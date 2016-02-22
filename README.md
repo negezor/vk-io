@@ -107,7 +107,8 @@ var status = vk.status;
 Остальные ошибки можно отловить через .catch() с возвращаемого promise.
 ## TODO
 * Если есть предложение пишите мне сюда https://vk.com/id195624402
-###English
+
+### English
 Module for easy work with vk api!
 
 ## npm depending
