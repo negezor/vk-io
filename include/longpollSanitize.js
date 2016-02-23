@@ -272,12 +272,18 @@ exports._longpollEvents = {
 						/* Вызываем другие события */
 						resolve([message,name]);
 					} else {
-						/* Увеличиваем счётчик принятых */
-						++this.status.accepted;
-
 						/* Возвращаем данные */
 						resolve(message);
 					}
+
+					/* Увеличиваем счётчик принятых */
+					++this.status.accepted;
+
+					/* Срез сообщений */
+					var skip = this.status.longpoll.skip;
+
+					/* Срезаем id которые устарели если есть */
+					skip.splice(skip.indexOf(message.id),1);
 				});
 			})
 			.catch(() => {
@@ -411,18 +417,18 @@ exports._longpollEvents = {
 exports._longpollSkipId = function(id){
 	/* Возвращаем promise */
 	return new this.promise((resolve,reject) => {
-		/* Алиас пропускамых сообщений */
+		/* Алиас пропуска */
 		var skip = this.status.longpoll.skip;
 
 		/* Проходимся по списку */
 		this.async.forEach(skip,(item,next) => {
 			/* Если совпадает с id */
-			if (item === id) {
+			if (item == id) {
 				/* Убераем id */
 				skip.splice(skip.indexOf(item),1);
 
 				/* Не пропускаем дальше */
-				reject();
+				return reject();
 			}
 
 			/* Переходим на следующую итерацию */
