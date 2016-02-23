@@ -33,7 +33,7 @@ exports._errorList = {
 	/* Требуется ввод кода с капчи */
 	14: function(error,request){
 		/* Вызывает событие капчи */
-		this.emit('captha',{
+		this.emit('captcha',{
 			/* Ссылка на изображение */
 			src: error.captcha_img,
 			/* ID капчи */
