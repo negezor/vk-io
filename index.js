@@ -59,7 +59,7 @@ io = function(){
 	};
 
 	/* Ставим свой обработчик сообщений */
-	this.api.messages.get = (params) => {
+	this.api.messages.send = (params) => {
 		/* Для сборки массива */
 		if (params.attachment && Array.isArray(params.attachment)) {
 			params.attachment = params.attachment.join(',');
