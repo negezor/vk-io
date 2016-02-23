@@ -84,13 +84,15 @@ vk.upload.message({
 ```
 Обработка исключений. Капча.
 ```javascript
-vk.on('captha',(captha) => {
-  // captha.src - путь до капчи
-  // captha.sid - id капчи
-  // captha.handler - нужно вызвать с передачей кода с капчи
+vk.on('captcha',(captcha) => {
+  // captcha.src - путь до капчи
+  // captcha.sid - id капчи
+  // captcha.handler - нужно вызвать с передачей кода с капчи
   // Дальше пример, он может отличаться от того что вы будете использовать
-  anti-captha(captha.src,(code) => {
-    captha.handler(code);
+  // Использовался модуль https://www.npmjs.com/package/ac-io
+  ac.url(captcha.src)
+  .then((data) => {
+  	captcha.handler(data.code);
   });
 });
 ```
@@ -193,13 +195,15 @@ vk.upload.message({
 ```
 Exception Handling. Captcha.
 ```javascript
-vk.on('captha',(captha) => {
-  // captha.src - the way to the CAPTCHA
-  // captha.sid - id CAPTCHA
-  // captha.handler - you need to call a code transmission with CAPTCHA
+vk.on('captcha',(captcha) => {
+  // captcha.src - the way to the CAPTCHA
+  // captcha.sid - id CAPTCHA
+  // captcha.handler - you need to call a code transmission with CAPTCHA
   // Next an example, it may be different from what you'll use
-  anti-captha(captha.src,(code) => {
-    captha.handler(code);
+  // Use modules https://www.npmjs.com/package/ac-io
+  ac.url(captcha.src)
+  .then((data) => {
+  	captcha.handler(data.code);
   });
 });
 ```
