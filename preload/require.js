@@ -6,6 +6,9 @@ exports.promise = require('bluebird');
 /* Работа с http */
 exports.request = require('request-promise');
 
+/* Наследование объектов */
+exports.extend = require('merge-util');
+
 /* Набор асинхронных утилит */
 exports.async = require('async');
 
