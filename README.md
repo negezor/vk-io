@@ -6,6 +6,7 @@
 * async
 * cheerio
 * bluebird
+* merge-util
 * html-entities
 * request-promise
 
