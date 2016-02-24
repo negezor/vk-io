@@ -27,7 +27,7 @@ exports.settings = {
  */
 exports.setting = function(object){
 	/* Наследуем конфиг */
-	Object.assign(this.settings,object);
+	this.settings = this.extend({},this.settings,object);
 
 	return this;
 };
