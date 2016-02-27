@@ -101,10 +101,10 @@ vk.on('captcha',(captcha) => {
 ```javascript
 var status = vk.status;
 
-// status.error - кол-во ошибок
+// status.errors - кол-во ошибок
 // status.execute - кол-во выполненных методов vk
-// status.send - кол-во отправленных сообщений
-// status.accepted - кол-во принятых сообщений
+// status.outbox - кол-во отправленных сообщений
+// status.inbox - кол-во принятых сообщений
 // status.tasks.queue.length - кол-во заданий в очереди
 ```
 Остальные ошибки можно отловить через .catch() с возвращаемого promise.
@@ -168,9 +168,9 @@ longpoll method returns a promise, since he did not hang up the handler .on, kee
 ```javascript
 vk.longpoll()
 .then(() => {
-  // При запуске longpoll продолжаете делать что то
+  // When you start longpoll keep doing something
   vk.on('longpoll.message',(msg) => {
-    // Например получать сообщения
+    // For example receive messages
   });
 });
 ```
@@ -212,10 +212,10 @@ Receive module status information
 ```javascript
 var status = vk.status;
 
-// status.error - number of errors
+// status.errors - number of errors
 // status.execute - Number of executed methods vk
-// status.send - Number of messages send
-// status.accepted - the number of received messages
+// status.outbox - Number of messages send
+// status.inbox - the number of received messages
 // status.tasks.queue.length - Number of jobs in the queue
 ```
 The remaining errors can catch through .catch () to return promise.

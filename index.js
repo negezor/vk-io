@@ -10,13 +10,13 @@ io = function(){
 	/* Текущий статус модуля */
 	this.status = {
 		/* Кол-во ошибок за инициализацию */
-		error: 0,
+		errors: 0,
 		/* Кол-во выполненых методов vk */
 		execute: 0,
 		/* Кол-во отправленных сообщений */
-		send: 0,
+		outbox: 0,
 		/* Кол-во полученных сообщений longpoll */
-		accepted: 0,
+		inbox: 0,
 		/* Задания */
 		tasks: {
 			/* Включен ли работник */
@@ -108,7 +108,7 @@ io = function(){
 				/* Добавляем id в список игнорируемых */
 				this.status.longpoll.skip.push(id);
 				/* Увеличиваем кол-во сообщений */
-				++this.status.message;
+				++this.status.outbox;
 
 				/* Возвращаем id */
 				resolve(id);
