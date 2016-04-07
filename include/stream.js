@@ -30,7 +30,7 @@ var generator = function(gen){
 	add(gen.method,function(params){
 		return new this.promise((resolve,reject) => {
 			/* Параметры */
-			var params = params || {};
+			params = params || {};
 
 			/* Ставим параметры */
 			var query = util._extend({},params);
