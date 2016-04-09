@@ -1,25 +1,5 @@
 'use strict';
 
-/* Основные настройки */
-exports.settings = {
-	/* Идентификатор пользователя */
-	id: null,
-	/* Email/логин/телефон от аккаунта */
-	email: null,
-	/* Пароль от аккаунта */
-	pass: null,
-	/* Токен */
-	token: null,
-	/* Приложения для авторизации */
-	app: null,
-	/* Секретный ключ приложения */
-	key: null,
-	/* Версия vk api */
-	version: 5.45,
-	/* Лимит запросов в секунду */
-	limit: 3
-};
-
 /**
  * Устанавливает настройки модуля
  * @param {object} object настройки
@@ -27,7 +7,7 @@ exports.settings = {
  */
 exports.setting = function(object){
 	/* Наследуем конфиг */
-	this.settings = this.extend({},this.settings,object);
+	this.settings = this.extend(this.settings,object);
 
 	return this;
 };

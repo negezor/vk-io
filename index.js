@@ -1,12 +1,30 @@
 'use strict';
 
-var
-/* File Stream */
-fs = require('fs'),
-/* Utility */
-util = require('util'),
-/* Основа модуля */
-io = function(){
+var base = new (require('base-io'));
+
+base
+.root(__dirname)
+.import(function(){
+	/* Основные настройки */
+	this.settings = {
+		/* Идентификатор пользователя */
+		id: null,
+		/* Email/логин/телефон от аккаунта */
+		email: null,
+		/* Пароль от аккаунта */
+		pass: null,
+		/* Токен */
+		token: null,
+		/* Приложения для авторизации */
+		app: null,
+		/* Секретный ключ приложения */
+		key: null,
+		/* Версия vk api */
+		version: '5.50',
+		/* Лимит запросов в секунду */
+		limit: 3
+	};
+
 	/* Текущий статус модуля */
 	this.status = {
 		/* Кол-во ошибок за инициализацию */
@@ -63,37 +81,6 @@ io = function(){
 		};
 	});
 
-	/* Добавляет методы в основу */
-	var method = (name,methods) => {
-		/* Алиас метода */
-		this[name] = {};
-
-		/* Проходимся по списку методов */
-		methods.forEach((item) => {
-			var
-			/* Путь метода */
-			path = item.path.split('.'),
-			/* Последний элемент */
-			end = path.length-1,
-			/* Алиас */
-			self = this[name];
-
-			/* Проходимся по пути метода */
-			path.forEach((key,i) => {
-				/* Если последний элемент */
-				if (end === i) {
-					return self[key] = item.handler.bind(this);
-				}
-
-				/* Установка ссылки на элемент */
-				self = self[key] = self[key] || {};
-			});
-
-			/* Ставим алиас */
-			self = this[name];
-		});
-	};
-
 	/* Ставим свой обработчик сообщений */
 	this.api.messages.send = (params) => {
 		/* Для сборки массива */
@@ -103,6 +90,10 @@ io = function(){
 
 		/* Возврашаем promise */
 		return new this.promise((resolve,reject) => {
+			params = params || {};
+
+			params.random_id = Date.now();
+
 			this._api('messages.send',params)
 			.then((id) => {
 				/* Добавляем id в список игнорируемых */
@@ -118,41 +109,15 @@ io = function(){
 	};
 
 	/* Добавляем управления потоками */
-	method('stream',this._streamHandlers);
-	method('upload',this._uploadHandlers);
-};
+	this._properties('stream',this._streamHandlers);
+	this._properties('upload',this._uploadHandlers);
+})
+.emiter()
+.change()
+.scan([
+	'preload',
+	'include',
+	'extesions'
+]);
 
-/* Наследуем EventEmitter */
-util.inherits(io,require('events').EventEmitter);
-
-/* Папки с прототипами модуля */
-['preload','include','extesions']
-/* Наследование прототипов */
-.forEach(function(dir){
-	var
-	/* Путь до папки */
-	dir = __dirname+'/'+dir+'/',
-	/* Считывание файлов директории */
-	files = fs.readdirSync(dir),
-	/* Кеш длины массива */
-	length = files.length,
-	/* Regex проверки что файл js расширения */
-	regex = /.*\.js/,
-	/* Остальные переменные */
-	file,i;
-
-	/* Проходимся по списку файлов */
-	for (i = 0; i < length; ++i) {
-		/* Текущий элемент */
-		file = files[i];
-
-		/* Проверка что файл js */
-		if (regex.test(file)) {
-			/* Наследуем */
-			util._extend(io.prototype,require(dir+file));
-		}
-	}
-});
-
-/* Экспорт модуля */
-module.exports = io;
+module.exports = base.export();

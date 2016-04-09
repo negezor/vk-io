@@ -11,7 +11,7 @@ var add = function(path,handler){
 	/* Добавляем объект */
 	exports._streamHandlers.push({
 		/* Путь до метода */
-		path: path,
+		way: path,
 		/* Обработчик */
 		handler: handler
 	});
@@ -19,7 +19,9 @@ var add = function(path,handler){
 
 /**
  * Генератор стримов
+ * 
  * @param   {object}   gen настройки функции
+ * 
  * @returns {function} готовая функция
  */
 var generator = function(gen){

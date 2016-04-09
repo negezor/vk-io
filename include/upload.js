@@ -50,7 +50,7 @@ var add = function(path,handler){
 	/* Добавляем объект */
 	exports._uploadHandlers.push({
 		/* Путь до метода */
-		path: path,
+		way: path,
 		/* Обработчик */
 		handler: handler
 	});
