@@ -4,6 +4,7 @@
 
 ## npm зависимости
 * async
+* base-io
 * cheerio
 * bluebird
 * merge-util
@@ -116,6 +117,7 @@ Module for easy work with vk api!
 
 ## npm depending
 * async
+* base-io
 * cheerio
 * bluebird
 * html-entities
