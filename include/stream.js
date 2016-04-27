@@ -80,6 +80,7 @@ var generator = function(gen){
 						/* Повторяем выборку */
 						fetch();
 					}
+					return null;
 				})
 				.catch(reject);
 			};
