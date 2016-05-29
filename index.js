@@ -3,6 +3,7 @@
 var base = new (require('base-io'));
 
 base
+.root(__dirname)
 .import(function(){
 	/* Основные настройки */
 	this.settings = {
