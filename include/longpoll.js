@@ -131,7 +131,7 @@ exports._longpollFetch = function(){
 		++this.status.error;
 
 		/* Проверяем статус если это проблемы соединения */
-		var status = if (error.code === 'ETIMEDOUT' || error.statusCode > 500) {;
+		var status = error.code === 'ETIMEDOUT' || error.statusCode > 500;
 
 		/* Выбираем действия при ошибке */
 		if (status) {
