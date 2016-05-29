@@ -19,9 +19,9 @@ var add = function(path,handler){
 
 /**
  * Генератор стримов
- * 
+ *
  * @param   {object}   gen настройки функции
- * 
+ *
  * @returns {function} готовая функция
  */
 var generator = function(gen){

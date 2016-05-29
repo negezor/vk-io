@@ -7,7 +7,6 @@
 * base-io
 * cheerio
 * bluebird
-* merge-util
 * html-entities
 * request-promise
 

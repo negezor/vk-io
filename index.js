@@ -3,7 +3,6 @@
 var base = new (require('base-io'));
 
 base
-.root(__dirname)
 .import(function(){
 	/* Основные настройки */
 	this.settings = {
@@ -20,7 +19,7 @@ base
 		/* Секретный ключ приложения */
 		key: null,
 		/* Версия vk api */
-		version: '5.50',
+		version: '5.52',
 		/* Лимит запросов в секунду */
 		limit: 3
 	};
@@ -112,7 +111,7 @@ base
 	this._properties('stream',this._streamHandlers);
 	this._properties('upload',this._uploadHandlers);
 })
-.emiter()
+.emitter()
 .change()
 .scan([
 	'preload',

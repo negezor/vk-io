@@ -100,10 +100,8 @@ exports._apiExecute = function(method,params,resolve,reject){
 		++this.status.error;
 
 		/* Если сервер не ответил */
-		if (error.name === 'RequestError' || error.name === 'StatusCodeError') {
+		if (error.code === 'ETIMEDOUT' || error.statusCode > 500) {
 			console.log('Server doesn\'t respond');
-		} else {
-			return console.error('Неизвестная ошибка api execute >',error);
 		}
 
 		/* Перезапускаем запросс метода */

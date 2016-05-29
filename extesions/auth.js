@@ -158,7 +158,6 @@ exports.auth = function(){
 		.then(formCompile)
 		.catch((error) => {
 			console.log(error);
-			console.log(Object.keys(error));
 		});
 	});
 };

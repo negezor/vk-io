@@ -7,7 +7,7 @@ exports.promise = require('bluebird');
 exports.request = require('request-promise');
 
 /* Наследование объектов */
-exports.extend = require('merge-util');
+exports.extend = Object.assign.bind(Object);
 
 /* Набор асинхронных утилит */
 exports.async = require('async');
