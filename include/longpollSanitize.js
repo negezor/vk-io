@@ -277,7 +277,7 @@ exports._longpollEvents = {
 					}
 
 					/* Увеличиваем счётчик принятых */
-					++this.status.accepted;
+					++this.status.inbox;
 
 					/* Срез сообщений */
 					var skip = this.status.longpoll.skip;
