@@ -1,6 +1,8 @@
 'use strict';
 
-/* Список методов vk api */
+/*
+ * Список методов vk api
+ */
 exports._apiMethodsList = [
 	'users.get',
 	'users.search',

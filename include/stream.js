@@ -1,18 +1,12 @@
 'use strict';
 
-/* Utility */
 var util = require('util');
 
-/* Список обработчиков потоков */
 exports._streamHandlers = [];
 
-/* Добавляет обработчик */
 var add = function(path,handler){
-	/* Добавляем объект */
 	exports._streamHandlers.push({
-		/* Путь до метода */
 		way: path,
-		/* Обработчик */
 		handler: handler
 	});
 };
@@ -25,59 +19,42 @@ var add = function(path,handler){
  * @returns {function} готовая функция
  */
 var generator = function(gen){
-	/* Использование метода */
 	var use = gen.method.split('.');
 
-	/* Добавляем метод */
 	add(gen.method,function(params){
 		return new this.promise((resolve,reject) => {
 			/* Параметры */
 			params = params || {};
 
-			/* Ставим параметры */
 			var query = util._extend({},params);
 
-			/* Если на задано кол-вол */
 			params.count = params.count || gen.max;
 
-			/* Смещение */
 			query.offset = 0;
-			/* Кол-вы выборки */
 			query.count = params.count > gen.count?gen.count:params.count;
 
-			/* Данные на вывод */
 			var container = [];
 
-			/* Загружает данные */
 			var fetch = () => {
 				/* Ищем по параметрам */
 				this.api[use[0]][use[1]](query)
 				.then((data) => {
-					/* Если кол-во привышает */
 					if (params.count > data.count) {
 						params.count = data.count;
 					}
 
-					/* Совмещаем данные */
 					container = container.concat(data.items);
 
-					/* Кол-во полученные элементов */
 					var length = container.length;
 
-					/* Длина */
 					if (length >= params.count) {
-						/* Возвращаем данные */
 						resolve(container);
 					} else {
-						/* Кол-во осташихся элементов */
 						var count = params.count - length;
 
-						/* Устанавливаем смещение */
 						query.offset = length;
-						/* Установка кол-во элементов */
 						query.count = count > gen.count?gen.count:count;
 
-						/* Повторяем выборку */
 						fetch();
 					}
 					return null;
@@ -85,7 +62,6 @@ var generator = function(gen){
 				.catch(reject);
 			};
 
-			/* Делаем первую выборку */
 			fetch();
 		});
 	});

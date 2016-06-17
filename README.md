@@ -1,6 +1,6 @@
 # vk-io
 ###Russian
-Модуль для лёгкой работы с vk api!
+Модуль для лёгкой и удобной работы с vk api!
 
 ## npm зависимости
 * async
@@ -11,13 +11,13 @@
 * request-promise
 
 ## Использование
-Инициализация
+#### Инициализация
 ```javascript
 'use strict';
 
-var vk = new (require('vk-io'));
+let vk = new (require('vk-io'));
 ```
-Конфигурация
+#### Конфигурация
 ```javascript
 vk.setting({
   id: 'ID пользователя',
@@ -25,10 +25,10 @@ vk.setting({
   token: 'Токен пользователя',
   app: 'Приложение standlone',
   key: 'Секретный ключ приложения',
-  limit: 3 // Лучше оставить как есть если у вас он не выше 3
+  limit: 3 /* Лучше оставить как есть если у вас он не выше 3 */
 });
 ```
-Авторизация вк для полного токена
+#### Авторизация вк для полного токена
 ```javascript
 vk.setting({
   app: 114,
@@ -38,188 +38,103 @@ vk.setting({
 
 vk.auth()
 .then((token) => {
-  // Дальше например сохраняете токен, он так же обновится в настройках
+  /* Дальше например сохраняете токен, он так же обновится в настройках */
 })
 ```
-Запросы на api
-Они очень просты, достаточно скопировать название метода с vk.com/dev/methods
-На примере messages.get
+#### Выполнение методов вк
+Достаточно скопировать название метода [api methods.](https://vk.com/dev/methods) на примере `messages.get`
 ```javascript
 vk.api.messages.get({
   count: 5
 })
 .then((messages) => {
-  // Работаем с данными
+  /* Работаем с данными */
 });
 ```
-Работа с longpoll.
-Метод longpoll возвращает promise, после него не повесить обработчик .on, учтите это.
+#### Работа с longpoll
+Список евентов `.on` начинается с `longpoll.[название]`  
+Метод `longpoll` возвращает promise, после него не повесить обработчик `.on`, учтите это.
 ```javascript
-vk.longpoll()
-.then(() => {
-  // При запуске longpoll продолжаете делать что то
-  vk.on('longpoll.message',(msg) => {
-    // Например получать сообщения
-  });
+vk.longpoll();
+
+vk.on('longpoll.message',(msg) => {
+	/* Действия с сообщением */
 });
 ```
-Работа с потоками, работает с теми методами в которых есть offset. Например photos.get.
+###### Список евентов longpoll
+| Название              | Описание                                                                                                                                                                                                                                                        | Данные                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+|-----------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| message.delete        | Удаление сообщения с указанным local id                                                                                                                                                                                                                         | `id` - id сообщения , `local` - удаляемое сообщения.                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| message.flags.replace | Замена флагов сообщения                                                                                                                                                                                                                                         | `id` - id сообщения , `flags` - флаги сообщения.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| message.flags.set     | Установка флагов сообщения                                                                                                                                                                                                                                      | `id` - id сообщения , `flags` - флаги сообщения.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| message.flags.reset   | Cброс флагов сообщения                                                                                                                                                                                                                                          | `id` - id сообщения , `flags` - флаги сообщения.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| message               | Получение нового сообщения                                                                                                                                                                                                                                      | `id` - id сообщения, `flags` - флаги сообщения, `peer` -идентификатор назначения, `user` - id пользователя, `date` - timestamp сообщения, `title` - название беседы, `text` - текст сообщения, `attach` - прикрепления, `isChat` - написано сообщение в чате, `chat` - id чата. В `attach` возможные прикрепления, `fwd` - пересылаемые сообщения, `wall` - стенка, `photo` - фотографии, `video` - видеозаписи, 'audio' - аудиозаписи, `doc` - документы, `sticker` - стикер, `link` - ссылка, `emoji` - присутвуют ли стикеры. |
+| message.read.inbox    | Прочтение всех входящих сообщений с $peer_id вплоть до $local_id                                                                                                                                                                                                | `peer` - id начального, `local` - конечное id                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| message.read.outbox   | Прочтение всех исходящих сообщений с $peer_id вплоть до $local_id                                                                                                                                                                                               | `peer` - id начального, `local` - конечное id                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| user.online           | Друг $user_id стал онлайн                                                                                                                                                                                                                                       | `user` - id пользователя, `flags` - флаги сообщения                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| user.offline          | Друг $user_id стал оффлайн                                                                                                                                                                                                                                      | `user` - id пользователя, `flags` - флаги сообщения                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| chat.flags.reset      | Сброс флагов фильтрации по папкам для чата/собеседника с $peer_id                                                                                                                                                                                               | `peer` - идентификатор чата, `flags` - флаги сообщения                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| chat.flags.replace    | Замена флагов фильтрации по папкам для чата/собеседника с $peer_id.                                                                                                                                                                                             | `peer` - идентификатор чата, `flags` - флаги сообщения                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| chat.flags.set        | Установка флагов фильтрации по папкам для чата/собеседника с $peer_id                                                                                                                                                                                           | `peer` - идентификатор чата, `flags` - флаги сообщения                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| message.replace.flags | Замена флагов всех сообщений с заданным peer_id (применяется только к сообщениям, у которых на текущий момент не установлены флаги 128 (deleted) и 64 (spam))                                                                                                   | `peer` - идентификатор чата, `flags` - флаги сообщения                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| message.set.flags     | Установка флагов всех сообщений с заданным peer_id (FLAGS|=$mask) (применяется только к сообщениям, у которых на текущий момент не установлены флаги 128 (deleted) и 64 (spam))                                                                                 | `peer` - идентификатор чата, `flags` - флаги сообщения                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| message.reset.flags   | Сброс флагов всех сообщений с заданным peer_id (FLAGS&=~$mask) (применяется только к сообщениям, у которых на текущий момент не установлены флаги 128 (deleted) и 64 (spam))                                                                                    | `peer` - идентификатор чата, `flags` - флаги сообщения                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| chat.action           | Один из параметров (состав, тема) беседы $chat_id были изменены. $self - были ли изменения вызваны самим пользователем                                                                                                                                          | `chat` - id чата, `self` - вызваны ли они самим пользователем (boolean)                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| user.active.message   | Пользователь $user_id начал набирать текст в диалоге. событие должно приходить раз в ~5 секунд при постоянном наборе текста                                                                                                                                     | `user` - id пользователя, `flags` - флаги                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| user.active.chat      | Пользователь $user_id начал набирать текст в беседе $chat_id.                                                                                                                                                                                                   | `user` - id пользователя, `chat` - id чата                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| user.call             | Пользователь $user_id совершил звонок имеющий идентификатор $call_id.                                                                                                                                                                                           | `user` - id пользователя, `call` - id звонка                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| message.count         | Новый счетчик непрочитанных в левом меню стал равен $count.                                                                                                                                                                                                     | `count` - счётчик непрочитанных                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| email.send            | Сейчас оно используется только при отправке исходящего сообщения на e-mail.                                                                                                                                                                                     |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| notify.set            | Изменились настройки оповещений, где peerId — $peer_id чата/собеседника, sound — 1 || 0, включены/выключены звуковые оповещения, disabled_until — выключение оповещений на необходимый срок (-1: навсегда, 0: включены, other: timestamp, когда нужно включить) | `peer` - идентификатор диалога, `sound` - включено ли оповоещение (boolean), `until` - срок включения                                                                                                                                                                                                                                                                                                                                                                                                                            |
+#### Работа с потоками
+Работает с теми методами в которых есть `offset`. Например `photos.get`
 ```javascript
 vk.stream.photos.get({
   owner_id: 1,
   album_id: 136592355
 })
 .then((photos) => {
-  // Вернёт массив с данными
+  /* Вернёт массив с данными */
 });
 ```
-Загрузка на сервера вк, на примере загружается картинка в диалог.
+#### Загрузка на сервера вк
+На примере загружается картинка в диалог.
 Остальные методы можно глянут в файле vk-io/include/upload.js
 ```javascript
 vk.upload.message({
   file: __dirname+'/test.png'
 })
 .then((image) => {
-  // Возвращается объект photo
+  /* Возвращается объект photo */
 });
 ```
-Обработка исключений. Капча.
+#### Обработка исключений
+Капча.
 ```javascript
 vk.on('captcha',(captcha) => {
-  // captcha.src - путь до капчи
-  // captcha.sid - id капчи
-  // captcha.handler - нужно вызвать с передачей кода с капчи
-  // Дальше пример, он может отличаться от того что вы будете использовать
-  // Использовался модуль https://www.npmjs.com/package/ac-io
+  /* Дальше пример, он может отличаться от того что вы будете использовать */
+  /* Использовался модуль https://www.npmjs.com/package/ac-io */
   ac.url(captcha.src)
   .then((data) => {
   	captcha.handler(data.code);
   });
 });
 ```
-Получение информации о состояние модуля
+* `captcha.src` - путь до капчи
+* `captcha.sid` - id капчи
+* `captcha.handler` - нужно вызвать с передачей кода с капчи
+
+#### Получение информации о состояние модуля
 ```javascript
 var status = vk.status;
-
-// status.errors - кол-во ошибок
-// status.execute - кол-во выполненных методов vk
-// status.outbox - кол-во отправленных сообщений
-// status.inbox - кол-во принятых сообщений
-// status.tasks.queue.length - кол-во заданий в очереди
 ```
-Остальные ошибки можно отловить через .catch() с возвращаемого promise.
+* `status.errors` - кол-во ошибок
+* `status.execute` - кол-во выполненных методов vk
+* `status.tasks.queue.length` - кол-во заданий в очереди
+* `status.outbox` - кол-во отправленных сообщений
+* `status.inbox` - кол-во принятых сообщений
+
+Остальные ошибки можно отловить через `.catch()` с возвращаемого promise.
+
 ## TODO
-* Если есть предложение пишите мне сюда https://vk.com/id195624402
-
-### English
-Module for easy work with vk api!
-
-## npm depending
-* async
-* base-io
-* cheerio
-* bluebird
-* html-entities
-* request-promise
-
-## Using
-Initialization
-```javascript
-'use strict';
-
-var vk = new (require('vk-io'));
-```
-Configuration
-```javascript
-vk.setting({
-  id: 'ID user',
-  email: 'Login/email/phone user',
-  token: 'user token',
-  app: 'application standlone',
-  key: 'Secret key applications',
-  limit: 3 // It is best left as it is if you do it does not exceed 3
-});
-```
-Log in to complete token vk
-```javascript
-vk.setting({
-  app: 114,
-  email: 'user@example.com',
-  pass: '1234'
-});
-
-vk.auth()
-.then((token) => {
-  // Then save the token for example, it is also updated in the settings
-})
-```
-Requests for api
-They are very simple, just copy the name of the method with vk.com/dev/methods
-For example messages.get
-```javascript
-vk.api.messages.get({
-  count: 5
-})
-.then((messages) => {
-  // We are working with data
-});
-```
-Working with longpoll.
-longpoll method returns a promise, since he did not hang up the handler .on, keep this in mind.
-```javascript
-vk.longpoll()
-.then(() => {
-  // When you start longpoll keep doing something
-  vk.on('longpoll.message',(msg) => {
-    // For example receive messages
-  });
-});
-```
-Working with the flow, working with those methods which have offset. For example photos.get.
-```javascript
-vk.stream.photos.get({
-  owner_id: 1,
-  album_id: 136592355
-})
-.then((photos) => {
-  // This will return an array of data
-});
-```
-Loading on the vk server, the example of a picture is loaded into a dialogue.
-Other methods you can look in the file vk-io/include/upload.js
-```javascript
-vk.upload.message({
-  file: __dirname+'/test.png'
-})
-.then((image) => {
-  // Returned object photo
-});
-```
-Exception Handling. Captcha.
-```javascript
-vk.on('captcha',(captcha) => {
-  // captcha.src - the way to the CAPTCHA
-  // captcha.sid - id CAPTCHA
-  // captcha.handler - you need to call a code transmission with CAPTCHA
-  // Next an example, it may be different from what you'll use
-  // Use modules https://www.npmjs.com/package/ac-io
-  ac.url(captcha.src)
-  .then((data) => {
-  	captcha.handler(data.code);
-  });
-});
-```
-Receive module status information
-```javascript
-var status = vk.status;
-
-// status.errors - number of errors
-// status.execute - Number of executed methods vk
-// status.outbox - Number of messages send
-// status.inbox - the number of received messages
-// status.tasks.queue.length - Number of jobs in the queue
-```
-The remaining errors can catch through .catch () to return promise.
-## TODO
-* If you have a suggestion please contact me here https://vk.com/id195624402
-* And I'm sorry if I made a mistake in the translation of |._. |
+* Если есть предложение пишите мне сюда [ВК](https://vk.com/id195624402)

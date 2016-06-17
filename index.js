@@ -3,9 +3,7 @@
 var base = new (require('base-io'));
 
 base
-.root(__dirname)
 .import(function(){
-	/* Основные настройки */
 	this.settings = {
 		/* Идентификатор пользователя */
 		id: null,
@@ -22,7 +20,9 @@ base
 		/* Версия vk api */
 		version: '5.52',
 		/* Лимит запросов в секунду */
-		limit: 3
+		limit: 3,
+		/* Игнорировать ли свои действия? */
+		ignoreMe: true
 	};
 
 	/* Текущий статус модуля */
@@ -61,34 +61,29 @@ base
 		}
 	};
 
-	/* Список методов api */
 	this.api = {};
-	/* Установка базовых методов vk api */
 	this._apiMethodsList.forEach((method) => {
 		var
-		/* Путь метода */
 		path = method.split('.'),
-		/* Группа метода */
 		group = path[0];
 
-		/* Ставим группу */
 		this.api[group] = this.api[group] || {};
 
-		/* Ставим обработчик */
 		this.api[group][path[1]] = (params) => {
-			/* Возврашаем promise */
 			return this._api(method,params);
 		};
 	});
 
-	/* Ставим свой обработчик сообщений */
 	this.api.messages.send = (params) => {
-		/* Для сборки массива */
+		if (params.attach) {
+			params.attachment = params.attach;
+			delete params.attach;
+		}
+
 		if (params.attachment && Array.isArray(params.attachment)) {
 			params.attachment = params.attachment.join(',');
 		}
 
-		/* Возврашаем promise */
 		return new this.promise((resolve,reject) => {
 			params = params || {};
 
@@ -96,22 +91,20 @@ base
 
 			this._api('messages.send',params)
 			.then((id) => {
-				/* Добавляем id в список игнорируемых */
 				this.status.longpoll.skip.push(id);
-				/* Увеличиваем кол-во сообщений */
 				++this.status.outbox;
 
-				/* Возвращаем id */
 				resolve(id);
 			})
 			.catch(reject);
 		});
 	};
 
-	/* Добавляем управления потоками */
+	/* Цепочки методов */
 	this._properties('stream',this._streamHandlers);
 	this._properties('upload',this._uploadHandlers);
 })
+.root(__dirname)
 .emitter()
 .change()
 .scan([

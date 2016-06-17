@@ -1,21 +1,14 @@
 'use strict';
 
-/* FileStream */
 var fs = require('fs');
 
-/* Методы работы с загрузкой */
 exports._uploadHandlers = [];
 
-/* Управлению загрузкой */
 exports._uploadSend = function(server,form){
-	/* Возвращаение promise */
 	return new this.promise((resolve,reject) => {
-		/* Объекты на отправку */
 		var formData = {};
 
-		/* Проходимся по ключам */
 		this.async.forEach(Object.keys(form),(key,next) => {
-			/* Создаём новый стрим */
 			if (!Array.isArray(form[key])) {
 				formData[key] = fs.createReadStream(form[key]);
 
@@ -23,7 +16,6 @@ exports._uploadSend = function(server,form){
 			} else {
 				var index = 1;
 
-				/* Проходимся по списку */
 				this.async.forEach(form[key],(item,each) => {
 					formData[key+index]	= fs.createReadStream(item);
 
@@ -45,22 +37,16 @@ exports._uploadSend = function(server,form){
 	});
 };
 
-/* Добавляет обработчик */
 var add = function(path,handler){
-	/* Добавляем объект */
 	exports._uploadHandlers.push({
-		/* Путь до метода */
 		way: path,
-		/* Обработчик */
 		handler: handler
 	});
 };
 
 /* Загрузка фотографий в альбом пользователя  */
 add('album',function(params){
-	/* Возвращаение promise */
 	return new this.promise((resolve,reject) => {
-		/* Получаем сервер для загрузки */
 		this.api.photos.getUploadServer(params)
 		.then((server) => {
 			var formData = {};
@@ -75,7 +61,6 @@ add('album',function(params){
 				formData.file1 = params.file;
 			}
 
-			/* Загружаем файлы */
 			return this._uploadSend(server,formData);
 		})
 		.then((save) => {
@@ -88,11 +73,8 @@ add('album',function(params){
 	});
 });
 
-/* Загрузка фотографий на стену пользователя  */
 add('wall',function(params){
-	/* Возвращаение promise */
 	return new this.promise((resolve,reject) => {
-		/* Получаем сервер для загрузки */
 		this.api.photos.getWallUploadServer(params)
 		.then((server) => {
 			return this._uploadSend(server,{
@@ -114,16 +96,13 @@ add('wall',function(params){
 	});
 });
 
-/* Загрузка главной фотографии на страницу пользователя или сообщества */
 add('owner',function(params){
-	/* Возвращаение promise */
 	return new this.promise((resolve,reject) => {
 		if (params.crop) {
 			var crop = params.crop;
 			delete params.crop;
 		}
 
-		/* Получаем сервер для загрузки */
 		this.api.photos.getOwnerPhotoUploadServer(params)
 		.then((server) => {
 			var send = {
@@ -135,7 +114,6 @@ add('owner',function(params){
 				}
 			};
 
-			/* Если есть параметры для разрезки */
 			if (crop) {
 				send.qs = {
 					_square_crop: crop
@@ -158,9 +136,7 @@ add('owner',function(params){
 
 /* Загрузка в личное сообщение */
 add('message',function(params){
-	/* Возвращаение promise */
 	return new this.promise((resolve,reject) => {
-		/* Получаем сервер для загрузки */
 		this.api.photos.getMessagesUploadServer(params)
 		.then((server) => {
 			return this._uploadSend(server,{
@@ -178,9 +154,7 @@ add('message',function(params){
 
 /* Загрузка фотографии для товара */
 add('product',function(params){
-	/* Возвращаение promise */
 	return new this.promise((resolve,reject) => {
-		/* Получаем сервер для загрузки */
 		this.api.photos.getMarketUploadServer(params)
 		.then((server) => {
 			return this._uploadSend(server,{
@@ -201,9 +175,7 @@ add('product',function(params){
 
 /* Загрузка фотографии для подборки товаров */
 add('selection',function(params){
-	/* Возвращаение promise */
 	return new this.promise((resolve,reject) => {
-		/* Получаем сервер для загрузки */
 		this.api.photos.getMarketAlbumUploadServer(params)
 		.then((server) => {
 			return this._uploadSend(server,{
@@ -224,9 +196,7 @@ add('selection',function(params){
 
 /* Загрузка аудиозаписей */
 add('audio',function(params){
-	/* Возвращаение promise */
 	return new this.promise((resolve,reject) => {
-		/* Получаем сервер для загрузки */
 		this.api.audio.getUploadServer(params)
 		.then((server) => {
 			return this._uploadSend(server,{
@@ -244,9 +214,7 @@ add('audio',function(params){
 
 /* Загрузка видеозаписей */
 add('video',function(params){
-	/* Возвращаение promise */
 	return new this.promise((resolve,reject) => {
-		/* Получаем сервер для загрузки */
 		this.api.video.save(params)
 		.then((server) => {
 			return this._uploadSend(server,{
@@ -260,9 +228,7 @@ add('video',function(params){
 
 /* Загрузка документов */
 add('docs',function(params){
-	/* Возвращаение promise */
 	return new this.promise((resolve,reject) => {
-		/* Получаем сервер для загрузки */
 		this.api.docs.getUploadServer(params)
 		.then((server) => {
 			return this._uploadSend(server,{
