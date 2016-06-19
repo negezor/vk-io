@@ -184,7 +184,7 @@ exports._longpollEvents = {
 
 						if (params.fwd && params.fwd === true) {
 							params.forward_messages = message.id;
-							return params.fwd;
+							delete params.fwd;
 						}
 
 						return this.api.messages.send(params);
