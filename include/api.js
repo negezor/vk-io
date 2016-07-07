@@ -68,7 +68,7 @@ exports._apiExecute = function(method,params,resolve,reject){
 
 		++this.status.execute;
 
-		resolve(body.response || body);
+		resolve(('response' in body)?body.response:body);
 	})
 	.catch((error) => {
 		++this.status.error;

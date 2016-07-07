@@ -28,7 +28,8 @@ exports._uploadSend = function(server,form){
 				uri: server.upload_url,
 				method: 'POST',
 				json: true,
-				formData: formData
+				formData: formData,
+				timeout: 15000
 			})
 			.then(resolve)
 			.catch(reject);

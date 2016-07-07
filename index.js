@@ -75,17 +75,17 @@ base
 	});
 
 	this.api.messages.send = (params) => {
-		if (params.attach) {
-			params.attachment = params.attach;
-			delete params.attach;
-		}
-
-		if (params.attachment && Array.isArray(params.attachment)) {
-			params.attachment = params.attachment.join(',');
-		}
-
 		return new this.promise((resolve,reject) => {
 			params = params || {};
+
+			if (params.attach) {
+				params.attachment = params.attach;
+				delete params.attach;
+			}
+
+			if (params.attachment && Array.isArray(params.attachment)) {
+				params.attachment = params.attachment.join(',');
+			}
 
 			params.random_id = Date.now();
 
@@ -98,6 +98,10 @@ base
 			})
 			.catch(reject);
 		});
+	};
+
+	this.api.execute = (params) => {
+		return this._api('execute',params);
 	};
 
 	/* Цепочки методов */

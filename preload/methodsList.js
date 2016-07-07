@@ -241,6 +241,7 @@ exports._apiMethodsList = [
 	'messages.search',
 	'messages.getHistory',
 	'messages.send',
+	'messages.sendSticker',
 	'messages.delete',
 	'messages.deleteDialog',
 	'messages.restore',

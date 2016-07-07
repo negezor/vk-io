@@ -33,6 +33,9 @@ exports._errorList = {
 				request[1].captcha_key = code;
 
 				this._apiRestart.apply(this,request);
+			},
+			restart: () => {
+				this._apiRestart.apply(this,request);
 			}
 		});
 	}

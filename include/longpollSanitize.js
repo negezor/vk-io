@@ -1,5 +1,21 @@
 'use strict';
 
+/**
+ * Флаги сообщения
+ */
+exports.flag = {
+	UNREAD: 1,
+	OUTBOX: 2,
+	REPLIED: 4,
+	IMPORTANT: 8,
+	CHAT: 16,
+	FRIENDS: 32,
+	SPAM: 64,
+	DELЕTЕD: 128,
+	FIXED: 256,
+	MEDIA: 512
+};
+
 var longpollUtil = {
 	/* Флаги сообщения */
 	flags: (event,resolve) => {
@@ -35,6 +51,8 @@ var longpollUtil = {
  * Проверяет что пересылаемое сообщение
  */
 exports._longpollHasFwd = /fwd([0-9]+)_([0-9]+)/;
+
+exports._textBrReplace = /<br>/g;
 
 /* Список event-ов */
 exports._longpollEvents = {
@@ -85,9 +103,11 @@ exports._longpollEvents = {
 				/* Название беседы */
 				message.title = this.entities.decode(event[4]);
 				/* Текст сообщения */
-				message.text = this.entities.decode(event[5]);
+				message.text = this.entities.decode(event[5]).replace(this._textBrReplace,'\n');
 				/* Прикрепления */
-				message.attach = event[6];
+				message.attach = {};
+
+				var attachments = event[6];
 
 				let chat = 2e9;
 
@@ -95,57 +115,186 @@ exports._longpollEvents = {
 					message.isChat = true;
 					message.chat = message.peer - chat;
 
-					message.user = parseInt(message.attach.from);
-					delete message.attach.from;
+					message.user = parseInt(attachments.from);
+					delete attachments.from;
 				} else {
 					message.isChat = false;
 					message.chat = null;
 					message.title = null;
 				}
 
+				/* Игнорировать ли себя */
 				if (this.settings.ignoreMe && this.settings.id === message.user) {
 					return;
 				}
 
+				/**
+				 * Отправка сообщения
+				 *
+				 * @param mixed   text
+				 * @param object  params
+				 *
+				 * @return object
+				 */
+				message.send = (text,params) => {
+					if (typeof text === 'object' || text instanceof Object) {
+						params = text;
+					} else {
+						params = params || {};
+
+						params.message = text;
+					}
+
+					params.peer_id = message.peer;
+
+					if ('fwd' in params) {
+						if (params.fwd === true) {
+							params.forward_messages = message.id;
+						}
+
+						delete params.fwd;
+					}
+
+					return this.api.messages.send(params);
+				};
+
+				/* Действия чата */
+				if (message.isChat === true && 'source_act' in attachments) {
+					var name = 'unknown';
+
+					switch (attachments.source_act) {
+						/* Переименованние чата */
+						case 'chat_title_update':
+							message.title = this.entities.decode(attachments.source_text);
+							message.rename = (title) => {
+								return this.api.messages.editChat({
+									chat_id: message.chat,
+									title: title
+								});
+							};
+
+							name = 'rename';
+							break;
+						/* Приглашения пользователя в чат */
+						case 'chat_invite_user':
+							message.invite = parseInt(attachments.source_mid);
+							message.kick = (id) => {
+								return this.api.messages.removeChatUser({
+									chat_id: message.chat,
+									user_id: id || message.invite
+								});
+							};
+
+							name = 'invite';
+							break;
+						/* Кик пользователя с чата */
+						case 'chat_kick_user':
+							message.kick = parseInt(attachments.source_mid);
+							message.invite = (id) => {
+								return this.api.messages.addChatUser({
+									chat_id: message.chat,
+									user_id: id || message.kick
+								});
+							};
+
+							name = 'kick';
+							break;
+						/* Установка изображения чата */
+						case 'chat_photo_update':
+							var peer = attachments.attach1.split('_');
+
+							message.photo = {
+								id: parseInt(peer[1]),
+								owner: parseInt(peer[0]),
+								get: 'photo'+attachments.attach1
+							};
+
+							message.remove = () => {
+								return this.api.messages.deleteChatPhoto({
+									chat_id: message.chat
+								});
+							};
+
+							name = 'photo.update';
+							break;
+						/* Удаление изображения чата */
+						case 'chat_photo_remove':
+							name = 'photo.remove';
+
+							break;
+						/* Создание чата */
+						case 'chat_create':
+							message.title = attachments.source_text;
+
+							name = 'create';
+					}
+
+					resolve([message,'chat.'+name]);
+				}
+
+				/* Стикер */
+				if ('attach1_product_id' in attachments) {
+					message.attach.sticker = {
+						id: parseInt(attachments.attach1),
+						product: parseInt(attachments.attach1_product_id)
+					};
+
+					return resolve(message);
+				}
+
+				/* Карта */
+				if ('geo' in attachments) {
+					message.attach.geo = {
+						id: attachments.geo,
+						provider: parseInt(attachments.geo_provider)
+					};
+				}
+
+				message.isEmoji = (('emoji' in attachments)?parseInt(attachments['emoji']):0) === 1;
+
 				(new this.promise((attach) => {
-					for (var i = 1; i <= 10; ++i) {
-						if (message.attach['attach'+i]) {
-							var type = message.attach['attach'+i+'_type'];
-							var split = message.attach['attach'+i].split('_');
+					var i = 1,key;
+
+					this.async.whilst(
+						() => {
+							key = 'attach'+i;
+
+							return key in attachments;
+						},
+						(next) => {
+							var type = attachments['attach'+i+'_type'];
+							var peer = attachments[key].split('_');
 
 							message.attach[type] = message.attach[type] || [];
 
 							message.attach[type].push({
-								id: parseInt(split[1]),
-								owner: parseInt(split[0]),
-								get: type+message.attach['attach'+i]
+								id: parseInt(peer[1]),
+								owner: parseInt(peer[0]),
+								get: type+attachments[key]
 							});
 
-							delete message.attach['attach'+i];
-							delete message.attach['attach'+i+'_type'];
-						} else {
-							break;
-						}
-					}
+							++i;
 
-					attach();
+							next();
+						},
+						attach
+					);
 				}))
 				.then(() => {
 					return new this.promise((attach) => {
-						if (!message.attach.fwd) {
+						if (!attachments.fwd) {
 							return attach();
 						}
 
 						message.attach.fwd = [];
-						delete message.attach.fwd_msg_count;
 
-						this.async.forEach(Object.keys(message.attach),(key,next) => {
+						this.async.forEach(Object.keys(attachments),(key,next) => {
 							if (!this._longpollHasFwd.test(key)) {
 								return next();
 							}
 
-							let fwd = this._longpollHasFwd.exec(key)
-							let id = parseInt(fwd[2]);
+							var fwd = key.match(this._longpollHasFwd);
+							var id = parseInt(fwd[2]);
 
 							message.attach.fwd.push({
 								id: id,
@@ -155,119 +304,19 @@ exports._longpollEvents = {
 									return this.api.messages.getById({
 										message_ids: id
 									})
-									.then(resp => resp.items[0]);
+									.then(body => body.items[0]);
 								}
 							});
-
-							delete message.attach[key];
 
 							next();
 						},attach);
 					});
 				})
 				.then(() => {
-					message.send = (text,params) => {
-						if (typeof text === 'object' || text instanceof Object) {
-							params = text;
-						} else {
-							params = params || {};
-
-							params.message = text;
-						}
-
-						params.peer_id = message.peer;
-
-						if (params.attach) {
-							params.attachment = params.attach;
-							delete params.attach;
-						}
-
-						if (params.fwd && params.fwd === true) {
-							params.forward_messages = message.id;
-							delete params.fwd;
-						}
-
-						return this.api.messages.send(params);
-					};
-
-					if (message.isChat === true && message.attach.source_act) {
-						switch (message.attach.source_act) {
-							/* Переименованние чата */
-							case 'chat_title_update':
-								var id = this.settings.id;
-
-								/* Если пользователь сам изменил */
-								if (this.settings.ignoreMe && id && id === message.user) {
-									return;
-								}
-
-								message.title = this.entities.decode(message.attach.source_text);
-								message.rename = (name) => {
-									return this.api.messages.editChat({
-										chat_id: message.chat,
-										title: name
-									});
-								};
-
-								var name = 'chat.rename';
-								break;
-							/* Приглашения пользователя в чат */
-							case 'chat_invite_user':
-								message.invite = parseInt(message.attach.source_mid);
-								message.kick = (id) => {
-									return this.api.messages.removeChatUser({
-										chat_id: message.chat,
-										user_id: id || message.kick
-									});
-								};
-
-								var name = 'chat.invite';
-								break;
-							/* Кик пользователя с чата */
-							case 'chat_kick_user':
-								message.kick = parseInt(message.attach.source_mid);
-								message.invite = (id) => {
-									return this.api.messages.addChatUser({
-										chat_id: message.chat,
-										user_id: id || message.kick
-									});
-								};
-
-								var name = 'chat.kick';
-								break;
-							/* Установка изображения чата */
-							case 'chat_photo_update':
-								message.photo = message.attach.photo[0];
-								delete message.attach.photo;
-
-								message.remove = () => {
-									return this.api.messages.deleteChatPhoto({
-										chat_id: message.chat
-									});
-								};
-
-								var name = 'chat.photo.update';
-								break;
-							/* Удаление изображения чата */
-							case 'chat_photo_remove':
-								var name = 'chat.photo.delete';
-								break;
-							case 'chat_create':
-								var name = 'chat.create';
-								break;
-						}
-
-						delete message.attach.source_text;
-						delete message.attach.source_mid;
-						delete message.attach.source_act;
-
-						resolve([message,name]);
-					} else {
-						resolve(message);
-					}
-
-					++this.status.inbox;
+					resolve(message);
 				});
+
+				++this.status.inbox;
 			})
 			.catch(() => {});
 		}
@@ -393,7 +442,10 @@ exports._longpollEvents = {
 
 /**
  * Пропускает сообщения с id
+ *
  * @param {number} id сообщение
+ *
+ * @return object
  */
 exports._longpollSkipId = function(id){
 	return new this.promise((resolve,reject) => {
@@ -413,6 +465,7 @@ exports._longpollSkipId = function(id){
 
 /**
  * Обрабатывает данные longpoll
+ *
  * @param {array} updates список изменений
  */
 exports._longpollSanitize = function(updates){
