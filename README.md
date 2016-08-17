@@ -1,4 +1,4 @@
-![Logo vk-io](https://github.com/negezor/vk-io/blob/master/logo.png?raw=true)
+[![Logo vk-io](https://github.com/negezor/vk-io/blob/master/logo.png?raw=true)](https://www.npmjs.com/package/vk-io)
 
 # VK-IO
 > Включает в себя авторизацию, загрузку файлов, longpoll, stream и утилиты
