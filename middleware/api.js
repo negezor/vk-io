@@ -1,7 +1,7 @@
 'use strict';
 
 /* Версия VK API */
-exports.API_VERSION = '5.53';
+exports.API_VERSION = '5.57';
 
 /**
  * Добавляет метод в очередь выполнения VK API
@@ -45,8 +45,8 @@ exports._api = function(method,params,captcha){
  * @param function reject
  * @param object   captcha Обработчики капчи
  */
-exports._executeMethod = function(method,params,resolve,reject,captcha){
-	arguments[1] = params = params || {};
+exports._executeMethod = function(method,params = {},resolve,reject,captcha){
+	arguments[1] = params;
 
 	params.access_token = this.settings.token;
 	params.v = this.API_VERSION;
@@ -55,7 +55,7 @@ exports._executeMethod = function(method,params,resolve,reject,captcha){
 		uri: 'https://api.vk.com/method/'+method,
 		method: 'POST',
 		json: true,
-		timeout: 6000,
+		timeout: this.settings.timeout * 1000,
 		qs: params
 	})
 	.then((data) => {
@@ -89,8 +89,16 @@ exports._executeMethod = function(method,params,resolve,reject,captcha){
 				captcha.reject(error);
 			}
 
+			if (method === 'messages.send') {
+				--this.status.messages;
+			}
+
+			this.logger.log('Request error',method);
+
 			return reject(error);
 		}
+
+		this.logger.debug('Restart request',method);
 
 		setTimeout(() => {
 			this._apiRestart(arguments);

@@ -1,8 +1,8 @@
 'use strict';
 
 const promise = require('bluebird');
-const request = require('request-promise');
 const cheerio = require('cheerio').load;
+const request = require('request-promise');
 const queryString = require('querystring');
 
 /* Список разрешений */
@@ -200,7 +200,7 @@ class StandloneAuth extends Auth {
 	}
 
 	/**
-	 *
+	 * Обход проверки телефона
 	 *
 	 * @return promise
 	 */
@@ -265,7 +265,7 @@ class StandloneAuth extends Auth {
 			})
 			.then(($) => {
 				if ($('.oauth_error').length > 0) {
-					return reject(new exports.AuthError('Неправильный логин и пароль!'));
+					return reject(new exports.AuthError('Неправильный логин или пароль!'));
 				}
 
 				if ($('input[name="code"]').length > 0) {
@@ -404,9 +404,7 @@ class DirectAuth extends Auth {
 	 *
 	 * @return promise
 	 */
-	_getToken (qs) {
-		qs = qs || {};
-
+	_getToken (qs = {}) {
 		qs.username = this.login || this.phone;
 		qs.client_secret = this.key;
 		qs.grant_type = 'password';

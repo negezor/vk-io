@@ -2,11 +2,13 @@
 
 var base = new (require('base-io'));
 
-base.import(class VkIo {
+base.import(class VK {
 	/**
 	 * Конструктор
+	 *
+	 * @param object setting
 	 */
-	constructor () {
+	constructor (setting = {}) {
 		/* Основные настройки */
 		this.settings = {
 			/* Идентификатор пользователя */
@@ -27,12 +29,24 @@ base.import(class VkIo {
 			scope: null,
 			/* Лимит запросов в секунду */
 			limit: 3,
+			/* Время сброса соединения на API */
+			timeout: 6,
+			/* Режим debug-а */
+			debug: true,
 			/* Игнорировать ли самого себя */
 			ignoreMe: true
 		};
 
+		this.setting(setting);
+
+		const _emitUpdateQueue = (count) => {
+			this.emit('queue.messages',count);
+		};
+
 		/* Статистика модуля */
 		this.status = {
+			/* Ожидающие сообщения */
+			_messages: 0,
 			/* Кол-во исходящих сообщений */
 			outbox: 0,
 			/* Кол-во входящих */
@@ -40,7 +54,17 @@ base.import(class VkIo {
 			/* Кол-во ошибок */
 			error: 0,
 			/* Кол-во выполненых методов */
-			done: 0
+			done: 0,
+			/* Сеттер обновление очереди сообщений */
+			set messages (val) {
+				this._messages = val;
+
+				_emitUpdateQueue(val);
+			},
+			/* Геттер обновление очереди сообщений */
+			get messages () {
+				return this._messages;
+			}
 		};
 
 		/* Очередь методов */
@@ -69,6 +93,42 @@ base.import(class VkIo {
 		/* Обработчик капчи */
 		this._captchaHandler = null;
 
+		/**
+		 * Встроенный логер сообщений
+		 *
+		 * @param string level
+		 * @param object args
+		 */
+		const _log = (level,args) => {
+			if (!this.settings.debug) {
+				return;
+			}
+
+			args = Array.from(args);
+
+			args.unshift('[VK]['+level+']');
+
+			console.log.apply(console,args);
+		};
+
+		this.logger = {
+			log: function(){
+				_log('LOG',arguments);
+			},
+			debug: function(){
+				_log('DEBUG',arguments);
+			},
+			info: function(){
+				_log('INFO',arguments);
+			},
+			warn: function(){
+				_log('WARN',arguments);
+			},
+			error: function(){
+				_log('ERROR',arguments);
+			}
+		};
+
 		/* Установка методов VK API */
 		this.api = {};
 		this._apiMethods.forEach((method) => {
@@ -90,8 +150,8 @@ base.import(class VkIo {
 		 *
 		 * @return promise
 		 */
-		this.api.messages.send = (params) => {
-			params = params || {};
+		this.api.messages.send = (params = {}) => {
+			++this.status.messages;
 
 			params.random_id = Date.now();
 
@@ -108,6 +168,7 @@ base.import(class VkIo {
 			.then((id) => {
 				this._longpoll.skip.push(id);
 
+				--this.status.messages;
 				++this.status.outbox;
 
 				return id;
@@ -168,6 +229,19 @@ base.import(class VkIo {
 
 		return this;
 	 };
+
+	 /**
+	  * Устанавливает логер сообщений
+	  *
+	  * @param object logger
+	  *
+	  * @return this
+	  */
+	 setLogger (logger) {
+		 this.logger = logger;
+
+		 return this;
+	 }
 
 	/**
 	 * Метод execute сохраненный приложением
@@ -243,6 +317,15 @@ base.import(class VkIo {
 	 */
 	getQueue () {
 		return this.tasks.queue.length;
+	}
+
+	/**
+	 * Возвращает кол-во заданий сообщений messages.send
+	 *
+	 * @return integer
+	 */
+	getQueueMessages () {
+		return this.status._messages;
 	}
 
 	/**

@@ -1,6 +1,6 @@
 'use strict';
 
-var errorNames = ['StatusCodeError','ETIMEDOUT'];
+var errorNames = ['StatusCodeError'];
 
 /**
  * Проверяет можно ли перезапустить соединение

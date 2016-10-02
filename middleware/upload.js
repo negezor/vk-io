@@ -44,61 +44,112 @@ exports._uploadGetSteam = (file) => {
 };
 
 /**
- * Отправляет файл(ы) на сервер
+ * Собирает форму для отправки
  *
- * @param string server Адрес сервера
- * @param object forms  Формы для отправки
+ * @param string name
+ * @param mixed  file
  *
  * @return promise
  */
-exports._uploadSend = function(server,forms){
-	return new this.promise((resolve,reject) => {
-		var formData = {};
+exports._uploadBuildForm = function(name,file){
+	return new this.promise((resolve) => {
+		var form = {};
+
+		if (!Array.isArray(file)) {
+			form[name] = this._uploadGetSteam(file);
+
+			return resolve(form);
+		}
+
+		var index = 0;
 
 		this.async.each(
-			Object.keys(forms),
-			(key,nextKey) => {
-				if (!Array.isArray(forms[key])) {
-					formData[key] = this._uploadGetSteam(forms[key]);
+			file,
+			(item,next) => {
+				form[name+(++index)] =  this._uploadGetSteam(item);
 
-					return nextKey();
-				}
-
-				var index = 1;
-
-				this.async.each(
-					forms[key],
-					(form,nextFile) => {
-						formData[key+index] = this._uploadGetSteam(form);
-
-						++index;
-
-						nextFile();
-					},
-					nextKey
-				);
+				next();
 			},
 			() => {
-				this.request({
-					uri: server.upload_url,
-					method: 'POST',
-					formData: formData,
-					json: true,
-					timeout: 15000
-				})
-				.then(resolve)
-				.catch((error) => {
-					++this.status.error;
-
-					reject(new this.RequestError(error));
-				});
+				resolve(form);
 			}
 		);
-
-		return null;
 	});
 };
 
+/**
+ * Возвращает объект с опции запроса
+ *
+ * @param object params
+ *
+ * @return object
+ */
+exports._optionsUpload = (params) => {
+	var options = {};
+
+	options.file = params.file;
+	delete params.file;
+
+	if ('timeout' in params) {
+		options.timeout = params.timeout;
+		delete params.timeout;
+	}
+
+	if ('qs' in params) {
+		options.qs = params.qs;
+		delete params.qs;
+	}
+
+	return options;
+};
+
+/**
+ * Отправляет файл(ы) на сервер
+ *
+ * @param object server  Адрес сервера
+ * @param object options Формы для отправки
+ * @param string form    Название формы
+ *
+ * @return promise
+ */
+exports._uploadSend = function(server,options,form){
+	return new this.promise((resolve,reject) => {
+		this._uploadBuildForm(form,options.file)
+		.then((formData) => {
+			var params = {
+				uri: server.upload_url,
+				method: 'POST',
+				json: true,
+				formData: formData,
+				timeout: (options.timeout || 15) * 1000
+			};
+
+			if ('qs' in options) {
+				params.qs = options.qs;
+			}
+
+			this.logger.log('Start upload');
+
+			return this.request(params)
+			.catch((error) => {
+				++this.status.error;
+
+				this.logger.error('Failed upload');
+
+				reject(new this.RequestError(error));
+			});
+		})
+		.then((result) => {
+			if ('response' in result) {
+				return result.response;
+			}
+
+			return response;
+		})
+		.then(resolve)
+		.catch(reject);
+	});
+};
 
 /**
  * Загрузка фотографий в альбом пользователя
@@ -112,27 +163,20 @@ exports._uploadSend = function(server,forms){
  * }) -> Promise
  */
 add('album',function(params){
-	return new this.promise((resolve,reject) => {
-		var files = params.file;
-		delete params.file;
+	var options = this._optionsUpload(params);
 
-		this.api.photos.getUploadServer(params)
-		.then((server) => {
-			if (!Array.isArray(files)) {
-				files = [files];
-			}
+	if (!Array.isArray(options.file)) {
+		options.file = [options.file];
+	}
 
-			return this._uploadSend(server,{
-				file: files.slice(0,5)
-			});
-		})
-		.then((save) => {
-			save.album_id = params.album_id;
+	return this.api.photos.getUploadServer(params)
+	.then((server) => {
+		return this._uploadSend(server,options,'file');
+	})
+	.then((save) => {
+		save.album_id = params.album_id;
 
-			return this.api.photos.save(save);
-		})
-		.then(resolve)
-		.catch(reject);
+		return this.api.photos.save(save);
 	});
 });
 
@@ -147,29 +191,20 @@ add('album',function(params){
  * }) -> promise
  */
 add('wall',function(params){
-	return new this.promise((resolve,reject) => {
-		var file = params.file;
-		delete params.file;
+	var options = this._optionsUpload(params);
 
-		this.api.photos.getWallUploadServer(params)
-		.then((server) => {
-			return this._uploadSend(server,{
-				photo: file
-			});
-		})
-		.then((save) => {
-			if ('group_id' in params) {
-				save.group_id = params.group_id;
-			}
+	return this.api.photos.getWallUploadServer(params)
+	.then((server) => {
+		return this._uploadSend(server,options,'photo');
+	})
+	.then((save) => {
+		if ('group_id' in params) {
+			save.group_id = params.group_id;
+		}
 
-			return this.api.photos.saveWallPhoto(save);
-		})
-		.then((photo) => {
-			return photo[0];
-		})
-		.then(resolve)
-		.catch(reject);
-	});
+		return this.api.photos.saveWallPhoto(save);
+	})
+	.then((photos) => photos[0]);
 });
 
 /**
@@ -184,43 +219,26 @@ add('wall',function(params){
  * }) -> promise
  */
 add('owner',function(params){
-	return new this.promise((resolve,reject) => {
-		var file = params.file;
-		delete params.file;
+	if ('crop' in params) {
+		params.qs = {
+			_square_crop: params.crop
+		};
 
-		if ('crop' in params) {
-			var crop = params.crop;
-			delete params.crop;
+		delete params.crop;
+	}
+
+	var options = this._optionsUpload(params);
+
+	return this.api.photos.getOwnerPhotoUploadServer(params)
+	.then((server) => {
+		return this._uploadSend(server,options,'photo');
+	})
+	.then((save) => {
+		if ('owner_id' in params) {
+			save.owner_id = params.owner_id;
 		}
 
-		this.api.photos.getOwnerPhotoUploadServer(params)
-		.then((server) => {
-			var send = {
-				uri: server.upload_url,
-				method: 'POST',
-				json: true,
-				formData: {
-					photo: this._uploadGetSteam(file)
-				}
-			};
-
-			if (crop) {
-				send.qs = {
-					_square_crop: crop
-				};
-			}
-
-			return this.request(send);
-		})
-		.then((save) => {
-			if ('owner_id' in params) {
-				save.owner_id = params.owner_id;
-			}
-
-			return this.api.photos.saveOwnerPhoto(save);
-		})
-		.then(resolve)
-		.catch(reject);
+		return this.api.photos.saveOwnerPhoto(save);
 	});
 });
 
@@ -235,23 +253,14 @@ add('owner',function(params){
  * }) -> promise
  */
 add('message',function(params){
-	return new this.promise((resolve,reject) => {
-		var file = params.file;
-		delete params.file;
+	var options = this._optionsUpload(params);
 
-		this.api.photos.getMessagesUploadServer(params)
-		.then((server) => {
-			return this._uploadSend(server,{
-				photo: file
-			});
-		})
-		.then(this.api.photos.saveMessagesPhoto)
-		.then((photo) => {
-			return photo[0];
-		})
-		.then(resolve)
-		.catch(reject);
-	});
+	return this.api.photos.getMessagesUploadServer(params)
+	.then((server) => {
+		return this._uploadSend(server,options,'photo');
+	})
+	.then(this.api.photos.saveMessagesPhoto)
+	.then((photos) => photos[0]);
 });
 
 /**
@@ -265,20 +274,34 @@ add('message',function(params){
  * }) -> promise
  */
 add('chat',function(params){
-	return new this.promise((resolve,reject) => {
-		var file = params.file;
-		delete params.file;
+	if ('crop' in params) {
+		if ('width' in params.crop) {
+			params.crop_width = params.crop.width;
+		}
 
-		this.api.photos.getChatUploadServer(params)
-		.then((server) => {
-			return this._uploadSend(server,{
-				file: file
-			});
-		})
-		.then(this.api.messages.setChatPhoto)
-		.then(resolve)
-		.catch(reject);
-	});
+		if ('x' in params.crop) {
+			params.crop_x = params.crop.x;
+		}
+
+		if ('y' in params.crop) {
+			params.crop_y = params.crop.y;
+		}
+
+		delete params.crop;
+	}
+
+	var options = this._optionsUpload(params);
+
+	return this.api.photos.getChatUploadServer(params)
+	.then((server) => {
+		return this._uploadSend(server,options,'file');
+	})
+	.then((result) => {
+		return {
+			file: result
+		};
+	})
+	.then(this.api.messages.setChatPhoto);
 });
 
 /**
@@ -292,25 +315,34 @@ add('chat',function(params){
  * }) -> promise
  */
 add('product',function(params){
-	return new this.promise((resolve,reject) => {
-		var file = params.file;
-		delete params.file;
+	if ('crop' in params) {
+		if ('width' in params.crop) {
+			params.crop_width = params.crop.width;
+		}
 
-		this.api.photos.getMarketUploadServer(params)
-		.then((server) => {
-			return this._uploadSend(server,{
-				file: file
-			});
-		})
-		.then((save) => {
-			if ('group_id' in params) {
-				save.group_id = params.group_id;
-			}
+		if ('x' in params.crop) {
+			params.crop_x = params.crop.x;
+		}
 
-			return this.api.photos.saveMarketPhoto(save);
-		})
-		.then(resolve)
-		.catch(reject);
+		if ('y' in params.crop) {
+			params.crop_y = params.crop.y;
+		}
+
+		delete params.crop;
+	}
+
+	var options = this._optionsUpload(params);
+
+	return this.api.photos.getMarketUploadServer(params)
+	.then((server) => {
+		return this._uploadSend(server,options,'file');
+	})
+	.then((save) => {
+		if ('group_id' in params) {
+			save.group_id = params.group_id;
+		}
+
+		return this.api.photos.saveMarketPhoto(save);
 	});
 });
 
@@ -325,25 +357,18 @@ add('product',function(params){
  * }) -> promise
  */
 add('selection',function(params){
-	return new this.promise((resolve,reject) => {
-		var file = params.file;
-		delete params.file;
+	var options = this._optionsUpload(params);
 
-		this.api.photos.getMarketAlbumUploadServer(params)
-		.then((server) => {
-			return this._uploadSend(server,{
-				file: file
-			});
-		})
-		.then((save) => {
-			if ('group_id' in params) {
-				save.group_id = params.group_id;
-			}
+	return this.api.photos.getMarketAlbumUploadServer(params)
+	.then((server) => {
+		return this._uploadSend(server,options,'file');
+	})
+	.then((save) => {
+		if ('group_id' in params) {
+			save.group_id = params.group_id;
+		}
 
-			return this.api.photos.saveMarketAlbumPhoto(save);
-		})
-		.then(resolve)
-		.catch(reject);
+		return this.api.photos.saveMarketAlbumPhoto(save);
 	});
 });
 
@@ -358,23 +383,13 @@ add('selection',function(params){
  * }) -> promise
  */
 add('audio',function(params){
-	return new this.promise((resolve,reject) => {
-		var file = params.file;
-		delete params.file;
+	var options = this._optionsUpload(params);
 
-		this.api.audio.getUploadServer(params)
-		.then((server) => {
-			return this._uploadSend(server,{
-				file: file
-			});
-		})
-		.then(this.api.audio.save)
-		.then((audio) => {
-			return audio[0];
-		})
-		.then(resolve)
-		.catch(reject);
-	});
+	return this.api.audio.getUploadServer(params)
+	.then((server) => {
+		return this._uploadSend(server,options,'file');
+	})
+	.then(this.api.audio.save);
 });
 
 /**
@@ -388,18 +403,11 @@ add('audio',function(params){
  * }) -> promise
  */
 add('video',function(params){
-	return new this.promise((resolve,reject) => {
-		var file = params.file;
-		delete params.file;
+	var options = this._optionsUpload(params);
 
-		this.api.video.save(params)
-		.then((server) => {
-			return this._uploadSend(server,{
-				video_file: file
-			});
-		})
-		.then(resolve)
-		.catch(reject);
+	return this.api.video.save(params)
+	.then((server) => {
+		return this._uploadSend(server,options,'video_file');
 	});
 });
 
@@ -414,27 +422,18 @@ add('video',function(params){
  * }) -> promise
  */
 add('doc',function(params){
-	return new this.promise((resolve,reject) => {
-		var file = params.file;
-		delete params.file;
+	var options = this._optionsUpload(params);
 
-		this.api.docs.getUploadServer(params)
-		.then((server) => {
-			return this._uploadSend(server,{
-				file: file
-			});
-		})
-		.then((save) => {
-			if ('group_id' in params) {
-				save.group_id = params.group_id;
-			}
+	return this.api.docs.getUploadServer(params)
+	.then((server) => {
+		return this._uploadSend(server,options,'file');
+	})
+	.then((save) => {
+		if ('group_id' in params) {
+			save.group_id = params.group_id;
+		}
 
-			return this.api.docs.save(save);
-		})
-		.then((docs) => {
-			return docs[0];
-		})
-		.then(resolve)
-		.catch(reject);
-	});
+		return this.api.docs.save(save);
+	})
+	.then((docs) => docs[0]);
 });

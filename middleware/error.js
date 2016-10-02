@@ -12,6 +12,12 @@ exports._apiError = function(errorVk,request){
 	var error = new this.ApiError(errorVk);
 
 	if (!(error.code in this._apiErrorList)) {
+		if (request[0] === 'messages.send') {
+			--this.status.messages;
+		}
+
+		this.logger.error('Api error №'+error.code,error.message);
+
 		request[3](error);
 
 		return error;
@@ -35,11 +41,7 @@ exports._apiErrorList = {
 	 */
 	14: function(error,request){
 		if (!this._captchaHandler) {
-			console.log('Capthca needed!');
-
-			return setTimeout(() => {
-				this._apiRestart(request);
-			},10000);
+			return this.logger.warn('Captcha needed!');
 		}
 
 		this._captchaHandler(error.captcha_img,(code) => {

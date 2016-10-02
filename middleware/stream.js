@@ -24,23 +24,27 @@ var add = (way,handler) => {
  * @param integer max    Максимальное кол-во возможный записей
  */
 function generator (method,limit,max) {
-	add(method,function(params){
+	add(method,function(params = {}){
 		return new this.promise((resolve,reject) => {
-			params = params || {};
-
 			var query = {
 				/* Смещение выборки */
 				offset: parseInt(params.offset || 0),
-				/* Результат выборки */
-				container: [],
 				/* Сколько нужно вытащить записей */
 				task: params.count,
+				/* Результат выборки */
+				container: [],
 				/* Записей за раз */
 				limit: limit
 			};
 
+			this.logger.log('Start stream fetch');
+
 			if (max && (!query.task || query.task && query.task > max)) {
 				query.task = max;
+			}
+
+			if (query.offset > 0) {
+				query.skip = query.offset;
 			}
 
 			delete params.count;
@@ -77,7 +81,13 @@ exports._streamPreparation = function(query,resolve,reject){
 			query.task = data.task;
 			query.container = query.container.concat(data.items);
 
+			if ('skip' in query) {
+				query.task -= query.skip;
+			}
+
 			query.offset += data.items.length;
+
+			this.logger.debug('Stream task:',query.container.length,'/',query.task);
 
 			if (query.task <= query.container.length) {
 				return resolve(query.container);

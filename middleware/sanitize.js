@@ -337,7 +337,7 @@ var longpollUtil = {
 		});
 	},
 	/* Флаги сообщества */
-	group: (event,resolve) => {
+	group: function(event,resolve){
 		this._longpollParseFlags(event[2])
 		.then((flags) => {
 			resolve({
@@ -382,7 +382,7 @@ var receivedMessage = function(message,event,resolve){
 	}
 
 	/* Игнорировать ли себя */
-	if (this.settings.ignoreMe && this.settings.id === message.user) {
+	if (this.settings.ignoreMe && parseInt(this.settings.id) === message.user) {
 		return;
 	}
 
@@ -394,12 +394,10 @@ var receivedMessage = function(message,event,resolve){
 	 *
 	 * @return object
 	 */
-	message.send = (text,params) => {
+	message.send = (text,params = {}) => {
 		if (typeof text === 'object' || text instanceof Object) {
 			params = text;
 		} else {
-			params = params || {};
-
 			params.message = text;
 		}
 

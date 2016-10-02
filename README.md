@@ -16,6 +16,18 @@ npm install vk-io --save
 
 const vk = new (require('vk-io'));
 ```
+В конструктор так можно сразу передать настройки
+```javascript
+const VK = require('vk-io');
+
+const group = new VK({
+	token: 'token-group'
+});
+const user = new VK({
+	id: 1,
+	token: 'token-user'
+});
+```
 ### Конфигурация модуля
 Сниппет простой установки токена
 ```javascript
@@ -60,12 +72,26 @@ vk.setting(<object>);
 
 Может использоваться вместо `login`
 
+##### debug
+Тип: `boolean`
+
+По умолчанию: `true`
+
+Позволяет логировать действия модуля
+
 ##### ignoreMe
 Тип: `boolean`
 
 По умолчанию: `true`
 
 Игнорировать ли себя в `longpoll`, если только указан id в настройках
+
+##### timeout
+Тип: `number`
+
+По умолчанию: `6`
+
+Время ожидания для сброса соединения в секундах
 
 ##### limit
 Тип: `number`
@@ -89,7 +115,7 @@ vk.setting({
 const auth = vk.standloneAuth();
 
 auth.run()
-.then(token) => {
+.then((token) => {
 	console.log('Token:',token);
 })
 .catch((error) => {
@@ -202,13 +228,21 @@ vk.stream.wall.get({
 });
 ```
 ### Загрузка файлов
-Для загрузки обязательный параметр `file`
+##### file
+Тип: `Stream`, `string` или `array` в некоторых случаях
 
-Он может быть типа `Stream`, `string` и в некоторых случаях `array`
+Обязательный параметр для загрузки
 
 В `array` может содержать только `Stream` или `string`
 
 В `string` может быть путь к файлу или url на файл
+
+##### timeout
+Тип: `number`
+
+По умолчанию: `15`
+
+Необязательный парметр, время ожидания для сброса соединения в секундах
 
 #### Методы для загрузки с описанием
 
@@ -233,8 +267,24 @@ vk.stream.wall.get({
 ##### chat
 Загрузка фотографии для чата
 
+Дополнительный параметр `crop` указываете объект квадратной миниатюры
+
+`width` - Ширина фотографии после обрезки в px.
+
+`x` - Координата x для обрезки фотографии (верхний правый угол)
+
+`y` - Координата y для обрезки фотографии (верхний правый угол).
+
 ##### product
 Загрузка фотографии для товара
+
+Дополнительный параметр `crop` указываете объект квадратной миниатюры
+
+`width` - Ширина фотографии после обрезки в px.
+
+`x` - Координата x для обрезки фотографии (верхний правый угол)
+
+`y` - Координата y для обрезки фотографии (верхний правый угол).
 
 ##### selection
 Загрузка фотографии для подборки товаров
@@ -585,7 +635,7 @@ vk.api.messages.send()
 .catch(vk.ApiError,(error) => {
 	console.error('Ошибка API Error:',error);
 })
-.catch(vk.ApiError,(error) => {
+.catch(vk.RequestError,(error) => {
 	console.error('Ошибка Request Error:',error);
 })
 .catch(Error,(error) => {
@@ -607,6 +657,34 @@ auth.run()
 	console.error('Другая ошибка:',error);
 });
 ```
+### Сниппеты
+#### Парсинг ссылок вк
+Принимает один параметр `string` или `number`
+
+Возможные значения `type`
+* `user` - Пользователь
+* `group` - Группа
+* `application` - Приложение
+
+С остальными типами присутствует свойство peer
+
+* `photo` - Фотография
+* `video` - Видео
+* `doc` - Документ
+* `album` - Альбом
+* `topic` - Топик
+* `wall` - Стена
+* `page` - Страница
+```javascript
+vk.parseLink(<Ссылка>)
+.then((link) => {
+	console.log('Тип: '+link.type,'Id:',link.id,(link.peer || ''));
+})
+.catch((error) => {
+	console.error(error);
+});
+```
+
 ### Cтатистики модуля
 Для получения статистики модуля нужно обратится к объекту `vk.status`
 
@@ -620,10 +698,22 @@ auth.run()
 ```javascript
 vk.getQueue(); // -> integer
 ```
+Получение кол-во очереди сообщений
+```javascript
+vk.getQueueMessages(); // -> integer
+```
 
 Получение токена
 ```javascript
 vk.getToken(); // -> null или string
+```
+
+#### События
+Обновление очереди сообщений
+```javascript
+vk.on('queue.messages',(count) => {
+	console.log('В очереди сообщений:',count);
+});
 ```
 
 ### Утилиты
