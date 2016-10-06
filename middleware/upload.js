@@ -1,6 +1,7 @@
 'use strict';
 
 const
+FormData = require('form-data'),
 request = require('request'),
 stream = require('stream'),
 fs = require('fs');
@@ -31,7 +32,7 @@ var add = (way,handler) => {
  *
  * @return ReadStream|mixed
  */
-exports._uploadGetSteam = (file) => {
+exports._uploadGetStream = (file) => {
 	if (typeof file === 'object' && (file.hasOwnProperty('httpModule') || file instanceof stream)) {
 		return file;
 	}
@@ -48,6 +49,7 @@ exports._uploadGetSteam = (file) => {
  *
  * @param string name
  * @param mixed  file
+ * @param object options
  *
  * @return promise
  */
@@ -56,7 +58,7 @@ exports._uploadBuildForm = function(name,file){
 		var form = {};
 
 		if (!Array.isArray(file)) {
-			form[name] = this._uploadGetSteam(file);
+			form[name] = this._uploadGetStream(file);
 
 			return resolve(form);
 		}
@@ -66,7 +68,7 @@ exports._uploadBuildForm = function(name,file){
 		this.async.each(
 			file,
 			(item,next) => {
-				form[name+(++index)] =  this._uploadGetSteam(item);
+				form[name+(++index)] =  this._uploadGetStream(item);
 
 				next();
 			},
@@ -114,7 +116,7 @@ exports._optionsUpload = (params) => {
  */
 exports._uploadSend = function(server,options,form){
 	return new this.promise((resolve,reject) => {
-		this._uploadBuildForm(form,options.file)
+		this._uploadBuildForm(form,options.file,options)
 		.then((formData) => {
 			var params = {
 				uri: server.upload_url,
@@ -140,13 +142,18 @@ exports._uploadSend = function(server,options,form){
 			});
 		})
 		.then((result) => {
-			if ('response' in result) {
-				return result.response;
+			console.log(result);
+
+			if ('error' in result) {
+				return reject(new this.UnknownError(result.error));
 			}
 
-			return response;
+			if ('response' in result) {
+				return resolve(result.response);
+			}
+
+			return resolve(result);
 		})
-		.then(resolve)
 		.catch(reject);
 	});
 };
@@ -436,4 +443,36 @@ add('doc',function(params){
 		return this.api.docs.save(save);
 	})
 	.then((docs) => docs[0]);
+});
+
+/**``
+ * Загрузка аудиосообщения
+ *
+ * Пример загрузки
+ *
+ * vk.upload.voice({
+ * 	file: <String|Stream>,
+ *  <остальные параметры>
+ * }) -> promise
+ */
+add('voice',function(params){
+	params.type = 'audio_message';
+
+	return this.upload.doc(params);
+});
+
+/**
+ * Загрузка граффити в сообщения
+ *
+ * Пример загрузки
+ *
+ * vk.upload.graffiti({
+ * 	file: <String|Stream>,
+ *  <остальные параметры>
+ * }) -> promise
+ */
+add('graffiti',function(params = {}){
+	params.type = 'graffiti';
+
+	return this.upload.doc(params);
 });

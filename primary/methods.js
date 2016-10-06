@@ -31,6 +31,7 @@ exports._apiMethods = [
 	'wall.editComment',
 	'wall.deleteComment',
 	'wall.restoreComment',
+	'wall.createComment',
 	'wall.reportPost',
 	'wall.reportComment',
 	'photos.createAlbum',

@@ -5,6 +5,10 @@
 
 Мощный инструмент для работы с VK API.
 
+[![Build Status](https://travis-ci.org/negezor/vk-io.svg?branch=master)](https://travis-ci.org/negezor/vk-io)
+[![NPM version](https://img.shields.io/npm/v/vk-io.svg)](https://www.npmjs.com/package/vk-io)
+[![NPM downloads](https://img.shields.io/npm/dt/vk-io.svg)](https://www.npmjs.com/package/vk-io)
+
 ## Инициализация / Начало работы
 ### Установка модуля
 ```shell
@@ -297,6 +301,16 @@ vk.stream.wall.get({
 
 ##### doc
 Загрузка документа
+
+##### graffiti
+Загрузка граффити, доступные расширения `png`,`svg`
+
+Наследует doc
+
+##### voice
+Загрузка аудиосообщения, доступные расширения `mp3`,`ogg`
+
+Наследует doc
 
 #### Пример загрузки файлов в doc
 Загрузка в документы

@@ -64,3 +64,22 @@ exports.RequestError = class RequestError extends Error {
 		Error.captureStackTrace(this,this.constructor.name);
 	}
 }
+
+/**
+ * Обработка неизвестный ошибок
+ */
+exports.UnknownError = class UnknownError extends Error {
+	/**
+	 * Конструктор
+	 *
+	 * @param ErrorStatusCode error Объект ошибки
+	 */
+	constructor (error) {
+		super(error.error_msg);
+		this.name = this.constructor.name;
+
+		this.message = error.message;
+
+		Error.captureStackTrace(this,this.constructor.name);
+	}
+}
