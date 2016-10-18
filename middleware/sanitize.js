@@ -634,7 +634,7 @@ exports._longpollEvents = {
 		action: function(event,resolve){
 			resolve({
 				user: parseInt(event[1]),
-				platform: this.longpollPlatform[event[2]] || null
+				platform: longpollPlatform[event[2]] || null
 			});
 		}
 	},
