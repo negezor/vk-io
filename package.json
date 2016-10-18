@@ -1,6 +1,6 @@
 {
     "name": "vk-io",
-    "version": "2.1.7",
+    "version": "2.2.0",
 	"engines": {
 		"node": "<6.0.0"
 	},
@@ -15,7 +15,7 @@
         "url": "git+https://github.com/negezor/vk-io.git"
     },
     "dependencies": {
-      "async": "^2.0.1",
+      "async": "^2.1.2",
       "base-io": "^1.0.2",
       "bluebird": "^3.4.6",
       "cheerio": "^0.22.0",

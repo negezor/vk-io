@@ -1,7 +1,5 @@
 'use strict';
 
-var errorNames = ['StatusCodeError'];
-
 /**
  * Проверяет можно ли перезапустить соединение
  *
@@ -10,15 +8,7 @@ var errorNames = ['StatusCodeError'];
  * @return boolean
  */
 exports._checkConnectReject = (error) => {
-	if (errorNames.indexOf(error.name) === -1) {
-		return true;
-	}
-
-	if ('statusCode' in error && error.statusCode !== 504) {
-		return true;
-	}
-
-	return false;
+	return error.statusCode > 500;
 };
 
 /**
@@ -52,14 +42,16 @@ exports.RequestError = class RequestError extends Error {
 	 * @param ErrorStatusCode error Объект ошибки
 	 */
 	constructor (error) {
-		super(error.error_msg);
+		super(error);
 		this.name = this.constructor.name;
 
 		if ('statusCode' in error) {
 			this.statusCode = error.statusCode;
 		}
 
-		this.message = error.message;
+		if ('message' in error) {
+			this.message = error.message;
+		}
 
 		Error.captureStackTrace(this,this.constructor.name);
 	}
@@ -72,13 +64,13 @@ exports.UnknownError = class UnknownError extends Error {
 	/**
 	 * Конструктор
 	 *
-	 * @param ErrorStatusCode error Объект ошибки
+	 * @param mixed error
 	 */
 	constructor (error) {
-		super(error.error_msg);
+		super(error);
 		this.name = this.constructor.name;
 
-		this.message = error.message;
+		this.message = error;
 
 		Error.captureStackTrace(this,this.constructor.name);
 	}

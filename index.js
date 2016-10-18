@@ -201,6 +201,10 @@ base.import(class VK {
 	setting (setting) {
 		this.settings = Object.assign(this.settings,setting);
 
+		if ('id' in setting) {
+			this.settings.id = parseInt(this.settings.id);
+		}
+
 		return this;
 	}
 

@@ -1,7 +1,6 @@
 'use strict';
 
 const
-FormData = require('form-data'),
 request = require('request'),
 stream = require('stream'),
 fs = require('fs');
@@ -142,11 +141,13 @@ exports._uploadSend = function(server,options,form){
 			});
 		})
 		.then((result) => {
-			console.log(result);
-
 			if ('error' in result) {
+				this.logger.error('Failed upload');
+
 				return reject(new this.UnknownError(result.error));
 			}
+
+			this.logger.log('Success upload');
 
 			if ('response' in result) {
 				return resolve(result.response);
@@ -181,7 +182,12 @@ add('album',function(params){
 		return this._uploadSend(server,options,'file');
 	})
 	.then((save) => {
-		save.album_id = params.album_id;
+		['album_id','group_id','latitude','longitude','caption']
+		.forEach((name) => {
+			if (name in params) {
+				save[name] = params[name];
+			}
+		});
 
 		return this.api.photos.save(save);
 	});
@@ -205,9 +211,12 @@ add('wall',function(params){
 		return this._uploadSend(server,options,'photo');
 	})
 	.then((save) => {
-		if ('group_id' in params) {
-			save.group_id = params.group_id;
-		}
+		['user_id','group_id']
+		.forEach((name) => {
+			if (name in params) {
+				save[name] = params[name];
+			}
+		});
 
 		return this.api.photos.saveWallPhoto(save);
 	})
@@ -396,7 +405,16 @@ add('audio',function(params){
 	.then((server) => {
 		return this._uploadSend(server,options,'file');
 	})
-	.then(this.api.audio.save);
+	.then((save) => {
+		['artist','title']
+		.forEach((name) => {
+			if (name in params) {
+				save[name] = params[name];
+			}
+		});
+
+		return this.api.audio.save(save);
+	});
 });
 
 /**
@@ -436,9 +454,12 @@ add('doc',function(params){
 		return this._uploadSend(server,options,'file');
 	})
 	.then((save) => {
-		if ('group_id' in params) {
-			save.group_id = params.group_id;
-		}
+		['group_id','title','tags']
+		.forEach((name) => {
+			if (name in params) {
+				save[name] = params[name];
+			}
+		});
 
 		return this.api.docs.save(save);
 	})

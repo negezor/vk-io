@@ -4,15 +4,15 @@
 exports.SHEAR_CHAT = 2e9;
 
 /* Заменя br */
-exports._longpollBrReplace = /<br>/g;
+const brReplace = /<br>/g;
 
 /* Удаляет скобки */
-exports._fwdHasBrackets = /(\(.*\))/;
+const fwdHasBrackets = /(\(.*\))/;
 
 /**
  * Список флагов longpoll
  */
-exports._longpollFlags = {
+const longpollFlags = {
 	1: 'unread',
 	2: 'outbox',
 	4: 'replied',
@@ -28,7 +28,7 @@ exports._longpollFlags = {
 /**
  * Список платформа longpoll
  */
-exports._longpollPlatform = {
+const longpollPlatform = {
 	1: 'mobile',
 	2: 'iphone',
 	3: 'ipad',
@@ -56,8 +56,8 @@ exports._longpollParseFlags = function(sum){
 				return i < 31;
 			},
 			(next) => {
-				if (sum & bit && bit in this._longpollFlags) {
-					flags.push(this._longpollFlags[bit]);
+				if (sum & bit && bit in longpollFlags) {
+					flags.push(longpollFlags[bit]);
 				}
 
 				bit *= 2;
@@ -141,7 +141,7 @@ exports._longpollSkipMessage = function(id){
  */
 exports._longpollParseAttach = function(message,attachments){
 	return new this.promise((resolve) => {
-		var i = 1,key;
+		var i = 1,key,type,peer,push;
 
 		this.async.whilst(
 			() => {
@@ -150,18 +150,38 @@ exports._longpollParseAttach = function(message,attachments){
 				return key in attachments;
 			},
 			(next) => {
-				var type = attachments['attach'+i+'_type'];
-				var peer = attachments[key].split('_');
+				type = attachments[key+'_type'];
 
 				message.attach[type] = message.attach[type] || [];
 
-				message.attach[type].push({
+				++i;
+
+				if (type === 'link') {
+					push = {
+						url: attachments[key+'_url'],
+						title: attachments[key+'_title'],
+						description: attachments[key+'_desc'],
+						photo: (attachments[key+'_photo'] || '').split(','),
+					};
+
+					message.attach[type].push(push);
+
+					return next();
+				}
+
+				peer = attachments[key].split('_');
+
+				push = {
 					id: parseInt(peer[1]),
 					owner: parseInt(peer[0]),
 					get: type+attachments[key]
-				});
+				};
 
-				++i;
+				if (type === 'doc' && key+'_kind' in attachments) {
+					push.type = attachments[key+'_kind'];
+				}
+
+				message.attach[type].push(push);
 
 				next();
 			},
@@ -287,7 +307,7 @@ exports._parseFwdAttachment = function(params){
  * @return promise
  */
 exports._longpollParseFwd = function(raw){
-	if (this._fwdHasBrackets.test(raw)) {
+	if (fwdHasBrackets.test(raw)) {
 		raw = raw.substring(1,raw.length - 1);
 	}
 
@@ -368,7 +388,7 @@ var receivedMessage = function(message,event,resolve){
 	/* Идентификатор сообщения и пользователя */
 	message.user = message.peer = parseInt(event[3]);
 	/* Текст сообщения */
-	message.text = this.entities(event[6]).replace(this._longpollBrReplace,'\n');
+	message.text = this.entities(event[6]).replace(brReplace,'\n');
 
 	/* Прикрипления */
 	var attachments = event[7];
@@ -382,8 +402,12 @@ var receivedMessage = function(message,event,resolve){
 	}
 
 	/* Игнорировать ли себя */
-	if (this.settings.ignoreMe && parseInt(this.settings.id) === message.user) {
+	if (this.settings.ignoreMe && this.settings.id === message.user) {
 		return;
+	}
+
+	if (message.text.length === 0) {
+		message.text = null;
 	}
 
 	/**
@@ -412,11 +436,39 @@ var receivedMessage = function(message,event,resolve){
 		return this.api.messages.send(params);
 	};
 
+	if ('attach1_type' in attachments) {
+		/* Стикер */
+		if (attachments.attach1_type === 'sticker') {
+			message.sticker = {
+				id: parseInt(attachments.attach1),
+				product: parseInt(attachments.attach1_product_id)
+			};
+
+			++this.status.inbox;
+
+			return resolve([message,'message.sticker']);
+		}
+
+		/* Перевод денег */
+		if (attachments.attach1_type === 'money_transfer') {
+			message.money = {
+				data: attachments.attach1 || null,
+				currency: attachments.attach1_currency,
+				amount: parseInt(attachments.attach1_amount)
+			};
+
+			return resolve([message,'message.money']);
+		}
+
+		/* Стикер */
+		if (attachments.attach1_type === 'gift') {
+			return resolve([message,'message.gift']);
+		}
+	}
+
 	/* Действия чата */
 	if (message.isChat === true && 'source_act' in attachments) {
 		var name = 'unknown';
-
-		message.text = null;
 
 		switch (attachments.source_act) {
 			/* Переименованние чата */
@@ -488,21 +540,6 @@ var receivedMessage = function(message,event,resolve){
 		return resolve([message,'chat.'+name]);
 	}
 
-	/* Стикер */
-	if ('attach1_product_id' in attachments) {
-		message.text = null;
-		message.isEmoji = false;
-
-		message.attach.sticker = {
-			id: parseInt(attachments.attach1),
-			product: parseInt(attachments.attach1_product_id)
-		};
-
-		++this.status.inbox;
-
-		return resolve(message);
-	}
-
 	/* Карта */
 	if ('geo' in attachments) {
 		message.attach.geo = {
@@ -511,7 +548,7 @@ var receivedMessage = function(message,event,resolve){
 		};
 	}
 
-	message.isEmoji = (('emoji' in attachments)?parseInt(attachments.emoji):0) === 1;
+	message.hasEmoji = (('emoji' in attachments)?parseInt(attachments.emoji):0) === 1;
 
 	this._longpollParseAttach(message,attachments)
 	.then(() => {
@@ -562,7 +599,11 @@ exports._longpollEvents = {
 				/* ID чата */
 				chat: null,
 				/* Отправлено ли в чате */
-				isChat: false
+				isChat: false,
+				/* Присутсвуют ли emoji */
+				hasEmoji: false,
+				/* Текст сообщения */
+				text: null
 			};
 
 			this._longpollSkipMessage(message.id)
@@ -593,7 +634,7 @@ exports._longpollEvents = {
 		action: function(event,resolve){
 			resolve({
 				user: parseInt(event[1]),
-				platform: this._longpollPlatform[event[2]] || null
+				platform: this.longpollPlatform[event[2]] || null
 			});
 		}
 	},

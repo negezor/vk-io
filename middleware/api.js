@@ -1,7 +1,7 @@
 'use strict';
 
 /* Версия VK API */
-exports.API_VERSION = '5.57';
+exports.API_VERSION = '5.59';
 
 /**
  * Добавляет метод в очередь выполнения VK API
@@ -46,17 +46,16 @@ exports._api = function(method,params,captcha){
  * @param object   captcha Обработчики капчи
  */
 exports._executeMethod = function(method,params = {},resolve,reject,captcha){
-	arguments[1] = params;
-
-	params.access_token = this.settings.token;
-	params.v = this.API_VERSION;
-
 	this.request({
 		uri: 'https://api.vk.com/method/'+method,
 		method: 'POST',
 		json: true,
 		timeout: this.settings.timeout * 1000,
-		qs: params
+		form: params,
+		qs: {
+			access_token: this.settings.token,
+			v: this.API_VERSION
+		}
 	})
 	.then((data) => {
 		if ('error' in data) {

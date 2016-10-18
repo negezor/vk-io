@@ -185,17 +185,13 @@ class StandloneAuth extends Auth {
 	 * @return promise
 	 */
 	_getBlankPermission () {
-		return new promise((resolve,reject) => {
-			this._getBlank()
-			.then(($) => {
-				if ($('#box').find('[name="pass"]').length === 0) {
-					return resolve($);
-				}
+		return this._getBlank()
+		.then(($) => {
+			if ($('#box').find('[name="pass"]').length === 0) {
+				return $;
+			}
 
-				this._parseAuthForm($)
-				.then(resolve)
-				.catch(reject);
-			});
+			return this._parseAuthForm($)
 		});
 	}
 
