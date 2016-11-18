@@ -90,8 +90,7 @@ exports._longpollSanitize = function(event,next){
 	}))
 	.then((data) => {
 		if (Array.isArray(data)) {
-			var custom = data[1];
-			data = data[0];
+			var [data,custom] = data;
 		}
 
 		this.emit(custom || handler.name,data);
@@ -352,7 +351,7 @@ var longpollUtil = {
 		.then((flags) => {
 			resolve({
 				id: parseInt(event[1]),
-				flags: flags
+				flags
 			});
 		});
 	},
@@ -362,7 +361,7 @@ var longpollUtil = {
 		.then((flags) => {
 			resolve({
 				peer: parseInt(event[1]),
-				flags: flags
+				flags
 			});
 		});
 	},
@@ -419,7 +418,7 @@ var receivedMessage = function(message,event,resolve){
 	 * @return object
 	 */
 	message.send = (text,params = {}) => {
-		if (typeof text === 'object' || text instanceof Object) {
+		if (typeof text === 'object') {
 			params = text;
 		} else {
 			params.message = text;

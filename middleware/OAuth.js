@@ -55,7 +55,7 @@ class Auth {
 		this.setCookieJar(request.jar());
 		this.setScope(setting.scope || fullScopes);
 
-		for (var key of ['app','key','login','phone','pass','version']) {
+		for (var key of ['app','key','login','phone','pass','version','proxy']) {
 			this[key] = setting[key] || null;
 		}
 
@@ -106,6 +106,7 @@ class Auth {
 			method: 'POST',
 			jar: this.jar,
 			timeout: 6000,
+			proxy: this.proxy,
 			headers: {
 				'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36'
 			}

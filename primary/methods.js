@@ -335,6 +335,7 @@ exports._apiMethods = [
 	'database.getFaculties',
 	'database.getChairs',
 	'gifts.get',
+	'gifts.send',
 	'market.get',
 	'market.getById',
 	'market.search',

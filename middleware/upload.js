@@ -1,12 +1,8 @@
 'use strict';
 
-const
-request = require('request'),
-stream = require('stream'),
-fs = require('fs');
-
-/* Проверяет строку на ссылку */
-const isLink = /^(https?:\/\/)?((([a-z\d]([a-z\d-]*[a-z\d])*)\.?)+[a-z]{2,}|((\d{1,3}\.){3}\d{1,3}))(\:\d+)?(\/[-a-z\d%_.~+]*)*(\?[;&a-z\d%_.~+=-]*)?(\#[-a-z\d_]*)?$/i;
+const request = require('request');
+const stream = require('stream');
+const fs = require('fs');
 
 /* Обработчики upload */
 exports._uploadHandlers = [];
@@ -17,12 +13,16 @@ exports._uploadHandlers = [];
  * @param string   way     Путь
  * @param function handler Обработчик
  */
-var add = (way,handler) => {
+const add = (way,handler) => {
 	exports._uploadHandlers.push({
 		way: way,
 		handler: handler
 	});
 };
+
+/* Проверяет строку на ссылку */
+const isLink = /^(https?:\/\/)?((([a-z\d]([a-z\d-]*[a-z\d])*)\.?)+[a-z]{2,}|((\d{1,3}\.){3}\d{1,3}))(\:\d+)?(\/[-a-z\d%_.~+]*)*(\?[;&a-z\d%_.~+=-]*)?(\#[-a-z\d_]*)?$/i;
+
 
 /**
  * Возвращает stream
@@ -31,7 +31,7 @@ var add = (way,handler) => {
  *
  * @return ReadStream|mixed
  */
-exports._uploadGetStream = (file) => {
+const uploadGetStream = (file) => {
 	if (typeof file === 'object' && (file.hasOwnProperty('httpModule') || file instanceof stream)) {
 		return file;
 	}
@@ -44,48 +44,13 @@ exports._uploadGetStream = (file) => {
 };
 
 /**
- * Собирает форму для отправки
- *
- * @param string name
- * @param mixed  file
- * @param object options
- *
- * @return promise
- */
-exports._uploadBuildForm = function(name,file){
-	return new this.promise((resolve) => {
-		var form = {};
-
-		if (!Array.isArray(file)) {
-			form[name] = this._uploadGetStream(file);
-
-			return resolve(form);
-		}
-
-		var index = 0;
-
-		this.async.each(
-			file,
-			(item,next) => {
-				form[name+(++index)] =  this._uploadGetStream(item);
-
-				next();
-			},
-			() => {
-				resolve(form);
-			}
-		);
-	});
-};
-
-/**
  * Возвращает объект с опции запроса
  *
  * @param object params
  *
  * @return object
  */
-exports._optionsUpload = (params) => {
+const optionsUpload = (params) => {
 	var options = {};
 
 	options.file = params.file;
@@ -102,6 +67,41 @@ exports._optionsUpload = (params) => {
 	}
 
 	return options;
+};
+
+/**
+ * Собирает форму для отправки
+ *
+ * @param string name
+ * @param mixed  file
+ * @param object options
+ *
+ * @return promise
+ */
+exports._uploadBuildForm = function(name,file){
+	return new this.promise((resolve) => {
+		var form = {};
+
+		if (!Array.isArray(file)) {
+			form[name] = uploadGetStream(file);
+
+			return resolve(form);
+		}
+
+		var index = 0;
+
+		this.async.each(
+			file,
+			(item,next) => {
+				form[name+(++index)] = uploadGetStream(item);
+
+				next();
+			},
+			() => {
+				resolve(form);
+			}
+		);
+	});
 };
 
 /**
@@ -122,6 +122,7 @@ exports._uploadSend = function(server,options,form){
 				method: 'POST',
 				json: true,
 				formData: formData,
+				proxy: this.settings.proxy,
 				timeout: (options.timeout || 15) * 1000
 			};
 
@@ -153,7 +154,7 @@ exports._uploadSend = function(server,options,form){
 				return resolve(result.response);
 			}
 
-			return resolve(result);
+			resolve(result);
 		})
 		.catch(reject);
 	});
@@ -171,7 +172,7 @@ exports._uploadSend = function(server,options,form){
  * }) -> Promise
  */
 add('album',function(params){
-	var options = this._optionsUpload(params);
+	var options = optionsUpload(params);
 
 	if (!Array.isArray(options.file)) {
 		options.file = [options.file];
@@ -204,7 +205,7 @@ add('album',function(params){
  * }) -> promise
  */
 add('wall',function(params){
-	var options = this._optionsUpload(params);
+	var options = optionsUpload(params);
 
 	return this.api.photos.getWallUploadServer(params)
 	.then((server) => {
@@ -243,7 +244,7 @@ add('owner',function(params){
 		delete params.crop;
 	}
 
-	var options = this._optionsUpload(params);
+	var options = optionsUpload(params);
 
 	return this.api.photos.getOwnerPhotoUploadServer(params)
 	.then((server) => {
@@ -269,7 +270,7 @@ add('owner',function(params){
  * }) -> promise
  */
 add('message',function(params){
-	var options = this._optionsUpload(params);
+	var options = optionsUpload(params);
 
 	return this.api.photos.getMessagesUploadServer(params)
 	.then((server) => {
@@ -306,7 +307,7 @@ add('chat',function(params){
 		delete params.crop;
 	}
 
-	var options = this._optionsUpload(params);
+	var options = optionsUpload(params);
 
 	return this.api.photos.getChatUploadServer(params)
 	.then((server) => {
@@ -347,7 +348,7 @@ add('product',function(params){
 		delete params.crop;
 	}
 
-	var options = this._optionsUpload(params);
+	var options = optionsUpload(params);
 
 	return this.api.photos.getMarketUploadServer(params)
 	.then((server) => {
@@ -373,7 +374,7 @@ add('product',function(params){
  * }) -> promise
  */
 add('selection',function(params){
-	var options = this._optionsUpload(params);
+	var options = optionsUpload(params);
 
 	return this.api.photos.getMarketAlbumUploadServer(params)
 	.then((server) => {
@@ -399,7 +400,7 @@ add('selection',function(params){
  * }) -> promise
  */
 add('audio',function(params){
-	var options = this._optionsUpload(params);
+	var options = optionsUpload(params);
 
 	return this.api.audio.getUploadServer(params)
 	.then((server) => {
@@ -428,7 +429,7 @@ add('audio',function(params){
  * }) -> promise
  */
 add('video',function(params){
-	var options = this._optionsUpload(params);
+	var options = optionsUpload(params);
 
 	return this.api.video.save(params)
 	.then((server) => {
@@ -447,7 +448,7 @@ add('video',function(params){
  * }) -> promise
  */
 add('doc',function(params){
-	var options = this._optionsUpload(params);
+	var options = optionsUpload(params);
 
 	return this.api.docs.getUploadServer(params)
 	.then((server) => {

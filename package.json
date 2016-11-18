@@ -1,6 +1,6 @@
 {
     "name": "vk-io",
-    "version": "2.2.1",
+    "version": "2.2.2",
 	"engines": {
 		"node": "<6.0.0"
 	},
@@ -16,11 +16,11 @@
     },
     "dependencies": {
       "async": "^2.1.2",
-      "base-io": "^1.0.2",
+      "base-io": "^1.0.3",
       "bluebird": "^3.4.6",
       "cheerio": "^0.22.0",
       "entities": "^1.1.1",
-      "request": "^2.75.0",
+      "request": "^2.78.0",
       "request-promise": "^4.1.1"
     },
     "keywords": [

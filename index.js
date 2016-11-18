@@ -1,6 +1,6 @@
 'use strict';
 
-var base = new (require('base-io'));
+const base = new (require('base-io'));
 
 base.import(class VK {
 	/**
@@ -33,6 +33,8 @@ base.import(class VK {
 			timeout: 6,
 			/* Режим debug-а */
 			debug: true,
+			/* Прокси */
+			proxy: null,
 			/* Игнорировать ли самого себя */
 			ignoreMe: true
 		};
@@ -43,10 +45,10 @@ base.import(class VK {
 			this.emit('queue.messages',count);
 		};
 
+		var waitMessages = 0;
+
 		/* Статистика модуля */
 		this.status = {
-			/* Ожидающие сообщения */
-			_messages: 0,
 			/* Кол-во исходящих сообщений */
 			outbox: 0,
 			/* Кол-во входящих */
@@ -57,13 +59,13 @@ base.import(class VK {
 			done: 0,
 			/* Сеттер обновление очереди сообщений */
 			set messages (val) {
-				this._messages = val;
+				waitMessages = val;
 
 				_emitUpdateQueue(val);
 			},
 			/* Геттер обновление очереди сообщений */
 			get messages () {
-				return this._messages;
+				return waitMessages;
 			}
 		};
 
@@ -155,11 +157,6 @@ base.import(class VK {
 
 			params.random_id = Date.now();
 
-			if ('attach' in params) {
-				params.attachment = params.attach;
-				delete params.attach;
-			}
-
 			if ('attachment' in params && Array.isArray(params.attachment)) {
 				params.attachment = params.attachment.join(',');
 			}
@@ -196,10 +193,10 @@ base.import(class VK {
 	 *
 	 * @param object setting
 	 *
-	 * @return self
+	 * @return this
 	 */
 	setting (setting) {
-		this.settings = Object.assign(this.settings,setting);
+		Object.assign(this.settings,setting);
 
 		if ('id' in setting) {
 			this.settings.id = parseInt(this.settings.id);

@@ -9,7 +9,7 @@ exports._streamHandlers = [];
  * @param string   way     Путь
  * @param function handler Обработчик
  */
-var add = (way,handler) => {
+const add = (way,handler) => {
 	exports._streamHandlers.push({
 		way: way,
 		handler: handler
@@ -30,7 +30,7 @@ function generator (method,limit,max) {
 				/* Смещение выборки */
 				offset: parseInt(params.offset || 0),
 				/* Сколько нужно вытащить записей */
-				task: params.count,
+				task: params.count || null,
 				/* Результат выборки */
 				container: [],
 				/* Записей за раз */
@@ -118,10 +118,6 @@ exports._streamGetExecute = function(method,params){
 		this.async.eachOf(
 			params,
 			(item,key,next) => {
-				if (Array.isArray(item)) {
-					return next();
-				}
-
 				options.push(key+':'+(
 					(typeof item === 'number')?item:'"'+item+'"')
 				);

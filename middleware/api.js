@@ -1,7 +1,7 @@
 'use strict';
 
 /* Версия VK API */
-exports.API_VERSION = '5.59';
+exports.API_VERSION = '5.60';
 
 /**
  * Добавляет метод в очередь выполнения VK API
@@ -51,6 +51,7 @@ exports._executeMethod = function(method,params = {},resolve,reject,captcha){
 		method: 'POST',
 		json: true,
 		timeout: this.settings.timeout * 1000,
+		proxy: this.settings.proxy,
 		form: params,
 		qs: {
 			access_token: this.settings.token,
@@ -118,16 +119,16 @@ exports._apiWorked = function(){
 	/**
 	 * Проверяет очередь на выполнения задачи
 	 */
-	var worker = () => {
+	const worker = () => {
 		if (tasks.queue.length !== 0) {
 			this._executeMethod.apply(this,tasks.queue.shift());
 
-			tasks.id = setTimeout(worker,timer);
-		} else {
-			clearTimeout(tasks.id);
-
-			tasks.launched = false;
+			return tasks.id = setTimeout(worker,timer);
 		}
+
+		clearTimeout(tasks.id);
+
+		tasks.launched = false;
 	};
 
 	worker();

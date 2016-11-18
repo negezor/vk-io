@@ -6,32 +6,27 @@
  * @return promise
  */
 exports.longpoll = function(){
-	return new this.promise((resolve,reject) => {
-		var lp = this._longpoll;
+	var lp = this._longpoll;
 
-		if (lp.launched) {
-			return resolve();
+	if (lp.launched) {
+		return this.promise.resolve();
+	}
+
+	return this.api.messages.getLongPollServer({
+		use_ssl: 1,
+		need_pts: 0
+	})
+	.then((data) => {
+		lp.server = 'https://'+data.server;
+		lp.key = data.key;
+
+		if (!lp.ts) {
+			lp.ts = data.ts;
 		}
 
-		this.api.messages.getLongPollServer({
-			use_ssl: 1,
-			need_pts: 0
-		})
-		.then((data) => {
-			lp.server = 'https://'+data.server;
-			lp.key = data.key;
+		lp.launched = true;
 
-			if (!lp.ts) {
-				lp.ts = data.ts;
-			}
-
-			lp.launched = true;
-
-			this._longpollFetch();
-
-			resolve();
-		})
-		.catch(reject);
+		this._longpollFetch();
 	});
 };
 
@@ -72,6 +67,7 @@ exports._longpollFetch = function(){
 		uri: lp.server,
 		timeout: 20000,
 		json: true,
+		proxy: this.settings.proxy,
 		qs: {
 			act: 'a_check',
 			key: lp.key,
