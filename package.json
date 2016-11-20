@@ -1,36 +1,41 @@
 {
-	"name": "vk-io",
-	"version": "2.1.4",
-	"description": "Module for easy work with vk api!",
-	"main": "index.js",
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
+    "name": "vk-io",
+    "version": "2.2.2",
+	"engines": {
+		"node": "<6.0.0"
 	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/UltraShock98/vk-io.git"
-	},
-	"dependencies": {
-		"async": "^2.0.0-rc.6",
-		"base-io": "^1.0.2",
-		"bluebird": "^3.4.1",
-		"cheerio": "^0.20.0",
-		"html-entities": "^1.2.0",
-		"request-promise": "^3.0.0"
-	},
-	"keywords": [
-    "api",
-    "js",
-    "module",
-    "node",
-    "npm",
-    "simple",
-    "vk"
-  ],
-	"author": "https://vk.com/id195624402",
-	"license": "MIT",
-	"bugs": {
-		"url": "https://github.com/UltraShock98/vk-io/issues"
-	},
-	"homepage": "https://github.com/UltraShock98/vk-io#readme"
+	"engineStrict": true,
+    "description": "Module for easy work with vk api!",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/negezor/vk-io.git"
+    },
+    "dependencies": {
+      "async": "^2.1.2",
+      "base-io": "^1.0.3",
+      "bluebird": "^3.4.6",
+      "cheerio": "^0.22.0",
+      "entities": "^1.1.1",
+      "request": "^2.78.0",
+      "request-promise": "^4.1.1"
+    },
+    "keywords": [
+		"vk",
+        "api",
+        "js",
+        "module",
+        "node",
+        "npm",
+        "simple"
+    ],
+    "author": "https://vk.com/id195624402",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/negezor/vk-io/issues"
+    },
+    "homepage": "https://github.com/negezor/vk-io#readme"
 }
