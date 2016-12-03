@@ -1,10 +1,10 @@
 {
     "name": "vk-io",
-    "version": "2.2.2",
-	"engines": {
-		"node": "<6.0.0"
-	},
-	"engineStrict": true,
+    "version": "2.2.3",
+    "engines": {
+        "node": "<6.0.0"
+    },
+    "engineStrict": true,
     "description": "Module for easy work with vk api!",
     "main": "index.js",
     "scripts": {
@@ -15,16 +15,16 @@
         "url": "git+https://github.com/negezor/vk-io.git"
     },
     "dependencies": {
-      "async": "^2.1.2",
-      "base-io": "^1.0.3",
-      "bluebird": "^3.4.6",
-      "cheerio": "^0.22.0",
-      "entities": "^1.1.1",
-      "request": "^2.78.0",
-      "request-promise": "^4.1.1"
+        "async": "^2.1.4",
+        "base-io": "^1.0.3",
+        "bluebird": "^3.4.6",
+        "cheerio": "^0.22.0",
+        "entities": "^1.1.1",
+        "request": "^2.79.0",
+        "request-promise": "^4.1.1"
     },
     "keywords": [
-		"vk",
+        "vk",
         "api",
         "js",
         "module",

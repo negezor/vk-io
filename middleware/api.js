@@ -30,8 +30,6 @@ exports._api = function(method,params,captcha){
 		if (!this.tasks.launched) {
 			this._apiWorked();
 		}
-
-		return null;
 	});
 };
 
@@ -62,7 +60,7 @@ exports._executeMethod = function(method,params = {},resolve,reject,captcha){
 		if ('error' in data) {
 			++this.status.error;
 
-			var error = this._apiError(data.error,arguments);
+			var error = this._apiError(data.error,Array.from(arguments));
 
 			if (error.code !== 14 || error.code === 14 && !captcha) {
 				return;
@@ -89,10 +87,6 @@ exports._executeMethod = function(method,params = {},resolve,reject,captcha){
 				captcha.reject(error);
 			}
 
-			if (method === 'messages.send') {
-				--this.status.messages;
-			}
-
 			this.logger.log('Request error',method);
 
 			return reject(error);
@@ -101,7 +95,7 @@ exports._executeMethod = function(method,params = {},resolve,reject,captcha){
 		this.logger.debug('Restart request',method);
 
 		setTimeout(() => {
-			this._apiRestart(arguments);
+			this._apiRestart(Array.from(arguments));
 		},3000);
 	});
 };

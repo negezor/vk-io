@@ -90,10 +90,10 @@ exports._longpollSanitize = function(event,next){
 	}))
 	.then((data) => {
 		if (Array.isArray(data)) {
-			var [data,custom] = data;
+			return this.emit(data[1],data[0]);
 		}
 
-		this.emit(custom || handler.name,data);
+		this.emit(handler.name,data);
 	});
 
 	next();
@@ -241,8 +241,6 @@ exports._fwdSplitDelimiter = function(raw,delimiter){
 				resolve(out);
 			}
 		);
-
-		return null;
 	});
 };
 
@@ -313,31 +311,6 @@ exports._longpollParseFwd = function(raw){
 	return this._fwdSplitDelimiter(raw,',')
 	.then((params) => {
 		return this._parseFwdAttachment(params);
-	});
-};
-
-/**
- * Парсирит пересылаемые сообщения
- *
- * @param object message     Объект сообщения
- * @param object attachments Прикрепления
- *
- * @return promise
- */
-exports._longpollGetFwd = function(message,attachments){
-	return new this.promise((resolve) => {
-		if (!('fwd' in attachments)) {
-			message.fwd = [];
-
-			return resolve();
-		}
-
-		this._longpollParseFwd(attachments.fwd)
-		.then((fwd) => {
-			message.fwd = fwd;
-
-			resolve();
-		});
 	});
 };
 
@@ -551,7 +524,12 @@ var receivedMessage = function(message,event,resolve){
 
 	this._longpollParseAttach(message,attachments)
 	.then(() => {
-		return this._longpollGetFwd(message,attachments);
+		if (!('fwd' in attachments)) {
+			return message.fwd = [];
+		}
+
+		return this._longpollParseFwd(attachments.fwd)
+		.then((fwd) => message.fwd = fwd);
 	})
 	.then(() => {
 		++this.status.inbox;

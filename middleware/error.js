@@ -16,9 +16,11 @@ const errorList = {
 			return this.logger.warn('Captcha needed!');
 		}
 
+		const sid = error.captcha_sid;
+
 		this._captchaHandler(error.captcha_img,(code) => {
 			return new this.promise((resolve,reject) => {
-				request[1].captcha_sid = error.captcha_sid;
+				request[1].captcha_sid = sid;
 				request[1].captcha_key = code;
 
 				request[4] = {
@@ -28,7 +30,7 @@ const errorList = {
 
 				this._apiRestart(request);
 			});
-		});
+		},sid);
 	}
 };
 
@@ -44,10 +46,6 @@ exports._apiError = function(errorVk,request){
 	var error = new this.ApiError(errorVk);
 
 	if (!(error.code in errorList)) {
-		if (request[0] === 'messages.send') {
-			--this.status.messages;
-		}
-
 		this.logger.error('Api error №'+error.code,error.message);
 
 		request[3](error);

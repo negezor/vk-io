@@ -50,7 +50,7 @@ vk.setting(<object>);
 ##### app
 Тип: `number` или `string`
 
-Идентификатор приложения `standlone`
+Идентификатор приложения `standalone`
 
 ##### key
 Тип: `string`
@@ -111,10 +111,12 @@ vk.setting(<object>);
 
 Лимит запросов в секунду
 
-### Авторизация через standlone
-Для авторизации `standlone` нужно установить `app`, `pass`, `login` или `phone`
+### Авторизация через standalone
+Для авторизации `standalone` нужно установить `app`, `pass`, `login` или `phone`
 
 Пример авторизации, по умолчанию scope содержит все разрешения
+
+Авторизация не заменяет токен в настройках модуля, учтите это
 ```javascript
 vk.setting({
 	app: 111,
@@ -123,7 +125,7 @@ vk.setting({
 	phone: '+749531116869'
 });
 
-const auth = vk.standloneAuth();
+const auth = vk.standaloneAuth();
 
 auth.run()
 .then((token) => {
@@ -219,12 +221,9 @@ vk.api.wall.get({
 vk.execute(<Название процедуры>,<Параметры>); // -> promise
 ```
 
-Выполнение множества методов, возвращает массив из результатов
+Если необходимо вызвать много одних и тех же методов рекомендуется использовать `.chain()` или `.executes()`
 
-Методы выполняются через execute по 25 за раз
-
-Рекомендуется при выполнения множества одинаковых запросов
-
+Для множественного вызова одного метода с разными параметрами есть снипет работающий на`.chain()`
 ```javascript
 vk.executes(<method>,<queue>);
 
@@ -237,6 +236,66 @@ vk.exeuctes('friends.add',[
 	{user_id: 5},
 	<...many>
 ]);
+```
+
+#### Цепочки методов
+Цепочки методов помогают получить много данных с разных методов или просто вызвать их
+
+Можно передать неограниченное количество методов в цепочку
+
+Цепочка будет делится по 25 методов в один execute и возвращать результат
+
+Учтите если был вызван `.execute()` и вызвать `.append()` выбросится синхронное исключение
+
+Пример работы с простой цепочкой
+```javascript
+const chain = vk.chain();
+
+chain.append('users.get');
+
+chain.append('friends.get',{
+	order: 'random'
+})
+.then((friends) => {
+	console.log(friends);
+});
+
+chain.execute()
+.then((data) => {
+	var users = data[0];
+	var friends = data[1];
+
+	console.log(users,friends);
+});
+```
+Данные можно получить двумя способами, первый способ просто поставить `.then()` на возвращаемый promise
+```javascript
+chain.append('users.get')
+.then(...)
+```
+Или же можно получить данные со всех результатов, они будут возвращены в порядке в котором вызваны
+```javascript
+chain.execute()
+.then((results) => {
+	console.log(results);
+});
+```
+Если цепочка методов будет пуста, в результат вернётся пустой массив
+```javascript
+vk.chain().execute()
+.then((results) => {
+	console.log(results.length === 0); // -> true
+})
+```
+Присутствует простой сниппет для быстрого получение `promise` без обращения к `.execute()`
+
+Простое сокращение `.execute().then(fn)` или `.execute().catch(fn)`
+```javascript
+chain.then(...);
+
+/* Или же */
+
+chain.catch(...);
 ```
 
 ### Работа с потоками
@@ -663,15 +722,17 @@ msg.send('Ответ на сообщение.',{
 
 ### Обработка исключений
 #### Captcha / Капча
-Установка обработчика капчи,
+Установка обработчика капчи, возвращает функция для повтора запроса.
 
 `1 аргумент` - ссылка на капчу
 
 `2 аргумент` - обработчик для повторной отправки с полученой капчей
 
+`3 аргумент` - идентификатор капчи
+
 Пример обработки капчи
 ```javascript
-vk.setCaptchaHandler((src,again) => {
+vk.setCaptchaHandler((src,again,sid) => {
 	youSuperAwesomeCaptchaHandler(src)
 	.then((code) => {
 		again(code)
@@ -774,6 +835,57 @@ vk.parseLink(<Ссылка>)
 	console.error(error);
 });
 ```
+#### Получение ссылок на фотографию объекта photo
+Есть 3 метода для получение ссылки с объекта [photo](https://vk.com/dev/objects/photo)
+
+Если метод не находит ссылку на фотографию он будет искать более меньшего размера пока не найдёт существующие разрешение
+
+`getLargePhoto` - Возвращает фотографии разрешения `2560` или `1280`
+
+`getMediumPhoto` - Возвращает фотографии разрешения `807` или `604`
+
+`getSmallPhoto` - Возвращает фотографии разрешения `130` или `75`
+
+Пример работы с методами
+```javascript
+vk.api.photos.get({
+	album_id: 'profile',
+	owner_id: 1,
+	rev: 1
+})
+.then((response) => response.items[0])
+.then((photo) => {
+	const urlLarge = vk.getLargePhoto(photo);
+	const urlMedium = vk.getMediumPhoto(photo);
+	const urlSmall = vk.getSmallPhoto(photo);
+
+	console.log(photo.photo_2560 === urlLarge); // -> true
+	console.log(photo.photo_807 === urlMedium); // -> true
+	console.log(photo.photo_130 === urlSmall); // -> true
+});
+```
+#### Получение прикриплений с объектов
+Список доступных объектов [objects](https://vk.com/dev/objects) медиаконтент
+
+Метод `getAttachment`
+
+`1 аргумент` - Тип нужно прикрипления
+
+Тип: `string`
+
+`2 аргумент` - Объекты или массив объектов
+
+Тип: `string` или `array`
+
+Пример работы с методом
+```javascript
+vk.upload.doc(...)
+.then((doc) => {
+	const attachment = vk.getAttachment('doc',doc);
+
+	console.log(attachment); // doc<owner_id>_<doc_id>
+})
+```
 
 ### Cтатистики модуля
 Для получения статистики модуля нужно обратится к объекту `vk.status`
@@ -787,10 +899,6 @@ vk.parseLink(<Ссылка>)
 Получение кол-во заданий в очереди
 ```javascript
 vk.getQueue(); // -> integer
-```
-Получение кол-во очереди сообщений
-```javascript
-vk.getQueueMessages(); // -> integer
 ```
 
 Получение токена
@@ -810,12 +918,7 @@ vk.SHEAR_CHAT;
 ```
 
 #### События
-Обновление очереди сообщений
-```javascript
-vk.on('queue.messages',(count) => {
-	console.log('В очереди сообщений:',count);
-});
-```
+Отсутствуют
 
 ### Утилиты
 Проверяет наличие метода

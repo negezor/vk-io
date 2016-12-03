@@ -41,12 +41,6 @@ base.import(class VK {
 
 		this.setting(setting);
 
-		const _emitUpdateQueue = (count) => {
-			this.emit('queue.messages',count);
-		};
-
-		var waitMessages = 0;
-
 		/* Статистика модуля */
 		this.status = {
 			/* Кол-во исходящих сообщений */
@@ -56,17 +50,7 @@ base.import(class VK {
 			/* Кол-во ошибок */
 			error: 0,
 			/* Кол-во выполненых методов */
-			done: 0,
-			/* Сеттер обновление очереди сообщений */
-			set messages (val) {
-				waitMessages = val;
-
-				_emitUpdateQueue(val);
-			},
-			/* Геттер обновление очереди сообщений */
-			get messages () {
-				return waitMessages;
-			}
+			done: 0
 		};
 
 		/* Очередь методов */
@@ -318,15 +302,6 @@ base.import(class VK {
 	 */
 	getQueue () {
 		return this.tasks.queue.length;
-	}
-
-	/**
-	 * Возвращает кол-во заданий сообщений messages.send
-	 *
-	 * @return integer
-	 */
-	getQueueMessages () {
-		return this.status._messages;
 	}
 
 	/**

@@ -69,3 +69,63 @@ exports.parseLink = function(link){
 		.catch(reject);
 	});
 };
+
+/**
+ * Возвращает ссылку на маленькую фотографию
+ *
+ * @param object photo
+ *
+ * @return string
+ */
+const getSmallPhoto = (photo) => {
+	return photo.photo_130 || photo.photo_75;
+};
+
+exports.getSmallPhoto = getSmallPhoto;
+
+/**
+ * Возвращает ссылку на среднюю фотографию
+ *
+ * @param object photo
+ *
+ * @return string
+ */
+const getMediumPhoto = (photo) => {
+	return photo.photo_807 || photo.photo_604 || getSmallPhoto(photo);
+};
+
+exports.getMediumPhoto = getMediumPhoto;
+
+/**
+ * Возвращает ссылку на большую фотографию
+ *
+ * @param object photo
+ *
+ * @return string
+ */
+exports.getLargePhoto = (photo) => {
+	return photo.photo_2560 || photo.photo_1280 || getMediumPhoto(photo);
+};
+
+/**
+ * Собирает прикрипление из переданных значений
+ *
+ * @param string type
+ *
+ * @return mixed
+ */
+const getAttachment = (type,object) => {
+	return type+object.owner_id+'_'+object.id;
+};
+
+exports.getAttachment = (type,objects) => {
+	type = type.toLowerCase();
+
+	if (Array.isArray(objects)) {
+		return object.map((object) => {
+			return getAttachment(type,object);
+		});
+	}
+
+	return getAttachment(type,objects);
+};

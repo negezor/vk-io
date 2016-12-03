@@ -4,6 +4,18 @@
 exports._streamHandlers = [];
 
 /**
+ * Формирует метод для вызова
+ *
+ * @param string method
+ * @param object params
+ *
+ * @return this
+ */
+exports._getExecuteMethod = (method,params = {}) => {
+	return 'API.'+method+'('+JSON.stringify(params)+')';
+};
+
+/**
  * Добавляет обработчик в vk.stream
  *
  * @param string   way     Путь
@@ -15,6 +27,22 @@ const add = (way,handler) => {
 		handler: handler
 	});
 };
+
+/**
+ * Возвращает код для vk execute
+ *
+ * @param object query Данные запроса
+ *
+ * @return promise
+ */
+const streamGetCode = function(query){
+	return 'var a='+query.limit+',b='+(query.task || 0)+',c='+query.container.length+',d='+query.offset+',f=[],i=0,j,g,h=b==0||c<b;while(i<25&&h){j='+query.execute+';f=f+j.items;if(b==0||b>j.count)b=j.count;c=c+j.items.length;d=d+j.items.length;g=b-c;if(g<a)a=g;h=c<b;i=i+1;}return {task:b,items:f.splice(0,b)};';
+};
+
+/**
+ * Заменяет строки на переменные
+ */
+const replaceParams = /\"(count|offset)\":\"(\w+)\"/g;
 
 /**
  * Добавляет обработчик c API
@@ -47,17 +75,13 @@ function generator (method,limit,max) {
 				query.skip = query.offset;
 			}
 
-			delete params.count;
-			delete params.offset;
+			params.count = 'a';
+			params.offset = 'd';
 
-			this._streamGetExecute(method,params)
-			.then((execute) => {
-				query.execute = execute;
+			query.execute = this.vk._getExecuteMethod(method,params)
+			.replace(replaceParams,'"$1":$2');
 
-				this._streamPreparation(query,resolve,reject);
-			});
-
-			return null;
+			this._streamPreparation(query,resolve,reject);
 		});
 	});
 };
@@ -70,12 +94,9 @@ function generator (method,limit,max) {
  * @param function reject
  */
 exports._streamPreparation = function(query,resolve,reject){
-	var fetch = () => {
-		this._streamGenerateCode(query)
-		.then((code) => {
-			return this.api.execute({
-				code: code
-			});
+	const fetch = () => {
+		this.api.execute({
+			code: streamGetCode(query)
 		})
 		.then((data) => {
 			query.task = data.task;
@@ -87,9 +108,15 @@ exports._streamPreparation = function(query,resolve,reject){
 
 			query.offset += data.items.length;
 
-			this.logger.debug('Stream task:',query.container.length,'/',query.task);
+			const length = query.container.length;
 
-			if (query.task <= query.container.length) {
+			/* Stream task: 500 / 1000 [50%] */
+			this.logger.debug(
+				'Stream task:',length,'/',query.task,
+				'['+Math.round(length/query.task*100)+'%]'
+			);
+
+			if (query.task <= length) {
 				return resolve(query.container);
 			}
 
@@ -101,49 +128,6 @@ exports._streamPreparation = function(query,resolve,reject){
 	};
 
 	fetch();
-};
-
-/**
- * Генерирует содержимое API.method
- *
- * @param string method Метод API
- * @param object params Параметры запроса
- *
- * @return promise
- */
-exports._streamGetExecute = function(method,params){
-	return new this.promise((resolve) => {
-		var options = ['count:a','offset:d'];
-
-		this.async.eachOf(
-			params,
-			(item,key,next) => {
-				options.push(key+':'+(
-					(typeof item === 'number')?item:'"'+item+'"')
-				);
-
-				next();
-			},
-			() => {
-				resolve('API.'+method+'({'+options.join(',')+'})');
-			}
-		);
-
-		return null;
-	});
-};
-
-/**
- * Генерирует код для vk execute
- *
- * @param object query Данные запроса
- *
- * @return promise
- */
-exports._streamGenerateCode = function(query){
-	return new this.promise((resolve) => {
-		resolve('var a='+query.limit+',b='+(query.task || 0)+',c='+query.container.length+',d='+query.offset+',f=[],i=0,j,g,h=b==0||c<b;while(i<25&&h){j='+query.execute+';f=f+j.items;if(b==0||b>j.count)b=j.count;c=c+j.items.length;d=d+j.items.length;g=b-c;if(g<a)a=g;h=c<b;i=i+1;}return {task:b,items:f.splice(0,b)};');
-	});
 };
 
 /**

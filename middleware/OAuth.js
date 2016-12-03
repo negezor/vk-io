@@ -29,7 +29,10 @@ const fullScopes = [
 	'notifications',
 ];
 
-exports.AuthError = class AuthError extends Error {
+/**
+ * Ошибка авторизации
+ */
+class AuthError extends Error {
 	/**
 	 * Конструктор
 	 *
@@ -45,6 +48,11 @@ exports.AuthError = class AuthError extends Error {
 	}
 };
 
+exports.AuthError = AuthError;
+
+/**
+ * Основа для методов авторизации
+ */
 class Auth {
 	/**
 	 * Конструктор
@@ -125,31 +133,31 @@ class Auth {
 	}
 }
 
-class StandloneAuth extends Auth {
+/**
+ * Авторизация standalone приложения
+ */
+class StandaloneAuth extends Auth {
 	/**
 	 * Выполняет авторизацию
 	 *
 	 * @return promise
 	 */
 	run () {
-		return new promise((resolve,reject) => {
-			this._getBlankPermission()
-			.then(($) => {
-				var script = $('script[type="text/javascript"][language="javascript"]').text();
-				var grantAccess = script.match(/location\.href = \"(.*)\";/)[1].replace('&cancel=1','');
+		return this._getBlankPermission()
+		.then(($) => {
+			var script = $('script[type="text/javascript"][language="javascript"]').text();
+			var grantAccess = script.match(/location\.href = \"(.+)\";/)[1].replace('&cancel=1','');
 
-				return this.request(grantAccess);
-			})
-			.then((response) => {
-				var hash = queryString.parse(response.request.uri.hash);
+			return this.request(grantAccess);
+		})
+		.then(() => {
+			var hash = queryString.parse(response.request.uri.hash);
 
-				if ('#access_token' in hash) {
-					return resolve(hash['#access_token']);
-				}
+			if ('#access_token' in hash) {
+				return hash['#access_token'];
+			}
 
-				reject(new exports.AuthError('Не удалось получить access token!'));
-			})
-			.catch(reject);
+			return new AuthError('Не удалось получить access token!');
 		});
 	}
 
@@ -202,42 +210,37 @@ class StandloneAuth extends Auth {
 	 * @return promise
 	 */
 	_setSecurityNumber ($) {
-		return new promise((resolve,reject) => {
-			var $tr = $('#form_table tr:first-child');
+		var $tr = $('#form_table tr:first-child');
 
-			var prefix = parseInt($tr.find('.ta_r').text());
-			var postfix = $tr.find('.phone_postfix').text().replace(/[^\d]/,'');
+		var prefix = parseInt($tr.find('.ta_r').text());
+		var postfix = $tr.find('.phone_postfix').text().replace(/[^\d]/,'');
 
-			var phone = (this.phone || this.login).trim().replace(/^(\+|00)/,'');
+		var phone = (this.phone || this.login).trim().replace(/^(\+|00)/,'');
 
-			phone = phone.replace(new RegExp('^'+prefix),'');
-			phone = phone.replace(new RegExp(postfix+'$'),'');
+		phone = phone.replace(new RegExp('^'+prefix),'');
+		phone = phone.replace(new RegExp(postfix+'$'),'');
 
-			var hash = $('script').text().match(/hash: \'([a-z\d]+)\'/)[1];
+		var hash = $('script').text().match(/hash: \'([a-z\d]+)\'/)[1];
 
-			this.request({
-				uri: 'vk.com/login.php',
-				qs: {
-					act: 'security_check'
-				},
-				form: {
-					code: phone,
-					al_page: 3,
-					hash: hash,
-					to: ''
-				}
-			})
-			.then(() => {
-				return this._getBlank();
-			})
-			.then(($) => {
-				if ($('input[name="code"]').length === 0) {
-					return resolve($);
-				}
+		return this.request({
+			uri: 'vk.com/login.php',
+			qs: {
+				act: 'security_check'
+			},
+			form: {
+				code: phone,
+				al_page: 3,
+				hash: hash,
+				to: ''
+			}
+		})
+		.then(() => this._getBlank())
+		.then(($) => {
+			if ($('input[name="code"]').length === 0) {
+				return $;
+			}
 
-				reject(new exports.AuthError('Введён неверный номер телефона!'));
-			})
-			.catch(reject);
+			throw new AuthError('Введён неверный номер телефона!');
 		});
 	}
 
@@ -249,31 +252,26 @@ class StandloneAuth extends Auth {
 	 * @return object
 	 */
 	_parseAuthForm ($) {
-		return new promise((resolve,reject) => {
-			var form = this._getFormsData($);
+		var form = this._getFormsData($);
 
-			form.fileds.email = this.login || this.phone;
-			form.fileds.pass = this.pass;
+		form.fileds.email = this.login || this.phone;
+		form.fileds.pass = this.pass;
 
-			this.request({
-				url: form.action,
-				transform: cheerio,
-				form: form.fileds
-			})
-			.then(($) => {
-				if ($('.oauth_error').length > 0) {
-					return reject(new exports.AuthError('Неправильный логин или пароль!'));
-				}
+		return this.request({
+			url: form.action,
+			transform: cheerio,
+			form: form.fileds
+		})
+		.then(($) => {
+			if ($('.oauth_error').length > 0) {
+				throw new AuthError('Неправильный логин или пароль!');
+			}
 
-				if ($('input[name="code"]').length > 0) {
-					return this._setSecurityNumber($)
-					.then(resolve)
-					.catch(reject);
-				}
+			if ($('input[name="code"]').length === 0) {
+				return $;
+			}
 
-				resolve($);
-			})
-			.catch(reject);
+			return this._setSecurityNumber($);
 		});
 	}
 
@@ -300,7 +298,9 @@ class StandloneAuth extends Auth {
 	}
 }
 
-
+/**
+ * Авторизация через официальные приложения
+ */
 class DirectAuth extends Auth {
 	/**
 	 * Конструктор
@@ -316,37 +316,30 @@ class DirectAuth extends Auth {
 
 	/**
 	 * Выполняет прямую авторизацию вк
-	 *
-	 * @param
 	 */
 	run () {
-		return new promise((resolve,reject) => {
-			this._getToken()
-			.then((data) => {
-				if (!('error' in data) && 'access_token' in data) {
-					var out = {
-						user: data.user_id,
-						token: data.access_token,
-						expires: data.expires_in,
-					};
+		return this._getToken()
+		.then((data) => {
+			if (!('error' in data) && 'access_token' in data) {
+				var out = {
+					user: data.user_id,
+					token: data.access_token,
+					expires: data.expires_in,
+				};
 
-					if ('email' in data) {
-						out.email = data.email;
-					}
-
-					return resolve(out);
+				if ('email' in data) {
+					out.email = data.email;
 				}
 
-				return reject(new exports.AuthError('Не удалось авторизоваться, ошибка: '+data.error));
+				return out;
+			}
 
-				if (data.error === 'need_validation') {
-					return this._needValidation(data)
-					.then(() => {
+			throw new AuthError('Не удалось авторизоваться, ошибка: '+data.error);
 
-					})
-					.catch(reject);
-				}
-			});
+			/* TODO: Сделать двухфакторную авторизацию */
+			if (data.error === 'need_validation') {
+				return this._needValidation(data);
+			}
 		});
 	}
 
@@ -379,18 +372,18 @@ class DirectAuth extends Auth {
 	/**
 	 * Двухфакторная авторизация
 	 *
-	 * @param
+	 * @param object data
+	 *
+	 * @return Promise
 	 */
 	_needValidation (data) {
-		return new promise((resolve,reject) => {
-			this.request({
-				uri: data.redirect_uri,
-				transform: cheerio,
-				method: 'GET'
-			})
-			.then(($) => {
+		return this.request({
+			uri: data.redirect_uri,
+			transform: cheerio,
+			method: 'GET'
+		})
+		.then(($) => {
 
-			});
 		});
 	}
 
@@ -424,14 +417,14 @@ class DirectAuth extends Auth {
 /**
  * Авторизация standlone приложения
  *
- * @return StandloneAuth
+ * @return StandaloneAuth
  */
-exports.standloneAuth = function(){
+exports.standaloneAuth = function(){
 	var params = Object.assign({},this.settings);
 
 	params.version = this.API_VERSION;
 
-	return new StandloneAuth(params);
+	return new StandaloneAuth(params);
 };
 
 /**
