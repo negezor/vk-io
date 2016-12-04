@@ -78,7 +78,7 @@ function generator (method,limit,max) {
 			params.count = 'a';
 			params.offset = 'd';
 
-			query.execute = this.vk._getExecuteMethod(method,params)
+			query.execute = this._getExecuteMethod(method,params)
 			.replace(replaceParams,'"$1":$2');
 
 			this._streamPreparation(query,resolve,reject);
