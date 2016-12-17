@@ -13,6 +13,8 @@ const errorList = {
 	 */
 	14: function(error,request){
 		if (!this._captchaHandler) {
+			request[3](error);
+
 			return this.logger.warn('Captcha needed!');
 		}
 

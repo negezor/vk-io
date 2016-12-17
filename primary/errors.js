@@ -28,7 +28,9 @@ exports.ApiError = class ApiError extends Error {
 		this.message = error.error_msg;
 		this.params = error.request_params;
 
-		Error.captureStackTrace(this,this.constructor.name);
+		if (Error.captureStackTrace) {
+			Error.captureStackTrace(this,this.constructor.name);
+		}
 	}
 };
 
@@ -53,7 +55,9 @@ exports.RequestError = class RequestError extends Error {
 			this.message = error.message;
 		}
 
-		Error.captureStackTrace(this,this.constructor.name);
+		if (Error.captureStackTrace) {
+			Error.captureStackTrace(this,this.constructor.name);
+		}
 	}
 }
 
@@ -72,6 +76,8 @@ exports.UnknownError = class UnknownError extends Error {
 
 		this.message = error;
 
-		Error.captureStackTrace(this,this.constructor.name);
+		if (Error.captureStackTrace) {
+			Error.captureStackTrace(this,this.constructor.name);
+		}
 	}
 }

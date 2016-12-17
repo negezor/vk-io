@@ -1,6 +1,6 @@
 'use strict';
 
-const promise = require('bluebird');
+const Promise = require('bluebird');
 const cheerio = require('cheerio').load;
 const request = require('request-promise');
 const queryString = require('querystring');
@@ -26,7 +26,7 @@ const fullScopes = [
 	'friends',
 	'messages',
 	'questions',
-	'notifications',
+	'notifications'
 ];
 
 /**
@@ -44,7 +44,9 @@ class AuthError extends Error {
 
 		this.message = error;
 
-		Error.captureStackTrace(this,this.constructor.name);
+		if (Error.captureStackTrace) {
+			Error.captureStackTrace(this,this.constructor.name);
+		}
 	}
 };
 
@@ -70,6 +72,9 @@ class Auth {
 		if (this.login === null) {
 			this.login = this.phone;
 		}
+
+		this._capthaHandler = null;
+		this._twoFactorHandler = null;
 	}
 
 	/**
@@ -116,7 +121,7 @@ class Auth {
 			timeout: 6000,
 			proxy: this.proxy,
 			headers: {
-				'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/52.0.2743.116 Safari/537.36'
+				'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36'
 			}
 		});
 
@@ -131,6 +136,32 @@ class Auth {
 	getCookieJar () {
 		return this.jar;
 	}
+
+	/**
+	 * Устанавливает обработчик двух факторной авторизации
+	 *
+	 * @param function handler
+	 *
+	 * @return this
+	 */
+	setTwoFactorHandler (handler) {
+		this._twoFactorHandler = handler;
+
+		return this;
+	}
+
+	/**
+	 * Устаналивает обработчик капчи
+	 *
+	 * @param function handler
+	 *
+	 * @return this
+	 */
+	setCaptchaHandler (handler) {
+		this._capthaHandler = handler;
+
+		return this;
+	}
 }
 
 /**
@@ -140,7 +171,7 @@ class StandaloneAuth extends Auth {
 	/**
 	 * Выполняет авторизацию
 	 *
-	 * @return promise
+	 * @return Promise
 	 */
 	run () {
 		return this._getBlankPermission()
@@ -150,7 +181,7 @@ class StandaloneAuth extends Auth {
 
 			return this.request(grantAccess);
 		})
-		.then(() => {
+		.then((response) => {
 			var hash = queryString.parse(response.request.uri.hash);
 
 			if ('#access_token' in hash) {
@@ -164,16 +195,17 @@ class StandaloneAuth extends Auth {
 	/**
 	 * Возвращает данные формы
 	 *
-	 * @param mixed $
+	 * @param mixed  $
+	 * @param string find
 	 *
 	 * @return object
 	 */
-	_getFormsData ($) {
+	_getFormsData ($,find) {
 		if (!('html' in $)) {
 			$ = cheerio($);
 		}
 
-		var $form = $('form[action][method="POST"]');
+		var $form = $(find || 'form[action][method="POST"]');
 		var fileds = {};
 
 		$form.find('input[name]').each(function(){
@@ -191,12 +223,12 @@ class StandaloneAuth extends Auth {
 	/**
 	 * Возвращает бланк разршения
 	 *
-	 * @return promise
+	 * @return Promise
 	 */
 	_getBlankPermission () {
 		return this._getBlank()
 		.then(($) => {
-			if ($('#box').find('[name="pass"]').length === 0) {
+			if ($('#login_submit').find('[name="pass"]').length === 0) {
 				return $;
 			}
 
@@ -205,9 +237,54 @@ class StandaloneAuth extends Auth {
 	}
 
 	/**
+	 * Обрабатывает двух-факторную защиту
+	 *
+	 * @param object $
+	 */
+	_twoFactor ($) {
+		if (!this._twoFactorHandler) {
+			throw new AuthError('Отсутствует обработчик двухфакторной защиты!');
+		}
+
+		var form = this._getFormsData($,'form[action][method="post"]');
+
+		return new Promise((resolve,reject) => {
+			this._twoFactorHandler((code) => {
+				form.fileds.code = code;
+				form.fileds.remember = 1;
+
+				return this.request({
+					uri: 'https://vk.com'+form.action,
+					form: form.fileds,
+					transform: cheerio
+				})
+				.then(($) => {
+					if ($('.service_msg_box').length !== 0) {
+						throw new Error('Присутствует сообщение об ошибке!');
+					}
+
+					return $;
+				})
+				.then(resolve)
+				.catch((error) => {
+					reject(error);
+
+					throw error;
+				});
+			});
+		})
+		.then(() => this._getBlank())
+		.catch((error) => {
+			console.log(error);
+
+			throw new AuthError('Двухфакторная авторизация провалена!');
+		});
+	}
+
+	/**
 	 * Обход проверки телефона
 	 *
-	 * @return promise
+	 * @return Promise
 	 */
 	_setSecurityNumber ($) {
 		var $tr = $('#form_table tr:first-child');
@@ -219,6 +296,8 @@ class StandaloneAuth extends Auth {
 
 		phone = phone.replace(new RegExp('^'+prefix),'');
 		phone = phone.replace(new RegExp(postfix+'$'),'');
+
+		require('fs').writeFileSync('checkAuthCode.html',$.html());
 
 		var hash = $('script').text().match(/hash: \'([a-z\d]+)\'/)[1];
 
@@ -258,27 +337,31 @@ class StandaloneAuth extends Auth {
 		form.fileds.pass = this.pass;
 
 		return this.request({
-			url: form.action,
+			uri: form.action,
 			transform: cheerio,
 			form: form.fileds
 		})
 		.then(($) => {
-			if ($('.oauth_error').length > 0) {
-				throw new AuthError('Неправильный логин или пароль!');
+			if ($('#login_submit.box_error').length !== 0) {
+				throw new AuthError('Неверный логин или пароль!');
 			}
 
-			if ($('input[name="code"]').length === 0) {
-				return $;
+			if ($('input[name="remember"]').length !== 0) {
+				return this._twoFactor($);
 			}
 
-			return this._setSecurityNumber($);
+			if ($('input[name="code"]').length !== 0) {
+				return this._setSecurityNumber($);
+			}
+
+			return $;
 		});
 	}
 
 	/**
 	 * Получает бланк авторизации или разрешения
 	 *
-	 * @return promise
+	 * @return Promise
 	 */
 	_getBlank () {
 		return this.request({
@@ -302,18 +385,6 @@ class StandaloneAuth extends Auth {
  * Авторизация через официальные приложения
  */
 class DirectAuth extends Auth {
-	/**
-	 * Конструктор
-	 *
-	 * @param object setting Настройки
-	 */
-	constructor (setting) {
-		super(setting);
-
-		this._capthaHandler = null;
-		this._twoFactorHandler = null;
-	}
-
 	/**
 	 * Выполняет прямую авторизацию вк
 	 */
@@ -344,32 +415,6 @@ class DirectAuth extends Auth {
 	}
 
 	/**
-	 * Устаналивает обработчик капчи
-	 *
-	 * @param function handler
-	 *
-	 * @return this
-	 */
-	setCaptchaHandler (handler) {
-		this._capthaHandler = handler;
-
-		return this;
-	}
-
-	/**
-	 * Устанавливает обработчик двух факторной авторизации
-	 *
-	 * @param function handler
-	 *
-	 * @return this
-	 */
-	settwoFactorHandler (handler) {
-		this._twoFactorHandler = handler;
-
-		return this;
-	}
-
-	/**
 	 * Двухфакторная авторизация
 	 *
 	 * @param object data
@@ -392,7 +437,7 @@ class DirectAuth extends Auth {
 	 *
 	 * @param object qs Параметры запроса
 	 *
-	 * @return promise
+	 * @return Promise
 	 */
 	_getToken (qs = {}) {
 		qs.username = this.login || this.phone;

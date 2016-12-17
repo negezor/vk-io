@@ -48,7 +48,7 @@ exports._executeMethod = function(method,params = {},resolve,reject,captcha){
 		uri: 'https://api.vk.com/method/'+method,
 		method: 'POST',
 		json: true,
-		timeout: this.settings.timeout * 1000,
+		timeout: this.settings.timeout * 1e3,
 		proxy: this.settings.proxy,
 		form: params,
 		qs: {
@@ -62,11 +62,11 @@ exports._executeMethod = function(method,params = {},resolve,reject,captcha){
 
 			var error = this._apiError(data.error,Array.from(arguments));
 
-			if (error.code !== 14 || error.code === 14 && !captcha) {
-				return;
+			if ((error.code === 14 || error.code !== 6) && captcha) {
+				captcha.reject(error);
 			}
 
-			return captcha.reject();
+			return;
 		}
 
 		if (captcha) {

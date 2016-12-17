@@ -122,7 +122,7 @@ exports.getAttachment = (type,objects) => {
 	type = type.toLowerCase();
 
 	if (Array.isArray(objects)) {
-		return object.map((object) => {
+		return objects.map((object) => {
 			return getAttachment(type,object);
 		});
 	}
