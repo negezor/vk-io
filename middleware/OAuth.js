@@ -297,8 +297,6 @@ class StandaloneAuth extends Auth {
 		phone = phone.replace(new RegExp('^'+prefix),'');
 		phone = phone.replace(new RegExp(postfix+'$'),'');
 
-		require('fs').writeFileSync('checkAuthCode.html',$.html());
-
 		var hash = $('script').text().match(/hash: \'([a-z\d]+)\'/)[1];
 
 		return this.request({
