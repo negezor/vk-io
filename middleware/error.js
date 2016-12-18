@@ -5,15 +5,15 @@ const errorList = {
 	/**
 	 * Превышен лимит запросов в секунду
 	 */
-	6: function(error,request){
-		this._apiRestart(request);
+	6: function(error,task){
+		this._apiRestart(task);
 	},
 	/**
 	 * Обработка капчи
 	 */
-	14: function(error,request){
+	14: function(error,task){
 		if (!this._captchaHandler) {
-			request[3](error);
+			task.reject(error);
 
 			return this.logger.warn('Captcha needed!');
 		}
@@ -22,15 +22,15 @@ const errorList = {
 
 		this._captchaHandler(error.captcha_img,(code) => {
 			return new this.promise((resolve,reject) => {
-				request[1].captcha_sid = sid;
-				request[1].captcha_key = code;
+				task.params.captcha_sid = sid;
+				task.params.captcha_key = code;
 
-				request[4] = {
+				task.params.captcha = {
 					resolve,
 					reject
 				};
 
-				this._apiRestart(request);
+				this._apiRestart(task);
 			});
 		},sid);
 	}
@@ -44,18 +44,16 @@ const errorList = {
  *
  * @return ApiError
  */
-exports._apiError = function(errorVk,request){
-	var error = new this.ApiError(errorVk);
-
-	if (!(error.code in errorList)) {
-		this.logger.error('Api error №'+error.code,error.message);
-
-		request[3](error);
+exports._apiError = function(error,task){
+	if (error.error_code in errorList) {
+		errorList[error.error_code].call(this,error,task);
 
 		return error;
 	}
 
-	errorList[error.code].call(this,errorVk,request);
+	this.logger.error('Api error №'+error.code,error.message);
+
+	task.reject(new this.ApiError(error));
 
 	return error;
 };

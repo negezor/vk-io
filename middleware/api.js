@@ -4,99 +4,79 @@
 exports.API_VERSION = '5.60';
 
 /**
- * Добавляет метод в очередь выполнения VK API
+ * Добавляет метод в очередь запросов
  *
- * @param string method  Название метода
- * @param object params  Параметры
- * @param object captcha Капча
+ * @param string method
+ * @param object params
  *
- * @return promise
+ * @return Promise
  */
-exports._api = function(method,params,captcha){
+exports._api = function(method,params = {}){
 	return new this.promise((resolve,reject) => {
-		var queue = [
+		this._queue.push({
 			method,
 			params,
 			resolve,
 			reject
-		];
+		});
 
-		if (captcha) {
-			queue.push(captcha);
-		}
-
-		this.tasks.queue.push(queue);
-
-		if (!this.tasks.launched) {
+		if (!this._tasks.launched) {
 			this._apiWorked();
 		}
 	});
 };
 
-
 /**
- * Выполняет метод VK API
+ * Выполняет метод
  *
- * @param string   method  Метод API
- * @param object   params  Параметры
- * @param function resolve
- * @param function reject
- * @param object   captcha Обработчики капчи
+ * @param object task
  */
-exports._executeMethod = function(method,params = {},resolve,reject,captcha){
+exports._executeMethod = function(task){
 	this.request({
-		uri: 'https://api.vk.com/method/'+method,
-		method: 'POST',
-		json: true,
+		uri: 'https://api.vk.com/method/'+task.method,
 		timeout: this.settings.timeout * 1e3,
 		proxy: this.settings.proxy,
-		form: params,
+		form: task.params,
+		method: 'POST',
+		json: true,
 		qs: {
 			access_token: this.settings.token,
 			v: this.API_VERSION
 		}
 	})
-	.then((data) => {
-		if ('error' in data) {
-			++this.status.error;
+	.then((result) => {
+		if ('error' in result) {
+			result = this._apiError(result.error,task);
 
-			var error = this._apiError(data.error,Array.from(arguments));
-
-			if ((error.code === 14 || error.code !== 6) && captcha) {
-				captcha.reject(error);
+			if ((result.error_code === 14 || result.error_code !== 6) && 'captcha' in task) {
+				task.captcha.reject(result);
 			}
 
 			return;
 		}
 
-		if (captcha) {
-			captcha.resolve();
+		if ('captcha' in task) {
+			task.captcha.resolve();
 		}
 
-		++this.status.done;
-
-		resolve(('response' in data)?data.response:data);
+		task.resolve(('response' in result)?result.response:result);
 	})
 	.catch((error) => {
-		++this.status.error;
+		if (!this._checkConnectReject(error)) {
+			this.logger.debug('Restarting method request',task.method);
 
-		if (this._checkConnectReject(error)) {
-			error = new this.RequestError(error);
-
-			if (captcha) {
-				captcha.reject(error);
-			}
-
-			this.logger.log('Request error',method);
-
-			return reject(error);
+			return setTimeout(() => this._apiRestart(task),3e3);
 		}
 
-		this.logger.debug('Restart request',method);
+		error = new this.RequestError(error);
 
-		setTimeout(() => {
-			this._apiRestart(Array.from(arguments));
-		},3000);
+		if ('captcha' in task) {
+			task.captcha.reject(error);
+		}
+
+		this.logger.error('Request method error',task.method);
+
+		return task.reject(error);
 	});
 };
 
@@ -104,37 +84,39 @@ exports._executeMethod = function(method,params = {},resolve,reject,captcha){
  * Выполняет методы из очереди
  */
 exports._apiWorked = function(){
-	var tasks = this.tasks;
+	var timer = 1133/this.settings.limit;
+	var tasks = this._tasks;
 
 	tasks.launched = true;
-
-	var timer = 1133/this.settings.limit;
 
 	/**
 	 * Проверяет очередь на выполнения задачи
 	 */
 	const worker = () => {
-		if (tasks.queue.length !== 0) {
-			this._executeMethod.apply(this,tasks.queue.shift());
+		if (this._queue.length === 0) {
+			clearTimeout(tasks.id);
 
-			return tasks.id = setTimeout(worker,timer);
+			return tasks.launched = false;
 		}
 
-		clearTimeout(tasks.id);
+		this._executeMethod(this._queue.shift());
 
-		tasks.launched = false;
+		tasks.id = setTimeout(worker,timer);
 	};
 
 	worker();
 };
 
+
 /**
  * Перезапускает метод
  *
- * @param object request Объект запроса
+ * @param object task
  */
-exports._apiRestart = function(request){
-	this._api(request[0],request[1],request[4] || null)
-	.then(request[2])
-	.catch(request[3]);
+exports._apiRestart = function(task){
+	this._queue.unshift(task);
+
+	if (!this._tasks.launched) {
+		this._apiWorked();
+	}
 };

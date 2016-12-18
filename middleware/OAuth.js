@@ -196,16 +196,15 @@ class StandaloneAuth extends Auth {
 	 * Возвращает данные формы
 	 *
 	 * @param mixed  $
-	 * @param string find
 	 *
 	 * @return object
 	 */
-	_getFormsData ($,find) {
+	_getFormsData ($) {
 		if (!('html' in $)) {
 			$ = cheerio($);
 		}
 
-		var $form = $(find || 'form[action][method="POST"]');
+		var $form = $('form[action][method]');
 		var fileds = {};
 
 		$form.find('input[name]').each(function(){
@@ -242,11 +241,13 @@ class StandaloneAuth extends Auth {
 	 * @param object $
 	 */
 	_twoFactor ($) {
+		throw new AuthError('Двухфакторная авторизация отсутствует в модуле!');
+
 		if (!this._twoFactorHandler) {
 			throw new AuthError('Отсутствует обработчик двухфакторной защиты!');
 		}
 
-		var form = this._getFormsData($,'form[action][method="post"]');
+		var form = this._getFormsData($);
 
 		return new Promise((resolve,reject) => {
 			this._twoFactorHandler((code) => {
@@ -263,7 +264,7 @@ class StandaloneAuth extends Auth {
 						throw new Error('Присутствует сообщение об ошибке!');
 					}
 
-					return $;
+					return this._parseAuthForm($);
 				})
 				.then(resolve)
 				.catch((error) => {
@@ -287,29 +288,27 @@ class StandaloneAuth extends Auth {
 	 * @return Promise
 	 */
 	_setSecurityNumber ($) {
-		var $tr = $('#form_table tr:first-child');
+		var phone = this.phone || this.login;
 
-		var prefix = parseInt($tr.find('.ta_r').text());
-		var postfix = $tr.find('.phone_postfix').text().replace(/[^\d]/,'');
+		if (typeof phone === 'string') {
+			phone = phone.trim().replace(/^(\+|00)/,'');
+		}
 
-		var phone = (this.phone || this.login).trim().replace(/^(\+|00)/,'');
+		var $field = $('.field_prefix');
+
+		var prefix = parseInt($field.first().text());
+		var postfix = parseInt($field.last().text());
 
 		phone = phone.replace(new RegExp('^'+prefix),'');
 		phone = phone.replace(new RegExp(postfix+'$'),'');
 
-		var hash = $('script').text().match(/hash: \'([a-z\d]+)\'/)[1];
+		var form = this._getFormsData($);
+
+		form.fileds.code = phone;
 
 		return this.request({
-			uri: 'vk.com/login.php',
-			qs: {
-				act: 'security_check'
-			},
-			form: {
-				code: phone,
-				al_page: 3,
-				hash: hash,
-				to: ''
-			}
+			uri: 'https://vk.com'+form.action,
+			form: form.fileds
 		})
 		.then(() => this._getBlank())
 		.then(($) => {

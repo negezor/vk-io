@@ -94,8 +94,6 @@ exports._longpollFetch = function(){
 		}
 	})
 	.catch((error) => {
-		++this.status.error;
-
 		if (!lp.launched) {
 			return;
 		}

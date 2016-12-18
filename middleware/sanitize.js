@@ -38,6 +38,8 @@ const longpollPlatform = {
 	7: 'web'
 };
 
+const nullFunction = () => {};
+
 /**
  * Получить флаги сообщения
  *
@@ -108,11 +110,11 @@ exports._longpollSanitize = function(event,next){
  */
 exports._longpollSkipMessage = function(id){
 	return new this.promise((resolve,reject) => {
-		if (!this.settings.ignoreMe) {
+		var skip = this._longpoll.skip;
+
+		if (!this.settings.ignoreMe || skip.length === 0) {
 			return resolve();
 		}
-
-		var skip = this._longpoll.skip;
 
 		this.async.eachOf(
 			skip,
@@ -416,8 +418,6 @@ var receivedMessage = function(message,event,resolve){
 				product: parseInt(attachments.attach1_product_id)
 			};
 
-			++this.status.inbox;
-
 			return resolve([message,'message.sticker']);
 		}
 
@@ -532,13 +532,11 @@ var receivedMessage = function(message,event,resolve){
 		.then((fwd) => message.fwd = fwd);
 	})
 	.then(() => {
-		++this.status.inbox;
-
 		resolve(message);
 
 		return this._longpollSkipMessage(message.id);
 	})
-	.catch((error) => {});
+	.catch(nullFunction);
 };
 
 /**
@@ -592,7 +590,7 @@ exports._longpollEvents = {
 
 				receivedMessage.call(this,message,event,resolve);
 			})
-			.catch(() => {});
+			.catch(nullFunction);
 		}
 	},
 	/* Прочтение всех входящих сообщений с $peer_id вплоть до $local_id  */
@@ -608,7 +606,7 @@ exports._longpollEvents = {
 	/* Друг $user_id стал онлайн */
 	8: {
 		name: 'user.online',
-		action: function(event,resolve){
+		action: (event,resolve) => {
 			resolve({
 				user: parseInt(event[1]),
 				platform: longpollPlatform[event[2]] || null

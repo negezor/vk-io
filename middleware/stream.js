@@ -22,10 +22,7 @@ exports._getExecuteMethod = (method,params = {}) => {
  * @param function handler Обработчик
  */
 const add = (way,handler) => {
-	exports._streamHandlers.push({
-		way: way,
-		handler: handler
-	});
+	exports._streamHandlers.push({way,handler});
 };
 
 /**
@@ -65,8 +62,6 @@ function generator (method,limit,max) {
 				limit: limit
 			};
 
-			this.logger.log('Start stream fetch');
-
 			if (max && (!query.task || query.task && query.task > max)) {
 				query.task = max;
 			}
@@ -94,13 +89,16 @@ function generator (method,limit,max) {
  * @param function reject
  */
 exports._streamPreparation = function(query,resolve,reject){
+	this.logger.debug('Start stream fetch');
+
 	const fetch = () => {
 		this.api.execute({
 			code: streamGetCode(query)
 		})
 		.then((data) => {
 			query.task = data.task;
-			query.container = query.container.concat(data.items);
+
+			query.container.push.apply(query.container,data.items)
 
 			if ('skip' in query) {
 				query.task -= query.skip;
@@ -110,10 +108,12 @@ exports._streamPreparation = function(query,resolve,reject){
 
 			const length = query.container.length;
 
+			var percent = Math.round(length/query.task*100);
+
 			/* Stream task: 500 / 1000 [50%] */
 			this.logger.debug(
 				'Stream task:',length,'/',query.task,
-				'['+Math.round(length/query.task*100)+'%]'
+				'['+(isNaN(percent)?100:percent)+'%]'
 			);
 
 			if (query.task <= length) {

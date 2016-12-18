@@ -41,24 +41,13 @@ base.import(class VK {
 
 		this.setting(setting);
 
-		/* Статистика модуля */
-		this.status = {
-			/* Кол-во исходящих сообщений */
-			outbox: 0,
-			/* Кол-во входящих */
-			inbox: 0,
-			/* Кол-во ошибок */
-			error: 0,
-			/* Кол-во выполненых методов */
-			done: 0
-		};
+		/* Очередь методов */
+		this._queue = [];
 
 		/* Очередь методов */
-		this.tasks = {
+		this._tasks = {
 			/* Запущена ли выполнение очереди */
 			launched: false,
-			/* Методы в очереди */
-			queue: [],
 			/* Идентификатор таймера */
 			id: null
 		};
@@ -90,41 +79,37 @@ base.import(class VK {
 				return;
 			}
 
-			args = Array.from(args);
-
 			args.unshift('[VK]['+level+']');
 
 			console.log.apply(console,args);
 		};
 
 		this.logger = {
-			log: function(){
-				_log('LOG',arguments);
+			log: function(...args){
+				_log('LOG',args);
 			},
-			debug: function(){
-				_log('DEBUG',arguments);
+			debug: function(...args){
+				_log('DEBUG',args);
 			},
-			info: function(){
-				_log('INFO',arguments);
+			info: function(...args){
+				_log('INFO',args);
 			},
-			warn: function(){
-				_log('WARN',arguments);
+			warn: function(...args){
+				_log('WARN',args);
 			},
-			error: function(){
-				_log('ERROR',arguments);
+			error: function(...args){
+				_log('ERROR',args);
 			}
 		};
 
 		/* Установка методов VK API */
 		this.api = {};
 		this._apiMethods.forEach((method) => {
-			var
-			path = method.split('.'),
-			group = path[0];
+			var [group,name] = method.split('.');
 
 			this.api[group] = this.api[group] || {};
 
-			this.api[group][path[1]] = (params) => {
+			this.api[group][name] = (params) => {
 				return this._api(method,params);
 			};
 		});
@@ -137,8 +122,6 @@ base.import(class VK {
 		 * @return promise
 		 */
 		this.api.messages.send = (params = {}) => {
-			++this.status.messages;
-
 			params.random_id = Date.now();
 
 			if ('attachment' in params && Array.isArray(params.attachment)) {
@@ -148,9 +131,6 @@ base.import(class VK {
 			return this._api('messages.send',params)
 			.then((id) => {
 				this._longpoll.skip.push(id);
-
-				--this.status.messages;
-				++this.status.outbox;
 
 				return id;
 			});
@@ -274,6 +254,17 @@ base.import(class VK {
 	}
 
 	/**
+	 * Проверяет является ли ошибка UnknownError
+	 *
+	 * @param mixed error
+	 *
+	 * @return boolean
+	 */
+	isUnknownError (error) {
+		return error instanceof this.UnknownError;
+	}
+
+	/**
 	 * Проверяет является ли ошибка API
 	 *
 	 * @param mixed error
@@ -281,7 +272,7 @@ base.import(class VK {
 	 * @return boolean
 	 */
 	isError (error) {
-		return this.isApiError(error) || this.isRequestError(error) || this.isAuthError(error);
+		return this.isApiError(error) || this.isRequestError(error) || this.isAuthError(error) || this.isUnknownError(error);
 	}
 
 	/**
@@ -301,7 +292,7 @@ base.import(class VK {
 	 * @return integer
 	 */
 	getQueue () {
-		return this.tasks.queue.length;
+		return this._queue.length;
 	}
 
 	/**

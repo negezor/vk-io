@@ -14,10 +14,7 @@ exports._uploadHandlers = [];
  * @param function handler Обработчик
  */
 const add = (way,handler) => {
-	exports._uploadHandlers.push({
-		way: way,
-		handler: handler
-	});
+	exports._uploadHandlers.push({way,handler});
 };
 
 /* Проверяет строку на ссылку */
@@ -111,52 +108,47 @@ exports._uploadBuildForm = function(name,file){
  * @param object options Формы для отправки
  * @param string form    Название формы
  *
- * @return promise
+ * @return Promise
  */
 exports._uploadSend = function(server,options,form){
-	return new this.promise((resolve,reject) => {
-		this._uploadBuildForm(form,options.file,options)
-		.then((formData) => {
-			var params = {
-				uri: server.upload_url,
-				method: 'POST',
-				json: true,
-				formData: formData,
-				proxy: this.settings.proxy,
-				timeout: (options.timeout || 15) * 1000
-			};
+	return this._uploadBuildForm(form,options.file,options)
+	.then((formData) => {
+		var params = {
+			uri: server.upload_url,
+			method: 'POST',
+			json: true,
+			formData: formData,
+			proxy: this.settings.proxy,
+			timeout: (options.timeout || 15) * 1e3
+		};
 
-			if ('qs' in options) {
-				params.qs = options.qs;
-			}
+		if ('qs' in options) {
+			params.qs = options.qs;
+		}
 
-			this.logger.log('Start upload');
+		this.logger.debug('Start upload');
 
-			return this.request(params)
-			.catch((error) => {
-				++this.status.error;
+		return this.request(params)
+		.catch((error) => {
+			this.logger.error('Failed upload');
 
-				this.logger.error('Failed upload');
+			throw new this.RequestError(error);
+		});
+	})
+	.then((result) => {
+		if ('error' in result) {
+			this.logger.error('Failed upload');
 
-				reject(new this.RequestError(error));
-			});
-		})
-		.then((result) => {
-			if ('error' in result) {
-				this.logger.error('Failed upload');
+			throw new this.UnknownError(result.error);
+		}
 
-				return reject(new this.UnknownError(result.error));
-			}
+		this.logger.debug('Success upload');
 
-			this.logger.log('Success upload');
+		if ('response' in result) {
+			return result.response;
+		}
 
-			if ('response' in result) {
-				return resolve(result.response);
-			}
-
-			resolve(result);
-		})
-		.catch(reject);
+		return result;
 	});
 };
 
