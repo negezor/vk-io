@@ -25,7 +25,7 @@ const errorList = {
 				task.params.captcha_sid = sid;
 				task.params.captcha_key = code;
 
-				task.params.captcha = {
+				task.captcha = {
 					resolve,
 					reject
 				};
