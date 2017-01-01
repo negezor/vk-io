@@ -85,19 +85,19 @@ base.import(class VK {
 		};
 
 		this.logger = {
-			log: function(...args){
+			log: (...args) => {
 				_log('LOG',args);
 			},
-			debug: function(...args){
+			debug: (...args) => {
 				_log('DEBUG',args);
 			},
-			info: function(...args){
+			info: (...args) => {
 				_log('INFO',args);
 			},
-			warn: function(...args){
+			warn: (...args) => {
 				_log('WARN',args);
 			},
-			error: function(...args){
+			error: (...args) => {
 				_log('ERROR',args);
 			}
 		};

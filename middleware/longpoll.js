@@ -65,7 +65,7 @@ exports._longpollFetch = function(){
 
 	this.request({
 		uri: lp.server,
-		timeout: 20000,
+		timeout: 2e4,
 		json: true,
 		proxy: this.settings.proxy,
 		qs: {

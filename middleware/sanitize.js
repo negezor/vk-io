@@ -29,13 +29,13 @@ const longpollFlags = {
  * Список платформа longpoll
  */
 const longpollPlatform = {
+	0: 'standalone',
 	1: 'mobile',
 	2: 'iphone',
 	3: 'ipad',
 	4: 'android',
 	5: 'wphone',
-	6: 'windows',
-	7: 'web'
+	6: 'windows'
 };
 
 const nullFunction = () => {};
@@ -49,13 +49,13 @@ const nullFunction = () => {};
  */
 exports._longpollParseFlags = function(sum){
 	return new this.promise((resolve) => {
-		var flags = [], i = 0, bit = 1;
+		var flags = [], bit = 1, i = 0;
 
 		sum = parseInt(sum);
 
 		this.async.whilst(
 			() => {
-				return i < 31;
+				return i < 10;
 			},
 			(next) => {
 				if (sum & bit && bit in longpollFlags) {
@@ -85,18 +85,24 @@ exports._longpollSanitize = function(event,next){
 		return next();
 	}
 
-	var handler = this._longpollEvents[event[0]];
+	var {name,action} = this._longpollEvents[event[0]];
 
-	(new this.promise((resolve) => {
-		handler.action.call(this,event,resolve);
-	}))
-	.then((data) => {
-		if (Array.isArray(data)) {
-			return this.emit(data[1],data[0]);
-		}
+	var result = action.call(this,event);
 
-		this.emit(handler.name,data);
-	});
+	if (typeof result === 'object' && 'then' in result) {
+		next();
+
+		return result.then((response) => {
+			if (!Array.isArray(response)) {
+				return this.emit(name,response);
+			}
+
+			this.emit(response[1],response[0]);
+		})
+		.catch(nullFunction);
+	}
+
+	this.emit(name,result);
 
 	next();
 };
@@ -321,31 +327,31 @@ exports._longpollParseFwd = function(raw){
  */
 var longpollUtil = {
 	/* Флаги сообщения */
-	flags: function(event,resolve){
-		this._longpollParseFlags(event[2])
+	flags: function(event){
+		return this._longpollParseFlags(event[2])
 		.then((flags) => {
-			resolve({
+			return {
 				id: parseInt(event[1]),
 				flags
-			});
+			};
 		});
 	},
 	/* Флаги сообщества */
-	group: function(event,resolve){
-		this._longpollParseFlags(event[2])
+	group: function(event){
+		return this._longpollParseFlags(event[2])
 		.then((flags) => {
-			resolve({
+			return {
 				peer: parseInt(event[1]),
 				flags
-			});
+			};
 		});
 	},
 	/* Прочитанное сообщение */
-	read: (event,resolve) => {
-		resolve({
+	read: (event) => {
+		return {
 			peer: parseInt(event[1]),
 			local: parseInt(event[2])
-		});
+		};
 	}
 };
 
@@ -354,9 +360,8 @@ var longpollUtil = {
  *
  * @param object   message Объект сообщения
  * @param array    event   Список событий
- * @param function resolve Готовое событие
  */
-var receivedMessage = function(message,event,resolve){
+var receivedMessage = function(message,event){
 	/* Timestamp сообщения */
 	message.date = event[4];
 	/* Идентификатор сообщения и пользователя */
@@ -418,7 +423,7 @@ var receivedMessage = function(message,event,resolve){
 				product: parseInt(attachments.attach1_product_id)
 			};
 
-			return resolve([message,'message.sticker']);
+			return [message,'message.sticker'];
 		}
 
 		/* Перевод денег */
@@ -429,12 +434,12 @@ var receivedMessage = function(message,event,resolve){
 				amount: parseInt(attachments.attach1_amount)
 			};
 
-			return resolve([message,'message.money']);
+			return [message,'message.money'];
 		}
 
 		/* Стикер */
 		if (attachments.attach1_type === 'gift') {
-			return resolve([message,'message.gift']);
+			return [message,'message.gift'];
 		}
 	}
 
@@ -509,7 +514,7 @@ var receivedMessage = function(message,event,resolve){
 				name = 'create';
 		}
 
-		return resolve([message,'chat.'+name]);
+		return [message,'chat.'+name];
 	}
 
 	/* Карта */
@@ -522,32 +527,27 @@ var receivedMessage = function(message,event,resolve){
 
 	message.hasEmoji = (('emoji' in attachments)?parseInt(attachments.emoji):0) === 1;
 
-	this._longpollParseAttach(message,attachments)
+	return this._longpollParseAttach(message,attachments)
 	.then(() => {
 		if (!('fwd' in attachments)) {
-			return message.fwd = [];
+			return [];
 		}
 
-		return this._longpollParseFwd(attachments.fwd)
-		.then((fwd) => message.fwd = fwd);
+		return this._longpollParseFwd(attachments.fwd);
 	})
-	.then(() => {
-		resolve(message);
+	.then((fwd) => {
+		message.fwd = fwd;
 
-		return this._longpollSkipMessage(message.id);
-	})
-	.catch(nullFunction);
+		this._longpollSkipMessage(message.id);
+
+		return message;
+	});
 };
 
 /**
  * Список всех event-ов
  */
 exports._longpollEvents = {
-	/* Замена флагов сообщения (FLAGS:=$flags) */
-	1: {
-		name: 'message.flags.replace',
-		action: longpollUtil.flags
-	},
 	/* Установка флагов сообщения (FLAGS|=$mask) */
 	2: {
 		name: 'message.flags.set',
@@ -555,12 +555,12 @@ exports._longpollEvents = {
 	},
 	/* Cброс флагов сообщения (FLAGS&=~$mask) */
 	3: {
-		name: 'message.flags.reset',
+		name: 'message.flags.remove',
 		action: longpollUtil.flags
 	},
 	4: {
 		name: 'message',
-		action: function(event,resolve){
+		action: function(event){
 			/* Объект сообщения */
 			var message = {
 				/* ID сообщения */
@@ -581,16 +581,15 @@ exports._longpollEvents = {
 				text: null
 			};
 
-			this._longpollSkipMessage(message.id)
+			return this._longpollSkipMessage(message.id)
 			.then(() => {
 				return this._longpollParseFlags(event[2]);
 			})
 			.then((flags) => {
 				message.flags = flags;
 
-				receivedMessage.call(this,message,event,resolve);
-			})
-			.catch(nullFunction);
+				return receivedMessage.call(this,message,event);
+			});
 		}
 	},
 	/* Прочтение всех входящих сообщений с $peer_id вплоть до $local_id  */
@@ -606,95 +605,75 @@ exports._longpollEvents = {
 	/* Друг $user_id стал онлайн */
 	8: {
 		name: 'user.online',
-		action: (event,resolve) => {
-			resolve({
-				user: parseInt(event[1]),
+		action: (event) => {
+			return {
+				user: -parseInt(event[1]),
 				platform: longpollPlatform[event[2]] || null
-			});
+			};
 		}
 	},
 	/* Друг $user_id стал оффлайн */
 	9: {
 		name: 'user.offline',
-		action: (event,resolve) => {
-			resolve({
-				user: parseInt(event[1]),
+		action: (event) => {
+			return {
+				user: -parseInt(event[1]),
 				exit: parseInt(event[2]) === 0
-			});
+			};
 		}
 	},
-	/* Сброс флагов фильтрации по папкам для чата/собеседника с $peer_id */
+	/* Сброс флагов диалога $peer_id. Соответствует операции (PEER_FLAGS &= ~$flags). Событие возвращается только для сообщений сообществ. */
 	10: {
-		name: 'group.flags.reset',
+		name: 'group.flags.remove',
 		action: longpollUtil.group
 	},
-	/* Замена флагов фильтрации по папкам для чата/собеседника с $peer_id. */
-	11: {
-		name: 'group.flags.replace',
-		action: longpollUtil.group
-	},
-	/* Установка флагов фильтрации по папкам для чата/собеседника с $peer_id */
+	/* Установка флагов диалога $peer_id. Соответствует операции (PEER_FLAGS|= $flags). Событие возвращается только для сообщений сообществ. */
 	12: {
 		name: 'group.flags.set',
 		action: longpollUtil.group
 	},
 	51: {
 		name: 'chat.action',
-		action: (event,resolve) => {
-			resolve({
+		action: (event) => {
+			return {
 				chat: parseInt(event[1]),
 				self: parseInt(event[2]) === 1
-			});
+			};
 		}
 	},
 	/* Пользователь $user_id начал набирать текст в диалоге. событие должно приходить раз в ~5 секунд при постоянном наборе текста */
 	61: {
 		name: 'typing.user',
-		action: (event,resolve) => {
-			resolve({
-				user: parseInt(event[1]),
-				active: parseInt(event[2]) === 1
-			});
+		action: (event) => {
+			return parseInt(event[1]);
 		}
 	},
 	/* Пользователь $user_id начал набирать текст в беседе $chat_id. */
 	62: {
 		name: 'typing.chat',
-		action: (event,resolve) => {
-			resolve({
+		action: (event) => {
+			return {
 				user: parseInt(event[1]),
 				chat: parseInt(event[2])
-			});
-		}
-	},
-	/* Пользователь $user_id совершил звонок имеющий идентификатор $call_id. */
-	70: {
-		name: 'user.call',
-		action: (event,resolve) => {
-			resolve({
-				user: parseInt(event[1]),
-				call: parseInt(event[2])
-			});
+			};
 		}
 	},
 	/* Новый счетчик непрочитанных в левом меню стал равен $count. */
 	80: {
 		name: 'unread.count',
-		action: (event,resolve) => {
-			resolve({
-				count: parseInt(event[1]),
-			});
+		action: (event) => {
+			return parseInt(event[1]);
 		}
 	},
 	/* Изменились настройки оповещений, где peerId — $peer_id чата/собеседника, sound — 1 || 0, включены/выключены звуковые оповещения, disabled_until — выключение оповещений на необходимый срок (-1: навсегда, 0: включены, other: timestamp, когда нужно включить) */
 	114: {
 		name: 'notify.set',
-		action: (event,resolve) => {
-			resolve({
+		action: (event) => {
+			return {
 				peer: parseInt(event[1]),
 				sound: parseInt(event[2]) === 1,
 				until: parseInt(event[3])
-			});
+			};
 		}
 	}
 };

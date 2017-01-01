@@ -1,6 +1,6 @@
 {
     "name": "vk-io",
-    "version": "2.2.6",
+    "version": "2.2.7",
     "engines": {
         "node": "<6.0.0"
     },
@@ -17,7 +17,7 @@
     "dependencies": {
         "async": "^2.1.4",
         "base-io": "^1.0.3",
-        "bluebird": "^3.4.6",
+        "bluebird": "^3.4.7",
         "cheerio": "^0.22.0",
         "entities": "^1.1.1",
         "request": "^2.79.0",
