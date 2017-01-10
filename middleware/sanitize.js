@@ -41,37 +41,171 @@ const longpollPlatform = {
 const nullFunction = () => {};
 
 /**
- * Получить флаги сообщения
- *
- * @param integer sum
- *
- * @return promise
+ * Повторяющиеся функции
  */
-exports._longpollParseFlags = function(sum){
-	return new this.promise((resolve) => {
-		var flags = [], bit = 1, i = 0;
+const longpollUtil = {
+	/* Флаги сообщения */
+	flags: function(event){
+		return this._longpollParseFlags(event[2])
+		.then((flags) => {
+			return {
+				id: parseInt(event[1]),
+				flags
+			};
+		});
+	},
+	/* Флаги сообщества */
+	group: function(event){
+		return this._longpollParseFlags(event[2])
+		.then((flags) => {
+			return {
+				peer: parseInt(event[1]),
+				flags
+			};
+		});
+	},
+	/* Прочитанное сообщение */
+	read: (event) => {
+		return {
+			peer: parseInt(event[1]),
+			local: parseInt(event[2])
+		};
+	}
+};
 
-		sum = parseInt(sum);
+/**
+ * Список всех event-ов
+ */
+const longpollEvents = {
+	/* Установка флагов сообщения (FLAGS|=$mask) */
+	2: {
+		name: 'message.flags.set',
+		action: longpollUtil.flags
+	},
+	/* Cброс флагов сообщения (FLAGS&=~$mask) */
+	3: {
+		name: 'message.flags.remove',
+		action: longpollUtil.flags
+	},
+	4: {
+		name: 'message',
+		action: function(event){
+			/* Объект сообщения */
+			var message = {
+				/* ID сообщения */
+				id: parseInt(event[1]),
+				/* Флаги сообщения */
+				flags: null,
+				/* Прикрепления */
+				attachments: {},
+				/* Название беседы */
+				title: null,
+				/* ID чата */
+				chat: null,
+				/* Отправлено ли в чате */
+				isChat: false,
+				/* Присутсвуют ли emoji */
+				hasEmoji: false,
+				/* Текст сообщения */
+				text: null
+			};
 
-		this.async.whilst(
-			() => {
-				return i < 10;
-			},
-			(next) => {
-				if (sum & bit && bit in longpollFlags) {
-					flags.push(longpollFlags[bit]);
-				}
+			return this._longpollParseFlags(event[2])
+			.then((flags) => {
+				message.flags = flags;
 
-				bit *= 2;
-				++i;
-
-				next();
-			},
-			() => {
-				resolve(flags);
-			}
-		);
-	});
+				return receivedMessage.call(this,message,event);
+			});
+		}
+	},
+	/* Прочтение всех входящих сообщений с $peer_id вплоть до $local_id  */
+	6: {
+		name: 'message.read.inbox',
+		action: longpollUtil.read
+	},
+	/* Прочтение всех исходящих сообщений с $peer_id вплоть до $local_id  */
+	7: {
+		name: 'message.read.outbox',
+		action: longpollUtil.read
+	},
+	/* Друг $user_id стал онлайн */
+	8: {
+		name: 'user.online',
+		action: (event) => {
+			return {
+				user: -parseInt(event[1]),
+				platform: longpollPlatform[event[2]] || null
+			};
+		}
+	},
+	/* Друг $user_id стал оффлайн */
+	9: {
+		name: 'user.offline',
+		action: (event) => {
+			return {
+				user: -parseInt(event[1]),
+				exit: parseInt(event[2]) === 0
+			};
+		}
+	},
+	/* Сброс флагов диалога $peer_id. Соответствует операции (PEER_FLAGS &= ~$flags). Событие возвращается только для сообщений сообществ. */
+	10: {
+		name: 'group.flags.remove',
+		action: longpollUtil.group
+	},
+	/* Установка флагов диалога $peer_id. Соответствует операции (PEER_FLAGS|= $flags). Событие возвращается только для сообщений сообществ. */
+	12: {
+		name: 'group.flags.set',
+		action: longpollUtil.group
+	},
+	51: {
+		name: 'chat.action',
+		action: (event) => {
+			return {
+				chat: parseInt(event[1]),
+				self: parseInt(event[2]) === 1
+			};
+		}
+	},
+	/* Пользователь $user_id начал набирать текст в диалоге. событие должно приходить раз в ~5 секунд при постоянном наборе текста */
+	61: {
+		name: 'typing.user',
+		action: (event) => {
+			return {
+				user: parseInt(event[1])
+			};
+		}
+	},
+	/* Пользователь $user_id начал набирать текст в беседе $chat_id. */
+	62: {
+		name: 'typing.chat',
+		action: (event) => {
+			return {
+				user: parseInt(event[1]),
+				chat: parseInt(event[2])
+			};
+		}
+	},
+	/* Новый счетчик непрочитанных в левом меню стал равен $count. */
+	80: {
+		name: 'unread.count',
+		action: (event) => {
+			return {
+				count: parseInt(event[1])
+			};
+		}
+	},
+	/* Изменились настройки оповещений, где peerId — $peer_id чата/собеседника, sound — 1 || 0, включены/выключены звуковые оповещения, disabled_until — выключение оповещений на необходимый срок (-1: навсегда, 0: включены, other: timestamp, когда нужно включить) */
+	114: {
+		name: 'notify.set',
+		action: (event) => {
+			return {
+				peer: parseInt(event[1]),
+				sound: parseInt(event[2]) === 1,
+				until: parseInt(event[3])
+			};
+		}
+	}
 };
 
 /**
@@ -81,17 +215,23 @@ exports._longpollParseFlags = function(sum){
  * @param function next  Переход к следущему событию
  */
 exports._longpollSanitize = function(event,next){
-	if (!(event[0] in this._longpollEvents)) {
-		return next();
+	next();
+
+	var id = event[0];
+
+	if (!(id in longpollEvents)) {
+		return;
 	}
 
-	var {name,action} = this._longpollEvents[event[0]];
+	var name = longpollEvents[id].name;
 
-	var result = action.call(this,event);
+	if (this.listenerCount(name) === 0) {
+		return;
+	}
 
-	if (typeof result === 'object' && 'then' in result) {
-		next();
+	var result = longpollEvents[id].action.call(this,event);
 
+	if ('then' in result) {
 		return result.then((response) => {
 			if (!Array.isArray(response)) {
 				return this.emit(name,response);
@@ -103,39 +243,6 @@ exports._longpollSanitize = function(event,next){
 	}
 
 	this.emit(name,result);
-
-	next();
-};
-
-/**
- * Пропускает сообщение
- *
- * @param integer id Идентификатор сообщения
- *
- * @return promise
- */
-exports._longpollSkipMessage = function(id){
-	return new this.promise((resolve,reject) => {
-		var skip = this._longpoll.skip;
-
-		if (!this.settings.ignoreMe || skip.length === 0) {
-			return resolve();
-		}
-
-		this.async.eachOf(
-			skip,
-			(item,key,next) => {
-				if (item === id) {
-					skip.splice(key,1);
-
-					reject();
-				}
-
-				next();
-			},
-			resolve
-		)
-	});
 };
 
 /**
@@ -196,6 +303,41 @@ exports._longpollParseAttach = function(message,attachments){
 		);
 	});
 };
+
+/**
+ * Получить флаги сообщения
+ *
+ * @param integer sum
+ *
+ * @return promise
+ */
+exports._longpollParseFlags = function(sum){
+	return new this.promise((resolve) => {
+		var flags = [], bit = 1, i = 0;
+
+		sum = parseInt(sum);
+
+		this.async.whilst(
+			() => {
+				return i < 10;
+			},
+			(next) => {
+				if (sum & bit && bit in longpollFlags) {
+					flags.push(longpollFlags[bit]);
+				}
+
+				bit *= 2;
+				++i;
+
+				next();
+			},
+			() => {
+				resolve(flags);
+			}
+		);
+	});
+};
+
 
 /**
  * Разделяет строку через разделитель
@@ -322,38 +464,6 @@ exports._longpollParseFwd = function(raw){
 	});
 };
 
-/**
- * Повторяющиеся функции
- */
-var longpollUtil = {
-	/* Флаги сообщения */
-	flags: function(event){
-		return this._longpollParseFlags(event[2])
-		.then((flags) => {
-			return {
-				id: parseInt(event[1]),
-				flags
-			};
-		});
-	},
-	/* Флаги сообщества */
-	group: function(event){
-		return this._longpollParseFlags(event[2])
-		.then((flags) => {
-			return {
-				peer: parseInt(event[1]),
-				flags
-			};
-		});
-	},
-	/* Прочитанное сообщение */
-	read: (event) => {
-		return {
-			peer: parseInt(event[1]),
-			local: parseInt(event[2])
-		};
-	}
-};
 
 /**
  * Новое сообщение
@@ -361,7 +471,7 @@ var longpollUtil = {
  * @param object   message Объект сообщения
  * @param array    event   Список событий
  */
-var receivedMessage = function(message,event){
+function receivedMessage (message,event){
 	/* Timestamp сообщения */
 	message.date = event[4];
 	/* Идентификатор сообщения и пользователя */
@@ -378,11 +488,6 @@ var receivedMessage = function(message,event){
 		message.chat = message.peer - this.SHEAR_CHAT;
 
 		message.user = parseInt(attachments.from);
-	}
-
-	/* Игнорировать ли себя */
-	if (this.settings.ignoreMe && this.settings.id === message.user) {
-		return;
 	}
 
 	if (message.text.length === 0) {
@@ -538,142 +643,6 @@ var receivedMessage = function(message,event){
 	.then((fwd) => {
 		message.fwd = fwd;
 
-		this._longpollSkipMessage(message.id);
-
 		return message;
 	});
-};
-
-/**
- * Список всех event-ов
- */
-exports._longpollEvents = {
-	/* Установка флагов сообщения (FLAGS|=$mask) */
-	2: {
-		name: 'message.flags.set',
-		action: longpollUtil.flags
-	},
-	/* Cброс флагов сообщения (FLAGS&=~$mask) */
-	3: {
-		name: 'message.flags.remove',
-		action: longpollUtil.flags
-	},
-	4: {
-		name: 'message',
-		action: function(event){
-			/* Объект сообщения */
-			var message = {
-				/* ID сообщения */
-				id: parseInt(event[1]),
-				/* Флаги сообщения */
-				flags: null,
-				/* Прикрепления */
-				attach: {},
-				/* Название беседы */
-				title: null,
-				/* ID чата */
-				chat: null,
-				/* Отправлено ли в чате */
-				isChat: false,
-				/* Присутсвуют ли emoji */
-				hasEmoji: false,
-				/* Текст сообщения */
-				text: null
-			};
-
-			return this._longpollSkipMessage(message.id)
-			.then(() => {
-				return this._longpollParseFlags(event[2]);
-			})
-			.then((flags) => {
-				message.flags = flags;
-
-				return receivedMessage.call(this,message,event);
-			});
-		}
-	},
-	/* Прочтение всех входящих сообщений с $peer_id вплоть до $local_id  */
-	6: {
-		name: 'message.read.inbox',
-		action: longpollUtil.read
-	},
-	/* Прочтение всех исходящих сообщений с $peer_id вплоть до $local_id  */
-	7: {
-		name: 'message.read.outbox',
-		action: longpollUtil.read
-	},
-	/* Друг $user_id стал онлайн */
-	8: {
-		name: 'user.online',
-		action: (event) => {
-			return {
-				user: -parseInt(event[1]),
-				platform: longpollPlatform[event[2]] || null
-			};
-		}
-	},
-	/* Друг $user_id стал оффлайн */
-	9: {
-		name: 'user.offline',
-		action: (event) => {
-			return {
-				user: -parseInt(event[1]),
-				exit: parseInt(event[2]) === 0
-			};
-		}
-	},
-	/* Сброс флагов диалога $peer_id. Соответствует операции (PEER_FLAGS &= ~$flags). Событие возвращается только для сообщений сообществ. */
-	10: {
-		name: 'group.flags.remove',
-		action: longpollUtil.group
-	},
-	/* Установка флагов диалога $peer_id. Соответствует операции (PEER_FLAGS|= $flags). Событие возвращается только для сообщений сообществ. */
-	12: {
-		name: 'group.flags.set',
-		action: longpollUtil.group
-	},
-	51: {
-		name: 'chat.action',
-		action: (event) => {
-			return {
-				chat: parseInt(event[1]),
-				self: parseInt(event[2]) === 1
-			};
-		}
-	},
-	/* Пользователь $user_id начал набирать текст в диалоге. событие должно приходить раз в ~5 секунд при постоянном наборе текста */
-	61: {
-		name: 'typing.user',
-		action: (event) => {
-			return parseInt(event[1]);
-		}
-	},
-	/* Пользователь $user_id начал набирать текст в беседе $chat_id. */
-	62: {
-		name: 'typing.chat',
-		action: (event) => {
-			return {
-				user: parseInt(event[1]),
-				chat: parseInt(event[2])
-			};
-		}
-	},
-	/* Новый счетчик непрочитанных в левом меню стал равен $count. */
-	80: {
-		name: 'unread.count',
-		action: (event) => {
-			return parseInt(event[1]);
-		}
-	},
-	/* Изменились настройки оповещений, где peerId — $peer_id чата/собеседника, sound — 1 || 0, включены/выключены звуковые оповещения, disabled_until — выключение оповещений на необходимый срок (-1: навсегда, 0: включены, other: timestamp, когда нужно включить) */
-	114: {
-		name: 'notify.set',
-		action: (event) => {
-			return {
-				peer: parseInt(event[1]),
-				sound: parseInt(event[2]) === 1,
-				until: parseInt(event[3])
-			};
-		}
-	}
 };

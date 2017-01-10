@@ -1,7 +1,7 @@
 'use strict';
 
 /* Версия VK API */
-exports.API_VERSION = '5.60';
+exports.API_VERSION = '5.62';
 
 /**
  * Добавляет метод в очередь запросов

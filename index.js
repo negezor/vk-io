@@ -34,9 +34,7 @@ base.import(class VK {
 			/* Режим debug-а */
 			debug: true,
 			/* Прокси */
-			proxy: null,
-			/* Игнорировать ли самого себя */
-			ignoreMe: true
+			proxy: null
 		};
 
 		this.setting(setting);
@@ -55,8 +53,6 @@ base.import(class VK {
 		this._longpoll = {
 			/* Запущен ли longpoll */
 			launched: false,
-			/* Пропуск ID сообщений */
-			skip: [],
 			/* Сервер longpoll */
 			server: null,
 			/* Ключ авторизации */
@@ -64,6 +60,9 @@ base.import(class VK {
 			/* TimeStamp последних событий */
 			ts: null
 		};
+
+		/* Установка проходимых event-ов */
+		this._acceptLongpoll = {};
 
 		/* Обработчик капчи */
 		this._captchaHandler = null;
@@ -128,12 +127,7 @@ base.import(class VK {
 				params.attachment = params.attachment.join(',');
 			}
 
-			return this._api('messages.send',params)
-			.then((id) => {
-				this._longpoll.skip.push(id);
-
-				return id;
-			});
+			return this._api('messages.send',params);
 		};
 
 		/**

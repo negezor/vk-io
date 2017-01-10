@@ -65,7 +65,7 @@ exports._longpollFetch = function(){
 
 	this.request({
 		uri: lp.server,
-		timeout: 2e4,
+		timeout: 25e3,
 		json: true,
 		proxy: this.settings.proxy,
 		qs: {
@@ -73,7 +73,8 @@ exports._longpollFetch = function(){
 			key: lp.key,
 			ts: lp.ts,
 			mode: 2,
-			wait: 15
+			wait: 20,
+			version: 1
 		}
 	})
 	.then((data) => {
@@ -86,7 +87,9 @@ exports._longpollFetch = function(){
 		lp.ts = data.ts;
 
 		if ('updates' in data && data.updates.length !== 0) {
-			this.async.each(data.updates,this._longpollSanitize.bind(this));
+			this.async.each(data.updates,(update,next) => {
+				this._longpollSanitize(update,next);
+			});
 		}
 
 		if (lp.launched) {

@@ -5,6 +5,9 @@ const cheerio = require('cheerio').load;
 const request = require('request-promise');
 const queryString = require('querystring');
 
+/* Удалить */
+const write = require('fs').writeFileSync;
+
 /* Список разрешений */
 const fullScopes = [
 	'ads',
@@ -177,9 +180,13 @@ class StandaloneAuth extends Auth {
 		return this._getBlankPermission()
 		.then(($) => {
 			var script = $('script[type="text/javascript"][language="javascript"]').text();
-			var grantAccess = script.match(/location\.href = \"(.+)\";/)[1].replace('&cancel=1','');
+			var grantAccess = script.match(/location\.href = \"(.+)\";/);
 
-			return this.request(grantAccess);
+			if (grantAccess === null || !(1 in grantAccess)) {
+				throw new AuthError('Не удалось получить ссылку grant access token!');
+			}
+
+			return this.request(grantAccess[1].replace('&cancel=1',''));
 		})
 		.then((response) => {
 			var hash = queryString.parse(response.request.uri.hash);
@@ -290,9 +297,7 @@ class StandaloneAuth extends Auth {
 	_setSecurityNumber ($) {
 		var phone = this.phone || this.login;
 
-		if (typeof phone === 'string') {
-			phone = phone.trim().replace(/^(\+|00)/,'');
-		}
+		phone = phone.toString().trim().replace(/^(\+|00)/,'');
 
 		var $field = $('.field_prefix');
 

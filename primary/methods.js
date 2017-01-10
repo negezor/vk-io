@@ -241,6 +241,7 @@ exports._apiMethods = [
 	'messages.getById',
 	'messages.search',
 	'messages.getHistory',
+	'messages.getHistoryAttachments',
 	'messages.send',
 	'messages.sendSticker',
 	'messages.delete',
