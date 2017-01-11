@@ -266,7 +266,7 @@ exports._longpollParseAttach = function(message,attachments){
 			(next) => {
 				type = attachments[key+'_type'];
 
-				message.attach[type] = message.attach[type] || [];
+				message.attachments[type] = message.attachments[type] || [];
 
 				++i;
 
@@ -278,7 +278,7 @@ exports._longpollParseAttach = function(message,attachments){
 						photo: (attachments[key+'_photo'] || '').split(','),
 					};
 
-					message.attach[type].push(push);
+					message.attachments[type].push(push);
 
 					return next();
 				}
@@ -295,7 +295,7 @@ exports._longpollParseAttach = function(message,attachments){
 					push.type = attachments[key+'_kind'];
 				}
 
-				message.attach[type].push(push);
+				message.attachments[type].push(push);
 
 				next();
 			},
@@ -624,7 +624,7 @@ function receivedMessage (message,event){
 
 	/* Карта */
 	if ('geo' in attachments) {
-		message.attach.geo = {
+		message.attachments.geo = {
 			id: attachments.geo,
 			provider: parseInt(attachments.geo_provider)
 		};
