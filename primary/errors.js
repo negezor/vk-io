@@ -8,6 +8,18 @@
  * @return boolean
  */
 exports._checkConnectReject = (error) => {
+	if (error.code === 'ETIMEDOUT') {
+		return false;
+	}
+
+	if (error.code === 'ECONNRESET') {
+		return true;
+	}
+
+	if (error.code === 'ECONNREFUSED') {
+		return true;
+	}
+
 	return error.statusCode > 500;
 };
 
