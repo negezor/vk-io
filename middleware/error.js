@@ -51,7 +51,7 @@ exports._apiError = function(error,task){
 		return error;
 	}
 
-	this.logger.error('Api error №'+error.code,error.message);
+	this.logger.error('Api error №'+error.error_code,error.error_msg);
 
 	task.reject(new this.ApiError(error));
 
