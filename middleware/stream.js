@@ -1,5 +1,7 @@
 'use strict';
 
+const Promise = require('bluebird');
+
 /* Обработчики stream */
 exports._streamHandlers = [];
 
@@ -50,8 +52,8 @@ const replaceParams = /\"(count|offset)\":\"(\w+)\"/g;
  */
 function generator (method,limit,max) {
 	add(method,function(params = {}){
-		return new this.promise((resolve,reject) => {
-			var query = {
+		return new Promise((resolve,reject) => {
+			let query = {
 				/* Смещение выборки */
 				offset: parseInt(params.offset || 0),
 				/* Сколько нужно вытащить записей */
@@ -79,7 +81,7 @@ function generator (method,limit,max) {
 			this._streamPreparation(query,resolve,reject);
 		});
 	});
-};
+}
 
 /**
  * Подготавливает данные
@@ -98,7 +100,7 @@ exports._streamPreparation = function(query,resolve,reject){
 		.then((data) => {
 			query.task = data.task;
 
-			query.container.push.apply(query.container,data.items)
+			query.container.push.apply(query.container,data.items);
 
 			if ('skip' in query) {
 				query.task -= query.skip;
@@ -108,7 +110,7 @@ exports._streamPreparation = function(query,resolve,reject){
 
 			const length = query.container.length;
 
-			var percent = Math.round(length/query.task*100);
+			const percent = Math.round(length/query.task*100);
 
 			/* Stream task: 500 / 1000 [50%] */
 			this.logger.debug(

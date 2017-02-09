@@ -1,5 +1,7 @@
 'use strict';
 
+const async = require('async');
+
 /**
  * Устанавливает соединение longpoll
  *
@@ -87,8 +89,10 @@ exports._longpollFetch = function(){
 		lp.ts = data.ts;
 
 		if ('updates' in data && data.updates.length !== 0) {
-			this.async.each(data.updates,(update,next) => {
-				this._longpollSanitize(update,next);
+			async.each(data.updates,(update,next) => {
+				next();
+
+				this._longpollSanitize(update);
 			});
 		}
 

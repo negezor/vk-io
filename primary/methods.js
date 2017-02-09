@@ -398,3 +398,17 @@ exports._apiMethods = [
 	'ads.getTargetGroups',
 	'ads.importTargetContacts'
 ];
+
+/* Серверные методы */
+exports._secureMethods = [
+	'secure.addAppEvent',
+	'secure.checkToken',
+	'secure.getAppBalance',
+	'secure.getSMSHistory',
+	'secure.getTransactionsHistory',
+	'secure.getUserLevel',
+	'secure.sendNotification',
+	'secure.sendSMSNotification',
+	'secure.setCounter',
+	'secure.setUserLevel'
+];

@@ -24,29 +24,6 @@ exports._checkConnectReject = (error) => {
 };
 
 /**
- * Обработка ошибок VK API
- */
-exports.ApiError = class ApiError extends Error {
-	/**
-	 * Конструктор
-	 *
-	 * @param object error Объект ошибки
-	 */
-	constructor (error) {
-		super(error.error_msg);
-		this.name = this.constructor.name;
-
-		this.code = parseInt(error.error_code);
-		this.message = error.error_msg;
-		this.params = error.request_params;
-
-		if (Error.captureStackTrace) {
-			Error.captureStackTrace(this,this.constructor.name);
-		}
-	}
-};
-
-/**
  * Обаботка ошибок запроса
  */
 exports.RequestError = class RequestError extends Error {
@@ -67,11 +44,11 @@ exports.RequestError = class RequestError extends Error {
 			this.message = error.message;
 		}
 
-		if (Error.captureStackTrace) {
+		if ('captureStackTrace' in Error) {
 			Error.captureStackTrace(this,this.constructor.name);
 		}
 	}
-}
+};
 
 /**
  * Обработка неизвестный ошибок
@@ -88,8 +65,8 @@ exports.UnknownError = class UnknownError extends Error {
 
 		this.message = error;
 
-		if (Error.captureStackTrace) {
+		if ('captureStackTrace' in Error) {
 			Error.captureStackTrace(this,this.constructor.name);
 		}
 	}
-}
+};

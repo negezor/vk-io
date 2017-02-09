@@ -29,6 +29,10 @@ base.import(class VK {
 			scope: null,
 			/* Лимит запросов в секунду */
 			limit: 3,
+			/* Перезапускать при ошибках */
+			restartError: true,
+			/* Количество доступных попыток перезапусков */
+			restartCount: 3,
 			/* Время сброса соединения на API */
 			timeout: 6,
 			/* Режим debug-а */
@@ -60,9 +64,6 @@ base.import(class VK {
 			/* TimeStamp последних событий */
 			ts: null
 		};
-
-		/* Установка проходимых event-ов */
-		this._acceptLongpoll = {};
 
 		/* Обработчик капчи */
 		this._captchaHandler = null;
@@ -109,6 +110,18 @@ base.import(class VK {
 			this.api[group] = this.api[group] || {};
 
 			this.api[group][name] = (params) => {
+				return this._api(method,params);
+			};
+		});
+
+		this._secureMethods.forEach((method) => {
+			var [group,name] = method.split('.');
+
+			this.api[group] = this.api[group] || {};
+
+			this.api[group][name] = (params = {}) => {
+				params.client_secret = this.settings.key;
+
 				return this._api(method,params);
 			};
 		});
@@ -187,7 +200,7 @@ base.import(class VK {
 	 	this._captchaHandler = handler;
 
 		return this;
-	 };
+	 }
 
 	 /**
 	  * Устанавливает логер сообщений

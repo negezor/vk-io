@@ -1,5 +1,9 @@
 'use strict';
 
+const async = require('async');
+
+const Promise = require('bluebird');
+
 /**
  * Создаёт чепочку методов которые выполняются через execute
  */
@@ -26,7 +30,7 @@ class Chain {
 			throw new Error('Chain завершил работу!');
 		}
 
-		return new this.vk.promise((resolve) => {
+		return new Promise((resolve) => {
 			this.executes.push({
 				code: this.vk._getExecuteMethod(method,params),
 				resolve
@@ -46,12 +50,12 @@ class Chain {
 			return this.vk.promise.resolve([]);
 		}
 
-		return new this.vk.promise((resolve,reject) => {
+		return new Promise((resolve,reject) => {
 			var queue = this.executes;
 
 			var promises = [];
 
-			this.vk.async.whilst(
+			async.whilst(
 				() => {
 					return queue.length !== 0;
 				},
@@ -78,7 +82,7 @@ class Chain {
 					.then(resolve)
 					.catch(reject);
 				}
-			)
+			);
 		});
 	}
 
@@ -112,10 +116,10 @@ class Chain {
 	 * @return Promise
 	 */
 	_getCode (queues) {
-		return new this.vk.promise((resolve) => {
+		return new Promise((resolve) => {
 			var out = [];
 
-			this.vk.async.each(
+			async.each(
 				queues,
 				(queue,next) => {
 					out.push(queue.code);
@@ -138,8 +142,8 @@ class Chain {
 	 * @return Promise
 	 */
 	_resolveExecutes (task,results) {
-		return new this.vk.promise((resolve) => {
-			this.vk.async.eachOf(
+		return new Promise((resolve) => {
+			async.eachOf(
 				results,
 				(result,key,next) => {
 					task[key].resolve(result);
@@ -149,10 +153,10 @@ class Chain {
 				() => {
 					resolve(results);
 				}
-			)
+			);
 		});
 	}
-};
+}
 
 /**
  * Создаёт цепочку
@@ -173,10 +177,10 @@ exports.chain = function(){
  * @return Promise
  */
 exports.executes = function(name,queues = []){
-	return new this.promise((resolve,reject) => {
+	return new Promise((resolve,reject) => {
 		const chain = this.chain();
 
-		this.async.each(
+		async.each(
 			queues,
 			(queue,next) => {
 				chain.append(name,queue);
@@ -188,6 +192,6 @@ exports.executes = function(name,queues = []){
 				.then(resolve)
 				.catch(reject);
 			}
-		)
+		);
 	});
 };

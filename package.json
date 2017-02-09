@@ -1,6 +1,6 @@
 {
     "name": "vk-io",
-    "version": "2.2.8",
+    "version": "2.2.9",
     "engines": {
         "node": "<6.0.0"
     },

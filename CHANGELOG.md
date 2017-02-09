@@ -5,6 +5,23 @@
 - Сделать обработку двухфакторной авторизации standalone и приложений официальных (возможно)
 - Изменить событие `notify.set` (ожидание ответа от тех поддержки)
 
+## [2.2.9] - 09.02.2017
+### Добавлено
+- Добавлены серверные методы secure.* для их использования нужен ключ в настройках `key`
+- Добавлена авторизация для серверных приложений `appAuth`
+- Добавлены методы для `message` в longpoll, `hasAttachments()`, `hasAttachment()`, `hasFwd()`, `getFwd()`, `isDialog()`, `isChat()`, `isGroup()`
+- Добавлены настройки `restartError`, `restartCount` для рестарта методов с ошибкой
+
+## Исправлено
+- Полный рефакторинг с расчётом на производительности обработки longpoll
+
+## Удалено
+- Удалено свойство `fwd` в параметрых метода `send` longpoll
+- Удалено событие `message.gift` используйте `message.hasAttachment('gift')`
+- Удалено событие `message.money` используйте `message.hasAttachment('money')`
+- Удалено событие `message.sticker` используйте `message.hasAttachment('sticker')`
+- Удалено свойство `isChat` в `message` longpoll, используйте `message.from === 'chat'` или `message.isChat()`
+
 ## [2.2.8] - 11-01-2017
 ### Добавлено
 - Добавлен метод `messages.getHistoryAttachments`

@@ -1,5 +1,7 @@
 'use strict';
 
+const Promise = require('bluebird');
+
 /* Версия VK API */
 exports.API_VERSION = '5.62';
 
@@ -12,7 +14,7 @@ exports.API_VERSION = '5.62';
  * @return Promise
  */
 exports._api = function(method,params = {}){
-	return new this.promise((resolve,reject) => {
+	return new Promise((resolve,reject) => {
 		this._queue.push({
 			method,
 			params,
@@ -62,8 +64,23 @@ exports._executeMethod = function(task){
 		task.resolve(('response' in result)?result.response:result);
 	})
 	.catch((error) => {
-		if (!this._checkConnectReject(error)) {
-			this.logger.debug('Restarting method request',task.method);
+		let {restartError,restartCount} = this.settings;
+
+		if (!('restarts' in task)) {
+			task.restarts = 0;
+		}
+
+		let isRestart = task.restarts < restartCount;
+
+		if (restartError && isRestart && !this._checkConnectReject(error)) {
+			++task.restarts;
+
+			this.logger.debug(
+				'Restarting method request',
+				task.method,
+				'the number of attempts',
+				task.restarts
+			);
 
 			return setTimeout(() => this._apiRestart(task),3e3);
 		}
@@ -84,8 +101,9 @@ exports._executeMethod = function(task){
  * Выполняет методы из очереди
  */
 exports._apiWorked = function(){
-	var timer = 1133/this.settings.limit;
-	var tasks = this._tasks;
+	const timer = 1133/this.settings.limit;
+
+	let tasks = this._tasks;
 
 	tasks.launched = true;
 

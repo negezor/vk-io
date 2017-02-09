@@ -1,5 +1,32 @@
 'use strict';
 
+const Promise = require('bluebird');
+
+/**
+ * Обработка ошибок VK API
+ */
+class ApiError extends Error {
+	/**
+	 * Конструктор
+	 *
+	 * @param object error Объект ошибки
+	 */
+	constructor (error) {
+		super(error.error_msg);
+		this.name = this.constructor.name;
+
+		this.code = parseInt(error.error_code);
+		this.message = error.error_msg;
+		this.params = error.request_params;
+
+		if ('captureStackTrace' in Error) {
+			Error.captureStackTrace(this,this.constructor.name);
+		}
+	}
+}
+
+exports.ApiError = ApiError;
+
 /* Обработчики ошибок VK API */
 const errorList = {
 	/**
@@ -21,7 +48,7 @@ const errorList = {
 		const sid = error.captcha_sid;
 
 		this._captchaHandler(error.captcha_img,(code) => {
-			return new this.promise((resolve,reject) => {
+			return new Promise((resolve,reject) => {
 				task.params.captcha_sid = sid;
 				task.params.captcha_key = code;
 
@@ -51,9 +78,9 @@ exports._apiError = function(error,task){
 		return error;
 	}
 
-	this.logger.error('Api error №'+error.code,error.message);
+	this.logger.error('Api error №'+error.error_code,error.error_msg);
 
-	task.reject(new this.ApiError(error));
+	task.reject(new ApiError(error));
 
 	return error;
 };

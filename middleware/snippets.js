@@ -1,5 +1,7 @@
 'use strict';
 
+const Promise = require('bluebird');
+
 const mainTypes = /(photo|video|doc|album|topic|wall|page)([\d-]+)_(\d+)/i;
 
 const otherTypes = /(app(?:lication)?|id|club)(\d+)/i;
@@ -20,9 +22,9 @@ const aliasOtherType = {
  * @return promise
  */
 exports.parseLink = function(link){
-	return new this.promise((resolve,reject) => {
+	return new Promise((resolve,reject) => {
 		if (mainTypes.test(link)) {
-			var match = link.match(mainTypes);
+			let match = link.match(mainTypes);
 
 			return resolve({
 				id: parseInt(match[3]),
@@ -32,9 +34,9 @@ exports.parseLink = function(link){
 		}
 
 		if (otherTypes.test(link)) {
-			var match = link.match(otherTypes);
+			let match = link.match(otherTypes);
 
-			var type = match[1].toLowerCase();
+			let type = match[1].toLowerCase();
 
 			if (type in aliasOtherType) {
 				type = aliasOtherType[type];

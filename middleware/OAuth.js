@@ -1,12 +1,10 @@
 'use strict';
 
-const Promise = require('bluebird');
 const cheerio = require('cheerio').load;
 const request = require('request-promise');
 const queryString = require('querystring');
 
-/* Удалить */
-const write = require('fs').writeFileSync;
+const Promise = require('bluebird');
 
 /* Список разрешений */
 const fullScopes = [
@@ -51,7 +49,7 @@ class AuthError extends Error {
 			Error.captureStackTrace(this,this.constructor.name);
 		}
 	}
-};
+}
 
 exports.AuthError = AuthError;
 
@@ -238,7 +236,7 @@ class StandaloneAuth extends Auth {
 				return $;
 			}
 
-			return this._parseAuthForm($)
+			return this._parseAuthForm($);
 		});
 	}
 
@@ -549,5 +547,32 @@ exports.ipadAuth = function(){
 	return this._directAuth({
 		id: 3682744,
 		key: 'mY6CDUswIVdJLCD3j15n'
+	});
+};
+
+/**
+ * Возвращает токен для серверной авторизации
+ *
+ * @return Promise
+ */
+exports.appAuth = function(){
+	return this.request({
+		uri: 'https://oauth.vk.com/access_token',
+		qs: {
+			grant_type: 'client_credentials',
+			client_secret: this.settings.key,
+			client_id: this.settings.app,
+			v: this.API_VERSION
+		},
+		json: true
+	})
+	.then((response) => {
+		if ('access_token' in response) {
+			return response.access_token;
+		}
+
+		console.log('[VK] Please send the response code here: https://github.com/negezor/vk-io/issues',response);
+
+		throw new AuthError('Could not get the token!');
 	});
 };

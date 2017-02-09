@@ -2,7 +2,10 @@
 
 const request = require('request');
 const stream = require('stream');
+const async = require('async');
 const fs = require('fs');
+
+const Promise = require('bluebird');
 
 /* Обработчики upload */
 exports._uploadHandlers = [];
@@ -76,7 +79,7 @@ const optionsUpload = (params) => {
  * @return promise
  */
 exports._uploadBuildForm = function(name,file){
-	return new this.promise((resolve) => {
+	return new Promise((resolve) => {
 		var form = {};
 
 		if (!Array.isArray(file)) {
@@ -87,7 +90,7 @@ exports._uploadBuildForm = function(name,file){
 
 		var index = 0;
 
-		this.async.each(
+		async.each(
 			file,
 			(item,next) => {
 				form[name+(++index)] = uploadGetStream(item);
