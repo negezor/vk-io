@@ -165,6 +165,30 @@ auth.getCookieJar(); // -> CookieJar - Хранилище cookie
 auth.getScope(); // -> array - Список разрешений
 ```
 
+### Серверная авторизация
+Токен получается для использования в серверных метода, пример
+```javascript
+const server = new (require('vk-io'));
+
+server.setting({
+	app: '<app>',
+	key: '<secret key app>'
+});
+
+server.appAuth()
+.then((accessToken) => {
+	server.setToken(accessToken);
+
+	const userCheckToken = '<token to check>';
+
+	return server.api.secure.checkToken({
+		token: userCheckToken
+	});
+})
+.then(console.log)
+.catch(console.error);
+```
+
 ### Авторизация через официальные приложения
 Для авторизации необходимо установить только `pass`, `login` или `phone`
 
