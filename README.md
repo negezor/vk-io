@@ -293,8 +293,8 @@ chain.append('friends.get',{
 
 chain.execute()
 .then((data) => {
-	var users = data[0];
-	var friends = data[1];
+	let users = data[0];
+	let friends = data[1];
 
 	console.log(users,friends);
 });
@@ -933,6 +933,19 @@ vk.API_VERSION;
 Проверяет наличие метода
 ```javascript
 vk.isMethod(<Метод>); // -> boolean
+```
+
+## Тесты
+Для запуска теста нужно написать в консоль
+```shell
+npm test
+```
+
+Для расширеного тестирование нужно открыть файл `test/test.js` и вставить полный токен для проверки загрузки, отправки сообщений и выгрузки данных
+
+Стоит заметить что все изменения будут происходить в [группе](https://vk.com/club139876267), на вашей странице ничего не изменится.
+```javascript
+const tokenExtendTest = <token>;
 ```
 
 ## TODO

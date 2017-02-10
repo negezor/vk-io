@@ -51,7 +51,7 @@ const uploadGetStream = (file) => {
  * @return object
  */
 const optionsUpload = (params) => {
-	var options = {};
+	let options = {};
 
 	options.file = params.file;
 	delete params.file;
@@ -78,9 +78,9 @@ const optionsUpload = (params) => {
  *
  * @return promise
  */
-exports._uploadBuildForm = function(name,file){
+const uploadBuildForm = (name,file) => {
 	return new Promise((resolve) => {
-		var form = {};
+		let form = {};
 
 		if (!Array.isArray(file)) {
 			form[name] = uploadGetStream(file);
@@ -88,9 +88,9 @@ exports._uploadBuildForm = function(name,file){
 			return resolve(form);
 		}
 
-		var index = 0;
+		let index = 0;
 
-		async.each(
+		async.eachSeries(
 			file,
 			(item,next) => {
 				form[name+(++index)] = uploadGetStream(item);
@@ -114,7 +114,7 @@ exports._uploadBuildForm = function(name,file){
  * @return Promise
  */
 exports._uploadSend = function(server,options,form){
-	return this._uploadBuildForm(form,options.file,options)
+	return uploadBuildForm(form,options.file,options)
 	.then((formData) => {
 		var params = {
 			uri: server.upload_url,
@@ -167,7 +167,7 @@ exports._uploadSend = function(server,options,form){
  * }) -> Promise
  */
 add('album',function(params){
-	var options = optionsUpload(params);
+	let options = optionsUpload(params);
 
 	if (!Array.isArray(options.file)) {
 		options.file = [options.file];
@@ -200,7 +200,7 @@ add('album',function(params){
  * }) -> promise
  */
 add('wall',function(params){
-	var options = optionsUpload(params);
+	let options = optionsUpload(params);
 
 	return this.api.photos.getWallUploadServer(params)
 	.then((server) => {
@@ -239,7 +239,7 @@ add('owner',function(params){
 		delete params.crop;
 	}
 
-	var options = optionsUpload(params);
+	let options = optionsUpload(params);
 
 	return this.api.photos.getOwnerPhotoUploadServer(params)
 	.then((server) => {
@@ -265,7 +265,7 @@ add('owner',function(params){
  * }) -> promise
  */
 add('message',function(params){
-	var options = optionsUpload(params);
+	let options = optionsUpload(params);
 
 	return this.api.photos.getMessagesUploadServer(params)
 	.then((server) => {
@@ -302,7 +302,7 @@ add('chat',function(params){
 		delete params.crop;
 	}
 
-	var options = optionsUpload(params);
+	let options = optionsUpload(params);
 
 	return this.api.photos.getChatUploadServer(params)
 	.then((server) => {
@@ -343,7 +343,7 @@ add('product',function(params){
 		delete params.crop;
 	}
 
-	var options = optionsUpload(params);
+	let options = optionsUpload(params);
 
 	return this.api.photos.getMarketUploadServer(params)
 	.then((server) => {
@@ -369,7 +369,7 @@ add('product',function(params){
  * }) -> promise
  */
 add('selection',function(params){
-	var options = optionsUpload(params);
+	let options = optionsUpload(params);
 
 	return this.api.photos.getMarketAlbumUploadServer(params)
 	.then((server) => {
@@ -395,7 +395,7 @@ add('selection',function(params){
  * }) -> promise
  */
 add('audio',function(params){
-	var options = optionsUpload(params);
+	let options = optionsUpload(params);
 
 	return this.api.audio.getUploadServer(params)
 	.then((server) => {
@@ -424,7 +424,7 @@ add('audio',function(params){
  * }) -> promise
  */
 add('video',function(params){
-	var options = optionsUpload(params);
+	let options = optionsUpload(params);
 
 	return this.api.video.save(params)
 	.then((server) => {
@@ -443,7 +443,7 @@ add('video',function(params){
  * }) -> promise
  */
 add('doc',function(params){
-	var options = optionsUpload(params);
+	let options = optionsUpload(params);
 
 	return this.api.docs.getUploadServer(params)
 	.then((server) => {

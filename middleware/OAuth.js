@@ -66,7 +66,7 @@ class Auth {
 		this.setCookieJar(request.jar());
 		this.setScope(setting.scope || fullScopes);
 
-		for (var key of ['app','key','login','phone','pass','version','proxy']) {
+		for (let key of ['app','key','login','phone','pass','version','proxy']) {
 			this[key] = setting[key] || null;
 		}
 
@@ -177,8 +177,8 @@ class StandaloneAuth extends Auth {
 	run () {
 		return this._getBlankPermission()
 		.then(($) => {
-			var script = $('script[type="text/javascript"][language="javascript"]').text();
-			var grantAccess = script.match(/location\.href = \"(.+)\";/);
+			let script = $('script[type="text/javascript"][language="javascript"]').text();
+			let grantAccess = script.match(/location\.href = \"(.+)\";/);
 
 			if (grantAccess === null || !(1 in grantAccess)) {
 				throw new AuthError('Не удалось получить ссылку grant access token!');
@@ -187,7 +187,7 @@ class StandaloneAuth extends Auth {
 			return this.request(grantAccess[1].replace('&cancel=1',''));
 		})
 		.then((response) => {
-			var hash = queryString.parse(response.request.uri.hash);
+			let hash = queryString.parse(response.request.uri.hash);
 
 			if ('#access_token' in hash) {
 				return hash['#access_token'];
@@ -209,11 +209,11 @@ class StandaloneAuth extends Auth {
 			$ = cheerio($);
 		}
 
-		var $form = $('form[action][method]');
-		var fileds = {};
+		let $form = $('form[action][method]');
+		let fileds = {};
 
 		$form.find('input[name]').each(function(){
-			var $elem = $(this);
+			let $elem = $(this);
 
 			fileds[$elem.attr('name')] = $elem.val();
 		});
@@ -252,7 +252,7 @@ class StandaloneAuth extends Auth {
 			throw new AuthError('Отсутствует обработчик двухфакторной защиты!');
 		}
 
-		var form = this._getFormsData($);
+		let form = this._getFormsData($);
 
 		return new Promise((resolve,reject) => {
 			this._twoFactorHandler((code) => {
@@ -293,19 +293,19 @@ class StandaloneAuth extends Auth {
 	 * @return Promise
 	 */
 	_setSecurityNumber ($) {
-		var phone = this.phone || this.login;
+		let phone = this.phone || this.login;
 
 		phone = phone.toString().trim().replace(/^(\+|00)/,'');
 
-		var $field = $('.field_prefix');
+		let $field = $('.field_prefix');
 
-		var prefix = parseInt($field.first().text());
-		var postfix = parseInt($field.last().text());
+		let prefix = parseInt($field.first().text());
+		let postfix = parseInt($field.last().text());
 
 		phone = phone.replace(new RegExp('^'+prefix),'');
 		phone = phone.replace(new RegExp(postfix+'$'),'');
 
-		var form = this._getFormsData($);
+		let form = this._getFormsData($);
 
 		form.fileds.code = phone;
 
@@ -331,7 +331,7 @@ class StandaloneAuth extends Auth {
 	 * @return object
 	 */
 	_parseAuthForm ($) {
-		var form = this._getFormsData($);
+		let form = this._getFormsData($);
 
 		form.fileds.email = this.login || this.phone;
 		form.fileds.pass = this.pass;
@@ -392,7 +392,7 @@ class DirectAuth extends Auth {
 		return this._getToken()
 		.then((data) => {
 			if (!('error' in data) && 'access_token' in data) {
-				var out = {
+				let out = {
 					user: data.user_id,
 					token: data.access_token,
 					expires: data.expires_in,
@@ -465,7 +465,7 @@ class DirectAuth extends Auth {
  * @return StandaloneAuth
  */
 exports.standaloneAuth = function(){
-	var params = Object.assign({},this.settings);
+	let params = Object.assign({},this.settings);
 
 	params.version = this.API_VERSION;
 
@@ -480,7 +480,7 @@ exports.standaloneAuth = function(){
  * @return DirectAuth
  */
 exports._directAuth = function(app){
-	var params = Object.assign({},this.settings);
+	let params = Object.assign({},this.settings);
 
 	params.version = this.API_VERSION;
 

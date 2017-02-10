@@ -47,7 +47,7 @@ class Chain {
 		this._isRun = true;
 
 		if (this.executes.length === 0) {
-			return this.vk.promise.resolve([]);
+			return Promise.resolve([]);
 		}
 
 		return new Promise((resolve,reject) => {
@@ -77,8 +77,8 @@ class Chain {
 					next();
 				},
 				(error) => {
-					this.vk.promise.all(promises)
-					.then((results) => [].concat(...results))
+					Promise.all(promises)
+					.then((results) => Array.prototype.concat.apply([],results))
 					.then(resolve)
 					.catch(reject);
 				}
@@ -119,7 +119,7 @@ class Chain {
 		return new Promise((resolve) => {
 			var out = [];
 
-			async.each(
+			async.eachSeries(
 				queues,
 				(queue,next) => {
 					out.push(queue.code);
@@ -143,7 +143,7 @@ class Chain {
 	 */
 	_resolveExecutes (task,results) {
 		return new Promise((resolve) => {
-			async.eachOf(
+			async.eachOfSeries(
 				results,
 				(result,key,next) => {
 					task[key].resolve(result);

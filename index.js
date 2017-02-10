@@ -1,14 +1,18 @@
 'use strict';
 
+const EventEmitter = require('events').EventEmitter;
+
 const base = new (require('base-io'));
 
-base.import(class VK {
+base.import(class VK extends EventEmitter {
 	/**
 	 * Конструктор
 	 *
 	 * @param object setting
 	 */
 	constructor (setting = {}) {
+		super();
+
 		/* Основные настройки */
 		this.settings = {
 			/* Идентификатор пользователя */
@@ -314,7 +318,6 @@ base.import(class VK {
 
 base
 .root(__dirname)
-.emitter()
 .change()
 .scan([
 	'primary',

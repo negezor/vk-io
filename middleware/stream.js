@@ -34,7 +34,7 @@ const add = (way,handler) => {
  *
  * @return promise
  */
-const streamGetCode = function(query){
+const streamGetCode = (query) => {
 	return 'var a='+query.limit+',b='+(query.task || 0)+',c='+query.container.length+',d='+query.offset+',f=[],i=0,j,g,h=b==0||c<b;while(i<25&&h){j='+query.execute+';f=f+j.items;if(b==0||b>j.count)b=j.count;c=c+j.items.length;d=d+j.items.length;g=b-c;if(g<a)a=g;h=c<b;i=i+1;}return {task:b,items:f.splice(0,b)};';
 };
 
@@ -557,3 +557,47 @@ generator('database.getFaculties',10000);
  * Возвращает список кафедр университета по указанному факультету.
  */
 generator('database.getChairs',10000);
+
+/**
+ * Код VK Execute для загрузки
+ */
+/*
+var count = <count>,
+    task = <task> | 0,
+    skip = <skip> | 0,
+    offset = <offset>,
+    items = [],
+    i = 0,
+    result, left, isAccept = task == 0 || skip < task;
+
+while (i < 25 && isAccept) {
+    result = API.<group>.<method>({
+		<params>
+        "count": count,
+        "offset": offset
+    });
+
+    items = items + result.items;
+
+    if (task == 0 || task > result.count) {
+		task = result.count;
+	}
+
+    skip = skip + result.items.length;
+    offset = offset + result.items.length;
+    left = task - skip;
+
+    if (left < count) {
+		count = left;
+	}
+
+    isAccept = skip < task;
+
+    i = i + 1;
+}
+return {
+    task: task,
+    items: items.splice(0, task)
+};
+
+*/

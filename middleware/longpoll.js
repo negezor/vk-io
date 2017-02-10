@@ -2,16 +2,18 @@
 
 const async = require('async');
 
+const Promise = require('bluebird');
+
 /**
  * Устанавливает соединение longpoll
  *
  * @return promise
  */
 exports.longpoll = function(){
-	var lp = this._longpoll;
+	let lp = this._longpoll;
 
 	if (lp.launched) {
-		return this.promise.resolve();
+		return Promise.resolve();
 	}
 
 	return this.api.messages.getLongPollServer({
@@ -59,7 +61,7 @@ exports._longpollRestart = function(){
  * Получает данные и отправляет на чистку
  */
 exports._longpollFetch = function(){
-	var lp = this._longpoll;
+	let lp = this._longpoll;
 
 	if (!lp.launched) {
 		return;
