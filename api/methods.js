@@ -336,7 +336,7 @@ module.exports = [
     'messages.search',
     'messages.searchDialogs',
     'messages.send',
-	'messages.sendSticker',
+    'messages.sendSticker',
     'messages.setActivity',
     'messages.setChatPhoto',
 
