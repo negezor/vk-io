@@ -213,9 +213,9 @@ module.exports = [
      * Методы для работы с подарками
      */
     'gifts.get',
-	/* Неофициально */
-	'gifts.send',
-	'gifts.getCatalog',
+    /* Неофициально */
+    'gifts.send',
+    'gifts.getCatalog',
 
     /**
      * Groups
@@ -336,7 +336,6 @@ module.exports = [
     'messages.search',
     'messages.searchDialogs',
     'messages.send',
-	'messages.sendSticker',
     'messages.setActivity',
     'messages.setChatPhoto',
 
@@ -576,8 +575,8 @@ module.exports = [
     'video.restoreComment',
     'video.save',
     'video.search',
-	/* Неофициально */
-	'video.getRecommendedLiveVideos',
+    /* Неофициально */
+    'video.getRecommendedLiveVideos',
 
     /**
      * Wall

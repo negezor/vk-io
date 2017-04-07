@@ -22,3 +22,23 @@ exports.getMethodApi = (method,params = {}) => {
 exports.getChainCode = (chain) => {
 	return `return [${chain.join(',')}];`;
 };
+
+/**
+ * Обрабатывает стак promise
+ *
+ * @param {Array} tasks
+ * @param {Array} result
+ */
+function resolvePromisesTask (tasks,result) {
+	let errors = 0;
+
+	result.response.forEach((response,i) => {
+		if (response !== false) {
+			return tasks[i].resolve(response);
+		}
+
+		tasks[i].reject(result.errors[errors++]);
+	});
+}
+
+exports.resolvePromisesTask = resolvePromisesTask;

@@ -63,7 +63,7 @@ module.exports = {
 				const act = message[7].source_act;
 
 				if (act in actions) {
-					return actions[act](this,message);
+					return actions[act](this.vk,message);
 				}
 
 				return null;
@@ -73,7 +73,7 @@ module.exports = {
 				return null;
 			}
 
-			return new Message(this,message);
+			return new Message(this.vk,message);
 		}
 	},
 	6: {

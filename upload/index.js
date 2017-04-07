@@ -270,8 +270,6 @@ class Upload {
 
 		if ('uploadUrl' in options) {
 			getServer = () => {
-				console.log('Кастомный сервер');
-
 				return Promise.resolve({
 					upload_url: options.uploadUrl
 				});

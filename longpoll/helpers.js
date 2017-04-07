@@ -250,3 +250,29 @@ function splitFwdDelimiter (raw, delimiter) {
 }
 
 exports.parseFwds = parseFwds;
+
+/**
+ * Кэш регулярных выражений
+ */
+const lt = /&lt;/g;
+const qt = /&gt;/g;
+const quot = /&quot;/g;
+const amp = /&amp;/g;
+const br = /<br>/g;
+
+/**
+ * Декодирует HTML сущности
+ *
+ * @param {string} str
+ *
+ * @return {string}
+ */
+function unescape (str) {
+	return str
+	.replace(lt,'<')
+	.replace(qt,'>')
+	.replace(quot,'"')
+	.replace(amp,'&');
+}
+
+exports.unescape = unescape;

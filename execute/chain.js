@@ -2,7 +2,7 @@
 
 const Promise = require('bluebird');
 
-const {getMethodApi, getChainCode} = require('../util/helpers');
+const {getMethodApi,getChainCode,resolvePromisesTask} = require('../util/helpers');
 
 /**
  * Создаёт цепочку методов которые выполняются через execute
@@ -135,24 +135,6 @@ class Chain {
 	catch (handler) {
 		return this.execute().catch(handler);
 	}
-}
-
-/**
- * Обрабатывает стак promise
- *
- * @param {Array} tasks
- * @param {Array} result
- */
-function resolvePromisesTask (tasks,result) {
-	let errors = 0;
-
-	result.response.forEach((response,i) => {
-		if (response !== false) {
-			return tasks[i].resolve(response);
-		}
-
-		tasks[i].reject(result.errors[errors++]);
-	});
 }
 
 /**

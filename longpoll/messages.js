@@ -1,10 +1,14 @@
 'use strict';
 
 const {inspect} = require('util');
-const {decodeHTML} = require('entities');
 
 const {SHEAR_CHAT_PEER} = require('../util/constants');
-const {parseFlags,parseAttachments,parseFwds} = require('./helpers');
+const {
+	parseFlags,
+	parseAttachments,
+	parseFwds,
+	unescape
+} = require('./helpers');
 
 /**
  * Заменяет тег <br> на \n
@@ -53,6 +57,51 @@ class BaseMessage {
 	}
 
 	/**
+	 * Отправляет стикер в текущий диалог
+	 *
+	 * @param {number} id
+	 *
+	 * @return {Promise}
+	 */
+	sendSticker (id) {
+		return this.send({
+			sticker_id: id
+		});
+	}
+
+	/**
+	 * Отправляет фотографию в диалог
+	 *
+	 * @param {mixed}  source
+	 * @param {Object} params
+	 *
+	 * @return {Promise}
+	 */
+	sendPhoto (source,params = {}) {
+		return this.vk.upload.message({
+			source
+		})
+		.then((photo) => {
+			return this.vk.getAttachment('photo',photo);
+		})
+		.then((attachment) => {
+			return this.send(Object.assign(params,{attachment}));
+		});
+	}
+
+	/**
+	 * Изменяет статус набора текста пользователем в диалоге
+	 *
+	 * @param {Promise}
+	 */
+	setActivity () {
+		return this.vk.api.messages.setActivity({
+			type: 'typing',
+			peer_id: this.peer
+		});
+	}
+
+	/**
 	 * Возвращает свойства которые нужно вывести
 	 *
 	 * @param {number} depth
@@ -86,7 +135,7 @@ class ChatEvent extends BaseMessage {
 
 		this.user = +message[7].from;
 		this.chat = this.peer - SHEAR_CHAT_PEER;
-		this.title = decodeHTML(message[5]);
+		this.title = unescape(message[5]);
 	}
 
 	/**
@@ -127,7 +176,7 @@ class Message extends BaseMessage {
 
 		if (this.peer > SHEAR_CHAT_PEER) {
 			this.user = +attachments.from;
-			this.title = decodeHTML(message[5]);
+			this.title = unescape(message[5]);
 
 			this.chat = this.peer - SHEAR_CHAT_PEER;
 
@@ -147,7 +196,7 @@ class Message extends BaseMessage {
 		}
 
 		if (message[6].length !== 0) {
-			this.text = decodeHTML(message[6]).replace(brReplace,'\n');
+			this.text = unescape(message[6]).replace(brReplace,'\n');
 		} else {
 			this.text = null;
 		}
@@ -165,6 +214,26 @@ class Message extends BaseMessage {
 		}
 
 		this._fwd = attachments.fwd || null;
+	}
+
+	/**
+	 * Отвечает на сообщение
+	 *
+	 * @param {mixed}  text
+	 * @param {Object} params
+	 *
+	 * @return {Promise}
+	 */
+	reply (text,params = {}) {
+	    if (typeof text === 'object') {
+	        params = text;
+	    } else {
+	        params.message = text;
+	    }
+
+		params.forward_messages = this.id;
+
+		return this.send(params);
 	}
 
 	/**
@@ -291,7 +360,7 @@ class ChatCreate extends ChatEvent {
 	constructor (vk,message) {
 		super(vk,message);
 
-		this.title = decodeHTML(message[7].source_text);
+		this.title = unescape(message[7].source_text);
 	}
 
 	/**
@@ -325,7 +394,7 @@ class TitleUpdate extends ChatEvent {
 	constructor (vk,message) {
 		super(vk,message);
 
-		this.title = decodeHTML(message[7].source_text);
+		this.title = unescape(message[7].source_text);
 	}
 
 	/**

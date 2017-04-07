@@ -8,6 +8,8 @@ const ExecuteError = require('../errors/execute');
 
 const methods = require('./methods');
 const {API_VERSION, API_URI} = require('../util/constants');
+const {getMethodApi,getChainCode,resolvePromisesTask} = require('../util/helpers');
+
 
 /**
  * Вызов методов API и ограничитель запросов
@@ -142,7 +144,52 @@ class Api {
 				return;
 			}
 
-			this._call(this._queue.shift());
+			if (this.vk.options.call !== 'execute' || this._queue[0].method === 'execute') {
+				this._call(this._queue.shift());
+			} else {
+				const tasks = [];
+				const code = [];
+
+				const maxCalls = this.vk.options.callCount;
+
+				for (let i = 0; i < this._queue.length; ++i) {
+					if (this._queue[i].method === 'execute') {
+						continue;
+					}
+
+					const [task] = this._queue.splice(i,1);
+
+					tasks.push(task);
+					code.push(getMethodApi(task.method,task.params));
+
+					if (tasks.length >= maxCalls) {
+						break;
+					}
+
+					--i;
+				}
+
+				(new Promise((resolve,reject) => {
+					this._call({
+						method: 'execute',
+						params: {
+							code: getChainCode(code)
+						},
+						resolve,
+						reject
+					});
+				}))
+				.then((response) => {
+					resolvePromisesTask(tasks,response);
+
+					return null;
+				})
+				.catch((error) => {
+					for (const task of tasks) {
+						task.reject(error);
+					}
+				});
+			}
 
 			this._timeout = setTimeout(worker,interval);
 		};

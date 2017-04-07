@@ -65,12 +65,51 @@ describe('Errors',() => {
 		ExecuteError
 	} = require('../errors');
 
-	const apiError = {
+	it('should parse error ApiError 14',() => {
+		const apiError = {
+			error_code: 14,
+			error_msg: 'It is required to enter the code from the picture',
+			request_params: [],
+			captcha_sid: '239633676097',
+			captcha_img: 'http://api.vk.com/captcha.php?sid=239633676097&s=1'
+		};
+		const error = new ApiError(apiError);
 
-	};
+		assert.strictEqual(14,error.code);
+		assert.strictEqual(apiError.error_msg,error.message);
+		assert.strictEqual(apiError.request_params,error.params);
 
-	it('',() => {
+		assert.strictEqual(239633676097,error.captchaSid);
+		assert.strictEqual(apiError.captcha_img,error.captchaImg);
+	});
 
+	it('should parse error ApiError 17',() => {
+		const apiError = {
+			error_code: '17',
+			error_msg: 'User validation is required.',
+			request_params: [],
+			redirect_uri: 'https://m.vk.com/login?act=security_check&api_hash=234307691'
+		};
+		const error = new ApiError(apiError);
+
+		assert.strictEqual(17,error.code);
+		assert.strictEqual(apiError.error_msg,error.message);
+		assert.strictEqual(apiError.request_params,error.params);
+
+		assert.strictEqual(apiError.redirect_uri,error.redirectUri);
+	});
+
+	it('should parse error ApiError 100',() => {
+		const apiError = {
+			error_code: '100',
+			error_msg: 'One of the parameters specified was missing or invalid',
+			request_params: []
+		};
+		const error = new ApiError(apiError);
+
+		assert.strictEqual(100,error.code);
+		assert.strictEqual(apiError.error_msg,error.message);
+		assert.strictEqual(apiError.request_params,error.params);
 	});
 });
 

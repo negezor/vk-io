@@ -153,7 +153,10 @@ class Longpoll extends Events {
 			this._ts = response.ts;
 
 			if ('pts' in response && response.pts !== this._pts) {
-				this.emit('pts',this._pts = +response.pts);
+				this.emit('pts',{
+					ts: this._ts,
+					pts: this._pts = +response.pts
+				});
 			}
 
 			if ('updates' in response) {

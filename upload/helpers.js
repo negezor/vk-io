@@ -106,13 +106,15 @@ function getSource (source) {
 		return createReadStream(source);
 	}
 
-	if (isStream(source) || Buffer.isBuffer(source) || 'httpModule' in source) {
+	if ('value' in source) {
+		source.value = getSource(source.value);
+
 		return source;
 	}
 
-	source.value = getSource(source.value);
-
-	return source;
+	if (isStream(source) || Buffer.isBuffer(source) || 'httpModule' in source) {
+		return source;
+	}
 }
 
 /**

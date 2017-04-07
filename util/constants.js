@@ -262,16 +262,18 @@ exports.METHODS_LIMIT = [
  *
  * @property {?string} [login] Email/телефон от аккаунта
  * @property {?number} [phone] Номер телефона
- * @property {?string} [pass] Пароль от аккаунта
+ * @property {?string} [pass]  Пароль от аккаунта
  *
  * @property {?string} [token] Токен
  *
- * @property {?number} [app] Приложение
- * @property {?string} [key] Секретный ключ приложения
+ * @property {?number} [app]   Приложение
+ * @property {?string} [key]   Секретный ключ приложения
  * @property {string}  [scope] Список разрешений
  *
- * @property {number}  [limit]   Максимальное количество запросов в секунду
- * @property {number}  [timeout] Время сброса соединения на API
+ * @property {string}  [call]      Режим вызова методов
+ * @property {number}  [limit]     Максимальное количество запросов в секунду
+ * @property {number}  [timeout]   Время сброса соединения на API
+ * @property {number}  [callCount] Максимальное количество вызовов методов в execute за раз
  *
  * @property {boolean} [restartError] Перезапускать ли при ошибках запрос
  * @property {number}  [restartCount] Количество попыток перезапуска
@@ -290,8 +292,10 @@ exports.defaultMainOptions = {
 	key: null,
 	scope: MAX_SCOPE.join(','),
 
+	call: 'api',
 	limit: 3,
 	timeout: 6e3,
+	callCount: 25,
 
 	restartError: true,
 	restartCount: 3,
