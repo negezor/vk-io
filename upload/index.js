@@ -290,9 +290,6 @@ class Upload {
 			this.vk.logger.debug('upload','Save files');
 
 			return saveServer(uploaded);
-		})
-		.tap(() => {
-			
 		});
 	}
 
