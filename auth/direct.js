@@ -85,10 +85,14 @@ class DirectAuth {
 		}
 
 		if (response.error === 'need_captcha') {
+			this.vk.logger.debug('auth','Captcha processing');
+
 			return this._passageCaptcha(response);
 		}
 
 		if (response.error === 'need_validation') {
+			this.vk.logger.debug('auth','Processes the authorization confirm number');
+
 			return this._securityPhoneCheck(response);
 		}
 

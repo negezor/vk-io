@@ -7,7 +7,7 @@ const RequestError = require('../errors/request');
 const ExecuteError = require('../errors/execute');
 
 const methods = require('./methods');
-const {API_VERSION, API_URI} = require('../util/constants');
+const {API_VERSION,API_URI} = require('../util/constants');
 const {getMethodApi,getChainCode,resolvePromisesTask} = require('../util/helpers');
 
 
@@ -54,7 +54,6 @@ class Api {
 
 			return this._enqueue('messages.send',params);
 		};
-
 
 		/**
 		 * Метод API execute
@@ -203,7 +202,9 @@ class Api {
 	 * @param {Object} task
 	 */
 	_call (task) {
-		const {token, timeout} = this.vk.options;
+		const {token,timeout} = this.vk.options;
+
+		const startTime = Date.now();
 
 		this.vk.request({
 			uri: API_URI+task.method,
@@ -218,6 +219,10 @@ class Api {
 			if ('error' in response) {
 				return this._error(task,response.error);
 			}
+
+			const time = (Date.now()-startTime).toLocaleString();
+
+			this.vk.logger.debug('api',`Request ${task.method} took ${time}ms of time`);
 
 			if ('captcha' in task) {
 				task.captcha.resolve();
@@ -241,12 +246,16 @@ class Api {
 			task.resolve(('response' in response)?response.response:response);
 		})
 		.catch((error) => {
-			const {restartError, restartCount, restartWait} = this.vk.options;
+			const {restartError,restartCount,restartWait} = this.vk.options;
 
 			if (restartError && checkAttemptsTask(task,restartCount)) {
 				++task.attempts;
 
-				return setTimeout(() => this._requeue(task),restartWait);
+				return setTimeout(() => {
+					this.vk.logger.debug('api',`Request ${task.method} restarted ${task.attempts} times`);
+
+					this._requeue(task);
+				},restartWait);
 			}
 
 			error = new RequestError(error);

@@ -276,14 +276,23 @@ class Upload {
 			};
 		}
 
+		this.vk.logger.debug('upload','Getting upload server');
+
 		return getServer(params)
 		.then((server) => {
+			this.vk.logger.debug('upload','Start upload files.');
+
 			return this._upload(server,options,field);
 		})
 		.then((uploaded) => {
 			copyParams(params,uploaded,saveParams);
 
+			this.vk.logger.debug('upload','Save files');
+
 			return saveServer(uploaded);
+		})
+		.tap(() => {
+			
 		});
 	}
 

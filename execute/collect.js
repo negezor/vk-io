@@ -25,7 +25,7 @@ class Collect {
 				this[group] = {};
 			}
 
-			this[group][name] = (params) => {
+			this[group][name] = (params = {}) => {
 				return new CollectStream(this.vk,{
 					method,
 					params,

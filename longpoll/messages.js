@@ -45,15 +45,15 @@ class BaseMessage {
 	 * @return {Promise}
 	 */
 	send (text,params = {}) {
-	    if (typeof text === 'object') {
-	        params = text;
-	    } else {
-	        params.message = text;
-	    }
+		if (typeof text === 'object') {
+			params = text;
+		} else {
+			params.message = text;
+		}
 
-	    params.peer_id = this.peer;
+		params.peer_id = this.peer;
 
-	    return this.vk.api.messages.send(params);
+		return this.vk.api.messages.send(params);
 	}
 
 	/**
@@ -225,11 +225,11 @@ class Message extends BaseMessage {
 	 * @return {Promise}
 	 */
 	reply (text,params = {}) {
-	    if (typeof text === 'object') {
-	        params = text;
-	    } else {
-	        params.message = text;
-	    }
+		if (typeof text === 'object') {
+			params = text;
+		} else {
+			params.message = text;
+		}
 
 		params.forward_messages = this.id;
 

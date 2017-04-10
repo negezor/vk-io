@@ -17,7 +17,7 @@ class CollectStream extends Readable {
 	 * @param {VK}     vk
 	 * @param {Object} options
 	 */
-	constructor (vk,{params, method, limit, max}) {
+	constructor (vk,{params,method,limit,max}) {
 		super({
 			objectMode: true
 		});
@@ -58,7 +58,7 @@ class CollectStream extends Readable {
 		this._received = 0;
 		this._skip = this._offset = +params.offset || 0;
 
-		this._code = getExecuteCode(method, params,{
+		this._code = getExecuteCode(method,params,{
 			maxCalls
 		});
 	}
@@ -136,7 +136,7 @@ class CollectStream extends Readable {
 
 			this.vk.logger.debug(
 				'collect',
-				`Collect task: ${this._received}/${this._task}`,
+				`Collect task ${this._received}/${this._task}`,
 				`[${isNaN(percent)?100:percent}%]`
 			);
 

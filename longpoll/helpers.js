@@ -44,7 +44,7 @@ const groupFlags = Object.assign({},dialogFlags,{
  *
  * @return {Array}
  */
-function parseFlags (sum, type = false) {
+function parseFlags (sum,type = false) {
 	const list = type?groupFlags:dialogFlags;
 
 	const flags = [];
@@ -211,10 +211,12 @@ function parseFwds (raw) {
  *
  * @return {Array}
  */
-function splitFwdDelimiter (raw, delimiter) {
+function splitFwdDelimiter (raw,delimiter) {
 	const out = [];
 
-	let tmp = '', left = 0, right = 0;
+	let tmp = '';
+	let left = 0;
+	let right = 0;
 
 	const keepResult = () => {
 		out.push(tmp);

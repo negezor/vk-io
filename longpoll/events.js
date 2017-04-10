@@ -1,6 +1,6 @@
 'use strict';
 
-const {Message, actions} = require('./messages');
+const {Message,actions} = require('./messages');
 const {parseFlags} = require('./helpers');
 
 const similarEvents = {

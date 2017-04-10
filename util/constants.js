@@ -50,6 +50,21 @@ const MAX_SCOPE = [
 exports.MAX_SCOPE = MAX_SCOPE;
 
 /**
+ * Уровни логгирования по умолчанию
+ *
+ * @type {Object}
+ */
+const LOGGER_LEVELS_DEFAULT = {
+	log: true,
+	info: true,
+	warn: true,
+	error: true,
+	debug: true
+};
+
+exports.LOGGER_LEVELS_DEFAULT = LOGGER_LEVELS_DEFAULT;
+
+/**
  * Список ограничений на методы
  *
  * @type {Array}
@@ -77,11 +92,11 @@ exports.METHODS_LIMIT = [
 	/**
 	 * Audio
 	 */
-	['audio.get', 6000],
-	['audio.search', 300, 1000],
-	['audio.getAlbums', 100],
-	['audio.getRecommendations', 1000],
-	['audio.getPopular', 1000],
+	['audio.get',6000],
+	['audio.search',300,1000],
+	['audio.getAlbums',100],
+	['audio.getRecommendations',1000],
+	['audio.getPopular',1000],
 
 	/**
 	 * Board
@@ -275,6 +290,9 @@ exports.METHODS_LIMIT = [
  * @property {number}  [timeout]   Время сброса соединения на API
  * @property {number}  [callCount] Максимальное количество вызовов методов в execute за раз
  *
+ * @property {number} [longpollCount] Количество попыток перезапуска longpoll
+ * @property {number} [longpollWait]  Время ожидания перезапуска
+ *
  * @property {boolean} [restartError] Перезапускать ли при ошибках запрос
  * @property {number}  [restartCount] Количество попыток перезапуска
  * @property {number}  [restartWait]  Время ожидания перезапуска
@@ -296,6 +314,9 @@ exports.defaultMainOptions = {
 	limit: 3,
 	timeout: 6e3,
 	callCount: 25,
+
+	longpollCount: 6,
+	longpollWait: 6e3,
 
 	restartError: true,
 	restartCount: 3,

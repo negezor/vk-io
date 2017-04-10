@@ -41,6 +41,19 @@ class Longpoll extends Events {
 
 		this.on('error',(error) => {
 			this.vk.logger.error('longpoll',error);
+
+			setTimeout(() => {
+				if (!this._launched) {
+					return;
+				}
+
+				this.vk.logger.info('longpoll','Getting a new server');
+
+				this.restart()
+				.catch((error) => {
+					this.emit('error',error);
+				});
+			},this.vk.options.longpollWait);
 		});
 	}
 
@@ -147,10 +160,13 @@ class Longpoll extends Events {
 			if ('failed' in response && response.failed !== 1) {
 				response._ts = null;
 
-				return void this.restart();
+				return void this.restart()
+				.catch((error) => {
+					this.emit('error',error);
+				});
 			}
 
-			this._ts = response.ts;
+			this._ts = +response.ts;
 
 			if ('pts' in response && response.pts !== this._pts) {
 				this.emit('pts',{
@@ -166,27 +182,32 @@ class Longpoll extends Events {
 			}
 
 			if (this._launched) {
+				this.vk.logger.debug('longpoll','Request for new data');
+
 				return void this._loop();
 			}
 		})
 		.catch((error) => {
-			this.emit('error',new RequestError(error));
-
 			if (!this._launched) {
 				return;
 			}
 
-			const {restartWait,restartCount} = this.vk.options;
+			const {longpollCount,longpollWait} = this.vk.options;
 
-			if (this._restarts < restartCount) {
+			if (this._restarts < longpollCount) {
 				++this._restarts;
+
+				this.vk.logger.debug('longpoll',`Request restarted ${this._restarts} times`);
 
 				return setTimeout(() => {
 					this._loop();
-				},restartWait);
+				},longpollWait);
 			}
 
-			this.restart();
+			this.restart()
+			.catch((error) => {
+				this.emit('error',error);
+			});
 		});
 	}
 
@@ -204,26 +225,34 @@ class Longpoll extends Events {
 			return;
 		}
 
-		const {name, action} = events[id];
+		const {name,action} = events[id];
 
 		if (id !== 4 && this.listenerCount(name) === 0) {
 			return;
 		}
 
+		let result;
+
 		try {
-		    const result = action.call(this,update);
-
-		    if (result === null) {
-		        return;
-		    }
-
-		    if (Array.isArray(result)) {
-		        return this.emit(result[1], result[0]);
-		    }
-
-		    this.emit(name, result);
+			result = action.call(this,update);
 		} catch (error) {
 			this.vk.logger.error('longpoll',error);
+
+			return;
+		}
+
+		if (result === null) {
+			return;
+		}
+
+		try {
+			if (Array.isArray(result)) {
+				return this.emit(result[1],result[0]);
+			}
+
+			this.emit(name,result);
+		} catch (error) {
+			console.error(error);
 		}
 	}
 }

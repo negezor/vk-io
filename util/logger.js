@@ -1,5 +1,7 @@
 'use strict';
 
+const {LOGGER_LEVELS_DEFAULT} = require('./constants');
+
 /**
  * Логгер класса ВК
  *
@@ -12,13 +14,9 @@ class Logger {
 	 * @param {Object} options
 	 */
 	constructor (options = {}) {
-		this._levels = {
-			log: true,
-			info: true,
-			warn: true,
-			error: true,
-			debug: true
-		};
+		this._levels = Object.assign({},LOGGER_LEVELS_DEFAULT);
+
+		this._modules = {};
 
 		/**
 		 * Выводит данные в консоль
@@ -28,7 +26,7 @@ class Logger {
 		 * @param {Array}  args
 		 */
 		this._output = (type,name,args) => {
-			if (!this._levels[type]) {
+			if (!this.isLoggable(type,name)) {
 				return;
 			}
 
@@ -52,6 +50,24 @@ class Logger {
 	}
 
 	/**
+	 * Устанавливает уровни выводы модулю
+	 *
+	 * @param {string} name
+	 * @param {Object} levels
+	 *
+	 * @return {this}
+	 */
+	setLevelsModule (name,levels) {
+		if (!(name in this._modules)) {
+			this._modules[name] = Object.assign({},LOGGER_LEVELS_DEFAULT);
+		}
+
+		Object.assign(this._modules[name],levels);
+
+		return this;
+	}
+
+	/**
 	 * Устанавливает кастомный вывод
 	 *
 	 * @param {function} output
@@ -62,6 +78,22 @@ class Logger {
 		this._output = output;
 
 		return this;
+	}
+
+	/**
+	 * Проверяет, выводится ли уровень лога
+	 *
+	 * @param {string} level
+	 * @param {string} name
+	 *
+	 * @return {boolean}
+	 */
+	isLoggable (level,name = null) {
+		if (name === null || !(name in this._modules)) {
+			return this._levels[level];
+		}
+
+		return this._modules[name][level];
 	}
 
 	/**
