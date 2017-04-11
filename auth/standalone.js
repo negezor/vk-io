@@ -7,8 +7,14 @@ const parseQuery = require('querystring').parse;
 
 const AuthError = require('../errors/auth');
 const RequestError = require('../errors/request');
-const {API_VERSION} = require('../util/constants');
-const {parseForm,parseSecurityForm} = require('./helpers');
+const { parseForm, parseSecurityForm } = require('./helpers');
+const { API_VERSION, USER_AGENT, AUTH_ERRORS } = require('../util/constants');
+
+const {
+	PAGE_BLOCKED,
+	INVALID_PHONE_NUMBER,
+	AUTHORIZATION_FAILED
+} = AUTH_ERRORS;
 
 /**
  * Автономное приложение
@@ -25,6 +31,43 @@ class StandaloneAuth {
 		this.vk = vk;
 
 		this.jar = request.jar();
+	}
+
+	/**
+	 * Возвращает CookieJar
+	 *
+	 * @return {CookieJar}
+	 */
+	getCookieJar () {
+		return this.jar;
+	}
+
+	/**
+	 * Устанавливает CookieJar
+	 * Вызывать до авторизации
+	 *
+	 * @param {CookieJar} jar
+	 *
+	 * @return {this}
+	 */
+	setCookieJar (jar) {
+		this.jar = jar;
+
+		return this;
+	}
+
+	/**
+	 * Возвращает Cookie
+	 * vk.com - Для основного домена
+	 * login.vk.com - Для поддомена с авторизацией
+	 *
+	 * @return {Object}
+	 */
+	getCookie () {
+		return {
+			'login.vk.com': this.jar.getCookieString('https://login.vk.com'),
+			'vk.com': this.jar.getCookieString('https://vk.com')
+		};
 	}
 
 	/**
@@ -47,7 +90,8 @@ class StandaloneAuth {
 				}
 
 				throw new AuthError({
-					message: body.error+', '+body.error_description
+					message: body.error + ', ' + body.error_description,
+					code: AUTHORIZATION_FAILED
 				});
 			}
 
@@ -67,23 +111,24 @@ class StandaloneAuth {
 			followAllRedirects: true,
 			resolveWithFullResponse: true,
 			headers: {
-				'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36'
+				'User-Agent': USER_AGENT
 			}
 		});
 
 		return this._getBlank()
+		.then((response) => (
+			this._route(response)
+		))
 		.then((response) => {
-			return this._route(response);
-		})
-		.then((response) => {
-			const hash = parseQuery((response.request.uri.hash || '').replace(/^#/,''));
+			const hash = parseQuery((response.request.uri.hash || '').replace(/^#/, ''));
 
 			if ('access_token' in hash) {
 				return hash.access_token;
 			}
 
 			throw new AuthError({
-				message: 'Failed to get token'
+				message: 'Failed to get token',
+				code: AUTHORIZATION_FAILED
 			});
 		});
 	}
@@ -96,46 +141,57 @@ class StandaloneAuth {
 	 *
 	 * @return {Promise}
 	 */
-	_route (response,$ = cheerio(response.body)) {
+	_route (response, $ = cheerio(response.body)) {
 		if ($('input[name="pass"]').length !== 0) {
-			this.vk.logger.debug('auth','Parse the authorization form');
+			this.vk.logger.debug('auth', 'Parse the authorization form');
 
-			return this._parseAuthForm(response,$);
+			return this._parseAuthForm(response, $);
 		}
 
 		if ($('input[name="code"]').length !== 0) {
-			const {action,fields} = parseForm($);
+			const { action, fields } = parseForm($);
 
 			if (action.includes('act=authcheck_code')) {
-				this.vk.logger.debug('auth','Processes the authorization code');
+				this.vk.logger.debug('auth', 'Processes the authorization code');
 
-				return this._authCheckCode(action,fields);
+				return this._authCheckCode(action, fields);
 			}
 
 			if (action.includes('act=security_check')) {
-				this.vk.logger.debug('auth','Processes the authorization confirm number');
+				this.vk.logger.debug('auth', 'Processes the authorization confirm number');
 
-				return this._securityPhoneCheck(response,$);
+				return this._securityPhoneCheck(response, $);
 			}
 
-			Promise.reject(new AuthError({
-				message: 'Unknown type of authorization check'
+			return Promise.reject(new AuthError({
+				message: 'Unknown type of authorization check',
+				code: AUTHORIZATION_FAILED
 			}));
 		}
 
-		this.vk.logger.debug('auth','Getting an address for proof of rights');
+		const { path } = response.request.uri;
+
+		if (path && path.includes('act=blocked')) {
+			return Promise.reject(new AuthError({
+				message: 'Page blocked',
+				code: PAGE_BLOCKED
+			}));
+		}
+
+		this.vk.logger.debug('auth', 'Getting an address for proof of rights');
 
 		const script = $('script[type="text/javascript"][language="javascript"]').text();
 		const locations = script.match(/location\.href\s+=\s+\"([^\"]+)\"/i);
 
 		if (locations !== null) {
 			return this.request({
-				uri: locations[1].replace('&cancel=1','')
+				uri: locations[1].replace('&cancel=1', '')
 			});
 		}
 
-		Promise.reject(new AuthError({
-			message: 'Could not log in'
+		return Promise.reject(new AuthError({
+			message: 'Could not log in',
+			code: AUTHORIZATION_FAILED
 		}));
 	}
 
@@ -147,8 +203,8 @@ class StandaloneAuth {
 	 *
 	 * @return {Promise}
 	 */
-	_securityPhoneCheck (response,$) {
-		const {action,fields} = parseSecurityForm(response,this.vk.options,$);
+	_securityPhoneCheck (response, $) {
+		const { action, fields } = parseSecurityForm(response, this.vk.options, $);
 
 		return this.request({
 			uri: action,
@@ -160,11 +216,12 @@ class StandaloneAuth {
 
 			if ($('input[name="code"]').length !== 0) {
 				throw new AuthError({
-					message: 'Invalid phone number'
+					message: 'Invalid phone number',
+					code: INVALID_PHONE_NUMBER
 				});
 			}
 
-			return this._route(response,$);
+			return this._route(response, $);
 		});
 	}
 
@@ -176,10 +233,13 @@ class StandaloneAuth {
 	 *
 	 * @return {Promise}
 	 */
-	_authCheckCode (action,fields) {
-		throw new AuthError({
-			message: 'Verification of authorization code is not supported'
-		});
+	_authCheckCode (action, fields) {
+		return Promise.reject(
+			new AuthError({
+				message: 'Verification of authorization code is not supported',
+				code: AUTHORIZATION_FAILED
+			})
+		);
 	}
 
 	/**
@@ -190,10 +250,10 @@ class StandaloneAuth {
 	 *
 	 * @return {Promise}
 	 */
-	_parseAuthForm (response,$) {
-		const {action,fields} = parseForm($);
+	_parseAuthForm (response, $) {
+		const { action, fields } = parseForm($);
 
-		const {login,phone,pass} = this.vk.options;
+		const { login, phone, pass } = this.vk.options;
 
 		fields.email = login || phone;
 		fields.pass = pass;
@@ -210,11 +270,12 @@ class StandaloneAuth {
 
 			if ($error.length !== 0) {
 				throw new AuthError({
-					message: 'Auth form error: '+$error.text()
+					message: 'Auth form error: ' + $error.text(),
+					code: AUTHORIZATION_FAILED
 				});
 			}
 
-			return this._route(response,$);
+			return this._route(response, $);
 		});
 	}
 
@@ -224,7 +285,7 @@ class StandaloneAuth {
 	 * @return {Promise}
 	 */
 	_getBlank () {
-		const {app,scope} = this.vk.options;
+		const { app, scope } = this.vk.options;
 
 		return this.request({
 			uri: 'https://oauth.vk.com/authorize',

@@ -9,7 +9,7 @@ vk.longpoll.start()
 	console.log('Long Poll started');
 });
 
-vk.longpoll.on('chat.invite',(action) => {
+vk.longpoll.on('chat.invite', (action) => {
 	vk.api.users.get({
 		user_id: action.invite
 	})
@@ -18,7 +18,7 @@ vk.longpoll.on('chat.invite',(action) => {
 	});
 });
 
-vk.longpoll.on('chat.kick',(action) => {
+vk.longpoll.on('chat.kick', (action) => {
 	vk.api.users.get({
 		user_id: action.kick
 	})

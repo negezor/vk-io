@@ -1,6 +1,6 @@
 'use strict';
 
-const {LOGGER_LEVELS_DEFAULT} = require('./constants');
+const { LOGGER_LEVELS_DEFAULT } = require('./constants');
 
 /**
  * Логгер класса ВК
@@ -14,7 +14,7 @@ class Logger {
 	 * @param {Object} options
 	 */
 	constructor (options = {}) {
-		this._levels = Object.assign({},LOGGER_LEVELS_DEFAULT);
+		this._levels = Object.assign({}, LOGGER_LEVELS_DEFAULT);
 
 		this._modules = {};
 
@@ -25,14 +25,14 @@ class Logger {
 		 * @param {string} name
 		 * @param {Array}  args
 		 */
-		this._output = (type,name,args) => {
-			if (!this.isLoggable(type,name)) {
+		this._output = (type, name, args) => {
+			if (!this.isLoggable(type, name)) {
 				return;
 			}
 
-			args.unshift(formatColor(type,`${type} vk:${name}`));
+			args.unshift(formatColor(type, `${type} vk:${name}`));
 
-			console.log.apply(console,args);
+			console.log.apply(console, args);
 		};
 	}
 
@@ -44,7 +44,7 @@ class Logger {
 	 * @return {this}
 	 */
 	setLevels (levels) {
-		Object.assign(this._levels,levels);
+		Object.assign(this._levels, levels);
 
 		return this;
 	}
@@ -57,12 +57,12 @@ class Logger {
 	 *
 	 * @return {this}
 	 */
-	setLevelsModule (name,levels) {
+	setLevelsModule (name, levels) {
 		if (!(name in this._modules)) {
-			this._modules[name] = Object.assign({},LOGGER_LEVELS_DEFAULT);
+			this._modules[name] = Object.assign({}, LOGGER_LEVELS_DEFAULT);
 		}
 
-		Object.assign(this._modules[name],levels);
+		Object.assign(this._modules[name], levels);
 
 		return this;
 	}
@@ -88,7 +88,7 @@ class Logger {
 	 *
 	 * @return {boolean}
 	 */
-	isLoggable (level,name = null) {
+	isLoggable (level, name = null) {
 		if (name === null || !(name in this._modules)) {
 			return this._levels[level];
 		}
@@ -102,7 +102,7 @@ class Logger {
 	 * @param {string} name
 	 */
 	log (name, ...args) {
-		this._output('log',name,args);
+		this._output('log', name, args);
 	}
 
 	/**
@@ -111,7 +111,7 @@ class Logger {
 	 * @param {string} name
 	 */
 	info (name, ...args) {
-		this._output('info',name,args);
+		this._output('info', name, args);
 	}
 
 	/**
@@ -120,7 +120,7 @@ class Logger {
 	 * @param {string} name
 	 */
 	error (name, ...args) {
-		this._output('error',name,args);
+		this._output('error', name, args);
 	}
 
 	/**
@@ -129,7 +129,7 @@ class Logger {
 	 * @param {string} name
 	 */
 	warn (name, ...args) {
-		this._output('warn',name,args);
+		this._output('warn', name, args);
 	}
 
 	/**
@@ -138,7 +138,7 @@ class Logger {
 	 * @param {string} name
 	 */
 	debug (name, ...args) {
-		this._output('debug',name,args);
+		this._output('debug', name, args);
 	}
 }
 
@@ -156,9 +156,9 @@ const colors = {
  *
  * @return {string}
  */
-function formatColor (type,text) {
+function formatColor(type, text) {
 	if (type in colors) {
-		return colors[type]+text+'\x1b[0m';
+		return colors[type] + text + '\x1b[0m';
 	}
 
 	return text;

@@ -66,6 +66,7 @@ const vk = new VK(options);
 | app           | number  | ID приложения                            | null         |
 | key           | string  | Секретный ключ прилржения                | null         |
 | scope         | string  | Список разрешений                        | max scope    |
+| lang          | string  | Язык на котором возвращаются данные      | null         |
 | call          | string  | Режим вызова методов ВКонаткте           | api          |
 | limit         | number  | Максимальное кол-во запросов в секунду   | 3            |
 | timeout       | number  | Время сброса соединения на API           | 6000         |
@@ -145,6 +146,39 @@ auth.run()
 	console.error(error);
 });
 ```
+
+#### standalone.getCookie
+Возвращает cookie после успешной авторизации для сайта и поддомена
+
+```javascript
+auth.getCookie(); // => Object
+```
+
+```javascript
+{
+	'vk.com': '...',
+	'login.vk.com': '...'
+}
+```
+
+#### standalone.getCookieJar
+Возвращает CookieJar для модуля request
+
+```javascript
+auth.getCookieJar(); // => CookieJar
+```
+
+#### standalone.setCookieJar
+Устанавливает CookieJar от модуля request
+
+```
+auth.setCookieJar(jar); // => this
+```
+
+| Параметр | Тип       | Описание         |
+|----------|-----------|------------------|
+| jar      | CookieJar | Хранилище cookie |
+
 ### Серверная авторизация ([Client Credentials Flow](https://vk.com/dev/client_cred_flow))
 Для получения сервисного ключа доступа необходимы опции `app`, `key`
 ```javascript
@@ -1182,7 +1216,7 @@ action.remove(); // => Promise
 Обработать её можно следующим образом
 
 ```javascript
-const {ApiError} = require('vk-io/errors');
+const { ApiError } = require('vk-io/errors');
 
 /* ... */
 
@@ -1210,7 +1244,7 @@ vk.api.messages.send()
 Обработать её можно следующим образом
 
 ```javascript
-const {RequestError} = require('vk-io/errors');
+const { RequestError } = require('vk-io/errors');
 
 /* ... */
 
@@ -1233,7 +1267,7 @@ vk.api.users.get()
 Обработать её можно следующим образом
 
 ```javascript
-const {UploadError} = require('vk-io/errors');
+const { UploadError } = require('vk-io/errors');
 
 /* ... */
 
@@ -1255,7 +1289,7 @@ vk.upload.doc(...)
 Обработать её можно следующим образом
 
 ```javascript
-const {AuthError} = require('vk-io/errors');
+const { AuthError } = require('vk-io/errors');
 
 /* ... */
 
@@ -1271,13 +1305,44 @@ vk.auth.standalone().run()
 |------------|--------|-----------------|
 | message    | string | Описание ошибки |
 
+#### Типы ошибок авторизации
+Узнать тип ошибки авторизации можно таким образом
+
+```javascript
+const { AuthError, AUTH_ERRORS } = require('vk-io/errors');
+
+const { PAGE_BLOCKED } = AUTH_ERRORS;
+
+/* ... */
+
+vk.auth.standalone().run()
+.catch(AuthError,(error) => {
+	/* Проверка что страница заблокирована */
+	if (error.code === PAGE_BLOCKED) {
+		return console.log('Oops, страница заблокирована');
+	}
+
+	console.log(`Другая ошибка авторизации ${error.code}`);
+});
+```
+
+Список всех констант ошибок авторизации
+
+- `PAGE_BLOCKED` - Страница заблокирована
+
+- `MISSING_CAPTCHA` - Отсутствует обработчик капчи
+
+- `INVALID_PHONE_NUMBER` - Неверный номер телефона
+
+- `AUTHORIZATION_FAILED` - Авторизация провалена
+
 ### Обработка ExecuteError
 Возникает при работе с методом API [execute](https://vk.com/dev/execute)
 
 Обработать её можно следующим образом
 
 ```javascript
-const {ExecuteError} = require('vk-io/errors');
+const { ExecuteError } = require('vk-io/errors');
 
 /* ... */
 
@@ -1299,7 +1364,7 @@ chain.append(...)
 Все ошибки модуля наследуют класс `VKError`, с ним вы сможете поймать любое исключение модуля vk-io
 
 ```javascript
-const {VKError} = require('vk-io/errors');
+const { VKError } = require('vk-io/errors');
 
 /* ... */
 

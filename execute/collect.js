@@ -1,6 +1,6 @@
 'use strict';
 
-const {METHODS_LIMIT} = require('../util/constants');
+const { METHODS_LIMIT } = require('../util/constants');
 
 const CollectStream = require('./stream');
 
@@ -18,21 +18,21 @@ class Collect {
 	constructor (vk) {
 		this.vk = vk;
 
-		for (const [method,limit,max] of METHODS_LIMIT) {
-			const [group,name] = method.split('.');
+		for (const [method, limit, max] of METHODS_LIMIT) {
+			const [group, name] = method.split('.');
 
 			if (!(group in this)) {
 				this[group] = {};
 			}
 
-			this[group][name] = (params = {}) => {
-				return new CollectStream(this.vk,{
+			this[group][name] = (params = {}) => (
+				new CollectStream(this.vk, {
 					method,
 					params,
 					limit,
 					max
-				});
-			};
+				})
+			);
 		}
 	}
 }

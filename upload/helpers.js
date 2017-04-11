@@ -2,8 +2,8 @@
 
 const request = require('request');
 
-const {Stream} = require('stream');
-const {createReadStream} = require('fs');
+const { Stream } = require('stream');
+const { createReadStream } = require('fs');
 
 /**
  * Возвращает форму для отправки
@@ -13,7 +13,7 @@ const {createReadStream} = require('fs');
  *
  * @return {Object}
  */
-function getForm (field,sources) {
+function getForm(field, sources) {
 	if (!Array.isArray(sources)) {
 		return {
 			[field]: getSource(sources)
@@ -25,7 +25,7 @@ function getForm (field,sources) {
 	let i = 0;
 
 	for (const source of sources) {
-		form[field+(++i)] = getSource(source);
+		form[field + (++i)] = getSource(source);
 	}
 
 	return form;
@@ -40,7 +40,7 @@ exports.getForm = getForm;
  *
  * @return {Object}
  */
-function extractUploadOptions (params) {
+function extractUploadOptions(params) {
 	const options = {
 		source: params.source
 	};
@@ -73,7 +73,7 @@ exports.extractUploadOptions = extractUploadOptions;
  * @param {Object} save
  * @param {Array}  list
  */
-function copyParams (params,save,list) {
+function copyParams(params, save, list) {
 	for (const name of list) {
 		if (name in params) {
 			save[name] = params[name];
@@ -97,7 +97,7 @@ const isLink = /^(https?:\/\/)?((([a-z\d]([a-z\d-]*[a-z\d])*)\.?)+[a-z]{2,}|((\d
  *
  * @return {mixed}
  */
-function getSource (source) {
+function getSource(source) {
 	if (typeof source !== 'object') {
 		if (isLink.test(source)) {
 			return request(source);
@@ -124,6 +124,6 @@ function getSource (source) {
  *
  * @return {Boolean}
  */
-function isStream (source) {
+function isStream(source) {
 	return source instanceof Stream;
 }

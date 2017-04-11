@@ -21,7 +21,7 @@ class ExecuteError extends VKError {
 		this.message = error.error_msg;
 
 		if ('captureStackTrace' in Error) {
-			Error.captureStackTrace(this,this.constructor.name);
+			Error.captureStackTrace(this, this.constructor.name);
 		}
 	}
 }

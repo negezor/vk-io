@@ -8,9 +8,9 @@
  *
  * @return {string}
  */
-exports.getAttachment = (type,attachment) => {
-	return type+attachment.owner_id+'_'+attachment.id;
-};
+exports.getAttachment = (type, attachment) => (
+	type + attachment.owner_id + '_' + attachment.id
+);
 
 /**
  * Возвращает ссылку на маленькую фотографию
@@ -19,9 +19,9 @@ exports.getAttachment = (type,attachment) => {
  *
  * @return {string}
  */
-const getSmallPhoto = (photo) => {
-	return photo.photo_130 || photo.photo_75;
-};
+const getSmallPhoto = (photo) => (
+	photo.photo_130 || photo.photo_75
+);
 
 exports.getSmallPhoto = getSmallPhoto;
 
@@ -32,9 +32,9 @@ exports.getSmallPhoto = getSmallPhoto;
  *
  * @return {string}
  */
-const getMediumPhoto = (photo) => {
-	return photo.photo_807 || photo.photo_604 || getSmallPhoto(photo);
-};
+const getMediumPhoto = (photo) => (
+	photo.photo_807 || photo.photo_604 || getSmallPhoto(photo)
+);
 
 exports.getMediumPhoto = getMediumPhoto;
 
@@ -45,6 +45,6 @@ exports.getMediumPhoto = getMediumPhoto;
  *
  * @return {string}
  */
-exports.getLargePhoto = (photo) => {
-	return photo.photo_2560 || photo.photo_1280 || getMediumPhoto(photo);
-};
+exports.getLargePhoto = (photo) => (
+	photo.photo_2560 || photo.photo_1280 || getMediumPhoto(photo)
+);

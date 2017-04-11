@@ -1,28 +1,24 @@
 'use strict';
 
-const {Message,actions} = require('./messages');
-const {parseFlags} = require('./helpers');
+const { Message, actions } = require('./messages');
+const { parseFlags } = require('./helpers');
 
 const similarEvents = {
-	flags: (event) => {
-		return {
-			id: +event[1],
-			peer: +event[3],
-			flags: parseFlags(event[2])
-		};
-	},
-	read: (event) => {
-		return {
-			id: +event[2],
-			peer: +event[1]
-		};
-	},
-	group: (event) => {
-		return {
-			peer: +event[1],
-			flags: parseFlags(+event[2],true)
-		};
-	}
+	flags: (event) => ({
+		id: +event[1],
+		peer: +event[3],
+		flags: parseFlags(event[2])
+	}),
+
+	read: (event) => ({
+		id: +event[2],
+		peer: +event[1]
+	}),
+
+	group: (event) => ({
+		peer: +event[1],
+		flags: parseFlags(+event[2], true)
+	})
 };
 
 /**
@@ -58,12 +54,12 @@ module.exports = {
 	},
 	4: {
 		name: 'message',
-		action: function(message){
+		action: function (message) {
 			if ('source_act' in message[7]) {
 				const act = message[7].source_act;
 
 				if (act in actions) {
-					return actions[act](this.vk,message);
+					return actions[act](this.vk, message);
 				}
 
 				return null;
@@ -73,7 +69,7 @@ module.exports = {
 				return null;
 			}
 
-			return new Message(this.vk,message);
+			return new Message(this.vk, message);
 		}
 	},
 	6: {
@@ -86,21 +82,17 @@ module.exports = {
 	},
 	8: {
 		name: 'user.online',
-		action: (event) => {
-			return {
-				user: -event[1],
-				platform: authPlatform[event[2]] || null
-			};
-		}
+		action: (event) => ({
+			user: -event[1],
+			platform: authPlatform[event[2]] || null
+		})
 	},
 	9: {
 		name: 'user.offline',
-		action: (event) => {
-			return {
-				user: -event[1],
-				exit: -event[2] === 0
-			};
-		}
+		action: (event) => ({
+			user: -event[1],
+			exit: -event[2] === 0
+		})
 	},
 	10: {
 		name: 'group.flag.remove',
@@ -116,36 +108,28 @@ module.exports = {
 	},
 	51: {
 		name: 'chat.action',
-		action: (event) => {
-			return {
-				chat: +event[1],
-				self: +event[2] === 1
-			};
-		}
+		action: (event) => ({
+			chat: +event[1],
+			self: +event[2] === 1
+		})
 	},
 	61: {
 		name: 'typing.user',
-		action: (event) => {
-			return {
-				user: +event[1]
-			};
-		}
+		action: (event) => ({
+			user: +event[1]
+		})
 	},
 	62: {
 		name: 'typing.chat',
-		action: (event) => {
-			return {
-				user: +event[1],
-				chat: +event[2]
-			};
-		}
+		action: (event) => ({
+			user: +event[1],
+			chat: +event[2]
+		})
 	},
 	80: {
 		name: 'unread.count',
-		action: (event) => {
-			return {
-				count: +event[1]
-			};
-		}
+		action: (event) => ({
+			count: +event[1]
+		})
 	}
 };

@@ -8,9 +8,9 @@
  *
  * @return {string}
  */
-exports.getMethodApi = (method,params = {}) => {
-	return `API.${method}(${JSON.stringify(params)})`;
-};
+exports.getMethodApi = (method, params = {}) => (
+	`API.${method}(${JSON.stringify(params)})`
+);
 
 /**
  * Возвращает очередь из методов
@@ -19,9 +19,9 @@ exports.getMethodApi = (method,params = {}) => {
  *
  * @return {string}
  */
-exports.getChainCode = (chain) => {
-	return `return [${chain.join(',')}];`;
-};
+exports.getChainCode = (chain) => (
+	`return [${chain.join(',')}];`
+);
 
 /**
  * Обрабатывает стак promise
@@ -29,10 +29,10 @@ exports.getChainCode = (chain) => {
  * @param {Array} tasks
  * @param {Array} result
  */
-function resolvePromisesTask (tasks,result) {
+function resolvePromisesTask(tasks, result) {
 	let errors = 0;
 
-	result.response.forEach((response,i) => {
+	result.response.forEach((response, i) => {
 		if (response !== false) {
 			return tasks[i].resolve(response);
 		}

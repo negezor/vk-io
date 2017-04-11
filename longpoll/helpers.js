@@ -34,7 +34,7 @@ const dialogFlags = {
  * answered - диалог с ответом от сообщества
  * ... наследование сообщений диалогов
  */
-const groupFlags = Object.assign({},dialogFlags,{
+const groupFlags = Object.assign({}, dialogFlags, {
 	1: 'important',
 	2: 'answered'
 });
@@ -44,8 +44,8 @@ const groupFlags = Object.assign({},dialogFlags,{
  *
  * @return {Array}
  */
-function parseFlags (sum,type = false) {
-	const list = type?groupFlags:dialogFlags;
+function parseFlags(sum, type = false) {
+	const list = type ? groupFlags : dialogFlags;
 
 	const flags = [];
 
@@ -64,30 +64,26 @@ exports.parseFlags = parseFlags;
  * Уникальные прикрипления к сообщениям
  */
 const attachmentOne = {
-	sticker: (raw) => {
-		return {
-			sticker: {
-				id: +raw.attach1,
-				product: +raw.attach1_product_id
-			}
-		};
-	},
-	money_transfer: (raw) => {
-		return {
-			money: {
-				data: raw.attach1 || null,
-				amount: +raw.attach1_amount,
-				currency: raw.attach1_currency
-			}
-		};
-	},
-	gift: (raw) => {
-		return {
-			gift: {
-				id: +raw.attach1
-			}
-		};
-	}
+	sticker: (raw) => ({
+		sticker: {
+			id: +raw.attach1,
+			product: +raw.attach1_product_id
+		}
+	}),
+
+	money_transfer: (raw) => ({
+		money: {
+			data: raw.attach1 || null,
+			amount: +raw.attach1_amount,
+			currency: raw.attach1_currency
+		}
+	}),
+
+	gift: (raw) => ({
+		gift: {
+			id: +raw.attach1
+		}
+	})
 };
 
 /**
@@ -97,15 +93,15 @@ const attachmentOne = {
  *
  * @return {Object}
  */
-function parseAttachments (raw) {
+function parseAttachments(raw) {
 	if ('attach1' in raw && raw.attach1_type in attachmentOne) {
 		return attachmentOne[raw.attach1_type](raw);
 	}
 
 	const attachments = {};
 
-	for (let i = 1, key = 'attach1'; key in raw; ++i, key = 'attach'+i) {
-		let type = raw[key+'_type'];
+	for (let i = 1, key = 'attach1'; key in raw; ++i, key = 'attach' + i) {
+		let type = raw[key + '_type'];
 
 		if (!(type in attachments)) {
 			attachments[type] = [];
@@ -113,15 +109,15 @@ function parseAttachments (raw) {
 
 		if (type === 'link') {
 			const attachment = {
-				url: raw[key+'_url'],
-				title: raw[key+'_title'],
-				description: raw[key+'_desc']
+				url: raw[key + '_url'],
+				title: raw[key + '_title'],
+				description: raw[key + '_desc']
 			};
 
-			const photoKey = key+'_photo';
+			const photoKey = key + '_photo';
 
 			if (photoKey in raw && raw[photoKey] !== '') {
-				const [owner,id] = raw[photoKey].split('_');
+				const [owner, id] = raw[photoKey].split('_');
 
 				attachment.photo = {
 					id: +id,
@@ -136,15 +132,15 @@ function parseAttachments (raw) {
 			continue;
 		}
 
-		const [owner,id] = raw[key].split('_');
+		const [owner, id] = raw[key].split('_');
 
 		const attachment = {
 			id: +id,
 			owner: +owner
 		};
 
-		if (type === 'doc' && key+'_kind' in raw) {
-			attachment.type = raw[key+'_kind'];
+		if (type === 'doc' && key + '_kind' in raw) {
+			attachment.type = raw[key + '_kind'];
 		}
 
 		attachments[type].push(attachment);
@@ -167,21 +163,21 @@ const fwdHasBrackets = /(\(.*\))/;
  *
  * @return {Array}
  */
-function parseFwds (raw) {
+function parseFwds(raw) {
 	if (fwdHasBrackets.test(raw)) {
-		raw = raw.substring(1,raw.length - 1);
+		raw = raw.substring(1, raw.length - 1);
 	}
 
 	const out = [];
 
-	for (const block of splitFwdDelimiter(raw,',')) {
-		const pair = splitFwdDelimiter(block,':');
+	for (const block of splitFwdDelimiter(raw, ',')) {
+		const pair = splitFwdDelimiter(block, ':');
 
 		if (pair.length === 0) {
 			continue;
 		}
 
-		const [owner,id] = pair[0].split('_');
+		const [owner, id] = pair[0].split('_');
 
 		const fwd = {
 			id: +id,
@@ -211,7 +207,7 @@ function parseFwds (raw) {
  *
  * @return {Array}
  */
-function splitFwdDelimiter (raw,delimiter) {
+function splitFwdDelimiter(raw, delimiter) {
 	const out = [];
 
 	let tmp = '';
@@ -269,12 +265,12 @@ const br = /<br>/g;
  *
  * @return {string}
  */
-function unescape (str) {
+function unescape(str) {
 	return str
-	.replace(lt,'<')
-	.replace(qt,'>')
-	.replace(quot,'"')
-	.replace(amp,'&');
+	.replace(lt, '<')
+	.replace(qt, '>')
+	.replace(quot, '"')
+	.replace(amp, '&');
 }
 
 exports.unescape = unescape;

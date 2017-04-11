@@ -10,12 +10,12 @@ const AuthError = require('../errors/auth');
  *
  * @return {Object}
  */
-function parseForm ($) {
+function parseForm($) {
 	const $form = $('form[action][method]');
 
 	const fields = {};
 
-	for (const {name,value} of $form.serializeArray()) {
+	for (const { name, value } of $form.serializeArray()) {
 		fields[name] = value;
 	}
 
@@ -36,7 +36,7 @@ exports.parseForm = parseForm;
  *
  * @return {Object}
  */
-function parseSecurityForm (response,{login,phone},$ = cheerio(response.body)) {
+function parseSecurityForm(response, { login, phone }, $ = cheerio(response.body)) {
 	let number;
 
 	if (phone !== null) {
@@ -50,22 +50,22 @@ function parseSecurityForm (response,{login,phone},$ = cheerio(response.body)) {
 	}
 
 	if (typeof number === 'string') {
-		number = number.trim().replace(/^(\+|00)/,'');
+		number = number.trim().replace(/^(\+|00)/, '');
 	}
 
 	const $field = $('.field_prefix');
 
-	const prefix = $field.first().text().trim().replace('+','').length;
+	const prefix = $field.first().text().trim().replace('+', '').length;
 	const postfix  = $field.last().text().trim().length;
 
 	number = number.toString();
 
-	let {action,fields} = parseForm($);
+	let { action, fields } = parseForm($);
 
-	fields.code = number.slice(prefix,number.length - postfix);
+	fields.code = number.slice(prefix, number.length - postfix);
 
 	if (!action.startsWith('https://')) {
-		action = 'https://'+response.request.uri.host+action;
+		action = 'https://' + response.request.uri.host + action;
 	}
 
 	return {

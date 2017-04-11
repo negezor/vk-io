@@ -6,7 +6,7 @@ const Events = require('events');
 const RequestError = require('../errors/request');
 
 const events = require('./events');
-const {isRestartRequest} = require('../util/helpers');
+const { isRestartRequest } = require('../util/helpers');
 
 /**
  * Работа с Longpoll
@@ -39,21 +39,21 @@ class Longpoll extends Events {
 		 */
 		this._mode = 2 + 64;
 
-		this.on('error',(error) => {
-			this.vk.logger.error('longpoll',error);
+		this.on('error', (error) => {
+			this.vk.logger.error('longpoll', error);
 
 			setTimeout(() => {
 				if (!this._launched) {
 					return;
 				}
 
-				this.vk.logger.info('longpoll','Getting a new server');
+				this.vk.logger.info('longpoll', 'Getting a new server');
 
 				this.restart()
 				.catch((error) => {
-					this.emit('error',error);
+					this.emit('error', error);
 				});
-			},this.vk.options.longpollWait);
+			}, this.vk.options.longpollWait);
 		});
 	}
 
@@ -79,7 +79,7 @@ class Longpoll extends Events {
 		this._launched = true;
 
 		return this.vk.api.messages.getLongPollServer()
-		.then(({server,key,ts}) => {
+		.then(({ server, key, ts }) => {
 			this._server = `https://${server}`;
 			this._key = key;
 
@@ -162,14 +162,14 @@ class Longpoll extends Events {
 
 				return void this.restart()
 				.catch((error) => {
-					this.emit('error',error);
+					this.emit('error', error);
 				});
 			}
 
 			this._ts = +response.ts;
 
 			if ('pts' in response && response.pts !== this._pts) {
-				this.emit('pts',{
+				this.emit('pts', {
 					ts: this._ts,
 					pts: this._pts = +response.pts
 				});
@@ -182,7 +182,7 @@ class Longpoll extends Events {
 			}
 
 			if (this._launched) {
-				this.vk.logger.debug('longpoll','Request for new data');
+				this.vk.logger.debug('longpoll', 'Request for new data');
 
 				return void this._loop();
 			}
@@ -192,21 +192,21 @@ class Longpoll extends Events {
 				return;
 			}
 
-			const {longpollCount,longpollWait} = this.vk.options;
+			const { longpollCount, longpollWait } = this.vk.options;
 
 			if (this._restarts < longpollCount) {
 				++this._restarts;
 
-				this.vk.logger.debug('longpoll',`Request restarted ${this._restarts} times`);
+				this.vk.logger.debug('longpoll', `Request restarted ${this._restarts} times`);
 
 				return setTimeout(() => {
 					this._loop();
-				},longpollWait);
+				}, longpollWait);
 			}
 
 			this.restart()
 			.catch((error) => {
-				this.emit('error',error);
+				this.emit('error', error);
 			});
 		});
 	}
@@ -217,7 +217,7 @@ class Longpoll extends Events {
 	 * @param {Array} update
 	 */
 	_restructure (update) {
-		this.emit('raw',update);
+		this.emit('raw', update);
 
 		const id = update[0];
 
@@ -225,7 +225,7 @@ class Longpoll extends Events {
 			return;
 		}
 
-		const {name,action} = events[id];
+		const { name, action } = events[id];
 
 		if (id !== 4 && this.listenerCount(name) === 0) {
 			return;
@@ -234,9 +234,9 @@ class Longpoll extends Events {
 		let result;
 
 		try {
-			result = action.call(this,update);
+			result = action.call(this, update);
 		} catch (error) {
-			this.vk.logger.error('longpoll',error);
+			this.vk.logger.error('longpoll', error);
 
 			return;
 		}
@@ -247,10 +247,10 @@ class Longpoll extends Events {
 
 		try {
 			if (Array.isArray(result)) {
-				return this.emit(result[1],result[0]);
+				return this.emit(result[1], result[0]);
 			}
 
-			this.emit(name,result);
+			this.emit(name, result);
 		} catch (error) {
 			console.error(error);
 		}

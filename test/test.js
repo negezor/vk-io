@@ -4,32 +4,32 @@ const assert = require('assert');
 
 const VK = require('../index');
 
-describe('Init',() => {
+describe('Init', () => {
 	const params = {
 		id: 12345678,
 		app: 12345,
 		key: 'QWERTY-ASDFH'
 	};
 
-	it('pass parameters to the constructor equivalents settings',() => {
+	it('pass parameters to the constructor equivalents settings', () => {
 		const vk = new VK(params);
 
-		assert.strictEqual(params.id,vk.options.id);
-		assert.strictEqual(params.app,vk.options.app);
-		assert.strictEqual(params.key,vk.options.key);
+		assert.strictEqual(params.id, vk.options.id);
+		assert.strictEqual(params.app, vk.options.app);
+		assert.strictEqual(params.key, vk.options.key);
 	});
 
-	it('the parameters passed to .setOptions() must be equivalent',() => {
+	it('the parameters passed to .setOptions() must be equivalent', () => {
 		const vk = new VK;
 
 		vk.setOptions(params);
 
-		assert.strictEqual(params.id,vk.options.id);
-		assert.strictEqual(params.app,vk.options.app);
-		assert.strictEqual(params.key,vk.options.key);
+		assert.strictEqual(params.id, vk.options.id);
+		assert.strictEqual(params.app, vk.options.app);
+		assert.strictEqual(params.key, vk.options.key);
 	});
 
-	it('the parameters passed to .setOptions() must be parsed',() => {
+	it('the parameters passed to .setOptions() must be parsed', () => {
 		const vk = new VK;
 
 		vk.setOptions({
@@ -40,22 +40,22 @@ describe('Init',() => {
 			]
 		});
 
-		assert.strictEqual(12345,vk.options.id);
-		assert.strictEqual('notify,friends',vk.options.scope);
+		assert.strictEqual(12345, vk.options.id);
+		assert.strictEqual('notify,friends', vk.options.scope);
 	});
 
-	it('installed .setToken() token must be equivalent',() => {
+	it('installed .setToken() token must be equivalent', () => {
 		const vk = new VK;
 
 		const token = '1234567890-qwertyuiop';
 
 		vk.setToken(token);
 
-		assert.strictEqual(token,vk.getToken());
+		assert.strictEqual(token, vk.getToken());
 	});
 });
 
-describe('Errors',() => {
+describe('Errors', () => {
 	const {
 		VKError,
 		ApiError,
@@ -65,7 +65,7 @@ describe('Errors',() => {
 		ExecuteError
 	} = require('../errors');
 
-	it('should parse error ApiError 14',() => {
+	it('should parse error ApiError 14', () => {
 		const apiError = {
 			error_code: 14,
 			error_msg: 'It is required to enter the code from the picture',
@@ -75,15 +75,15 @@ describe('Errors',() => {
 		};
 		const error = new ApiError(apiError);
 
-		assert.strictEqual(14,error.code);
-		assert.strictEqual(apiError.error_msg,error.message);
-		assert.strictEqual(apiError.request_params,error.params);
+		assert.strictEqual(14, error.code);
+		assert.strictEqual(apiError.error_msg, error.message);
+		assert.strictEqual(apiError.request_params, error.params);
 
-		assert.strictEqual(239633676097,error.captchaSid);
-		assert.strictEqual(apiError.captcha_img,error.captchaImg);
+		assert.strictEqual(239633676097, error.captchaSid);
+		assert.strictEqual(apiError.captcha_img, error.captchaImg);
 	});
 
-	it('should parse error ApiError 17',() => {
+	it('should parse error ApiError 17', () => {
 		const apiError = {
 			error_code: '17',
 			error_msg: 'User validation is required.',
@@ -92,14 +92,14 @@ describe('Errors',() => {
 		};
 		const error = new ApiError(apiError);
 
-		assert.strictEqual(17,error.code);
-		assert.strictEqual(apiError.error_msg,error.message);
-		assert.strictEqual(apiError.request_params,error.params);
+		assert.strictEqual(17, error.code);
+		assert.strictEqual(apiError.error_msg, error.message);
+		assert.strictEqual(apiError.request_params, error.params);
 
-		assert.strictEqual(apiError.redirect_uri,error.redirectUri);
+		assert.strictEqual(apiError.redirect_uri, error.redirectUri);
 	});
 
-	it('should parse error ApiError 100',() => {
+	it('should parse error ApiError 100', () => {
 		const apiError = {
 			error_code: '100',
 			error_msg: 'One of the parameters specified was missing or invalid',
@@ -107,30 +107,30 @@ describe('Errors',() => {
 		};
 		const error = new ApiError(apiError);
 
-		assert.strictEqual(100,error.code);
-		assert.strictEqual(apiError.error_msg,error.message);
-		assert.strictEqual(apiError.request_params,error.params);
+		assert.strictEqual(100, error.code);
+		assert.strictEqual(apiError.error_msg, error.message);
+		assert.strictEqual(apiError.request_params, error.params);
 	});
 });
 
 const vk = new VK;
 
-describe('Util',() => {
-	it('should return string attachment .getAttachment()',() => {
-		assert.strictEqual('photo1234_5678',vk.getAttachment('photo',{
+describe('Util', () => {
+	it('should return string attachment .getAttachment()', () => {
+		assert.strictEqual('photo1234_5678', vk.getAttachment('photo', {
 			id: 5678,
 			owner_id: 1234
 		}));
 	});
 
-	it('should return array attachments .getAttachment()',() => {
+	it('should return array attachments .getAttachment()', () => {
 		const attachments = [
 			'photo1234_5678',
 			'photo9012_3456',
 			'photo7890_1234'
 		];
 
-		assert.deepStrictEqual(attachments,vk.getAttachment('photo',[
+		assert.deepStrictEqual(attachments, vk.getAttachment('photo', [
 			{
 				id: 5678,
 				owner_id: 1234
@@ -146,8 +146,8 @@ describe('Util',() => {
 		]));
 	});
 
-	it('check parse link user profile',() => {
-		return vk.parseLink('https://vk.com/id195624402')
+	it('check parse link user profile', () => (
+		vk.parseLink('https://vk.com/id195624402')
 		.then((link) => {
 			assert.deepStrictEqual(
 				{
@@ -156,11 +156,11 @@ describe('Util',() => {
 				},
 				link
 			);
-		});
-	});
+		})
+	));
 
-	it('check parse link user photo',() => {
-		return vk.parseLink('https://vk.com/id195624402?z=photo195624402_408795472/album195624402_0/rev')
+	it('check parse link user photo', () => (
+		vk.parseLink('https://vk.com/id195624402?z=photo195624402_408795472/album195624402_0/rev')
 		.then((link) => {
 			assert.deepStrictEqual(
 				{
@@ -170,11 +170,11 @@ describe('Util',() => {
 				},
 				link
 			);
-		});
-	});
+		})
+	));
 
-	it('check parse link id',() => {
-		return vk.parseLink('195624402')
+	it('check parse link id', () => (
+		vk.parseLink('195624402')
 		.then((link) => {
 			assert.deepStrictEqual(
 				{
@@ -183,16 +183,16 @@ describe('Util',() => {
 				},
 				link
 			);
-		});
-	});
+		})
+	));
 });
 
-describe('#api.isMethod()',() => {
-	it('should return TRUE for existing method',() => {
+describe('#api.isMethod()', () => {
+	it('should return TRUE for existing method', () => {
 		assert(vk.api.isMethod('users.get'));
 	});
 
-	it('should return FALSE for non-existing method',() => {
+	it('should return FALSE for non-existing method', () => {
 		assert(!vk.api.isMethod('users.getNice'));
 	});
 });

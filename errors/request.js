@@ -23,7 +23,7 @@ class RequestError extends VKError {
 		}
 
 		if ('captureStackTrace' in Error) {
-			Error.captureStackTrace(this,this.constructor.name);
+			Error.captureStackTrace(this, this.constructor.name);
 		}
 	}
 }

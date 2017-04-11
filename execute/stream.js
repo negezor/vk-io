@@ -1,9 +1,9 @@
 'use strict';
 
 const Promise = require('bluebird');
-const {Readable} = require('stream');
+const { Readable } = require('stream');
 
-const {getMethodApi} = require('../util/helpers');
+const { getMethodApi } = require('../util/helpers');
 
 /**
  * Позволяет получать коллекцию
@@ -17,7 +17,7 @@ class CollectStream extends Readable {
 	 * @param {VK}     vk
 	 * @param {Object} options
 	 */
-	constructor (vk,{params,method,limit,max}) {
+	constructor (vk, { params, method, limit, max }) {
 		super({
 			objectMode: true
 		});
@@ -43,11 +43,11 @@ class CollectStream extends Readable {
 			delete params.maxCalls;
 
 			if (maxCalls < 2) {
-				this.vk.logger.warn('collect','The minimum number of calls can be 2');
+				this.vk.logger.warn('collect', 'The minimum number of calls can be 2');
 
 				maxCalls = 2;
 			} else if (maxCalls > 25) {
-				this.vk.logger.warn('collect','The maximum number of calls can be 25');
+				this.vk.logger.warn('collect', 'The maximum number of calls can be 25');
 
 				maxCalls = 25;
 			}
@@ -58,7 +58,7 @@ class CollectStream extends Readable {
 		this._received = 0;
 		this._skip = this._offset = +params.offset || 0;
 
-		this._code = getExecuteCode(method,params,{
+		this._code = getExecuteCode(method, params, {
 			maxCalls
 		});
 	}
@@ -91,13 +91,13 @@ class CollectStream extends Readable {
 	 * @return {Promise}
 	 */
 	_promise () {
-		return new Promise((resolve,reject) => {
+		return new Promise((resolve, reject) => {
 			const collect = [];
 
 			this
-			.on('error',reject)
-			.on('end',() => resolve(collect))
-			.on('data',(items) => Array.prototype.push.apply(collect,items));
+			.on('error', reject)
+			.on('end', () => resolve(collect))
+			.on('data', (items) => Array.prototype.push.apply(collect, items));
 		});
 	}
 
@@ -117,12 +117,12 @@ class CollectStream extends Readable {
 			offset: this._offset,
 			received: this._received
 		})
-		.then(({response,errors}) => {
+		.then(({ response, errors }) => {
 			if (errors.length !== 0) {
 				throw errors[0];
 			}
 
-			const {length} = response.items;
+			const { length } = response.items;
 
 			if (length === 0) {
 				return this.push(null);
@@ -132,17 +132,17 @@ class CollectStream extends Readable {
 			this._received += length;
 			this._task = response.task;
 
-			const percent = Math.round(this._received/this._task*100);
+			const percent = Math.round(this._received / this._task * 100);
 
 			this.vk.logger.debug(
 				'collect',
 				`Collect task ${this._received}/${this._task}`,
-				`[${isNaN(percent)?100:percent}%]`
+				`[${isNaN(percent) ? 100 : percent}%]`
 			);
 
 			this.push(response.items);
 		})
-		.catch((error) => this.emit('error',error));
+		.catch((error) => this.emit('error', error));
 	}
 }
 
@@ -161,7 +161,7 @@ const unespaceOffset = /\"offset\":\"(\w+)\"/g;
  *
  * @return {string}
  */
-function getExecuteCode (method,params,{maxCalls}) {
+function getExecuteCode(method, params, { maxCalls }) {
 	params.offset = 'offset';
 
 	return `var task = parseInt(Args.task);
@@ -179,7 +179,7 @@ function getExecuteCode (method,params,{maxCalls}) {
 	var i = 0, items = [], result, length;
 
 	while (i < ${maxCalls} && proceed) {
-		result = ${getMethodApi(method,params)};
+		result = ${getMethodApi(method, params)};
 
 		if (task == 0 || task > result.count) {
 			task = result.count;
@@ -196,7 +196,7 @@ function getExecuteCode (method,params,{maxCalls}) {
 	return {
 		task: task,
 		items: items.splice(0, task)
-	};`.replace(unespaceOffset,'offset:$1');
+	};`.replace(unespaceOffset, 'offset:$1');
 }
 
 module.exports = CollectStream;

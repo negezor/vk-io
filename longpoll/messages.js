@@ -1,8 +1,8 @@
 'use strict';
 
-const {inspect} = require('util');
+const { inspect } = require('util');
 
-const {SHEAR_CHAT_PEER} = require('../util/constants');
+const { SHEAR_CHAT_PEER } = require('../util/constants');
 const {
 	parseFlags,
 	parseAttachments,
@@ -27,7 +27,7 @@ class BaseMessage {
 	 * @param {VK}    vk
 	 * @param {Array} message
 	 */
-	constructor (vk,message) {
+	constructor (vk, message) {
 		this.vk = vk;
 
 		this.id = +message[1];
@@ -44,7 +44,7 @@ class BaseMessage {
 	 *
 	 * @return {Promise}
 	 */
-	send (text,params = {}) {
+	send (text, params = {}) {
 		if (typeof text === 'object') {
 			params = text;
 		} else {
@@ -77,16 +77,16 @@ class BaseMessage {
 	 *
 	 * @return {Promise}
 	 */
-	sendPhoto (source,params = {}) {
+	sendPhoto (source, params = {}) {
 		return this.vk.upload.message({
 			source
 		})
-		.then((photo) => {
-			return this.vk.getAttachment('photo',photo);
-		})
-		.then((attachment) => {
-			return this.send(Object.assign(params,{attachment}));
-		});
+		.then((photo) => (
+			this.vk.getAttachment('photo', photo)
+		))
+		.then((attachment) => (
+			this.send(Object.assign(params, { attachment }))
+		));
 	}
 
 	/**
@@ -109,7 +109,7 @@ class BaseMessage {
 	 *
 	 * @return {Object}
 	 */
-	inspect (depth,options) {
+	inspect (depth, options) {
 		return {
 			id: this.id,
 			date: this.date,
@@ -130,8 +130,8 @@ class ChatEvent extends BaseMessage {
 	 * @param {VK}    vk
 	 * @param {Array} message
 	 */
-	constructor (vk,message) {
-		super(vk,message);
+	constructor (vk, message) {
+		super(vk, message);
 
 		this.user = +message[7].from;
 		this.chat = this.peer - SHEAR_CHAT_PEER;
@@ -146,8 +146,8 @@ class ChatEvent extends BaseMessage {
 	 *
 	 * @return {Object}
 	 */
-	inspect (depth,options) {
-		return Object.assign(super.inspect(depth,options),{
+	inspect (depth, options) {
+		return Object.assign(super.inspect(depth, options), {
 			user: this.user,
 			chat: this.chat,
 			title: this.title
@@ -167,8 +167,8 @@ class Message extends BaseMessage {
 	 * @param {VK}     vk
 	 * @param {Object} message
 	 */
-	constructor (vk,message) {
-		super(vk,message);
+	constructor (vk, message) {
+		super(vk, message);
 
 		this.chat = null;
 
@@ -196,12 +196,12 @@ class Message extends BaseMessage {
 		}
 
 		if (message[6].length !== 0) {
-			this.text = unescape(message[6]).replace(brReplace,'\n');
+			this.text = unescape(message[6]).replace(brReplace, '\n');
 		} else {
 			this.text = null;
 		}
 
-		this.flags = parseFlags(message[2],this.isGroup);
+		this.flags = parseFlags(message[2], this.isGroup);
 		this.attachments = parseAttachments(attachments);
 
 		this.hasEmoji = 'emoji' in attachments;
@@ -224,7 +224,7 @@ class Message extends BaseMessage {
 	 *
 	 * @return {Promise}
 	 */
-	reply (text,params = {}) {
+	reply (text, params = {}) {
 		if (typeof text === 'object') {
 			params = text;
 		} else {
@@ -327,8 +327,8 @@ class Message extends BaseMessage {
 	 *
 	 * @return object
 	 */
-	inspect (depth,options) {
-		const print = Object.assign(super.inspect(depth,options),{
+	inspect (depth, options) {
+		const print = Object.assign(super.inspect(depth, options), {
 			user: this.user,
 			chat: this.chat,
 			title: this.title,
@@ -339,7 +339,7 @@ class Message extends BaseMessage {
 			attachments: this.attachments
 		});
 
-		return this.constructor.name+' '+inspect(print,options);
+		return this.constructor.name + ' ' + inspect(print, options);
 	}
 }
 
@@ -357,8 +357,8 @@ class ChatCreate extends ChatEvent {
 	 * @param {VK}    vk
 	 * @param {Array} message
 	 */
-	constructor (vk,message) {
-		super(vk,message);
+	constructor (vk, message) {
+		super(vk, message);
 
 		this.title = unescape(message[7].source_text);
 	}
@@ -371,9 +371,9 @@ class ChatCreate extends ChatEvent {
 	 *
 	 * @return {Object}
 	 */
-	inspect (depth,options) {
-		return this.constructor.name+' '+inspect(
-			super.inspect(depth,options),
+	inspect (depth, options) {
+		return this.constructor.name + ' ' + inspect(
+			super.inspect(depth, options),
 			options
 		);
 	}
@@ -391,8 +391,8 @@ class TitleUpdate extends ChatEvent {
 	 * @param {VK}    vk
 	 * @param {Array} message
 	 */
-	constructor (vk,message) {
-		super(vk,message);
+	constructor (vk, message) {
+		super(vk, message);
 
 		this.title = unescape(message[7].source_text);
 	}
@@ -419,9 +419,9 @@ class TitleUpdate extends ChatEvent {
 	 *
 	 * @return {Object}
 	 */
-	inspect (depth,options) {
-		return this.constructor.name+' '+inspect(
-			super.inspect(depth,options),
+	inspect (depth, options) {
+		return this.constructor.name + ' ' + inspect(
+			super.inspect(depth, options),
 			options
 		);
 	}
@@ -439,10 +439,10 @@ class PhotoUpdate extends ChatEvent {
 	 * @param {VK}    vk
 	 * @param {Array} message
 	 */
-	constructor (vk,message) {
-		super(vk,message);
+	constructor (vk, message) {
+		super(vk, message);
 
-		const [onwer,id] = message[7].attach1.split('_');
+		const [onwer, id] = message[7].attach1.split('_');
 
 		this.photo = {
 			id: +id,
@@ -469,12 +469,12 @@ class PhotoUpdate extends ChatEvent {
 	 *
 	 * @return {Object}
 	 */
-	inspect (depth,options) {
-		const print = Object.assign(super.inspect(depth,options),{
+	inspect (depth, options) {
+		const print = Object.assign(super.inspect(depth, options), {
 			photo: this.photo
 		});
 
-		return this.constructor.name+' '+inspect(print,options);
+		return this.constructor.name + ' ' + inspect(print, options);
 	}
 }
 
@@ -490,9 +490,9 @@ class PhotoRemove extends ChatEvent {
 	 *
 	 * @return {string}
 	 */
-	inspect (depth,options) {
-		return this.constructor.name+' '+inspect(
-			super.inspect(depth,options),
+	inspect (depth, options) {
+		return this.constructor.name + ' ' + inspect(
+			super.inspect(depth, options),
 			options
 		);
 	}
@@ -508,8 +508,8 @@ class InviteUser extends ChatEvent {
 	 * @param {VK}    vk
 	 * @param {Array} message
 	 */
-	constructor (vk,message) {
-		super(vk,message);
+	constructor (vk, message) {
+		super(vk, message);
 
 		this.invite = +message[7].source_mid;
 	}
@@ -536,12 +536,12 @@ class InviteUser extends ChatEvent {
 	 *
 	 * @return {Object}
 	 */
-	inspect (depth,options) {
-		const print = Object.assign(super.inspect(depth,options),{
+	inspect (depth, options) {
+		const print = Object.assign(super.inspect(depth, options), {
 			invite: this.invite
 		});
 
-		return this.constructor.name+' '+inspect(print,options);
+		return this.constructor.name + ' ' + inspect(print, options);
 	}
 }
 
@@ -555,8 +555,8 @@ class KickUser extends ChatEvent {
 	 * @param {VK}    vk
 	 * @param {Array} message
 	 */
-	constructor (vk,message) {
-		super(vk,message);
+	constructor (vk, message) {
+		super(vk, message);
 
 		this.kick = +message[7].source_mid;
 	}
@@ -583,12 +583,12 @@ class KickUser extends ChatEvent {
 	 *
 	 * @return {Object}
 	 */
-	inspect (depth,options) {
-		const print = Object.assign(super.inspect(depth,options),{
+	inspect (depth, options) {
+		const print = Object.assign(super.inspect(depth, options), {
 			kick: this.kick
 		});
 
-		return this.constructor.name+' '+inspect(print,options);
+		return this.constructor.name + ' ' + inspect(print, options);
 	}
 }
 
@@ -596,23 +596,27 @@ class KickUser extends ChatEvent {
  * Обработчики событий чата
  */
 exports.actions = {
-	chat_create: (vk,message) => {
-		return [new ChatCreate(vk,message),'chat.create'];
-	},
-	chat_title_update: (vk,message) => {
-		return [new TitleUpdate(vk,message),'chat.rename'];
-	},
-	chat_photo_update: (vk,message) => {
-		return [new PhotoUpdate(vk,message),'chat.photo.update'];
-	},
+	chat_create: (vk, message) => (
+		[new ChatCreate(vk, message), 'chat.create']
+	),
+
+	chat_title_update: (vk, message) => (
+		[new TitleUpdate(vk, message), 'chat.rename']
+	),
+
+	chat_photo_update: (vk, message) => (
+		[new PhotoUpdate(vk, message), 'chat.photo.update']
+	),
 	/* Это не стандартизировано */
-	chat_photo_remove: (vk,message) => {
-		return [new PhotoRemove(vk,message),'chat.photo.remove'];
-	},
-	chat_invite_user: (vk,message) => {
-		return [new InviteUser(vk,message),'chat.invite'];
-	},
-	chat_kick_user: (vk,message) => {
-		return [new KickUser(vk,message),'chat.kick'];
-	}
+	chat_photo_remove: (vk, message) => (
+		[new PhotoRemove(vk, message), 'chat.photo.remove']
+	),
+
+	chat_invite_user: (vk, message) => (
+		[new InviteUser(vk, message), 'chat.invite']
+	),
+
+	chat_kick_user: (vk, message) => (
+		[new KickUser(vk, message), 'chat.kick']
+	)
 };

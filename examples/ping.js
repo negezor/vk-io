@@ -9,7 +9,7 @@ vk.longpoll.start()
 	console.log('Long Poll started');
 });
 
-vk.longpoll.on('message',(message) => {
+vk.longpoll.on('message', (message) => {
 	if (message.text === 'ping') {
 		message.send('pong');
 	}

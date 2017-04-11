@@ -6,7 +6,7 @@ const StandaloneAuth = require('./standalone');
 const AuthError = require('../errors/auth');
 const RequestError = require('../errors/request');
 
-const {API_VERSION} = require('../util/constants');
+const { API_VERSION, AUTH_ERRORS } = require('../util/constants');
 
 /**
  * Содержит в себе методы для работы с авторизацией
@@ -24,6 +24,15 @@ class Auth {
 	}
 
 	/**
+	 * Возвращает константы ошибок авторизации
+	 *
+	 * @return {Object}
+	 */
+	get AUTH_ERRORS () {
+		return AUTH_ERRORS;
+	}
+
+	/**
 	 * Автономная авторизация
 	 *
 	 * @return {StandaloneAuth}
@@ -38,7 +47,7 @@ class Auth {
 	 * @return {DirectAuth}
 	 */
 	android () {
-		return new DirectAuth(this.vk,{
+		return new DirectAuth(this.vk, {
 			app: 2274003,
 			key: 'hHbZxrka2uZ6jB1inYsH'
 		});
@@ -50,7 +59,7 @@ class Auth {
 	 * @return {DirectAuth}
 	 */
 	windows () {
-		return new DirectAuth(this.vk,{
+		return new DirectAuth(this.vk, {
 			app: 3697615,
 			key: 'AlVXZFMUqyrnABp8ncuU'
 		});
@@ -62,7 +71,7 @@ class Auth {
 	 * @return {DirectAuth}
 	 */
 	windowsPhone () {
-		return new DirectAuth(this.vk,{
+		return new DirectAuth(this.vk, {
 			app: 3502557,
 			key: 'PEObAuQi6KloPM4T30DV'
 		});
@@ -74,7 +83,7 @@ class Auth {
 	 * @return {DirectAuth}
 	 */
 	iphone () {
-		return new DirectAuth(this.vk,{
+		return new DirectAuth(this.vk, {
 			app: 3140623,
 			key: 'VeWdmVclDCtn6ihuP1nt'
 		});
@@ -86,7 +95,7 @@ class Auth {
 	 * @return {DirectAuth}
 	 */
 	ipad () {
-		return new DirectAuth(this.vk,{
+		return new DirectAuth(this.vk, {
 			app: 3682744,
 			key: 'mY6CDUswIVdJLCD3j15n'
 		});
@@ -98,7 +107,7 @@ class Auth {
 	 * @return {Promise}
 	 */
 	server () {
-		const {key,app} = this.vk.options;
+		const { key, app } = this.vk.options;
 
 		return this.vk.request({
 			uri: 'https://oauth.vk.com/access_token',
@@ -116,7 +125,7 @@ class Auth {
 		.then((response) => {
 			if ('error' in response) {
 				throw new AuthError({
-					message: response.error+', '+response.error_description
+					message: response.error + ', ' + response.error_description
 				});
 			}
 

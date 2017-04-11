@@ -13,13 +13,13 @@ class UploadError extends VKError {
 	 *
 	 * @param {Object} error
 	 */
-	constructor ({error}) {
+	constructor ({ error }) {
 		super(error);
 
 		this.message = error;
 
 		if ('captureStackTrace' in Error) {
-			Error.captureStackTrace(this,this.constructor.name);
+			Error.captureStackTrace(this, this.constructor.name);
 		}
 	}
 }

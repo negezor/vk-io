@@ -16,7 +16,7 @@ vk.longpoll.start()
 
 const regexReverse = /\/reverse (.+)/i;
 
-vk.longpoll.on('message',(message) => {
+vk.longpoll.on('message', (message) => {
 	/* Empty message */
 	if (message.text === null) {
 		return;

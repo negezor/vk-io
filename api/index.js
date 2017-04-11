@@ -7,9 +7,8 @@ const RequestError = require('../errors/request');
 const ExecuteError = require('../errors/execute');
 
 const methods = require('./methods');
-const {API_VERSION,API_URI} = require('../util/constants');
-const {getMethodApi,getChainCode,resolvePromisesTask} = require('../util/helpers');
-
+const { API_VERSION, API_URI } = require('../util/constants');
+const { getMethodApi, getChainCode, resolvePromisesTask } = require('../util/helpers');
 
 /**
  * Вызов методов API и ограничитель запросов
@@ -30,15 +29,15 @@ class Api {
 		this._queue = [];
 
 		for (const method of methods) {
-			const [group,name] = method.split('.');
+			const [group, name] = method.split('.');
 
 			if (!(group in this)) {
 				this[group] = {};
 			}
 
-			this[group][name] = (params) => {
-				return this._enqueue(method,params);
-			};
+			this[group][name] = (params) => (
+				this._enqueue(method, params)
+			);
 		}
 
 		/**
@@ -52,7 +51,7 @@ class Api {
 		this.messages.send = (params = {}) => {
 			params.random_id = Date.now();
 
-			return this._enqueue('messages.send',params);
+			return this._enqueue('messages.send', params);
 		};
 
 		/**
@@ -62,9 +61,9 @@ class Api {
 		 *
 		 * @return {Promise}
 		 */
-		this.execute = (params) => {
-			return this._enqueue('execute',params);
-		};
+		this.execute = (params) => (
+			this._enqueue('execute', params)
+		);
 	}
 
 	/**
@@ -75,8 +74,8 @@ class Api {
 	 *
 	 * @return {Promise}
 	 */
-	call (method,params) {
-		return this._enqueue(method,params);
+	call (method, params) {
+		return this._enqueue(method, params);
 	}
 
 	/**
@@ -98,8 +97,8 @@ class Api {
 	 *
 	 * @return {Promise}
 	 */
-	_enqueue (method,params = {}) {
-		return new Promise((resolve,reject) => {
+	_enqueue (method, params = {}) {
+		return new Promise((resolve, reject) => {
 			this._queue.push({
 				method,
 				params,
@@ -132,7 +131,7 @@ class Api {
 
 		this._launched = true;
 
-		const interval = Math.round(1133/this.vk.options.limit);
+		const interval = Math.round(1133 / this.vk.options.limit);
 
 		const worker = () => {
 			if (this._queue.length === 0) {
@@ -156,10 +155,10 @@ class Api {
 						continue;
 					}
 
-					const [task] = this._queue.splice(i,1);
+					const [task] = this._queue.splice(i, 1);
 
 					tasks.push(task);
-					code.push(getMethodApi(task.method,task.params));
+					code.push(getMethodApi(task.method, task.params));
 
 					if (tasks.length >= maxCalls) {
 						break;
@@ -168,7 +167,7 @@ class Api {
 					--i;
 				}
 
-				(new Promise((resolve,reject) => {
+				(new Promise((resolve, reject) => {
 					this._call({
 						method: 'execute',
 						params: {
@@ -179,7 +178,7 @@ class Api {
 					});
 				}))
 				.then((response) => {
-					resolvePromisesTask(tasks,response);
+					resolvePromisesTask(tasks, response);
 
 					return null;
 				})
@@ -190,7 +189,7 @@ class Api {
 				});
 			}
 
-			this._timeout = setTimeout(worker,interval);
+			this._timeout = setTimeout(worker, interval);
 		};
 
 		worker();
@@ -202,27 +201,28 @@ class Api {
 	 * @param {Object} task
 	 */
 	_call (task) {
-		const {token,timeout} = this.vk.options;
+		const { token, timeout, lang } = this.vk.options;
 
 		const startTime = Date.now();
 
 		this.vk.request({
-			uri: API_URI+task.method,
+			uri: API_URI + task.method,
 			timeout: timeout,
 			form: task.params,
 			qs: {
 				access_token: token,
+				lang: lang || '',
 				v: API_VERSION
 			}
 		})
 		.then((response) => {
 			if ('error' in response) {
-				return this._error(task,response.error);
+				return this._error(task, response.error);
 			}
 
-			const time = (Date.now()-startTime).toLocaleString();
+			const time = (Date.now() - startTime).toLocaleString();
 
-			this.vk.logger.debug('api',`Request ${task.method} took ${time}ms of time`);
+			this.vk.logger.debug('api', `Request ${task.method} took ${time}ms of time`);
 
 			if ('captcha' in task) {
 				task.captcha.resolve();
@@ -231,9 +231,9 @@ class Api {
 			/* Для execute нужно вернуть полный запрос */
 			if (task.method === 'execute') {
 				if ('execute_errors' in response) {
-					response.errors = response.execute_errors.map((error) => {
-						return new ExecuteError(error);
-					});
+					response.errors = response.execute_errors.map((error) => (
+						new ExecuteError(error)
+					));
 
 					delete response.execute_errors;
 				} else {
@@ -243,19 +243,19 @@ class Api {
 				return task.resolve(response);
 			}
 
-			task.resolve(('response' in response)?response.response:response);
+			task.resolve(('response' in response) ? response.response : response);
 		})
 		.catch((error) => {
-			const {restartError,restartCount,restartWait} = this.vk.options;
+			const { restartError, restartCount, restartWait } = this.vk.options;
 
-			if (restartError && checkAttemptsTask(task,restartCount)) {
+			if (restartError && checkAttemptsTask(task, restartCount)) {
 				++task.attempts;
 
 				return setTimeout(() => {
-					this.vk.logger.debug('api',`Request ${task.method} restarted ${task.attempts} times`);
+					this.vk.logger.debug('api', `Request ${task.method} restarted ${task.attempts} times`);
 
 					this._requeue(task);
-				},restartWait);
+				}, restartWait);
 			}
 
 			error = new RequestError(error);
@@ -274,10 +274,10 @@ class Api {
 	 * @param {Object} task
 	 * @param {Object} error
 	 */
-	_error (task,error) {
+	_error (task, error) {
 		error = new ApiError(error);
 
-		const {code} = error;
+		const { code } = error;
 
 		if (code === 6) {
 			return this._requeue(task);
@@ -291,8 +291,8 @@ class Api {
 			return task.reject(error);
 		}
 
-		this.vk._captchaHandler(error.captchaImg,error.captchaSid,(key) => {
-			return new Promise((resolve,reject) => {
+		this.vk._captchaHandler(error.captchaImg, error.captchaSid, (key) => (
+			new Promise((resolve, reject) => {
 				task.params.captcha_sid = error.captchaSid;
 				task.params.captcha_key = key;
 
@@ -302,8 +302,8 @@ class Api {
 				};
 
 				this._requeue(task);
-			});
-		});
+			})
+		));
 	}
 }
 
@@ -317,7 +317,7 @@ module.exports = Api;
  *
  * @return {boolean}
  */
-function checkAttemptsTask (task,attempts) {
+function checkAttemptsTask(task, attempts) {
 	if (!('attempts' in task)) {
 		task.attempts = 0;
 	}

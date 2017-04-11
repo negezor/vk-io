@@ -37,7 +37,7 @@ class VK {
 	 * @param {MainOptions} options
 	 */
 	constructor (options = {}) {
-		this.options = Object.assign({},defaultMainOptions);
+		this.options = Object.assign({}, defaultMainOptions);
 		this.request = request.defaults({
 			method: 'POST',
 			json: true
@@ -123,8 +123,8 @@ class VK {
 	 *
 	 * @return {Promise}
 	 */
-	procedure (name,params) {
-		return this.api.call(`execute.${name}`,params);
+	procedure (name, params) {
+		return this.api.call(`execute.${name}`, params);
 	}
 
 	/**
@@ -135,8 +135,8 @@ class VK {
 	 *
 	 * @return {Promise}
 	 */
-	executes (method,queues) {
-		return Chain.executes(this,method,queues);
+	executes (method, queues) {
+		return Chain.executes(this, method, queues);
 	}
 
 	/**
@@ -147,7 +147,7 @@ class VK {
 	 * @return {Promise}
 	 */
 	parseLink (uri) {
-		return parseLink(this.api,uri);
+		return parseLink(this.api, uri);
 	}
 
 	/**
@@ -167,14 +167,14 @@ class VK {
 	 *
 	 * @return {mixed}
 	 */
-	getAttachment (type,attachments) {
+	getAttachment (type, attachments) {
 		type = type.toLowerCase();
 
 		if (!Array.isArray(attachments)) {
-			return getAttachment(type,attachments);
+			return getAttachment(type, attachments);
 		}
 
-		return attachments.map((attachment) => getAttachment(type,attachment));
+		return attachments.map((attachment) => getAttachment(type, attachment));
 	}
 
 	/**
@@ -218,7 +218,7 @@ class VK {
 	 * @return {Object}
 	 */
 	_transformOptions (options) {
-		options = Object.assign({},options);
+		options = Object.assign({}, options);
 
 		if ('id' in options) {
 			options.id = +options.id;
@@ -238,16 +238,16 @@ class VK {
 
 			/* На случай лайфхака :/ */
 			if (!proxy.startsWith('http')) {
-				proxy = 'http://'+proxy;
+				proxy = 'http://' + proxy;
 			}
 
-			const {protocol,auth,host,path} = url.parse(proxy);
+			const { protocol, auth, host, path } = url.parse(proxy);
 
 			const params = {};
 
 			if (auth !== null) {
 				params.headers = {
-					'Proxy-Authorization': 'Basic '+Buffer.from(auth).toString('base64')
+					'Proxy-Authorization': 'Basic ' + Buffer.from(auth).toString('base64')
 				};
 			}
 
@@ -262,61 +262,61 @@ class VK {
 	/** Дальше устаревшее */
 
 	setting (settings) {
-		this.logger.warn('main','vk.setting deprecated, use vk.setOptions');
+		this.logger.warn('main', 'vk.setting deprecated, use vk.setOptions');
 
 		return this.setOptions(settings);
 	}
 
 	isMethod (method) {
-		this.logger.warn('main','vk.isMethod deprecated, use vk.api.isMethod');
+		this.logger.warn('main', 'vk.isMethod deprecated, use vk.api.isMethod');
 
 		return this.api.isMethod(method);
 	}
 
 	standaloneAuth () {
-		this.logger.warn('main','vk.standaloneAuth deprecated, use vk.auth.standalone');
+		this.logger.warn('main', 'vk.standaloneAuth deprecated, use vk.auth.standalone');
 
 		return this.auth.standalone();
 	}
 
 	appAuth () {
-		this.logger.warn('main','vk.appAuth deprecated, use vk.auth.server');
+		this.logger.warn('main', 'vk.appAuth deprecated, use vk.auth.server');
 
 		return this.auth.server();
 	}
 
 	androidAuth () {
-		this.logger.warn('main','vk.androidAuth deprecated, use vk.auth.android');
+		this.logger.warn('main', 'vk.androidAuth deprecated, use vk.auth.android');
 
 		return this.auth.android();
 	}
 
 	windowsAuth () {
-		this.logger.warn('main','vk.windowsAuth deprecated, use vk.auth.windows');
+		this.logger.warn('main', 'vk.windowsAuth deprecated, use vk.auth.windows');
 
 		return this.auth.windows();
 	}
 
 	windowsPhoneAuth () {
-		this.logger.warn('main','vk.windowsPhoneAuth deprecated, use vk.auth.windowsPhone');
+		this.logger.warn('main', 'vk.windowsPhoneAuth deprecated, use vk.auth.windowsPhone');
 
 		return this.auth.windowsPhone();
 	}
 
 	iphoneAuth () {
-		this.logger.warn('main','vk.iphoneAuth deprecated, use vk.auth.iphone');
+		this.logger.warn('main', 'vk.iphoneAuth deprecated, use vk.auth.iphone');
 
 		return this.auth.iphone();
 	}
 
 	ipadAuth () {
-		this.logger.warn('main','vk.ipadAuth deprecated, use vk.auth.ipad');
+		this.logger.warn('main', 'vk.ipadAuth deprecated, use vk.auth.ipad');
 
 		return this.auth.ipad();
 	}
 
 	get stream () {
-		this.logger.warn('main','vk.stream deprecated, use vk.collect');
+		this.logger.warn('main', 'vk.stream deprecated, use vk.collect');
 
 		return this.collect;
 	}

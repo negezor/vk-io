@@ -17,7 +17,7 @@ class VKError extends Error {
 		this.name = this.constructor.name;
 
 		if ('captureStackTrace' in Error) {
-			Error.captureStackTrace(this,this.constructor.name);
+			Error.captureStackTrace(this, this.constructor.name);
 		}
 	}
 }

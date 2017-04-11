@@ -23,9 +23,9 @@ const aliasOtherType = {
  *
  * @return {Promise}
  */
-module.exports = (api,uri) => {
+module.exports = (api, uri) => {
 	if (mainTypes.test(uri)) {
-		const [,type,peer,id] = uri.match(mainTypes);
+		const [, type, peer, id] = uri.match(mainTypes);
 
 		return Promise.resolve({
 			id: +id,
@@ -57,7 +57,7 @@ module.exports = (api,uri) => {
 	}
 
 	return api.utils.resolveScreenName({
-		screen_name: uri.replace(replaceNotUri,'')
+		screen_name: uri.replace(replaceNotUri, '')
 	})
 	.then((screen) => {
 		if (Array.isArray(screen)) {

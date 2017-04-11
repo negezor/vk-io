@@ -2,6 +2,10 @@
 
 const VKError = require('./vk');
 
+const { AUTH_ERRORS } = require('../util/constants');
+
+const { AUTHORIZATION_FAILED } = AUTH_ERRORS;
+
 /**
  * Обработка ошибок execute
  *
@@ -13,13 +17,14 @@ class AuthError extends VKError {
 	 *
 	 * @param {string} message
 	 */
-	constructor (error) {
-		super(error.message);
+	constructor ({ message, code = AUTHORIZATION_FAILED }) {
+		super(message);
 
-		this.message = error.message;
+		this.message = message;
+		this.code = code;
 
 		if ('captureStackTrace' in Error) {
-			Error.captureStackTrace(this,this.constructor.name);
+			Error.captureStackTrace(this, this.constructor.name);
 		}
 	}
 }

@@ -4,7 +4,7 @@ const Promise = require('bluebird');
 
 const RequestError = require('../errors/request');
 const UploadError = require('../errors/upload');
-const {getForm,extractUploadOptions,copyParams} = require('./helpers');
+const { getForm, extractUploadOptions, copyParams } = require('./helpers');
 
 /**
  * Класс для загрузки файлов во ВКонтакте
@@ -34,7 +34,7 @@ class Upload {
 			'file',
 			this.vk.api.photos.getUploadServer,
 			this.vk.api.photos.save,
-			['album_id','group_id','latitude','longitude','caption']
+			['album_id', 'group_id', 'latitude', 'longitude', 'caption']
 		]);
 	}
 
@@ -51,7 +51,7 @@ class Upload {
 			'photo',
 			this.vk.api.photos.getWallUploadServer,
 			this.vk.api.photos.saveWallPhoto,
-			['album_id','group_id','latitude','longitude','caption']
+			['album_id', 'group_id', 'latitude', 'longitude', 'caption']
 		])
 		.then((photos) => photos[0]);
 	}
@@ -103,11 +103,12 @@ class Upload {
 			params,
 			'file',
 			this.vk.api.photos.getChatUploadServer,
-			(uploaded) => {
-				return this.vk.api.messages.setChatPhoto({
+			(uploaded) => (
+				this.vk.api.messages.setChatPhoto({
 					file: uploaded
-				});
-			},
+				})
+			),
+
 			[]
 		]);
 	}
@@ -161,7 +162,7 @@ class Upload {
 			'file',
 			this.vk.api.audio.getUploadServer,
 			this.vk.api.audio.save,
-			['artist','title']
+			['artist', 'title']
 		]);
 	}
 
@@ -176,7 +177,7 @@ class Upload {
 		const options = extractUploadOptions(params);
 
 		return this.vk.api.video.save(params)
-		.then((server) => this._upload(server,options,'video_file'));
+		.then((server) => this._upload(server, options, 'video_file'));
 	}
 
 	/**
@@ -192,7 +193,7 @@ class Upload {
 			'file',
 			this.vk.api.docs.getUploadServer,
 			this.vk.api.docs.save,
-			['title','tags']
+			['title', 'tags']
 		])
 		.then((photos) => photos[0]);
 	}
@@ -210,7 +211,7 @@ class Upload {
 			'file',
 			this.vk.api.docs.getWallUploadServer,
 			this.vk.api.docs.save,
-			['title','tags']
+			['title', 'tags']
 		])
 		.then((photos) => photos[0]);
 	}
@@ -265,29 +266,29 @@ class Upload {
 	 *
 	 * @return {Promise}
 	 */
-	_conduct ([params,field,getServer,saveServer,saveParams]) {
+	_conduct ([params, field, getServer, saveServer, saveParams]) {
 		const options = extractUploadOptions(params);
 
 		if ('uploadUrl' in options) {
-			getServer = () => {
-				return Promise.resolve({
+			getServer = () => (
+				Promise.resolve({
 					upload_url: options.uploadUrl
-				});
-			};
+				})
+			);
 		}
 
-		this.vk.logger.debug('upload','Getting upload server');
+		this.vk.logger.debug('upload', 'Getting upload server');
 
 		return getServer(params)
 		.then((server) => {
-			this.vk.logger.debug('upload','Start upload files.');
+			this.vk.logger.debug('upload', 'Start upload files.');
 
-			return this._upload(server,options,field);
+			return this._upload(server, options, field);
 		})
 		.then((uploaded) => {
-			copyParams(params,uploaded,saveParams);
+			copyParams(params, uploaded, saveParams);
 
-			this.vk.logger.debug('upload','Save files');
+			this.vk.logger.debug('upload', 'Save files');
 
 			return saveServer(uploaded);
 		});
@@ -302,10 +303,10 @@ class Upload {
 	 *
 	 * @return {Promise}
 	 */
-	_upload ({upload_url},options,field) {
+	_upload ({ upload_url: url }, options, field) {
 		const params = {
-			uri: upload_url,
-			formData: getForm(field,options.source),
+			uri: url,
+			formData: getForm(field, options.source),
 			timeout: (options.timeout || 15e3)
 		};
 

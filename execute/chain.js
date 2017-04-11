@@ -2,7 +2,7 @@
 
 const Promise = require('bluebird');
 
-const {getMethodApi,getChainCode,resolvePromisesTask} = require('../util/helpers');
+const { getMethodApi, getChainCode, resolvePromisesTask } = require('../util/helpers');
 
 /**
  * Создаёт цепочку методов которые выполняются через execute
@@ -31,24 +31,24 @@ class Chain {
 	 *
 	 * @return {Promise}
 	 */
-	static executes (vk,method,queues) {
+	static executes (vk, method, queues) {
 		const promises = [];
 
 		while (queues.length !== 0) {
 			const code = getChainCode(
-				queues.splice(0,25).map((params) => getMethodApi(method,params))
+				queues.splice(0, 25).map((params) => getMethodApi(method, params))
 			);
 
 			promises.push(
 				vk.api.execute({
 					code: code
 				})
-				.then(({response}) => response)
+				.then(({ response }) => response)
 			);
 		}
 
 		return Promise.all(promises)
-		.then((responses) => Array.prototype.concat.apply([],responses));
+		.then((responses) => Array.prototype.concat.apply([], responses));
 	}
 
 	/**
@@ -59,14 +59,14 @@ class Chain {
 	 *
 	 * @return {Promise}
 	 */
-	append (method,params = {}) {
+	append (method, params = {}) {
 		if (this._isRun) {
 			throw new Error('Chain завершил работу!');
 		}
 
-		return new Promise((resolve,reject) => {
+		return new Promise((resolve, reject) => {
 			this._queue.push({
-				method: getMethodApi(method,params),
+				method: getMethodApi(method, params),
 				resolve,
 				reject
 			});
@@ -89,14 +89,14 @@ class Chain {
 		const queues = this._queue;
 
 		while (queues.length !== 0) {
-			const tasks = queues.splice(0,25);
+			const tasks = queues.splice(0, 25);
 
 			promises.push(
 				this.vk.api.execute({
 					code: getCode(tasks)
 				})
 				.then((result) => {
-					resolvePromisesTask(tasks,result);
+					resolvePromisesTask(tasks, result);
 
 					return result.response;
 				})
@@ -111,7 +111,7 @@ class Chain {
 		}
 
 		return Promise.all(promises)
-		.then((responses) => Array.prototype.concat.apply([],responses));
+		.then((responses) => Array.prototype.concat.apply([], responses));
 	}
 
 	/**
@@ -144,7 +144,7 @@ class Chain {
  *
  * @return {string}
  */
-function getCode (queues) {
+function getCode(queues) {
 	return getChainCode(queues.map((queue) => queue.method));
 }
 
