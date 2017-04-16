@@ -7,7 +7,7 @@ server.setOptions({
 	key: 'secret-key-app'
 });
 
-server.auth.server().run()
+server.auth.server()
 .then((token) => {
 	server.setToken(token);
 
