@@ -2,6 +2,7 @@
 
 const Promise = require('bluebird');
 const cheerio = require('cheerio').load;
+const debug = require('debug')('vk-io:auth');
 const parseQuery = require('querystring').parse;
 
 const AuthError = require('../errors/auth');
@@ -92,13 +93,13 @@ class DirectAuth {
 		}
 
 		if (response.error === 'need_captcha') {
-			this.vk.logger.debug('auth', 'Captcha processing');
+			debug('Captcha processing');
 
 			return this._passageCaptcha(response);
 		}
 
 		if (response.error === 'need_validation') {
-			this.vk.logger.debug('auth', 'Processes the authorization confirm number');
+			debug('Processes the authorization confirm number');
 
 			return this._securityPhoneCheck(response);
 		}

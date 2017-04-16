@@ -2,6 +2,7 @@
 
 const Promise = require('bluebird');
 const { Readable } = require('stream');
+const debug = require('debug')('vk-io:collect');
 
 const { getMethodApi } = require('../util/helpers');
 
@@ -43,11 +44,11 @@ class CollectStream extends Readable {
 			delete params.maxCalls;
 
 			if (maxCalls < 2) {
-				this.vk.logger.warn('collect', 'The minimum number of calls can be 2');
+				debug('The minimum number of calls can be 2');
 
 				maxCalls = 2;
 			} else if (maxCalls > 25) {
-				this.vk.logger.warn('collect', 'The maximum number of calls can be 25');
+				debug('The maximum number of calls can be 25');
 
 				maxCalls = 25;
 			}
@@ -134,7 +135,7 @@ class CollectStream extends Readable {
 
 			const percent = Math.round(this._received / this._task * 100);
 
-			this.vk.logger.debug(
+			debug(
 				'collect',
 				`Collect task ${this._received}/${this._task}`,
 				`[${isNaN(percent) ? 100 : percent}%]`

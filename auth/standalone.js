@@ -3,6 +3,7 @@
 const Promise = require('bluebird');
 const cheerio = require('cheerio').load;
 const request = require('request-promise');
+const debug = require('debug')('vk-io:auth');
 const parseQuery = require('querystring').parse;
 
 const AuthError = require('../errors/auth');
@@ -143,7 +144,7 @@ class StandaloneAuth {
 	 */
 	_route (response, $ = cheerio(response.body)) {
 		if ($('input[name="pass"]').length !== 0) {
-			this.vk.logger.debug('auth', 'Parse the authorization form');
+			debug('Parse the authorization form');
 
 			return this._parseAuthForm(response, $);
 		}
@@ -152,13 +153,13 @@ class StandaloneAuth {
 			const { action, fields } = parseForm($);
 
 			if (action.includes('act=authcheck_code')) {
-				this.vk.logger.debug('auth', 'Processes the authorization code');
+				debug('Processes the authorization code');
 
 				return this._authCheckCode(action, fields);
 			}
 
 			if (action.includes('act=security_check')) {
-				this.vk.logger.debug('auth', 'Processes the authorization confirm number');
+				debug('Processes the authorization confirm number');
 
 				return this._securityPhoneCheck(response, $);
 			}
@@ -178,7 +179,7 @@ class StandaloneAuth {
 			}));
 		}
 
-		this.vk.logger.debug('auth', 'Getting an address for proof of rights');
+		debug('Getting an address for proof of rights');
 
 		const script = $('script[type="text/javascript"][language="javascript"]').text();
 		const locations = script.match(/location\.href\s+=\s+\"([^\"]+)\"/i);

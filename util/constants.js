@@ -60,21 +60,6 @@ const MAX_SCOPE = [
 exports.MAX_SCOPE = MAX_SCOPE;
 
 /**
- * Уровни логгирования по умолчанию
- *
- * @type {Object}
- */
-const LOGGER_LEVELS_DEFAULT = {
-	log: true,
-	info: true,
-	warn: true,
-	error: true,
-	debug: true
-};
-
-exports.LOGGER_LEVELS_DEFAULT = LOGGER_LEVELS_DEFAULT;
-
-/**
  * Список ошибок авторизации
  *
  * @type {Object}
@@ -157,6 +142,8 @@ exports.METHODS_LIMIT = [
 	/**
 	 * Friends
 	 */
+	['friends.get', 1000],
+	['friends.getMutual', 1000],
 	['friends.getMutual', 1000],
 	['friends.getOnline', 1000],
 	['friends.getRecent', 1000],

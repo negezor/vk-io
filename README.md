@@ -187,9 +187,7 @@ vk.setOptions({
 	key: 'super-secret-key'
 });
 
-const auth = vk.auth.server();
-
-auth.run()
+vk.auth.server()
 .then((token) => {
 	console.log('Server token:',token);
 })
@@ -270,7 +268,7 @@ vk.api.wall.get({
 ### Альтернативный вызов методов
 Если метод отсутствует в списке или необходимо вызвать строкой
 ```javascript
-vk.api.call(method,params); // => Promise
+vk.api.call(method, params); // => Promise
 ```
 
 | Параметр | Тип    | Описание         |
@@ -315,7 +313,7 @@ vk.api.isMethod(method); // => boolean
 
 ### Вызов хранимой процедуры приложения
 ```javascript
-vk.procedure(name,params); // => Promise
+vk.procedure(name, params); // => Promise
 ```
 
 | Параметр | Тип    | Описание            |
@@ -335,7 +333,7 @@ vk.procedure(name,params); // => Promise
 
 В случае ошибки в массиве на месте метода будет `false`
 ```javascript
-vk.executes(method,queue); // => Promise
+vk.executes(method, queue); // => Promise
 ```
 
 | Параметр | Тип    | Описание              |
@@ -358,7 +356,7 @@ vk.executes('wall.get',[
 
 #### chain
 Позволяет вызывать сразу разные методы со своей обработкой данных
-```javascript
+```javascriptsend
 const chain = vk.chain();
 ```
 
@@ -370,7 +368,7 @@ const chain = vk.chain();
 > Если был вызван `.execute()` и вызвать `.append()` выбросится синхронное исключение
 
 ```javascript
-chain.append(method,params); // => Promise
+chain.append(method, params); // => Promise
 ```
 
 | Параметр | Тип    | Описание         |
@@ -709,7 +707,7 @@ vk.longpoll.isStarted(); // => boolean
 Позволяет повешать событие, можно использовать и другие методы [EventEmitter](https://nodejs.org/api/events.html)
 
 ```javascript
-vk.longpoll.on(event,handler);
+vk.longpoll.on(event, handler);
 ```
 
 | Параметр | Тип      | Описание          |
@@ -817,7 +815,7 @@ message.send(params); // => Promise
 | params   | object | Параметры сообщения |
 
 ```javascript
-message.send(text,params); // => Promise
+message.send(text [, params]); // => Promise
 ```
 
 | Параметр | Тип    | Описание            |
@@ -840,7 +838,7 @@ message.sendSticker(id); // => Promise
 Отправляет фотографию в текущий диалог
 
 ```javascript
-message.sendPhoto(source,params); // => Promise
+message.sendPhoto(source [, params]); // => Promise
 ```
 
 | Параметр | Тип    | Описание                 |
@@ -860,7 +858,7 @@ message.reply(params); // => Promise
 | params   | object | Параметры сообщения |
 
 ```javascript
-message.reply(text,params); // => Promise
+message.reply(text [, params]); // => Promise
 ```
 
 | Параметр | Тип    | Описание            |
@@ -1074,7 +1072,7 @@ action.send(params); // => Promise
 | params   | object | Параметры сообщения |
 
 ```javascript
-action.send(text,params); // => Promise
+action.send(text [, params]); // => Promise
 ```
 
 | Параметр | Тип    | Описание            |
@@ -1097,7 +1095,7 @@ message.sendSticker(id); // => Promise
 Отправляет фотографию в текущий диалог
 
 ```javascript
-message.sendPhoto(source,params); // => Promise
+message.sendPhoto(source [, params]); // => Promise
 ```
 
 | Параметр | Тип    | Описание                 |
@@ -1396,7 +1394,7 @@ vk.setCaptchaHandler(handler); // => VK
 | handler  | function | Обработчик captcha |
 
 ```javascript
-vk.setCaptchaHandler((src,sid,retry) => {
+vk.setCaptchaHandler((src, sid, retry) => {
 	youSuperAwesomeCaptchaHandler(src)
 	.then((key) => {
 		return retry(key); // => Promise
@@ -1417,57 +1415,19 @@ vk.setCaptchaHandler((src,sid,retry) => {
 | retry    | function | Повторить запрос с текстом captcha  |
 
 ## Логирование
-В модуле присутствует свой простой логгер
+Логирование производится через модуль [debug](http://npmjs.com/package/debug)
 
-### logger.setLevels
-Устанавливает уровни вывода логирования
+Для того что бы получать все данные логирование модуля подставьте переменную окружения DEBUG
 
-По умолчанию все включены
-
-```javascript
-vk.logger.setLevels(levels); // => Logger
+### Windows
+```shell
+set DEBUG=vk-io:*
 ```
 
-| Параметр | Тип    | Описание             |
-|----------|--------|----------------------|
-| levels   | object | Уровни вывода ошибок |
-
-Список уровней вывода
-
-- `log` - Стандартный лог
-
-- `info` - Информация
-
-- `warn` - Предупреждения
-
-- `error` - Ошибки
-
-- `debug` - Информация для отладки
-
-Например отключить уровень `debug` и `info`
-
-```javascript
-vk.logger.setLevels({
-	info: false,
-	debug: false
-});
+### Linux/Mac
+```shell
+DEBUG=vk-io:*
 ```
-
-### logger.setLevelsModule
-Позволяет установить свой уровень логирования для компонента
-
-> Обратите внимание
-
-> В первую очередь идёт проверка глобальных установок
-
-```javascript
-vk.logger.setLevelsModule(module,levels); // => Logger
-```
-
-| Параметр | Тип    | Описание             |
-|----------|--------|----------------------|
-| module   | string | Название модуля      |
-| levels   | object | Уровни вывода ошибок |
 
 Список компонентов логирования
 
@@ -1482,27 +1442,6 @@ vk.logger.setLevelsModule(module,levels); // => Logger
 - `upload` - Загрузка файлов
 
 - `longpoll` - Long Poll
-
-### logger.setCustomOutput
-Установить свой вывод лога вместо `console.log`
-
-```javascript
-vk.logger.setCustomOutput(handler); // => Logger
-```
-
-| Параметр | Тип      | Описание               |
-|----------|----------|------------------------|
-| handler  | function | Свой обработчик вывода |
-
-```javascript
-vk.logger.setCustomOutput((type,name,args) => {...});
-```
-
-| Параметр | Тип    | Описание         |
-|----------|--------|------------------|
-| type     | string | Уровень вывода   |
-| name     | string | Компонент модуля |
-| args     | array  | Аргументы вывода |
 
 ## Сниппеты
 ### parseLink
@@ -1586,7 +1525,7 @@ vk.getSmallPhoto(photo); // => string
 | photo    | object | Объект фотографии |
 
 #### Пример работы с методами
-На примере получения фотографии [Павла Дурова](vk.com/photo1_376599151)
+На примере получения фотографии [Павла Дурова](https://vk.com/photo1_376599151)
 
 ```javascript
 vk.api.photos.getById({
@@ -1598,16 +1537,16 @@ vk.api.photos.getById({
 	const urlMedium = vk.getMediumPhoto(photo);
 	const urlSmall = vk.getSmallPhoto(photo);
 
-	console.log('Url large compare:',photo.photo_2560 === urlLarge); // => true
-	console.log('Url medium compare:',photo.photo_807 === urlMedium); // => true
-	console.log('Url small compare:',photo.photo_130 === urlSmall); // => true
+	console.log('Url large compare:', photo.photo_2560 === urlLarge); // => true
+	console.log('Url medium compare:', photo.photo_807 === urlMedium); // => true
+	console.log('Url small compare:', photo.photo_130 === urlSmall); // => true
 });
 ```
 
 ### getAttachment
 Позволяет получить прикрепления с [объектов](https://vk.com/dev/objects)
 ```javascript
-vk.getAttachment(type,attachment); // => array / string
+vk.getAttachment(type, attachment); // => array / string
 ```
 
 | Параметр   | Тип            | Описание            |
@@ -1620,7 +1559,7 @@ vk.getAttachment(type,attachment); // => array / string
 ```javascript
 vk.upload.doc(...)
 .then((doc) => {
-	const attachment = vk.getAttachment('doc',doc);
+	const attachment = vk.getAttachment('doc', doc);
 
 	console.log(attachment); // => doc<owner_id>_<doc_id>
 });

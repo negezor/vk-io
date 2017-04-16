@@ -64,6 +64,7 @@ exports.parseFlags = parseFlags;
  * Уникальные прикрипления к сообщениям
  */
 const attachmentOne = {
+	/* Отправлен стикер */
 	sticker: (raw) => ({
 		sticker: {
 			id: +raw.attach1,
@@ -71,6 +72,7 @@ const attachmentOne = {
 		}
 	}),
 
+	/* Передача денег */
 	money_transfer: (raw) => ({
 		money: {
 			data: raw.attach1 || null,
@@ -79,6 +81,7 @@ const attachmentOne = {
 		}
 	}),
 
+	/* Отправлен подарок */
 	gift: (raw) => ({
 		gift: {
 			id: +raw.attach1

@@ -201,7 +201,7 @@ class Message extends BaseMessage {
 			this.text = null;
 		}
 
-		this.flags = parseFlags(message[2], this.isGroup);
+		this.flags = parseFlags(message[2], this.isGroup());
 		this.attachments = parseAttachments(attachments);
 
 		this.hasEmoji = 'emoji' in attachments;

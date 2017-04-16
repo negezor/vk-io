@@ -1,6 +1,7 @@
 'use strict';
 
 const Promise = require('bluebird');
+const debug = require('debug')('vk-io:api');
 
 const ApiError = require('../errors/api');
 const RequestError = require('../errors/request');
@@ -222,7 +223,7 @@ class Api {
 
 			const time = (Date.now() - startTime).toLocaleString();
 
-			this.vk.logger.debug('api', `Request ${task.method} took ${time}ms of time`);
+			debug(`Request ${task.method} took ${time}ms of time`);
 
 			if ('captcha' in task) {
 				task.captcha.resolve();
@@ -252,7 +253,7 @@ class Api {
 				++task.attempts;
 
 				return setTimeout(() => {
-					this.vk.logger.debug('api', `Request ${task.method} restarted ${task.attempts} times`);
+					debug(`Request ${task.method} restarted ${task.attempts} times`);
 
 					this._requeue(task);
 				}, restartWait);

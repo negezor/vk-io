@@ -1,6 +1,7 @@
 'use strict';
 
 const Promise = require('bluebird');
+const debug = require('debug')('vk-io:upload');
 
 const RequestError = require('../errors/request');
 const UploadError = require('../errors/upload');
@@ -277,18 +278,18 @@ class Upload {
 			);
 		}
 
-		this.vk.logger.debug('upload', 'Getting upload server');
+		debug('Getting upload server');
 
 		return getServer(params)
 		.then((server) => {
-			this.vk.logger.debug('upload', 'Start upload files.');
+			debug('Start upload files.');
 
 			return this._upload(server, options, field);
 		})
 		.then((uploaded) => {
 			copyParams(params, uploaded, saveParams);
 
-			this.vk.logger.debug('upload', 'Save files');
+			debug('Save files');
 
 			return saveServer(uploaded);
 		});

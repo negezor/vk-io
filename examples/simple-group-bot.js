@@ -32,11 +32,11 @@ vk.longpoll.on('message', (message) => {
 	}
 
 	if (message.text.startsWith('/hi')) {
-		message.send('Hi!');
+		return message.send('Hi!');
 	}
 
 	if (message.text.startsWith('/time')) {
-		message.send((new Date).toString());
+		return message.send((new Date).toString());
 	}
 
 	if (message.text.startsWith('/random')) {

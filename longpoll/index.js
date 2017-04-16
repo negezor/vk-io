@@ -2,6 +2,7 @@
 
 const Promise = require('bluebird');
 const Events = require('events');
+const debug = require('debug')('vk-io:longpoll');
 
 const RequestError = require('../errors/request');
 
@@ -40,14 +41,14 @@ class Longpoll extends Events {
 		this._mode = 2 + 64;
 
 		this.on('error', (error) => {
-			this.vk.logger.error('longpoll', error);
+			debug('longpoll error', error);
 
 			setTimeout(() => {
 				if (!this._launched) {
 					return;
 				}
 
-				this.vk.logger.info('longpoll', 'Getting a new server');
+				debug('Getting a new server');
 
 				this.restart()
 				.catch((error) => {
@@ -182,7 +183,7 @@ class Longpoll extends Events {
 			}
 
 			if (this._launched) {
-				this.vk.logger.debug('longpoll', 'Request for new data');
+				debug('Request for new data');
 
 				return void this._loop();
 			}
@@ -197,7 +198,7 @@ class Longpoll extends Events {
 			if (this._restarts < longpollCount) {
 				++this._restarts;
 
-				this.vk.logger.debug('longpoll', `Request restarted ${this._restarts} times`);
+				debug(`Request restarted ${this._restarts} times`);
 
 				return setTimeout(() => {
 					this._loop();
@@ -236,7 +237,7 @@ class Longpoll extends Events {
 		try {
 			result = action.call(this, update);
 		} catch (error) {
-			this.vk.logger.error('longpoll', error);
+			debug('longpoll handler parse error', error);
 
 			return;
 		}

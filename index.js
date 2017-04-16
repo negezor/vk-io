@@ -2,11 +2,11 @@
 
 const Promise = require('bluebird');
 const request = require('request-promise');
+const debug = require('debug')('vk-io:main');
 const url = require('url');
 
 const Api = require('./api/index');
 const Auth = require('./auth/index');
-const Logger = require('./util/logger');
 const Chain = require('./execute/chain');
 const Upload = require('./upload/index');
 const Collect = require('./execute/collect');
@@ -44,7 +44,6 @@ class VK {
 		});
 
 		this.api = new Api(this);
-		this.logger = new Logger;
 		this.auth = new Auth(this);
 		this.upload = new Upload(this);
 		this.collect = new Collect(this);
@@ -262,61 +261,61 @@ class VK {
 	/** Дальше устаревшее */
 
 	setting (settings) {
-		this.logger.warn('main', 'vk.setting deprecated, use vk.setOptions');
+		debug('vk.setting deprecated, use vk.setOptions');
 
 		return this.setOptions(settings);
 	}
 
 	isMethod (method) {
-		this.logger.warn('main', 'vk.isMethod deprecated, use vk.api.isMethod');
+		debug('vk.isMethod deprecated, use vk.api.isMethod');
 
 		return this.api.isMethod(method);
 	}
 
 	standaloneAuth () {
-		this.logger.warn('main', 'vk.standaloneAuth deprecated, use vk.auth.standalone');
+		debug('vk.standaloneAuth deprecated, use vk.auth.standalone');
 
 		return this.auth.standalone();
 	}
 
 	appAuth () {
-		this.logger.warn('main', 'vk.appAuth deprecated, use vk.auth.server');
+		debug('vk.appAuth deprecated, use vk.auth.server');
 
 		return this.auth.server();
 	}
 
 	androidAuth () {
-		this.logger.warn('main', 'vk.androidAuth deprecated, use vk.auth.android');
+		debug('vk.androidAuth deprecated, use vk.auth.android');
 
 		return this.auth.android();
 	}
 
 	windowsAuth () {
-		this.logger.warn('main', 'vk.windowsAuth deprecated, use vk.auth.windows');
+		debug('vk.windowsAuth deprecated, use vk.auth.windows');
 
 		return this.auth.windows();
 	}
 
 	windowsPhoneAuth () {
-		this.logger.warn('main', 'vk.windowsPhoneAuth deprecated, use vk.auth.windowsPhone');
+		debug('vk.windowsPhoneAuth deprecated, use vk.auth.windowsPhone');
 
 		return this.auth.windowsPhone();
 	}
 
 	iphoneAuth () {
-		this.logger.warn('main', 'vk.iphoneAuth deprecated, use vk.auth.iphone');
+		debug('vk.iphoneAuth deprecated, use vk.auth.iphone');
 
 		return this.auth.iphone();
 	}
 
 	ipadAuth () {
-		this.logger.warn('main', 'vk.ipadAuth deprecated, use vk.auth.ipad');
+		debug('vk.ipadAuth deprecated, use vk.auth.ipad');
 
 		return this.auth.ipad();
 	}
 
 	get stream () {
-		this.logger.warn('main', 'vk.stream deprecated, use vk.collect');
+		debug('vk.stream deprecated, use vk.collect');
 
 		return this.collect;
 	}
