@@ -50,7 +50,10 @@ class Api {
 		 * @return {Promise}
 		 */
 		this.messages.send = (params = {}) => {
-			params.random_id = Date.now();
+			if(!params.random_id) {
+				let random = Math.floor(Math.random() * 1000) + '';
+				params.random_id = parseInt(random + Date.now());
+			}
 
 			return this._enqueue('messages.send', params);
 		};
