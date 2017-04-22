@@ -72,6 +72,7 @@ const vk = new VK(options);
 | timeout       | number  | Время сброса соединения на API           | 6000         |
 | proxy         | string  | Установка прокси сервера                 | null         |
 | callCount     | number  | Количество запросов при call - `execute` | 25           |
+| authCaptcha   | number  | Количество попыток пройти капчу          | 3            |
 | longpollCount | number  | Количество попыток перезапуска Long Poll | 6            |
 | longpollWait  | number  | Время ожидания перезапуска Long Poll     | 6000         |
 | restartError  | boolean | Перезапускать ли при ошибках запрос      | true         |

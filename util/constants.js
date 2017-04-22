@@ -302,6 +302,8 @@ exports.METHODS_LIMIT = [
  * @property {number}  [timeout]   Время сброса соединения на API
  * @property {number}  [callCount] Максимальное количество вызовов методов в execute за раз
  *
+ * @property {?number} [authCaptcha]  Количество попыток пройти капчу
+ * 
  * @property {number} [longpollCount] Количество попыток перезапуска longpoll
  * @property {number} [longpollWait]  Время ожидания перезапуска
  *
@@ -327,6 +329,8 @@ exports.defaultMainOptions = {
 	limit: 3,
 	timeout: 6e3,
 	callCount: 25,
+
+	authCaptcha: 3,
 
 	longpollCount: 6,
 	longpollWait: 6e3,

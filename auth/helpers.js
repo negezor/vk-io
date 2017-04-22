@@ -1,6 +1,8 @@
 'use strict';
 
 const cheerio = require('cheerio').load;
+const { decode: decodeCp1251 } = require('iconv-lite');
+
 const AuthError = require('../errors/auth');
 
 /**
@@ -75,3 +77,14 @@ function parseSecurityForm(response, { login, phone }, $ = cheerio(response.body
 }
 
 exports.parseSecurityForm = parseSecurityForm;
+
+/**
+ * Конвентирует CP1251 в UTF-8
+ *
+ * @param {string} str
+ *
+ * @return {string}
+ */
+exports.decodeCp1251 = (str) => (
+	decodeCp1251(Buffer.from(str, 'binary'), 'win1251')
+);

@@ -9,7 +9,12 @@ const ExecuteError = require('../errors/execute');
 
 const methods = require('./methods');
 const { API_VERSION, API_URI } = require('../util/constants');
-const { getMethodApi, getChainCode, resolvePromisesTask } = require('../util/helpers');
+const {
+	getRandomId,
+	getMethodApi,
+	getChainCode,
+	resolvePromisesTask
+} = require('../util/helpers');
 
 /**
  * Вызов методов API и ограничитель запросов
@@ -50,7 +55,9 @@ class Api {
 		 * @return {Promise}
 		 */
 		this.messages.send = (params = {}) => {
-			params.random_id = Date.now();
+			if (!('random_id' in params)) {
+				params.random_id = getRandomId();
+			}
 
 			return this._enqueue('messages.send', params);
 		};

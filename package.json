@@ -1,6 +1,6 @@
 {
     "name": "vk-io",
-    "version": "3.1.4",
+    "version": "3.1.5",
     "description": "Module for easy work with vk api!",
     "main": "index.js",
     "engines": {
@@ -9,16 +9,17 @@
     "scripts": {
         "test": "mocha"
     },
-	"dependencies": {
-		"debug": "^2.6.3",
-		"bluebird": "^3.5.0",
-		"cheerio": "^0.22.0",
-		"request": "^2.81.0",
-		"request-promise": "^4.2.0"
-	},
-	"devDependencies": {
-		"mocha": "^3.2.0"
-	},
+    "dependencies": {
+        "debug": "^2.6.4",
+        "bluebird": "^3.5.0",
+        "cheerio": "^0.22.0",
+        "request": "^2.81.0",
+        "iconv-lite": "^0.4.15",
+        "request-promise": "^4.2.0"
+    },
+    "devDependencies": {
+        "mocha": "^3.2.0"
+    },
     "repository": {
         "type": "git",
         "url": "git+https://github.com/negezor/vk-io.git"

@@ -34,6 +34,8 @@ class DirectAuth {
 
 		this.app = app;
 		this.key = key;
+
+		this._captchaAttempts = 0;
 	}
 
 	/**
@@ -178,6 +180,13 @@ class DirectAuth {
 			return Promise.reject(new AuthError({
 				message: 'Missing captcha handler',
 				code: MISSING_CAPTCHA
+			}));
+		}
+
+		if (this._captchaAttempts >= this.vk.options.authCaptcha) {
+			return Promise.reject(new AuthError({
+				message: 'Maximum attempts passage captcha',
+				code: AUTHORIZATION_FAILED
 			}));
 		}
 

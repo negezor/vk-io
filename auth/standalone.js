@@ -8,11 +8,16 @@ const parseQuery = require('querystring').parse;
 
 const AuthError = require('../errors/auth');
 const RequestError = require('../errors/request');
-const { parseForm, parseSecurityForm } = require('./helpers');
 const { API_VERSION, USER_AGENT, AUTH_ERRORS } = require('../util/constants');
+const {
+	parseForm,
+	decodeCp1251,
+	parseSecurityForm
+} = require('./helpers');
 
 const {
 	PAGE_BLOCKED,
+	MISSING_CAPTCHA,
 	INVALID_PHONE_NUMBER,
 	AUTHORIZATION_FAILED
 } = AUTH_ERRORS;
@@ -32,6 +37,8 @@ class StandaloneAuth {
 		this.vk = vk;
 
 		this.jar = request.jar();
+
+		this._captchaAttempts = 0;
 	}
 
 	/**
@@ -81,11 +88,13 @@ class StandaloneAuth {
 	request (options) {
 		return this._request(options)
 		.catch((error) => {
-			if ('body' in error.response) {
+			const { response } = error;
+
+			if (typeof response === 'object' && 'body' in response) {
 				let body;
 
 				try {
-					body = JSON.parse(error.response.body);
+					body = JSON.parse(response.body);
 				} catch (e) {
 					throw new RequestError(error);
 				}
@@ -259,11 +268,13 @@ class StandaloneAuth {
 		fields.email = login || phone;
 		fields.pass = pass;
 
-		return this.request({
-			uri: action,
-			form: fields,
-			method: 'POST'
-		})
+		if ('captcha_sid' in fields) {
+			const src = $('.oauth_captcha').attr('src');
+
+			return this._passageCaptcha(action, fields, src);
+		}
+
+		return this._sendAuthForm(action, fields)
 		.then((response) => {
 			const $ = cheerio(response.body);
 
@@ -271,12 +282,102 @@ class StandaloneAuth {
 
 			if ($error.length !== 0) {
 				throw new AuthError({
-					message: 'Auth form error: ' + $error.text(),
+					message: 'Auth form error: ' + decodeCp1251($error.text()),
 					code: AUTHORIZATION_FAILED
 				});
 			}
 
 			return this._route(response, $);
+		});
+	}
+
+	/**
+	 * Отправляет форму авторизации
+	 *
+	 * @param {string} action
+	 * @param {Object} fields
+	 *
+	 * @return {Promise}
+	 */
+	_sendAuthForm (action, fields) {
+		return this.request({
+			uri: action,
+			form: fields,
+			method: 'POST',
+			encoding: 'binary'
+		});
+	}
+
+	/**
+	 * Проходит капчу
+	 *
+	 * @param {string} action
+	 * @param {Object} fields
+	 * @param {Object} src
+	 *
+	 * @return {Promise}
+	 */
+	_passageCaptcha (action, fields, src) {
+		if (this.vk._captchaHandler === null) {
+			return Promise.reject(new AuthError({
+				message: 'Missing captcha handler',
+				code: MISSING_CAPTCHA
+			}));
+		}
+
+		if (this._captchaAttempts >= this.vk.options.authCaptcha) {
+			return Promise.reject(new AuthError({
+				message: 'Maximum attempts passage captcha',
+				code: AUTHORIZATION_FAILED
+			}));
+		}
+
+		return new Promise((resolve, reject) => {
+			this.vk._captchaHandler(src, fields.captcha_sid, (key) => (
+				new Promise((resolveCaptcha, rejectCaptcha) => {
+					fields.captcha_key = key;
+
+					this._sendAuthForm(action, fields)
+					.then((response) => {
+						const $ = cheerio(response.body);
+
+						const $error = $('.box_error');
+
+						if ($error.length === 0) {
+							resolveCaptcha();
+
+							this._route(response, $)
+							.then(resolve)
+							.catch(reject);
+
+							return null;
+						}
+
+						rejectCaptcha();
+
+						const text = decodeCp1251($error.text());
+
+						if (!text.includes('Код с картинки введён неверно')) {
+							return reject(new AuthError({
+								message: 'Auth form error: ' + text,
+								code: AUTHORIZATION_FAILED
+							}));
+						}
+
+						debug('Captcha incorrect');
+
+						this._parseAuthForm(response, $)
+						.then(resolve)
+						.catch(reject);
+
+						return null;
+					})
+					.catch((error) => {
+						reject(error);
+						rejectCaptcha(error);
+					});
+				})
+			));
 		});
 	}
 

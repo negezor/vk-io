@@ -3,7 +3,6 @@
 const Promise = require('bluebird');
 const request = require('request-promise');
 const debug = require('debug')('vk-io:main');
-const url = require('url');
 
 const Api = require('./api/index');
 const Auth = require('./auth/index');
@@ -240,19 +239,7 @@ class VK {
 				proxy = 'http://' + proxy;
 			}
 
-			const { protocol, auth, host, path } = url.parse(proxy);
-
-			const params = {};
-
-			if (auth !== null) {
-				params.headers = {
-					'Proxy-Authorization': 'Basic ' + Buffer.from(auth).toString('base64')
-				};
-			}
-
-			params.proxy = `${protocol}//${host}${path || ''}`;
-
-			this.request = this.request.defaults(params);
+			this.request = this.request.defaults({ proxy });
 		}
 
 		return options;

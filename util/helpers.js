@@ -42,3 +42,12 @@ function resolvePromisesTask(tasks, result) {
 }
 
 exports.resolvePromisesTask = resolvePromisesTask;
+
+/**
+ * Возвращает рандомный ID
+ *
+ * @return {number}
+ */
+exports.getRandomId = () => (
+	(Math.floor(Math.random() * 1e3) + '') + Date.now()
+);
