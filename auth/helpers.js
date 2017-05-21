@@ -34,7 +34,7 @@ exports.parseForm = parseForm;
  *
  * @param {Object}  response
  * @param {Object}  options
- * @param {cheerio} $
+ * @param {Cheerio} $
  *
  * @return {Object}
  */

@@ -42,7 +42,7 @@ class BaseMessage {
 	 * @param {mixed}  text
 	 * @param {Object} params
 	 *
-	 * @return {Promise}
+	 * @return {Promise<Number>}
 	 */
 	send (text, params = {}) {
 		if (typeof text === 'object') {
@@ -61,7 +61,7 @@ class BaseMessage {
 	 *
 	 * @param {number} id
 	 *
-	 * @return {Promise}
+	 * @return {Promise<Number>}
 	 */
 	sendSticker (id) {
 		return this.send({
@@ -75,7 +75,7 @@ class BaseMessage {
 	 * @param {mixed}  source
 	 * @param {Object} params
 	 *
-	 * @return {Promise}
+	 * @return {Promise<Number>}
 	 */
 	sendPhoto (source, params = {}) {
 		return this.vk.upload.message({
@@ -92,7 +92,7 @@ class BaseMessage {
 	/**
 	 * Изменяет статус набора текста пользователем в диалоге
 	 *
-	 * @param {Promise}
+	 * @param {Promise<void>}
 	 */
 	setActivity () {
 		return this.vk.api.messages.setActivity({
@@ -192,7 +192,7 @@ class Message extends BaseMessage {
 			this.user = this.peer;
 			this.title = null;
 
-			this.from = 'dialog';
+			this.from = 'dm';
 		}
 
 		if (message[6].length !== 0) {
@@ -222,7 +222,7 @@ class Message extends BaseMessage {
 	 * @param {mixed}  text
 	 * @param {Object} params
 	 *
-	 * @return {Promise}
+	 * @return {Promise<Number>}
 	 */
 	reply (text, params = {}) {
 		if (typeof text === 'object') {
@@ -281,8 +281,8 @@ class Message extends BaseMessage {
 	 *
 	 * @return {boolean}
 	 */
-	isDialog () {
-		return this.from === 'dialog';
+	isDM () {
+		return this.from === 'dm';
 	}
 
 	/**
@@ -402,7 +402,7 @@ class TitleUpdate extends ChatEvent {
 	 *
 	 * @param {string} title
 	 *
-	 * @return {Promise}
+	 * @return {Promise<void>}
 	 */
 	rename (title) {
 		return this.vk.api.messages.editChat({
@@ -453,7 +453,7 @@ class PhotoUpdate extends ChatEvent {
 	/**
 	 * Удаляет фотографию беседы
 	 *
-	 * @return {Promise}
+	 * @return {Promise<void>}
 	 */
 	remove () {
 		return this.vk.api.messages.deleteChatPhoto({
@@ -519,7 +519,7 @@ class InviteUser extends ChatEvent {
 	 *
 	 * @param {number} id
 	 *
-	 * @return {Promise}
+	 * @return {Promise<void>}
 	 */
 	kick (id = this.invite) {
 		return this.vk.api.messages.removeChatUser({
@@ -566,7 +566,7 @@ class KickUser extends ChatEvent {
 	 *
 	 * @param {number} id
 	 *
-	 * @return {Promise}
+	 * @return {Promise<void>}
 	 */
 	invite (id = this.kick) {
 		return this.vk.api.messages.addChatUser({

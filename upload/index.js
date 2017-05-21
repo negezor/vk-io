@@ -27,7 +27,7 @@ class Upload {
 	 *
 	 * @param {Object} params
 	 *
-	 * @return {Promise}
+	 * @return {Promise<Object>}
 	 */
 	album (params) {
 		return this._conduct([
@@ -44,7 +44,7 @@ class Upload {
 	 *
 	 * @param {Object} params
 	 *
-	 * @return {Promise}
+	 * @return {Promise<Object>}
 	 */
 	wall (params) {
 		return this._conduct([
@@ -62,7 +62,7 @@ class Upload {
 	 *
 	 * @param {Object} params
 	 *
-	 * @return {Promise}
+	 * @return {Promise<Object>}
 	 */
 	owner (params) {
 		return this._conduct([
@@ -79,7 +79,7 @@ class Upload {
 	 *
 	 * @param {Object} params
 	 *
-	 * @return {Promise}
+	 * @return {Promise<Object>}
 	 */
 	message (params) {
 		return this._conduct([
@@ -97,7 +97,7 @@ class Upload {
 	 *
 	 * @param {Object} params
 	 *
-	 * @return {Promise}
+	 * @return {Promise<Object>}
 	 */
 	chat (params) {
 		return this._conduct([
@@ -119,7 +119,7 @@ class Upload {
 	 *
 	 * @param {Object} params
 	 *
-	 * @return {Promise}
+	 * @return {Promise<Object>}
 	 */
 	product (params) {
 		return this._conduct([
@@ -137,7 +137,7 @@ class Upload {
 	 *
 	 * @param {Object} params
 	 *
-	 * @return {Promise}
+	 * @return {Promise<Object>}
 	 */
 	selection (params) {
 		return this._conduct([
@@ -155,7 +155,7 @@ class Upload {
 	 *
 	 * @param {Object} params
 	 *
-	 * @return {Promise}
+	 * @return {Promise<Object>}
 	 */
 	audio (params) {
 		return this._conduct([
@@ -172,13 +172,30 @@ class Upload {
 	 *
 	 * @param {Object} params
 	 *
-	 * @return {Promise}
+	 * @return {Promise<Object>}
 	 */
 	video (params) {
 		const options = extractUploadOptions(params);
 
 		return this.vk.api.video.save(params)
-		.then((server) => this._upload(server, options, 'video_file'));
+		.then((server) => {
+			if ('link' in params) {
+				return this.vk.request(server.upload_url)
+				.then(() => server);
+			}
+
+			return this._upload(server, options, 'video_file')
+			.then((result) => {
+				Object.assign(server, result);
+
+				return server;
+			});
+		})
+		.then((save) => {
+			delete save.upload_url;
+
+			return save;
+		});
 	}
 
 	/**
@@ -186,7 +203,7 @@ class Upload {
 	 *
 	 * @param {Object} params
 	 *
-	 * @return {Promise}
+	 * @return {Promise<Object>}
 	 */
 	doc (params) {
 		return this._conduct([
@@ -204,7 +221,7 @@ class Upload {
 	 *
 	 * @param {Object} params
 	 *
-	 * @return {Promise}
+	 * @return {Promise<Object>}
 	 */
 	wallDoc (params) {
 		return this._conduct([
@@ -222,7 +239,7 @@ class Upload {
 	 *
 	 * @param {Object} params
 	 *
-	 * @return {Promise}
+	 * @return {Promise<Object>}
 	 */
 	voice (params) {
 		params.type = 'audio_message';
@@ -235,7 +252,7 @@ class Upload {
 	 *
 	 * @param {Object} params
 	 *
-	 * @return {Promise}
+	 * @return {Promise<Object>}
 	 */
 	graffiti (params) {
 		params.type = 'graffiti';
@@ -248,7 +265,7 @@ class Upload {
 	 *
 	 * @param {Object} params
 	 *
-	 * @return {Promise}
+	 * @return {Promise<Object>}
 	 */
 	cover (params) {
 		return this._conduct([
@@ -265,7 +282,7 @@ class Upload {
 	 *
 	 * @param {Object} conduct
 	 *
-	 * @return {Promise}
+	 * @return {Promise<Object>}
 	 */
 	_conduct ([params, field, getServer, saveServer, saveParams]) {
 		const options = extractUploadOptions(params);
@@ -302,7 +319,7 @@ class Upload {
 	 * @param {Object} options
 	 * @param {string} field
 	 *
-	 * @return {Promise}
+	 * @return {Promise<Object>}
 	 */
 	_upload ({ upload_url: url }, options, field) {
 		const params = {

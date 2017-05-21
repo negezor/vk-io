@@ -69,7 +69,7 @@ class CollectStream extends Readable {
 	 *
 	 * @param {function} handler
 	 *
-	 * @return {Promise}
+	 * @return {Promise<Array>}
 	 */
 	then (handler) {
 		return this._promise().then(handler);
@@ -80,7 +80,7 @@ class CollectStream extends Readable {
 	 *
 	 * @param {function} handler
 	 *
-	 * @return {Promise}
+	 * @return {Promise<Object>}
 	 */
 	catch (handler) {
 		return this._promise().catch(handler);
@@ -89,7 +89,7 @@ class CollectStream extends Readable {
 	/**
 	 * Возвращает promise
 	 *
-	 * @return {Promise}
+	 * @return {Promise<Array>}
 	 */
 	_promise () {
 		return new Promise((resolve, reject) => {

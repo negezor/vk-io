@@ -43,7 +43,7 @@ class DirectAuth {
 	 *
 	 * @param {Object} options
 	 *
-	 * @return {Promise}
+	 * @return {Promise<Object>}
 	 */
 	request (options) {
 		return this._request(options)
@@ -77,7 +77,7 @@ class DirectAuth {
 	 *
 	 * @param {Object} response
 	 *
-	 * @return {Promise}
+	 * @return {Promise<Object>}
 	 */
 	_route (response) {
 		if (!('error' in response)) {
@@ -117,7 +117,7 @@ class DirectAuth {
 	 *
 	 * @param {Object} response
 	 *
-	 * @return {Promise}
+	 * @return {Promise<Object>}
 	 */
 	_securityPhoneCheck ({ redirect_uri: redirect }) {
 		if (redirect.includes('act=blocked')) {
@@ -173,7 +173,7 @@ class DirectAuth {
 	 *
 	 * @param {Object} response
 	 *
-	 * @return {Promise}
+	 * @return {Promise<Object>}
 	 */
 	_passageCaptcha ({ captcha_sid: sid, captcha_img: img }) {
 		if (this.vk._captchaHandler === null) {
@@ -228,7 +228,7 @@ class DirectAuth {
 	/**
 	 * Запрашивает данные для токена
 	 *
-	 * @return {Promise}
+	 * @return {Promise<Object>}
 	 */
 	_getToken (qs = {}) {
 		const { login, phone, pass, scope } = this.vk.options;

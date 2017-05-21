@@ -5,7 +5,7 @@
  *
  * @type {string}
  */
-exports.API_VERSION = '5.63';
+exports.API_VERSION = '5.64';
 
 /**
  * Адрес API методов
@@ -20,7 +20,7 @@ exports.API_URI = 'https://api.vk.com/method/';
  * @type {string}
  */
 const USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-+ ' (KHTML, like Gecko) Chrome/57.0.2987.133 Safari/537.36';
++ ' (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36';
 
 exports.USER_AGENT = USER_AGENT;
 
@@ -303,7 +303,7 @@ exports.METHODS_LIMIT = [
  * @property {number}  [callCount] Максимальное количество вызовов методов в execute за раз
  *
  * @property {?number} [authCaptcha]  Количество попыток пройти капчу
- * 
+ *
  * @property {number} [longpollCount] Количество попыток перезапуска longpoll
  * @property {number} [longpollWait]  Время ожидания перезапуска
  *

@@ -104,7 +104,7 @@ class Auth {
 	/**
 	 * Серверная авторизация
 	 *
-	 * @return {Promise}
+	 * @return {Promise<string>}
 	 */
 	server () {
 		const { key, app } = this.vk.options;

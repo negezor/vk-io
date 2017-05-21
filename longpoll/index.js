@@ -70,7 +70,7 @@ class Longpoll extends Events {
 	/**
 	 * Запускает longpoll
 	 *
-	 * @return {Promise}
+	 * @return {Promise<void>}
 	 */
 	start () {
 		if (this._launched) {
@@ -100,7 +100,7 @@ class Longpoll extends Events {
 	/**
 	 * Останавливает работу longpoll
 	 *
-	 * @return {Promise}
+	 * @return {Promise<void>}
 	 */
 	stop () {
 		this._ts = null;
@@ -113,7 +113,7 @@ class Longpoll extends Events {
 	/**
 	 * Перезапускает longpoll
 	 *
-	 * @return {Promise}
+	 * @return {Promise<void>}
 	 */
 	restart () {
 		this._restarts = 0;

@@ -29,7 +29,7 @@ class Chain {
 	 * @param {string} method
 	 * @param {Object} params
 	 *
-	 * @return {Promise}
+	 * @return {Promise<Array>}
 	 */
 	static executes (vk, method, queues) {
 		const promises = [];
@@ -57,7 +57,7 @@ class Chain {
 	 * @param {string} method
 	 * @param {Object} params
 	 *
-	 * @return {Promise}
+	 * @return {Promise<Object>}
 	 */
 	append (method, params = {}) {
 		if (this._isRun) {
@@ -76,7 +76,7 @@ class Chain {
 	/**
 	 * Выполняет цепочку методов
 	 *
-	 * @return {Promise}
+	 * @return {Promise<Array>}
 	 */
 	execute () {
 		this._isRun = true;
@@ -119,7 +119,7 @@ class Chain {
 	 *
 	 * @param  {function} handler
 	 *
-	 * @return {Promise}
+	 * @return {Promise<Object>}
 	 */
 	then (handler) {
 		return this.execute().then(handler);
@@ -130,7 +130,7 @@ class Chain {
 	 *
 	 * @param {function} handler
 	 *
-	 * @return {Promise}
+	 * @return {Promise<Object>}
 	 */
 	catch (handler) {
 		return this.execute().catch(handler);

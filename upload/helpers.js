@@ -86,9 +86,9 @@ exports.copyParams = copyParams;
 /**
  * Проверяет наличие ссылки
  *
- * @type {Boolean}
+ * @type {RegExp}
  */
-const isLink = /^(https?:\/\/)?((([a-z\d]([a-z\d-]*[a-z\d])*)\.?)+[a-z]{2,}|((\d{1,3}\.){3}\d{1,3}))(\:\d+)?(\/[-a-z\d%_.~+]*)*(\?[;&a-z\d%_.~+=-]*)?(\#[-a-z\d_]*)?$/i;
+const isLink = /^https?:\/\//i;
 
 /**
  * Возвращает исходник для отправки

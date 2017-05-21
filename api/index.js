@@ -3,6 +3,8 @@
 const Promise = require('bluebird');
 const debug = require('debug')('vk-io:api');
 
+const Validate = require('../auth/validate');
+
 const ApiError = require('../errors/api');
 const RequestError = require('../errors/request');
 const ExecuteError = require('../errors/execute');
@@ -31,6 +33,7 @@ class Api {
 		this.vk = vk;
 
 		this._launched = false;
+		this._isStop = false;
 		this._timeout = null;
 		this._queue = [];
 
@@ -52,7 +55,7 @@ class Api {
 		 *
 		 * @param {Object} params
 		 *
-		 * @return {Promise}
+		 * @return {Promise<Object>}
 		 */
 		this.messages.send = (params = {}) => {
 			if (!('random_id' in params)) {
@@ -80,7 +83,7 @@ class Api {
 	 * @param {string} method
 	 * @param {Object} params
 	 *
-	 * @return {Promise}
+	 * @return {Promise<Object>}
 	 */
 	call (method, params) {
 		return this._enqueue(method, params);
@@ -103,7 +106,7 @@ class Api {
 	 * @param {string} method
 	 * @param {Object} params
 	 *
-	 * @return {Promise}
+	 * @return {Promise<Object>}
 	 */
 	_enqueue (method, params = {}) {
 		return new Promise((resolve, reject) => {
@@ -142,7 +145,7 @@ class Api {
 		const interval = Math.round(1133 / this.vk.options.limit);
 
 		const worker = () => {
-			if (this._queue.length === 0) {
+			if (this._queue.length === 0 || this._isStop) {
 				clearTimeout(this._timeout);
 
 				this._launched = false;
@@ -163,7 +166,7 @@ class Api {
 						continue;
 					}
 
-					const [task] = this._queue.splice(i, 1);
+					const task = this._queue.splice(i--, 1)[0];
 
 					tasks.push(task);
 					code.push(getMethodApi(task.method, task.params));
@@ -171,8 +174,6 @@ class Api {
 					if (tasks.length >= maxCalls) {
 						break;
 					}
-
-					--i;
 				}
 
 				(new Promise((resolve, reject) => {
@@ -293,6 +294,34 @@ class Api {
 
 		if ('captcha' in task) {
 			task.captcha.reject(error);
+		}
+
+		if (code === 17) {
+			if (this._isStop) {
+				return this._requeue(task);
+			}
+
+			this._isStop = true;
+
+			const validate = new Validate(this.vk);
+
+			return validate.run(error.redirectUri)
+			.then((token) => {
+				this.vk.setToken(token);
+
+				this._isStop = false;
+
+				debug('Validation passed successfully ApiError 17');
+
+				this._requeue(task);
+			})
+			.catch((validateError) => {
+				debug('Validation error', validateError);
+
+				this._isStop = false;
+
+				task.reject(error);
+			});
 		}
 
 		if (code === 14 && this.vk._captchaHandler === null || code !== 14) {

@@ -83,7 +83,7 @@ class StandaloneAuth {
 	 *
 	 * @param {Object} options
 	 *
-	 * @return {Promise}
+	 * @return {Promise<string>}
 	 */
 	request (options) {
 		return this._request(options)
@@ -146,8 +146,8 @@ class StandaloneAuth {
 	/**
 	 * Выбирает нужное действие
 	 *
-	 * @param {Object} response
-	 * @param {Cheeri} $
+	 * @param {Object}  response
+	 * @param {Cheerio} $
 	 *
 	 * @return {Promise}
 	 */
@@ -208,8 +208,8 @@ class StandaloneAuth {
 	/**
 	 * Проверка номера телефона при заходе с других мест
 	 *
-	 * @param {Object} response
-	 * @param {Cheeri} $
+	 * @param {Object}  response
+	 * @param {Cheerio} $
 	 *
 	 * @return {Promise}
 	 */

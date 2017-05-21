@@ -21,7 +21,7 @@ const aliasOtherType = {
  * @param {Api}    api
  * @param {string} uri
  *
- * @return {Promise}
+ * @return {Promise<Object>}
  */
 module.exports = (api, uri) => {
 	if (mainTypes.test(uri)) {

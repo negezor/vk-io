@@ -49,5 +49,5 @@ exports.resolvePromisesTask = resolvePromisesTask;
  * @return {number}
  */
 exports.getRandomId = () => (
-	(Math.floor(Math.random() * 1e3) + '') + Date.now()
+	(Math.floor(Math.random() * 1e4) + '') + Date.now()
 );
