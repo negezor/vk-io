@@ -55,8 +55,8 @@ module.exports = {
 	4: {
 		name: 'message',
 		action: function (message) {
-			if ('source_act' in message[7]) {
-				const act = message[7].source_act;
+			if ('source_act' in message[6]) {
+				const act = message[6].source_act;
 
 				if (act in actions) {
 					return actions[act](this.vk, message);
@@ -105,6 +105,10 @@ module.exports = {
 	12: {
 		name: 'group.flag.set',
 		action: similarEvents.group
+	},
+	13: {
+		name: 'message.removed',
+		action: similarEvents.read
 	},
 	51: {
 		name: 'chat.action',

@@ -151,7 +151,7 @@ class Longpoll extends Events {
 				key: this._key,
 				act: 'a_check',
 				ts: this._ts,
-				version: 1,
+				version: 2,
 				wait: 20
 			}
 		})

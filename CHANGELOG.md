@@ -7,9 +7,20 @@
 ## Планируется
 - Сделать обработку двухфакторной авторизации standalone и приложений официальных (возможно)
 
+## [3.1.7] - 06.06.2017
+### Исправлено
+- Обновлена версия API до `5.65`, обновлён `User-Agent`
+- Long Poll обновлён до 2 версии API
+- Добавлено событие в Long Poll `message.removed` (удаление всех сообщений в диалоге)
+- В Long Poll изменён флаг `answered` на `unanswered` он соответствует неотвеченному диалогу
+- В Long Poll добавлен флаг `hidden` он соответствует приветственному сообщению от сообщества
+- В Long Poll удалено свойство `title` кроме события `chat.rename`
+- В Long Poll свойство `chat` доступно только в чатах
+- В Long Poll свойство `user` недоступно в группах
+
 ## [3.1.6] - 20.05.2017
 ### Добавлено
-- Обработка ошибки [ApiError 17](https://vk.com/dev/need_validation) `Validation required: please open redirect_uri in browser` (работоспособность не проверялась, DEBUG=vk-io:auth)
+- Обработка ошибки [ApiError 17](https://vk.com/dev/need_validation) `Validation required: please open redirect_uri in browser` (работоспособность не проверялась, `DEBUG=vk-io:auth`)
 
 ### Исправлено
 - Исправлена неправильная работа метода `upload.video`

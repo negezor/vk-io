@@ -24,19 +24,20 @@ const dialogFlags = {
 	64: 'spam',
 	128: 'delеtеd',
 	256: 'fixed',
-	512: 'media'
+	512: 'media',
+	65536: 'hidden'
 };
 
 /**
  * Список флагов сообщества
  *
  * important - важный диалог
- * answered - диалог с ответом от сообщества
+ * unanswered - неотвеченный диалог от сообщества
  * ... наследование сообщений диалогов
  */
 const groupFlags = Object.assign({}, dialogFlags, {
 	1: 'important',
-	2: 'answered'
+	2: 'unanswered'
 });
 
 /**
@@ -49,7 +50,7 @@ function parseFlags(sum, type = false) {
 
 	const flags = [];
 
-	for (let i = 0, bit = 1; i < 10; ++i, bit *= 2) {
+	for (let i = 0, bit = 1; i < 11; ++i, bit *= 2) {
 		if ((sum & bit) !== 0) {
 			flags.push(list[bit]);
 		}
@@ -259,7 +260,8 @@ const lt = /&lt;/g;
 const qt = /&gt;/g;
 const quot = /&quot;/g;
 const amp = /&amp;/g;
-const br = /<br>/g;
+
+exports.brReplace = /<br>/g;
 
 /**
  * Декодирует HTML сущности

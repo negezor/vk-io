@@ -7,13 +7,9 @@ const {
 	parseFlags,
 	parseAttachments,
 	parseFwds,
+	brReplace,
 	unescape
 } = require('./helpers');
-
-/**
- * Заменяет тег <br> на \n
- */
-const brReplace = /<br>/g;
 
 /**
  * Базовай класс сообщений ВКонтакте
@@ -133,9 +129,8 @@ class ChatEvent extends BaseMessage {
 	constructor (vk, message) {
 		super(vk, message);
 
-		this.user = +message[7].from;
+		this.user = +message[6].from;
 		this.chat = this.peer - SHEAR_CHAT_PEER;
-		this.title = unescape(message[5]);
 	}
 
 	/**
@@ -149,8 +144,7 @@ class ChatEvent extends BaseMessage {
 	inspect (depth, options) {
 		return Object.assign(super.inspect(depth, options), {
 			user: this.user,
-			chat: this.chat,
-			title: this.title
+			chat: this.chat
 		});
 	}
 }
@@ -170,33 +164,26 @@ class Message extends BaseMessage {
 	constructor (vk, message) {
 		super(vk, message);
 
-		this.chat = null;
-
-		const attachments = message[7];
+		const attachments = message[6];
 
 		if (this.peer > SHEAR_CHAT_PEER) {
 			this.user = +attachments.from;
-			this.title = unescape(message[5]);
 
 			this.chat = this.peer - SHEAR_CHAT_PEER;
 
 			this.from = 'chat';
 		} else if (this.peer < 0) {
-			this.user = null;
-			this.title = null;
-
 			this.admin = +attachments.from_admin;
 
 			this.from = 'group';
 		} else {
 			this.user = this.peer;
-			this.title = null;
 
 			this.from = 'dm';
 		}
 
-		if (message[6].length !== 0) {
-			this.text = unescape(message[6]).replace(brReplace, '\n');
+		if (message[5].length !== 0) {
+			this.text = unescape(message[5]).replace(brReplace, '\n');
 		} else {
 			this.text = null;
 		}
@@ -331,7 +318,6 @@ class Message extends BaseMessage {
 		const print = Object.assign(super.inspect(depth, options), {
 			user: this.user,
 			chat: this.chat,
-			title: this.title,
 			text: this.text,
 			from: this.from,
 			hasEmoji: this.hasEmoji,
@@ -359,8 +345,6 @@ class ChatCreate extends ChatEvent {
 	 */
 	constructor (vk, message) {
 		super(vk, message);
-
-		this.title = unescape(message[7].source_text);
 	}
 
 	/**
@@ -394,7 +378,7 @@ class TitleUpdate extends ChatEvent {
 	constructor (vk, message) {
 		super(vk, message);
 
-		this.title = unescape(message[7].source_text);
+		this.title = unescape(message[6].source_text);
 	}
 
 	/**
@@ -407,7 +391,7 @@ class TitleUpdate extends ChatEvent {
 	rename (title) {
 		return this.vk.api.messages.editChat({
 			chat_id: this.chat,
-			title: title
+			title
 		});
 	}
 
@@ -442,7 +426,7 @@ class PhotoUpdate extends ChatEvent {
 	constructor (vk, message) {
 		super(vk, message);
 
-		const [onwer, id] = message[7].attach1.split('_');
+		const [onwer, id] = message[6].attach1.split('_');
 
 		this.photo = {
 			id: +id,
@@ -511,7 +495,7 @@ class InviteUser extends ChatEvent {
 	constructor (vk, message) {
 		super(vk, message);
 
-		this.invite = +message[7].source_mid;
+		this.invite = +message[6].source_mid;
 	}
 
 	/**
@@ -558,7 +542,7 @@ class KickUser extends ChatEvent {
 	constructor (vk, message) {
 		super(vk, message);
 
-		this.kick = +message[7].source_mid;
+		this.kick = +message[6].source_mid;
 	}
 
 	/**

@@ -1,10 +1,10 @@
 {
     "name": "vk-io",
-    "version": "3.1.6",
+    "version": "3.1.7",
     "description": "Module for easy work with vk api!",
     "main": "index.js",
     "engines": {
-        "node": ">=6.0.0"
+        "node": ">=7.0.0"
     },
     "scripts": {
         "test": "mocha"
@@ -18,7 +18,7 @@
         "request-promise": "^4.2.1"
     },
     "devDependencies": {
-        "mocha": "^3.4.1"
+        "mocha": "^3.4.2"
     },
     "repository": {
         "type": "git",
