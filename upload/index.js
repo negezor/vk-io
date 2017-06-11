@@ -238,13 +238,14 @@ class Upload {
 	 * Загрузка аудиосообщения
 	 *
 	 * @param {Object} params
+	 * @param {Boolean} params.groupVoice - для отправки аудиосообщения в групповом чате
 	 *
 	 * @return {Promise<Object>}
 	 */
 	voice (params) {
 		params.type = 'audio_message';
 
-		return this.doc(params);
+		return params.groupVoice ? this.wallDoc(params) : this.doc(params);
 	}
 
 	/**
