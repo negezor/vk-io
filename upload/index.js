@@ -244,7 +244,7 @@ class Upload {
 	voice (params) {
 		params.type = 'audio_message';
 
-		return this.doc(params);
+		return params.group_id ? this.wallDoc(params) : this.doc(params);
 	}
 
 	/**
