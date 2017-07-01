@@ -1,0 +1,47 @@
+{
+    "name": "vk-io",
+    "version": "4.0.0",
+    "description": "Modern VK API SDK for Node.js",
+    "main": "index.js",
+    "scripts": {
+        "test": "mocha lib/tests",
+        "build": "npm run-script babel",
+        "babel": "babel src/ --out-dir lib/",
+        "watch": "npm run-script babel -- --watch",
+        "prepare": "npm run-script babel && npm run-script test"
+    },
+    "engines": {
+        "node": ">=7"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/negezor/vk-io.git"
+    },
+    "keywords": [
+        "vk",
+        "api",
+        "sdk",
+        "bot",
+        "node",
+        "js",
+        "es6",
+        "es7"
+    ],
+    "author": "Vladlen <negezor@gmail.com>",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/negezor/vk-io/issues"
+    },
+    "homepage": "https://github.com/negezor/vk-io#readme",
+    "devDependencies": {
+        "babel-cli": "^6.24.1",
+        "babel-core": "^6.25.0",
+        "babel-preset-env": "^1.5.2",
+        "chai": "^4.0.2",
+        "mocha": "^3.4.2"
+    },
+    "dependencies": {
+        "debug": "^2.6.8",
+        "node-fetch": "^1.7.1"
+    }
+}
