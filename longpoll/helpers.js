@@ -168,9 +168,6 @@ const fwdHasBrackets = /(\(.*\))/;
  * @return {Array}
  */
 function parseFwds(raw) {
-	if (fwdHasBrackets.test(raw)) {
-		raw = raw.substring(1, raw.length - 1);
-	}
 
 	const out = [];
 
@@ -195,7 +192,7 @@ function parseFwds(raw) {
 			continue;
 		}
 
-		fwd.fwd = parseFwds(pair[1]);
+		fwd.fwd = parseFwds(pair[1].substring(1, pair[1].length - 1));
 
 		out.push(fwd);
 	}
