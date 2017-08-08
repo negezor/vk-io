@@ -1,6 +1,8 @@
 'use strict';
 
-import Api from './api';
+import { Agent } from 'https';
+
+import API from './api';
 
 import { defaultOptions } from './util/constants';
 
@@ -16,9 +18,25 @@ export class VK {
 	 * @param {Object} options
 	 */
 	constructor (options = {}) {
-		this.options = Object.assign({}, defaultOptions);
+		this.options = {
+			...defaultOptions,
 
-		this.api = new Api(this);
+			agent: new Agent({
+				keepAlive: true,
+				keepAliveMsecs: 10000
+			})
+		};
+
+		this.api = new API(this);
+	}
+
+	/**
+	 * Returns custom tag
+	 *
+	 * @return {string}
+	 */
+	get [Symbol.toStringTag] () {
+		return 'VK';
 	}
 
 	/**
