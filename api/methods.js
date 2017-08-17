@@ -164,6 +164,7 @@ module.exports = [
 	'docs.getById',
 	'docs.getTypes',
 	'docs.getUploadServer',
+	'docs.getMessagesUploadServer',
 	'docs.getWallUploadServer',
 	'docs.save',
 	'docs.search',

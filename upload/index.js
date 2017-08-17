@@ -213,11 +213,11 @@ class Upload {
 			this.vk.api.docs.save,
 			['title', 'tags']
 		])
-		.then((photos) => photos[0]);
+		.then((docs) => docs[0]);
 	}
 
 	/**
-	 * Загрузка документов для последующей отправки документа на стену или личным сообщением
+	 * Загрузка документов для последующей отправки документа на стену
 	 *
 	 * @param {Object} params
 	 *
@@ -231,7 +231,25 @@ class Upload {
 			this.vk.api.docs.save,
 			['title', 'tags']
 		])
-		.then((photos) => photos[0]);
+		.then((docs) => docs[0]);
+	}
+	
+	/**
+	 * Загрузка документов для последующей отправки документа личным сообщением
+	 *
+	 * @param {Object} params
+	 *
+	 * @return {Promise<Object>}
+	 */
+	messageDoc (params) {
+		return this._conduct([
+			params,
+			'file',
+			this.vk.api.docs.getMessagesUploadServer,
+			this.vk.api.docs.save,
+			['title', 'tags']
+		])
+		.then((docs) => docs[0]);
 	}
 
 	/**
@@ -244,7 +262,7 @@ class Upload {
 	voice (params) {
 		params.type = 'audio_message';
 
-		return params.group_id ? this.wallDoc(params) : this.doc(params);
+		return this.messageDoc(params);
 	}
 
 	/**
