@@ -41,14 +41,12 @@ class Longpoll extends Events {
 		this._mode = 2 + 64;
 
 		this.on('error', (error) => {
-			debug('longpoll error', error);
+			debug('error', error);
 
 			setTimeout(() => {
 				if (!this._launched) {
 					return;
 				}
-
-				debug('Getting a new server');
 
 				this.restart()
 				.catch((error) => {
@@ -77,6 +75,8 @@ class Longpoll extends Events {
 			return Promise.resolve();
 		}
 
+		debug('started');
+
 		this._launched = true;
 
 		return this.vk.api.messages.getLongPollServer()
@@ -103,6 +103,8 @@ class Longpoll extends Events {
 	 * @return {Promise<void>}
 	 */
 	stop () {
+		debug('stoped');
+
 		this._ts = null;
 		this._restarts = 0;
 		this._launched = false;
@@ -116,6 +118,8 @@ class Longpoll extends Events {
 	 * @return {Promise<void>}
 	 */
 	restart () {
+		debug('restart');
+
 		this._restarts = 0;
 		this._launched = false;
 
@@ -143,6 +147,10 @@ class Longpoll extends Events {
 	 * Цикличное получение обновлений
 	 */
 	_loop () {
+		debug('http -->');
+
+		const startTime = Date.now();
+
 		this.vk.request({
 			uri: this._server,
 			timeout: 25e3,
@@ -158,8 +166,14 @@ class Longpoll extends Events {
 		.then((response) => {
 			this._restarts = 0;
 
+			const endTime = (Date.now() - startTime).toLocaleString();
+
+			debug(`http <-- ${endTime}ms`);
+
 			if ('failed' in response && response.failed !== 1) {
 				response._ts = null;
+
+				debug('failed 1');
 
 				return void this.restart()
 				.catch((error) => {
@@ -183,8 +197,6 @@ class Longpoll extends Events {
 			}
 
 			if (this._launched) {
-				debug('Request for new data');
-
 				return void this._loop();
 			}
 		})
@@ -198,7 +210,7 @@ class Longpoll extends Events {
 			if (this._restarts < longpollCount) {
 				++this._restarts;
 
-				debug(`Request restarted ${this._restarts} times`);
+				debug(`restarted ${this._restarts} times`);
 
 				return setTimeout(() => {
 					this._loop();

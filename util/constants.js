@@ -5,7 +5,7 @@
  *
  * @type {string}
  */
-exports.API_VERSION = '5.65';
+exports.API_VERSION = '5.68';
 
 /**
  * Адрес API методов
@@ -19,8 +19,8 @@ exports.API_URI = 'https://api.vk.com/method/';
  *
  * @type {string}
  */
-const USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 '
-+ ' (KHTML, like Gecko) Chrome/59.0.3071.86 Safari/537.36';
+const USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
++ ' (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36';
 
 exports.USER_AGENT = USER_AGENT;
 

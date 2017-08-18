@@ -214,6 +214,8 @@ class Api {
 
 		const startTime = Date.now();
 
+		debug(`http --> ${task.method}`);
+
 		this.vk.request({
 			uri: API_URI + task.method,
 			timeout: timeout,
@@ -229,9 +231,9 @@ class Api {
 				return this._error(task, response.error);
 			}
 
-			const time = (Date.now() - startTime).toLocaleString();
+			const endTime = (Date.now() - startTime).toLocaleString();
 
-			debug(`Request ${task.method} took ${time}ms of time`);
+			debug(`http <-- ${task.method} ${endTime}ms`);
 
 			if ('captcha' in task) {
 				task.captcha.resolve();

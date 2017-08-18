@@ -2,7 +2,7 @@
 
 /**
  * Список методов ВКонтакте
- * Последнее обновление 25.03.2017
+ * Последнее обновление 18.08.2017
  *
  * @type {Array}
  */
@@ -235,7 +235,6 @@ module.exports = [
 	'groups.getBanned',
 	'groups.getById',
 	'groups.getCallbackConfirmationCode',
-	'groups.getCallbackServerSettings',
 	'groups.getCallbackSettings',
 	'groups.getCatalog',
 	'groups.getCatalogInfo',
@@ -251,8 +250,6 @@ module.exports = [
 	'groups.removeUser',
 	'groups.reorderLink',
 	'groups.search',
-	'groups.setCallbackServer',
-	'groups.setCallbackServerSettings',
 	'groups.setCallbackSettings',
 	'groups.unbanUser',
 

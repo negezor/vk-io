@@ -1,6 +1,6 @@
 {
     "name": "vk-io",
-    "version": "3.1.7",
+    "version": "3.2.0",
     "description": "Module for easy work with vk api!",
     "main": "index.js",
     "engines": {
@@ -10,7 +10,7 @@
         "test": "mocha"
     },
     "dependencies": {
-        "debug": "^2.6.8",
+        "debug": "^3.0.0",
         "bluebird": "^3.5.0",
         "cheerio": "^0.22.0",
         "request": "^2.81.0",
