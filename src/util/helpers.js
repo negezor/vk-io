@@ -40,3 +40,12 @@ export const resolveExecuteTask = (tasks, result) => {
 		tasks[i].reject(result.errors[errors++]);
 	});
 };
+
+/**
+ * Returns random ID
+ *
+ * @return {number}
+ */
+export const getRandomId = () => (
+	(Math.floor(Math.random() * 1e4) + '') + Date.now()
+);

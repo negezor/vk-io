@@ -5,9 +5,11 @@ import createDebug from 'debug';
 import { URL, URLSearchParams } from 'url';
 
 import Request from './request';
+import methods from './methods';
 import { APIError, ExecuteError } from '../errors';
 import { API_VERSION, API_ERRORS } from '../util/constants';
 import {
+	getRandomId,
 	getChainReturn,
 	getExecuteMethod,
 	resolveExecuteTask
@@ -37,6 +39,27 @@ export default class API {
 
 		this._queue = [];
 		this._isStarted = false;
+
+		for (const method of methods) {
+			/*jscs: disable disallowArrayDestructuringReturn */
+			const [group, name] = method.split('.');
+
+			if (!(group in this)) {
+				this[group] = {};
+			}
+
+			this[group][name] = (params) => (
+				this._enqueue(method, params)
+			);
+		}
+
+		this.messages.send = () => {
+			if (!('random_id' in params)) {
+				params.random_id = getRandomId();
+			}
+
+			return this._enqueue('messages.send');
+		};
 	}
 
 	/**
@@ -57,6 +80,17 @@ export default class API {
 	 */
 	execute (params) {
 		return this._enqueue('execute', params);
+	}
+
+	/**
+	 * Checks that this is a API method
+	 *
+	 * @param {string} method
+	 *
+	 * @return {boolean}
+	 */
+	isMethod (method) {
+		return methods.includes(method);
 	}
 
 	/**
@@ -231,6 +265,8 @@ export default class API {
 					this._requeue(request);
 				}, apiWait);
 			}
+
+			/* TODO: Add transform error to RequestError */
 
 			if ('captcha' in request) {
 				request.captcha.reject(error);
