@@ -18,8 +18,10 @@ export const API_VERSION = '5.68';
  * @property [lang]             The return data language
  *
  * @property [apiMode]          Query mode (sequential|parallel)
+ * @property [apiWait]          Time to wait before re-querying
  * @property [apiLimit]         Requests per second
  * @property [apiTimeout]       Wait time for one request
+ * @property [apiAttempts]      The number of retries at calling
  * @property [apiExecuteCount]  Number of requests per execute
  */
 export const defaultOptions = {
@@ -27,7 +29,9 @@ export const defaultOptions = {
 	lang: null,
 
 	apiMode: 'sequential',
+	apiWait: 3e3,
 	apiLimit: 3,
+	apiAttempts: 3,
 	apiTimeout: 6e3,
 	apiHeaders: {
 		'User-Agent': `vk-io/${version} (+https://github.com/negezor/vk-io)`

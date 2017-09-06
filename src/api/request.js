@@ -29,6 +29,19 @@ export default class Request {
 	}
 
 	/**
+	 * Adds attempt
+	 *
+	 * @return {number}
+	 */
+	addAttempt () {
+		if (!('attempts' in this)) {
+			this.attempts = 0;
+		}
+
+		this.attempts += 1;
+	}
+
+	/**
 	 * Returns string to execute
 	 *
 	 * @return {string}

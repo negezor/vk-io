@@ -92,7 +92,7 @@ export default class API {
 	/**
 	 * Adds an element to the beginning of the queue
 	 *
-	 * @param {Object} request
+	 * @param {Request} request
 	 */
 	_requeue (request) {
 		this._queue.unshift(request);
@@ -207,6 +207,10 @@ export default class API {
 				return this._handleError(request, new APIError(response.error));
 			}
 
+			if ('captcha' in request) {
+				request.captcha.resolve();
+			}
+
 			if (request.method === 'execute') {
 				return request.resolve({
 					response: response.response,
@@ -218,6 +222,20 @@ export default class API {
 
 			request.resolve(('response' in response) ? response.response : response);
 		} catch (error) {
+			const { apiWait, apiAttempts } = this.vk.options;
+
+			if (this.addAttempt() <= apiAttempts) {
+				return setTimeout(() => {
+					debug(`Request ${request.method} restarted ${request.attempts} times`);
+
+					this._requeue(request);
+				}, apiWait);
+			}
+
+			if ('captcha' in request) {
+				request.captcha.reject(error);
+			}
+
 			request.reject(error);
 		}
 	}
