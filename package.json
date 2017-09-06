@@ -34,15 +34,15 @@
     },
     "homepage": "https://github.com/negezor/vk-io#readme",
     "devDependencies": {
-        "babel-cli": "^6.24.1",
-        "babel-core": "^6.25.0",
-        "babel-plugin-transform-object-rest-spread": "^6.23.0",
+        "babel-cli": "^6.26.0",
+        "babel-core": "^6.26.0",
+        "babel-plugin-transform-object-rest-spread": "^6.26.0",
         "babel-preset-env": "^1.6.0",
-        "chai": "^4.1.1",
+        "chai": "^4.1.2",
         "mocha": "^3.5.0"
     },
     "dependencies": {
-        "debug": "^2.6.8",
+        "debug": "^3.0.1",
         "node-fetch": "next"
     }
 }

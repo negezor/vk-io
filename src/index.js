@@ -6,6 +6,8 @@ import API from './api';
 
 import { defaultOptions } from './util/constants';
 
+export * from './errors';
+
 /**
  * Main class
  *

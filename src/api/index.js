@@ -4,12 +4,15 @@ import fetch from 'node-fetch';
 import createDebug from 'debug';
 import { URL, URLSearchParams } from 'url';
 
-import { API_VERSION } from '../util/constants';
+import { APIError, ExecuteError } from '../errors';
+import { API_VERSION, API_ERRORS } from '../util/constants';
 import {
 	getChainReturn,
 	getExecuteMethod,
 	resolveExecuteTask
 } from '../util/helpers';
+
+const { TOO_MANY_REQUESTS } = API_ERRORS;
 
 const debug = createDebug('vk-io:api');
 
@@ -95,27 +98,27 @@ export default class API {
 
 		this._isStarted = true;
 
-		const interval = Math.round(1133 / this.vk.options.apiLimit);
+		const { apiLimit, apiMode, apiExecuteCount } = this.vk.options;
 
-		const worker = async () => {
+		const interval = Math.round(1133 / apiLimit);
+
+		const work = async () => {
 			if (this._queue.length === 0) {
 				this._isStarted = false;
 
 				return;
 			}
 
-			if (this.vk.options.apiMode !== 'execute' || this._queue[0].method === 'execute') {
+			if (apiMode !== 'parallel' || this._queue[0].method === 'execute') {
 				this._callMethod(
 					this._queue.shift()
 				);
 
-				return setTimeout(worker, interval);
+				return setTimeout(work, interval);
 			}
 
 			const tasks = [];
 			const chain = [];
-
-			const { apiCount } = this.vk.options;
 
 			for (let i = 0; i < this._queue.length; ++i) {
 				if (this._queue[i].method === 'execute') {
@@ -127,31 +130,44 @@ export default class API {
 				tasks.push(task);
 				chain.push(getMethodApi(task.method, task.params));
 
-				if (tasks.length >= apiCount) {
+				if (tasks.length >= apiExecuteCount) {
 					break;
 				}
 			}
 
 			try {
-				const response = await (new Promise((resolve, reject) => {
-					this._callMethod({
-						method: 'execute',
-						params: {
-							code: getChainReturn(chain)
-						},
-
-						resolve,
-						reject
-					});
-				}));
+				resolveExecuteTask(tasks, await this._callExecuteChain(chain));
 			} catch (error) {
 				for (const task of tasks) {
 					task.reject(error);
 				}
 			}
+
+			setTimeout(work, interval);
 		};
 
-		worker();
+		work();
+	}
+
+	/**
+	 * Call execute method
+	 *
+	 * @param {Array} chain
+	 *
+	 * @return {Promise<Object>}
+	 */
+	_callExecuteChain (chain) {
+		return new Promise((resolve, reject) => {
+			this._callMethod({
+				method: 'execute',
+				params: {
+					code: getChainReturn(chain)
+				},
+
+				resolve,
+				reject
+			});
+		});
 	}
 
 	/**
@@ -171,7 +187,6 @@ export default class API {
 			url.searchParams.append('lang', lang);
 		}
 
-		let response;
 		try {
 			debug(`http --> ${task.method}`);
 
@@ -191,9 +206,42 @@ export default class API {
 
 			debug(`http <-- ${task.method} ${endTime}ms`);
 
+			if ('error' in response) {
+				return this._handleError(task, new APIError(response.error));
+			}
+
+			if (task.method === 'execute') {
+				return task.resolve({
+					response: response.response,
+					errors: (response.execute_errors || []).map((error) => (
+						new ExecuteError(error)
+					))
+				});
+			}
+
 			task.resolve(('response' in response) ? response.response : response);
 		} catch (error) {
 			task.reject(error);
 		}
+	}
+
+	/**
+	 * Error API handler
+	 *
+	 * @param {Object} task
+	 * @param {Object} error
+	 */
+	_handleError (task, error) {
+		const { code } = error;
+
+		if (code === TOO_MANY_REQUESTS) {
+			return this._requeue(task);
+		}
+
+		if (code !== CAPTCHA_REQUIRED) {
+			return task.reject(error);
+		}
+
+		/* TODO: Add captcha and validate handler */
 	}
 }
