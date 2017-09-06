@@ -4,6 +4,7 @@ import fetch from 'node-fetch';
 import createDebug from 'debug';
 import { URL, URLSearchParams } from 'url';
 
+import Request from './request';
 import { APIError, ExecuteError } from '../errors';
 import { API_VERSION, API_ERRORS } from '../util/constants';
 import {
@@ -12,7 +13,11 @@ import {
 	resolveExecuteTask
 } from '../util/helpers';
 
-const { TOO_MANY_REQUESTS } = API_ERRORS;
+const {
+	CAPTCHA_REQUIRED,
+	TOO_MANY_REQUESTS,
+	USER_VALIDATION_REQUIRED
+} = API_ERRORS;
 
 const debug = createDebug('vk-io:api');
 
@@ -44,6 +49,17 @@ export default class API {
 	}
 
 	/**
+	 * Call execute method
+	 *
+	 * @param {Object} params
+	 *
+	 * @return {Promise<Object>}
+	 */
+	execute (params) {
+		return this._enqueue('execute', params);
+	}
+
+	/**
 	 * Call raw method
 	 *
 	 * @param {string} method
@@ -63,27 +79,23 @@ export default class API {
 	 *
 	 * @return {Promise<Object>}
 	 */
-	_enqueue (method, params = {}) {
-		return new Promise((resolve, reject) => {
-			this._queue.push({
-				method,
-				params,
+	_enqueue (method, params) {
+		const request = new Request(method, params);
 
-				resolve,
-				reject
-			});
+		this._queue.push(request);
 
-			this._worker();
-		});
+		this._worker();
+
+		return request.promise;
 	}
 
 	/**
 	 * Adds an element to the beginning of the queue
 	 *
-	 * @param {Object} task
+	 * @param {Object} request
 	 */
-	_requeue (task) {
-		this._queue.unshift(task);
+	_requeue (request) {
+		this._queue.unshift(request);
 
 		this._worker();
 	}
@@ -125,10 +137,10 @@ export default class API {
 					continue;
 				}
 
-				const task = this._queue.splice(i--, 1)[0];
+				const request = this._queue.splice(i--, 1)[0];
 
-				tasks.push(task);
-				chain.push(getMethodApi(task.method, task.params));
+				tasks.push(request);
+				chain.push(String(request));
 
 				if (tasks.length >= apiExecuteCount) {
 					break;
@@ -136,7 +148,13 @@ export default class API {
 			}
 
 			try {
-				resolveExecuteTask(tasks, await this._callExecuteChain(chain));
+				const request = new Request('execute', {
+					code: getChainReturn(chain)
+				});
+
+				this._callMethod(request);
+
+				resolveExecuteTask(tasks, await request.promise);
 			} catch (error) {
 				for (const task of tasks) {
 					task.reject(error);
@@ -150,35 +168,14 @@ export default class API {
 	}
 
 	/**
-	 * Call execute method
-	 *
-	 * @param {Array} chain
-	 *
-	 * @return {Promise<Object>}
-	 */
-	_callExecuteChain (chain) {
-		return new Promise((resolve, reject) => {
-			this._callMethod({
-				method: 'execute',
-				params: {
-					code: getChainReturn(chain)
-				},
-
-				resolve,
-				reject
-			});
-		});
-	}
-
-	/**
 	 * Calls the api method
 	 *
-	 * @param {Object} task
+	 * @param {Object} request
 	 */
-	async _callMethod (task) {
+	async _callMethod (request) {
 		const { token, lang, agent, apiTimeout, apiHeaders } = this.vk.options;
 
-		const url = new URL(task.method, 'https://api.vk.com/method/');
+		const url = new URL(request.method, 'https://api.vk.com/method/');
 
 		url.searchParams.append('access_token', token);
 		url.searchParams.append('v', API_VERSION);
@@ -188,7 +185,7 @@ export default class API {
 		}
 
 		try {
-			debug(`http --> ${task.method}`);
+			debug(`http --> ${request.method}`);
 
 			const startTime = Date.now();
 
@@ -197,21 +194,21 @@ export default class API {
 				method: 'POST',
 				headers: apiHeaders,
 				timeout: apiTimeout,
-				body: new URLSearchParams(task.params)
+				body: new URLSearchParams(request.params)
 			});
 
 			response = await response.json();
 
 			const endTime = (Date.now() - startTime).toLocaleString();
 
-			debug(`http <-- ${task.method} ${endTime}ms`);
+			debug(`http <-- ${request.method} ${endTime}ms`);
 
 			if ('error' in response) {
-				return this._handleError(task, new APIError(response.error));
+				return this._handleError(request, new APIError(response.error));
 			}
 
-			if (task.method === 'execute') {
-				return task.resolve({
+			if (request.method === 'execute') {
+				return request.resolve({
 					response: response.response,
 					errors: (response.execute_errors || []).map((error) => (
 						new ExecuteError(error)
@@ -219,29 +216,58 @@ export default class API {
 				});
 			}
 
-			task.resolve(('response' in response) ? response.response : response);
+			request.resolve(('response' in response) ? response.response : response);
 		} catch (error) {
-			task.reject(error);
+			request.reject(error);
 		}
 	}
 
 	/**
 	 * Error API handler
 	 *
-	 * @param {Object} task
+	 * @param {Request} request
 	 * @param {Object} error
 	 */
-	_handleError (task, error) {
+	_handleError (request, error) {
 		const { code } = error;
 
 		if (code === TOO_MANY_REQUESTS) {
-			return this._requeue(task);
+			return setTimeout(() => {
+				this._requeue(task);
+			}, 300);
 		}
 
-		if (code !== CAPTCHA_REQUIRED) {
-			return task.reject(error);
+		if ('captcha' in request) {
+			request.captcha.reject(error);
 		}
 
-		/* TODO: Add captcha and validate handler */
+		// if (code === USER_VALIDATION_REQUIRED) {
+		// 	/* TODO: Add validate handler */
+		// }
+
+		const isCaptcha = code === CAPTCHA_REQUIRED;
+
+		if (isCaptcha && this.vk._captchaHandler === null || !isCaptcha) {
+			return request.reject(error);
+		}
+
+		const { captchaSid } = error;
+
+		const payload = {
+			src: error.captchaImg,
+			sid: captchaSid,
+			request
+		};
+
+		this.vk._captchaHandler(payload, (key) => (
+			new Promise((resolve, reject) => {
+				request.params.captcha_sid = captchaSid;
+				request.params.captcha_key = key;
+
+				request.captcha = { resolve, reject };
+
+				this._requeue(request);
+			})
+		));
 	}
 }

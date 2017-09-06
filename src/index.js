@@ -3,7 +3,6 @@
 import { Agent } from 'https';
 
 import API from './api';
-
 import { defaultOptions } from './util/constants';
 
 export * from './errors';
@@ -30,6 +29,8 @@ export class VK {
 		};
 
 		this.api = new API(this);
+
+		this._captchaHandler = null;
 	}
 
 	/**
@@ -74,5 +75,18 @@ export class VK {
 	 */
 	getToken () {
 		return this.options.token;
+	}
+
+	/**
+	 * Sets captcha handler
+	 *
+	 * @param {Function} handler
+	 *
+	 * @return {this}
+	 */
+	setCaptchaHandler (handler) {
+		this._captchaHandler = handler;
+
+		return this;
 	}
 }

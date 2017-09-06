@@ -1,7 +1,6 @@
 'use strict';
 
 import VKError from './vk';
-
 import { API_ERRORS } from '../util/constants';
 
 const { CAPTCHA_REQUIRED, USER_VALIDATION_REQUIRED } = API_ERRORS;
