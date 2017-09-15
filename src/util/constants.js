@@ -17,16 +17,22 @@ export const API_VERSION = '5.68';
  * @property [token]            Access token
  * @property [lang]             The return data language
  *
+ * @property [agent]            HTTPS agent
+ *
  * @property [apiMode]          Query mode (sequential|parallel)
  * @property [apiWait]          Time to wait before re-querying
  * @property [apiLimit]         Requests per second
  * @property [apiTimeout]       Wait time for one request
  * @property [apiAttempts]      The number of retries at calling
  * @property [apiExecuteCount]  Number of requests per execute
+ *
+ * @property [uploadTimeout]    Wait time for one request
  */
 export const defaultOptions = {
 	token: null,
 	lang: null,
+
+	agent: null,
 
 	apiMode: 'sequential',
 	apiWait: 3e3,
@@ -36,7 +42,17 @@ export const defaultOptions = {
 	apiHeaders: {
 		'User-Agent': `vk-io/${version} (+https://github.com/negezor/vk-io)`
 	},
-	apiExecuteCount: 25
+	apiExecuteCount: 25,
+
+	uploadTimeout: 15e3
+};
+
+export const defaultExtensions = {
+	photo: 'jpg',
+	video: 'mp4',
+	audio: 'mp3',
+	voice: 'ogg',
+	graffiti: 'png'
 };
 
 /**

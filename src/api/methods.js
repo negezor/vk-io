@@ -573,7 +573,7 @@ export default [
 	'video.restoreComment',
 	'video.save',
 	'video.search',
-	/* Неофициально */
+	/* Unofficially */
 	'video.getRecommendedLiveVideos',
 
 	/**

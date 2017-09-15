@@ -41,7 +41,7 @@ export default class API {
 		this._isStarted = false;
 
 		for (const method of methods) {
-			/*jscs: disable disallowArrayDestructuringReturn */
+			/* jscs: disable disallowArrayDestructuringReturn */
 			const [group, name] = method.split('.');
 
 			if (!(group in this)) {
@@ -53,7 +53,7 @@ export default class API {
 			);
 		}
 
-		this.messages.send = () => {
+		this.messages.send = (params = {}) => {
 			if (!('random_id' in params)) {
 				params.random_id = getRandomId();
 			}
@@ -72,17 +72,6 @@ export default class API {
 	}
 
 	/**
-	 * Call execute method
-	 *
-	 * @param {Object} params
-	 *
-	 * @return {Promise<Object>}
-	 */
-	execute (params) {
-		return this._enqueue('execute', params);
-	}
-
-	/**
 	 * Checks that this is a API method
 	 *
 	 * @param {string} method
@@ -91,6 +80,17 @@ export default class API {
 	 */
 	isMethod (method) {
 		return methods.includes(method);
+	}
+
+	/**
+	 * Call execute method
+	 *
+	 * @param {Object} params
+	 *
+	 * @return {Promise<Object>}
+	 */
+	execute (params) {
+		return this._enqueue('execute', params);
 	}
 
 	/**
@@ -226,8 +226,11 @@ export default class API {
 			let response = await fetch(url, {
 				agent,
 				method: 'POST',
-				headers: apiHeaders,
 				timeout: apiTimeout,
+				headers: {
+					...apiHeaders,
+					connection: 'keep-alive'
+				},
 				body: new URLSearchParams(request.params)
 			});
 
@@ -286,9 +289,7 @@ export default class API {
 		const { code } = error;
 
 		if (code === TOO_MANY_REQUESTS) {
-			return setTimeout(() => {
-				this._requeue(task);
-			}, 300);
+			return this._requeue(task);
 		}
 
 		if ('captcha' in request) {

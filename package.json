@@ -39,10 +39,11 @@
         "babel-plugin-transform-object-rest-spread": "^6.26.0",
         "babel-preset-env": "^1.6.0",
         "chai": "^4.1.2",
-        "mocha": "^3.5.0"
+        "mocha": "^3.5.3"
     },
     "dependencies": {
         "debug": "^3.0.1",
-        "node-fetch": "next"
+        "node-fetch": "next",
+        "sandwich-stream": "^1.0.0"
     }
 }
