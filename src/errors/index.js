@@ -7,3 +7,5 @@ import ExecuteError from './execute';
 export { API_ERRORS } from '../util/constants';
 
 export { VKError, APIError, ExecuteError };
+
+export default VKError;

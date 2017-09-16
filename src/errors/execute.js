@@ -16,13 +16,4 @@ export default class ExecuteError extends VKError {
 
 		this.method = payload.method;
 	}
-
-	/**
-	 * Returns custom tag
-	 *
-	 * @return {string}
-	 */
-	get[Symbol.toStringTag]() {
-		return 'ExecuteError';
-	}
 }

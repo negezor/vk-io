@@ -5,6 +5,13 @@ import fetch from 'node-fetch';
 import { randomBytes } from 'crypto';
 import { createReadStream } from 'fs';
 
+import {
+	PhotoAttachment,
+	AudioAttachment,
+	VideoAttachment,
+	DocumentAttachment
+} from '../structures/attachments';
+
 import UploadError from '../errors/upload';
 import MultipartStream from './multipart-stream';
 import { isStream, copyParams } from './helpers';
@@ -27,10 +34,10 @@ export default class Upload {
 	 *
 	 * @param {Object} params
 	 *
-	 * @return {Promise<Object>}
+	 * @return {Promise<Array>}
 	 */
-	photoAlbum (params) {
-		return this._conduct({
+	async photoAlbum (params) {
+		const uploads = await this._conduct({
 			field: 'file',
 			params,
 
@@ -44,21 +51,9 @@ export default class Upload {
 			attachmentType: 'photo'
 		});
 
-		// [{
-		// 	id: 456260572,
-		// 	album_id: 247223193,
-		// 	owner_id: 195624402,
-		// 	photo_75: 'https://pp.userapi.com/c639421/v639421114/459d2/YeSnSuSSXaU.jpg',
-		// 	photo_130: 'https://pp.userapi.com/c639421/v639421114/459d3/dT5VG8VHtwI.jpg',
-		// 	photo_604: 'https://pp.userapi.com/c639421/v639421114/459d4/PjSwLfkLKK4.jpg',
-		// 	photo_807: 'https://pp.userapi.com/c639421/v639421114/459d5/AAJKTDWh3OU.jpg',
-		// 	photo_1280: 'https://pp.userapi.com/c639421/v639421114/459d6/1abuczPSwVA.jpg',
-		// 	photo_2560: 'https://pp.userapi.com/c639421/v639421114/459d7/950zJQtoAO4.jpg',
-		// 	width: 1159,
-		// 	height: 1500,
-		// 	text: 'Upload #3',
-		// 	date: 1505449398
-		// }]
+		return uploads.map((upload) => (
+			new PhotoAttachment(upload, this.vk)
+		));
 	}
 
 	/**
@@ -66,10 +61,10 @@ export default class Upload {
 	 *
 	 * @param {Object} params
 	 *
-	 * @return {Promise<Object>}
+	 * @return {Promise<PhotoAttachment>}
 	 */
-	wallPhoto (params) {
-		return this._conduct({
+	async wallPhoto (params) {
+		const uploads = await this._conduct({
 			field: 'photo',
 			params,
 
@@ -83,22 +78,7 @@ export default class Upload {
 			attachmentType: 'photo'
 		});
 
-		// [{
-		// 	id: 456260571,
-		// 	album_id: -14,
-		// 	owner_id: 195624402,
-		// 	photo_75: 'https://pp.userapi.com/c639621/v639621114/424f3/LX-U9n2q_Dg.jpg',
-		// 	photo_130: 'https://pp.userapi.com/c639621/v639621114/424f4/a8Ji8Mt3Ft8.jpg',
-		// 	photo_604: 'https://pp.userapi.com/c639621/v639621114/424f5/Y94idjILhxo.jpg',
-		// 	photo_807: 'https://pp.userapi.com/c639621/v639621114/424f6/0sR8l2TgttU.jpg',
-		// 	photo_1280: 'https://pp.userapi.com/c639621/v639621114/424f7/_Tsmg5lLRwc.jpg',
-		// 	photo_2560: 'https://pp.userapi.com/c639621/v639621114/424f8/pg0m1QbK_jg.jpg',
-		// 	width: 1159,
-		// 	height: 1500,
-		// 	text: 'Upload #3',
-		// 	date: 1505449358,
-		// 	access_key: '9b0b9e9602b6fbd652'
-		// }]
+		return new PhotoAttachment(uploads[0], this.vk);
 	}
 
 	/**
@@ -137,10 +117,10 @@ export default class Upload {
 	 *
 	 * @param {Object} params
 	 *
-	 * @return {Promise<Object>}
+	 * @return {Promise<PhotoAttachment>}
 	 */
-	messagePhoto (params) {
-		return this._conduct({
+	async messagePhoto (params) {
+		const uploads = await this._conduct({
 			field: 'photo',
 			params,
 
@@ -153,21 +133,7 @@ export default class Upload {
 			attachmentType: 'photo'
 		});
 
-		// [{
-		// 	id: 456260573,
-		// 	album_id: -3,
-		// 	owner_id: 195624402,
-		// 	photo_75: 'https://pp.userapi.com/c837525/v837525114/61c17/9Y7T2MQjJiM.jpg',
-		// 	photo_130: 'https://pp.userapi.com/c837525/v837525114/61c18/F9rP-74Z7Os.jpg',
-		// 	photo_604: 'https://pp.userapi.com/c837525/v837525114/61c19/aBUTeSvf_aQ.jpg',
-		// 	photo_807: 'https://pp.userapi.com/c837525/v837525114/61c1a/Z06mXP8eYWY.jpg',
-		// 	photo_1280: 'https://pp.userapi.com/c837525/v837525114/61c1b/c9a2JSuyd9c.jpg',
-		// 	photo_2560: 'https://pp.userapi.com/c837525/v837525114/61c1c/4dQuTAhA8AU.jpg',
-		// 	width: 1159,
-		// 	height: 1500,
-		// 	text: '',
-		// 	date: 1505449438
-		// }]
+		return new PhotoAttachment(uploads[0], this.vk);
 	}
 
 	/**
@@ -198,7 +164,7 @@ export default class Upload {
 		// 	chat: {
 		// 		id: 152,
 		// 		type: 'chat',
-		// 		title: 'михаил Илтк | кал топ',
+		// 		title: '<Titile name>',
 		// 		admin_id: 335447860,
 		// 		users: [335447860,
 		// 			140192020,
@@ -251,10 +217,10 @@ export default class Upload {
 	 *
 	 * @param {Object} params
 	 *
-	 * @return {Promise<Object>}
+	 * @return {Promise<PhotoAttachment>}
 	 */
-	marketPhoto (params) {
-		return this._conduct({
+	async marketPhoto (params) {
+		const uploads = await this._conduct({
 			field: 'file',
 			params,
 
@@ -268,22 +234,7 @@ export default class Upload {
 			attachmentType: 'photo'
 		});
 
-		// [{
-		// 	id: 456239041,
-		// 	album_id: -53,
-		// 	owner_id: -139876267,
-		// 	user_id: 195624402,
-		// 	photo_75: 'https://pp.userapi.com/c837630/v837630114/60404/HGUmUYRZLDY.jpg',
-		// 	photo_130: 'https://pp.userapi.com/c837630/v837630114/60405/84a-drjp37M.jpg',
-		// 	photo_604: 'https://pp.userapi.com/c837630/v837630114/60406/4W1UMTde1vc.jpg',
-		// 	photo_807: 'https://pp.userapi.com/c837630/v837630114/60407/Q0r3_gf0vSs.jpg',
-		// 	photo_1280: 'https://pp.userapi.com/c837630/v837630114/60408/7LeT57quqYE.jpg',
-		// 	photo_2560: 'https://pp.userapi.com/c837630/v837630114/60409/GqvpRZBbFTU.jpg',
-		// 	width: 1159,
-		// 	height: 1500,
-		// 	text: '',
-		// 	date: 1505450850
-		// }]
+		return new PhotoAttachment(uploads[0], this.vk);
 	}
 
 	/**
@@ -291,10 +242,10 @@ export default class Upload {
 	 *
 	 * @param {Object} params
 	 *
-	 * @return {Promise<Object>}
+	 * @return {Promise<Array>}
 	 */
-	marketAlbumPhoto (params) {
-		return this._conduct({
+	async marketAlbumPhoto (params) {
+		const uploads = await this._conduct({
 			field: 'file',
 			params,
 
@@ -308,20 +259,9 @@ export default class Upload {
 			attachmentType: 'photo'
 		});
 
-		// [{
-		// 	id: 456239043,
-		// 	album_id: -53,
-		// 	owner_id: -139876267,
-		// 	user_id: 195624402,
-		// 	photo_75: 'https://pp.userapi.com/c840534/v840534474/63c4/59ZTpqb0Q-Q.jpg',
-		// 	photo_130: 'https://pp.userapi.com/c840534/v840534474/63c5/wIZB1ZbiTOg.jpg',
-		// 	photo_604: 'https://pp.userapi.com/c840534/v840534474/63c6/Az9DGYeZaJs.jpg',
-		// 	photo_807: 'https://pp.userapi.com/c840534/v840534474/63c7/EZI-mtWsrqI.jpg',
-		// 	width: 1138,
-		// 	height: 640,
-		// 	text: '',
-		// 	date: 1505451096
-		// }]
+		return uploads.map((upload) => (
+			new PhotoAttachment(upload, this.vk)
+		));
 	}
 
 	/**
@@ -329,10 +269,10 @@ export default class Upload {
 	 *
 	 * @param {Object} params
 	 *
-	 * @return {Promise<Object>}
+	 * @return {Promise<AudioAttachment>}
 	 */
-	audio (params) {
-		return this._conduct({
+	async audio (params) {
+		const audio = await this._conduct({
 			field: 'file',
 			params,
 
@@ -345,16 +285,7 @@ export default class Upload {
 			attachmentType: 'audio'
 		});
 
-		// {
-		// 	id: 456239074,
-		// 	owner_id: 195624402,
-		// 	artist: 'PH Electro',
-		// 	title: 'Englishman In New York',
-		// 	duration: 294,
-		// 	date: 1505451289,
-		// 	url: 'https://psv4.userapi.com/c815120/u195624402/audios/eac0f7d3136e.mp3?extra=A81zpX_f_FVSLqSJjkGSnEiUzGL_73XCGV0aw21xWljLDXS0vcIsXgEEJNZlPKm3A7HucbX9l07xrYMbFWYVGl3XMQgSGpZ4ARxWP8rtmZLv50YEvnCKVnAMyuaalcSUqkc8DLfVn_L5xaI',
-		// 	is_hq: false
-		// }
+		return new AudioAttachment(audio, this.vk);
 	}
 
 	/**
@@ -362,7 +293,7 @@ export default class Upload {
 	 *
 	 * @param {Object} params
 	 *
-	 * @return {Promise<Object>}
+	 * @return {Promise<VideoAttachment>}
 	 */
 	async video (params) {
 		/* FIXME: 400 Bad Request */
@@ -382,12 +313,14 @@ export default class Upload {
 			])
 		);
 
+		save.id = save.video_id;
+
 		if ('link' in params) {
 			const response = await fetch(save.upload_url);
 
 			await response.json();
 
-			return save;
+			return new VideoAttachment(save, this.vk);
 		}
 
 		if (!Array.isArray(params.source)) {
@@ -403,9 +336,7 @@ export default class Upload {
 
 		const uploaded = await this._upload(save.upload_url, formData);
 
-		delete save.upload_url;
-
-		return { ...save, ...uploaded };
+		return new VideoAttachment({ ...save, ...uploaded }, this.vk);
 	}
 
 	/**
@@ -413,10 +344,10 @@ export default class Upload {
 	 *
 	 * @param {Object} params
 	 *
-	 * @return {Promise<Object>}
+	 * @return {Promise<DocumentAttachment>}
 	 */
-	doc (params) {
-		return this._conduct({
+	async doc (params) {
+		const uploads = await this._conduct({
 			field: 'file',
 			params,
 
@@ -430,16 +361,7 @@ export default class Upload {
 			attachmentType: 'doc'
 		});
 
-		// [{
-		// 	id: 450653982,
-		// 	owner_id: 195624402,
-		// 	title: 'file0.dat',
-		// 	size: 383631,
-		// 	ext: 'dat',
-		// 	url: 'https://vk.com/doc195624402_450653982?hash=383e2969b07c7a0893&dl=GE4TKNRSGQ2DAMQ:1505453288:2c6cda2d6feb8cab35&api=1&no_preview=1',
-		// 	date: 1505453288,
-		// 	type: 1
-		// }]
+		return new DocumentAttachment(uploads[0], this.vk);
 	}
 
 	/**
@@ -447,10 +369,10 @@ export default class Upload {
 	 *
 	 * @param {Object} params
 	 *
-	 * @return {Promise<Object>}
+	 * @return {Promise<DocumentAttachment>}
 	 */
-	wallDoc (params) {
-		return this._conduct({
+	async wallDoc (params) {
+		const uploads = await this._conduct({
 			field: 'file',
 			params,
 
@@ -464,16 +386,7 @@ export default class Upload {
 			attachmentType: 'doc'
 		});
 
-		// [{
-		// 	id: 450654029,
-		// 	owner_id: 195624402,
-		// 	title: 'file0.dat',
-		// 	size: 383631,
-		// 	ext: 'dat',
-		// 	url: 'https://vk.com/doc195624402_450654029?hash=dd1d0735ece19c6530&dl=GE4TKNRSGQ2DAMQ:1505453419:8e9b458e27e264c546&api=1&no_preview=1',
-		// 	date: 1505453419,
-		// 	type: 1
-		// }]
+		return new DocumentAttachment(uploads[0], this.vk);
 	}
 
 	/**
@@ -481,10 +394,10 @@ export default class Upload {
 	 *
 	 * @param {Object} params
 	 *
-	 * @return {Promise<Object>}
+	 * @return {Promise<DocumentAttachment>}
 	 */
-	messageDoc (params) {
-		return this._conduct({
+	async messageDoc (params) {
+		const uploads = await this._conduct({
 			field: 'file',
 			params,
 
@@ -498,16 +411,7 @@ export default class Upload {
 			attachmentType: 'doc'
 		});
 
-		// [{
-		// 	id: 450654051,
-		// 	owner_id: 195624402,
-		// 	title: 'file0.dat',
-		// 	size: 383631,
-		// 	ext: 'dat',
-		// 	url: 'https://vk.com/doc195624402_450654051?hash=a62475ac3fc60c086c&dl=GE4TKNRSGQ2DAMQ:1505453498:4adbe8dfaf889498b7&api=1&no_preview=1',
-		// 	date: 1505453498,
-		// 	type: 1
-		// }]
+		return new DocumentAttachment(uploads[0], this.vk);
 	}
 
 	/**
@@ -515,7 +419,7 @@ export default class Upload {
 	 *
 	 * @param {Object} params
 	 *
-	 * @return {Promise<Object>}
+	 * @return {Promise<DocumentAttachment>}
 	 */
 	voice (params) {
 		params.type = 'audio_message';
@@ -648,7 +552,7 @@ export default class Upload {
 	 *
 	 * @param {Object} params
 	 *
-	 * @return {Promise<Object>}
+	 * @return {Promise<DocumentAttachment>}
 	 */
 	graffiti (params) {
 		/* FIXME: One of the parameters specified was missing or invalid: file is undefined */

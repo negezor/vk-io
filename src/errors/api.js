@@ -26,13 +26,4 @@ export default class APIError extends VKError {
 			this.redirectUri = payload.redirect_uri;
 		}
 	}
-
-	/**
-	 * Returns custom tag
-	 *
-	 * @return {string}
-	 */
-	get [Symbol.toStringTag] () {
-		return 'APIError';
-	}
 }

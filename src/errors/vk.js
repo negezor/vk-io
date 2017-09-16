@@ -27,7 +27,7 @@ export default class VKError extends Error {
 	 * @return {string}
 	 */
 	get [Symbol.toStringTag] () {
-		return 'VKError';
+		return this.constructor.name;
 	}
 
 	/**

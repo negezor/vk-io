@@ -11,13 +11,4 @@ export default class UploadError extends VKError {
 	constructor (payload = {}) {
 		super(payload);
 	}
-
-	/**
-	 * Returns custom tag
-	 *
-	 * @return {string}
-	 */
-	get [Symbol.toStringTag] () {
-		return 'UploadError';
-	}
 }

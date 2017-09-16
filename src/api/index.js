@@ -58,7 +58,7 @@ export default class API {
 				params.random_id = getRandomId();
 			}
 
-			return this._enqueue('messages.send');
+			return this._enqueue('messages.send', params);
 		};
 	}
 
