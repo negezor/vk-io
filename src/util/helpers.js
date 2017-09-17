@@ -82,3 +82,14 @@ export const getMediumPhoto = (photo) => (
 export const getLargePhoto = (photo) => (
 	photo.photo_2560 || photo.photo_1280 || getMediumPhoto(photo)
 );
+
+/**
+ * Delay N-ms
+ *
+ * @param {number} delayed
+ *
+ * @return {Promise}
+ */
+export const delay = (delayed) => (
+	new Promise((resolve) => setTimeout(resolve, delayed))
+);

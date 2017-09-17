@@ -28,6 +28,7 @@ export const API_VERSION = '5.68';
  *
  * @property [uploadTimeout]       Wait time for one request
  *
+ * @property [webhookPath]         Webhook path
  * @property [webhookSecret]       Webhook secret key
  * @property [webhookConfirmation] Webhook confirmation key
  */
@@ -49,6 +50,7 @@ export const defaultOptions = {
 
 	uploadTimeout: 15e3,
 
+	webhookPath: '/',
 	webhookSecret: null,
 	webhookConfirmation: null
 };
