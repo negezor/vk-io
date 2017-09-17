@@ -1,10 +1,10 @@
 'use strict';
 
-export default class VKContext {
+export default class Context {
 	/**
 	 * Constructor
 	 */
-	constructor (update, vk) {
+	constructor (vk) {
 		this.vk = vk;
 	}
 
@@ -14,6 +14,6 @@ export default class VKContext {
 	 * @return {string}
 	 */
 	get [Symbol.toStringTag] () {
-		return 'VKContext';
+		return this.constructor.name;
 	}
 }

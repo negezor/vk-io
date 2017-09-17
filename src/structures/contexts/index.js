@@ -1,7 +1,7 @@
 'use strict';
 
-import VKContext from './context';
+import Context from './context';
 
-export { VKContext };
+export { Context };
 
-export default VKContext;
+export default Context;

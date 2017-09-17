@@ -8,6 +8,7 @@ import fetch from 'node-fetch';
 import createDebug from 'debug';
 
 import { delay } from '../util/helpers';
+import MessageContext from '../structures/contexts/message';
 
 const debug = createDebug('vk-io:updates');
 
@@ -28,14 +29,17 @@ export default class Updates {
 		this._ts = null;
 
 		/**
-		 * 2 - Attachments
+		 * 2 -  Attachments
+		 * 8 -  Extended events
 		 * 64 - Online user platform ID
 		 *
 		 * @type {number}
 		 */
-		this._mode = 2 + 64;
+		this._mode = 2 + 8 + 64;
 
 		this.webhookServer = null;
+
+		this._handlers = [];
 	}
 
 	/**
@@ -48,11 +52,21 @@ export default class Updates {
 	}
 
 	/**
+	 * Added handler
+	 * Temporarily
+	 *
+	 * @param {function} handler
+	 */
+	use (handler) {
+		this._handlers.push(handler);
+	}
+
+	/**
 	 * Handles longpoll event
 	 *
 	 * @param {Array} update
 	 */
-	async handleLongpollUpdate (update) {
+	handleLongpollUpdate (update) {
 		console.log('Longpoll', update);
 	}
 
@@ -310,6 +324,16 @@ export default class Updates {
 			for (const update of response.updates) {
 				this.handleLongpollUpdate(update);
 			}
+		}
+	}
+
+	/**
+	 * Run handlers
+	 * Temporarily
+	 */
+	_runHandlers (...args) {
+		for (const handler of this._handlers) {
+			handler(...args);
 		}
 	}
 }
