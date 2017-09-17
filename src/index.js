@@ -4,6 +4,7 @@ import { Agent } from 'https';
 
 import API from './api';
 import Upload from './upload';
+import Updates from './updates';
 import { defaultOptions } from './util/constants';
 
 export * from './errors';
@@ -31,6 +32,7 @@ export class VK {
 
 		this.api = new API(this);
 		this.upload = new Upload(this);
+		this.updates = new Updates(this);
 
 		this._captchaHandler = null;
 	}

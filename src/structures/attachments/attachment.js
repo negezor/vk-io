@@ -71,13 +71,17 @@ export default class Attachment {
 	 * @return {string}
 	 */
 	[inspect.custom] (depth, options) {
-		return options.stylize(this.constructor.name, 'special') + ' { '
-		+ options.stylize(this, 'string') + ' | '
-		+ (
-			('_isFilled' in this && this._isFilled)
-				? inspect(this.payload, options)
-				: options.stylize('empty', 'undefined')
-		)
-		+ ' }';
+		const { name } = this.constructor.name;
+
+		return (
+			`${options.stylize(name, 'special')} {`
+			+ `${options.stylize(this, 'string')} | `
+			+ (
+				'_isFilled' in this && this._isFilled
+					? inspect(this.payload, options)
+					: options.stylize('empty', 'undefined')
+			)
+			+ ' }'
+		);
 	}
 }

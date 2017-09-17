@@ -14,19 +14,22 @@ export const API_VERSION = '5.68';
  *
  * @type {Object}
  *
- * @property [token]            Access token
- * @property [lang]             The return data language
+ * @property [token]               Access token
+ * @property [lang]                The return data language
  *
- * @property [agent]            HTTPS agent
+ * @property [agent]               HTTPS agent
  *
- * @property [apiMode]          Query mode (sequential|parallel)
- * @property [apiWait]          Time to wait before re-querying
- * @property [apiLimit]         Requests per second
- * @property [apiTimeout]       Wait time for one request
- * @property [apiAttempts]      The number of retries at calling
- * @property [apiExecuteCount]  Number of requests per execute
+ * @property [apiMode]             Query mode (sequential|parallel)
+ * @property [apiWait]             Time to wait before re-querying
+ * @property [apiLimit]            Requests per second
+ * @property [apiTimeout]          Wait time for one request
+ * @property [apiAttempts]         The number of retries at calling
+ * @property [apiExecuteCount]     Number of requests per execute
  *
- * @property [uploadTimeout]    Wait time for one request
+ * @property [uploadTimeout]       Wait time for one request
+ *
+ * @property [webhookSecret]       Webhook secret key
+ * @property [webhookConfirmation] Webhook confirmation key
  */
 export const defaultOptions = {
 	token: null,
@@ -44,7 +47,10 @@ export const defaultOptions = {
 	},
 	apiExecuteCount: 25,
 
-	uploadTimeout: 15e3
+	uploadTimeout: 15e3,
+
+	webhookSecret: null,
+	webhookConfirmation: null
 };
 
 export const defaultExtensions = {
