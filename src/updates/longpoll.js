@@ -138,7 +138,7 @@ export const transformMessage = ([, id, flags, peer, date, body, attachments, ra
 	}
 
 	if ('fwd' in attachments) {
-		this.fwd_messages = parseFwds(attachments.fwd);
+		message.fwd_messages = parseFwds(attachments.fwd);
 	}
 
 	return message;
