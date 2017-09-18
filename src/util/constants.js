@@ -28,6 +28,9 @@ export const API_VERSION = '5.68';
  *
  * @property [uploadTimeout]       Wait time for one request
  *
+ * @property [longpollWait]        Time to wait before re-querying
+ * @property [longpollAttempts]    The number of retries at calling
+ *
  * @property [webhookPath]         Webhook path
  * @property [webhookSecret]       Webhook secret key
  * @property [webhookConfirmation] Webhook confirmation key
@@ -49,6 +52,9 @@ export const defaultOptions = {
 	apiExecuteCount: 25,
 
 	uploadTimeout: 15e3,
+
+	longpollWait: 3e3,
+	longpollAttempts: 3,
 
 	webhookPath: '/',
 	webhookSecret: null,
@@ -97,4 +103,13 @@ export const API_ERRORS = {
 	PAYMENTS_DISABLED: 500,
 	COMMERCIAL_ACCESS_DENIED: 600,
 	COMMERCIAL_ERROR: 603
+};
+
+/**
+ * Updates error codes
+ *
+ * @type {Object}
+ */
+export const UPDATES_ERRORS = {
+	NEED_RESTART: 'NEED_RESTART'
 };

@@ -8,7 +8,12 @@ import fetch from 'node-fetch';
 import createDebug from 'debug';
 
 import { delay } from '../util/helpers';
+import { UpdatesError } from '../errors';
+import { transformMessage } from './longpoll';
+import { UPDATES_ERRORS } from '../util/constants';
 import MessageContext from '../structures/contexts/message';
+
+const { NEED_RESTART } = UPDATES_ERRORS;
 
 const debug = createDebug('vk-io:updates');
 
@@ -68,6 +73,17 @@ export default class Updates {
 	 */
 	handleLongpollUpdate (update) {
 		console.log('Longpoll', update);
+
+		const eventId = update[0];
+
+		if (eventId === 4) {
+			return this._runHandlers(
+				new MessageContext(
+					this.vk,
+					transformMessage(update)
+				)
+			);
+		}
 	}
 
 	/**
@@ -77,6 +93,10 @@ export default class Updates {
 	 */
 	handleWebhookUpdate (update) {
 		console.log('Webhook', update);
+
+		if (['message_new', 'message_reply'].includes(update.type)) {
+			return this._runHandlers(new MessageContext(this.vk, update));
+		}
 	}
 
 	/**
@@ -256,10 +276,12 @@ export default class Updates {
 		} catch (error) {
 			debug('longpoll error', error);
 
-			if (this._restarted < 3) {
+			const { longpollWait, longpollAttempts } = this.vk.options;
+
+			if (error.code !== NEED_RESTART && this._restarted < longpollAttempts) {
 				++this._restarted;
 
-				debug('longpoll restarted');
+				debug('longpoll restart request');
 
 				await delay(3e3);
 
@@ -271,11 +293,11 @@ export default class Updates {
 					await this.stop();
 					await this.startPolling();
 				} catch (error) {
-					debug('longpoll restart error', error);
+					debug('longpoll restarted error', error);
 
 					this._started = 'longpoll';
 
-					await delay(5e3);
+					await delay(longpollWait);
 				}
 			}
 		}
@@ -311,7 +333,10 @@ export default class Updates {
 		if ('failed' in response && response.failed !== 1) {
 			this._ts = null;
 
-			throw new Error('Polling failed, need restart!');
+			throw new UpdatesError({
+				code: NEED_RESTART,
+				message: 'Polling failed'
+			});
 		}
 
 		this._ts = Number(response.ts);

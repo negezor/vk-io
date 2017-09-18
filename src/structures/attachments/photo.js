@@ -16,7 +16,7 @@ export default class PhotoAttachment extends Attachment {
 	 * @param {VK}     vk
 	 */
 	constructor (payload, vk) {
-		super('photo', payload.owner_id, payload.id);
+		super('photo', payload.owner_id, payload.id, payload.access_key);
 
 		this.vk = vk;
 		this.payload = payload;
@@ -45,6 +45,10 @@ export default class PhotoAttachment extends Attachment {
 		});
 
 		this.payload = photos[0];
+
+		if ('access_key' in this.payload) {
+			this.accessKey = this.payload.access_key;
+		}
 
 		this._isFilled = true;
 	}

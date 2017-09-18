@@ -26,7 +26,7 @@ export default class DocumentAttachment extends Attachment {
 	 * @param {VK}     vk
 	 */
 	constructor (payload, vk) {
-		super('doc', payload.owner_id, payload.id);
+		super('doc', payload.owner_id, payload.id, payload.access_key);
 
 		this.vk = vk;
 		this.payload = payload;
@@ -54,6 +54,10 @@ export default class DocumentAttachment extends Attachment {
 		});
 
 		this.payload = documents[0];
+
+		if ('access_key' in this.payload) {
+			this.accessKey = this.payload.access_key;
+		}
 
 		this._isFilled = true;
 	}

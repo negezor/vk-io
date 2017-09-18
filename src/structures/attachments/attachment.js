@@ -9,12 +9,15 @@ export default class Attachment {
 	 * @param {string} type
 	 * @param {string} owner
 	 * @param {string} id
+	 * @param {string} accessKey
 	 */
-	constructor (type, owner, id) {
+	constructor (type, owner, id, accessKey = null) {
 		this.type = type;
 
 		this.owner = Number(owner);
 		this.id = Number(id);
+
+		this.accessKey = accessKey;
 	}
 
 	/**
@@ -59,7 +62,12 @@ export default class Attachment {
 	 * @return {string}
 	 */
 	toString () {
-		return `${this.type}${this.owner}_${this.id}`;
+		return `${this.type}${this.owner}_${this.id}`
+			+ (
+				this.accessKey !== null
+					? `_${this.accessKey}`
+					: ''
+			);
 	}
 
 	/**

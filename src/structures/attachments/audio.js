@@ -10,7 +10,7 @@ export default class AudioAttachment extends Attachment {
 	 * @param {VK}     vk
 	 */
 	constructor (payload, vk) {
-		super('audio', payload.owner_id, payload.id);
+		super('audio', payload.owner_id, payload.id, payload.access_key);
 
 		this.vk = vk;
 		this.payload = payload;
@@ -38,6 +38,10 @@ export default class AudioAttachment extends Attachment {
 		});
 
 		this.payload = audios[0];
+
+		if ('access_key' in this.payload) {
+			this.accessKey = this.payload.access_key;
+		}
 
 		this._isFilled = true;
 	}
