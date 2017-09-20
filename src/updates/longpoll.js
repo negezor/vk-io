@@ -1,11 +1,6 @@
 'use strict';
 
-/**
- * Chat peer ID
- *
- * @type {number}
- */
-const CHAT_PEER = 2e9;
+import { CHAT_PEER } from '../util/constants';
 
 /**
  * Special attachments in one message
@@ -46,7 +41,6 @@ const specialAttachments = {
 export const transformMessage = ([, id, flags, peer, date, body, attachments, random]) => {
 	const message = {
 		id,
-		peer,
 		date,
 		body,
 		flags,
@@ -57,7 +51,8 @@ export const transformMessage = ([, id, flags, peer, date, body, attachments, ra
 		emoji: Number(attachments.emoji === 1),
 	};
 
-	const isGroup = peer > 0;
+	const isGroup = peer < 0;
+	const isChat = peer > CHAT_PEER;
 
 	if (isGroup) {
 		message.out = Number((flags & 2) === 0);
@@ -67,7 +62,7 @@ export const transformMessage = ([, id, flags, peer, date, body, attachments, ra
 		message.important = Number((flags & 8) !== 0);
 	}
 
-	if (peer > CHAT_PEER) {
+	if (isChat) {
 		message.user_id = Number(attachments.from);
 		message.chat_id = peer - CHAT_PEER;
 

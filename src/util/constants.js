@@ -70,6 +70,13 @@ export const defaultExtensions = {
 };
 
 /**
+ * Chat peer ID
+ *
+ * @type {number}
+ */
+const CHAT_PEER = 2e9;
+
+/**
  * API error codes
  *
  * @type {Object}
