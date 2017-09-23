@@ -3,7 +3,6 @@
 import { inspect } from 'util';
 
 import Context from './context';
-
 import { CHAT_PEER } from '../../util/constants';
 import { unescapeHTML } from '../../updates/helpers';
 
@@ -152,6 +151,82 @@ export default class MessageContext extends Context {
 	 */
 	isEvent () {
 		return this.isChat() && Boolean(this.payload.action);
+	}
+
+	/**
+	 * Checks whether the message is outbox
+	 *
+	 * @return {boolean}
+	 */
+	isOutbox () {
+		return Boolean(this.payload.out);
+	}
+
+	/**
+	 * Checks that the message was deleted
+	 *
+	 * @return {boolean}
+	 */
+	isDeleted () {
+		return Boolean(this.payload.deleted);
+	}
+
+	/**
+	 * Checks whether the message is read
+	 *
+	 * @return {boolean}
+	 */
+	isRead () {
+		return Boolean(this.payload.read_state);
+	}
+
+	/**
+	 * Checks that the message is important
+	 *
+	 * @return {boolean}
+	 */
+	isImportant () {
+		return Boolean(this.payload.important);
+	}
+
+	/**
+	 * Returns the message ID
+	 *
+	 * @return {?number}
+	 */
+	getId () {
+		return this.payload.id;
+	}
+
+	/**
+	 * Returns the user ID
+	 *
+	 * @return {?number}
+	 */
+	getUserId () {
+		return this.payload.user_id;
+	}
+
+	/**
+	 * Returns the chat ID
+	 *
+	 * @return {?number}
+	 */
+	getChatId () {
+		if (!this.isChat()) {
+			return null;
+		}
+
+		return this.payload.chat_id;
+	}
+
+	/**
+	 * Returns the date when this message was created
+	 *
+	 * @return {number}
+	 */
+	getDate () {
+		return this.payload.date;
 	}
 
 	/**
@@ -354,12 +429,17 @@ export default class MessageContext extends Context {
 	/**
 	 * Custom inspect object
 	 *
-	 * @return {Object}
+	 * @param {?number} depth
+	 * @param {Object}  options
+	 *
+	 * @return {string}
 	 */
-	[inspect.custom] () {
-		return {
-			...this,
-			vk: '<VK>'
-		};
+	[inspect.custom] (depth, options) {
+		const { name } = this.constructor;
+
+		return (
+			`${options.stylize(name, 'special')} `
+			+ inspect({ ...this, vk: '<VK>' }, options)
+		);
 	}
 }

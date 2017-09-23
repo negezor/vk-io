@@ -19,15 +19,6 @@ export default class MarketAlbumAttachment extends Attachment {
 	}
 
 	/**
-	 * Returns whether the attachment is filled
-	 *
-	 * @return {boolean}
-	 */
-	isFilled () {
-		return this._isFilled;
-	}
-
-	/**
 	 * Get photo info
 	 *
 	 * @return {Promise}

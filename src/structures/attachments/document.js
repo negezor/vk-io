@@ -35,15 +35,6 @@ export default class DocumentAttachment extends Attachment {
 	}
 
 	/**
-	 * Returns whether the attachment is filled
-	 *
-	 * @return {boolean}
-	 */
-	isFilled () {
-		return this._isFilled;
-	}
-
-	/**
 	 * Get document info
 	 *
 	 * @return {Promise}

@@ -18,6 +18,17 @@ export default class Attachment {
 		this.id = Number(id);
 
 		this.accessKey = accessKey;
+
+		this._isFilled = false;
+	}
+
+	/**
+	 * Returns whether the attachment is filled
+	 *
+	 * @return {boolean}
+	 */
+	isFilled () {
+		return this._isFilled;
 	}
 
 	/**
@@ -79,17 +90,17 @@ export default class Attachment {
 	 * @return {string}
 	 */
 	[inspect.custom] (depth, options) {
-		const { name } = this.constructor.name;
+		const { name } = this.constructor;
 
 		return (
-			`${options.stylize(name, 'special')} {`
-			+ `${options.stylize(this, 'string')} | `
+			`${options.stylize(name, 'special')} { `
+			+ `${options.stylize(this, 'string')} `
 			+ (
-				'_isFilled' in this && this._isFilled
-					? inspect(this.payload, options)
-					: options.stylize('empty', 'undefined')
+				this._isFilled
+					? ` ${inspect(this.payload, options)} `
+					: ''
 			)
-			+ ' }'
+			+ '}'
 		);
 	}
 }
