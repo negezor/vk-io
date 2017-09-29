@@ -7,7 +7,7 @@ import { URL, URLSearchParams } from 'url';
 import Request from './request';
 import methods from './methods';
 import { APIError, ExecuteError } from '../errors';
-import { API_VERSION, API_ERRORS } from '../util/constants';
+import { API_VERSION, apiErrors } from '../util/constants';
 import {
 	getRandomId,
 	getChainReturn,
@@ -19,7 +19,7 @@ const {
 	CAPTCHA_REQUIRED,
 	TOO_MANY_REQUESTS,
 	USER_VALIDATION_REQUIRED
-} = API_ERRORS;
+} = apiErrors;
 
 const debug = createDebug('vk-io:api');
 
@@ -261,7 +261,7 @@ export default class API {
 		} catch (error) {
 			const { apiWait, apiAttempts } = this.vk.options;
 
-			if (this.addAttempt() <= apiAttempts) {
+			if (request.addAttempt() <= apiAttempts) {
 				return setTimeout(() => {
 					debug(`Request ${request.method} restarted ${request.attempts} times`);
 

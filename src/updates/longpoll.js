@@ -68,9 +68,11 @@ export const transformMessage = ([, id, flags, peer, date, body, attachments, ra
 
 		message.title = attachments.title;
 
-		message.action = attachments.source_act;
-		message.action_mid = attachments.source_mid;
-		message.action_text = attachments.source_text;
+		if ('source_act' in attachments) {
+			message.action = attachments.source_act;
+			message.action_mid = attachments.source_mid;
+			message.action_text = attachments.source_text;
+		}
 	} else {
 		message.user_id = peer;
 	}

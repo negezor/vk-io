@@ -74,14 +74,14 @@ export const defaultExtensions = {
  *
  * @type {number}
  */
-const CHAT_PEER = 2e9;
+export const CHAT_PEER = 2e9;
 
 /**
  * API error codes
  *
  * @type {Object}
  */
-export const API_ERRORS = {
+export const apiErrors = {
 	UKNOWN_ERROR: 1,
 	APP_SWITCHED_OFF: 2,
 	UNKNOWN_METHOD: 3,
@@ -117,6 +117,6 @@ export const API_ERRORS = {
  *
  * @type {Object}
  */
-export const UPDATES_ERRORS = {
+export const updatesErrors = {
 	NEED_RESTART: 'NEED_RESTART'
 };

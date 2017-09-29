@@ -1,9 +1,9 @@
 'use strict';
 
 import VKError from './vk';
-import { API_ERRORS } from '../util/constants';
+import { apiErrors } from '../util/constants';
 
-const { CAPTCHA_REQUIRED, USER_VALIDATION_REQUIRED } = API_ERRORS;
+const { CAPTCHA_REQUIRED, USER_VALIDATION_REQUIRED } = apiErrors;
 
 export default class APIError extends VKError {
 	/**

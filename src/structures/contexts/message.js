@@ -1,7 +1,5 @@
 'use strict';
 
-import { inspect } from 'util';
-
 import Context from './context';
 import { CHAT_PEER } from '../../util/constants';
 import { unescapeHTML } from '../../updates/helpers';
@@ -19,6 +17,20 @@ import {
 	WallReplyAttachment,
 	MarketAlbumAttachment
 } from '../attachments';
+
+const attachmentsTypes = [
+	'doc',
+	'gift',
+	'link',
+	'wall',
+	'photo',
+	'video',
+	'audio',
+	'market',
+	'sticker',
+	'wall_reply',
+	'market_album'
+];
 
 export default class MessageContext extends Context {
 	/**
@@ -89,6 +101,23 @@ export default class MessageContext extends Context {
 			}
 		})
 		.filter(Boolean);
+
+		const subTypes = attachmentsTypes.filter((type) => (
+			this.attachments.some((attachment) => (
+				attachment.type === type
+			))
+		));
+
+		if (this.text !== null) {
+			subTypes.push('text');
+		}
+
+		if ('action' in this.payload) {
+			subTypes.push(this.payload.action);
+		}
+
+		this.type = 'message';
+		this.subTypes = subTypes;
 	}
 
 	/**
@@ -106,6 +135,15 @@ export default class MessageContext extends Context {
 		return this.attachments.some((attachment) => (
 			attachment.type === type
 		));
+	}
+
+	/**
+	 * Checks if there is text
+	 *
+	 * @return {boolean}
+	 */
+	hasText () {
+		return this.text !== null;
 	}
 
 	/**
@@ -160,6 +198,15 @@ export default class MessageContext extends Context {
 	 */
 	isOutbox () {
 		return Boolean(this.payload.out);
+	}
+
+	/**
+	 * Checks whether the message is inbox
+	 *
+	 * @return {boolean}
+	 */
+	isInbox () {
+		return !this.isOutbox();
 	}
 
 	/**
@@ -424,22 +471,5 @@ export default class MessageContext extends Context {
 			chat_id: this.payload.chat_id,
 			user_id: id
 		});
-	}
-
-	/**
-	 * Custom inspect object
-	 *
-	 * @param {?number} depth
-	 * @param {Object}  options
-	 *
-	 * @return {string}
-	 */
-	[inspect.custom] (depth, options) {
-		const { name } = this.constructor;
-
-		return (
-			`${options.stylize(name, 'special')} `
-			+ inspect({ ...this, vk: '<VK>' }, options)
-		);
 	}
 }

@@ -7,13 +7,21 @@ import { URL, URLSearchParams } from 'url';
 import fetch from 'node-fetch';
 import createDebug from 'debug';
 
+import {
+	TypingContext,
+	MessageContext,
+	UserOnlineContext,
+	ReadMessagesContext,
+	MessageFlagsContext,
+	RemovedMessagesContext
+} from '../structures/contexts';
+
 import { delay } from '../util/helpers';
 import { UpdatesError } from '../errors';
 import { transformMessage } from './longpoll';
-import { UPDATES_ERRORS } from '../util/constants';
-import MessageContext from '../structures/contexts/message';
+import { updatesErrors } from '../util/constants';
 
-const { NEED_RESTART } = UPDATES_ERRORS;
+const { NEED_RESTART } = updatesErrors;
 
 const debug = createDebug('vk-io:updates');
 
@@ -72,17 +80,64 @@ export default class Updates {
 	 * @param {Array} update
 	 */
 	handleLongpollUpdate (update) {
-		console.log('Longpoll', update);
-
-		const eventId = update[0];
-
-		if (eventId === 4) {
-			return this._runHandlers(
-				new MessageContext(
-					this.vk,
-					transformMessage(update)
-				)
-			);
+		switch (update[0]) {
+			case 1:
+			case 2:
+			case 3:
+				return this._runHandlers(
+					new MessageFlagsContext(
+						this.vk,
+						update
+					)
+				);
+			case 4:
+				return this._runHandlers(
+					new MessageContext(
+						this.vk,
+						transformMessage(update)
+					)
+				);
+			case 6:
+			case 7:
+				return this._runHandlers(
+					new ReadMessagesContext(
+						this.vk,
+						update
+					)
+				);
+			case 8:
+			case 9:
+				return this._runHandlers(
+					new UserOnlineContext(
+						this.vk,
+						update
+					)
+				);
+			case 10:
+			case 11:
+			case 12:
+				return this._runHandlers(
+					new DialogFlagsContext(
+						this.vk,
+						update
+					)
+				);
+			case 13:
+			case 14:
+				return this._runHandlers(
+					new RemovedMessagesContext(
+						this.vk,
+						update
+					)
+				);
+			case 61:
+			case 62:
+				return this._runHandlers(
+					new TypingContext(
+						this.vk,
+						update
+					)
+				);
 		}
 	}
 
@@ -347,7 +402,11 @@ export default class Updates {
 
 		if ('updates' in response) {
 			for (const update of response.updates) {
-				this.handleLongpollUpdate(update);
+				try {
+					this.handleLongpollUpdate(update);
+				} catch (error) {
+					console.log(error);
+				}
 			}
 		}
 	}
