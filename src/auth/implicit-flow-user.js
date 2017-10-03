@@ -3,7 +3,8 @@ import createDebug from 'debug';
 import { URL, URLSearchParams } from 'url';
 
 import ImplicitFlow from './implicit-flow';
-import { API_VERSION, CALLBACK_BLANK, authScope } from '../util/constants';
+import { API_VERSION, CALLBACK_BLANK } from '../util/constants';
+import { getAllPermissionsBitMask, getPermissionsBitMaskByName } from './helpers';
 
 const debug = createDebug('vk-io:auth:implicit-flow-user');
 
@@ -18,23 +19,9 @@ export default class ImplicitFlowUser extends ImplicitFlow {
 		let { scope } = this.vk.options;
 
 		if (scope === 'all' || scope === null) {
-			scope = Array.from(authScope.values()).reduce((previous, current) => (
-				previous + current
-			), 0);
+			scope = getAllPermissionsBitMask();
 		} else if (typeof scope !== 'number') {
-			if (!Array.isArray(scope)) {
-				scope = scope.split(/,\s{0,}/);
-			}
-
-			let bitMask = 0;
-
-			for (const [key, value] of authScope) {
-				if (scope.includes(key)) {
-					bitMask += value;
-				}
-			}
-
-			scope = bitMask;
+			scope = getPermissionsBitMaskByName(scope);
 		}
 
 		debug('auth scope %s', scope);

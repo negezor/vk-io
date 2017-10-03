@@ -36,7 +36,7 @@ export default class API {
 		this.vk = vk;
 
 		this.queue = [];
-		this.isStarted = false;
+		this.started = false;
 
 		for (const method of methods) {
 			const [group, name] = method.split('.');
@@ -135,11 +135,11 @@ export default class API {
 	 * Running queue
 	 */
 	worker() {
-		if (this.isStarted) {
+		if (this.started) {
 			return;
 		}
 
-		this.isStarted = true;
+		this.started = true;
 
 		const { apiLimit, apiMode, apiExecuteCount } = this.vk.options;
 
@@ -147,7 +147,7 @@ export default class API {
 
 		const work = async () => {
 			if (this.queue.length === 0) {
-				this.isStarted = false;
+				this.started = false;
 
 				return;
 			}

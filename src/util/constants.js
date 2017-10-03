@@ -167,13 +167,14 @@ export const authErrors = {
  *
  * @type {Map}
  */
-export const authScope = new Map([
+export const scopes = new Map([
 	['notify', 1],
 	['friends', 2],
 	['photos', 4],
 	['audio', 8],
 	['video', 16],
 	['pages', 128],
+	['link', 256],
 	['status', 1024],
 	['notes', 2048],
 	['messages', 4096],

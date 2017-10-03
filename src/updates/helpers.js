@@ -35,7 +35,7 @@ const fwdHasBrackets = /(\(.*\))/;
  *
  * @return {Array}
  */
-function splitFwdDelimiter(raw, delimiter) {
+export const splitFwdDelimiter = (raw, delimiter) => {
 	const out = [];
 
 	let tmp = '';
@@ -75,7 +75,7 @@ function splitFwdDelimiter(raw, delimiter) {
 	keepResult();
 
 	return out;
-}
+};
 
 /**
  * Parse the sent forwards messages
@@ -84,7 +84,7 @@ function splitFwdDelimiter(raw, delimiter) {
  *
  * @return {Array}
  */
-export function parseFwds(raw) {
+export const parseFwds = (raw) => {
 	const out = [];
 
 	for (const block of splitFwdDelimiter(raw, ',')) {
@@ -114,4 +114,4 @@ export function parseFwds(raw) {
 	}
 
 	return out;
-}
+};

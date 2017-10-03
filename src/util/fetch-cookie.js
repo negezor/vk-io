@@ -13,12 +13,12 @@ export const fetchCookieDecorator = (jar = new CookieJar()) => {
 	const getCookieString = promisify(jar.getCookieString).bind(jar);
 
 	return async function fetchCookie(url, options = {}) {
-		const beforeCookie = await getCookieString(url);
+		const previousCookie = await getCookieString(url);
 
 		const { headers = {} } = options;
 
-		if (beforeCookie) {
-			headers.cookie = beforeCookie;
+		if (previousCookie) {
+			headers.cookie = previousCookie;
 		}
 
 		debug('fetch url %s', url, options);
