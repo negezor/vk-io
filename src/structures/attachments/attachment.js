@@ -73,7 +73,11 @@ export default class Attachment {
 	toString() {
 		const hasAccessKey = this.accessKey !== null;
 
-		return `${this.type}${this.owner}_${this.id}${hasAccessKey ? this.accessKey : ''}`;
+		const accessKey = this.accessKey !== null
+			? `_${this.accessKey}`
+			: '';
+
+		return `${this.type}${this.owner}_${this.id}${accessKey}`;
 	}
 
 	/**

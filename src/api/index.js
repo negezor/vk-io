@@ -212,8 +212,8 @@ export default class API {
 
 		const url = new URL(request.method, 'https://api.vk.com/method/');
 
-		url.searchParams.append('access_token', token);
-		url.searchParams.append('v', API_VERSION);
+		url.searchParams.set('access_token', token);
+		url.searchParams.set('v', API_VERSION);
 
 		if (lang !== null) {
 			url.searchParams.append('lang', lang);
@@ -230,6 +230,7 @@ export default class API {
 				timeout: apiTimeout,
 				headers: {
 					...apiHeaders,
+
 					connection: 'keep-alive'
 				},
 				body: new URLSearchParams(request.params)

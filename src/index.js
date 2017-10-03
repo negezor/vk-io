@@ -35,6 +35,7 @@ export class VK {
 		this.updates = new Updates(this);
 
 		this.captchaHandler = null;
+		this.twoFactorHandler = null;
 	}
 
 	/**
@@ -90,6 +91,19 @@ export class VK {
 	 */
 	setCaptchaHandler(handler) {
 		this.captchaHandler = handler;
+
+		return this;
+	}
+
+	/**
+	 * Sets two-factor handler
+	 *
+	 * @param {?Function} handler
+	 *
+	 * @return {this}
+	 */
+	setTwoFactorHandler(handler) {
+		this.twoFactorHandler = handler;
 
 		return this;
 	}

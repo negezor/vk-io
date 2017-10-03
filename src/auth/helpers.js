@@ -1,12 +1,12 @@
-import { scopes } from '../util/constants';
+import { userScopes } from '../util/constants';
 
 /**
  * Returns the entire permission bit mask
  *
  * @return {number}
  */
-export const getAllPermissionsBitMask = () => (
-	Array.from(scopes.values()).reduce((previous, current) => (
+export const getAllUsersPermissions = () => (
+	Array.from(userScopes.values()).reduce((previous, current) => (
 		previous + current
 	), 0)
 );
@@ -18,7 +18,7 @@ export const getAllPermissionsBitMask = () => (
  *
  * @return {number}
  */
-export const getPermissionsBitMaskByName = (scope) => {
+export const getUsersPermissionsByName = (scope) => {
 	if (!Array.isArray(scope)) {
 		scope = scope.split(/,\s{0,}/);
 	}
@@ -26,8 +26,8 @@ export const getPermissionsBitMaskByName = (scope) => {
 	let bitMask = 0;
 
 	for (const name of scope) {
-		if (scopes.has(name)) {
-			bitMask += scopes.get(name);
+		if (userScopes.has(name)) {
+			bitMask += userScopes.get(name);
 		}
 	}
 
@@ -41,7 +41,6 @@ export const getPermissionsBitMaskByName = (scope) => {
  *
  * @return {Object}
  */
-// eslint-disable-next-line import/prefer-default-export
 export const parseFormField = ($) => {
 	const $form = $('form[action][method]');
 
