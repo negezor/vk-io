@@ -1,5 +1,3 @@
-'use strict';
-
 import Attachment from './attachment';
 
 export default class AudioAttachment extends Attachment {
@@ -9,7 +7,7 @@ export default class AudioAttachment extends Attachment {
 	 * @param {Object} payload
 	 * @param {VK}     vk
 	 */
-	constructor (payload, vk) {
+	constructor(payload, vk) {
 		super('audio', payload.owner_id, payload.id, payload.access_key);
 
 		this.vk = vk;
@@ -23,12 +21,12 @@ export default class AudioAttachment extends Attachment {
 	 *
 	 * @return {Promise}
 	 */
-	async getAttachmentPayload () {
-		const audios = await this.vk.api.docs.getById({
+	async getAttachmentPayload() {
+		const [audio] = await this.vk.api.docs.getById({
 			audios: `${this.owner}_${this.id}`
 		});
 
-		this.payload = audios[0];
+		this.payload = audio;
 
 		if ('access_key' in this.payload) {
 			this.accessKey = this.payload.access_key;
@@ -42,7 +40,7 @@ export default class AudioAttachment extends Attachment {
 	 *
 	 * @return {?boolean}
 	 */
-	isHq () {
+	isHq() {
 		const { is_hq: isHq } = this.payload;
 
 		if (!isHq) {
@@ -57,7 +55,7 @@ export default class AudioAttachment extends Attachment {
 	 *
 	 * @return {?string}
 	 */
-	getArtist () {
+	getArtist() {
 		return this.payload.artist || null;
 	}
 
@@ -66,7 +64,7 @@ export default class AudioAttachment extends Attachment {
 	 *
 	 * @return {?string}
 	 */
-	getTitle () {
+	getTitle() {
 		return this.payload.title || null;
 	}
 
@@ -75,7 +73,7 @@ export default class AudioAttachment extends Attachment {
 	 *
 	 * @return {?number}
 	 */
-	getDuration () {
+	getDuration() {
 		return this.payload.duration || null;
 	}
 
@@ -84,7 +82,7 @@ export default class AudioAttachment extends Attachment {
 	 *
 	 * @return {?number}
 	 */
-	getDate () {
+	getDate() {
 		return this.payload.date || null;
 	}
 
@@ -93,7 +91,7 @@ export default class AudioAttachment extends Attachment {
 	 *
 	 * @return {?string}
 	 */
-	getUrl () {
+	getUrl() {
 		return this.payload.url || null;
 	}
 
@@ -102,7 +100,7 @@ export default class AudioAttachment extends Attachment {
 	 *
 	 * @return {?number}
 	 */
-	getLyricsId () {
+	getLyricsId() {
 		return this.payload.lyrics_id || null;
 	}
 
@@ -111,7 +109,7 @@ export default class AudioAttachment extends Attachment {
 	 *
 	 * @return {?number}
 	 */
-	getAlbumId () {
+	getAlbumId() {
 		return this.payload.album_id || null;
 	}
 
@@ -120,7 +118,7 @@ export default class AudioAttachment extends Attachment {
 	 *
 	 * @return {?number}
 	 */
-	getGenreId () {
+	getGenreId() {
 		return this.payload.album_id || null;
 	}
-};
+}

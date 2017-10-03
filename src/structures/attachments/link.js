@@ -1,5 +1,3 @@
-'use strict';
-
 export default class LinkAttachment {
 	/**
 	 * Constructor
@@ -7,7 +5,7 @@ export default class LinkAttachment {
 	 * @param {Object} payload
 	 * @param {VK}     vk
 	 */
-	constructor (payload, vk) {
+	constructor(payload, vk) {
 		this.payload = payload;
 
 		this.type = 'link';

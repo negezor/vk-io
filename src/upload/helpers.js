@@ -1,5 +1,3 @@
-'use strict';
-
 import { Stream } from 'stream';
 
 /**
@@ -9,7 +7,7 @@ import { Stream } from 'stream';
  *
  * @return {boolean}
  */
-export const isStream = (source) => (
+export const isStream = source => (
 	typeof source === 'object' && source instanceof Stream
 );
 

@@ -1,5 +1,3 @@
-'use strict';
-
 import VKError from './vk';
 
 export default class UpdatesError extends VKError {
@@ -8,7 +6,7 @@ export default class UpdatesError extends VKError {
 	 *
 	 * @param {Object} payload
 	 */
-	constructor (payload) {
+	constructor(payload = {}) {
 		super(payload);
 	}
 }

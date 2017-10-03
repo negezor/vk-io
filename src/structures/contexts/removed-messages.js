@@ -1,5 +1,3 @@
-'use strict';
-
 import Context from './context';
 
 export default class RemovedMessagesContext extends Context {
@@ -9,7 +7,7 @@ export default class RemovedMessagesContext extends Context {
 	 * @param {VK}     vk
 	 * @param {Arrray} update
 	 */
-	constructor (vk, [eventId, peer, id]) {
+	constructor(vk, [eventId, peer, id]) {
 		super(vk);
 
 		this.payload = {
@@ -30,7 +28,7 @@ export default class RemovedMessagesContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isRemoved () {
+	isRemoved() {
 		return this.subTypes.includes('removed_messages');
 	}
 
@@ -39,7 +37,7 @@ export default class RemovedMessagesContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isRecovery () {
+	isRecovery() {
 		return this.subTypes.includes('recovery_messages');
 	}
 
@@ -48,7 +46,7 @@ export default class RemovedMessagesContext extends Context {
 	 *
 	 * @return {string}
 	 */
-	getId () {
+	getId() {
 		return this.payload.id;
 	}
 
@@ -57,7 +55,7 @@ export default class RemovedMessagesContext extends Context {
 	 *
 	 * @return {number}
 	 */
-	getPeerId () {
+	getPeerId() {
 		return this.payload.peer_id;
 	}
 }

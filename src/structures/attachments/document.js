@@ -1,5 +1,3 @@
-'use strict';
-
 import Attachment from './attachment';
 
 /**
@@ -25,7 +23,7 @@ export default class DocumentAttachment extends Attachment {
 	 * @param {Object} payload
 	 * @param {VK}     vk
 	 */
-	constructor (payload, vk) {
+	constructor(payload, vk) {
 		super('doc', payload.owner_id, payload.id, payload.access_key);
 
 		this.vk = vk;
@@ -39,12 +37,12 @@ export default class DocumentAttachment extends Attachment {
 	 *
 	 * @return {Promise}
 	 */
-	async getAttachmentPayload () {
-		const documents = await this.vk.api.docs.getById({
+	async getAttachmentPayload() {
+		const [document] = await this.vk.api.docs.getById({
 			docs: `${this.owner}_${this.id}`,
 		});
 
-		this.payload = documents[0];
+		this.payload = document;
 
 		if ('access_key' in this.payload) {
 			this.accessKey = this.payload.access_key;
@@ -58,7 +56,7 @@ export default class DocumentAttachment extends Attachment {
 	 *
 	 * @return {?boolean}
 	 */
-	isText () {
+	isText() {
 		if (!this._isFilled) {
 			return null;
 		}
@@ -71,7 +69,7 @@ export default class DocumentAttachment extends Attachment {
 	 *
 	 * @return {?boolean}
 	 */
-	isArchive () {
+	isArchive() {
 		if (!this._isFilled) {
 			return null;
 		}
@@ -84,7 +82,7 @@ export default class DocumentAttachment extends Attachment {
 	 *
 	 * @return {?boolean}
 	 */
-	isGif () {
+	isGif() {
 		if (!this._isFilled) {
 			return null;
 		}
@@ -97,7 +95,7 @@ export default class DocumentAttachment extends Attachment {
 	 *
 	 * @return {?boolean}
 	 */
-	isImage () {
+	isImage() {
 		if (!this._isFilled) {
 			return null;
 		}
@@ -110,7 +108,7 @@ export default class DocumentAttachment extends Attachment {
 	 *
 	 * @return {?boolean}
 	 */
-	isGraffiti () {
+	isGraffiti() {
 		if (!this._isFilled) {
 			return null;
 		}
@@ -123,7 +121,7 @@ export default class DocumentAttachment extends Attachment {
 	 *
 	 * @return {?boolean}
 	 */
-	isAudio () {
+	isAudio() {
 		if (!this._isFilled) {
 			return null;
 		}
@@ -136,7 +134,7 @@ export default class DocumentAttachment extends Attachment {
 	 *
 	 * @return {?boolean}
 	 */
-	isVoice () {
+	isVoice() {
 		if (!this._isFilled) {
 			return null;
 		}
@@ -149,7 +147,7 @@ export default class DocumentAttachment extends Attachment {
 	 *
 	 * @return {?boolean}
 	 */
-	isVideo () {
+	isVideo() {
 		if (!this._isFilled) {
 			return null;
 		}
@@ -162,7 +160,7 @@ export default class DocumentAttachment extends Attachment {
 	 *
 	 * @return {?boolean}
 	 */
-	isBook () {
+	isBook() {
 		if (!this._isFilled) {
 			return null;
 		}
@@ -175,7 +173,7 @@ export default class DocumentAttachment extends Attachment {
 	 *
 	 * @return {?string}
 	 */
-	getTitle () {
+	getTitle() {
 		return this.payload.title || null;
 	}
 
@@ -184,7 +182,7 @@ export default class DocumentAttachment extends Attachment {
 	 *
 	 * @return {?number}
 	 */
-	getDate () {
+	getDate() {
 		return this.payload.date || null;
 	}
 
@@ -193,7 +191,7 @@ export default class DocumentAttachment extends Attachment {
 	 *
 	 * @return {?number}
 	 */
-	getTypeId () {
+	getTypeId() {
 		return this.payload.type || null;
 	}
 
@@ -202,7 +200,7 @@ export default class DocumentAttachment extends Attachment {
 	 *
 	 * @return {?string}
 	 */
-	getTypeName () {
+	getTypeName() {
 		if (!this._isFilled) {
 			return null;
 		}
@@ -215,7 +213,7 @@ export default class DocumentAttachment extends Attachment {
 	 *
 	 * @return {?number}
 	 */
-	getSize () {
+	getSize() {
 		return this.payload.size || null;
 	}
 
@@ -224,7 +222,7 @@ export default class DocumentAttachment extends Attachment {
 	 *
 	 * @return {?string}
 	 */
-	getExtension () {
+	getExtension() {
 		return this.payload.ext || null;
 	}
 
@@ -233,7 +231,7 @@ export default class DocumentAttachment extends Attachment {
 	 *
 	 * @return {?string}
 	 */
-	getUrl () {
+	getUrl() {
 		return this.payload.url || null;
 	}
 
@@ -242,7 +240,7 @@ export default class DocumentAttachment extends Attachment {
 	 *
 	 * @return {?Object}
 	 */
-	getPreview () {
+	getPreview() {
 		return this.payload.preview || null;
 	}
 
@@ -253,7 +251,7 @@ export default class DocumentAttachment extends Attachment {
 	 *
 	 * @return {boolean}
 	 */
-	_hasPreviewProperty (name) {
+	_hasPreviewProperty(name) {
 		const preview = this.getPreview();
 
 		if (preview === null) {

@@ -1,5 +1,3 @@
-'use strict';
-
 import { inspect } from 'util';
 
 export default class Attachment {
@@ -11,7 +9,7 @@ export default class Attachment {
 	 * @param {string} id
 	 * @param {string} accessKey
 	 */
-	constructor (type, owner, id, accessKey = null) {
+	constructor(type, owner, id, accessKey = null) {
 		this.type = type;
 
 		this.owner = Number(owner);
@@ -27,7 +25,7 @@ export default class Attachment {
 	 *
 	 * @return {boolean}
 	 */
-	isFilled () {
+	isFilled() {
 		return this._isFilled;
 	}
 
@@ -36,7 +34,7 @@ export default class Attachment {
 	 *
 	 * @return {string}
 	 */
-	getType () {
+	getType() {
 		return this.type;
 	}
 
@@ -45,7 +43,7 @@ export default class Attachment {
 	 *
 	 * @return {number}
 	 */
-	getOwner () {
+	getOwner() {
 		return this.owner;
 	}
 
@@ -54,7 +52,7 @@ export default class Attachment {
 	 *
 	 * @return {number}
 	 */
-	getId () {
+	getId() {
 		return this.id;
 	}
 
@@ -63,7 +61,7 @@ export default class Attachment {
 	 *
 	 * @return {string}
 	 */
-	get [Symbol.toStringTag] () {
+	get [Symbol.toStringTag]() {
 		return this.constructor.name;
 	}
 
@@ -72,13 +70,10 @@ export default class Attachment {
 	 *
 	 * @return {string}
 	 */
-	toString () {
-		return `${this.type}${this.owner}_${this.id}`
-			+ (
-				this.accessKey !== null
-					? `_${this.accessKey}`
-					: ''
-			);
+	toString() {
+		const hasAccessKey = this.accessKey !== null;
+
+		return `${this.type}${this.owner}_${this.id}${hasAccessKey ? this.accessKey : ''}`;
 	}
 
 	/**
@@ -89,18 +84,13 @@ export default class Attachment {
 	 *
 	 * @return {string}
 	 */
-	[inspect.custom] (depth, options) {
+	[inspect.custom](depth, options) {
 		const { name } = this.constructor;
 
-		return (
-			`${options.stylize(name, 'special')} { `
-			+ `${options.stylize(this, 'string')} `
-			+ (
-				this._isFilled
-					? ` ${inspect(this.payload, options)} `
-					: ''
-			)
-			+ '}'
-		);
+		const payload = this._isFilled
+			? ` ${inspect(this.payload, options)} `
+			: '';
+
+		return `${options.stylize(name, 'special')} { ${options.stylize(this, 'string')} ${payload}}`;
 	}
 }

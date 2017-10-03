@@ -1,5 +1,3 @@
-'use strict';
-
 import Context from './context';
 
 const platforms = {
@@ -19,7 +17,7 @@ export default class UserOnlineContext extends Context {
 	 * @param {VK}    vk
 	 * @param {Array} update
 	 */
-	constructor (vk, [eventId, user, extra, date]) {
+	constructor(vk, [eventId, user, extra, date]) {
 		super(vk);
 
 		this.payload = {
@@ -41,7 +39,7 @@ export default class UserOnlineContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isUserOnline () {
+	isUserOnline() {
 		return this.subTypes.includes('online');
 	}
 
@@ -50,7 +48,7 @@ export default class UserOnlineContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isUserOffline () {
+	isUserOffline() {
 		return this.subTypes.includes('offline');
 	}
 
@@ -59,8 +57,8 @@ export default class UserOnlineContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isSelfExit () {
-		return this.isUserOffline() && !Boolean(this.payload.extra);
+	isSelfExit() {
+		return this.isUserOffline() && !this.payload.extra;
 	}
 
 	/**
@@ -68,7 +66,7 @@ export default class UserOnlineContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isTimeoutExit () {
+	isTimeoutExit() {
 		return this.isUserOffline() && Boolean(this.payload.extra);
 	}
 
@@ -77,7 +75,7 @@ export default class UserOnlineContext extends Context {
 	 *
 	 * @return {number}
 	 */
-	getDate () {
+	getDate() {
 		return this.payload.date;
 	}
 
@@ -86,7 +84,7 @@ export default class UserOnlineContext extends Context {
 	 *
 	 * @return {?string}
 	 */
-	getPlatformName () {
+	getPlatformName() {
 		return platforms[this.payload.extra] || null;
 	}
 }

@@ -1,5 +1,3 @@
-'use strict';
-
 import VKError from './vk';
 import { apiErrors } from '../util/constants';
 
@@ -11,7 +9,7 @@ export default class APIError extends VKError {
 	 *
 	 * @param {Object} payload
 	 */
-	constructor (payload) {
+	constructor(payload) {
 		const code = Number(payload.error_code);
 		const message = `Code №${code} - ${payload.error_msg}`;
 

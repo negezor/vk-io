@@ -1,5 +1,3 @@
-'use strict';
-
 import Context from './context';
 
 import TypingContext from './typing';

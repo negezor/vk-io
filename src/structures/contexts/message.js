@@ -1,5 +1,3 @@
-'use strict';
-
 import Context from './context';
 import { CHAT_PEER } from '../../util/constants';
 import { unescapeHTML } from '../../updates/helpers';
@@ -39,7 +37,7 @@ export default class MessageContext extends Context {
 	 * @param {VK}     vk
 	 * @param {Object} payload
 	 */
-	constructor (vk, payload) {
+	constructor(vk, payload) {
 		super(vk);
 
 		this.payload = payload;
@@ -65,45 +63,45 @@ export default class MessageContext extends Context {
 			type: peerType
 		};
 
-		this.text = !!this.payload.body
+		this.text = this.payload.body
 			? unescapeHTML(this.payload.body)
 			: null;
 
 		this.attachments = (payload.attachments || []).map((item) => {
-			const type = item.type;
+			const { type } = item;
 			const attachment = item[type];
 
 			switch (type) {
-				case 'gift':
-					return new GiftAttachment(attachment, this.vk);
-				case 'wall':
-					return new WallAttachment(attachment, this.vk);
-				case 'link':
-					return new LinkAttachment(attachment, this.vk);
-				case 'photo':
-					return new PhotoAttachment(attachment, this.vk);
-				case 'audio':
-					return new AudioAttachment(attachment, this.vk);
-				case 'video':
-					return new VideoAttachment(attachment, this.vk);
-				case 'market':
-					return new MarketAttachment(attachment, this.vk);
-				case 'sticker':
-					return new StickerAttachment(attachment, this.vk);
-				case 'doc':
-					return new DocumentAttachment(attachment, this.vk);
-				case 'wall_reply':
-					return new WallReplyAttachment(attachment, this.vk);
-				case 'market_album':
-					return new MarketAlbumAttachment(attachment, this.vk);
-				default:
-					return false;
+			case 'gift':
+				return new GiftAttachment(attachment, this.vk);
+			case 'wall':
+				return new WallAttachment(attachment, this.vk);
+			case 'link':
+				return new LinkAttachment(attachment, this.vk);
+			case 'photo':
+				return new PhotoAttachment(attachment, this.vk);
+			case 'audio':
+				return new AudioAttachment(attachment, this.vk);
+			case 'video':
+				return new VideoAttachment(attachment, this.vk);
+			case 'market':
+				return new MarketAttachment(attachment, this.vk);
+			case 'sticker':
+				return new StickerAttachment(attachment, this.vk);
+			case 'doc':
+				return new DocumentAttachment(attachment, this.vk);
+			case 'wall_reply':
+				return new WallReplyAttachment(attachment, this.vk);
+			case 'market_album':
+				return new MarketAlbumAttachment(attachment, this.vk);
+			default:
+				return false;
 			}
 		})
 		.filter(Boolean);
 
-		const subTypes = attachmentsTypes.filter((type) => (
-			this.attachments.some((attachment) => (
+		const subTypes = attachmentsTypes.filter(type => (
+			this.attachments.some(attachment => (
 				attachment.type === type
 			))
 		));
@@ -127,12 +125,12 @@ export default class MessageContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	hasAttachments (type = null) {
+	hasAttachments(type = null) {
 		if (type === null) {
 			return this.attachments.length > 0;
 		}
 
-		return this.attachments.some((attachment) => (
+		return this.attachments.some(attachment => (
 			attachment.type === type
 		));
 	}
@@ -142,7 +140,7 @@ export default class MessageContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	hasText () {
+	hasText() {
 		return this.text !== null;
 	}
 
@@ -151,7 +149,7 @@ export default class MessageContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	hasForwards () {
+	hasForwards() {
 		return 'fwd_messages' in this.payload;
 	}
 
@@ -160,7 +158,7 @@ export default class MessageContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isDM () {
+	isDM() {
 		return this.form.type === 'dm';
 	}
 
@@ -169,7 +167,7 @@ export default class MessageContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isChat () {
+	isChat() {
 		return this.form.type === 'chat';
 	}
 
@@ -178,7 +176,7 @@ export default class MessageContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isGroup () {
+	isGroup() {
 		return this.form.type === 'group';
 	}
 
@@ -187,7 +185,7 @@ export default class MessageContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isEvent () {
+	isEvent() {
 		return this.isChat() && Boolean(this.payload.action);
 	}
 
@@ -196,7 +194,7 @@ export default class MessageContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isOutbox () {
+	isOutbox() {
 		return Boolean(this.payload.out);
 	}
 
@@ -205,7 +203,7 @@ export default class MessageContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isInbox () {
+	isInbox() {
 		return !this.isOutbox();
 	}
 
@@ -214,7 +212,7 @@ export default class MessageContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isDeleted () {
+	isDeleted() {
 		return Boolean(this.payload.deleted);
 	}
 
@@ -223,7 +221,7 @@ export default class MessageContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isRead () {
+	isRead() {
 		return Boolean(this.payload.read_state);
 	}
 
@@ -232,7 +230,7 @@ export default class MessageContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isImportant () {
+	isImportant() {
 		return Boolean(this.payload.important);
 	}
 
@@ -241,7 +239,7 @@ export default class MessageContext extends Context {
 	 *
 	 * @return {?number}
 	 */
-	getId () {
+	getId() {
 		return this.payload.id;
 	}
 
@@ -250,7 +248,7 @@ export default class MessageContext extends Context {
 	 *
 	 * @return {?number}
 	 */
-	getUserId () {
+	getUserId() {
 		return this.payload.user_id;
 	}
 
@@ -259,7 +257,7 @@ export default class MessageContext extends Context {
 	 *
 	 * @return {?number}
 	 */
-	getChatId () {
+	getChatId() {
 		if (!this.isChat()) {
 			return null;
 		}
@@ -272,7 +270,7 @@ export default class MessageContext extends Context {
 	 *
 	 * @return {number}
 	 */
-	getDate () {
+	getDate() {
 		return this.payload.date;
 	}
 
@@ -281,7 +279,7 @@ export default class MessageContext extends Context {
 	 *
 	 * @return {?string}
 	 */
-	getText () {
+	getText() {
 		return this.text;
 	}
 
@@ -290,7 +288,7 @@ export default class MessageContext extends Context {
 	 *
 	 * @return {Object}
 	 */
-	getFrom () {
+	getFrom() {
 		return this.from;
 	}
 
@@ -301,12 +299,12 @@ export default class MessageContext extends Context {
 	 *
 	 * @return {Array}
 	 */
-	getAttachments (type = null) {
+	getAttachments(type = null) {
 		if (type === null) {
 			return this.attachments;
 		}
 
-		return this.attachments.filter((attachment) => (
+		return this.attachments.filter(attachment => (
 			attachment.type === type
 		));
 	}
@@ -319,7 +317,7 @@ export default class MessageContext extends Context {
 	 *
 	 * @return {Promise}
 	 */
-	send (text, params = {}) {
+	send(text, params = {}) {
 		if (typeof text !== 'object') {
 			params.message = text;
 		} else {
@@ -339,7 +337,7 @@ export default class MessageContext extends Context {
 	 *
 	 * @return {Promise}
 	 */
-	reply (text, params = {}) {
+	reply(text, params = {}) {
 		if (typeof text !== 'object') {
 			params.message = text;
 		} else {
@@ -358,7 +356,7 @@ export default class MessageContext extends Context {
 	 *
 	 * @return {Promise}
 	 */
-	sendSticker (id) {
+	sendSticker(id) {
 		return this.send({
 			sticker_id: id
 		});
@@ -372,7 +370,7 @@ export default class MessageContext extends Context {
 	 *
 	 * @return {Promise}
 	 */
-	async sendPhoto (source, params = {}) {
+	async sendPhoto(source, params = {}) {
 		const attachment = await this.vk.upload.message({ source });
 
 		return await this.send({
@@ -386,7 +384,7 @@ export default class MessageContext extends Context {
 	 *
 	 * @return {Promise}
 	 */
-	setActivity () {
+	setActivity() {
 		return this.vk.api.messages.setActivity({
 			peer_id: this.from.id,
 			type: 'typing'
@@ -400,7 +398,7 @@ export default class MessageContext extends Context {
 	 *
 	 * @return {Promise}
 	 */
-	renameChat (title) {
+	renameChat(title) {
 		if (!this.isChat()) {
 			throw new Error('This is not a chat');
 		}
@@ -419,7 +417,7 @@ export default class MessageContext extends Context {
 	 *
 	 * @return {Promise}
 	 */
-	newChatPhoto (source, params = {}) {
+	newChatPhoto(source, params = {}) {
 		if (!this.isChat()) {
 			throw new Error('This is not a chat');
 		}
@@ -435,7 +433,7 @@ export default class MessageContext extends Context {
 	 *
 	 * @return {Promise}
 	 */
-	removeChatPhoto () {
+	removeChatPhoto() {
 		if (!this.isChat()) {
 			throw new Error('This is not a chat');
 		}
@@ -452,7 +450,7 @@ export default class MessageContext extends Context {
 	 *
 	 * @return {Promise}
 	 */
-	inviteUser (id = this.payload.action_mid) {
+	inviteUser(id = this.payload.action_mid) {
 		return this.vk.api.messages.removeChatUser({
 			chat_id: this.payload.chat_id,
 			user_id: id
@@ -466,7 +464,7 @@ export default class MessageContext extends Context {
 	 *
 	 * @return {Promise}
 	 */
-	kickUser (id = this.payload.action_mid) {
+	kickUser(id = this.payload.action_mid) {
 		return this.vk.api.messages.removeChatUser({
 			chat_id: this.payload.chat_id,
 			user_id: id

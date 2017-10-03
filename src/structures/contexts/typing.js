@@ -1,5 +1,3 @@
-'use strict';
-
 import Context from './context';
 
 import { CHAT_PEER } from '../../util/constants';
@@ -11,7 +9,7 @@ export default class TypingContext extends Context {
 	 * @param {VK}    vk
 	 * @param {Array} update
 	 */
-	constructor (vk, [eventId, user, extra]) {
+	constructor(vk, [eventId, user, extra]) {
 		super(vk);
 
 		const isChat = eventId === 62;
@@ -40,7 +38,7 @@ export default class TypingContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isDM () {
+	isDM() {
 		return this.subTypes.includes('typing_dm');
 	}
 
@@ -49,7 +47,7 @@ export default class TypingContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isChat () {
+	isChat() {
 		return this.subTypes.includes('typing_chat');
 	}
 
@@ -58,7 +56,7 @@ export default class TypingContext extends Context {
 	 *
 	 * @return {number}
 	 */
-	getUserId () {
+	getUserId() {
 		return this.payload.user_id;
 	}
 
@@ -67,7 +65,7 @@ export default class TypingContext extends Context {
 	 *
 	 * @return {?number}
 	 */
-	getChatId () {
+	getChatId() {
 		return this.payload.chat_id;
 	}
 }

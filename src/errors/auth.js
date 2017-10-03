@@ -1,6 +1,6 @@
 import VKError from './vk';
 
-export default class UploadError extends VKError {
+export default class AuthError extends VKError {
 	/**
 	 * Constructor
 	 *

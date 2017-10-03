@@ -83,61 +83,74 @@ export default class Updates {
 		switch (update[0]) {
 			case 1:
 			case 2:
-			case 3:
+			case 3: {
 				return this._runHandlers(
 					new MessageFlagsContext(
 						this.vk,
 						update
 					)
 				);
-			case 4:
+			}
+
+			case 4: {
 				return this._runHandlers(
 					new MessageContext(
 						this.vk,
 						transformMessage(update)
 					)
 				);
+			}
+
 			case 6:
-			case 7:
+			case 7: {
 				return this._runHandlers(
 					new ReadMessagesContext(
 						this.vk,
 						update
 					)
 				);
+			}
+
 			case 8:
-			case 9:
+			case 9: {
 				return this._runHandlers(
 					new UserOnlineContext(
 						this.vk,
 						update
 					)
 				);
+			}
+
 			case 10:
 			case 11:
-			case 12:
+			case 12: {
 				return this._runHandlers(
 					new DialogFlagsContext(
 						this.vk,
 						update
 					)
 				);
+			}
+
 			case 13:
-			case 14:
+			case 14: {
 				return this._runHandlers(
 					new RemovedMessagesContext(
 						this.vk,
 						update
 					)
 				);
+			}
+
 			case 61:
-			case 62:
+			case 62: {
 				return this._runHandlers(
 					new TypingContext(
 						this.vk,
 						update
 					)
 				);
+			}
 		}
 	}
 
@@ -149,8 +162,18 @@ export default class Updates {
 	handleWebhookUpdate (update) {
 		console.log('Webhook', update);
 
-		if (['message_new', 'message_reply'].includes(update.type)) {
-			return this._runHandlers(new MessageContext(this.vk, update));
+		switch (update.type) {
+			case 'message_new':
+			case 'message_reply': {
+				return this._runHandlers(new MessageContext(this.vk, update));
+			}
+
+			case 'photo_new':
+			case 'audio_new':
+			case 'video_new': {
+				/* TODO: I'll do it later */
+				return;
+			}
 		}
 	}
 

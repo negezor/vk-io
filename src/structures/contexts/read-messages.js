@@ -1,5 +1,3 @@
-'use strict';
-
 import Context from './context';
 
 export default class ReadMessagesContext extends Context {
@@ -9,7 +7,7 @@ export default class ReadMessagesContext extends Context {
 	 * @param {VK}    vk
 	 * @param {Array} update
 	 */
-	constructor (vk, [eventId, peer, id]) {
+	constructor(vk, [eventId, peer, id]) {
 		super(vk);
 
 		this.payload = {
@@ -30,7 +28,7 @@ export default class ReadMessagesContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isInbox () {
+	isInbox() {
 		return this.subTypes.includes('read_inbox_messages');
 	}
 
@@ -39,7 +37,7 @@ export default class ReadMessagesContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isOutbox () {
+	isOutbox() {
 		return this.subTypes.includes('read_oubox_messages');
 	}
 
@@ -48,7 +46,7 @@ export default class ReadMessagesContext extends Context {
 	 *
 	 * @return {number}
 	 */
-	getId () {
+	getId() {
 		return this.payload.id;
 	}
 
@@ -57,7 +55,7 @@ export default class ReadMessagesContext extends Context {
 	 *
 	 * @return {number}
 	 */
-	getPeerId () {
+	getPeerId() {
 		return this.payload.peer_id;
 	}
 }

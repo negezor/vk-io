@@ -1,0 +1,29 @@
+{
+	"env": {
+		"es6": true,
+        "node": true
+	},
+    "extends": "airbnb-base",
+	"parserOptions": {
+		"ecmaVersion": 2017
+	},
+	"rules": {
+		"class-methods-use-this": 0,
+		"no-restricted-syntax": 0,
+		"no-param-reassign": 0,
+		"no-await-in-loop": 0,
+		"no-return-await": 0,
+		"no-unused-vars": 0,
+		"comma-dangle": 0,
+		"no-continue": 0,
+		"no-tabs": 0,
+		"indent": [
+			"error",
+			"tab"
+		],
+		"linebreak-style": [
+			"error",
+			"windows"
+		]
+	}
+}

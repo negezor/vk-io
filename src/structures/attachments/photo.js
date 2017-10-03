@@ -1,5 +1,3 @@
-'use strict';
-
 import Attachment from './attachment';
 
 import {
@@ -15,7 +13,7 @@ export default class PhotoAttachment extends Attachment {
 	 * @param {Object} payload
 	 * @param {VK}     vk
 	 */
-	constructor (payload, vk) {
+	constructor(payload, vk) {
 		super('photo', payload.owner_id, payload.id, payload.access_key);
 
 		this.vk = vk;
@@ -29,13 +27,13 @@ export default class PhotoAttachment extends Attachment {
 	 *
 	 * @return {Promise}
 	 */
-	async getAttachmentPayload () {
-		const photos = await this.vk.api.photos.getById({
+	async getAttachmentPayload() {
+		const [photo] = await this.vk.api.photos.getById({
 			photos: `${this.owner}_${this.id}`,
 			extended: 0
 		});
 
-		this.payload = photos[0];
+		this.payload = photo;
 
 		if ('access_key' in this.payload) {
 			this.accessKey = this.payload.access_key;
@@ -49,7 +47,7 @@ export default class PhotoAttachment extends Attachment {
 	 *
 	 * @return {?number}
 	 */
-	getUserId () {
+	getUserId() {
 		return this.payload.user_id || null;
 	}
 
@@ -58,7 +56,7 @@ export default class PhotoAttachment extends Attachment {
 	 *
 	 * @return {?number}
 	 */
-	getAlbumId () {
+	getAlbumId() {
 		return this.payload.album_id || null;
 	}
 
@@ -67,7 +65,7 @@ export default class PhotoAttachment extends Attachment {
 	 *
 	 * @return {?string}
 	 */
-	getText () {
+	getText() {
 		return this.payload.text || null;
 	}
 
@@ -76,7 +74,7 @@ export default class PhotoAttachment extends Attachment {
 	 *
 	 * @return {?number}
 	 */
-	getDate () {
+	getDate() {
 		return this.payload.date || null;
 	}
 
@@ -85,7 +83,7 @@ export default class PhotoAttachment extends Attachment {
 	 *
 	 * @return {?number}
 	 */
-	getHeight () {
+	getHeight() {
 		return this.payload.height || null;
 	}
 
@@ -94,7 +92,7 @@ export default class PhotoAttachment extends Attachment {
 	 *
 	 * @return {?number}
 	 */
-	getWidth () {
+	getWidth() {
 		return this.payload.width || null;
 	}
 
@@ -104,7 +102,7 @@ export default class PhotoAttachment extends Attachment {
 	 *
 	 * @return {?string}
 	 */
-	getSmallPhoto () {
+	getSmallPhoto() {
 		if (!this._isFilled) {
 			return null;
 		}
@@ -118,7 +116,7 @@ export default class PhotoAttachment extends Attachment {
 	 *
 	 * @return {?string}
 	 */
-	getMediumPhoto () {
+	getMediumPhoto() {
 		if (!this._isFilled) {
 			return null;
 		}
@@ -132,11 +130,11 @@ export default class PhotoAttachment extends Attachment {
 	 *
 	 * @return {?string}
 	 */
-	getLargePhoto () {
+	getLargePhoto() {
 		if (!this._isFilled) {
 			return null;
 		}
 
 		return getLargePhoto(this.payload);
 	}
-};
+}

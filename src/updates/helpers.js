@@ -1,5 +1,3 @@
-'use strict';
-
 const lt = /&lt;/g;
 const qt = /&gt;/g;
 const br = /<br>/g;
@@ -13,11 +11,11 @@ const quot = /&quot;/g;
  *
  * @return {string}
  */
-export const unescapeHTML = (text) => (
+export const unescapeHTML = text => (
 	text
-	.replace(lt, '<')
-	.replace(qt, '>')
-	.replace(br, '\n')
-	.replace(amp, '&')
-	.replace(quot, '"')
+		.replace(lt, '<')
+		.replace(qt, '>')
+		.replace(br, '\n')
+		.replace(amp, '&')
+		.replace(quot, '"')
 );

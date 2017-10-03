@@ -1,6 +1,4 @@
-'use strict';
-
-import { version } from '../../package';
+import { version } from '../../package.json';
 
 /**
  * VK API version
@@ -16,6 +14,14 @@ export const API_VERSION = '5.68';
  *
  * @property [token]               Access token
  * @property [lang]                The return data language
+ *
+ * @property [login]               User login (phone number or email)
+ * @property [phone]               User phone number
+ * @property [password]            User password
+ *
+ * @property [app]                 Application ID
+ * @property [key]                 Secret application key
+ * @property [scope]               List of permissions
  *
  * @property [agent]               HTTPS agent
  *
@@ -38,6 +44,14 @@ export const API_VERSION = '5.68';
 export const defaultOptions = {
 	token: null,
 	lang: null,
+
+	login: null,
+	phone: null,
+	password: null,
+
+	app: null,
+	key: null,
+	scope: 'all',
 
 	agent: null,
 
@@ -75,6 +89,21 @@ export const defaultExtensions = {
  * @type {number}
  */
 export const CHAT_PEER = 2e9;
+
+/**
+ * Blank html redirect
+ *
+ * @type {string}
+ */
+export const CALLBACK_BLANK = 'https://oauth.vk.com/blank.html';
+
+/**
+ * User-Agent for standalone auth
+ *
+ * @type {string}
+ */
+export const STANDALONE_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
++ ' AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36';
 
 /**
  * API error codes
@@ -120,3 +149,41 @@ export const apiErrors = {
 export const updatesErrors = {
 	NEED_RESTART: 'NEED_RESTART'
 };
+
+/**
+ * Auth error codes
+ *
+ * @type {Object}
+ */
+export const authErrors = {
+	PAGE_BLOCKED: 'PAGE_BLOCKED',
+	INVALID_PHONE_NUMBER: 'INVALID_PHONE_NUMBER',
+	AUTHORIZATION_FAILED: 'AUTHORIZATION_FAILED',
+	MISSING_CAPTCHA_HANDLER: 'MISSING_CAPTCHA_HANDLER'
+};
+
+/**
+ * List of permissions and their bit mask
+ *
+ * @type {Map}
+ */
+export const authScope = new Map([
+	['notify', 1],
+	['friends', 2],
+	['photos', 4],
+	['audio', 8],
+	['video', 16],
+	['pages', 128],
+	['status', 1024],
+	['notes', 2048],
+	['messages', 4096],
+	['wall', 8192],
+	['ads', 32768],
+	['offline', 65536],
+	['docs', 131072],
+	['groups', 262144],
+	['notifications', 524288],
+	['stats', 1048576],
+	['email', 4194304],
+	['market', 134217728]
+]);

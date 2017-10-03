@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * List methods VK
  * Last updated 18.08.2017

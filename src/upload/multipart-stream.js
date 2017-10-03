@@ -1,5 +1,3 @@
-'use strict';
-
 import { PassThrough } from 'stream';
 import { SandwichStream } from 'sandwich-stream';
 
@@ -13,7 +11,7 @@ export default class MultipartStream extends SandwichStream {
 	 *
 	 * @param {string} boundary
 	 */
-	constructor (boundary = Math.random().toString(36).slice(2)) {
+	constructor(boundary = Math.random().toString(36).slice(2)) {
 		super({
 			head: `--${boundary}${CRNL}`,
 			tail: `${CRNL}--${boundary}--`,
@@ -28,7 +26,7 @@ export default class MultipartStream extends SandwichStream {
 	 *
 	 * @return {string}
 	 */
-	getBoundary () {
+	getBoundary() {
 		return this.boundary;
 	}
 
@@ -37,8 +35,8 @@ export default class MultipartStream extends SandwichStream {
 	 *
 	 * @param {Object} part
 	 */
-	addPart (part = {}) {
-		const partStream = new PassThrough;
+	addPart(part = {}) {
+		const partStream = new PassThrough();
 
 		if ('headers' in part) {
 			for (const [key, header] of Object.entries(part.headers)) {
@@ -64,7 +62,7 @@ export default class MultipartStream extends SandwichStream {
 	 * @param {mixed}  body
 	 * @param {Object} options
 	 */
-	append (field, body, { filename = null, headers = {} }) {
+	append(field, body, { filename = null, headers = {} }) {
 		let header = `form-data; name="${field}"`;
 
 		if (filename !== null) {

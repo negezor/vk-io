@@ -1,5 +1,3 @@
-'use strict';
-
 export default class GiftAttachment {
 	/**
 	 * Constructor
@@ -7,7 +5,7 @@ export default class GiftAttachment {
 	 * @param {Object} payload
 	 * @param {VK}     vk
 	 */
-	constructor (payload, vk) {
+	constructor(payload, vk) {
 		this.payload = payload;
 
 		this.type = 'gift';

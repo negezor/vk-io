@@ -1,5 +1,3 @@
-'use strict';
-
 import Attachment from './attachment';
 
 export default class VideoAttachment extends Attachment {
@@ -9,7 +7,7 @@ export default class VideoAttachment extends Attachment {
 	 * @param {Object} payload
 	 * @param {VK}     vk
 	 */
-	constructor (payload, vk) {
+	constructor(payload, vk) {
 		super('video', payload.owner_id, payload.id, payload.access_key);
 
 		this.vk = vk;
@@ -23,13 +21,15 @@ export default class VideoAttachment extends Attachment {
 	 *
 	 * @return {Promise}
 	 */
-	async getAttachmentPayload () {
-		const videos = await this.vk.api.video.get({
+	async getAttachmentPayload() {
+		const { items } = await this.vk.api.video.get({
 			videos: `${this.owner}_${this.id}`,
 			extended: 0
 		});
 
-		this.payload = videos.items[0];
+		const [video] = items;
+
+		this.payload = video;
 
 		if ('access_key' in this.payload) {
 			this.accessKey = this.payload.access_key;

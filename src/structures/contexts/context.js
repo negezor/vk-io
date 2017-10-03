@@ -1,12 +1,10 @@
-'use strict';
-
 import { inspect } from 'util';
 
 export default class Context {
 	/**
 	 * Constructor
 	 */
-	constructor (vk) {
+	constructor(vk) {
 		this.vk = vk;
 	}
 
@@ -15,7 +13,7 @@ export default class Context {
 	 *
 	 * @return {string}
 	 */
-	get [Symbol.toStringTag] () {
+	get [Symbol.toStringTag]() {
 		return this.constructor.name;
 	}
 
@@ -27,12 +25,9 @@ export default class Context {
 	 *
 	 * @return {string}
 	 */
-	[inspect.custom] (depth, options) {
+	[inspect.custom](depth, options) {
 		const { name } = this.constructor;
 
-		return (
-			`${options.stylize(name, 'special')} `
-			+ inspect({ ...this, vk: '<VK>' }, options)
-		);
+		return `${options.stylize(name, 'special')} ${inspect({ ...this, vk: '<VK>' }, options)}`;
 	}
 }

@@ -1,8 +1,7 @@
-'use strict';
-
 import { Agent } from 'https';
 
 import API from './api';
+import Auth from './auth';
 import Upload from './upload';
 import Updates from './updates';
 import { defaultOptions } from './util/constants';
@@ -20,7 +19,7 @@ export class VK {
 	 *
 	 * @param {Object} options
 	 */
-	constructor (options = {}) {
+	constructor(options = {}) {
 		this.options = {
 			...defaultOptions,
 
@@ -31,10 +30,11 @@ export class VK {
 		};
 
 		this.api = new API(this);
+		this.auth = new Auth(this);
 		this.upload = new Upload(this);
 		this.updates = new Updates(this);
 
-		this._captchaHandler = null;
+		this.captchaHandler = null;
 	}
 
 	/**
@@ -42,7 +42,7 @@ export class VK {
 	 *
 	 * @return {string}
 	 */
-	get [Symbol.toStringTag] () {
+	get [Symbol.toStringTag]() {
 		return 'VK';
 	}
 
@@ -53,7 +53,7 @@ export class VK {
 	 *
 	 * @return {this}
 	 */
-	setOptions (options) {
+	setOptions(options) {
 		Object.assign(this.options, options);
 
 		return this;
@@ -66,7 +66,7 @@ export class VK {
 	 *
 	 * @return {this}
 	 */
-	setToken (token) {
+	setToken(token) {
 		this.options.token = token;
 
 		return this;
@@ -77,7 +77,7 @@ export class VK {
 	 *
 	 * @return {?string}
 	 */
-	getToken () {
+	getToken() {
 		return this.options.token;
 	}
 
@@ -88,8 +88,8 @@ export class VK {
 	 *
 	 * @return {this}
 	 */
-	setCaptchaHandler (handler) {
-		this._captchaHandler = handler;
+	setCaptchaHandler(handler) {
+		this.captchaHandler = handler;
 
 		return this;
 	}

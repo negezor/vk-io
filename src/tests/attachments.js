@@ -1,5 +1,3 @@
-'use strict';
-
 import { assert, expect } from 'chai';
 
 import {
@@ -21,20 +19,20 @@ import {
 const { NODE_ENV = 'development' } = process.env;
 
 describe('Attachments', () => {
-	it('the main class must be equivalent to a string', function () {
+	it('the main class must be equivalent to a string', () => {
 		const attachment = new Attachment('photo', 1234, 5678);
 
 		expect(String(attachment)).to.equal('photo1234_5678');
 	});
 
-	it('the main class must be equivalent to a string with access_key', function () {
+	it('the main class must be equivalent to a string with access_key', () => {
 		const attachment = new Attachment('photo', 1234, 5678, 'ACCESS_KEY');
 
 		expect(String(attachment)).to.equal('photo1234_5678_ACCESS_KEY');
 	});
 
 	describe('should equivalent to attaching to a string', () => {
-		it('wall', function () {
+		it('wall', () => {
 			const attachment = new WallAttachment({
 				id: 4567,
 				owner_id: 1234
@@ -43,7 +41,7 @@ describe('Attachments', () => {
 			expect(String(attachment)).to.equal('wall1234_4567');
 		});
 
-		it('photo', function () {
+		it('photo', () => {
 			const attachment = new PhotoAttachment({
 				id: 4567,
 				owner_id: 1234
@@ -52,7 +50,7 @@ describe('Attachments', () => {
 			expect(String(attachment)).to.equal('photo1234_4567');
 		});
 
-		it('audio', function () {
+		it('audio', () => {
 			const attachment = new AudioAttachment({
 				id: 4567,
 				owner_id: 1234
@@ -61,7 +59,7 @@ describe('Attachments', () => {
 			expect(String(attachment)).to.equal('audio1234_4567');
 		});
 
-		it('video', function () {
+		it('video', () => {
 			const attachment = new VideoAttachment({
 				id: 4567,
 				owner_id: 1234
@@ -70,7 +68,7 @@ describe('Attachments', () => {
 			expect(String(attachment)).to.equal('video1234_4567');
 		});
 
-		it('market', function () {
+		it('market', () => {
 			const attachment = new MarketAttachment({
 				id: 4567,
 				owner_id: 1234
@@ -79,7 +77,7 @@ describe('Attachments', () => {
 			expect(String(attachment)).to.equal('market1234_4567');
 		});
 
-		it('document', function () {
+		it('document', () => {
 			const attachment = new DocumentAttachment({
 				id: 4567,
 				owner_id: 1234
@@ -88,7 +86,7 @@ describe('Attachments', () => {
 			expect(String(attachment)).to.equal('doc1234_4567');
 		});
 
-		it('market album', function () {
+		it('market album', () => {
 			const attachment = new MarketAlbumAttachment({
 				id: 4567,
 				owner_id: 1234

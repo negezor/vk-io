@@ -1,5 +1,3 @@
-'use strict';
-
 import VKError from './vk';
 
 export default class ExecuteError extends VKError {
@@ -8,7 +6,7 @@ export default class ExecuteError extends VKError {
 	 *
 	 * @param {Object} payload
 	 */
-	constructor (payload) {
+	constructor(payload) {
 		const code = Number(payload.error_code);
 		const message = `Code №${code} - ${payload.error_msg}`;
 

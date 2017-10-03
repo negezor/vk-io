@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * General error class
  *
@@ -11,7 +9,7 @@ export default class VKError extends Error {
 	 *
 	 * @param {Object} payload
 	 */
-	constructor ({ code, message }) {
+	constructor({ code, message }) {
 		super(message);
 
 		this.code = code;
@@ -26,7 +24,7 @@ export default class VKError extends Error {
 	 *
 	 * @return {string}
 	 */
-	get [Symbol.toStringTag] () {
+	get [Symbol.toStringTag]() {
 		return this.constructor.name;
 	}
 
@@ -35,7 +33,7 @@ export default class VKError extends Error {
 	 *
 	 * @return {Object}
 	 */
-	toJSON () {
+	toJSON() {
 		const json = {};
 
 		for (const key of Object.getOwnPropertyNames(this)) {
@@ -44,4 +42,4 @@ export default class VKError extends Error {
 
 		return json;
 	}
-};
+}

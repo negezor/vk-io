@@ -1,5 +1,3 @@
-'use strict';
-
 import Attachment from './attachment';
 
 import GiftAttachment from './gift';

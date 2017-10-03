@@ -1,5 +1,3 @@
-'use strict';
-
 import Context from './context';
 
 export default class MessageFlagsContext extends Context {
@@ -9,7 +7,7 @@ export default class MessageFlagsContext extends Context {
 	 * @param {VK}    vk
 	 * @param {Array} update
 	 */
-	constructor (vk, [eventId, id, flags, peer]) {
+	constructor(vk, [eventId, id, flags, peer]) {
 		super(vk);
 
 		this.payload = {
@@ -20,6 +18,7 @@ export default class MessageFlagsContext extends Context {
 
 		this.type = 'message_flags';
 		this.subTypes = [
+			// eslint-disable-next-line no-nested-ternary
 			eventId === 1
 				? 'message_replace_flags'
 				: eventId === 2
@@ -33,7 +32,7 @@ export default class MessageFlagsContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isUnread () {
+	isUnread() {
 		return Boolean(this.payload.flags & 1);
 	}
 
@@ -42,7 +41,7 @@ export default class MessageFlagsContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isOutbox () {
+	isOutbox() {
 		return Boolean(this.payload.flags & 2);
 	}
 
@@ -51,7 +50,7 @@ export default class MessageFlagsContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isReplied () {
+	isReplied() {
 		return Boolean(this.payload.flags & 4);
 	}
 
@@ -60,7 +59,7 @@ export default class MessageFlagsContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isImportant () {
+	isImportant() {
 		return Boolean(this.payload.flags & 8);
 	}
 
@@ -69,7 +68,7 @@ export default class MessageFlagsContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isChat () {
+	isChat() {
 		return Boolean(this.payload.flags & 16);
 	}
 
@@ -78,7 +77,7 @@ export default class MessageFlagsContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isFriends () {
+	isFriends() {
 		return Boolean(this.payload.flags & 32);
 	}
 
@@ -87,7 +86,7 @@ export default class MessageFlagsContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isSpam () {
+	isSpam() {
 		return Boolean(this.payload.flags & 64);
 	}
 
@@ -96,7 +95,7 @@ export default class MessageFlagsContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isDeleted () {
+	isDeleted() {
 		return Boolean(this.payload.flags & 128);
 	}
 
@@ -105,7 +104,7 @@ export default class MessageFlagsContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isFixed () {
+	isFixed() {
 		return Boolean(this.payload.flags & 256);
 	}
 
@@ -114,7 +113,7 @@ export default class MessageFlagsContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isMedia () {
+	isMedia() {
 		return Boolean(this.payload.flags & 512);
 	}
 
@@ -123,7 +122,7 @@ export default class MessageFlagsContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isHidden () {
+	isHidden() {
 		return Boolean(this.payload.flags & 65536);
 	}
 
@@ -132,7 +131,7 @@ export default class MessageFlagsContext extends Context {
 	 *
 	 * @return {number}
 	 */
-	getId () {
+	getId() {
 		return this.payload.id;
 	}
 
@@ -141,7 +140,7 @@ export default class MessageFlagsContext extends Context {
 	 *
 	 * @return {number}
 	 */
-	getPeerId () {
+	getPeerId() {
 		return this.payload.peer_id;
 	}
 
@@ -150,7 +149,7 @@ export default class MessageFlagsContext extends Context {
 	 *
 	 * @return {number}
 	 */
-	getFlags () {
+	getFlags() {
 		return this.payload.flags;
 	}
 }

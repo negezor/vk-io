@@ -1,5 +1,3 @@
-'use strict';
-
 import { getExecuteMethod } from '../util/helpers';
 
 export default class Request {
@@ -9,7 +7,7 @@ export default class Request {
 	 * @param {string} method
 	 * @param {Object} params
 	 */
-	constructor (method, params = {}) {
+	constructor(method, params = {}) {
 		this.method = method;
 		this.params = params;
 
@@ -24,7 +22,7 @@ export default class Request {
 	 *
 	 * @return {string}
 	 */
-	get [Symbol.toStringTag] () {
+	get [Symbol.toStringTag]() {
 		return 'Request';
 	}
 
@@ -33,7 +31,7 @@ export default class Request {
 	 *
 	 * @return {number}
 	 */
-	addAttempt () {
+	addAttempt() {
 		if (!('attempts' in this)) {
 			this.attempts = 0;
 		}
@@ -46,7 +44,7 @@ export default class Request {
 	 *
 	 * @return {string}
 	 */
-	toString () {
+	toString() {
 		return getExecuteMethod(this.method, this.params);
 	}
 }

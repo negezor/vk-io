@@ -1,5 +1,3 @@
-'use strict';
-
 import Attachment from './attachment';
 
 export default class MarketAttachment extends Attachment {
@@ -9,7 +7,7 @@ export default class MarketAttachment extends Attachment {
 	 * @param {Object} payload
 	 * @param {VK}     vk
 	 */
-	constructor (payload, vk) {
+	constructor(payload, vk) {
 		super('market', payload.owner_id, payload.id, payload.access_key);
 
 		this.vk = vk;
@@ -23,13 +21,13 @@ export default class MarketAttachment extends Attachment {
 	 *
 	 * @return {Promise}
 	 */
-	async getAttachmentPayload () {
-		const markets = await this.vk.api.market.getById({
+	async getAttachmentPayload() {
+		const [market] = await this.vk.api.market.getById({
 			item_ids: `${this.owner}_${this.id}`,
 			extended: 0
 		});
 
-		this.payload = markets[0];
+		this.payload = market;
 
 		if ('access_key' in this.payload) {
 			this.accessKey = this.payload.access_key;

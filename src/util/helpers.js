@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * Returns method for execute
  *
@@ -19,7 +17,7 @@ export const getExecuteMethod = (method, params = {}) => (
  *
  * @return {string}
  */
-export const getChainReturn = (methods) => (
+export const getChainReturn = methods => (
 	`return [${methods.join(',')}];`
 );
 
@@ -34,10 +32,14 @@ export const resolveExecuteTask = (tasks, result) => {
 
 	result.response.forEach((response, i) => {
 		if (response !== false) {
-			return tasks[i].resolve(response);
+			tasks[i].resolve(response);
+
+			return;
 		}
 
-		tasks[i].reject(result.errors[errors++]);
+		tasks[i].reject(result.errors[errors]);
+
+		errors += 1;
 	});
 };
 
@@ -47,7 +49,7 @@ export const resolveExecuteTask = (tasks, result) => {
  * @return {number}
  */
 export const getRandomId = () => (
-	(Math.floor(Math.random() * 1e4) + '') + Date.now()
+	`${Math.floor(Math.random() * 1e4)}${Date.now()}`
 );
 
 /**
@@ -57,7 +59,7 @@ export const getRandomId = () => (
  *
  * @return {string}
  */
-export const getSmallPhoto = (photo) => (
+export const getSmallPhoto = photo => (
 	photo.photo_130 || photo.photo_75
 );
 
@@ -68,7 +70,7 @@ export const getSmallPhoto = (photo) => (
  *
  * @return {string}
  */
-export const getMediumPhoto = (photo) => (
+export const getMediumPhoto = photo => (
 	photo.photo_807 || photo.photo_604 || getSmallPhoto(photo)
 );
 
@@ -79,7 +81,7 @@ export const getMediumPhoto = (photo) => (
  *
  * @return {string}
  */
-export const getLargePhoto = (photo) => (
+export const getLargePhoto = photo => (
 	photo.photo_2560 || photo.photo_1280 || getMediumPhoto(photo)
 );
 
@@ -90,6 +92,6 @@ export const getLargePhoto = (photo) => (
  *
  * @return {Promise}
  */
-export const delay = (delayed) => (
-	new Promise((resolve) => setTimeout(resolve, delayed))
+export const delay = delayed => (
+	new Promise(resolve => setTimeout(resolve, delayed))
 );
