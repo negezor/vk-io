@@ -149,11 +149,3 @@ export default class ImplicitFlow {
 		});
 	}
 }
-
-var one = 1,
-	two = 2,
-	three = 3; // Плохо
-
-var one = 1;
-var two = 2;
-var three = 3; // Хорошо

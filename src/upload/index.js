@@ -616,8 +616,8 @@ export default class Upload {
 	 *
 	 * @return {Promise<Object>}
 	 */
-	storiesPhoto(params) {
-		return Promise.reject('Not yet');
+	async storiesPhoto(params) {
+		throw new Error('Not yet');
 	}
 
 	/**
@@ -627,8 +627,8 @@ export default class Upload {
 	 *
 	 * @return {Promise<Object>}
 	 */
-	storiesVideo(params) {
-		return Promise.reject('Not yet');
+	async storiesVideo(params) {
+		throw new Error('Not yet');
 	}
 
 	/**

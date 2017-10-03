@@ -13,7 +13,7 @@ export default class MarketAttachment extends Attachment {
 		this.vk = vk;
 		this.payload = payload;
 
-		this._isFilled = 'title' in payload && 'date' in payload;
+		this.filled = 'title' in payload && 'date' in payload;
 	}
 
 	/**
@@ -33,6 +33,6 @@ export default class MarketAttachment extends Attachment {
 			this.accessKey = this.payload.access_key;
 		}
 
-		this._isFilled = true;
+		this.filled = true;
 	}
 }

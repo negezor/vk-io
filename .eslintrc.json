@@ -16,6 +16,7 @@
 		"no-unused-vars": 0,
 		"comma-dangle": 0,
 		"no-continue": 0,
+		"no-bitwise": 0,
 		"no-tabs": 0,
 		"indent": [
 			"error",

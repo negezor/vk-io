@@ -17,7 +17,7 @@ export default class Attachment {
 
 		this.accessKey = accessKey;
 
-		this._isFilled = false;
+		this.filled = false;
 	}
 
 	/**
@@ -26,7 +26,7 @@ export default class Attachment {
 	 * @return {boolean}
 	 */
 	isFilled() {
-		return this._isFilled;
+		return this.filled;
 	}
 
 	/**
@@ -87,7 +87,7 @@ export default class Attachment {
 	[inspect.custom](depth, options) {
 		const { name } = this.constructor;
 
-		const payload = this._isFilled
+		const payload = this.filled
 			? ` ${inspect(this.payload, options)} `
 			: '';
 

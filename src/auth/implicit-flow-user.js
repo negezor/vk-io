@@ -59,6 +59,6 @@ export default class ImplicitFlowUser extends ImplicitFlow {
 	async run() {
 		const response = await super.run();
 
-		console.log('Получено!');
+		debug('auth with login & pass complete');
 	}
 }

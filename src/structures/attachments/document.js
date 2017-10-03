@@ -29,7 +29,7 @@ export default class DocumentAttachment extends Attachment {
 		this.vk = vk;
 		this.payload = payload;
 
-		this._isFilled = 'ext' in payload && 'date' in payload;
+		this.filled = 'ext' in payload && 'date' in payload;
 	}
 
 	/**
@@ -48,7 +48,7 @@ export default class DocumentAttachment extends Attachment {
 			this.accessKey = this.payload.access_key;
 		}
 
-		this._isFilled = true;
+		this.filled = true;
 	}
 
 	/**
@@ -57,7 +57,7 @@ export default class DocumentAttachment extends Attachment {
 	 * @return {?boolean}
 	 */
 	isText() {
-		if (!this._isFilled) {
+		if (!this.filled) {
 			return null;
 		}
 
@@ -70,7 +70,7 @@ export default class DocumentAttachment extends Attachment {
 	 * @return {?boolean}
 	 */
 	isArchive() {
-		if (!this._isFilled) {
+		if (!this.filled) {
 			return null;
 		}
 
@@ -83,7 +83,7 @@ export default class DocumentAttachment extends Attachment {
 	 * @return {?boolean}
 	 */
 	isGif() {
-		if (!this._isFilled) {
+		if (!this.filled) {
 			return null;
 		}
 
@@ -96,7 +96,7 @@ export default class DocumentAttachment extends Attachment {
 	 * @return {?boolean}
 	 */
 	isImage() {
-		if (!this._isFilled) {
+		if (!this.filled) {
 			return null;
 		}
 
@@ -109,11 +109,11 @@ export default class DocumentAttachment extends Attachment {
 	 * @return {?boolean}
 	 */
 	isGraffiti() {
-		if (!this._isFilled) {
+		if (!this.filled) {
 			return null;
 		}
 
-		return this._hasPreviewProperty('graffiti');
+		return this.hasPreviewProperty('graffiti');
 	}
 
 	/**
@@ -122,7 +122,7 @@ export default class DocumentAttachment extends Attachment {
 	 * @return {?boolean}
 	 */
 	isAudio() {
-		if (!this._isFilled) {
+		if (!this.filled) {
 			return null;
 		}
 
@@ -135,11 +135,11 @@ export default class DocumentAttachment extends Attachment {
 	 * @return {?boolean}
 	 */
 	isVoice() {
-		if (!this._isFilled) {
+		if (!this.filled) {
 			return null;
 		}
 
-		return this._hasPreviewProperty('audio_msg');
+		return this.hasPreviewProperty('audio_msg');
 	}
 
 	/**
@@ -148,7 +148,7 @@ export default class DocumentAttachment extends Attachment {
 	 * @return {?boolean}
 	 */
 	isVideo() {
-		if (!this._isFilled) {
+		if (!this.filled) {
 			return null;
 		}
 
@@ -161,7 +161,7 @@ export default class DocumentAttachment extends Attachment {
 	 * @return {?boolean}
 	 */
 	isBook() {
-		if (!this._isFilled) {
+		if (!this.filled) {
 			return null;
 		}
 
@@ -201,7 +201,7 @@ export default class DocumentAttachment extends Attachment {
 	 * @return {?string}
 	 */
 	getTypeName() {
-		if (!this._isFilled) {
+		if (!this.filled) {
 			return null;
 		}
 
@@ -251,7 +251,7 @@ export default class DocumentAttachment extends Attachment {
 	 *
 	 * @return {boolean}
 	 */
-	_hasPreviewProperty(name) {
+	hasPreviewProperty(name) {
 		const preview = this.getPreview();
 
 		if (preview === null) {

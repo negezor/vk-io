@@ -98,7 +98,7 @@ export default class MessageContext extends Context {
 				return false;
 			}
 		})
-		.filter(Boolean);
+			.filter(Boolean);
 
 		const subTypes = attachmentsTypes.filter(type => (
 			this.attachments.some(attachment => (

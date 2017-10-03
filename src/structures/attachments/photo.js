@@ -19,7 +19,7 @@ export default class PhotoAttachment extends Attachment {
 		this.vk = vk;
 		this.payload = payload;
 
-		this._isFilled = 'album_id' in payload && 'date' in payload;
+		this.filled = 'album_id' in payload && 'date' in payload;
 	}
 
 	/**
@@ -39,7 +39,7 @@ export default class PhotoAttachment extends Attachment {
 			this.accessKey = this.payload.access_key;
 		}
 
-		this._isFilled = true;
+		this.filled = true;
 	}
 
 	/**
@@ -103,7 +103,7 @@ export default class PhotoAttachment extends Attachment {
 	 * @return {?string}
 	 */
 	getSmallPhoto() {
-		if (!this._isFilled) {
+		if (!this.filled) {
 			return null;
 		}
 
@@ -117,7 +117,7 @@ export default class PhotoAttachment extends Attachment {
 	 * @return {?string}
 	 */
 	getMediumPhoto() {
-		if (!this._isFilled) {
+		if (!this.filled) {
 			return null;
 		}
 
@@ -131,7 +131,7 @@ export default class PhotoAttachment extends Attachment {
 	 * @return {?string}
 	 */
 	getLargePhoto() {
-		if (!this._isFilled) {
+		if (!this.filled) {
 			return null;
 		}
 

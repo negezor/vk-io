@@ -13,7 +13,7 @@ export default class WallAttachment extends Attachment {
 		this.vk = vk;
 		this.payload = payload;
 
-		this._isFilled = 'date' in payload;
+		this.filled = 'date' in payload;
 	}
 
 	/**
@@ -33,6 +33,6 @@ export default class WallAttachment extends Attachment {
 			this.accessKey = this.payload.access_key;
 		}
 
-		this._isFilled = true;
+		this.filled = true;
 	}
 }

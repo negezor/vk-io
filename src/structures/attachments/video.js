@@ -13,7 +13,7 @@ export default class VideoAttachment extends Attachment {
 		this.vk = vk;
 		this.payload = payload;
 
-		this._isFilled = 'duration' in payload && 'date' in payload;
+		this.filled = 'duration' in payload && 'date' in payload;
 	}
 
 	/**
@@ -35,7 +35,7 @@ export default class VideoAttachment extends Attachment {
 			this.accessKey = this.payload.access_key;
 		}
 
-		this._isFilled = true;
+		this.filled = true;
 	}
 
 	/**
@@ -43,8 +43,8 @@ export default class VideoAttachment extends Attachment {
 	 *
 	 * @return {?boolean}
 	 */
-	isRepeat () {
-		return this._checkBooleanInProperty('repeat');
+	isRepeat() {
+		return this.checkBooleanInProperty('repeat');
 	}
 
 	/**
@@ -52,8 +52,8 @@ export default class VideoAttachment extends Attachment {
 	 *
 	 * @return {?boolean}
 	 */
-	isCanAdd () {
-		return this._checkBooleanInProperty('can_add');
+	isCanAdd() {
+		return this.checkBooleanInProperty('can_add');
 	}
 
 	/**
@@ -61,8 +61,8 @@ export default class VideoAttachment extends Attachment {
 	 *
 	 * @return {?boolean}
 	 */
-	isCanEdit () {
-		return this._checkBooleanInProperty('can_edit');
+	isCanEdit() {
+		return this.checkBooleanInProperty('can_edit');
 	}
 
 	/**
@@ -70,8 +70,8 @@ export default class VideoAttachment extends Attachment {
 	 *
 	 * @return {?boolean}
 	 */
-	isProcessing () {
-		return this._checkBooleanInProperty('processing');
+	isProcessing() {
+		return this.checkBooleanInProperty('processing');
 	}
 
 	/**
@@ -79,8 +79,8 @@ export default class VideoAttachment extends Attachment {
 	 *
 	 * @return {?boolean}
 	 */
-	isBroadcast () {
-		return this._checkBooleanInProperty('live');
+	isBroadcast() {
+		return this.checkBooleanInProperty('live');
 	}
 
 	/**
@@ -88,8 +88,8 @@ export default class VideoAttachment extends Attachment {
 	 *
 	 * @return {?boolean}
 	 */
-	isUpcoming () {
-		return this._checkBooleanInProperty('upcoming');
+	isUpcoming() {
+		return this.checkBooleanInProperty('upcoming');
 	}
 
 	/**
@@ -97,7 +97,7 @@ export default class VideoAttachment extends Attachment {
 	 *
 	 * @return {?string}
 	 */
-	getTitle () {
+	getTitle() {
 		return this.payload.title || null;
 	}
 
@@ -106,7 +106,7 @@ export default class VideoAttachment extends Attachment {
 	 *
 	 * @return {?string}
 	 */
-	getDescription () {
+	getDescription() {
 		return this.payload.description || null;
 	}
 
@@ -115,7 +115,7 @@ export default class VideoAttachment extends Attachment {
 	 *
 	 * @return {?string}
 	 */
-	getDuration () {
+	getDuration() {
 		return this.payload.duration || null;
 	}
 
@@ -124,7 +124,7 @@ export default class VideoAttachment extends Attachment {
 	 *
 	 * @return {?number}
 	 */
-	getDate () {
+	getDate() {
 		return this.payload.date || null;
 	}
 
@@ -133,7 +133,7 @@ export default class VideoAttachment extends Attachment {
 	 *
 	 * @return {?number}
 	 */
-	getAddingDate () {
+	getAddingDate() {
 		return this.payload.adding_date || null;
 	}
 
@@ -142,7 +142,7 @@ export default class VideoAttachment extends Attachment {
 	 *
 	 * @return {?number}
 	 */
-	getViewsCount () {
+	getViewsCount() {
 		return this.payload.views || null;
 	}
 
@@ -151,7 +151,7 @@ export default class VideoAttachment extends Attachment {
 	 *
 	 * @return {?number}
 	 */
-	getCommentsCount () {
+	getCommentsCount() {
 		return this.payload.comments || null;
 	}
 
@@ -160,7 +160,7 @@ export default class VideoAttachment extends Attachment {
 	 *
 	 * @return {?number}
 	 */
-	getHeight () {
+	getHeight() {
 		return this.payload.height || null;
 	}
 
@@ -169,7 +169,7 @@ export default class VideoAttachment extends Attachment {
 	 *
 	 * @return {?number}
 	 */
-	getWidth () {
+	getWidth() {
 		return this.payload.width || null;
 	}
 
@@ -178,7 +178,7 @@ export default class VideoAttachment extends Attachment {
 	 *
 	 * @return {?string}
 	 */
-	getPlayer () {
+	getPlayer() {
 		return this.payload.player || null;
 	}
 
@@ -189,7 +189,7 @@ export default class VideoAttachment extends Attachment {
 	 *
 	 * @return {?boolean}
 	 */
-	_checkBooleanInProperty (name) {
+	checkBooleanInProperty(name) {
 		const property = this.payload[name];
 
 		if (typeof property !== 'number') {
@@ -198,4 +198,4 @@ export default class VideoAttachment extends Attachment {
 
 		return property === 1;
 	}
-};
+}

@@ -1,5 +1,3 @@
-'use strict';
-
 import http from 'http';
 import https from 'https';
 import { URL, URLSearchParams } from 'url';
@@ -11,6 +9,7 @@ import {
 	TypingContext,
 	MessageContext,
 	UserOnlineContext,
+	DialogFlagsContext,
 	ReadMessagesContext,
 	MessageFlagsContext,
 	RemovedMessagesContext
@@ -18,8 +17,8 @@ import {
 
 import { delay } from '../util/helpers';
 import { UpdatesError } from '../errors';
-import { transformMessage } from './longpoll';
 import { updatesErrors } from '../util/constants';
+import transformMessage from './transform-message';
 
 const { NEED_RESTART } = updatesErrors;
 
@@ -31,15 +30,15 @@ export default class Updates {
 	 *
 	 * @param {VK} vk
 	 */
-	constructor (vk) {
+	constructor(vk) {
 		this.vk = vk;
 
-		this._restarted = 0;
-		this._started = null;
+		this.restarted = 0;
+		this.started = null;
 
-		this._url = null;
-		this._pts = null;
-		this._ts = null;
+		this.url = null;
+		this.pts = null;
+		this.ts = null;
 
 		/**
 		 * 2 -  Attachments
@@ -48,11 +47,11 @@ export default class Updates {
 		 *
 		 * @type {number}
 		 */
-		this._mode = 2 + 8 + 64;
+		this.mode = 2 + 8 + 64;
 
 		this.webhookServer = null;
 
-		this._handlers = [];
+		this.handlers = [];
 	}
 
 	/**
@@ -60,7 +59,7 @@ export default class Updates {
 	 *
 	 * @return {string}
 	 */
-	get [Symbol.toStringTag] () {
+	get [Symbol.toStringTag]() {
 		return 'Updates';
 	}
 
@@ -70,8 +69,8 @@ export default class Updates {
 	 *
 	 * @param {function} handler
 	 */
-	use (handler) {
-		this._handlers.push(handler);
+	use(handler) {
+		this.handlers.push(handler);
 	}
 
 	/**
@@ -79,78 +78,80 @@ export default class Updates {
 	 *
 	 * @param {Array} update
 	 */
-	handleLongpollUpdate (update) {
+	handleLongpollUpdate(update) {
+		debug('longpoll update', update);
+		// eslint-disable-next-line default-case
 		switch (update[0]) {
-			case 1:
-			case 2:
-			case 3: {
-				return this._runHandlers(
-					new MessageFlagsContext(
-						this.vk,
-						update
-					)
-				);
-			}
+		case 1:
+		case 2:
+		case 3: {
+			this.runHandlers(new MessageFlagsContext(
+				this.vk,
+				update
+			));
 
-			case 4: {
-				return this._runHandlers(
-					new MessageContext(
-						this.vk,
-						transformMessage(update)
-					)
-				);
-			}
+			break;
+		}
 
-			case 6:
-			case 7: {
-				return this._runHandlers(
-					new ReadMessagesContext(
-						this.vk,
-						update
-					)
-				);
-			}
+		case 4: {
+			this.runHandlers(new MessageContext(
+				this.vk,
+				transformMessage(update)
+			));
 
-			case 8:
-			case 9: {
-				return this._runHandlers(
-					new UserOnlineContext(
-						this.vk,
-						update
-					)
-				);
-			}
+			break;
+		}
 
-			case 10:
-			case 11:
-			case 12: {
-				return this._runHandlers(
-					new DialogFlagsContext(
-						this.vk,
-						update
-					)
-				);
-			}
+		case 6:
+		case 7: {
+			this.runHandlers(new ReadMessagesContext(
+				this.vk,
+				update
+			));
 
-			case 13:
-			case 14: {
-				return this._runHandlers(
-					new RemovedMessagesContext(
-						this.vk,
-						update
-					)
-				);
-			}
+			break;
+		}
 
-			case 61:
-			case 62: {
-				return this._runHandlers(
-					new TypingContext(
-						this.vk,
-						update
-					)
-				);
-			}
+		case 8:
+		case 9: {
+			this.runHandlers(new UserOnlineContext(
+				this.vk,
+				update
+			));
+
+			break;
+		}
+
+		case 10:
+		case 11:
+		case 12: {
+			this.runHandlers(new DialogFlagsContext(
+				this.vk,
+				update
+			));
+
+			break;
+		}
+
+		case 13:
+		case 14: {
+			this.runHandlers(new RemovedMessagesContext(
+				this.vk,
+				update
+			));
+
+			break;
+		}
+
+		case 61:
+		case 62: {
+			this.runHandlers(new TypingContext(
+				this.vk,
+				update
+			));
+
+			break;
+		}
 		}
 	}
 
@@ -159,21 +160,24 @@ export default class Updates {
 	 *
 	 * @param {Object} update
 	 */
-	handleWebhookUpdate (update) {
-		console.log('Webhook', update);
+	handleWebhookUpdate(update) {
+		debug('webhook update', update);
 
+		// eslint-disable-next-line default-case
 		switch (update.type) {
-			case 'message_new':
-			case 'message_reply': {
-				return this._runHandlers(new MessageContext(this.vk, update));
-			}
+		case 'message_new':
+		case 'message_reply': {
+			this.runHandlers(new MessageContext(this.vk, update));
 
-			case 'photo_new':
-			case 'audio_new':
-			case 'video_new': {
-				/* TODO: I'll do it later */
-				return;
-			}
+			break;
+		}
+
+		case 'photo_new':
+		case 'audio_new':
+		case 'video_new': {
+			/* TODO: I'll do it later */
+
+		}
 		}
 	}
 
@@ -182,33 +186,35 @@ export default class Updates {
 	 *
 	 * @return {Promise}
 	 */
-	async startPolling () {
-		if (this._started !== null) {
-			return void debug(`Updates already started: ${this._started}`);
+	async startPolling() {
+		if (this.started !== null) {
+			debug(`Updates already started: ${this.started}`);
+
+			return;
 		}
 
-		this._started = 'longpoll';
+		this.started = 'longpoll';
 
 		try {
 			const { server, key, ts } = await this.vk.api.messages.getLongPollServer({
 				lp_version: 2
 			});
 
-			if (this._ts === null) {
-				this._ts = ts;
+			if (this.ts === null) {
+				this.ts = ts;
 			}
 
-			this._url = new URL(`https://${server}`);
-			this._url.search = new URLSearchParams({
+			this.url = new URL(`https://${server}`);
+			this.url.search = new URLSearchParams({
 				act: 'a_check',
 				version: 2,
 				wait: 20,
 				key,
 			});
 
-			this._startFetchLoop();
+			this.startFetchLoop();
 		} catch (error) {
-			this._started = null;
+			this.started = null;
 
 			throw error;
 		}
@@ -221,12 +227,14 @@ export default class Updates {
 	 *
 	 * @return {Promise}
 	 */
-	async startWebhook ({ tls, port, host }, next) {
-		if (this._started !== null) {
-			return void debug(`Updates already started: ${this._started}`);
+	async startWebhook({ tls, port, host }, next) {
+		if (this.started !== null) {
+			debug(`Updates already started: ${this.started}`);
+
+			return;
 		}
 
-		this._started = 'webhook';
+		this.started = 'webhook';
 
 		try {
 			const webhookCallback = this.getWebhookCallback();
@@ -247,7 +255,7 @@ export default class Updates {
 				debug(`Webhook listening on port: ${port || tls ? 443 : 80}`);
 			});
 		} catch (error) {
-			this._started = null;
+			this.started = null;
 
 			throw error;
 		}
@@ -258,9 +266,9 @@ export default class Updates {
 	 *
 	 * @return {Promise}
 	 */
-	stop () {
-		this._restarted = 0;
-		this._started = null;
+	stop() {
+		this.restarted = 0;
+		this.started = null;
 
 		if (this.webhookServer !== null) {
 			this.webhookServer.close();
@@ -273,17 +281,21 @@ export default class Updates {
 	 *
 	 * @return {Function}
 	 */
-	getWebhookCallback () {
+	getWebhookCallback() {
 		const { webhookPath } = this.vk.options;
 
 		return (req, res, next) => {
 			if (req.method !== 'POST' || req.url !== webhookPath) {
 				if (typeof next === 'function') {
-					return next();
+					next();
+
+					return;
 				}
 
 				res.writeHead(403);
-				return res.end();
+				res.end();
+
+				return;
 			}
 
 			let body = '';
@@ -295,7 +307,9 @@ export default class Updates {
 					res.writeHead(413);
 					res.end();
 
-					return req.connection.destroy();
+					req.connection.destroy();
+
+					return;
 				}
 
 				body += String(chunk);
@@ -309,7 +323,9 @@ export default class Updates {
 
 					if (webhookSecret !== null && update.secret !== webhookSecret) {
 						res.writeHead(403);
-						return res.end();
+						res.end();
+
+						return;
 					}
 
 					const headers = {
@@ -320,11 +336,15 @@ export default class Updates {
 					if (update.type === 'confirmation') {
 						if (webhookConfirmation === null) {
 							res.writeHead(500);
-							return res.end();
+							res.end();
+
+							return;
 						}
 
 						res.writeHead(200, headers);
-						return res.end(String(webhookConfirmation));
+						res.end(String(webhookConfirmation));
+
+						return;
 					}
 
 					res.writeHead(200, headers);
@@ -346,34 +366,36 @@ export default class Updates {
 	 *
 	 * @return {Promise}
 	 */
-	async _startFetchLoop () {
+	async startFetchLoop() {
 		try {
-			while (this._started === 'longpoll') {
-				await this._fetchUpdates();
+			while (this.started === 'longpoll') {
+				await this.fetchUpdates();
 			}
 		} catch (error) {
 			debug('longpoll error', error);
 
 			const { longpollWait, longpollAttempts } = this.vk.options;
 
-			if (error.code !== NEED_RESTART && this._restarted < longpollAttempts) {
-				++this._restarted;
+			if (error.code !== NEED_RESTART && this.restarted < longpollAttempts) {
+				this.restarted += 1;
 
 				debug('longpoll restart request');
 
 				await delay(3e3);
 
-				return this._startFetchLoop();
+				this.startFetchLoop();
+
+				return;
 			}
 
-			while (this._started === 'longpoll') {
+			while (this.started === 'longpoll') {
 				try {
 					await this.stop();
 					await this.startPolling();
-				} catch (error) {
-					debug('longpoll restarted error', error);
+				} catch (restartError) {
+					debug('longpoll restarted error', restartError);
 
-					this._started = 'longpoll';
+					this.started = 'longpoll';
 
 					await delay(longpollWait);
 				}
@@ -386,16 +408,16 @@ export default class Updates {
 	 *
 	 * @return {Promise}
 	 */
-	async _fetchUpdates () {
+	async fetchUpdates() {
 		const { agent } = this.vk.options;
-		const { searchParams } = this._url;
+		const { searchParams } = this.url;
 
-		searchParams.set('mode', this._mode);
-		searchParams.set('ts', this._ts);
+		searchParams.set('mode', this.mode);
+		searchParams.set('ts', this.ts);
 
 		debug('http -->');
 
-		let response = await fetch(this._url, {
+		let response = await fetch(this.url, {
 			agent,
 
 			method: 'GET',
@@ -409,7 +431,7 @@ export default class Updates {
 		debug('http <--');
 
 		if ('failed' in response && response.failed !== 1) {
-			this._ts = null;
+			this.ts = null;
 
 			throw new UpdatesError({
 				code: NEED_RESTART,
@@ -417,10 +439,10 @@ export default class Updates {
 			});
 		}
 
-		this._ts = Number(response.ts);
+		this.ts = Number(response.ts);
 
-		if ('pts' in response && response.pts !== this._pts) {
-			this._pts = Number(response.pts);
+		if ('pts' in response && response.pts !== this.pts) {
+			this.pts = Number(response.pts);
 		}
 
 		if ('updates' in response) {
@@ -428,7 +450,7 @@ export default class Updates {
 				try {
 					this.handleLongpollUpdate(update);
 				} catch (error) {
-					console.log(error);
+					debug('handle update error', error);
 				}
 			}
 		}
@@ -438,8 +460,8 @@ export default class Updates {
 	 * Run handlers
 	 * Temporarily
 	 */
-	_runHandlers (...args) {
-		for (const handler of this._handlers) {
+	runHandlers(...args) {
+		for (const handler of this.handlers) {
 			handler(...args);
 		}
 	}
