@@ -102,8 +102,7 @@ export const CALLBACK_BLANK = 'https://oauth.vk.com/blank.html';
  *
  * @type {string}
  */
-export const STANDALONE_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
-+ ' AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36';
+export const DESKTOP_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36';
 
 /**
  * API error codes

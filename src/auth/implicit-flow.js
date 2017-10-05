@@ -7,7 +7,7 @@ import { URL, URLSearchParams } from 'url';
 import { AuthError, authErrors } from '../errors';
 
 import { parseFormField, getFullURL } from './helpers';
-import { STANDALONE_USER_AGENT, CALLBACK_BLANK } from '../util/constants';
+import { DESKTOP_USER_AGENT, CALLBACK_BLANK } from '../util/constants';
 import { fetchCookieFollowRedirectsDecorator } from '../util/fetch-cookie';
 
 const debug = createDebug('vk-io:auth:implicit-flow');
@@ -21,6 +21,13 @@ const {
 	FAILED_PASSED_TWO_FACTOR,
 	MISSING_TWO_FACTOR_HANDLER
 } = authErrors;
+
+/**
+ * Blocked action
+ *
+ * @type {string}
+ */
+const ACTION_BLOCKED = 'act=blocked';
 
 /**
  * Login action
@@ -128,7 +135,7 @@ export default class ImplicitFlow {
 			headers: {
 				...headers,
 
-				'User-Agent': STANDALONE_USER_AGENT,
+				'User-Agent': DESKTOP_USER_AGENT,
 				agent
 			}
 		});
@@ -161,17 +168,17 @@ export default class ImplicitFlow {
 		while (isProcessed) {
 			const { url } = response;
 
-			if (url.includes('act=blocked')) {
+			if (url.includes(CALLBACK_BLANK)) {
+				return { response };
+			}
+
+			if (url.includes(ACTION_BLOCKED)) {
 				debug('page blocked');
 
 				throw new AuthError({
 					message: 'Page blocked',
 					code: PAGE_BLOCKED
 				});
-			}
-
-			if (url.includes(CALLBACK_BLANK)) {
-				return { response };
 			}
 
 			const $ = cheerioLoad(await response.text());

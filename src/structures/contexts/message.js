@@ -392,6 +392,51 @@ export default class MessageContext extends Context {
 	}
 
 	/**
+	 * Marks messages as important or removes a mark.
+	 *
+	 * @param {Array}  ids
+	 * @param {Object} options
+	 *
+	 * @return {Promise<Array>}
+	 */
+	markAsImportant(ids = [this.payload.id], options = { important: 1 }) {
+		return this.vk.api.messages.markAsImportant({
+			...options,
+
+			message_ids: ids.join(',')
+		});
+	}
+
+	/**
+	 * Deletes the message
+	 *
+	 * @param {Array}  ids
+	 * @param {Object} options
+	 *
+	 * @return {Promise<boolean>}
+	 */
+	deleteMessage(ids = [this.payload.id], options = { spam: 0 }) {
+		return this.vk.api.messages.delete({
+			...options,
+
+			message_ids: ids.join(',')
+		});
+	}
+
+	/**
+	 * Restores the message
+	 *
+	 * @return {Promise<boolean>}
+	 */
+	async restoreMessage() {
+		const isRestore = await this.vk.api.messages.restore({
+			message_id: this.payload.id
+		});
+
+		return Boolean(isRestore);
+	}
+
+	/**
 	 * Rename the chat
 	 *
 	 * @param {string} title

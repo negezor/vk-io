@@ -35,7 +35,7 @@ export default class Upload {
 	 * @return {Promise<Array>}
 	 */
 	async photoAlbum(params) {
-		const uploads = await this.conduct({
+		const photos = await this.conduct({
 			field: 'file',
 			params,
 
@@ -49,8 +49,8 @@ export default class Upload {
 			attachmentType: 'photo'
 		});
 
-		return uploads.map(upload => (
-			new PhotoAttachment(upload, this.vk)
+		return photos.map(photo => (
+			new PhotoAttachment(photo, this.vk)
 		));
 	}
 
@@ -62,7 +62,7 @@ export default class Upload {
 	 * @return {Promise<PhotoAttachment>}
 	 */
 	async wallPhoto(params) {
-		const uploads = await this.conduct({
+		const [photo] = await this.conduct({
 			field: 'photo',
 			params,
 
@@ -76,7 +76,7 @@ export default class Upload {
 			attachmentType: 'photo'
 		});
 
-		return new PhotoAttachment(uploads[0], this.vk);
+		return new PhotoAttachment(photo, this.vk);
 	}
 
 	/**
@@ -118,7 +118,7 @@ export default class Upload {
 	 * @return {Promise<PhotoAttachment>}
 	 */
 	async messagePhoto(params) {
-		const uploads = await this.conduct({
+		const [photo] = await this.conduct({
 			field: 'photo',
 			params,
 
@@ -131,7 +131,7 @@ export default class Upload {
 			attachmentType: 'photo'
 		});
 
-		return new PhotoAttachment(uploads[0], this.vk);
+		return new PhotoAttachment(photo, this.vk);
 	}
 
 	/**
@@ -218,7 +218,7 @@ export default class Upload {
 	 * @return {Promise<PhotoAttachment>}
 	 */
 	async marketPhoto(params) {
-		const uploads = await this.conduct({
+		const [photo] = await this.conduct({
 			field: 'file',
 			params,
 
@@ -232,7 +232,7 @@ export default class Upload {
 			attachmentType: 'photo'
 		});
 
-		return new PhotoAttachment(uploads[0], this.vk);
+		return new PhotoAttachment(photo, this.vk);
 	}
 
 	/**
@@ -243,7 +243,7 @@ export default class Upload {
 	 * @return {Promise<Array>}
 	 */
 	async marketAlbumPhoto(params) {
-		const uploads = await this.conduct({
+		const photos = await this.conduct({
 			field: 'file',
 			params,
 
@@ -257,8 +257,8 @@ export default class Upload {
 			attachmentType: 'photo'
 		});
 
-		return uploads.map(upload => (
-			new PhotoAttachment(upload, this.vk)
+		return photos.map(photo => (
+			new PhotoAttachment(photo, this.vk)
 		));
 	}
 
@@ -330,9 +330,9 @@ export default class Upload {
 			sources: params.source
 		});
 
-		const uploaded = await this.upload(save.upload_url, formData);
+		const video = await this.upload(save.upload_url, formData);
 
-		return new VideoAttachment({ ...save, ...uploaded }, this.vk);
+		return new VideoAttachment({ ...save, ...video }, this.vk);
 	}
 
 	/**
@@ -343,7 +343,7 @@ export default class Upload {
 	 * @return {Promise<DocumentAttachment>}
 	 */
 	async doc(params) {
-		const uploads = await this.conduct({
+		const [document] = await this.conduct({
 			field: 'file',
 			params,
 
@@ -357,7 +357,7 @@ export default class Upload {
 			attachmentType: 'doc'
 		});
 
-		return new DocumentAttachment(uploads[0], this.vk);
+		return new DocumentAttachment(document, this.vk);
 	}
 
 	/**
@@ -368,7 +368,7 @@ export default class Upload {
 	 * @return {Promise<DocumentAttachment>}
 	 */
 	async wallDoc(params) {
-		const uploads = await this.conduct({
+		const [document] = await this.conduct({
 			field: 'file',
 			params,
 
@@ -382,7 +382,7 @@ export default class Upload {
 			attachmentType: 'doc'
 		});
 
-		return new DocumentAttachment(uploads[0], this.vk);
+		return new DocumentAttachment(document, this.vk);
 	}
 
 	/**
@@ -393,7 +393,7 @@ export default class Upload {
 	 * @return {Promise<DocumentAttachment>}
 	 */
 	async messageDoc(params) {
-		const uploads = await this.conduct({
+		const [document] = await this.conduct({
 			field: 'file',
 			params,
 
@@ -407,7 +407,7 @@ export default class Upload {
 			attachmentType: 'doc'
 		});
 
-		return new DocumentAttachment(uploads[0], this.vk);
+		return new DocumentAttachment(document, this.vk);
 	}
 
 	/**
@@ -670,6 +670,12 @@ export default class Upload {
 			throw new Error('The number of files uploaded has exceeded');
 		}
 
+		if ('uploadUrl' in params) {
+			getServer = () => ({
+				upload_url: params.uploadUrl
+			});
+		}
+
 		const [{ upload_url: url }, formData] = await Promise.all([
 			getServer(copyParams(params, serverParams)),
 			this.buildPayload({
@@ -700,7 +706,10 @@ export default class Upload {
 	 * @return {Promise}
 	 */
 	async buildPayload({
-		field, sources, maxFiles, attachmentType
+		field,
+		sources,
+		maxFiles,
+		attachmentType
 	}) {
 		const boundary = randomBytes(30).toString('hex');
 		const formData = new MultipartStream(boundary);
@@ -709,20 +718,20 @@ export default class Upload {
 
 		const tasks = sources
 			.map((source) => {
-				if (typeof source === 'object' && 'source' in source) {
+				if (typeof source === 'object' && 'value' in source) {
 					return source;
 				}
 
-				return { source };
+				return { value: source };
 			})
-			.map(async ({ source, filename }, i) => {
-				if (typeof source === 'string') {
-					if (isLink.test(source)) {
-						const response = await fetch(source);
+			.map(async ({ value, filename, contentType = null }, i) => {
+				if (typeof value === 'string') {
+					if (isLink.test(value)) {
+						const response = await fetch(value);
 
-						source = response.body;
+						value = response.body;
 					} else {
-						source = createReadStream(source);
+						value = createReadStream(value);
 					}
 				}
 
@@ -730,12 +739,18 @@ export default class Upload {
 					filename = `file${i}.${defaultExtensions[attachmentType] || 'dat'}`;
 				}
 
-				if (isStream(source) || Buffer.isBuffer(source)) {
+				if (isStream(value) || Buffer.isBuffer(value)) {
 					const name = isMultipart
 						? field + (i + 1)
 						: field;
 
-					return formData.append(name, source, { filename });
+					const headers = {};
+
+					if (contentType !== null) {
+						headers['content-type'] = contentType;
+					}
+
+					return formData.append(name, value, { filename, headers });
 				}
 
 				throw new Error('Unsupported source type');

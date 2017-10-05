@@ -72,6 +72,7 @@ export default class MultipartStream extends SandwichStream {
 		return this.addPart({
 			headers: {
 				...headers,
+
 				'content-disposition': header
 			},
 			body

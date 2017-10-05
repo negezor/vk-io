@@ -100,7 +100,6 @@ export default function transformMessage([, id, flags, peer, date, body, attachm
 				const photoKey = `${key}_photo`;
 
 				if (attachments[photoKey]) {
-					/* jscs: disable disallowArrayDestructuringReturn */
 					const [owner, attachmentId] = attachments[photoKey].split('_');
 
 					attachment.link.photo = {
