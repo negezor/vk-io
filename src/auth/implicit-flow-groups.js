@@ -8,17 +8,50 @@ import { AuthError, authErrors } from '../errors';
 import { API_VERSION, CALLBACK_BLANK } from '../util/constants';
 import {
 	parseFormField,
-	getAllUsersPermissions,
-	getUsersPermissionsByName
+	getAllGroupsPermissions,
+	getGroupsPermissionsByName
 } from './helpers';
 
 const debug = createDebug('vk-io:auth:implicit-flow-user');
 
 const { AUTHORIZATION_FAILED } = authErrors;
 
-export default class ImplicitFlowUser extends ImplicitFlow {
+export default class ImplicitFlowGroups extends ImplicitFlow {
+	/**
+	 * Constructor
+	 *
+	 * @param {VK}     vk
+	 * @param {Object} options
+	 */
+	constructor(vk, options) {
+		super(vk, options);
+
+		let { groups = null } = options;
+
+		if (groups === null) {
+			throw Error('Groups list must have');
+		}
+
+		if (!Array.isArray(groups)) {
+			groups = [groups];
+		}
+
+		this.groups = groups.map((group) => {
+			if (typeof group !== 'number') {
+				group = Number(group);
+			}
+
+			if (group < 0) {
+				group = -group;
+			}
+
+			return group;
+		});
+	}
 	/**
 	 * Returns permission page
+	 *
+	 * @param {Array} groups
 	 *
 	 * @return {Response}
 	 */
@@ -27,14 +60,15 @@ export default class ImplicitFlowUser extends ImplicitFlow {
 		let { scope } = this.vk.options;
 
 		if (scope === 'all' || scope === null) {
-			scope = getAllUsersPermissions();
+			scope = getAllGroupsPermissions();
 		} else if (typeof scope !== 'number') {
-			scope = getUsersPermissionsByName(scope);
+			scope = getGroupsPermissionsByName(scope);
 		}
 
 		debug('auth scope %s', scope);
 
 		const params = new URLSearchParams({
+			group_ids: this.groups.join(','),
 			redirect_uri: CALLBACK_BLANK,
 			response_type: 'token',
 			display: 'page',
@@ -54,7 +88,7 @@ export default class ImplicitFlowUser extends ImplicitFlow {
 	/**
 	 * Starts authorization
 	 *
-	 * @return {Promise<Object>}
+	 * @return {Promise<Array>}
 	 */
 	async run() {
 		const { response } = await super.run();
@@ -69,15 +103,29 @@ export default class ImplicitFlowUser extends ImplicitFlow {
 			});
 		}
 
-		const user = params.get('user_id');
-		const expires = params.get('expires_in');
+		let expires = params.get('expires_in');
 
-		return {
-			email: params.get('email'),
-			user: user || Number(user),
+		if (expires !== null) {
+			expires = Number(expires);
+		}
 
-			token: params.get('access_token'),
-			expires: expires || Number(expires)
-		};
+		const tokens = [];
+
+		for (const [name, value] of params) {
+			if (!name.startsWith('access_token_')) {
+				continue;
+			}
+
+			/* Example group access_token_XXXXX */
+			const [,, group] = name.split('_');
+
+			tokens.push({
+				group: Number(group),
+				token: value,
+				expires
+			});
+		}
+
+		return tokens;
 	}
 }

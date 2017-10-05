@@ -166,7 +166,7 @@ export const authErrors = {
 };
 
 /**
- * List of permissions and their bit mask
+ * List of user permissions and their bit mask
  *
  * @type {Map}
  */
@@ -190,4 +190,16 @@ export const userScopes = new Map([
 	['stats', 1048576],
 	['email', 4194304],
 	['market', 134217728]
+]);
+
+/**
+ * List of group permissions and their bit mask
+ *
+ * @type {Map}
+ */
+export const groupScopes = new Map([
+	['photos', 4],
+	['messages', 4096],
+	['docs', 131072],
+	['manage', 262144]
 ]);

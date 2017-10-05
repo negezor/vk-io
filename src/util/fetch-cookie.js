@@ -21,7 +21,7 @@ export const fetchCookieDecorator = (jar = new CookieJar()) => {
 			headers.cookie = previousCookie;
 		}
 
-		debug('fetch url %s', url, options);
+		debug('fetch url %s', url);
 
 		const response = await fetch(url, {
 			...options,

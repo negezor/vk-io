@@ -6,7 +6,7 @@ import { URL, URLSearchParams } from 'url';
 
 import { AuthError, authErrors } from '../errors';
 
-import { parseFormField } from './helpers';
+import { parseFormField, getFullURL } from './helpers';
 import { STANDALONE_USER_AGENT, CALLBACK_BLANK } from '../util/constants';
 import { fetchCookieFollowRedirectsDecorator } from '../util/fetch-cookie';
 
@@ -61,10 +61,21 @@ export default class ImplicitFlow {
 	/**
 	 * Constructor
 	 *
-	 * @param {VK} vk
+	 * @param {VK}     vk
+	 * @param {Object} options
 	 */
-	constructor(vk) {
+	constructor(vk, {
+		agent = vk.options.agent,
+		login = vk.options.login,
+		phone = vk.options.phone,
+		password = vk.options.password
+	} = {}) {
 		this.vk = vk;
+
+		this.agent = agent;
+		this.login = login;
+		this.phone = phone;
+		this.password = password;
 
 		this.jar = new CookieJar();
 
@@ -106,7 +117,7 @@ export default class ImplicitFlow {
 	 * @return {Promise<Response>}
 	 */
 	fetch(url, options = {}) {
-		const { agent } = this.vk.options;
+		const { agent } = this;
 
 		const { headers = {} } = options;
 
@@ -157,6 +168,10 @@ export default class ImplicitFlow {
 					message: 'Page blocked',
 					code: PAGE_BLOCKED
 				});
+			}
+
+			if (url.includes(CALLBACK_BLANK)) {
+				return { response };
 			}
 
 			const $ = cheerioLoad(await response.text());
@@ -222,14 +237,42 @@ export default class ImplicitFlow {
 				continue;
 			}
 
-			if (!url.includes('act=') || url.includes(CALLBACK_BLANK)) {
-				return { response, $ };
+			if (url.includes('act=')) {
+				throw new AuthError({
+					message: 'Unsupported authorization event',
+					code: AUTHORIZATION_FAILED
+				});
 			}
 
-			throw new AuthError({
-				message: 'Unsupported authorization event',
-				code: AUTHORIZATION_FAILED
-			});
+			debug('auth with login & pass complete');
+
+			if ($('form').length !== 0) {
+				const { action } = parseFormField($);
+
+				debug('url grant access', action);
+
+				response = await this.fetch(action, {
+					method: 'POST'
+				});
+			} else {
+				const script = $('script[type="text/javascript"][language="javascript"]').text();
+				const locations = script.match(/location\.href\s+=\s+"([^"]+)"/i);
+
+				if (locations === null) {
+					throw new AuthError({
+						message: 'Could not log in',
+						code: AUTHORIZATION_FAILED
+					});
+				}
+
+				const location = locations[1].replace('&cancel=1', '');
+
+				debug('url grant access', location);
+
+				response = await this.fetch(location, {
+					method: 'POST'
+				});
+			}
 		}
 	}
 
@@ -244,7 +287,7 @@ export default class ImplicitFlow {
 	async processAuthForm(response, $) {
 		debug('process login handle');
 
-		const { login, password, phone } = this.vk.options;
+		const { login, password, phone } = this;
 
 		const { action, fields } = parseFormField($);
 
@@ -301,14 +344,9 @@ export default class ImplicitFlow {
 
 					fields.code = code;
 
-					let url = action;
-					if (!url.startsWith('https://')) {
-						const { protocol, host } = new URL(response.url);
-
-						url = new URL(action, `${protocol}//${host}`);
-					}
-
 					try {
+						const url = getFullURL(action, response);
+
 						response = await this.fetch(url, {
 							method: 'POST',
 							body: new URLSearchParams(fields)
@@ -358,7 +396,7 @@ export default class ImplicitFlow {
 	async processSecurityForm(response, $) {
 		debug('process security form');
 
-		const { login, phone } = this.vk.options;
+		const { login, phone } = this;
 
 		let number;
 		if (phone !== null) {
@@ -387,12 +425,7 @@ export default class ImplicitFlow {
 
 		fields.code = number.slice(prefix, number.length - postfix);
 
-		let url = action;
-		if (!action.startsWith('https://')) {
-			const { protocol, host } = new URL(response.url);
-
-			url = new URL(action, `${protocol}//${host}`);
-		}
+		const url = getFullURL(action, response);
 
 		response = await this.fetch(url, {
 			method: 'POST',
