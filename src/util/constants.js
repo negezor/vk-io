@@ -8,38 +8,60 @@ import { version } from '../../package.json';
 export const API_VERSION = '5.68';
 
 /**
+ * Chat peer ID
+ *
+ * @type {number}
+ */
+export const CHAT_PEER = 2e9;
+
+/**
+ * Blank html redirect
+ *
+ * @type {string}
+ */
+export const CALLBACK_BLANK = 'https://oauth.vk.com/blank.html';
+
+/**
+ * User-Agent for standalone auth
+ *
+ * @type {string}
+ */
+export const DESKTOP_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36';
+
+/**
  * Default options
  *
  * @type {Object}
  *
- * @property [token]               Access token
- * @property [lang]                The return data language
+ * @property {?string} [token]               Access token
+ * @property {?string} [lang]                The return data language
  *
- * @property [login]               User login (phone number or email)
- * @property [phone]               User phone number
- * @property [password]            User password
+ * @property {?string} [login]               User login (phone number or email)
+ * @property {?string} [phone]               User phone number
+ * @property {?string} [password]            User password
  *
- * @property [app]                 Application ID
- * @property [key]                 Secret application key
- * @property [scope]               List of permissions
+ * @property {?number} [app]                 Application ID
+ * @property {?number} [key]                 Secret application key
+ * @property {?number} [scope]               List of permissions
  *
- * @property [agent]               HTTPS agent
+ * @property {Agent}   [agent]               HTTPS agent
  *
- * @property [apiMode]             Query mode (sequential|parallel)
- * @property [apiWait]             Time to wait before re-querying
- * @property [apiLimit]            Requests per second
- * @property [apiTimeout]          Wait time for one request
- * @property [apiAttempts]         The number of retries at calling
- * @property [apiExecuteCount]     Number of requests per execute
+ * @property {string}  [apiMode]             Query mode (sequential|parallel|parallel-selected)
+ * @property {number}  [apiWait]             Time to wait before re-querying
+ * @property {number}  [apiLimit]            Requests per second
+ * @property {number}  [apiTimeout]          Wait time for one request
+ * @property {number}  [apiAttempts]         The number of retries at calling
+ * @property {number}  [apiExecuteCount]     Number of requests per execute
+ * @property {Array}   [apiExecuteMethods]   Methods for call execute (apiMode=parallel-selected)
  *
- * @property [uploadTimeout]       Wait time for one request
+ * @property {number}  [uploadTimeout]       Wait time for one request
  *
- * @property [longpollWait]        Time to wait before re-querying
- * @property [longpollAttempts]    The number of retries at calling
+ * @property {number}  [longpollWait]        Time to wait before re-querying
+ * @property {number}  [longpollAttempts]    The number of retries at calling
  *
- * @property [webhookPath]         Webhook path
- * @property [webhookSecret]       Webhook secret key
- * @property [webhookConfirmation] Webhook confirmation key
+ * @property {string}  [webhookPath]         Webhook path
+ * @property {?string} [webhookSecret]       Webhook secret key
+ * @property {?string} [webhookConfirmation] Webhook confirmation key
  */
 export const defaultOptions = {
 	token: null,
@@ -64,6 +86,7 @@ export const defaultOptions = {
 		'User-Agent': `vk-io/${version} (+https://github.com/negezor/vk-io)`
 	},
 	apiExecuteCount: 25,
+	apiExecuteMethods: ['messages.send'],
 
 	uploadTimeout: 15e3,
 
@@ -82,27 +105,6 @@ export const defaultExtensions = {
 	voice: 'ogg',
 	graffiti: 'png'
 };
-
-/**
- * Chat peer ID
- *
- * @type {number}
- */
-export const CHAT_PEER = 2e9;
-
-/**
- * Blank html redirect
- *
- * @type {string}
- */
-export const CALLBACK_BLANK = 'https://oauth.vk.com/blank.html';
-
-/**
- * User-Agent for standalone auth
- *
- * @type {string}
- */
-export const DESKTOP_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36';
 
 /**
  * API error codes
@@ -201,4 +203,20 @@ export const groupScopes = new Map([
 	['messages', 4096],
 	['docs', 131072],
 	['manage', 262144]
+]);
+
+/**
+ * VK Platforms
+ *
+ * @type {Map}
+ */
+export const platforms = new Map([
+	[1, 'mobile'],
+	[2, 'iphone'],
+	[3, 'ipad'],
+	[4, 'android'],
+	[5, 'wphone'],
+	[6, 'windows'],
+	[7, 'web'],
+	[8, 'standalone']
 ]);

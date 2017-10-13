@@ -1,9 +1,12 @@
 import { Agent } from 'https';
+import { inspect } from 'util';
 
 import API from './api';
 import Auth from './auth';
 import Upload from './upload';
+import Collect from './collect';
 import Updates from './updates';
+import StreamingAPI from './streaming';
 import { defaultOptions } from './util/constants';
 
 export * from './errors';
@@ -29,10 +32,14 @@ export class VK {
 			})
 		};
 
+		this.setOptions(options);
+
 		this.api = new API(this);
 		this.auth = new Auth(this);
 		this.upload = new Upload(this);
+		this.collect = new Collect(this);
 		this.updates = new Updates(this);
+		this.streaming = new StreamingAPI(this);
 
 		this.captchaHandler = null;
 		this.twoFactorHandler = null;
@@ -106,5 +113,48 @@ export class VK {
 		this.twoFactorHandler = handler;
 
 		return this;
+	}
+
+	/**
+	 * Custom inspect object
+	 *
+	 * @param {?number} depth
+	 * @param {Object}  options
+	 *
+	 * @return {string}
+	 */
+	[inspect.custom](depth, options) {
+		const { name } = this.constructor;
+
+		const {
+			api,
+			updates,
+			streaming,
+			captchaHandler,
+			twoFactorHandler
+		} = this;
+
+		const {
+			app,
+			token,
+			login,
+			phone
+		} = this.options;
+
+		const payload = {
+			options: {
+				app,
+				login,
+				phone,
+				token
+			},
+			captchaHandler,
+			twoFactorHandler,
+			api,
+			updates,
+			streaming
+		};
+
+		return `${options.stylize(name, 'special')} ${inspect(payload, options)}`;
 	}
 }

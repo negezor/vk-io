@@ -1,14 +1,6 @@
 import Context from './context';
 
-const platforms = {
-	1: 'mobile',
-	2: 'iphone',
-	3: 'ipad',
-	4: 'android',
-	5: 'wphone',
-	6: 'windows',
-	7: 'standalone'
-};
+import { platforms } from '../../util/constants';
 
 export default class UserOnlineContext extends Context {
 	/**
@@ -26,11 +18,11 @@ export default class UserOnlineContext extends Context {
 			date
 		};
 
-		this.type = 'user_online';
+		this.type = 'user_active';
 		this.subTypes = [
 			eventId === 8
-				? 'online'
-				: 'offline'
+				? 'user_online'
+				: 'user_offline'
 		];
 	}
 
@@ -40,7 +32,7 @@ export default class UserOnlineContext extends Context {
 	 * @return {boolean}
 	 */
 	isUserOnline() {
-		return this.subTypes.includes('online');
+		return this.subTypes.includes('user_online');
 	}
 
 	/**
@@ -49,7 +41,7 @@ export default class UserOnlineContext extends Context {
 	 * @return {boolean}
 	 */
 	isUserOffline() {
-		return this.subTypes.includes('offline');
+		return this.subTypes.includes('user_offline');
 	}
 
 	/**
@@ -85,6 +77,6 @@ export default class UserOnlineContext extends Context {
 	 * @return {?string}
 	 */
 	getPlatformName() {
-		return platforms[this.payload.extra] || null;
+		return platforms.get(this.payload.extra);
 	}
 }

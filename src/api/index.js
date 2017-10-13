@@ -1,17 +1,15 @@
 import fetch from 'node-fetch';
 import createDebug from 'debug';
+
+import { inspect } from 'util';
 import { URL, URLSearchParams } from 'url';
 
 import Request from './request';
 import methods from './methods';
+import { getRandomId } from '../util/helpers';
 import { APIError, ExecuteError } from '../errors';
 import { API_VERSION, apiErrors } from '../util/constants';
-import {
-	getRandomId,
-	getChainReturn,
-	getExecuteMethod,
-	resolveExecuteTask
-} from '../util/helpers';
+import { sequential, parallel, parallelSelected } from './workers';
 
 const {
 	CAPTCHA_REQUIRED,
@@ -91,6 +89,18 @@ export default class API {
 	}
 
 	/**
+	 * Call execute procedure
+	 *
+	 * @param {string} name
+	 * @param {Object} params
+	 *
+	 * @return {Promise<Object>}
+	 */
+	procedure(name, params) {
+		return this.enqueue(`execute.${name}`, params);
+	}
+
+	/**
 	 * Call raw method
 	 *
 	 * @param {string} method
@@ -100,6 +110,21 @@ export default class API {
 	 */
 	call(method, params) {
 		return this.enqueue(method, params);
+	}
+
+	/**
+	 * Adds request for queue
+	 *
+	 * @param {Request} request
+	 *
+	 * @return {Promise<Object>}
+	 */
+	callWithRequest(request) {
+		this.queue.push(request);
+
+		this.worker();
+
+		return request.promise;
 	}
 
 	/**
@@ -113,11 +138,7 @@ export default class API {
 	enqueue(method, params) {
 		const request = new Request(method, params);
 
-		this.queue.push(request);
-
-		this.worker();
-
-		return request.promise;
+		return this.callWithRequest(request);
 	}
 
 	/**
@@ -144,6 +165,7 @@ export default class API {
 		const { apiLimit, apiMode, apiExecuteCount } = this.vk.options;
 
 		const interval = Math.round(1133 / apiLimit);
+		const handler = this.getRequestHandler(apiMode);
 
 		const work = async () => {
 			if (this.queue.length === 0) {
@@ -152,49 +174,9 @@ export default class API {
 				return;
 			}
 
-			if (apiMode !== 'parallel' || this.queue[0].method === 'execute') {
-				this.callMethod(this.queue.shift());
-
+			handler.call(this, () => {
 				setTimeout(work, interval);
-
-				return;
-			}
-
-			const tasks = [];
-			const chain = [];
-
-			for (let i = 0; i < this.queue.length; i += 1) {
-				if (this.queue[i].method === 'execute') {
-					continue;
-				}
-
-				const request = this.queue.splice(i, 1)[0];
-
-				i -= 1;
-
-				tasks.push(request);
-				chain.push(String(request));
-
-				if (tasks.length >= apiExecuteCount) {
-					break;
-				}
-			}
-
-			try {
-				const request = new Request('execute', {
-					code: getChainReturn(chain)
-				});
-
-				this.callMethod(request);
-
-				resolveExecuteTask(tasks, await request.promise);
-			} catch (error) {
-				for (const task of tasks) {
-					task.reject(error);
-				}
-			}
-
-			setTimeout(work, interval);
+			});
 		};
 
 		work();
@@ -227,11 +209,13 @@ export default class API {
 			let response = await fetch(url, {
 				agent,
 				method: 'POST',
+				compress: false,
 				timeout: apiTimeout,
 				headers: {
 					...apiHeaders,
 
-					connection: 'keep-alive'
+					connection: 'keep-alive',
+					'content-type': 'application/json'
 				},
 				body: new URLSearchParams(request.params)
 			});
@@ -306,9 +290,9 @@ export default class API {
 			request.captcha.reject(error);
 		}
 
-		// if (code === USER_VALIDATION_REQUIRED) {
-		// 	/* TODO: Add validate handler */
-		// }
+		if (code === USER_VALIDATION_REQUIRED) {
+			// TODO: Add validate handler
+		}
 
 		const isCaptcha = code === CAPTCHA_REQUIRED;
 
@@ -336,5 +320,48 @@ export default class API {
 				this.requeue(request);
 			})
 		));
+	}
+
+	/**
+	 * Returns request handler
+	 *
+	 * @param {string} mode
+	 *
+	 * @return {Function}
+	 */
+	getRequestHandler(mode = 'sequential') {
+		switch (mode) {
+		case 'sequential': {
+			return sequential;
+		}
+
+		case 'parallel': {
+			return parallel;
+		}
+
+		case 'parallel-selected': {
+			return parallelSelected;
+		}
+
+		default:
+			throw new Error('Unsuported api mode');
+		}
+	}
+
+	/**
+	 * Custom inspect object
+	 *
+	 * @param {?number} depth
+	 * @param {Object}  options
+	 *
+	 * @return {string}
+	 */
+	[inspect.custom](depth, options) {
+		const { name } = this.constructor;
+		const { started, queue } = this;
+
+		const payload = { started, queue };
+
+		return `${options.stylize(name, 'special')} ${inspect(payload, options)}`;
 	}
 }

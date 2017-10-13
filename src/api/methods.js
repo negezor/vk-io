@@ -1,6 +1,6 @@
 /**
  * List methods VK
- * Last updated 18.08.2017
+ * Last updated 06.10.2017
  *
  * @type {Array}
  */
@@ -515,6 +515,15 @@ export default [
 	'storage.get',
 	'storage.getKeys',
 	'storage.set',
+
+	/**
+	 * Streaming
+	 * Methods for working with the Streaming API
+	 */
+	'streaming.getServerUrl',
+	'streaming.getSettings',
+	'streaming.getStats',
+	'streaming.setSettings',
 
 	/**
 	 * Users

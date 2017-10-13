@@ -1,3 +1,5 @@
+import { inspect } from 'util';
+
 import { getExecuteMethod } from '../util/helpers';
 
 export default class Request {
@@ -46,5 +48,22 @@ export default class Request {
 	 */
 	toString() {
 		return getExecuteMethod(this.method, this.params);
+	}
+
+	/**
+	 * Custom inspect object
+	 *
+	 * @param {?number} depth
+	 * @param {Object}  options
+	 *
+	 * @return {string}
+	 */
+	[inspect.custom](depth, options) {
+		const { name } = this.constructor;
+		const { method, params, promise } = this;
+
+		const payload = { method, params, promise };
+
+		return `${options.stylize(name, 'special')} ${inspect(payload, options)}`;
 	}
 }

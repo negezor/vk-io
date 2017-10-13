@@ -1,17 +1,25 @@
-import http from 'http';
-import https from 'https';
-import { URL, URLSearchParams } from 'url';
-
 import fetch from 'node-fetch';
 import createDebug from 'debug';
 
+import http from 'http';
+import https from 'https';
+import { inspect, promisify } from 'util';
+import { URL, URLSearchParams } from 'url';
+
 import {
+	VoteContext,
 	TypingContext,
 	MessageContext,
+	WallPostContext,
 	UserOnlineContext,
+	GroupChangeContext,
 	DialogFlagsContext,
+	MessageAllowContext,
 	ReadMessagesContext,
 	MessageFlagsContext,
+	CommentActionContext,
+	GroupSubscribeContext,
+	NewAttachmentsContext,
 	RemovedMessagesContext
 } from '../structures/contexts';
 
@@ -61,6 +69,15 @@ export default class Updates {
 	 */
 	get [Symbol.toStringTag]() {
 		return 'Updates';
+	}
+
+	/**
+	 * Checks is started
+	 *
+	 * @return {boolean}
+	 */
+	isStarted() {
+		return this.started !== null;
 	}
 
 	/**
@@ -167,7 +184,14 @@ export default class Updates {
 		switch (update.type) {
 		case 'message_new':
 		case 'message_reply': {
-			this.runHandlers(new MessageContext(this.vk, update));
+			this.runHandlers(new MessageContext(this.vk, update.object));
+
+			break;
+		}
+
+		case 'message_allow':
+		case 'message_deny': {
+			this.runHandlers(new MessageAllowContext(this.vk, update));
 
 			break;
 		}
@@ -175,8 +199,62 @@ export default class Updates {
 		case 'photo_new':
 		case 'audio_new':
 		case 'video_new': {
-			/* TODO: I'll do it later */
+			this.runHandlers(new NewAttachmentsContext(this.vk, update));
 
+			break;
+		}
+
+		case 'wall_post_new':
+		case 'wall_repost': {
+			this.runHandlers(new WallPostContext(this.vk, update));
+
+			break;
+		}
+
+		case 'group_join':
+		case 'group_leave': {
+			this.runHandlers(new GroupSubscribeContext(this.vk, update));
+
+			break;
+		}
+
+		case 'photo_comment_new':
+		case 'photo_comment_edit':
+		case 'photo_comment_delete':
+		case 'photo_comment_restore':
+		case 'video_comment_new':
+		case 'video_comment_edit':
+		case 'video_comment_delete':
+		case 'video_comment_restore':
+		case 'wall_reply_new':
+		case 'wall_reply_edit':
+		case 'wall_reply_delete':
+		case 'wall_reply_restore':
+		case 'board_reply_new':
+		case 'board_reply_edit':
+		case 'board_reply_delete':
+		case 'board_reply_restore':
+		case 'market_reply_new':
+		case 'market_reply_edit':
+		case 'market_reply_delete':
+		case 'market_reply_restore': {
+			this.runHandlers(new CommentActionContext(this.vk, update));
+
+			break;
+		}
+
+		case 'poll_vote_new': {
+			this.runHandlers(new VoteContext(this.vk, update));
+
+			break;
+		}
+
+		case 'group_change_photo':
+		case 'group_officers_edit':
+		case 'group_change_settings': {
+			this.runHandlers(new GroupChangeContext(this.vk, update));
+
+			break;
 		}
 		}
 	}
@@ -251,9 +329,13 @@ export default class Updates {
 				? https.createServer(tls, callback)
 				: http.createServer(callback);
 
-			this.webhookServer.listen(port, host, () => {
-				debug(`Webhook listening on port: ${port || tls ? 443 : 80}`);
-			});
+			const { webhookServer } = this;
+
+			const listen = promisify(webhookServer.listen).bind(webhookServer);
+
+			await listen(port, host);
+
+			debug(`Webhook listening on port: ${port || tls ? 443 : 80}`);
 		} catch (error) {
 			this.started = null;
 
@@ -266,12 +348,17 @@ export default class Updates {
 	 *
 	 * @return {Promise}
 	 */
-	stop() {
+	async stop() {
 		this.restarted = 0;
 		this.started = null;
 
 		if (this.webhookServer !== null) {
-			this.webhookServer.close();
+			const { webhookServer } = this;
+
+			const close = promisify(webhookServer.close).bind(webhookServer);
+
+			await close();
+
 			this.webhookServer = null;
 		}
 	}
@@ -422,6 +509,7 @@ export default class Updates {
 
 			method: 'GET',
 			timeout: 25e3,
+			compress: false,
 			headers: {
 				connection: 'keep-alive'
 			}
@@ -464,5 +552,23 @@ export default class Updates {
 		for (const handler of this.handlers) {
 			handler(...args);
 		}
+	}
+
+	/**
+	 * Custom inspect object
+	 *
+	 * @param {?number} depth
+	 * @param {Object}  options
+	 *
+	 * @return {string}
+	 */
+	[inspect.custom](depth, options) {
+		const { name } = this.constructor;
+
+		const { started, handlers } = this;
+
+		const payload = { started, handlers };
+
+		return `${options.stylize(name, 'special')} ${inspect(payload, options)}`;
 	}
 }

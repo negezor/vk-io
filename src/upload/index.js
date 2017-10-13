@@ -1,7 +1,10 @@
 import fetch from 'node-fetch';
 
+import { URL } from 'url';
+import { inspect } from 'util';
 import { randomBytes } from 'crypto';
 import { createReadStream } from 'fs';
+import { request as HTTPSRequest } from 'https';
 
 import {
 	PhotoAttachment,
@@ -14,6 +17,10 @@ import UploadError from '../errors/upload';
 import MultipartStream from './multipart-stream';
 import { isStream, copyParams } from './helpers';
 import { defaultExtensions } from '../util/constants';
+
+/* TODO: After remove */
+import charlesProxy from '../../../cover/agent';
+import FormDataNPM from '../../../cover/node_modules/form-data';
 
 const isLink = /^https?:\/\//i;
 
@@ -330,7 +337,49 @@ export default class Upload {
 			sources: params.source
 		});
 
-		const video = await this.upload(save.upload_url, formData);
+		// const video = await this.upload(save.upload_url, formData);
+
+		const {
+			protocol,
+			search,
+			port,
+			hostname,
+			pathname
+		} = new URL(save.upload_url);
+
+		const request = HTTPSRequest({
+			protocol: 'https:',
+			port,
+			host: hostname,
+			path: pathname + search,
+
+
+			agent: charlesProxy,
+			method: 'POST',
+			headers: {
+				'Content-Type': `multipart/form-data; boundary=${formData.getBoundary()}`
+			}
+		}, (response) => {
+			response.setEncoding('utf8');
+
+			let body = '';
+
+			response.on('data', (chunk) => {
+				body += String(chunk);
+			});
+
+			response.on('end', () => {
+				/* TODO: Remove after */
+				// eslint-disable-next-line
+				console.log(body);
+			});
+		});
+
+		// request.removeHeader('transfer-encoding');
+
+		formData.pipe(request);
+
+		const video = {};
 
 		return new VideoAttachment({ ...save, ...video }, this.vk);
 	}
@@ -714,6 +763,8 @@ export default class Upload {
 		const boundary = randomBytes(30).toString('hex');
 		const formData = new MultipartStream(boundary);
 
+		// const formData = new FormDataNPM();
+
 		const isMultipart = maxFiles > 1;
 
 		const tasks = sources
@@ -747,7 +798,7 @@ export default class Upload {
 					const headers = {};
 
 					if (contentType !== null) {
-						headers['content-type'] = contentType;
+						headers['Content-Type'] = contentType;
 					}
 
 					return formData.append(name, value, { filename, headers });
@@ -774,12 +825,13 @@ export default class Upload {
 		const { agent, uploadTimeout } = this.vk.options;
 
 		let response = await fetch(url, {
-			agent,
+			// agent,
+			agent: charlesProxy,
+			compress: false,
 			method: 'POST',
 			timeout: timeout || uploadTimeout,
 			headers: {
-				connection: 'keep-alive',
-				'content-type': `multipart/form-data; boundary=${formData.getBoundary()}`
+				'Content-Type': `multipart/form-data; boundary=${formData.getBoundary()}`
 			},
 			body: formData
 		});
@@ -795,5 +847,19 @@ export default class Upload {
 		}
 
 		return response;
+	}
+
+	/**
+	 * Custom inspect object
+	 *
+	 * @param {?number} depth
+	 * @param {Object}  options
+	 *
+	 * @return {string}
+	 */
+	[inspect.custom](depth, options) {
+		const { name } = this.constructor;
+
+		return `${options.stylize(name, 'special')} {}`;
 	}
 }

@@ -1,0 +1,82 @@
+import { inspect } from 'util';
+
+import CollectStream from './stream';
+import LIMITS_METHODS from './limits';
+
+import Chain from './chain';
+import { getChainReturn, getExecuteMethod } from '../util/helpers';
+
+export default class Collect {
+	/**
+	 * constructor
+	 *
+	 * @param {VK} vk
+	 */
+	constructor(vk) {
+		this.vk = vk;
+
+		for (const [method, limit, max] of LIMITS_METHODS) {
+			const [group, name] = method.split('.');
+
+			if (!(group in this)) {
+				this[group] = {};
+			}
+
+			this[group][name] = (options = {}) => (
+				new CollectStream(this.vk, {
+					options,
+					method,
+					limit,
+					max
+				})
+			);
+		}
+	}
+
+	/**
+	 * Returns new Chain instance
+	 *
+	 * @return {Chain}
+	 */
+	chain() {
+		return new Chain(this.vk);
+	}
+
+	/**
+	 * Call multiple executors
+	 *
+	 * @param {string} method
+	 * @param {Array}  queue
+	 *
+	 * @return {Promise<Array>}
+	 */
+	executes(method, queue) {
+		queue = queue.map(params => (
+			getExecuteMethod(method, params)
+		));
+
+		const promises = [];
+
+		while (queue.length !== 0) {
+			const code = getChainReturn(queue.splice(0, 25));
+
+			promises.push(this.vk.api.execute({ code }));
+		}
+
+		return Promise.all(promises);
+	}
+
+	/**
+	 * Custom inspect object
+	 *
+	 * @param {?number} depth
+	 * @param {Object}  options
+	 *
+	 * @return {string}
+	 */
+	[inspect.custom](depth, options) {
+		const { name } = this.constructor;
+
+		return `${options.stylize(name, 'special')} {}`;
+	}
+}

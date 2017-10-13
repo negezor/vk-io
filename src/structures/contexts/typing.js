@@ -52,7 +52,7 @@ export default class TypingContext extends Context {
 	}
 
 	/**
-	 * Returns the user id
+	 * Returns the identifier user
 	 *
 	 * @return {number}
 	 */
@@ -61,7 +61,7 @@ export default class TypingContext extends Context {
 	}
 
 	/**
-	 * Returns the chat id
+	 * Returns the identifier chat
 	 *
 	 * @return {?number}
 	 */

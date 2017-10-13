@@ -18,8 +18,8 @@ export default class RemovedMessagesContext extends Context {
 		this.type = 'removed_messages';
 		this.subTypes = [
 			eventId === 13
-				? 'removed_messages'
-				: 'recovery_messages'
+				? 'delete_messages'
+				: 'restore_messages'
 		];
 	}
 
@@ -29,7 +29,7 @@ export default class RemovedMessagesContext extends Context {
 	 * @return {boolean}
 	 */
 	isRemoved() {
-		return this.subTypes.includes('removed_messages');
+		return this.subTypes.includes('delete_messages');
 	}
 
 	/**
@@ -38,7 +38,7 @@ export default class RemovedMessagesContext extends Context {
 	 * @return {boolean}
 	 */
 	isRecovery() {
-		return this.subTypes.includes('recovery_messages');
+		return this.subTypes.includes('restore_messages');
 	}
 
 	/**

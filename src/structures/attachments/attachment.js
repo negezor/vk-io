@@ -39,16 +39,16 @@ export default class Attachment {
 	}
 
 	/**
-	 * Returns owner id
+	 * Returns the identifier owner
 	 *
 	 * @return {number}
 	 */
-	getOwner() {
+	getOwnerId() {
 		return this.owner;
 	}
 
 	/**
-	 * Returns attachment id
+	 * Returns the identifier attachment
 	 *
 	 * @return {number}
 	 */

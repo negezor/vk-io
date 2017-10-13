@@ -23,8 +23,8 @@ export default class ImplicitFlowUser extends ImplicitFlow {
 	 * @return {Response}
 	 */
 	getPermissionsPage() {
-		const { app } = this.vk.options;
-		let { scope } = this.vk.options;
+		const { app } = this;
+		let { scope } = this;
 
 		if (scope === 'all' || scope === null) {
 			scope = getAllUsersPermissions();
@@ -40,7 +40,6 @@ export default class ImplicitFlowUser extends ImplicitFlow {
 			display: 'page',
 			v: API_VERSION,
 			client_id: app,
-			revoke: 1,
 			scope
 		});
 
@@ -59,8 +58,13 @@ export default class ImplicitFlowUser extends ImplicitFlow {
 	async run() {
 		const { response } = await super.run();
 
-		const { hash } = new URL(response.url);
-		const params = new URLSearchParams(hash.substring(1));
+		let { hash } = new URL(response.url);
+
+		if (hash.startsWith('#')) {
+			hash = hash.substring(1);
+		}
+
+		const params = new URLSearchParams(hash);
 
 		if (params.has('error')) {
 			throw new AuthError({
@@ -74,10 +78,14 @@ export default class ImplicitFlowUser extends ImplicitFlow {
 
 		return {
 			email: params.get('email'),
-			user: user || Number(user),
+			user: user !== null
+				? Number(user)
+				: null,
 
 			token: params.get('access_token'),
-			expires: expires || Number(expires)
+			expires: expires !== null
+				? Number(expires)
+				: null
 		};
 	}
 }

@@ -40,7 +40,7 @@ export default class MultipartStream extends SandwichStream {
 
 		if ('headers' in part) {
 			for (const [key, header] of Object.entries(part.headers)) {
-				partStream.write(`${key}:${header}${CRNL}`);
+				partStream.write(`${key}: ${header}${CRNL}`);
 			}
 		}
 
@@ -66,14 +66,14 @@ export default class MultipartStream extends SandwichStream {
 		let header = `form-data; name="${field}"`;
 
 		if (filename !== null) {
-			header += `;filename="${filename}"`;
+			header += `; filename="${filename}"`;
 		}
 
 		return this.addPart({
 			headers: {
 				...headers,
 
-				'content-disposition': header
+				'Content-Disposition': header
 			},
 			body
 		});

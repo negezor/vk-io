@@ -72,14 +72,24 @@ export default class ImplicitFlow {
 	 * @param {Object} options
 	 */
 	constructor(vk, {
+		app = vk.options.app,
+		key = vk.options.key,
+
 		agent = vk.options.agent,
+
+		scope = vk.options.scope,
 		login = vk.options.login,
 		phone = vk.options.phone,
 		password = vk.options.password
 	} = {}) {
 		this.vk = vk;
 
+		this.app = app;
+		this.key = key;
+
 		this.agent = agent;
+
+		this.scope = scope;
 		this.login = login;
 		this.phone = phone;
 		this.password = password;
@@ -128,9 +138,10 @@ export default class ImplicitFlow {
 
 		const { headers = {} } = options;
 
-		// eslint-disable-next-line no-underscore-dangle
 		return this.fetchCookie(url, {
 			...options,
+
+			compress: false,
 
 			headers: {
 				...headers,
@@ -302,6 +313,13 @@ export default class ImplicitFlow {
 		fields.pass = password;
 
 		if ('captcha_sid' in fields) {
+			if (this.vk.captchaHandler === null) {
+				throw new AuthError({
+					message: 'Missing captcha handler',
+					code: MISSING_CAPTCHA_HANDLER
+				});
+			}
+
 			const payload = {
 				src: $('.oauth_captcha').attr('src'),
 				sid: fields.captcha_sid
