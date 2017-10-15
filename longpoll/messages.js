@@ -42,7 +42,11 @@ class BaseMessage {
 	 */
 	send (text, params = {}) {
 		if (typeof text === 'object') {
-			params = text;
+			if(text.attachment) {
+				params = text;
+			} else {
+				throw new Error('First parameter of function "send" must be a string or object with "attachment" property');
+			}
 		} else {
 			params.message = text;
 		}
