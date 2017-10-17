@@ -2,7 +2,7 @@ import { getExecuteMethod } from '../util/helpers';
 
 const unespaceOffset = /"offset":"(\w+)"/g;
 
-export default ({ method, params, paralleltotal }) => {
+export default ({ method, params, parallelCount }) => {
 	const methodCode = getExecuteMethod(method, {
 		...params,
 
@@ -18,15 +18,15 @@ export default ({ method, params, paralleltotal }) => {
 
 		var i = 0, items = [], result, length;
 
-		while (i < ${paralleltotal} && proceed) {
+		while (i < ${parallelCount} && proceed) {
 			result = ${methodCode};
 			length = result.items.length;
 
 			if (total == 0 || total > result.total) {
-				total = result.total;
+				total = length;
 			}
 
-			items = items + results.items;
+			items = items + result.items;
 
 			offset = offset + length;
 			received = received + length;
@@ -41,5 +41,5 @@ export default ({ method, params, paralleltotal }) => {
 		};
 	`;
 
-	return code.replace(unespaceOffset, 'offset:$1');
+	return code.replace(unespaceOffset, '"offset":$1');
 };

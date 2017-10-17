@@ -25,21 +25,21 @@ export default class NewAttachmentsContext extends Context {
 		switch (type) {
 		case 'photo_new': {
 			subType = 'new_photo';
-			attachment = new PhotoAttachment(update);
+			attachment = new PhotoAttachment(update, vk);
 
 			break;
 		}
 
 		case 'video_new': {
 			subType = 'new_video';
-			attachment = new VideoAttachment(update);
+			attachment = new VideoAttachment(update, vk);
 
 			break;
 		}
 
 		case 'audio_new': {
 			subType = 'new_audio';
-			attachment = new AudioAttachment(update);
+			attachment = new AudioAttachment(update, vk);
 
 			break;
 		}

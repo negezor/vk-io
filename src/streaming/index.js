@@ -81,13 +81,13 @@ export default class StreamingAPI {
 			try {
 				switch (code) {
 				case 100: {
-					this.handleEvent(message.service_message);
+					this.handleEvent(message.event);
 
 					break;
 				}
 
 				case 300: {
-					this.handleServiceMessage(message.event);
+					this.handleServiceMessage(message.service_message);
 
 					break;
 				}
@@ -148,7 +148,7 @@ export default class StreamingAPI {
 	async handleEvent(event) {
 		const context = new StreamingContext(this.vk, event);
 
-		
+		console.log(context);
 	}
 
 	/**

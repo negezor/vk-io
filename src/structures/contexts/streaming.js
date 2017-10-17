@@ -17,7 +17,7 @@ export default class StreamingContext extends Context {
 
 		const { action, event_type: type } = payload;
 
-		this.attachments = transformAttachments(payload.attachments);
+		this.attachments = transformAttachments(payload.attachments, vk);
 
 		this.type = 'publication';
 		this.subTypes = [

@@ -54,7 +54,7 @@ export default class MessageContext extends Context {
 			? unescapeHTML(this.payload.body)
 			: null;
 
-		this.attachments = transformAttachments(payload.attachments);
+		this.attachments = transformAttachments(payload.attachments, vk);
 
 		const subTypes = attachmentsTypes.filter(type => (
 			this.attachments.some(attachment => (

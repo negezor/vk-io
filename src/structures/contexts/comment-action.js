@@ -21,7 +21,7 @@ export default class CommentActionContext extends Context {
 		super(vk);
 
 		this.payload = update;
-		this.attachments = transformAttachments(update.attachments);
+		this.attachments = transformAttachments(update.attachments, vk);
 
 		const [, initsiator, commentType, action] = type.match(findTypes);
 

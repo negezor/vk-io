@@ -14,7 +14,7 @@ export default class WallPostContext extends Context {
 
 		this.payload = update;
 
-		this.attachments = [new WallAttachment(this.vk, update)];
+		this.attachments = [new WallAttachment(update, vk)];
 
 		this.type = 'wall_post';
 		this.subTypes = [

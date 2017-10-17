@@ -3,6 +3,8 @@ import { inspect } from 'util';
 export default class Context {
 	/**
 	 * Constructor
+	 *
+	 * @param {VK} vk
 	 */
 	constructor(vk) {
 		this.vk = vk;

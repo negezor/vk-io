@@ -126,11 +126,13 @@ export default class CollectStream extends Readable {
 
 			items = collect;
 		} else {
+			// console.log({ ...this });
+			// return console.log(this.code);
 			const { response, errors } = await this.vk.api.execute({
 				code: this.code,
-				offset: this.offset,
 				total: this.total || 0,
-				received: this.received,
+				offset: this.offset || 0,
+				received: this.received
 			});
 
 			if (errors.length > 0) {
@@ -141,6 +143,8 @@ export default class CollectStream extends Readable {
 					errors
 				});
 			}
+
+			console.log('Execute response:', response, errors);
 
 			const { total, items: collect } = response;
 

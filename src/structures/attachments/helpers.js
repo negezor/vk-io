@@ -16,11 +16,12 @@ import {
  * Transform raw attachments to wrapper
  *
  * @param {Array} attachments
+ * @param {VK}    vk
  *
  * @return {Array}
  */
 // eslint-disable-next-line import/prefer-default-export
-export const transformAttachments = (attachments = []) => (
+export const transformAttachments = (attachments = [], vk) => (
 	attachments
 		.map((item) => {
 			const { type } = item;
@@ -28,27 +29,27 @@ export const transformAttachments = (attachments = []) => (
 
 			switch (type) {
 			case 'gift':
-				return new GiftAttachment(attachment, this.vk);
+				return new GiftAttachment(attachment, vk);
 			case 'wall':
-				return new WallAttachment(attachment, this.vk);
+				return new WallAttachment(attachment, vk);
 			case 'link':
-				return new LinkAttachment(attachment, this.vk);
+				return new LinkAttachment(attachment, vk);
 			case 'photo':
-				return new PhotoAttachment(attachment, this.vk);
+				return new PhotoAttachment(attachment, vk);
 			case 'audio':
-				return new AudioAttachment(attachment, this.vk);
+				return new AudioAttachment(attachment, vk);
 			case 'video':
-				return new VideoAttachment(attachment, this.vk);
+				return new VideoAttachment(attachment, vk);
 			case 'market':
-				return new MarketAttachment(attachment, this.vk);
+				return new MarketAttachment(attachment, vk);
 			case 'sticker':
-				return new StickerAttachment(attachment, this.vk);
+				return new StickerAttachment(attachment, vk);
 			case 'doc':
-				return new DocumentAttachment(attachment, this.vk);
+				return new DocumentAttachment(attachment, vk);
 			case 'wall_reply':
-				return new WallReplyAttachment(attachment, this.vk);
+				return new WallReplyAttachment(attachment, vk);
 			case 'market_album':
-				return new MarketAlbumAttachment(attachment, this.vk);
+				return new MarketAlbumAttachment(attachment, vk);
 			default:
 				return false;
 			}

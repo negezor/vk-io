@@ -17,7 +17,7 @@ export default class GroupChangeContext extends Context {
 		const isChangePhoto = type === 'group_change_photo';
 
 		this.attachments = isChangePhoto
-			? [new PhotoAttachment(this.vk, update.photo)]
+			? [new PhotoAttachment(update.photo, vk)]
 			: [];
 
 		this.type = 'group_change';
