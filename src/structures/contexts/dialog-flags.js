@@ -19,10 +19,10 @@ export default class DialogFlagsContext extends Context {
 		this.subTypes = [
 			// eslint-disable-next-line no-nested-ternary
 			eventId === 10
-				? 'dialog_removed_flags'
+				? 'remove_dialog_flags'
 				: eventId === 11
-					? 'dialog_replace_flags'
-					: 'dialog_set_flags'
+					? 'update_dialog_flags'
+					: 'set_dialog_flags'
 		];
 	}
 

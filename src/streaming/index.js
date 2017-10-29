@@ -125,7 +125,7 @@ export default class StreamingAPI {
 	}
 
 	/**
-	 * [handleServiceMessage description]
+	 * Processes server messages
 	 *
 	 * @param {Object} serviceMessage
 	 *
@@ -139,7 +139,7 @@ export default class StreamingAPI {
 	}
 
 	/**
-	 * [handleEvent description]
+	 * Handles events
 	 *
 	 * @param {Object} event
 	 *
@@ -148,7 +148,7 @@ export default class StreamingAPI {
 	async handleEvent(event) {
 		const context = new StreamingContext(this.vk, event);
 
-		console.log(context);
+		return await this.vk.updates.dispatchMiddleware(context);
 	}
 
 	/**

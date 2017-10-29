@@ -20,14 +20,14 @@ export default class GroupChangeContext extends Context {
 			? [new PhotoAttachment(update.photo, vk)]
 			: [];
 
-		this.type = 'group_change';
+		this.type = 'group_update';
 		this.subTypes = [
 			// eslint-disable-next-line no-nested-ternary
 			type === 'group_change_settings'
-				? 'group_change_settings'
+				? 'group_update_settings'
 				: isChangePhoto
-					? 'group_change_photo'
-					: 'group_change_officers'
+					? 'group_update_photo'
+					: 'group_update_officers'
 		];
 	}
 

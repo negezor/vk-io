@@ -338,7 +338,7 @@ export default class API {
 			return parallel;
 		}
 
-		case 'parallel-selected': {
+		case 'parallel_selected': {
 			return parallelSelected;
 		}
 

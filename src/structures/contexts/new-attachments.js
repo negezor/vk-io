@@ -24,21 +24,21 @@ export default class NewAttachmentsContext extends Context {
 		// eslint-disable-next-line default-case
 		switch (type) {
 		case 'photo_new': {
-			subType = 'new_photo';
+			subType = 'new_photo_attachment';
 			attachment = new PhotoAttachment(update, vk);
 
 			break;
 		}
 
 		case 'video_new': {
-			subType = 'new_video';
+			subType = 'new_video_attachment';
 			attachment = new VideoAttachment(update, vk);
 
 			break;
 		}
 
 		case 'audio_new': {
-			subType = 'new_audio';
+			subType = 'new_audio_attachment';
 			attachment = new AudioAttachment(update, vk);
 
 			break;

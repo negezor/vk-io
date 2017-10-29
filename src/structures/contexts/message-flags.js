@@ -20,10 +20,10 @@ export default class MessageFlagsContext extends Context {
 		this.subTypes = [
 			// eslint-disable-next-line no-nested-ternary
 			eventId === 1
-				? 'message_replace_flags'
+				? 'update_message_flags'
 				: eventId === 2
-					? 'message_set_flags'
-					: 'message_removed_flags'
+					? 'set_message_flags'
+					: 'remove_message_flags'
 		];
 	}
 

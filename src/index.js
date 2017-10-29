@@ -10,6 +10,7 @@ import StreamingAPI from './streaming';
 import { defaultOptions } from './util/constants';
 
 export * from './errors';
+export * from './structures/attachments';
 
 /**
  * Main class

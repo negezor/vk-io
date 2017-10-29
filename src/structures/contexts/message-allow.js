@@ -28,7 +28,7 @@ export default class MessageAllowContext extends Context {
 	 * @return {boolean}
 	 */
 	isSubscribed() {
-		return this.subTypes.includes('message_allow');
+		return this.subTypes.includes('message_subscribe');
 	}
 
 	/**
@@ -37,7 +37,7 @@ export default class MessageAllowContext extends Context {
 	 * @return {boolean}
 	 */
 	isUbsubscribed() {
-		return this.subTypes.includes('message_deny');
+		return this.subTypes.includes('message_unsubscribe');
 	}
 
 	/**

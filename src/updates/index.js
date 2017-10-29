@@ -1,5 +1,6 @@
 import fetch from 'node-fetch';
 import createDebug from 'debug';
+import Middleware from 'middleware-io';
 
 import http from 'http';
 import https from 'https';
@@ -59,7 +60,8 @@ export default class Updates {
 
 		this.webhookServer = null;
 
-		this.handlers = [];
+		this.hears = new Middleware();
+		this.middleware = new Middleware();
 	}
 
 	/**
@@ -81,13 +83,91 @@ export default class Updates {
 	}
 
 	/**
-	 * Added handler
-	 * Temporarily
+	 * Added middleware
 	 *
-	 * @param {function} handler
+	 * @param {Function} handler
+	 *
+	 * @return {this}
 	 */
-	use(handler) {
-		this.handlers.push(handler);
+	use(middleware) {
+		this.middleware.use(middleware);
+
+		return this;
+	}
+
+	/**
+	 * Subscribe to events
+	 *
+	 * @param {String[]} events
+	 * @param {Function} handler
+	 *
+	 * @return {this}
+	 */
+	on(events, handler) {
+		if (!Array.isArray(events)) {
+			events = [events];
+		}
+
+		return this.use(async (context, next) => {
+			const hasSomeType = events.includes(context.type);
+			const hasSomeSubTypes = context.subTypes.some(event => (
+				events.includes(event)
+			));
+
+			if (hasSomeType || hasSomeSubTypes) {
+				await handler(context, next);
+
+				return;
+			}
+
+			await next();
+		});
+	}
+
+	/**
+	 * Listen text
+	 *
+	 * @param {Mixed[]}  condition
+	 * @param {Function} handler
+	 *
+	 * @return {this}
+	 */
+	hear(conditions, handler) {
+		if (!Array.isArray(conditions)) {
+			conditions = [conditions];
+		}
+
+		this.hears.use(async (context, next) => {
+			const text = context.getText();
+
+			const hasSome = conditions.some((condition) => {
+				if (typeof condition === 'function') {
+					return conditions(text, context);
+				}
+
+				if (condition instanceof RegExp) {
+					const passed = condition.test(text);
+
+					if (passed) {
+						context.$match = text.match(condition);
+					}
+
+					return passed;
+				}
+
+				return text === condition;
+			});
+
+			if (!hasSome) {
+				await next();
+
+				return;
+			}
+
+			await handler(context, next);
+		});
+
+		return this;
 	}
 
 	/**
@@ -102,7 +182,7 @@ export default class Updates {
 		case 1:
 		case 2:
 		case 3: {
-			this.runHandlers(new MessageFlagsContext(
+			this.dispatchMiddleware(new MessageFlagsContext(
 				this.vk,
 				update
 			));
@@ -111,7 +191,7 @@ export default class Updates {
 		}
 
 		case 4: {
-			this.runHandlers(new MessageContext(
+			this.dispatchMiddleware(new MessageContext(
 				this.vk,
 				transformMessage(update)
 			));
@@ -121,7 +201,7 @@ export default class Updates {
 
 		case 6:
 		case 7: {
-			this.runHandlers(new ReadMessagesContext(
+			this.dispatchMiddleware(new ReadMessagesContext(
 				this.vk,
 				update
 			));
@@ -131,7 +211,7 @@ export default class Updates {
 
 		case 8:
 		case 9: {
-			this.runHandlers(new UserOnlineContext(
+			this.dispatchMiddleware(new UserOnlineContext(
 				this.vk,
 				update
 			));
@@ -142,7 +222,7 @@ export default class Updates {
 		case 10:
 		case 11:
 		case 12: {
-			this.runHandlers(new DialogFlagsContext(
+			this.dispatchMiddleware(new DialogFlagsContext(
 				this.vk,
 				update
 			));
@@ -152,7 +232,7 @@ export default class Updates {
 
 		case 13:
 		case 14: {
-			this.runHandlers(new RemovedMessagesContext(
+			this.dispatchMiddleware(new RemovedMessagesContext(
 				this.vk,
 				update
 			));
@@ -162,7 +242,7 @@ export default class Updates {
 
 		case 61:
 		case 62: {
-			this.runHandlers(new TypingContext(
+			this.dispatchMiddleware(new TypingContext(
 				this.vk,
 				update
 			));
@@ -184,14 +264,14 @@ export default class Updates {
 		switch (update.type) {
 		case 'message_new':
 		case 'message_reply': {
-			this.runHandlers(new MessageContext(this.vk, update.object));
+			this.dispatchMiddleware(new MessageContext(this.vk, update.object));
 
 			break;
 		}
 
 		case 'message_allow':
 		case 'message_deny': {
-			this.runHandlers(new MessageAllowContext(this.vk, update));
+			this.dispatchMiddleware(new MessageAllowContext(this.vk, update));
 
 			break;
 		}
@@ -199,21 +279,21 @@ export default class Updates {
 		case 'photo_new':
 		case 'audio_new':
 		case 'video_new': {
-			this.runHandlers(new NewAttachmentsContext(this.vk, update));
+			this.dispatchMiddleware(new NewAttachmentsContext(this.vk, update));
 
 			break;
 		}
 
 		case 'wall_post_new':
 		case 'wall_repost': {
-			this.runHandlers(new WallPostContext(this.vk, update));
+			this.dispatchMiddleware(new WallPostContext(this.vk, update));
 
 			break;
 		}
 
 		case 'group_join':
 		case 'group_leave': {
-			this.runHandlers(new GroupSubscribeContext(this.vk, update));
+			this.dispatchMiddleware(new GroupSubscribeContext(this.vk, update));
 
 			break;
 		}
@@ -238,13 +318,13 @@ export default class Updates {
 		case 'market_reply_edit':
 		case 'market_reply_delete':
 		case 'market_reply_restore': {
-			this.runHandlers(new CommentActionContext(this.vk, update));
+			this.dispatchMiddleware(new CommentActionContext(this.vk, update));
 
 			break;
 		}
 
 		case 'poll_vote_new': {
-			this.runHandlers(new VoteContext(this.vk, update));
+			this.dispatchMiddleware(new VoteContext(this.vk, update));
 
 			break;
 		}
@@ -252,7 +332,7 @@ export default class Updates {
 		case 'group_change_photo':
 		case 'group_officers_edit':
 		case 'group_change_settings': {
-			this.runHandlers(new GroupChangeContext(this.vk, update));
+			this.dispatchMiddleware(new GroupChangeContext(this.vk, update));
 
 			break;
 		}
@@ -545,13 +625,24 @@ export default class Updates {
 	}
 
 	/**
-	 * Run handlers
-	 * Temporarily
+	 * Calls up the middleware chain
+	 *
+	 * @param {Context} context
+	 *
+	 * @return {Promise<void>}
 	 */
-	runHandlers(...args) {
-		for (const handler of this.handlers) {
-			handler(...args);
+	async dispatchMiddleware(context) {
+		const { finished, contexts } = await this.middleware.run(context);
+
+		if (!finished) {
+			return;
 		}
+
+		if (!contexts[0].subTypes.includes('text')) {
+			return;
+		}
+
+		await this.hears.run(...contexts);
 	}
 
 	/**

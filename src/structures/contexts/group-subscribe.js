@@ -12,11 +12,11 @@ export default class GroupSubscribeContext extends Context {
 
 		this.payload = update;
 
-		this.type = 'group_subscribers';
+		this.type = 'group_member';
 		this.subTypes = [
 			type === 'group_leave'
-				? 'group_leave'
-				: 'group_join'
+				? 'leave_group_member'
+				: 'join_group_member'
 		];
 	}
 

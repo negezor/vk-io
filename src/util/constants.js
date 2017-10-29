@@ -46,7 +46,7 @@ export const DESKTOP_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) App
  *
  * @property {Agent}   [agent]               HTTPS agent
  *
- * @property {string}  [apiMode]             Query mode (sequential|parallel|parallel-selected)
+ * @property {string}  [apiMode]             Query mode (sequential|parallel|parallel_selected)
  * @property {number}  [apiWait]             Time to wait before re-querying
  * @property {number}  [apiLimit]            Requests per second
  * @property {number}  [apiTimeout]          Wait time for one request

@@ -71,8 +71,6 @@ export default class Attachment {
 	 * @return {string}
 	 */
 	toString() {
-		const hasAccessKey = this.accessKey !== null;
-
 		const accessKey = this.accessKey !== null
 			? `_${this.accessKey}`
 			: '';
