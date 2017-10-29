@@ -108,6 +108,12 @@ export default class Updates {
 			events = [events];
 		}
 
+		const hasNull = events.some(event => !event);
+
+		if (hasNull) {
+			throw new Error('Events should be not null');
+		}
+
 		return this.use(async (context, next) => {
 			const hasSomeType = events.includes(context.type);
 			const hasSomeSubTypes = context.subTypes.some(event => (
@@ -135,6 +141,12 @@ export default class Updates {
 	hear(conditions, handler) {
 		if (!Array.isArray(conditions)) {
 			conditions = [conditions];
+		}
+
+		const hasNull = conditions.some(condition => !condition);
+
+		if (hasNull) {
+			throw new Error('Condition should be not null');
 		}
 
 		this.hears.use(async (context, next) => {
@@ -385,7 +397,7 @@ export default class Updates {
 	 *
 	 * @return {Promise}
 	 */
-	async startWebhook({ tls, port, host }, next) {
+	async startWebhook({ tls, port = 80, host } = {}, next) {
 		if (this.started !== null) {
 			debug(`Updates already started: ${this.started}`);
 

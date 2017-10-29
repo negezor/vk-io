@@ -19,8 +19,8 @@ import { isStream, copyParams } from './helpers';
 import { defaultExtensions } from '../util/constants';
 
 /* TODO: After remove */
-import charlesProxy from '../../../cover/agent';
-import FormDataNPM from '../../../cover/node_modules/form-data';
+// import charlesProxy from '../../../cover/agent';
+// import FormDataNPM from '../../../cover/node_modules/form-data';
 
 const isLink = /^https?:\/\//i;
 
