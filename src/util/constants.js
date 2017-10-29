@@ -62,6 +62,8 @@ export const DESKTOP_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) App
  * @property {string}  [webhookPath]         Webhook path
  * @property {?string} [webhookSecret]       Webhook secret key
  * @property {?string} [webhookConfirmation] Webhook confirmation key
+ *
+ * @property {number}  [collectAttempts]     The number of retries at calling
  */
 export const defaultOptions = {
 	token: null,
@@ -95,7 +97,9 @@ export const defaultOptions = {
 
 	webhookPath: '/',
 	webhookSecret: null,
-	webhookConfirmation: null
+	webhookConfirmation: null,
+
+	collectAttempts: 3
 };
 
 export const defaultExtensions = {
@@ -121,6 +125,7 @@ export const apiErrors = {
 	INCORRECT_REQUEST: 8,
 	TOO_MANY_SIMILAR_ACTIONS: 9,
 	INTERNAL_ERROR: 10,
+	RESPONSE_SIZE_TOO_BIG: 13,
 	CAPTCHA_REQUIRED: 14,
 	ACCESS_DENIED: 15,
 	USER_VALIDATION_REQUIRED: 17,

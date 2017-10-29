@@ -3,12 +3,14 @@ import createDebug from 'debug';
 import { inspect } from 'util';
 import { Readable } from 'stream';
 
-import { CollectError } from '../errors';
+import { CollectError, apiErrors } from '../errors';
 
 import Request from '../api/request';
 import getExecuteCode from './execute-code';
 
 const debug = createDebug('vk-io:collect:stream');
+
+const { APP_TOKEN_NOT_VALID, RESPONSE_SIZE_TOO_BIG } = apiErrors;
 
 export default class CollectStream extends Readable {
 	/**
@@ -42,10 +44,8 @@ export default class CollectStream extends Readable {
 			count: limit
 		};
 
-		if (parallelCount < 1) {
-			throw new RangeError('The minimum number of parallel calls can be 1');
-		} else if (parallelCount > 25) {
-			throw new RangeError('The maximum number of parallel calls can be 25');
+		if (parallelCount < 1 || parallelCount > 25) {
+			throw new RangeError('The number of parallel calls can be between 1 and 25');
 		}
 
 		this.parallelCount = parallelCount;
@@ -64,10 +64,15 @@ export default class CollectStream extends Readable {
 
 		this.received = 0;
 
+		this.attempts = 0;
 		this.promise = null;
 		this.supportExecute = true;
 
-		this.code = getExecuteCode({ method, params, parallelCount });
+		this.code = getExecuteCode({
+			params: this.params,
+			parallelCount,
+			method
+		});
 	}
 
 	/**
@@ -118,7 +123,27 @@ export default class CollectStream extends Readable {
 				offset: this.offset
 			});
 
-			const { count, items: collect } = await this.vk.api.resolveExecuteTask(request);
+			let result;
+			try {
+				result = await this.vk.api.callWithRequest(request);
+			} catch (error) {
+				const { collectAttempts } = this.vk.options;
+
+				if (this.attempts >= collectAttempts) {
+					this.emit('error', error);
+
+					return;
+				}
+
+				this.attempts += 1;
+
+				// eslint-disable-next-line no-underscore-dangle
+				this._read();
+
+				return;
+			}
+
+			const { count, items: collect } = result;
 
 			if (this.total === null || this.total > count) {
 				this.total = count;
@@ -126,25 +151,69 @@ export default class CollectStream extends Readable {
 
 			items = collect;
 		} else {
-			// console.log({ ...this });
-			// return console.log(this.code);
-			const { response, errors } = await this.vk.api.execute({
-				code: this.code,
-				total: this.total || 0,
-				offset: this.offset || 0,
-				received: this.received
-			});
+			let result;
+			try {
+				result = await this.vk.api.execute({
+					code: this.code,
+					total: this.total,
+					offset: this.offset,
+					received: this.received
+				});
+			} catch (error) {
+				if (error.code === APP_TOKEN_NOT_VALID) {
+					this.supportExecute = false;
+
+					debug('execute not supported in token');
+
+					// eslint-disable-next-line no-underscore-dangle
+					this._read();
+
+					return;
+				}
+
+				if (error.code === RESPONSE_SIZE_TOO_BIG) {
+					this.parallelCount -= 1;
+
+					this.code = getExecuteCode({
+						parallelCount: this.parallelCount,
+						params: this.params,
+						method: this.method
+					});
+
+					// eslint-disable-next-line no-underscore-dangle
+					this._read();
+
+					return;
+				}
+
+				const { collectAttempts } = this.vk.options;
+
+				if (this.attempts >= collectAttempts) {
+					this.emit('error', error);
+
+					return;
+				}
+
+				this.attempts += 1;
+
+				// eslint-disable-next-line no-underscore-dangle
+				this._read();
+
+				return;
+			}
+
+			const { response, errors } = result;
 
 			if (errors.length > 0) {
 				/* FIXME: Adds code error and set normal message */
-				throw new CollectError({
+				this.emit('error', new CollectError({
 					message: 'Execute error',
 					code: 'METHOD_ERROR',
 					errors
-				});
-			}
+				}));
 
-			console.log('Execute response:', response, errors);
+				return;
+			}
 
 			const { total, items: collect } = response;
 

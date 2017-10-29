@@ -22,7 +22,7 @@ export default ({ method, params, parallelCount }) => {
 			result = ${methodCode};
 			length = result.items.length;
 
-			if (total == 0 || total > result.total) {
+			if (total == 0 || total > result.count) {
 				total = length;
 			}
 

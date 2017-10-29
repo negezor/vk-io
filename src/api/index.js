@@ -214,8 +214,7 @@ export default class API {
 				headers: {
 					...apiHeaders,
 
-					connection: 'keep-alive',
-					'content-type': 'application/json'
+					connection: 'keep-alive'
 				},
 				body: new URLSearchParams(request.params)
 			});
