@@ -34,6 +34,7 @@ export const DESKTOP_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) App
  * @type {Object}
  *
  * @property {?string} [token]               Access token
+ * @property {Agent}   [agent]               HTTPS agent
  * @property {?string} [lang]                The return data language
  *
  * @property {?string} [login]               User login (phone number or email)
@@ -44,20 +45,19 @@ export const DESKTOP_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) App
  * @property {?number} [key]                 Secret application key
  * @property {?number} [scope]               List of permissions
  *
- * @property {Agent}   [agent]               HTTPS agent
- *
  * @property {string}  [apiMode]             Query mode (sequential|parallel|parallel_selected)
  * @property {number}  [apiWait]             Time to wait before re-querying
  * @property {number}  [apiLimit]            Requests per second
  * @property {number}  [apiTimeout]          Wait time for one request
+ * @property {number}  [apiHeaders]          Headers sent to the API
  * @property {number}  [apiAttempts]         The number of retries at calling
  * @property {number}  [apiExecuteCount]     Number of requests per execute
  * @property {Array}   [apiExecuteMethods]   Methods for call execute (apiMode=parallel-selected)
  *
  * @property {number}  [uploadTimeout]       Wait time for one request
  *
- * @property {number}  [longpollWait]        Time to wait before re-querying
- * @property {number}  [longpollAttempts]    The number of retries at calling
+ * @property {number}  [pollingWait]         Time to wait before re-querying
+ * @property {number}  [pollingAttempts]     The number of retries at calling
  *
  * @property {string}  [webhookPath]         Webhook path
  * @property {?string} [webhookSecret]       Webhook secret key
@@ -67,6 +67,7 @@ export const DESKTOP_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) App
  */
 export const defaultOptions = {
 	token: null,
+	agent: null,
 	lang: null,
 
 	login: null,
@@ -76,8 +77,6 @@ export const defaultOptions = {
 	app: null,
 	key: null,
 	scope: 'all',
-
-	agent: null,
 
 	apiMode: 'sequential',
 	apiWait: 3e3,
@@ -92,8 +91,8 @@ export const defaultOptions = {
 
 	uploadTimeout: 15e3,
 
-	longpollWait: 3e3,
-	longpollAttempts: 3,
+	pollingWait: 3e3,
+	pollingAttempts: 3,
 
 	webhookPath: '/',
 	webhookSecret: null,

@@ -553,9 +553,9 @@ export default class Updates {
 		} catch (error) {
 			debug('longpoll error', error);
 
-			const { longpollWait, longpollAttempts } = this.vk.options;
+			const { pollingWait, pollingAttempts } = this.vk.options;
 
-			if (error.code !== NEED_RESTART && this.restarted < longpollAttempts) {
+			if (error.code !== NEED_RESTART && this.restarted < pollingAttempts) {
 				this.restarted += 1;
 
 				debug('longpoll restart request');
@@ -576,7 +576,7 @@ export default class Updates {
 
 					this.started = 'longpoll';
 
-					await delay(longpollWait);
+					await delay(pollingWait);
 				}
 			}
 		}

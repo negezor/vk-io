@@ -1,5 +1,12 @@
 import { inspect } from 'util';
 
+/**
+ * Parse attachments with RegExp
+ *
+ * @type {RegExp}
+ */
+const parseAttachment = /^([^\d-]+)([-\d]+)_(\d+)_?(\d+)?$/;
+
 export default class Attachment {
 	/**
 	 * Constructor
@@ -18,6 +25,23 @@ export default class Attachment {
 		this.accessKey = accessKey;
 
 		this.filled = false;
+	}
+
+	/**
+	 * Parse attachment with string
+	 *
+	 * @param {string} attachment
+	 *
+	 * @return {Attachment}
+	 */
+	static fromString(attachment) {
+		if (!parseAttachment.test(attachment)) {
+			throw new Error('Incorrect attachment');
+		}
+
+		const [, type, owner, id, accessKey] = attachment.match(parseAttachment);
+
+		return new Attachment(type, owner, id, accessKey);
 	}
 
 	/**

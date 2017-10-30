@@ -287,7 +287,7 @@ export default class DirectAuth {
 		while (this.twoFactorAttempts < TWO_FACTOR_ATTEMPTS && isProcessed) {
 			// eslint-disable-next-line no-loop-func
 			await (new Promise((resolve, reject) => {
-				this.vk.twoFactorHandler(async (code) => {
+				this.vk.twoFactorHandler({}, async (code) => {
 					const { action, fields } = parseFormField($);
 
 					fields.code = code;
