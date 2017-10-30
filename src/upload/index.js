@@ -39,7 +39,7 @@ export default class Upload {
 	 *
 	 * @param {Object} params
 	 *
-	 * @return {Promise<Array>}
+	 * @return {Promise<PhotoAttachment[]>}
 	 */
 	async photoAlbum(params) {
 		const photos = await this.conduct({
@@ -218,7 +218,7 @@ export default class Upload {
 	}
 
 	/**
-	 * Uploading the main photo for a chat
+	 * Uploading a photo for a product
 	 *
 	 * @param {Object} params
 	 *
@@ -247,10 +247,10 @@ export default class Upload {
 	 *
 	 * @param {Object} params
 	 *
-	 * @return {Promise<Array>}
+	 * @return {Promise<PhotoAttachment>}
 	 */
 	async marketAlbumPhoto(params) {
-		const photos = await this.conduct({
+		const [photo] = await this.conduct({
 			field: 'file',
 			params,
 
@@ -264,9 +264,7 @@ export default class Upload {
 			attachmentType: 'photo'
 		});
 
-		return photos.map(photo => (
-			new PhotoAttachment(photo, this.vk)
-		));
+		return new PhotoAttachment(photo, this.vk);
 	}
 
 	/**
@@ -284,7 +282,7 @@ export default class Upload {
 			getServer: this.vk.api.audio.getUploadServer,
 
 			saveFiles: this.vk.api.audio.save,
-			saveParams: ['artist', 'title'],
+			saveParams: ['title', 'artist'],
 
 			maxFiles: 1,
 			attachmentType: 'audio'
@@ -303,13 +301,13 @@ export default class Upload {
 	async video(params) {
 		/* FIXME: 400 Bad Request */
 		const save = await this.vk.api.video.save(copyParams(params, [
-			'name',
-			'description',
-			'is_private',
-			'wallpost',
-			'link',
 			'group_id',
 			'album_id',
+			'name',
+			'description',
+			'link',
+			'is_private',
+			'wallpost',
 			'privacy_view',
 			'privacy_comment',
 			'no_comments',
@@ -825,8 +823,8 @@ export default class Upload {
 		const { agent, uploadTimeout } = this.vk.options;
 
 		let response = await fetch(url, {
-			// agent,
-			agent: charlesProxy,
+			agent,
+			// agent: charlesProxy,
 			compress: false,
 			method: 'POST',
 			timeout: timeout || uploadTimeout,
