@@ -1,6 +1,8 @@
 import { Agent } from 'https';
 import { inspect } from 'util';
 
+import Request from './api/request';
+
 import API from './api';
 import Auth from './auth';
 import Upload from './upload';
@@ -11,6 +13,8 @@ import { defaultOptions } from './util/constants';
 
 export * from './errors';
 export * from './structures/attachments';
+
+export { Request };
 
 /**
  * Main class

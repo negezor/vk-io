@@ -2,15 +2,19 @@
 
 ```js
 import VK from 'vk-io';
+
+// OR
+
+import { VK } from 'vk-io';
 ```
 
 ## Constructor
-Инициализация новой инстанции VK
+Инициализация новой инстанции
 ```js
 new VK([options]);
 ```
 
-Пример
+Например
 ```js
 new VK({
 	app: 1707
