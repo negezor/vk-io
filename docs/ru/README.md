@@ -10,4 +10,7 @@
 		* [CollectStream](api-reference/collect-stream.md)
 	* [Upload](api-reference/upload.md)
 	* [Attachment](api-reference/attachments/attachment.md)
+		* [PhotoAttachment](api-reference/attachments/photo.md)
+	* [Updates](api-reference/updates.md)
+		* [Context](api-reference/contexts/context.md)
 	* ...Уже скоро

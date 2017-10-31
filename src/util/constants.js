@@ -59,7 +59,7 @@ export const DESKTOP_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) App
  * @property {number}  [pollingWait]         Time to wait before re-querying
  * @property {number}  [pollingAttempts]     The number of retries at calling
  *
- * @property {string}  [webhookPath]         Webhook path
+ * @property {?string} [webhookPath]         Webhook path
  * @property {?string} [webhookSecret]       Webhook secret key
  * @property {?string} [webhookConfirmation] Webhook confirmation key
  *
@@ -94,7 +94,7 @@ export const defaultOptions = {
 	pollingWait: 3e3,
 	pollingAttempts: 3,
 
-	webhookPath: '/',
+	webhookPath: null,
 	webhookSecret: null,
 	webhookConfirmation: null,
 

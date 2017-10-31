@@ -34,7 +34,7 @@ new Request('messages.send', {...});
 | reject   | Function | Reject обещания                |
 
 ## toString
-Выдаёт метод для `execute`
+Возвращает строковое представление метода для `execute`
 
 ```js
 String(request);
@@ -44,7 +44,7 @@ String(request);
 request.toString();
 ```
 
-Например
+Пример использования
 
 ```js
 const request = new Request('users.get', {

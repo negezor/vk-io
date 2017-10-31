@@ -12,8 +12,8 @@ export default class Attachment {
 	 * Constructor
 	 *
 	 * @param {string} type
-	 * @param {string} owner
-	 * @param {string} id
+	 * @param {number} owner
+	 * @param {number} id
 	 * @param {string} accessKey
 	 */
 	constructor(type, owner, id, accessKey = null) {

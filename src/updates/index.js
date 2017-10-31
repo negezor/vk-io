@@ -397,7 +397,15 @@ export default class Updates {
 	 *
 	 * @return {Promise}
 	 */
-	async startWebhook({ tls, port = 80, host } = {}, next) {
+	async startWebhook(
+		{
+			tls,
+			path,
+			port = 80,
+			host,
+		} = {},
+		next
+	) {
 		if (this.started !== null) {
 			debug(`Updates already started: ${this.started}`);
 
@@ -407,7 +415,9 @@ export default class Updates {
 		this.started = 'webhook';
 
 		try {
-			const webhookCallback = this.getWebhookCallback();
+			const { webhookPath } = this.vk.options;
+
+			const webhookCallback = this.getWebhookCallback(path || webhookPath || '/');
 
 			const callback = typeof next === 'function'
 				? (req, res) => (
@@ -456,15 +466,15 @@ export default class Updates {
 	}
 
 	/**
-	 * Returns webhook callback like http(s) or express
+	 * Returns webhook callback like http[s] or express
+	 *
+	 * @param {string} path
 	 *
 	 * @return {Function}
 	 */
-	getWebhookCallback() {
-		const { webhookPath } = this.vk.options;
-
+	getWebhookCallback(path = null) {
 		return (req, res, next) => {
-			if (req.method !== 'POST' || req.url !== webhookPath) {
+			if (req.method !== 'POST' || (path !== null && req.url !== path)) {
 				if (typeof next === 'function') {
 					next();
 
