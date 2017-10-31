@@ -141,13 +141,13 @@ export default class ImplicitFlow {
 		return this.fetchCookie(url, {
 			...options,
 
+			agent,
 			compress: false,
 
 			headers: {
 				...headers,
 
-				'User-Agent': DESKTOP_USER_AGENT,
-				agent
+				'User-Agent': DESKTOP_USER_AGENT
 			}
 		});
 	}
@@ -195,13 +195,6 @@ export default class ImplicitFlow {
 			const $ = cheerioLoad(await response.text());
 
 			if (url.includes(ACTION_AUTH_CODE)) {
-				if (this.vk.twoFactorHandler === null) {
-					throw new AuthError({
-						message: 'Missing two-factor handler',
-						code: MISSING_TWO_FACTOR_HANDLER
-					});
-				}
-
 				response = await this.processTwoFactorForm(response, $);
 
 				continue;
@@ -358,6 +351,13 @@ export default class ImplicitFlow {
 	 */
 	async processTwoFactorForm(response, $) {
 		debug('process two-factor handle');
+
+		if (this.vk.twoFactorHandler === null) {
+			throw new AuthError({
+				message: 'Missing two-factor handler',
+				code: MISSING_TWO_FACTOR_HANDLER
+			});
+		}
 
 		let isProcessed = true;
 

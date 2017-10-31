@@ -109,13 +109,13 @@ export default class DirectAuth {
 		return this.fetchCookie(url, {
 			...options,
 
+			agent,
 			compress: false,
 
 			headers: {
 				...headers,
 
-				'User-Agent': DESKTOP_USER_AGENT,
-				agent
+				'User-Agent': DESKTOP_USER_AGENT
 			}
 		});
 	}
@@ -181,9 +181,9 @@ export default class DirectAuth {
 			});
 		}
 
-		this.fetchCookie = fetchCookieFollowRedirectsDecorator(this.jar);
-
 		this.started = true;
+
+		this.fetchCookie = fetchCookieFollowRedirectsDecorator(this.jar);
 
 		let response = await this.getPermissionsPage();
 		let text;

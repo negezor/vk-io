@@ -352,7 +352,7 @@ export default class Upload {
 			path: pathname + search,
 
 
-			agent: charlesProxy,
+			// agent: charlesProxy,
 			method: 'POST',
 			headers: {
 				'Content-Type': `multipart/form-data; boundary=${formData.getBoundary()}`

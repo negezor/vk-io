@@ -36,6 +36,17 @@ export default class Auth {
 	}
 
 	/**
+	 * Direct authorization with login & login in user application
+	 *
+	 * @return {DirectAuth}
+	 */
+	direct() {
+		const { app, key } = this.vk.options;
+
+		return new DirectAuth(this.vk, { app, key });
+	}
+
+	/**
 	 * Direct authorization with login & login in android application
 	 *
 	 * @return {DirectAuth}

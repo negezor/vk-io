@@ -13,6 +13,8 @@ export default class Request {
 		this.method = method;
 		this.params = params;
 
+		this.attempts = 0;
+
 		this.promise = new Promise((resolve, reject) => {
 			this.resolve = resolve;
 			this.reject = reject;
@@ -34,10 +36,6 @@ export default class Request {
 	 * @return {number}
 	 */
 	addAttempt() {
-		if (!('attempts' in this)) {
-			this.attempts = 0;
-		}
-
 		this.attempts += 1;
 	}
 

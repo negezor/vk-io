@@ -6,9 +6,10 @@ import { URL, URLSearchParams } from 'url';
 
 import Request from './request';
 import methods from './methods';
-import { getRandomId } from '../util/helpers';
 import { APIError, ExecuteError } from '../errors';
+import { getRandomId, delay } from '../util/helpers';
 import { API_VERSION, apiErrors } from '../util/constants';
+import AccountVerification from '../auth/account-verification';
 import { sequential, parallel, parallelSelected } from './workers';
 
 const {
@@ -35,6 +36,7 @@ export default class API {
 
 		this.queue = [];
 		this.started = false;
+		this.suspended = false;
 
 		for (const method of methods) {
 			const [group, name] = method.split('.');
@@ -168,7 +170,7 @@ export default class API {
 		const handler = this.getRequestHandler(apiMode);
 
 		const work = async () => {
-			if (this.queue.length === 0) {
+			if (this.queue.length === 0 || this.suspended) {
 				this.started = false;
 
 				return;
@@ -276,7 +278,7 @@ export default class API {
 	 * @param {Request} request
 	 * @param {Object} error
 	 */
-	handleError(request, error) {
+	async handleError(request, error) {
 		const { code } = error;
 
 		if (code === TOO_MANY_REQUESTS) {
@@ -290,7 +292,37 @@ export default class API {
 		}
 
 		if (code === USER_VALIDATION_REQUIRED) {
-			// TODO: Add validate handler
+			if (this.suspended) {
+				this.requeue(request);
+			}
+
+			this.suspended = true;
+
+			try {
+				const verification = new AccountVerification(this.vk);
+
+				const { token } = await verification.run(error.redirectUri);
+
+				debug('Account verification passed');
+
+				this.vk.setToken(token);
+
+				this.suspended = false;
+
+				this.requeue(request);
+			} catch (verificationError) {
+				debug('Account verification error', verificationError);
+
+				request.reject(error);
+
+				await delay(15e3);
+
+				this.suspended = false;
+
+				this.worker();
+			}
+
+			return;
 		}
 
 		const isCaptcha = code === CAPTCHA_REQUIRED;
