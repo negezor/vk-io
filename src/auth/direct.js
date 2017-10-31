@@ -45,6 +45,13 @@ const TWO_FACTOR_ATTEMPTS = 3;
  */
 const CAPTCHA_ATTEMPTS = 3;
 
+/**
+ * Phone number check action
+ *
+ * @type {string}
+ */
+const ACTION_SECURITY_CODE = 'act=security';
+
 export default class DirectAuth {
 	/**
 	 * Constructor
@@ -80,6 +87,8 @@ export default class DirectAuth {
 		this.started = false;
 
 		this.captcha = null;
+		this.twoFactor = null;
+
 		this.captchaAttempts = 0;
 		this.twoFactorAttempts = 0;
 	}
@@ -118,7 +127,7 @@ export default class DirectAuth {
 	 *
 	 * @return {Response}
 	 */
-	getPermissionPage(query = {}) {
+	getPermissionsPage(query = {}) {
 		let { scope } = this;
 
 		if (scope === 'all' || scope === null) {
@@ -142,7 +151,9 @@ export default class DirectAuth {
 			username: login || phone,
 			grant_type: 'password',
 			client_secret: key,
-			'2fa_supported': 1,
+			'2fa_supported': this.vk.twoFactorHandler !== null
+				? 1
+				: 0,
 			v: API_VERSION,
 			client_id: app,
 			password,
@@ -170,9 +181,11 @@ export default class DirectAuth {
 			});
 		}
 
+		this.fetchCookie = fetchCookieFollowRedirectsDecorator(this.jar);
+
 		this.started = true;
 
-		let response = this.getPermissionsPage();
+		let response = await this.getPermissionsPage();
 		let text;
 
 		const isProcessed = true;
@@ -180,11 +193,9 @@ export default class DirectAuth {
 		while (isProcessed) {
 			text = await response.text();
 
-			let isJSON;
+			let isJSON = true;
 			try {
 				text = JSON.parse(text);
-
-				isJSON = true;
 			} catch (e) {
 				isJSON = false;
 			}
@@ -210,24 +221,35 @@ export default class DirectAuth {
 				};
 			} else if (isJSON && 'error' in text) {
 				if (text.error === 'need_captcha') {
-					if (this.captcha !== null) {
-						this.captcha.reject(new AuthError({
-							message: 'Incorrect captcha code',
-							code: FAILED_PASSED_CAPTCHA
-						}));
+					response = await this.processCaptcha(text);
 
-						this.captcha = null;
+					continue;
+				}
 
-						this.captchaAttempts += 1;
+				if (text.error === 'need_validation') {
+					if ('validation_type' in text) {
+						response = await this.processTwoFactor(text);
+
+						continue;
 					}
 
-					response = await this.processCaptcha(text);
+					const $ = cheerioLoad(text);
+
+					response = this.processSecurityForm(response, $);
+
+					continue;
 				}
+
+				throw new AuthError({
+					message: 'Unsupported type validation',
+					code: AUTHORIZATION_FAILED
+				});
 			}
 
-			const $ = cheerioLoad(text);
-
-			/* TODO: Make me! */
+			throw new AuthError({
+				message: 'Authorization failed',
+				code: AUTHORIZATION_FAILED
+			});
 		}
 	}
 
@@ -240,6 +262,17 @@ export default class DirectAuth {
 	 */
 	async processCaptcha({ captcha_sid: sid, captcha_img: src }) {
 		debug('captcha process');
+
+		if (this.captcha !== null) {
+			this.captcha.reject(new AuthError({
+				message: 'Incorrect captcha code',
+				code: FAILED_PASSED_CAPTCHA
+			}));
+
+			this.captcha = null;
+
+			this.captchaAttempts += 1;
+		}
 
 		if (this.vk.captchaHandler === null) {
 			throw new AuthError({
@@ -272,61 +305,110 @@ export default class DirectAuth {
 	}
 
 	/**
-	 * Process two-factor form
+	 * Process two-factor
+	 *
+	 * @param {Object} response
+	 *
+	 * @return {Promise<Response>}
+	 */
+	async processTwoFactor({ validation_type: validationType, phone_mask: phoneMask }) {
+		debug('process two-factor handle');
+
+		if (this.twoFactor !== null) {
+			this.twoFactor.reject(new AuthError({
+				message: 'Incorrect two-factor code',
+				code: FAILED_PASSED_TWO_FACTOR
+			}));
+
+			this.twoFactor = null;
+
+			this.twoFactorAttempts += 1;
+		}
+
+		if (this.vk.twoFactorHandler === null) {
+			throw new AuthError({
+				message: 'Missing two-factor handler',
+				code: MISSING_TWO_FACTOR_HANDLER
+			});
+		}
+
+		if (this.twoFactorAttempts >= TWO_FACTOR_ATTEMPTS) {
+			throw new AuthError({
+				message: 'Failed passed two-factor authentication',
+				code: FAILED_PASSED_TWO_FACTOR
+			});
+		}
+
+		const type = validationType === '2fa_app'
+			? 'app'
+			: 'sms';
+
+		const key = await (new Promise((resolveTwoFactor) => {
+			this.vk.captchaHandler({ type, phoneMask }, code => (
+				new Promise((resolve, reject) => {
+					this.twoFactor = { resolve, reject };
+
+					resolveTwoFactor(code);
+				})
+			));
+		}));
+
+		return await this.getPermissionsPage({
+			code: key
+		});
+	}
+
+	/**
+	 * Process security form
 	 *
 	 * @param {Response} response
 	 * @param {Cheerio}  $
 	 *
 	 * @return {Promise<Response>}
 	 */
-	async processTwoFactorForm(response, $) {
-		debug('process two-factor handle');
+	async processSecurityForm(response, $) {
+		debug('process security form');
 
-		let isProcessed = true;
+		const { login, phone } = this;
 
-		while (this.twoFactorAttempts < TWO_FACTOR_ATTEMPTS && isProcessed) {
-			// eslint-disable-next-line no-loop-func
-			await (new Promise((resolve, reject) => {
-				this.vk.twoFactorHandler({}, async (code) => {
-					const { action, fields } = parseFormField($);
-
-					fields.code = code;
-
-					try {
-						const url = getFullURL(action, response);
-
-						response = await this.fetch(url, {
-							method: 'POST',
-							body: new URLSearchParams(fields)
-						});
-					} catch (error) {
-						reject(error);
-
-						throw error;
-					}
-
-					if (response.url.includes('act=authcheck')) {
-						resolve();
-
-						throw new AuthError({
-							message: 'Incorrect two-factor code',
-							code: FAILED_PASSED_TWO_FACTOR
-						});
-					}
-
-					isProcessed = false;
-
-					resolve();
-				});
-			}));
-
-			this.twoFactorAttempts += 1;
+		let number;
+		if (phone !== null) {
+			number = phone;
+		} else if (login !== null && !login.includes('@')) {
+			number = login;
+		} else {
+			throw new AuthError({
+				message: 'Missing phone number in the phone or login field',
+				code: INVALID_PHONE_NUMBER
+			});
 		}
 
-		if (this.twoFactorAttempts >= TWO_FACTOR_ATTEMPTS && isProcessed) {
+		if (typeof number === 'string') {
+			number = number.trim().replace(/^(\+|00)/, '');
+		}
+
+		number = String(number);
+
+		const $field = $('.field_prefix');
+
+		const prefix = $field.first().text().trim().replace('+', '').length;
+		const postfix = $field.last().text().trim().length;
+
+		const { action, fields } = parseFormField($);
+
+		fields.code = number.slice(prefix, number.length - postfix);
+
+		const url = getFullURL(action, response);
+
+		response = await this.fetch(url, {
+			method: 'POST',
+			body: new URLSearchParams(fields)
+		});
+
+		if (response.url.includes(ACTION_SECURITY_CODE)) {
 			throw new AuthError({
-				message: 'Failed passed two-factor authentication',
-				code: FAILED_PASSED_TWO_FACTOR
+				message: 'Invalid phone number',
+				code: INVALID_PHONE_NUMBER
 			});
 		}
 
