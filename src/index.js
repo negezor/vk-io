@@ -8,6 +8,7 @@ import Auth from './auth';
 import Upload from './upload';
 import Collect from './collect';
 import Updates from './updates';
+import Snippets from './snippets';
 import StreamingAPI from './streaming';
 import { defaultOptions } from './util/constants';
 
@@ -44,6 +45,7 @@ export class VK {
 		this.upload = new Upload(this);
 		this.collect = new Collect(this);
 		this.updates = new Updates(this);
+		this.snippets = new Snippets(this);
 		this.streaming = new StreamingAPI(this);
 
 		this.captchaHandler = null;

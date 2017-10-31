@@ -1,7 +1,7 @@
 import VKError from './vk';
 import { apiErrors } from '../util/constants';
 
-const { CAPTCHA_REQUIRED, USER_VALIDATION_REQUIRED } = apiErrors;
+const { CAPTCHA_REQUIRED, USER_VALIDATION_REQUIRED, CONFIRMATION_REQUIRED } = apiErrors;
 
 export default class APIError extends VKError {
 	/**
@@ -22,6 +22,8 @@ export default class APIError extends VKError {
 			this.captchaImg = payload.captcha_img;
 		} else if (code === USER_VALIDATION_REQUIRED) {
 			this.redirectUri = payload.redirect_uri;
+		} else if (code === CONFIRMATION_REQUIRED) {
+			this.confirmationText = payload.confirmation_text;
 		}
 	}
 }

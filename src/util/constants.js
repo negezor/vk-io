@@ -171,6 +171,15 @@ export const authErrors = {
 };
 
 /**
+ * Collect error codes
+ *
+ * @type {Object}
+ */
+export const collectErrors = {
+	EXECUTE_ERROR: 'EXECUTE_ERROR'
+};
+
+/**
  * List of user permissions and their bit mask
  *
  * @type {Map}

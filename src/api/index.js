@@ -194,7 +194,9 @@ export default class API {
 			token, lang, agent, apiTimeout, apiHeaders
 		} = this.vk.options;
 
-		const url = new URL(request.method, 'https://api.vk.com/method/');
+		const { method } = request;
+
+		const url = new URL(method, 'https://api.vk.com/method/');
 
 		url.searchParams.set('access_token', token);
 		url.searchParams.set('v', API_VERSION);
@@ -204,7 +206,7 @@ export default class API {
 		}
 
 		try {
-			debug(`http --> ${request.method}`);
+			debug(`http --> ${method}`);
 
 			const startTime = Date.now();
 
@@ -225,7 +227,7 @@ export default class API {
 
 			const endTime = (Date.now() - startTime).toLocaleString();
 
-			debug(`http <-- ${request.method} ${endTime}ms`);
+			debug(`http <-- ${method} ${endTime}ms`);
 
 			if ('error' in response) {
 				this.handleError(request, new APIError(response.error));
@@ -237,7 +239,7 @@ export default class API {
 				request.captcha.resolve();
 			}
 
-			if (request.method === 'execute') {
+			if (method === 'execute' || method.startsWith('execute.')) {
 				request.resolve({
 					response: response.response,
 					errors: (response.execute_errors || []).map(error => (
@@ -254,15 +256,13 @@ export default class API {
 
 			if (request.addAttempt() <= apiAttempts) {
 				setTimeout(() => {
-					debug(`Request ${request.method} restarted ${request.attempts} times`);
+					debug(`Request ${method} restarted ${request.attempts} times`);
 
 					this.requeue(request);
 				}, apiWait);
 
 				return;
 			}
-
-			/* TODO: Add transform error to RequestError */
 
 			if ('captcha' in request) {
 				request.captcha.reject(error);

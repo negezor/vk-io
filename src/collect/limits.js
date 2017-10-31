@@ -120,18 +120,6 @@ export default [
 	['messages.search', 100],
 
 	/**
-	 * Newsfeed
-	 * TODO: Make methods
-	 */
-	['newsfeed.getMentions', 50],
-	['newsfeed.getSuggestedSources', 1000],
-
-	/**
-	 * Notification
-	 * TODO: Make methods
-	 */
-
-	/**
 	 * Notes
 	 */
 	['notes.get', 100],

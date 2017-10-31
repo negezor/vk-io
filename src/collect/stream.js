@@ -3,7 +3,7 @@ import createDebug from 'debug';
 import { inspect } from 'util';
 import { Readable } from 'stream';
 
-import { CollectError, apiErrors } from '../errors';
+import { CollectError, apiErrors, collectErrors } from '../errors';
 
 import Request from '../api/request';
 import getExecuteCode from './execute-code';
@@ -11,6 +11,8 @@ import getExecuteCode from './execute-code';
 const debug = createDebug('vk-io:collect:stream');
 
 const { APP_TOKEN_NOT_VALID, RESPONSE_SIZE_TOO_BIG } = apiErrors;
+
+const { EXECUTE_ERROR } = collectErrors;
 
 export default class CollectStream extends Readable {
 	/**
@@ -205,10 +207,9 @@ export default class CollectStream extends Readable {
 			const { response, errors } = result;
 
 			if (errors.length > 0) {
-				/* FIXME: Adds code error and set normal message */
 				this.emit('error', new CollectError({
 					message: 'Execute error',
-					code: 'METHOD_ERROR',
+					code: EXECUTE_ERROR,
 					errors
 				}));
 

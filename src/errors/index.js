@@ -6,7 +6,12 @@ import UpdatesError from './updates';
 import ExecuteError from './execute';
 import StreamingRuleError from './streaming-rule';
 
-export { apiErrors, authErrors, updatesErrors } from '../util/constants';
+export {
+	apiErrors,
+	authErrors,
+	updatesErrors,
+	collectErrors
+} from '../util/constants';
 
 export {
 	VKError,
