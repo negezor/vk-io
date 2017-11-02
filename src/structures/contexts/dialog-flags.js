@@ -61,4 +61,34 @@ export default class DialogFlagsContext extends Context {
 	getFlags() {
 		return this.payload.flags;
 	}
+
+	/**
+	 * Marks the dialog as answered or unchecked.
+	 *
+	 * @param {Object} params
+	 *
+	 * @return {Promise}
+	 */
+	markAsAnsweredDialog(params) {
+		return this.vk.api.messages.markAsAnsweredDialog({
+			...params,
+
+			peer_id: this.payload.peer_id
+		});
+	}
+
+	/**
+	 * Marks the dialog as important or removes the mark
+	 *
+	 * @param {Object} params
+	 *
+	 * @return {Promise}
+	 */
+	markAsImportantDialog(params) {
+		return this.vk.api.messages.markAsImportantDialog({
+			...params,
+
+			peer_id: this.payload.peer_id
+		});
+	}
 }

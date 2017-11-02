@@ -4,7 +4,11 @@ import { URL } from 'url';
 import { inspect } from 'util';
 import { randomBytes } from 'crypto';
 import { createReadStream } from 'fs';
-import { request as HTTPSRequest } from 'https';
+
+import { UploadError } from '../errors';
+import MultipartStream from './multipart-stream';
+import { isStream, copyParams } from './helpers';
+import { defaultExtensions, defaultContentType } from '../util/constants';
 
 import {
 	PhotoAttachment,
@@ -13,16 +17,7 @@ import {
 	DocumentAttachment
 } from '../structures/attachments';
 
-import UploadError from '../errors/upload';
-import MultipartStream from './multipart-stream';
-import { isStream, copyParams } from './helpers';
-import { defaultExtensions } from '../util/constants';
-
-/* TODO: After remove */
-// import charlesProxy from '../../../cover/agent';
-// import FormDataNPM from '../../../cover/node_modules/form-data';
-
-const isLink = /^https?:\/\//i;
+const isURL = /^https?:\/\//i;
 
 export default class Upload {
 	/**
@@ -317,7 +312,9 @@ export default class Upload {
 		save.id = save.video_id;
 
 		if ('link' in params) {
-			const response = await fetch(save.upload_url);
+			const response = await fetch(save.upload_url, {
+				agent: this.vk.options.agent
+			});
 
 			await response.json();
 
@@ -335,49 +332,7 @@ export default class Upload {
 			sources: params.source
 		});
 
-		// const video = await this.upload(save.upload_url, formData);
-
-		const {
-			protocol,
-			search,
-			port,
-			hostname,
-			pathname
-		} = new URL(save.upload_url);
-
-		const request = HTTPSRequest({
-			protocol: 'https:',
-			port,
-			host: hostname,
-			path: pathname + search,
-
-
-			// agent: charlesProxy,
-			method: 'POST',
-			headers: {
-				'Content-Type': `multipart/form-data; boundary=${formData.getBoundary()}`
-			}
-		}, (response) => {
-			response.setEncoding('utf8');
-
-			let body = '';
-
-			response.on('data', (chunk) => {
-				body += String(chunk);
-			});
-
-			response.on('end', () => {
-				/* TODO: Remove after */
-				// eslint-disable-next-line
-				console.log(body);
-			});
-		});
-
-		// request.removeHeader('transfer-encoding');
-
-		formData.pipe(request);
-
-		const video = {};
+		const video = await this.upload(save.upload_url, formData);
 
 		return new VideoAttachment({ ...save, ...video }, this.vk);
 	}
@@ -386,10 +341,11 @@ export default class Upload {
 	 * Uploads doc
 	 *
 	 * @param {Object} params
+	 * @param {Object} options
 	 *
 	 * @return {Promise<DocumentAttachment>}
 	 */
-	async doc(params) {
+	async doc(params, { attachmentType = null } = {}) {
 		const [document] = await this.conduct({
 			field: 'file',
 			params,
@@ -401,7 +357,7 @@ export default class Upload {
 			saveParams: ['title', 'tags'],
 
 			maxFiles: 1,
-			attachmentType: 'doc'
+			attachmentType: attachmentType || 'doc'
 		});
 
 		return new DocumentAttachment(document, this.vk);
@@ -411,10 +367,11 @@ export default class Upload {
 	 * Uploads wall doc
 	 *
 	 * @param {Object} params
+	 * @param {Object} options
 	 *
 	 * @return {Promise<DocumentAttachment>}
 	 */
-	async wallDoc(params) {
+	async wallDoc(params, { attachmentType = null } = {}) {
 		const [document] = await this.conduct({
 			field: 'file',
 			params,
@@ -426,7 +383,7 @@ export default class Upload {
 			saveParams: ['title', 'tags'],
 
 			maxFiles: 1,
-			attachmentType: 'doc'
+			attachmentType: attachmentType || 'doc'
 		});
 
 		return new DocumentAttachment(document, this.vk);
@@ -436,10 +393,11 @@ export default class Upload {
 	 * Uploads message doc
 	 *
 	 * @param {Object} params
+	 * @param {Object} options
 	 *
 	 * @return {Promise<DocumentAttachment>}
 	 */
-	async messageDoc(params) {
+	async messageDoc(params, { attachmentType = null } = {}) {
 		const [document] = await this.conduct({
 			field: 'file',
 			params,
@@ -451,7 +409,7 @@ export default class Upload {
 			saveParams: ['title', 'tags'],
 
 			maxFiles: 1,
-			attachmentType: 'doc'
+			attachmentType: attachmentType || 'doc'
 		});
 
 		return new DocumentAttachment(document, this.vk);
@@ -467,7 +425,9 @@ export default class Upload {
 	voice(params) {
 		params.type = 'audio_message';
 
-		return this.messageDoc(params);
+		return this.messageDoc(params, {
+			attachmentType: 'voice'
+		});
 
 		// [{
 		// 	id: 450654090,
@@ -598,10 +558,11 @@ export default class Upload {
 	 * @return {Promise<DocumentAttachment>}
 	 */
 	graffiti(params) {
-		/* FIXME: One of the parameters specified was missing or invalid: file is undefined */
 		params.type = 'graffiti';
 
-		return this.doc(params);
+		return this.doc(params, {
+			attachmentType: 'graffiti'
+		});
 	}
 
 	/**
@@ -663,8 +624,23 @@ export default class Upload {
 	 *
 	 * @return {Promise<Object>}
 	 */
-	async storiesPhoto(params) {
-		throw new Error('Not yet');
+	storiesPhoto(params) {
+		return this.conduct({
+			field: 'file',
+			params,
+
+			getServer: this.vk.api.stories.getPhotoUploadServer,
+			serverParams: ['user_ids', 'add_to_news'],
+
+			saveFiles: (save) => {
+				console.log('Save', save);
+
+				return save;
+			},
+
+			maxFiles: 1,
+			attachmentType: 'photo'
+		});
 	}
 
 	/**
@@ -674,8 +650,23 @@ export default class Upload {
 	 *
 	 * @return {Promise<Object>}
 	 */
-	async storiesVideo(params) {
-		throw new Error('Not yet');
+	storiesVideo(params) {
+		return this.conduct({
+			field: 'file',
+			params,
+
+			getServer: this.vk.api.stories.getVideoUploadServer,
+			serverParams: ['user_ids', 'add_to_news'],
+
+			saveFiles: (save) => {
+				console.log('Save', save);
+
+				return save;
+			},
+
+			maxFiles: 1,
+			attachmentType: 'video'
+		});
 	}
 
 	/**
@@ -761,8 +752,6 @@ export default class Upload {
 		const boundary = randomBytes(30).toString('hex');
 		const formData = new MultipartStream(boundary);
 
-		// const formData = new FormDataNPM();
-
 		const isMultipart = maxFiles > 1;
 
 		const tasks = sources
@@ -775,7 +764,7 @@ export default class Upload {
 			})
 			.map(async ({ value, filename, contentType = null }, i) => {
 				if (typeof value === 'string') {
-					if (isLink.test(value)) {
+					if (isURL.test(value)) {
 						const response = await fetch(value);
 
 						value = response.body;
@@ -797,6 +786,8 @@ export default class Upload {
 
 					if (contentType !== null) {
 						headers['Content-Type'] = contentType;
+					} else if (attachmentType in defaultContentType) {
+						headers['Content-Type'] = defaultContentType[attachmentType];
 					}
 
 					return formData.append(name, value, { filename, headers });
@@ -824,7 +815,6 @@ export default class Upload {
 
 		let response = await fetch(url, {
 			agent,
-			// agent: charlesProxy,
 			compress: false,
 			method: 'POST',
 			timeout: timeout || uploadTimeout,

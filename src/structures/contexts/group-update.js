@@ -2,7 +2,7 @@ import Context from './context';
 
 import { PhotoAttachment } from '../attachments';
 
-export default class GroupChangeContext extends Context {
+export default class GroupUpdateContext extends Context {
 	/**
 	 * Constructor
 	 *

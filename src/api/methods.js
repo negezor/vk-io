@@ -1,6 +1,6 @@
 /**
  * List methods VK
- * Last updated 06.10.2017
+ * Last updated 01.11.2017
  *
  * @type {Array}
  */
@@ -515,6 +515,15 @@ export default [
 	'storage.get',
 	'storage.getKeys',
 	'storage.set',
+
+	/**
+	 * Stories
+	 * Methods for working with stories
+	 */
+	'stories.get',
+	'stories.delete',
+	'stories.getVideoUploadServer',
+	'stories.getPhotoUploadServer',
 
 	/**
 	 * Streaming

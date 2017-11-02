@@ -8,7 +8,7 @@ const { updates } = vk;
 Запущено ли получение обновлений
 
 ```js
-updates.isStarted(); // => Boolean
+updates.isStarted(); // => boolean
 ```
 
 ## startPolling
@@ -52,7 +52,7 @@ updates.getWebhookCallback(path); // => Function
 
 | Параметр | Тип    | Описание        | По умолчанию |
 |----------|--------|-----------------|--------------|
-| path     | String | Адрес webhook'а | null         |
+| path     | string | Адрес webhook'а | null         |
 
 Пример использования
 
@@ -101,7 +101,7 @@ updates.on(events, handler);
 
 | Параметр | Тип      | Описание       |
 |----------|----------|----------------|
-| events   | String[] | Список событий |
+| events   | string[] | Список событий |
 | handler  | Function | Middleware     |
 
 Пример использования
@@ -127,7 +127,7 @@ updates.hear(text, handler);
 
 | Параметр | Тип      | Описание               |
 |----------|----------|------------------------|
-| name     | String   | Строка которую сверяет |
+| name     | string   | Строка которую сверяет |
 | handler  | Function | Middleware             |
 
 

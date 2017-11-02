@@ -43,6 +43,15 @@ export default class PhotoAttachment extends Attachment {
 	}
 
 	/**
+	 * Returns the photo owner ID
+	 *
+	 * @return {?number}
+	 */
+	getOwnerId() {
+		return this.payload.owner_id || null;
+	}
+
+	/**
 	 * Returns the ID of the user who uploaded the image
 	 *
 	 * @return {?number}

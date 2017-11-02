@@ -5,7 +5,7 @@ import { version } from '../../package.json';
  *
  * @type {string}
  */
-export const API_VERSION = '5.68';
+export const API_VERSION = '5.69';
 
 /**
  * Chat peer ID
@@ -101,12 +101,30 @@ export const defaultOptions = {
 	collectAttempts: 3
 };
 
+/**
+ * Default extensions for attachments
+ *
+ * @type {Object}
+ */
 export const defaultExtensions = {
 	photo: 'jpg',
 	video: 'mp4',
 	audio: 'mp3',
 	voice: 'ogg',
 	graffiti: 'png'
+};
+
+/**
+ * Default content type for attachments
+ *
+ * @type {Object}
+ */
+export const defaultContentType = {
+	photo: 'image/jpeg',
+	video: 'video/mp4',
+	audio: 'audio/mp3',
+	voice: 'audio/ogg',
+	graffiti: 'image/png'
 };
 
 /**

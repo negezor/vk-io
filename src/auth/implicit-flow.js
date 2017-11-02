@@ -2,6 +2,7 @@ import createDebug from 'debug';
 import { CookieJar } from 'tough-cookie';
 import { load as cheerioLoad } from 'cheerio';
 
+import { promisify } from 'util';
 import { URL, URLSearchParams } from 'url';
 
 import { AuthError, authErrors } from '../errors';
@@ -123,6 +124,27 @@ export default class ImplicitFlow {
 		this.jar = jar;
 
 		return this;
+	}
+
+	/**
+	 * Returns cookie
+	 *
+	 * @return {Promise<Object>}
+	 */
+	async getCookie() {
+		const { jar } = this;
+
+		const getCookieString = promisify(jar.getCookieString).bind(jar);
+
+		const [login, main] = await Promise.all([
+			getCookieString('https://login.vk.com'),
+			getCookieString('https://vk.com')
+		]);
+
+		return {
+			'login.vk.com': login,
+			'vk.com': main
+		};
 	}
 
 	/**

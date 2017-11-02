@@ -33,61 +33,61 @@ new PhotoAttachment(photo, vk);
 Возвращает идентификатор пользователя
 
 ```js
-attachment.getUserId(); // => ?Number
+attachment.getUserId(); // => ?number
 ```
 
 ## getAlbumId
 Возвращает идентификатор альбома
 
 ```js
-attachment.getAlbumId(); // => ?Number
+attachment.getAlbumId(); // => ?number
 ```
 
 ## getText
 Возвращает текст описания фотографии
 
 ```js
-attachment.getText(); // => ?String
+attachment.getText(); // => ?string
 ```
 
 ## getDate
 Возращает дату добавления в формате Unixtime
 
 ```js
-attachment.getDate(); // => ?Number
+attachment.getDate(); // => ?number
 ```
 
 ## getHeight
 Возращает ширину оригинала фотографии в пикселах
 
 ```js
-attachment.getHeight(); // => ?Number
+attachment.getHeight(); // => ?number
 ```
 
 ## getWidth
 Возращает высоту оригинала фотографии в пикселах
 
 ```js
-attachment.getWidth(); // => ?Number
+attachment.getWidth(); // => ?number
 ```
 
 ## getSmallPhoto
 Возвращает URL-адрес маленькой фотографии (130 или 75)
 
 ```js
-attachment.getSmallPhoto(); // => ?String
+attachment.getSmallPhoto(); // => ?string
 ```
 
 ## getMediumPhoto
 Возвращает URL-адрес средней фотографии (807 или 604 или меньше)
 
 ```js
-attachment.getMediumPhoto(); // => ?String
+attachment.getMediumPhoto(); // => ?string
 ```
 
 ## getLargePhoto
 Возвращает URL-адрес большой фотографии (2560 или 1280 или меньше)
 
 ```js
-attachment.getLargePhoto(); // => ?String
+attachment.getLargePhoto(); // => ?string
 ```

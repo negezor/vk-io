@@ -41,4 +41,18 @@ export default class WallPostContext extends Context {
 	getWall() {
 		return this.attachments[0];
 	}
+
+	/**
+	 * Removes a record from the wall
+	 *
+	 * @return {Promise}
+	 */
+	deletePost() {
+		const wall = this.getWall();
+
+		return this.vk.api.wall.delete({
+			post_id: wall.getId(),
+			owner_id: wall.getOwnerId()
+		});
+	}
 }

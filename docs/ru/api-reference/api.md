@@ -21,7 +21,7 @@ api.call(method, params); // => Promise<Mixed>
 
 | Параметр | Тип    | Описание          |
 |----------|--------|-------------------|
-| method   | String | Метод             |
+| method   | string | Метод             |
 | params   | Object | Список параметров |
 
 Вместо прямого вызова `api.call` стоит использовать алиасы
@@ -56,16 +56,16 @@ api.procedure(name, params); // => Promise<Mixed>
 
 | Параметр | Тип    | Описание           |
 |----------|--------|--------------------|
-| name     | String | Название процедуры |
+| name     | string | Название процедуры |
 | params   | Object | Список параметров  |
 
 ## isMethod
 Проверяет, является ли строка методом
 
 ```js
-api.isMethod(method); // => Boolean
+api.isMethod(method); // => boolean
 ```
 
 | Параметр | Тип    | Описание            |
 |----------|--------|---------------------|
-| method   | String | Строка для проверки |
+| method   | string | Строка для проверки |

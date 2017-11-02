@@ -1,6 +1,7 @@
 import VKError from './vk';
 import APIError from './api';
 import AuthError from './auth';
+import UploadError from './upload';
 import CollectError from './collect';
 import UpdatesError from './updates';
 import ExecuteError from './execute';
@@ -17,6 +18,7 @@ export {
 	VKError,
 	APIError,
 	AuthError,
+	UploadError,
 	CollectError,
 	UpdatesError,
 	ExecuteError,

@@ -13,7 +13,8 @@ export default class VideoAttachment extends Attachment {
 		this.vk = vk;
 		this.payload = payload;
 
-		this.filled = 'duration' in payload && 'date' in payload;
+		// this.filled = 'duration' in payload && 'date' in payload;
+		this.filled = 'date' in payload;
 	}
 
 	/**

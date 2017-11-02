@@ -41,9 +41,9 @@ vk.setOptions(options); // => this
 
 | Опция | Тип    | Описание                                                                 | По умолчанию |
 |-------|--------|--------------------------------------------------------------------------|--------------|
-| token | String | Токен                                                                    | null         |
+| token | string | Токен                                                                    | null         |
 | agent | Agent  | [HTTPS агент](https://nodejs.org/api/https.html#https_class_https_agent) | https.Agent  |
-| lang  | String | Язык возвращаемых данных                                                 | null         |
+| lang  | string | Язык возвращаемых данных                                                 | null         |
 
 Доступные языки возвращаемых данных
 - `ru` - русский
@@ -59,25 +59,25 @@ vk.setOptions(options); // => this
 
 | Опция    | Тип    | Описание                  | По умолчанию |
 |----------|--------|---------------------------|--------------|
-| login    | String | Логин (email)             | null         |
-| phone    | String | Телефон                   | null         |
-| password | String | Пароль                    | null         |
-| app      | Number | Идентификатор приложения  | null         |
-| key      | String | Секретный ключ приложения | null         |
-| scope    | String | Доступ приложения         | all          |
+| login    | string | Логин (email)             | null         |
+| phone    | string | Телефон                   | null         |
+| password | string | Пароль                    | null         |
+| app      | number | Идентификатор приложения  | null         |
+| key      | string | Секретный ключ приложения | null         |
+| scope    | string | Доступ приложения         | all          |
 
 ### Опции запросов к API
 
 | Опция             | Тип      | Описание                                                                  | По умолчанию                                                             |
 |-------------------|----------|---------------------------------------------------------------------------|--------------------------------------------------------------------------|
-| apiMode           | String   | Режим работы API                                                          | sequential                                                               |
-| apiWait           | Number   | Время ожидания следующей попытки запроса после ошибки                     | 3000                                                                     |
-| apiLimit          | Number   | Количество запрос к API в секунду                                         | 3                                                                        |
-| apiAttempts       | Number   | Количество попыток повтора запроса после ошибки                           | 3                                                                        |
-| apiTimeout        | Number   | Время ожидания запроса                                                    | 6000                                                                     |
+| apiMode           | string   | Режим работы API                                                          | sequential                                                               |
+| apiWait           | number   | Время ожидания следующей попытки запроса после ошибки                     | 3000                                                                     |
+| apiLimit          | number   | Количество запрос к API в секунду                                         | 3                                                                        |
+| apiAttempts       | number   | Количество попыток повтора запроса после ошибки                           | 3                                                                        |
+| apiTimeout        | number   | Время ожидания запроса                                                    | 6000                                                                     |
 | apiHeaders        | Object   | Заголовки отправляемые вместе с запросом                                  | {'User-Agent':\`vk-io/${version} (+https://github.com/negezor/vk-io)\`}  |
-| apiExecuteCount   | Number   | Количество параллельных запросов при apiMode=(parallel|parallel_selected) | 25                                                                       |
-| apiExecuteMethods | String[] | Методы которые будут собираться в execute при apiMode=parallel_selected   | ['messages.send']                                                        |
+| apiExecuteCount   | number   | Количество параллельных запросов при apiMode=(parallel|parallel_selected) | 25                                                                       |
+| apiExecuteMethods | string[] | Методы которые будут собираться в execute при apiMode=parallel_selected   | ['messages.send']                                                        |
 
 Доступные режимы работы API
 - `sequential` - Все запросы идут последовательно
@@ -88,28 +88,28 @@ vk.setOptions(options); // => this
 
 | Опция         | Тип    | Описание                        | По умолчанию |
 |---------------|--------|---------------------------------|--------------|
-| uploadTimeout | Number | Время ожидания запроса загрузки | 15000        |
+| uploadTimeout | number | Время ожидания запроса загрузки | 15000        |
 
 ### Опции polling (long poll)
 
 | Опция           | Тип    | Описание                                              | По умолчанию |
 |-----------------|--------|-------------------------------------------------------|--------------|
-| pollingWait     | Number | Время ожидания следующей попытки запроса после ошибки | 3000         |
-| pollingAttempts | Number | Количество попыток повтора запроса после ошибки       | 3            |
+| pollingWait     | number | Время ожидания следующей попытки запроса после ошибки | 3000         |
+| pollingAttempts | number | Количество попыток повтора запроса после ошибки       | 3            |
 
 ### Опции webhook (callback api)
 
 | Опция               | Тип    | Описание                                              | По умолчанию |
 |---------------------|--------|-------------------------------------------------------|--------------|
-| webhookPath         | String | Время ожидания следующей попытки запроса после ошибки | null         |
-| webhookSecret       | String | Секретный ключ для проверки запросов                  | null         |
-| webhookConfirmation | String | Строка подтверждения сервера                          | null         |
+| webhookPath         | string | Время ожидания следующей попытки запроса после ошибки | null         |
+| webhookSecret       | string | Секретный ключ для проверки запросов                  | null         |
+| webhookConfirmation | string | Строка подтверждения сервера                          | null         |
 
 ### Опции коллекций
 
 | Опция           | Тип    | Описание                                        | По умолчанию |
 |-----------------|--------|-------------------------------------------------|--------------|
-| collectAttempts | Number | Количество попыток повтора запроса после ошибки | 3            |
+| collectAttempts | number | Количество попыток повтора запроса после ошибки | 3            |
 
 ## setToken
 Устанавливает токен
@@ -120,13 +120,13 @@ vk.setToken(token); // => this
 
 | Параметр | Тип    | Описание |
 |----------|--------|----------|
-| token    | String | Токен    |
+| token    | string | Токен    |
 
 ## getToken
 Возвращает токен
 
 ```js
-vk.getToken(); // ?String
+vk.getToken(); // ?string
 ```
 
 ### setCaptchaHandler
@@ -153,8 +153,8 @@ vk.setCaptchaHandler((payload, retry) => {...}); // => this
 
 | Свойство | Тип      | Описание                 |
 |----------|----------|--------------------------|
-| sid      | Number   | Идентификатор капчи      |
-| src      | String   | URL на изображение капчи |
+| sid      | number   | Идентификатор капчи      |
+| src      | string   | URL на изображение капчи |
 | request  | ?Request | Объект запроса           |
 
 Пример использования

@@ -266,6 +266,33 @@ export default class MessageContext extends Context {
 	}
 
 	/**
+	 * Returns the event id
+	 *
+	 * @type {Object}
+	 */
+	getEventId() {
+		return this.payload.action_mid || null;
+	}
+
+	/**
+	 * Returns the event name
+	 *
+	 * @return {?string}
+	 */
+	getEventName() {
+		return this.payload.action || null;
+	}
+
+	/**
+	 * Returns the event name
+	 *
+	 * @return {?string}
+	 */
+	getEventText() {
+		return this.payload.action_text || null;
+	}
+
+	/**
 	 * Sends a message to the current dialog
 	 *
 	 * @param {string|Object} text

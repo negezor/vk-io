@@ -21,10 +21,10 @@ new Attachment('photo', 1, 456264771);
 
 | Параметр  | Тип    | Описание                     |
 |-----------|--------|------------------------------|
-| type      | String | Тип прикрепления             |
-| owner     | Number | Идентификатор владелеца      |
-| id        | Number | Идентификатор прикрепления   |
-| accessKey | String | Ключ доступа (необязательно) |
+| type      | string | Тип прикрепления             |
+| owner     | number | Идентификатор владелеца      |
+| id        | number | Идентификатор прикрепления   |
+| accessKey | string | Ключ доступа (необязательно) |
 
 ## fromString (static)
 Разбирает прикрепление в объект
@@ -35,7 +35,7 @@ Attachment.fromString(attachment); // => Attachment
 
 | Параметр   | Тип    | Описание     |
 |------------|--------|--------------|
-| attachment | String | Прикрепление |
+| attachment | string | Прикрепление |
 
 Пример использования
 
@@ -47,28 +47,28 @@ Attachment.fromString('photo1_456264771'); // => Attachment
 Заполнен ли объект прикрепления, используется в классах наследниках
 
 ```js
-attachment.isFilled(); // Boolean
+attachment.isFilled(); // boolean
 ```
 
 ## getType
 Возвращает тип прикрепления
 
 ```js
-attachment.getType(); // String
+attachment.getType(); // string
 ```
 
 ## getOwnerId
 Возвращает идентификатор владельца
 
 ```js
-attachment.getOwnerId(); // Number
+attachment.getOwnerId(); // number
 ```
 
 ## getId
 Возвращает идентификатор прикрепления
 
 ```js
-attachment.getId(); // Number
+attachment.getId(); // number
 ```
 
 ## toString

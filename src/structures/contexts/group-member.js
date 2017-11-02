@@ -1,6 +1,6 @@
 import Context from './context';
 
-export default class GroupSubscribeContext extends Context {
+export default class GroupMemberContext extends Context {
 	/**
 	 * Constructro
 	 *
@@ -26,7 +26,7 @@ export default class GroupSubscribeContext extends Context {
 	 * @return {boolean}
 	 */
 	isJoin() {
-		return this.subTypes.includes('group_join');
+		return this.subTypes.includes('join_group_member');
 	}
 
 	/**
@@ -35,7 +35,7 @@ export default class GroupSubscribeContext extends Context {
 	 * @return {boolean}
 	 */
 	isLeave() {
-		return this.subTypes.includes('group_leave');
+		return this.subTypes.includes('leave_group_member');
 	}
 
 	/**

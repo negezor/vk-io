@@ -13,7 +13,7 @@ new Request(method, params);
 
 | Параметр | Тип    | Описание          |
 |----------|--------|-------------------|
-| method   | String | Метод             |
+| method   | string | Метод             |
 | params   | Object | Список параметров |
 
 Например
@@ -26,9 +26,9 @@ new Request('messages.send', {...});
 
 | Свойство | Тип      | Описание                       |
 |----------|----------|--------------------------------|
-| method   | String   | Метод                          |
+| method   | string   | Метод                          |
 | params   | Object   | Параметры                      |
-| attempts | Number   | Количество попыток перезапуска |
+| attempts | number   | Количество попыток перезапуска |
 | promise  | Promise  | Обещание                       |
 | resolve  | Function | Resolve обещания               |
 | reject   | Function | Reject обещания                |

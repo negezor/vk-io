@@ -11,6 +11,6 @@ import { Context } from 'vk-io';
 | Свойство | Тип      | Описание          |
 |----------|----------|-------------------|
 | vk       | VK       | Инстанция VK      |
-| type     | String   | Тип контекста     |
-| subTypes | String[] | Подтипы контекста |
+| type     | string   | Тип контекста     |
+| subTypes | string[] | Подтипы контекста |
 | payload  | Object   | Полезная нагрузка |

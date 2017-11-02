@@ -111,4 +111,40 @@ export default class NewAttachmentsContext extends Context {
 	isAudio() {
 		return this.subTypes.includes('new_audio');
 	}
+
+	/**
+	 * Removes the attachment
+	 *
+	 * @return {Promise}
+	 */
+	deleteAttachment() {
+		if (this.isPhoto()) {
+			const [photo] = this.getAttachments('photo');
+
+			return this.vk.api.photos.delete({
+				owner_id: photo.getOwnerId(),
+				photo_id: photo.getId()
+			});
+		}
+
+		if (this.isVideo()) {
+			const [video] = this.getAttachments('video');
+
+			return this.vk.api.video.delete({
+				owner_id: video.getOwnerId(),
+				video_id: video.getId()
+			});
+		}
+
+		if (this.isAudio()) {
+			const [audio] = this.getAttachments('audio');
+
+			return this.vk.api.audio.delete({
+				owner_id: audio.getOwnerId(),
+				audio_id: audio.getId()
+			});
+		}
+
+		return Promise.reject(new Error('Unsupported event for deleting attachment'));
+	}
 }

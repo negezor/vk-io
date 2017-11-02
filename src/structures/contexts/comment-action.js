@@ -17,7 +17,7 @@ export default class CommentActionContext extends Context {
 	 * @param {VK}     vk
 	 * @param {Object} payload
 	 */
-	constructor(vk, { type, object: update }) {
+	constructor(vk, { type, object: update, group_id: groupId }) {
 		super(vk);
 
 		this.payload = update;
@@ -30,6 +30,8 @@ export default class CommentActionContext extends Context {
 			`${initsiator}_comment`,
 			`${action}_${initsiator}_comment`,
 		];
+
+		this.$groupId = groupId;
 	}
 
 	/**
@@ -278,5 +280,95 @@ export default class CommentActionContext extends Context {
 	 */
 	includesFromSubType(type) {
 		return this.subTypes[1].includes(type);
+	}
+
+	/**
+	 * Edits a comment
+	 *
+	 * @param {Object} options
+	 *
+	 * @return {Promise}
+	 */
+	editComment(options) {
+		if (this.isDelete()) {
+			return Promise.reject(new Error('Comment is deleted'));
+		}
+
+		if (this.isBoardComment()) {
+			return this.vk.api.board.editComment({
+				...options,
+
+				topic_id: this.getObjectId(),
+				comment_id: this.getId(),
+				group_id: this.$groupId
+			});
+		}
+
+		const params = {
+			...options,
+
+			comment_id: this.getId(),
+			owner_id: this.getOwnerId()
+		};
+
+		if (this.isPhotoComment()) {
+			return this.vk.api.photos.editComment(params);
+		}
+
+		if (this.isVideoComment()) {
+			return this.vk.api.video.editComment(params);
+		}
+
+		if (this.isWallComment()) {
+			return this.vk.api.wall.editComment(params);
+		}
+
+		if (this.isMarketComment()) {
+			return this.vk.api.market.editComment(params);
+		}
+
+		return Promise.reject(new Error('Unsupported event for editing comment'));
+	}
+
+	/**
+	 * Removes comment
+	 *
+	 * @return {Promise}
+	 */
+	deleteComment() {
+		if (this.isDelete()) {
+			return Promise.reject(new Error('Comment is deleted'));
+		}
+
+		if (this.isBoardComment()) {
+			return this.vk.api.board.deleteComment({
+				topic_id: this.getObjectId(),
+				comment_id: this.getId(),
+				group_id: this.$groupId
+			});
+		}
+
+		const params = {
+			comment_id: this.getId(),
+			owner_id: this.getOwnerId()
+		};
+
+		if (this.isPhotoComment()) {
+			return this.vk.api.photos.deleteComment(params);
+		}
+
+		if (this.isVideoComment()) {
+			return this.vk.api.video.deleteComment(params);
+		}
+
+		if (this.isWallComment()) {
+			return this.vk.api.wall.deleteComment(params);
+		}
+
+		if (this.isMarketComment()) {
+			return this.vk.api.market.deleteComment(params);
+		}
+
+		return Promise.reject(new Error('Unsupported event for deleting comment'));
 	}
 }

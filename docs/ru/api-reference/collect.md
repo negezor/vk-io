@@ -45,7 +45,7 @@ collect.executes(method, params); // => Promise<Mixed[]>
 
 | Параметр | Тип      | Описание  |
 |----------|----------|-----------|
-| method   | String   | Метод     |
+| method   | string   | Метод     |
 | params   | Object[] | Параметры |
 
 Пример использования

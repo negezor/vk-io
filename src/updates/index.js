@@ -12,22 +12,22 @@ import {
 	TypingContext,
 	MessageContext,
 	WallPostContext,
+	GroupUserContext,
 	UserOnlineContext,
-	GroupChangeContext,
+	GroupUpdateContext,
 	DialogFlagsContext,
 	MessageAllowContext,
 	ReadMessagesContext,
 	MessageFlagsContext,
 	CommentActionContext,
-	GroupSubscribeContext,
+	GroupMemberContext,
 	NewAttachmentsContext,
 	RemovedMessagesContext
 } from '../structures/contexts';
 
 import { delay } from '../util/helpers';
-import { UpdatesError } from '../errors';
-import { updatesErrors } from '../util/constants';
 import transformMessage from './transform-message';
+import { UpdatesError, updatesErrors } from '../errors';
 
 const { NEED_RESTART } = updatesErrors;
 
@@ -305,7 +305,14 @@ export default class Updates {
 
 		case 'group_join':
 		case 'group_leave': {
-			this.dispatchMiddleware(new GroupSubscribeContext(this.vk, update));
+			this.dispatchMiddleware(new GroupMemberContext(this.vk, update));
+
+			break;
+		}
+
+		case 'user_block':
+		case 'user_unblock': {
+			this.dispatchMiddleware(new GroupUserContext(this.vk, update));
 
 			break;
 		}
@@ -344,7 +351,7 @@ export default class Updates {
 		case 'group_change_photo':
 		case 'group_officers_edit':
 		case 'group_change_settings': {
-			this.dispatchMiddleware(new GroupChangeContext(this.vk, update));
+			this.dispatchMiddleware(new GroupUpdateContext(this.vk, update));
 
 			break;
 		}

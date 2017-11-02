@@ -1,5 +1,4 @@
 import createDebug from 'debug';
-import { CookieJar } from 'tough-cookie';
 import { load as cheerioLoad } from 'cheerio';
 
 import { URL, URLSearchParams } from 'url';
@@ -81,8 +80,6 @@ export default class DirectAuth {
 		this.login = login;
 		this.phone = phone;
 		this.password = password;
-
-		this.jar = new CookieJar();
 
 		this.started = false;
 
@@ -183,7 +180,7 @@ export default class DirectAuth {
 
 		this.started = true;
 
-		this.fetchCookie = fetchCookieFollowRedirectsDecorator(this.jar);
+		this.fetchCookie = fetchCookieFollowRedirectsDecorator();
 
 		let response = await this.getPermissionsPage();
 		let text;
