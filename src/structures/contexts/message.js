@@ -115,7 +115,7 @@ export default class MessageContext extends Context {
 	 * @return {boolean}
 	 */
 	isDM() {
-		return this.form.type === 'dm';
+		return this.from.type === 'dm';
 	}
 
 	/**
@@ -124,7 +124,7 @@ export default class MessageContext extends Context {
 	 * @return {boolean}
 	 */
 	isChat() {
-		return this.form.type === 'chat';
+		return this.from.type === 'chat';
 	}
 
 	/**
@@ -133,7 +133,7 @@ export default class MessageContext extends Context {
 	 * @return {boolean}
 	 */
 	isGroup() {
-		return this.form.type === 'group';
+		return this.from.type === 'group';
 	}
 
 	/**

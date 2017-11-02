@@ -187,6 +187,7 @@ export default class Updates {
 	 *
 	 * @param {Array} update
 	 */
+	// eslint-disable-next-line consistent-return
 	handleLongpollUpdate(update) {
 		debug('longpoll update', update);
 		// eslint-disable-next-line default-case
@@ -194,72 +195,58 @@ export default class Updates {
 		case 1:
 		case 2:
 		case 3: {
-			this.dispatchMiddleware(new MessageFlagsContext(
+			return this.dispatchMiddleware(new MessageFlagsContext(
 				this.vk,
 				update
 			));
-
-			break;
 		}
 
 		case 4: {
-			this.dispatchMiddleware(new MessageContext(
+			return this.dispatchMiddleware(new MessageContext(
 				this.vk,
 				transformMessage(update)
 			));
-
-			break;
 		}
 
 		case 6:
 		case 7: {
-			this.dispatchMiddleware(new ReadMessagesContext(
+			return this.dispatchMiddleware(new ReadMessagesContext(
 				this.vk,
 				update
 			));
-
-			break;
 		}
 
 		case 8:
 		case 9: {
-			this.dispatchMiddleware(new UserOnlineContext(
+			return this.dispatchMiddleware(new UserOnlineContext(
 				this.vk,
 				update
 			));
-
-			break;
 		}
 
 		case 10:
 		case 11:
 		case 12: {
-			this.dispatchMiddleware(new DialogFlagsContext(
+			return this.dispatchMiddleware(new DialogFlagsContext(
 				this.vk,
 				update
 			));
-
-			break;
 		}
 
 		case 13:
 		case 14: {
-			this.dispatchMiddleware(new RemovedMessagesContext(
+			return this.dispatchMiddleware(new RemovedMessagesContext(
 				this.vk,
 				update
 			));
-
-			break;
 		}
 
 		case 61:
 		case 62: {
-			this.dispatchMiddleware(new TypingContext(
+			return this.dispatchMiddleware(new TypingContext(
 				this.vk,
 				update
 			));
-
-			break;
 		}
 		}
 	}
@@ -269,6 +256,7 @@ export default class Updates {
 	 *
 	 * @param {Object} update
 	 */
+	// eslint-disable-next-line consistent-return
 	handleWebhookUpdate(update) {
 		debug('webhook update', update);
 
@@ -276,45 +264,33 @@ export default class Updates {
 		switch (update.type) {
 		case 'message_new':
 		case 'message_reply': {
-			this.dispatchMiddleware(new MessageContext(this.vk, update.object));
-
-			break;
+			return this.dispatchMiddleware(new MessageContext(this.vk, update.object));
 		}
 
 		case 'message_allow':
 		case 'message_deny': {
-			this.dispatchMiddleware(new MessageAllowContext(this.vk, update));
-
-			break;
+			return this.dispatchMiddleware(new MessageAllowContext(this.vk, update));
 		}
 
 		case 'photo_new':
 		case 'audio_new':
 		case 'video_new': {
-			this.dispatchMiddleware(new NewAttachmentsContext(this.vk, update));
-
-			break;
+			return this.dispatchMiddleware(new NewAttachmentsContext(this.vk, update));
 		}
 
 		case 'wall_post_new':
 		case 'wall_repost': {
-			this.dispatchMiddleware(new WallPostContext(this.vk, update));
-
-			break;
+			return this.dispatchMiddleware(new WallPostContext(this.vk, update));
 		}
 
 		case 'group_join':
 		case 'group_leave': {
-			this.dispatchMiddleware(new GroupMemberContext(this.vk, update));
-
-			break;
+			return this.dispatchMiddleware(new GroupMemberContext(this.vk, update));
 		}
 
 		case 'user_block':
 		case 'user_unblock': {
-			this.dispatchMiddleware(new GroupUserContext(this.vk, update));
-
-			break;
+			return this.dispatchMiddleware(new GroupUserContext(this.vk, update));
 		}
 
 		case 'photo_comment_new':
@@ -337,23 +313,17 @@ export default class Updates {
 		case 'market_reply_edit':
 		case 'market_reply_delete':
 		case 'market_reply_restore': {
-			this.dispatchMiddleware(new CommentActionContext(this.vk, update));
-
-			break;
+			return this.dispatchMiddleware(new CommentActionContext(this.vk, update));
 		}
 
 		case 'poll_vote_new': {
-			this.dispatchMiddleware(new VoteContext(this.vk, update));
-
-			break;
+			return this.dispatchMiddleware(new VoteContext(this.vk, update));
 		}
 
 		case 'group_change_photo':
 		case 'group_officers_edit':
 		case 'group_change_settings': {
-			this.dispatchMiddleware(new GroupUpdateContext(this.vk, update));
-
-			break;
+			return this.dispatchMiddleware(new GroupUpdateContext(this.vk, update));
 		}
 		}
 	}
@@ -546,7 +516,10 @@ export default class Updates {
 					res.writeHead(200, headers);
 					res.end('ok');
 
-					this.handleWebhookUpdate(update);
+					this.handleWebhookUpdate(update).catch((error) => {
+						// eslint-disable-next-line no-console
+						console.error('Handle webhook update error', error);
+					});
 				} catch (error) {
 					debug('webhook error', error);
 
@@ -645,9 +618,10 @@ export default class Updates {
 		if ('updates' in response) {
 			for (const update of response.updates) {
 				try {
-					this.handleLongpollUpdate(update);
+					await this.handleLongpollUpdate(update);
 				} catch (error) {
-					debug('handle update error', error);
+					// eslint-disable-next-line no-console
+					console.error('Handle polling update error', error);
 				}
 			}
 		}
