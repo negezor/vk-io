@@ -48,7 +48,7 @@ api.callWithRequest(request); // => Promise<Mixed>
 | request  | [Request](request.md) | Объект запроса |
 
 ## procedure
-Выполняет процедуру в приложении
+Выполняет процедуру сохраненную в приложении
 
 ```js
 api.procedure(name, params); // => Promise<Mixed>

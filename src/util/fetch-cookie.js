@@ -58,12 +58,15 @@ export const fetchCookieFollowRedirectsDecorator = (jar) => {
 		if (isRedirect && options.redirect !== 'manual' && options.follow !== 0) {
 			debug('Redirect to', response.headers.get('location'));
 
+			let follow;
+			if (options.follow) {
+				follow = options.follow - 1;
+			}
+
 			return await fetchCookieFollowRedirects(response.headers.get('location'), {
 				method: 'GET',
 				body: null,
-				follow: options.follow
-					? options.follow - 1
-					: undefined
+				follow
 			});
 		}
 

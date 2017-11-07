@@ -95,6 +95,9 @@ export default class VK {
 	 * @param {?Function} handler
 	 *
 	 * @return {this}
+	 *
+	 * @example
+	 * 	vk.setCaptchaHandler((payload, retry) => {...});
 	 */
 	setCaptchaHandler(handler) {
 		this.captchaHandler = handler;
@@ -108,6 +111,9 @@ export default class VK {
 	 * @param {?Function} handler
 	 *
 	 * @return {this}
+	 *
+	 * @example
+	 * 	vk.setTwoFactorHandler((payload, retry) => {...});
 	 */
 	setTwoFactorHandler(handler) {
 		this.twoFactorHandler = handler;

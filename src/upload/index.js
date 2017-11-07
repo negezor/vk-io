@@ -632,11 +632,7 @@ export default class Upload {
 			getServer: this.vk.api.stories.getPhotoUploadServer,
 			serverParams: ['user_ids', 'add_to_news'],
 
-			saveFiles: (save) => {
-				console.log('Save', save);
-
-				return save;
-			},
+			saveFiles: save => save,
 
 			maxFiles: 1,
 			attachmentType: 'photo'

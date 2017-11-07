@@ -165,12 +165,15 @@ export default class StreamingAPI {
 		const url = new URL('/rules', this.endPoint);
 		url.searchParams.set('key', this.key);
 
+		let body;
+		if (method !== 'GET') {
+			body = JSON.stringify(payload);
+		}
+
 		let response = await fetch(url, {
 			agent,
 			method,
-			body: method !== 'GET'
-				? JSON.stringify(payload)
-				: undefined,
+			body,
 			headers: {
 				'content-type': 'application/json'
 			}
