@@ -8,6 +8,9 @@
 VK-IO - Это мощный [Node.js](https://nodejs.org) модуль который позволяет вам легко взаимодействовать с ВКонтакте API 🚀
 
 ## Особенности
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/25ee36d46e6e498981a74f8b0653aacc)](https://www.codacy.com/app/negezor/vk-io?utm_source=github.com&utm_medium=referral&utm_content=negezor/vk-io&utm_campaign=badger)
+
 - Полная поддержка ВКонтакте API
 - Предсказуемая абстракция
 - 100% базируется на Promise
