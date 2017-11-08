@@ -33,11 +33,15 @@ export default class DocumentAttachment extends Attachment {
 	}
 
 	/**
-	 * Get document info
+	 * Load attachment payload
 	 *
 	 * @return {Promise}
 	 */
-	async getAttachmentPayload() {
+	async loadAttachmentPayload() {
+		if (this.filled) {
+			return;
+		}
+
 		const [document] = await this.vk.api.docs.getById({
 			docs: `${this.owner}_${this.id}`,
 		});

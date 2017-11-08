@@ -196,16 +196,16 @@ export default class API {
 
 		const { method } = request;
 
-		const url = new URL(method, 'https://api.vk.com/method/');
-
-		url.searchParams.set('access_token', token);
-		url.searchParams.set('v', API_VERSION);
-
-		if (lang !== null) {
-			url.searchParams.append('lang', lang);
-		}
-
 		try {
+			const url = new URL(method, 'https://api.vk.com/method/');
+
+			url.searchParams.set('access_token', token);
+			url.searchParams.set('v', API_VERSION);
+
+			if (lang !== null) {
+				url.searchParams.append('lang', lang);
+			}
+
 			debug(`http --> ${method}`);
 
 			const startTime = Date.now();
@@ -239,7 +239,7 @@ export default class API {
 				request.captcha.resolve();
 			}
 
-			if (method === 'execute' || method.startsWith('execute.')) {
+			if (method.startsWith('execute')) {
 				request.resolve({
 					response: response.response,
 					errors: (response.execute_errors || []).map(error => (

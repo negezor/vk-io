@@ -1,0 +1,100 @@
+const { VK } = require('vk-io');
+const fetch = require('node-fetch');
+
+const fs = require('fs');
+
+const vk = new VK({
+	token: process.env.TOKEN
+});
+
+/**
+ * Uploads photo for wall
+ *
+ * Auto filename and contentType
+ */
+Promise.all([
+	/* File path */
+	vk.upload.wallPhoto({
+		source: './path/to/cat1.jpg'
+	}),
+
+	/* File stream */
+	vk.upload.wallPhoto({
+		source: fs.createReadStream('./path/to/cat2.jpg')
+	}),
+
+	/* Buffer */
+	vk.upload.wallPhoto({
+		source: fs.readFileSync('./path/to/cat3.jpg')
+	}),
+
+	/* URL */
+	vk.upload.wallPhoto({
+		source: 'http://lorempixel.com/400/200/cats/'
+	}),
+
+	/* URL Buffer */
+	fetch('http://lorempixel.com/400/200/cats/')
+		.then(response => response.buffer())
+		.then(buffer => (
+			vk.upload.wallPhoto({
+				source: buffer
+			})
+		)),
+
+	/* URL Stream */
+	fetch('http://lorempixel.com/400/200/cats/')
+		.then(response => (
+			vk.upload.wallPhoto({
+				source: response.body
+			})
+		))
+]);
+
+/**
+ * Uploads photo for wall with contentType and filename
+ */
+Promise.all([
+	/* File path */
+	vk.upload.wallPhoto({
+		// jpeg at dat file
+		source: {
+			value: './path/to/cat1.dat',
+			contentType: 'image/jpeg',
+			filename: 'cat1.jpg'
+		}
+	}),
+
+	/* File stream */
+	vk.upload.wallPhoto({
+		// png at file without extensions
+		source: {
+			value: fs.createReadStream('./path/to/cat2'),
+			contentType: 'cat2.png',
+			filename: 'image/png'
+		}
+	})
+
+	// ...etc
+]);
+
+/**
+ * Uploads multiple files (current only photoAlbum)
+ */
+vk.upload.photoAlbum({
+	source: [
+		'./path/to/cat1.jpg',
+
+		fs.createReadStream('./path/to/cat2.jpg'),
+
+		fs.readFileSync('./path/to/cat3.jpg'),
+
+		'http://lorempixel.com/400/200/cats/',
+
+		{
+			value: './path/to/cat5.dat',
+			contentType: 'image/jpeg',
+			filename: 'cat5.jpg'
+		}
+	]
+});

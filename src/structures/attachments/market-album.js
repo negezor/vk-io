@@ -17,11 +17,15 @@ export default class MarketAlbumAttachment extends Attachment {
 	}
 
 	/**
-	 * Get photo info
+	 * Load attachment payload
 	 *
 	 * @return {Promise}
 	 */
-	async getAttachmentPayload() {
+	async loadAttachmentPayload() {
+		if (this.filled) {
+			return;
+		}
+
 		const [album] = await this.vk.api.market.getAlbumById({
 			owner_id: this.owner,
 			album_ids: this.id

@@ -18,11 +18,15 @@ export default class VideoAttachment extends Attachment {
 	}
 
 	/**
-	 * Get photo info
+	 * Load attachment payload
 	 *
 	 * @return {Promise}
 	 */
-	async getAttachmentPayload() {
+	async loadAttachmentPayload() {
+		if (this.filled) {
+			return;
+		}
+
 		const { items } = await this.vk.api.video.get({
 			videos: `${this.owner}_${this.id}`,
 			extended: 0

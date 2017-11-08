@@ -23,11 +23,15 @@ export default class PhotoAttachment extends Attachment {
 	}
 
 	/**
-	 * Get photo info
+	 * Load attachment payload
 	 *
 	 * @return {Promise}
 	 */
-	async getAttachmentPayload() {
+	async loadAttachmentPayload() {
+		if (this.filled) {
+			return;
+		}
+
 		const [photo] = await this.vk.api.photos.getById({
 			photos: `${this.owner}_${this.id}`,
 			extended: 0

@@ -5,9 +5,9 @@ import { inspect } from 'util';
 import { randomBytes } from 'crypto';
 import { createReadStream } from 'fs';
 
-import { UploadError } from '../errors';
 import MultipartStream from './multipart-stream';
 import { isStream, copyParams } from './helpers';
+import { UploadError, uploadErrors } from '../errors';
 import { defaultExtensions, defaultContentType } from '../util/constants';
 
 import {
@@ -16,6 +16,12 @@ import {
 	VideoAttachment,
 	DocumentAttachment
 } from '../structures/attachments';
+
+const {
+	NO_FILES_TO_UPLOAD,
+	EXCEEDED_MAX_FILES,
+	UNSUPPORTED_SOURCE_TYPE
+} = uploadErrors;
 
 const isURL = /^https?:\/\//i;
 
@@ -654,11 +660,7 @@ export default class Upload {
 			getServer: this.vk.api.stories.getVideoUploadServer,
 			serverParams: ['user_ids', 'add_to_news'],
 
-			saveFiles: (save) => {
-				console.log('Save', save);
-
-				return save;
-			},
+			saveFiles: save => save,
 
 			maxFiles: 1,
 			attachmentType: 'video'
@@ -700,8 +702,20 @@ export default class Upload {
 			params.source = [params.source];
 		}
 
+		params.source = params.source.filter(Boolean);
+
+		if (params.source.length === 0) {
+			throw new UploadError({
+				message: 'No files to upload',
+				code: NO_FILES_TO_UPLOAD
+			});
+		}
+
 		if (params.source.length > maxFiles) {
-			throw new Error('The number of files uploaded has exceeded');
+			throw new UploadError({
+				message: 'The number of files uploaded has exceeded',
+				code: EXCEEDED_MAX_FILES
+			});
 		}
 
 		if ('uploadUrl' in params) {
@@ -789,7 +803,10 @@ export default class Upload {
 					return formData.append(name, value, { filename, headers });
 				}
 
-				throw new Error('Unsupported source type');
+				throw new UploadError({
+					message: 'Unsupported source type',
+					code: UNSUPPORTED_SOURCE_TYPE
+				});
 			});
 
 		await Promise.all(tasks);

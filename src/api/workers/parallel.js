@@ -11,7 +11,7 @@ import {
 export default async function parallel(next) {
 	const { queue } = this;
 
-	if (queue[0].method === 'execute') {
+	if (queue[0].method.startsWith('execute')) {
 		sequential.call(this, next);
 
 		return;
@@ -26,7 +26,7 @@ export default async function parallel(next) {
 	const chain = [];
 
 	for (let i = 0; i < queue.length; i += 1) {
-		if (queue[i].method === 'execute') {
+		if (queue[i].method.startsWith('execute')) {
 			continue;
 		}
 

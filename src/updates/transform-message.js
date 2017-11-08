@@ -49,6 +49,8 @@ export default function transformMessage([, id, flags, peer, date, body, attachm
 		deleted: Number((flags & 128) !== 0),
 		read_state: Number((flags & 1) !== 0),
 		emoji: Number(attachments.emoji === 1),
+
+		$source: 'polling'
 	};
 
 	const isGroup = peer < 0;

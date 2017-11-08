@@ -72,6 +72,30 @@ export default class MessageContext extends Context {
 
 		this.type = 'message';
 		this.subTypes = subTypes;
+
+		this.filled = this.payload.$source !== 'polling';
+	}
+
+	/**
+	 * Load message payload
+	 *
+	 * @return {Promise}
+	 */
+	async loadMessagePayload() {
+		if (this.filled) {
+			return;
+		}
+
+		const { items } = this.vk.api.messages.getById({
+			message_ids: this.getId()
+		});
+		const [message] = items;
+
+		this.payload = message;
+
+		this.attachments = transformAttachments(message.attachments, this.vk);
+
+		this.filled = true;
 	}
 
 	/**
@@ -193,7 +217,7 @@ export default class MessageContext extends Context {
 	/**
 	 * Returns the identifier message
 	 *
-	 * @return {?number}
+	 * @return {number}
 	 */
 	getId() {
 		return this.payload.id;
@@ -202,7 +226,7 @@ export default class MessageContext extends Context {
 	/**
 	 * Returns the identifier user
 	 *
-	 * @return {?number}
+	 * @return {number}
 	 */
 	getUserId() {
 		return this.payload.user_id;
@@ -354,7 +378,7 @@ export default class MessageContext extends Context {
 	 * @return {Promise}
 	 */
 	async sendPhoto(source, params = {}) {
-		const attachment = await this.vk.upload.message({ source });
+		const attachment = await this.vk.upload.messagePhoto({ source });
 
 		return await this.send({
 			...params,

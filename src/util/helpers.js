@@ -6,9 +6,21 @@
  *
  * @return {string}
  */
-export const getExecuteMethod = (method, params = {}) => (
-	`API.${method}(${JSON.stringify(params)})`
-);
+export const getExecuteMethod = (method, params = {}) => {
+	const options = {};
+
+	for (const [key, value] of Object.entries(params)) {
+		if (typeof value === 'object') {
+			options[key] = String(value);
+
+			continue;
+		}
+
+		options[key] = value;
+	}
+
+	return `API.${method}(${JSON.stringify(options)})`;
+};
 
 /**
  * Returns chain for execute

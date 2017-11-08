@@ -17,11 +17,15 @@ export default class AudioAttachment extends Attachment {
 	}
 
 	/**
-	 * Get document info
+	 * Load attachment payload
 	 *
 	 * @return {Promise}
 	 */
-	async getAttachmentPayload() {
+	async loadAttachmentPayload() {
+		if (this.filled) {
+			return;
+		}
+
 		const [audio] = await this.vk.api.docs.getById({
 			audios: `${this.owner}_${this.id}`
 		});

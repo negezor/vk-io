@@ -60,6 +60,8 @@ export default class Updates {
 
 		this.webhookServer = null;
 
+		this.stack = [];
+
 		this.hears = new Middleware();
 		this.middleware = new Middleware();
 	}
@@ -90,7 +92,22 @@ export default class Updates {
 	 * @return {this}
 	 */
 	use(middleware) {
-		this.middleware.use(middleware);
+		this.stack.push(middleware);
+
+		this.middleware = new Middleware(this.stack);
+		this.middleware.use(async (context, next) => {
+			if (!context.subTypes.includes('text')) {
+				await next();
+
+				return;
+			}
+
+			const { finished } = await this.hears.run(context);
+
+			if (finished) {
+				await next();
+			}
+		});
 
 		return this;
 	}
@@ -187,7 +204,6 @@ export default class Updates {
 	 *
 	 * @param {Array} update
 	 */
-	// eslint-disable-next-line consistent-return
 	handleLongpollUpdate(update) {
 		debug('longpoll update', update);
 		// eslint-disable-next-line default-case
@@ -249,6 +265,8 @@ export default class Updates {
 			));
 		}
 		}
+
+		return Promise.resolve();
 	}
 
 	/**
@@ -256,7 +274,6 @@ export default class Updates {
 	 *
 	 * @param {Object} update
 	 */
-	// eslint-disable-next-line consistent-return
 	handleWebhookUpdate(update) {
 		debug('webhook update', update);
 
@@ -326,6 +343,8 @@ export default class Updates {
 			return this.dispatchMiddleware(new GroupUpdateContext(this.vk, update));
 		}
 		}
+
+		return Promise.resolve();
 	}
 
 	/**
@@ -634,18 +653,8 @@ export default class Updates {
 	 *
 	 * @return {Promise<void>}
 	 */
-	async dispatchMiddleware(context) {
-		const { finished, contexts } = await this.middleware.run(context);
-
-		if (!finished) {
-			return;
-		}
-
-		if (!contexts[0].subTypes.includes('text')) {
-			return;
-		}
-
-		await this.hears.run(...contexts);
+	dispatchMiddleware(context) {
+		return this.middleware.run(context);
 	}
 
 	/**

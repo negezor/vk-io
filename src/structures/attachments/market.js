@@ -17,11 +17,15 @@ export default class MarketAttachment extends Attachment {
 	}
 
 	/**
-	 * Get photo info
+	 * Load attachment payload
 	 *
 	 * @return {Promise}
 	 */
-	async getAttachmentPayload() {
+	async loadAttachmentPayload() {
+		if (this.filled) {
+			return;
+		}
+
 		const [market] = await this.vk.api.market.getById({
 			item_ids: `${this.owner}_${this.id}`,
 			extended: 0

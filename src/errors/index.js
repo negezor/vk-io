@@ -10,8 +10,9 @@ import StreamingRuleError from './streaming-rule';
 export {
 	apiErrors,
 	authErrors,
+	uploadErrors,
 	updatesErrors,
-	collectErrors
+	collectErrors,
 } from '../util/constants';
 
 export {

@@ -19,11 +19,15 @@ export default class WallAttachment extends Attachment {
 	}
 
 	/**
-	 * Get payload
+	 * Load attachment payload
 	 *
 	 * @return {Promise}
 	 */
-	async getAttachmentPayload() {
+	async loadAttachmentPayload() {
+		if (this.filled) {
+			return;
+		}
+
 		const [post] = await this.vk.api.wall.getById({
 			posts: `${this.owner}_${this.id}`,
 			extended: 0

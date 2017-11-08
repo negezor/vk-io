@@ -165,15 +165,6 @@ export const apiErrors = {
 };
 
 /**
- * Updates error codes
- *
- * @type {Object}
- */
-export const updatesErrors = {
-	NEED_RESTART: 'NEED_RESTART'
-};
-
-/**
  * Auth error codes
  *
  * @type {Object}
@@ -186,6 +177,26 @@ export const authErrors = {
 	MISSING_CAPTCHA_HANDLER: 'MISSING_CAPTCHA_HANDLER',
 	FAILED_PASSED_TWO_FACTOR: 'FAILED_PASSED_TWO_FACTOR',
 	MISSING_TWO_FACTOR_HANDLER: 'MISSING_TWO_FACTOR_HANDLER'
+};
+
+/**
+ * Upload error codes
+ *
+ * @type {Object}
+ */
+export const uploadErrors = {
+	NO_FILES_TO_UPLOAD: 'NO_FILES_TO_UPLOAD',
+	EXCEEDED_MAX_FILES: 'EXCEEDED_MAX_FILES',
+	UNSUPPORTED_SOURCE_TYPE: 'UNSUPPORTED_SOURCE_TYPE'
+};
+
+/**
+ * Updates error codes
+ *
+ * @type {Object}
+ */
+export const updatesErrors = {
+	NEED_RESTART: 'NEED_RESTART'
 };
 
 /**
