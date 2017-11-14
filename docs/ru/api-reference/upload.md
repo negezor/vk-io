@@ -184,6 +184,8 @@ upload.audio(params); // => Promise<AudioAttachment>
 | artist   | string | Автор композиции. По умолчанию берется из ID3 тегов    |
 
 ## video
+> Временно не работает
+
 Загрузка видео
 
 ```js

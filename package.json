@@ -1,6 +1,6 @@
 {
     "name": "vk-io",
-    "version": "4.0.0",
+    "version": "4.0.0-alpha.0",
     "description": "Modern VK API SDK for Node.js",
     "main": "index.js",
     "scripts": {
@@ -14,6 +14,9 @@
     "engines": {
         "node": ">=8"
     },
+	"files": [
+		"lib"
+	],
     "repository": {
         "type": "git",
         "url": "git+https://github.com/negezor/vk-io.git"
@@ -35,12 +38,12 @@
     },
     "homepage": "https://github.com/negezor/vk-io#readme",
     "devDependencies": {
-        "@babel/cli": "^7.0.0-beta.31",
-        "@babel/core": "^7.0.0-beta.31",
-        "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.31",
-        "@babel/preset-env": "^7.0.0-beta.31",
+        "@babel/cli": "^7.0.0-beta.32",
+        "@babel/core": "^7.0.0-beta.32",
+        "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.32",
+        "@babel/preset-env": "^7.0.0-beta.32",
         "chai": "^4.1.2",
-        "eslint": "^4.10.0",
+        "eslint": "^4.11.0",
         "eslint-config-airbnb-base": "^12.1.0",
         "eslint-plugin-import": "^2.8.0",
         "mocha": "^4.0.1"
@@ -52,6 +55,6 @@
         "node-fetch": "^2.0.0-alpha.9",
         "sandwich-stream": "^1.0.0",
         "tough-cookie": "^2.3.3",
-        "ws": "^3.3.0"
+        "ws": "^3.3.1"
     }
 }
