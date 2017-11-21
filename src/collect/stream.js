@@ -78,6 +78,15 @@ export default class CollectStream extends Readable {
 	}
 
 	/**
+	 * Returns custom tag
+	 *
+	 * @return {string}
+	 */
+	get [Symbol.toStringTag]() {
+		return 'CollectStream';
+	}
+
+	/**
 	 * Promise based
 	 *
 	 * @param {Function} thenFn

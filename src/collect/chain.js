@@ -17,6 +17,15 @@ export default class Chain {
 	}
 
 	/**
+	 * Returns custom tag
+	 *
+	 * @return {string}
+	 */
+	get [Symbol.toStringTag]() {
+		return 'Chain';
+	}
+
+	/**
 	 * Adds method to queue
 	 *
 	 * @param {string} method

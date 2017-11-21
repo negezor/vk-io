@@ -105,6 +105,15 @@ export default class ImplicitFlow {
 	}
 
 	/**
+	 * Returns custom tag
+	 *
+	 * @return {string}
+	 */
+	get [Symbol.toStringTag]() {
+		return this.constructor.name;
+	}
+
+	/**
 	 * Returns CookieJar
 	 *
 	 * @return {CookieJar}

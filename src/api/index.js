@@ -69,6 +69,15 @@ export default class API {
 	}
 
 	/**
+	 * Returns the current used API version
+	 *
+	 * @return {string}
+	 */
+	get API_VERSION() {
+		return API_VERSION;
+	}
+
+	/**
 	 * Checks that this is a API method
 	 *
 	 * @param {string} method

@@ -34,6 +34,15 @@ export default class Collect {
 	}
 
 	/**
+	 * Returns custom tag
+	 *
+	 * @return {string}
+	 */
+	get [Symbol.toStringTag]() {
+		return 'Collect';
+	}
+
+	/**
 	 * Returns new Chain instance
 	 *
 	 * @return {Chain}

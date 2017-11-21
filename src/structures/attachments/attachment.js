@@ -28,6 +28,15 @@ export default class Attachment {
 	}
 
 	/**
+	 * Returns custom tag
+	 *
+	 * @return {string}
+	 */
+	get [Symbol.toStringTag]() {
+		return this.constructor.name;
+	}
+
+	/**
 	 * Parse attachment with string
 	 *
 	 * @param {string} attachment

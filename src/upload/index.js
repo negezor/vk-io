@@ -36,6 +36,15 @@ export default class Upload {
 	}
 
 	/**
+	 * Returns custom tag
+	 *
+	 * @return {string}
+	 */
+	get [Symbol.toStringTag]() {
+		return 'Upload';
+	}
+
+	/**
 	 * Uploading photos to an album
 	 *
 	 * @param {Object} params
@@ -344,14 +353,14 @@ export default class Upload {
 	}
 
 	/**
-	 * Uploads doc
+	 * Uploads document
 	 *
 	 * @param {Object} params
 	 * @param {Object} options
 	 *
 	 * @return {Promise<DocumentAttachment>}
 	 */
-	async doc(params, { attachmentType = null } = {}) {
+	async document(params, { attachmentType = null } = {}) {
 		const [document] = await this.conduct({
 			field: 'file',
 			params,
@@ -370,14 +379,14 @@ export default class Upload {
 	}
 
 	/**
-	 * Uploads wall doc
+	 * Uploads wall document
 	 *
 	 * @param {Object} params
 	 * @param {Object} options
 	 *
 	 * @return {Promise<DocumentAttachment>}
 	 */
-	async wallDoc(params, { attachmentType = null } = {}) {
+	async wallDocument(params, { attachmentType = null } = {}) {
 		const [document] = await this.conduct({
 			field: 'file',
 			params,
@@ -396,14 +405,14 @@ export default class Upload {
 	}
 
 	/**
-	 * Uploads message doc
+	 * Uploads message document
 	 *
 	 * @param {Object} params
 	 * @param {Object} options
 	 *
 	 * @return {Promise<DocumentAttachment>}
 	 */
-	async messageDoc(params, { attachmentType = null } = {}) {
+	async messageDocument(params, { attachmentType = null } = {}) {
 		const [document] = await this.conduct({
 			field: 'file',
 			params,
@@ -431,7 +440,7 @@ export default class Upload {
 	voice(params) {
 		params.type = 'audio_message';
 
-		return this.messageDoc(params, {
+		return this.messageDocument(params, {
 			attachmentType: 'voice'
 		});
 
@@ -566,7 +575,7 @@ export default class Upload {
 	graffiti(params) {
 		params.type = 'graffiti';
 
-		return this.doc(params, {
+		return this.document(params, {
 			attachmentType: 'graffiti'
 		});
 	}

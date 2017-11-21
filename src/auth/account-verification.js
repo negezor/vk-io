@@ -68,6 +68,15 @@ export default class AccountVerification {
 	}
 
 	/**
+	 * Returns custom tag
+	 *
+	 * @return {string}
+	 */
+	get [Symbol.toStringTag]() {
+		return 'AccountVerification';
+	}
+
+	/**
 	 * Executes the HTTP request
 	 *
 	 * @param {string} url

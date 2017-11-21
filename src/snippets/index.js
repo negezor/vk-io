@@ -44,6 +44,15 @@ export default class Snippets {
 	}
 
 	/**
+	 * Returns custom tag
+	 *
+	 * @return {string}
+	 */
+	get [Symbol.toStringTag]() {
+		return 'Snippets';
+	}
+
+	/**
 	 * Defines the type of object (user, community, application, attachment)
 	 *
 	 * @param {string} resource

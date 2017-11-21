@@ -15,6 +15,15 @@ export default class Auth {
 	}
 
 	/**
+	 * Returns custom tag
+	 *
+	 * @return {string}
+	 */
+	get [Symbol.toStringTag]() {
+		return 'Auth';
+	}
+
+	/**
 	 * Standalone authorization with login & password
 	 *
 	 * @return {ImplicitFlowUser}

@@ -23,7 +23,7 @@ export default ({ method, params, parallelCount }) => {
 			length = result.items.length;
 
 			if (total == 0 || total > result.count) {
-				total = length;
+				total = result.count;
 			}
 
 			items = items + result.items;

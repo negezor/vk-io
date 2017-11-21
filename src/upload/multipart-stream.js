@@ -22,6 +22,15 @@ export default class MultipartStream extends SandwichStream {
 	}
 
 	/**
+	 * Returns custom tag
+	 *
+	 * @return {string}
+	 */
+	get [Symbol.toStringTag]() {
+		return 'MultipartStream';
+	}
+
+	/**
 	 * Returns boundary
 	 *
 	 * @return {string}

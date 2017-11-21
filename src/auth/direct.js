@@ -91,6 +91,15 @@ export default class DirectAuth {
 	}
 
 	/**
+	 * Returns custom tag
+	 *
+	 * @return {string}
+	 */
+	get [Symbol.toStringTag]() {
+		return 'DirectAuth';
+	}
+
+	/**
 	 * Executes the HTTP request
 	 *
 	 * @param {string} url

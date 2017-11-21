@@ -212,11 +212,11 @@ upload.video(params); // => Promise<VideoAttachment>
 | no_comments     | number | 1 — закрыть комментарии (для видео из сообществ)                                                                              |
 | repeat          | number | 1 — зацикливать воспроизведения видеозаписи                                                                                   |
 
-## doc
+## document
 Загрузка документа
 
 ```js
-upload.doc(params); // => Promise<DocumentAttachment>
+upload.document(params); // => Promise<DocumentAttachment>
 ```
 
 | Параметр | Тип    | Описание           |
@@ -232,7 +232,7 @@ upload.doc(params); // => Promise<DocumentAttachment>
 | title    | string | Название документа                     |
 | tags     | string | Метки для поиска                       |
 
-## wallDoc
+## wallDocument
 Загрузка документа на стену
 
 ```js
@@ -252,7 +252,7 @@ upload.wallDoc(params); // => Promise<DocumentAttachment>
 | title    | string | Название документа                     |
 | tags     | string | Метки для поиска                       |
 
-## messageDoc
+## messageDocument
 Загрузка документа в сообщение
 
 ```js

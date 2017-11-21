@@ -382,6 +382,43 @@ export default class MessageContext extends Context {
 
 		return await this.send({
 			...params,
+
+			attachment
+		});
+	}
+
+	/**
+	 * Sends a document to the current dialog
+	 *
+	 * @param {mixed}  sourxe
+	 * @param {Object} params
+	 *
+	 * @return {Promise}
+	 */
+	async sendDocument(source, params = {}) {
+		const attachment = await this.vk.upload.messageDocument({ source });
+
+		return await this.send({
+			...params,
+
+			attachment
+		});
+	}
+
+	/**
+	 * Sends a voice to the current dialog
+	 *
+	 * @param {mixed}  sourxe
+	 * @param {Object} params
+	 *
+	 * @return {Promise}
+	 */
+	async sendVoice(source, params = {}) {
+		const attachment = await this.vk.upload.voice({ source });
+
+		return await this.send({
+			...params,
+
 			attachment
 		});
 	}
