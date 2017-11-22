@@ -14,8 +14,10 @@ const debug = createDebug('vk-io:auth:account-verification');
 const {
 	INVALID_PHONE_NUMBER,
 	AUTHORIZATION_FAILED,
+	FAILED_PASSED_CAPTCHA,
+	MISSING_CAPTCHA_HANDLER,
 	FAILED_PASSED_TWO_FACTOR,
-	MISSING_TWO_FACTOR_HANDLER
+	MISSING_TWO_FACTOR_HANDLER,
 } = authErrors;
 
 /**
@@ -31,6 +33,20 @@ const ACTION_AUTH_CODE = 'act=authcheck';
  * @type {string}
  */
 const ACTION_SECURITY_CODE = 'act=security';
+
+/**
+ * Bind a phone to a page
+ *
+ * @type {string}
+ */
+const ACTION_VALIDATE = 'act=validate';
+
+/**
+ * Bind a phone to a page action
+ *
+ * @type {string}
+ */
+const ACTION_CAPTCHA = 'act=captcha';
 
 /**
  * Number of two-factorial attempts
@@ -64,6 +80,8 @@ export default class AccountVerification {
 		this.jar = new CookieJar();
 		this.fetchCookie = fetchCookieFollowRedirectsDecorator(this.jar);
 
+		this.captcha = null;
+		this.captchaAttempts = 0;
 		this.twoFactorAttempts = 0;
 	}
 
@@ -156,6 +174,18 @@ export default class AccountVerification {
 
 			if (url.includes(ACTION_SECURITY_CODE)) {
 				response = await this.processSecurityForm(response, $);
+
+				continue;
+			}
+
+			if (url.includes(ACTION_VALIDATE)) {
+				response = await this.processValidateForm(response, $);
+
+				continue;
+			}
+
+			if (url.includes(ACTION_CAPTCHA)) {
+				response = await this.processCaptchaForm(response, $);
 
 				continue;
 			}
@@ -291,5 +321,78 @@ export default class AccountVerification {
 		}
 
 		return response;
+	}
+
+	/**
+	 * Process validation form
+	 *
+	 * @param {Response} response
+	 * @param {Cheerio}  $
+	 *
+	 * @return {Promise<Response>}
+	 */
+	async processValidateForm(response, $) {
+		const href = $('#activation_wrap a').attr('href');
+		const url = getFullURL(href, response);
+
+		return await this.fetch(url, {
+			method: 'GET'
+		});
+	}
+
+	/**
+	 * Process captcha form
+	 *
+	 * @param {Response} response
+	 * @param {Cheerio}  $
+	 *
+	 * @return {Promise<Response>}
+	 */
+	async processCaptchaForm(response, $) {
+		if (this.vk.captchaHandler === null) {
+			throw new AuthError({
+				message: 'Missing captcha handler',
+				code: MISSING_CAPTCHA_HANDLER
+			});
+		}
+
+		if (this.captcha !== null) {
+			this.captcha.reject(new AuthError({
+				message: 'Incorrect captcha code',
+				code: FAILED_PASSED_CAPTCHA
+			}));
+
+			this.captcha = null;
+
+			this.captchaAttempts += 1;
+		}
+
+		const { action, fields } = parseFormField($);
+
+		const payload = {
+			src: $('.captcha_img').attr('src'),
+			sid: fields.captcha_sid
+		};
+
+		await (new Promise((resolveCaptcha) => {
+			this.vk.captchaHandler(payload, key => (
+				new Promise((resolve, reject) => {
+					fields.captcha_key = key;
+
+					this.captcha = { resolve, reject };
+
+					resolveCaptcha();
+				})
+			));
+		}));
+
+		const url = getFullURL(action, response);
+
+		url.searchParams.set('utf8', 1);
+
+		return await this.fetch(url, {
+			method: 'POST',
+			body: new URLSearchParams(fields)
+		});
 	}
 }
