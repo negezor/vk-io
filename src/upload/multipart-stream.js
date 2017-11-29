@@ -11,7 +11,7 @@ export default class MultipartStream extends SandwichStream {
 	 *
 	 * @param {string} boundary
 	 */
-	constructor(boundary = Math.random().toString(36).slice(2)) {
+	constructor(boundary) {
 		super({
 			head: `--${boundary}${CRNL}`,
 			tail: `${CRNL}--${boundary}--`,
@@ -82,7 +82,7 @@ export default class MultipartStream extends SandwichStream {
 			headers: {
 				...headers,
 
-				'Content-Disposition': header
+				'content-disposition': header
 			},
 			body
 		});

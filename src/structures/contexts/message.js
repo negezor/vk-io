@@ -86,7 +86,7 @@ export default class MessageContext extends Context {
 			return;
 		}
 
-		const { items } = this.vk.api.messages.getById({
+		const { items } = await this.vk.api.messages.getById({
 			message_ids: this.getId()
 		});
 		const [message] = items;
@@ -131,6 +131,15 @@ export default class MessageContext extends Context {
 	 */
 	hasForwards() {
 		return 'fwd_messages' in this.payload;
+	}
+
+	/**
+	 * Checks if there is text
+	 *
+	 * @return {boolean}
+	 */
+	hasGeo() {
+		return Boolean(this.payload.geo);
 	}
 
 	/**
@@ -270,6 +279,23 @@ export default class MessageContext extends Context {
 	 */
 	getFrom() {
 		return this.from;
+	}
+
+	/**
+	 * Returns geo
+	 *
+	 * @return {?Object}
+	 */
+	getGeo() {
+		if (!this.hasGeo()) {
+			return null;
+		}
+
+		if (this.payload.$source === 'polling') {
+			throw new Error('The message payload is not fully loaded');
+		}
+
+		return this.payload.geo;
 	}
 
 	/**

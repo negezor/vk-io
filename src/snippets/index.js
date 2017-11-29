@@ -128,8 +128,13 @@ export default class Snippets {
 			};
 		}
 
+		let screenName = resource;
+		if (screenName.startsWith('@') || screenName.startsWith('*')) {
+			screenName = screenName.substring(1);
+		}
+
 		const response = await this.vk.api.utils.resolveScreenName({
-			screen_name: resource
+			screen_name: screenName
 		});
 
 		if (Array.isArray(response)) {

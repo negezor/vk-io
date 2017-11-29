@@ -768,7 +768,7 @@ export default class Upload {
 		maxFiles,
 		attachmentType
 	}) {
-		const boundary = randomBytes(30).toString('hex');
+		const boundary = randomBytes(32).toString('hex');
 		const formData = new MultipartStream(boundary);
 
 		const isMultipart = maxFiles > 1;
