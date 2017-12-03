@@ -345,7 +345,7 @@ export default class ImplicitFlow {
 			}
 
 			const payload = {
-				src: $('.oauth_captcha').attr('src'),
+				src: $('.oauth_captcha').attr('src') || $('#captcha').attr('src'),
 				sid: fields.captcha_sid
 			};
 

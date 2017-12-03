@@ -46,7 +46,7 @@ export default function transformMessage([, id, flags, peer, date, body, attachm
 		flags,
 		geo: 'geo' in attachments
 			? {}
-			: undefined,
+			: null,
 		random_id: random,
 		out: Number((flags & 1) !== 0),
 		deleted: Number((flags & 128) !== 0),

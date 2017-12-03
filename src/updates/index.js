@@ -550,6 +550,48 @@ export default class Updates {
 	}
 
 	/**
+	 * Returns the middleware for the webhook under koa
+	 *
+	 * @param {Object} options
+	 *
+	 * @return {Function}
+	 */
+	getKoaWebhookMiddleware(options = {}) {
+		return async (context, next) => {
+			const update = context.request.body;
+
+			const { webhookSecret, webhookConfirmation } = this.vk.options;
+
+			if (webhookSecret !== null && update.secret !== webhookSecret) {
+				context.status = 403;
+
+				return;
+			}
+
+			if (update.type === 'confirmation') {
+				if (webhookConfirmation === null) {
+					context.status = 500;
+
+					return;
+				}
+
+				context.body = webhookConfirmation;
+
+				return;
+			}
+
+			context.body = 'ok';
+			context.set('connection', 'keep-alive');
+
+			/* Do not delay server response */
+			this.handleWebhookUpdate(update).catch((error) => {
+				// eslint-disable-next-line no-console
+				console.error('Handle webhook update error', error);
+			});
+		};
+	}
+
+	/**
 	 * Starts forever fetch updates  loop
 	 *
 	 * @return {Promise}

@@ -15,7 +15,7 @@ const reasonNames = new Map([
 
 export default class GroupUserContext extends Context {
 	/**
-	 * Constructro
+	 * Constructror
 	 *
 	 * @param {VK}     vk
 	 * @param {Object} payload

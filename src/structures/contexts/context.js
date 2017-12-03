@@ -8,6 +8,8 @@ export default class Context {
 	 */
 	constructor(vk) {
 		this.vk = vk;
+
+		this.state = {};
 	}
 
 	/**
