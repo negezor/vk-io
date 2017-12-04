@@ -28,7 +28,7 @@ new MessageContext(vk, payload);
 
 Перезагружает сообщения с сервера
 
-Например если вы используете [polling](../updates.md#startPolling) где получается только часть данных сообщение (отсутствуют полные данные о геолокации, пересланных сообщениях, прикреплениях)
+Например если вы используете [polling](../updates.md#startpolling) где получается только часть данных сообщение (отсутствуют полные данные о геолокации, пересланных сообщениях, прикреплениях)
 
 ```js
 context.loadMessagePayload(); // => Promise
@@ -350,21 +350,9 @@ context.sendPhoto(source [, params]); // => Promise<number>
 
 | Параметр | Тип    | Описание                                                               |
 |----------|--------|------------------------------------------------------------------------|
-| source   | mixed  | [Источник загрузки](../upload.md#messagePhoto)                         |
+| source   | mixed  | [Источник загрузки](../upload.md#messagephoto)                         |
 | params   | Object | [Дополнительные параметры сообщения](https://vk.com/dev/messages.send) |
 
-## sendPhoto
-
-Отправляет фото в текущий диалог
-
-```js
-context.sendPhoto(source [, params]); // => Promise<number>
-```
-
-| Параметр | Тип    | Описание                                                               |
-|----------|--------|------------------------------------------------------------------------|
-| source   | mixed  | [Источник загрузки](../upload.md#messagePhoto)                         |
-| params   | Object | [Дополнительные параметры сообщения](https://vk.com/dev/messages.send) |
 
 ## sendDocument
 
@@ -376,7 +364,7 @@ context.sendDocument(source [, params]); // => Promise<number>
 
 | Параметр | Тип    | Описание                                                               |
 |----------|--------|------------------------------------------------------------------------|
-| source   | mixed  | [Источник загрузки](../upload.md#messageDocument)                      |
+| source   | mixed  | [Источник загрузки](../upload.md#messagedocument)                      |
 | params   | Object | [Дополнительные параметры сообщения](https://vk.com/dev/messages.send) |
 
 ## sendVoice
@@ -469,8 +457,8 @@ context.newChatPhoto(source [, params]); // => Promise<Object>
 
 | Параметр | Тип    | Описание                                                    |
 |----------|--------|-------------------------------------------------------------|
-| source   | mixed  | [Источник загрузки](../upload.md#chatPhoto)                 |
-| params   | Object | [Дополнительные параметры загрузки](../upload.md#chatPhoto) |
+| source   | mixed  | [Источник загрузки](../upload.md#chatphoto)                 |
+| params   | Object | [Дополнительные параметры загрузки](../upload.md#chatphoto) |
 
 ## removeChatPhoto
 
