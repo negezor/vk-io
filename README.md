@@ -17,6 +17,11 @@ VK-IO - This is a powerful [Node.js](https://nodejs.org) module that allows you 
 - Working with large collections of data
 - Support for all types authorization of login and password
 
+## Migrating to 4.0.0
+You can read the about [migration guide here](Upgrade-RU.md)
+
+Old version of the library [here](https://github.com/negezor/vk-io/tree/v3.2.0)
+
 ## Installation
 **[Node.js](https://nodejs.org/) 8.0.0 or newer is required**  
 

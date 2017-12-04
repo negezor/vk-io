@@ -82,14 +82,14 @@ export const defaultOptions = {
 	apiWait: 3e3,
 	apiLimit: 3,
 	apiAttempts: 3,
-	apiTimeout: 6e3,
+	apiTimeout: 10e3,
 	apiHeaders: {
 		'User-Agent': `vk-io/${version} (+https://github.com/negezor/vk-io)`
 	},
 	apiExecuteCount: 25,
 	apiExecuteMethods: ['messages.send'],
 
-	uploadTimeout: 15e3,
+	uploadTimeout: 20e3,
 
 	pollingWait: 3e3,
 	pollingAttempts: 3,

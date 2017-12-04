@@ -62,7 +62,7 @@ export default class MessageContext extends Context {
 			))
 		));
 
-		if (this.text !== null) {
+		if (this.hasText()) {
 			subTypes.push('text');
 		}
 
@@ -255,12 +255,30 @@ export default class MessageContext extends Context {
 	}
 
 	/**
-	 * Returns the date when this message was created
+	 * Returns the destination identifier
 	 *
 	 * @return {number}
 	 */
-	getDate() {
+	getPeerId() {
+		return this.from.id;
+	}
+
+	/**
+	 * Returns the timestamp when this message was created
+	 *
+	 * @return {number}
+	 */
+	getTimestamp() {
 		return this.payload.date;
+	}
+
+	/**
+	 * Returns the Date object when this message was created
+	 *
+	 * @return {Date}
+	 */
+	getDate() {
+		return new Date(this.payload.date);
 	}
 
 	/**
@@ -329,7 +347,7 @@ export default class MessageContext extends Context {
 	 *
 	 * @return {?string}
 	 */
-	getEventName() {
+	getEventType() {
 		return this.payload.action || null;
 	}
 
@@ -340,6 +358,37 @@ export default class MessageContext extends Context {
 	 */
 	getEventText() {
 		return this.payload.action_text || null;
+	}
+
+	/**
+	 * Gets a link to invite the user to a conversation
+	 *
+	 * @param {Object} params
+	 *
+	 * @type {Promise<Object>}
+	 */
+	getInviteLink(params = {}) {
+		return this.vk.api.messages.getInviteLink({
+			...params,
+
+			peer_id: this.getPeerId()
+		});
+	}
+
+	/**
+	 * Edits a message
+	 *
+	 * @param {Object} params
+	 *
+	 * @return {Promise}
+	 */
+	edit(params) {
+		return this.vk.api.messages.edit({
+			...params,
+
+			peer_id: this.getPeerId(),
+			message_id: this.getId()
+		});
 	}
 
 	/**
@@ -404,7 +453,11 @@ export default class MessageContext extends Context {
 	 * @return {Promise}
 	 */
 	async sendPhoto(source, params = {}) {
-		const attachment = await this.vk.upload.messagePhoto({ source });
+		const attachment = await this.vk.upload.messagePhoto({
+			peer_id: this.getPeerId(),
+
+			source
+		});
 
 		return await this.send({
 			...params,
@@ -422,7 +475,11 @@ export default class MessageContext extends Context {
 	 * @return {Promise}
 	 */
 	async sendDocument(source, params = {}) {
-		const attachment = await this.vk.upload.messageDocument({ source });
+		const attachment = await this.vk.upload.messageDocument({
+			peer_id: this.getPeerId(),
+
+			source
+		});
 
 		return await this.send({
 			...params,
@@ -440,7 +497,11 @@ export default class MessageContext extends Context {
 	 * @return {Promise}
 	 */
 	async sendVoice(source, params = {}) {
-		const attachment = await this.vk.upload.voice({ source });
+		const attachment = await this.vk.upload.voice({
+			peer_id: this.getPeerId(),
+
+			source
+		});
 
 		return await this.send({
 			...params,
@@ -452,13 +513,15 @@ export default class MessageContext extends Context {
 	/**
 	 * Changes the status of typing in the dialog
 	 *
-	 * @return {Promise}
+	 * @return {Promise<boolean>}
 	 */
-	setActivity() {
-		return this.vk.api.messages.setActivity({
+	async setActivity() {
+		const isActivited = await this.vk.api.messages.setActivity({
 			peer_id: this.from.id,
 			type: 'typing'
 		});
+
+		return Boolean(isActivited);
 	}
 
 	/**
@@ -469,12 +532,21 @@ export default class MessageContext extends Context {
 	 *
 	 * @return {Promise<Array>}
 	 */
-	markAsImportant(ids = [this.payload.id], options = { important: 1 }) {
-		return this.vk.api.messages.markAsImportant({
+	async markAsImportant(
+		ids = [this.getId()],
+		options = { important: Number(!this.isImportant()) }
+	) {
+		const messageIds = await this.vk.api.messages.markAsImportant({
 			...options,
 
 			message_ids: ids.join(',')
 		});
+
+		if (messageIds.includes(this.getId())) {
+			this.payload.important = options.important;
+		}
+
+		return messageIds;
 	}
 
 	/**
@@ -483,14 +555,24 @@ export default class MessageContext extends Context {
 	 * @param {Array}  ids
 	 * @param {Object} options
 	 *
-	 * @return {Promise<boolean>}
+	 * @return {Promise<number[]>}
 	 */
-	deleteMessage(ids = [this.payload.id], options = { spam: 0 }) {
-		return this.vk.api.messages.delete({
+	async deleteMessage(ids = [this.getId()], options = { spam: 0 }) {
+		let messageIds = await this.vk.api.messages.delete({
 			...options,
 
 			message_ids: ids.join(',')
 		});
+
+		messageIds = Object.entries(messageIds)
+			.filter(([, value]) => Boolean(value))
+			.map(([key]) => key);
+
+		if (messageIds.includes(this.getId())) {
+			this.payload.delete = 1;
+		}
+
+		return messageIds;
 	}
 
 	/**
@@ -499,11 +581,40 @@ export default class MessageContext extends Context {
 	 * @return {Promise<boolean>}
 	 */
 	async restoreMessage() {
-		const isRestore = await this.vk.api.messages.restore({
+		const isRestored = await this.vk.api.messages.restore({
 			message_id: this.payload.id
 		});
 
-		return Boolean(isRestore);
+		if (this.isDeleted() && isRestored) {
+			this.payload.deleted = 0;
+		}
+
+		return Boolean(isRestored);
+	}
+
+	/**
+	 * Allows you to join the chat by an invitation link
+	 *
+	 * @param {string} params
+	 * @param {Object} params
+	 *
+	 * @return {Promise<Object>}
+	 */
+	joinChatByInviteLink(link, params = {}) {
+		return this.vk.api.messages.joinChatByInviteLink({
+			...params,
+
+			link
+		});
+	}
+
+	/**
+	 * Checks that in a chat
+	 */
+	assertIsChat() {
+		if (!this.isChat()) {
+			throw new Error('This is not a chat');
+		}
 	}
 
 	/**
@@ -511,17 +622,17 @@ export default class MessageContext extends Context {
 	 *
 	 * @param {string} title
 	 *
-	 * @return {Promise}
+	 * @return {Promise<boolean>}
 	 */
-	renameChat(title) {
-		if (!this.isChat()) {
-			throw new Error('This is not a chat');
-		}
+	async renameChat(title) {
+		this.assertIsChat();
 
-		return this.vk.api.messages.editChat({
-			chat_id: this.payload.chat_id,
+		const isRenamed = await this.vk.api.messages.editChat({
+			chat_id: this.getChatId(),
 			title
 		});
+
+		return Boolean(isRenamed);
 	}
 
 	/**
@@ -530,15 +641,15 @@ export default class MessageContext extends Context {
 	 * @param {mixed}  source
 	 * @param {Object} params
 	 *
-	 * @return {Promise}
+	 * @return {Promise<Object>}
 	 */
-	newChatPhoto(source, params = {}) {
-		if (!this.isChat()) {
-			throw new Error('This is not a chat');
-		}
+	async newChatPhoto(source, params = {}) {
+		this.assertIsChat();
 
-		return this.vk.upload.chatPhoto({
+		return await this.vk.upload.chatPhoto({
 			...params,
+
+			chat_id: this.getChatId(),
 			source
 		});
 	}
@@ -546,15 +657,13 @@ export default class MessageContext extends Context {
 	/**
 	 * Remove the chat photo
 	 *
-	 * @return {Promise}
+	 * @return {Promise<boolean>}
 	 */
-	removeChatPhoto() {
-		if (!this.isChat()) {
-			throw new Error('This is not a chat');
-		}
+	async removeChatPhoto() {
+		this.assertIsChat();
 
 		return this.vk.api.messages.deleteChatPhoto({
-			chat_id: this.payload.chat_id
+			chat_id: this.getChatId()
 		});
 	}
 
@@ -563,13 +672,17 @@ export default class MessageContext extends Context {
 	 *
 	 * @param {number} id
 	 *
-	 * @return {Promise}
+	 * @return {Promise<boolean>}
 	 */
-	inviteUser(id = this.payload.action_mid) {
-		return this.vk.api.messages.removeChatUser({
-			chat_id: this.payload.chat_id,
+	async inviteUser(id = this.getEventId()) {
+		this.assertIsChat();
+
+		const isInvited = await this.vk.api.messages.removeChatUser({
+			chat_id: this.getChatId(),
 			user_id: id
 		});
+
+		return Boolean(isInvited);
 	}
 
 	/**
@@ -577,12 +690,48 @@ export default class MessageContext extends Context {
 	 *
 	 * @param {number} id
 	 *
-	 * @return {Promise}
+	 * @return {Promise<boolean>}
 	 */
-	kickUser(id = this.payload.action_mid) {
-		return this.vk.api.messages.removeChatUser({
-			chat_id: this.payload.chat_id,
+	async kickUser(id = this.getEventId()) {
+		this.assertIsChat();
+
+		const isKicked = await this.vk.api.messages.removeChatUser({
+			chat_id: this.getChatId(),
 			user_id: id
 		});
+
+		return Boolean(isKicked);
+	}
+
+	/**
+	 * Pins a message
+	 *
+	 * @return {Promise<boolean>}
+	 */
+	async pinMessage() {
+		this.assertIsChat();
+
+		const isPinned = await this.vk.api.messages.pin({
+			peer_id: this.getPeerId(),
+			message_id: this.getId()
+		});
+
+		return Boolean(isPinned);
+	}
+
+	/**
+	 * Unpins a message
+	 *
+	 * @return {Promise<boolean>}
+	 */
+	async unpinMessage() {
+		this.assertIsChat();
+
+		const isUnpinned = await this.vk.api.messages.unpin({
+			peer_id: this.getPeerId(),
+			message_id: this.getId()
+		});
+
+		return Boolean(isUnpinned);
 	}
 }

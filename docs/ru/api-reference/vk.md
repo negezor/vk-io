@@ -74,7 +74,7 @@ vk.setOptions(options); // => this
 | apiWait           | number   | Время ожидания следующей попытки запроса после ошибки                     | 3000                                                                     |
 | apiLimit          | number   | Количество запрос к API в секунду                                         | 3                                                                        |
 | apiAttempts       | number   | Количество попыток повтора запроса после ошибки                           | 3                                                                        |
-| apiTimeout        | number   | Время ожидания запроса                                                    | 6000                                                                     |
+| apiTimeout        | number   | Время ожидания запроса                                                    | 10000                                                                    |
 | apiHeaders        | Object   | Заголовки отправляемые вместе с запросом                                  | {'User-Agent':\`vk-io/${version} (+https://github.com/negezor/vk-io)\`}  |
 | apiExecuteCount   | number   | Количество параллельных запросов при apiMode=(parallel|parallel_selected) | 25                                                                       |
 | apiExecuteMethods | string[] | Методы которые будут собираться в execute при apiMode=parallel_selected   | ['messages.send']                                                        |
@@ -88,7 +88,7 @@ vk.setOptions(options); // => this
 
 | Опция         | Тип    | Описание                        | По умолчанию |
 |---------------|--------|---------------------------------|--------------|
-| uploadTimeout | number | Время ожидания запроса загрузки | 15000        |
+| uploadTimeout | number | Время ожидания запроса загрузки | 20000        |
 
 ### Опции polling ([long poll](vk.com/dev/using_longpoll))
 

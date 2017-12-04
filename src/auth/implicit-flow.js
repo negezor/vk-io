@@ -242,7 +242,7 @@ export default class ImplicitFlow {
 
 			const isError = $error.length !== 0;
 
-			if (isError || $service.length !== 0) {
+			if (this.captcha === null && (isError || $service.length !== 0)) {
 				const errorText = isError
 					? $error.text()
 					: $service.text();

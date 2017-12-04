@@ -13,4 +13,5 @@
 		* [PhotoAttachment](api-reference/attachments/photo.md)
 	* [Updates](api-reference/updates.md)
 		* [Context](api-reference/contexts/context.md)
+		* [MessageContext](api-reference/contexts/message.md)
 	* ...Уже скоро

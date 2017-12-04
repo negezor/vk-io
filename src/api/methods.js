@@ -1,6 +1,6 @@
 /**
  * List methods VK
- * Last updated 01.11.2017
+ * Last updated 05.12.2017
  *
  * @type {Array}
  */
@@ -311,6 +311,7 @@ export default [
 	'messages.deleteChatPhoto',
 	'messages.deleteDialog',
 	'messages.denyMessagesFromGroup',
+	'messages.edit',
 	'messages.editChat',
 	'messages.get',
 	'messages.getById',
@@ -319,10 +320,13 @@ export default [
 	'messages.getDialogs',
 	'messages.getHistory',
 	'messages.getHistoryAttachments',
+	'messages.getInviteLink',
 	'messages.getLastActivity',
 	'messages.getLongPollHistory',
 	'messages.getLongPollServer',
+	'messages.pin',
 	'messages.isMessagesFromGroupAllowed',
+	'messages.joinChatByInviteLink',
 	'messages.markAsAnsweredDialog',
 	'messages.markAsImportant',
 	'messages.markAsImportantDialog',
@@ -334,6 +338,7 @@ export default [
 	'messages.send',
 	'messages.setActivity',
 	'messages.setChatPhoto',
+	'messages.unpin',
 
 	/**
 	 * Newsfeed

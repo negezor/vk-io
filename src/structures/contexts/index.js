@@ -19,6 +19,7 @@ import RemovedMessagesContext from './removed-messages';
 
 export {
 	Context,
+
 	VoteContext,
 	TypingContext,
 	MessageContext,
