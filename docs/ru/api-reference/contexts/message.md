@@ -214,6 +214,14 @@ context.getFrom(); // => Object
 | id       | number | Идентификатор назначения |
 | type     | string | Тип откуда отправлено    |
 
+## getForwards
+
+Возвращает пересланные сообщение
+
+```js
+context.getForwards(); // => Object[]
+```
+
 ## getGeo
 
 Возвращает геолокацию
@@ -274,17 +282,29 @@ context.getInviteLink([params]); // => Promise<Object>
 |----------|--------|------------------|
 | link     | string | Ссылка на беседу |
 
-## edit
+## editMessage
 
 Редактирует сообщение
 
 ```js
-context.edit(params); // => Promise
+context.editMessage(params); // => Promise
 ```
 
 | Параметр | Тип    | Описание  |
 |----------|--------|-----------|
 | params   | Object | Параметры |
+
+## editMessageText
+
+Редактирует текст сообщения
+
+```js
+context.editMessageText(message); // => Promise
+```
+
+| Параметр | Тип    | Описание        |
+|----------|--------|-----------------|
+| message  | string | Текст сообщения |
 
 ## send
 
@@ -460,12 +480,12 @@ context.newChatPhoto(source [, params]); // => Promise<Object>
 | source   | mixed  | [Источник загрузки](../upload.md#chatphoto)                 |
 | params   | Object | [Дополнительные параметры загрузки](../upload.md#chatphoto) |
 
-## removeChatPhoto
+## deleteChatPhoto
 
 Удаляет фотографию чата (беседы)
 
 ```js
-context.removeChatPhoto();
+context.deleteChatPhoto();
 ```
 
 ## inviteUser

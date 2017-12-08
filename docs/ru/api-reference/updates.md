@@ -64,6 +64,32 @@ http.createServer(updates.getWebhookCallback('/webhook'));
 app.use('/webhook', updates.getWebhookCallback());
 ```
 
+## getKoaWebhookMiddleware
+
+Возвращает [middleware](https://github.com/koajs/koa#middleware) для [koa.js](https://github.com/koajs/koa)
+
+Предполагается что вы уже разобрали тело запроса например через [koa-body](https://github.com/dlau/koa-body)
+
+```js
+updates.getKoaWebhookMiddleware(options); // => Function
+```
+
+| Параметр | Тип    | Описание     |
+|----------|--------|--------------|
+| options  | Object | Список опций |
+
+Пример использования
+
+```js
+app.use(updates.getKoaWebhookMiddleware());
+```
+
+С роутером
+
+```js
+router.post('/webhook', updates.getKoaWebhookMiddleware());
+```
+
 ## use
 Добавляет middleware в цепочку
 

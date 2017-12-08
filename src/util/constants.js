@@ -196,7 +196,8 @@ export const uploadErrors = {
  * @type {Object}
  */
 export const updatesErrors = {
-	NEED_RESTART: 'NEED_RESTART'
+	NEED_RESTART: 'NEED_RESTART',
+	POLLING_REQUEST_FAILED: 'POLLING_REQUEST_FAILED'
 };
 
 /**

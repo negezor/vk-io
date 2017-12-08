@@ -300,6 +300,15 @@ export default class MessageContext extends Context {
 	}
 
 	/**
+	 * Returns the forwards messages
+	 *
+	 * @return {Object[]}
+	 */
+	getForwards() {
+		return this.payload.fwd_messages || [];
+	}
+
+	/**
 	 * Returns geo
 	 *
 	 * @return {?Object}
@@ -309,7 +318,7 @@ export default class MessageContext extends Context {
 			return null;
 		}
 
-		if (this.payload.$source === 'polling') {
+		if (!this.filled) {
 			throw new Error('The message payload is not fully loaded');
 		}
 
@@ -382,13 +391,32 @@ export default class MessageContext extends Context {
 	 *
 	 * @return {Promise}
 	 */
-	edit(params) {
+	editMessage(params) {
 		return this.vk.api.messages.edit({
 			...params,
 
 			peer_id: this.getPeerId(),
 			message_id: this.getId()
 		});
+	}
+
+	/**
+	 * Edits a message text
+	 *
+	 * @param {string} message
+	 *
+	 * @return {Promise}
+	 */
+	async editMessageText(message) {
+		try {
+			const response = await this.editMessage({ message });
+
+			this.text = message;
+
+			return response;
+		} catch (e) {
+			throw e;
+		}
 	}
 
 	/**
@@ -613,7 +641,7 @@ export default class MessageContext extends Context {
 	 */
 	assertIsChat() {
 		if (!this.isChat()) {
-			throw new Error('This is not a chat');
+			throw new Error('This method is only available in chat');
 		}
 	}
 
@@ -659,7 +687,7 @@ export default class MessageContext extends Context {
 	 *
 	 * @return {Promise<boolean>}
 	 */
-	async removeChatPhoto() {
+	async deleteChatPhoto() {
 		this.assertIsChat();
 
 		return this.vk.api.messages.deleteChatPhoto({

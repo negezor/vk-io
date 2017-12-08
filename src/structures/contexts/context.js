@@ -9,6 +9,9 @@ export default class Context {
 	constructor(vk) {
 		this.vk = vk;
 
+		this.type = null;
+		this.subTypes = [];
+
 		this.state = {};
 	}
 
@@ -19,6 +22,23 @@ export default class Context {
 	 */
 	get [Symbol.toStringTag]() {
 		return this.constructor.name;
+	}
+
+	/**
+	 * Checks whether the context of some of these types
+	 *
+	 * @param {string[]} types
+	 *
+	 * @return {boolean}
+	 */
+	is(types) {
+		if (!Array.isArray(types)) {
+			types = [types];
+		}
+
+		return [this.type, ...this.subTypes].some(type => (
+			types.includes(type)
+		));
 	}
 
 	/**

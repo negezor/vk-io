@@ -6,7 +6,7 @@ const { api } = vk;
 
 API предоставляет удобный интерфейс для взаимодействия без прямого вызова `api.call` с помощью алиасов `api.<method>`
 
-Достаточно скопировать названия метода и вызвать
+Достаточно скопировать названия метода и вызвать, пример использования
 
 ```js
 api.wall.get();
@@ -14,6 +14,10 @@ api.wall.get();
 
 ## call
 Выполняет метод, используется как альтернативный вызов методов
+
+> Обратите внимание
+
+> Вместо прямого вызова `api.call` стоит использовать алиасы
 
 ```js
 api.call(method, params); // => Promise<Mixed>
@@ -24,12 +28,10 @@ api.call(method, params); // => Promise<Mixed>
 | method   | string | Метод             |
 | params   | Object | Список параметров |
 
-Вместо прямого вызова `api.call` стоит использовать алиасы
-
 ```js
 api.call('messages.send', {...});
 
-// VS
+// VS alias
 
 api.messages.send({...});
 ```
@@ -40,7 +42,7 @@ api.messages.send({...});
 Вызов метода через объект `Request`
 
 ```js
-api.callWithRequest(request); // => Promise<Mixed>
+api.callWithRequest(request); // => Promise<mixed>
 ```
 
 | Параметр | Тип                   | Описание       |

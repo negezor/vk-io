@@ -7,11 +7,12 @@ vk.setOptions({
 	apiMode: 'parallel_selected',
 	webhookPath: '/webhook/secret-path'
 });
+
 const { updates } = vk;
 
-// Handle errors and skip outbox message
+// Skip outbox message and handle errors
 updates.use(async (context, next) => {
-	if (context.type === 'message' && context.isOutbox()) {
+	if (context.is('message') && context.isOutbox()) {
 		return;
 	}
 
@@ -48,28 +49,25 @@ updates.hear(['/time', '/date'], async (context) => {
 updates.hear(/^\/reverse (.+)/i, async (context) => {
 	const text = context.$match[1];
 
-	await context.send(text.split('').reverse().join(''));
+	const reversed = text.split('').reverse().join('');
+
+	await context.send(reversed);
 });
 
 const catsPurring = [
 	'http://ronsen.org/purrfectsounds/purrs/trip.mp3',
-	'http://ronsen.org/purrfectsounds/purrs/chicken.mp3',
-	'http://ronsen.org/purrfectsounds/purrs/maja.mp3'
+	'http://ronsen.org/purrfectsounds/purrs/maja.mp3',
+	'http://ronsen.org/purrfectsounds/purrs/chicken.mp3'
 ];
 
 updates.hear('/purr', async (context) => {
 	const link = catsPurring[Math.floor(Math.random() * catsPurring.length)];
 
-	const [, attachment] = await Promise.all([
+	await Promise.all([
 		context.send('Wait for the uploads purring 😻'),
 
-		vk.upload.voice({
-			peer_id: context.getUserId(),
-			source: link
-		})
+		context.sendVoice(link)
 	]);
-
-	await context.send({ attachment });
 });
 
 async function run() {

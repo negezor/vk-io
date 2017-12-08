@@ -24,7 +24,7 @@ const { auth } = vk;
 Прямая авторизация по логину и паролю с указанием `app` и `key` в [опциях](vk.md#Опции-авторизации)
 
 ```js
-const direct = auth.direct(); // DirectAuth
+const direct = auth.direct(); // => DirectAuth
 ```
 
 Пример использования
@@ -55,28 +55,28 @@ direct.run()
 Авторизация через официальное приложение `android`
 
 ```js
-const direct = auth.androidApp(); // DirectAuth
+const direct = auth.androidApp(); // => DirectAuth
 ```
 
 ### Windows
 Авторизация через официальное приложение `windows`
 
 ```js
-const direct = auth.windowsApp(); // DirectAuth
+const direct = auth.windowsApp(); // => DirectAuth
 ```
 
 ### Windows Phone
 Авторизация через официальное приложение `windows phone`
 
 ```js
-const direct = auth.windowsPhoneApp(); // DirectAuth
+const direct = auth.windowsPhoneApp(); // => DirectAuth
 ```
 
 ### iPhone
 Авторизация через официальное приложение `iPhone`
 
 ```js
-const direct = auth.iphoneApp(); // DirectAuth
+const direct = auth.iphoneApp(); // => DirectAuth
 ```
 
 ### iPad
@@ -84,7 +84,7 @@ const direct = auth.iphoneApp(); // DirectAuth
 Авторизация через официальное приложение `iPad`
 
 ```js
-const direct = auth.ipadApp(); // DirectAuth
+const direct = auth.ipadApp(); // => DirectAuth
 ```
 
 ## Implicit Flow

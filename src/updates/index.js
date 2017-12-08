@@ -29,7 +29,7 @@ import { delay } from '../util/helpers';
 import transformMessage from './transform-message';
 import { UpdatesError, updatesErrors } from '../errors';
 
-const { NEED_RESTART } = updatesErrors;
+const { NEED_RESTART, POLLING_REQUEST_FAILED } = updatesErrors;
 
 const debug = createDebug('vk-io:updates');
 
@@ -96,7 +96,7 @@ export default class Updates {
 
 		this.middleware = new Middleware(this.stack);
 		this.middleware.use(async (context, next) => {
-			if (!context.subTypes.includes('text')) {
+			if (!context.is('text')) {
 				await next();
 
 				return;
@@ -115,7 +115,7 @@ export default class Updates {
 	/**
 	 * Subscribe to events
 	 *
-	 * @param {String[]} events
+	 * @param {string[]} events
 	 * @param {Function} handler
 	 *
 	 * @return {this}
@@ -132,12 +132,7 @@ export default class Updates {
 		}
 
 		return this.use(async (context, next) => {
-			const hasSomeType = events.includes(context.type);
-			const hasSomeSubTypes = context.subTypes.some(event => (
-				events.includes(event)
-			));
-
-			if (hasSomeType || hasSomeSubTypes) {
+			if (context.is(events)) {
 				await handler(context, next);
 
 				return;
@@ -375,7 +370,7 @@ export default class Updates {
 				act: 'a_check',
 				version: 2,
 				wait: 20,
-				key,
+				key
 			});
 
 			this.startFetchLoop();
@@ -657,6 +652,14 @@ export default class Updates {
 				connection: 'keep-alive'
 			}
 		});
+
+		if (!response.ok) {
+			throw new UpdatesError({
+				code: POLLING_REQUEST_FAILED,
+				message: 'Polling request failed'
+			});
+		}
+
 		response = await response.json();
 
 		debug('http <--');
@@ -666,7 +669,7 @@ export default class Updates {
 
 			throw new UpdatesError({
 				code: NEED_RESTART,
-				message: 'Polling failed'
+				message: 'The server has failed'
 			});
 		}
 
@@ -677,14 +680,14 @@ export default class Updates {
 		}
 
 		if ('updates' in response) {
-			for (const update of response.updates) {
+			await Promise.all(response.updates.map(async (update) => {
 				try {
 					await this.handleLongpollUpdate(update);
 				} catch (error) {
 					// eslint-disable-next-line no-console
 					console.error('Handle polling update error', error);
 				}
-			}
+			}));
 		}
 	}
 

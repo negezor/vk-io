@@ -47,28 +47,28 @@ Attachment.fromString('photo1_456264771'); // => Attachment
 Заполнен ли объект прикрепления, используется в классах наследниках
 
 ```js
-attachment.isFilled(); // boolean
+attachment.isFilled(); // => boolean
 ```
 
 ## getType
 Возвращает тип прикрепления
 
 ```js
-attachment.getType(); // string
+attachment.getType(); // => string
 ```
 
 ## getOwnerId
 Возвращает идентификатор владельца
 
 ```js
-attachment.getOwnerId(); // number
+attachment.getOwnerId(); // => number
 ```
 
 ## getId
 Возвращает идентификатор прикрепления
 
 ```js
-attachment.getId(); // number
+attachment.getId(); // => number
 ```
 
 ## toString
