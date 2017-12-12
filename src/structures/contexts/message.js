@@ -242,6 +242,15 @@ export default class MessageContext extends Context {
 	}
 
 	/**
+	 * Returns the sender identifier
+	 *
+	 * @return {number}
+	 */
+	getSenderId() {
+		return this.payload.from_id;
+	}
+
+	/**
 	 * Returns the identifier chat
 	 *
 	 * @return {?number}

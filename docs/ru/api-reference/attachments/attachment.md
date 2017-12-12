@@ -27,7 +27,7 @@ new Attachment('photo', 1, 456264771);
 | accessKey | string | Ключ доступа (необязательно) |
 
 ## fromString (static)
-Разбирает прикрепление в объект
+Парсирит прикрепление из строки в объект
 
 ```js
 Attachment.fromString(attachment); // => Attachment
@@ -70,6 +70,30 @@ attachment.getOwnerId(); // => number
 ```js
 attachment.getId(); // => number
 ```
+
+## equals
+
+Проверяет эквивалентность прикрепления
+
+```js
+attachment.equals(attachment); // => boolean
+```
+
+| Параметр   | Тип        | Описание     |
+|------------|------------|--------------|
+| attachment | Attachment | Прикрепление |
+
+## equalString
+
+Проверяет эквивалентность прикрепления строки с объектом
+
+```js
+attachment.equalString(attachment); // => boolean
+```
+
+| Параметр   | Тип    | Описание     |
+|------------|--------|--------------|
+| attachment | string | Прикрепление |
 
 ## toString
 Возвращает строковое представление прикрепления

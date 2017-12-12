@@ -69,6 +69,23 @@ export default class WallAttachment extends Attachment {
 	}
 
 	/**
+	 * Checks for the presence of attachments
+	 *
+	 * @param {?string} type
+	 *
+	 * @return {boolean}
+	 */
+	hasAttachments(type = null) {
+		if (type === null) {
+			return this.attachments.length > 0;
+		}
+
+		return this.attachments.some(attachment => (
+			attachment.type === type
+		));
+	}
+
+	/**
 	 * Checks has this user reposted
 	 *
 	 * @return {?boolean}
@@ -258,6 +275,23 @@ export default class WallAttachment extends Attachment {
 	 */
 	getText() {
 		return this.payload.text || null;
+	}
+
+	/**
+	 * Returns the attachments
+	 *
+	 * @param {?string} type
+	 *
+	 * @return {Array}
+	 */
+	getAttachments(type = null) {
+		if (type === null) {
+			return this.attachments;
+		}
+
+		return this.attachments.filter(attachment => (
+			attachment.type === type
+		));
 	}
 
 	/**

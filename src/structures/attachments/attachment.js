@@ -90,12 +90,41 @@ export default class Attachment {
 	}
 
 	/**
-	 * Returns custom tag
+	 * Checks that the attachment is equivalent with object
 	 *
-	 * @return {string}
+	 * @param {Attachment} attachment
+	 *
+	 * @return {boolean}
 	 */
-	get [Symbol.toStringTag]() {
-		return this.constructor.name;
+	equals(attachment) {
+		if (!attachment) {
+			return false;
+		}
+
+		if (this.getType() !== attachment.getType()) {
+			return false;
+		}
+
+		if (this.getOwnerId() !== attachment.getOwnerId()) {
+			return false;
+		}
+
+		if (this.getId() !== attachment.getId()) {
+			return false;
+		}
+
+		return true;
+	}
+
+	/**
+	 * Checks that the attachment is equivalent with string
+	 *
+	 * @param {string} attachment
+	 *
+	 * @return {boolean}
+	 */
+	equalString(attachment) {
+		return this.equals(Attachment.fromString(attachment));
 	}
 
 	/**
