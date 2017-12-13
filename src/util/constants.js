@@ -133,7 +133,7 @@ export const defaultContentType = {
  * @type {Object}
  */
 export const apiErrors = {
-	UKNOWN_ERROR: 1,
+	UNKNOWN_ERROR: 1,
 	APP_SWITCHED_OFF: 2,
 	UNKNOWN_METHOD: 3,
 	AUTH_FAILURE: 5,
