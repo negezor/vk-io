@@ -1,4 +1,21 @@
 /**
+ * Creates a key and value from the keys
+ *
+ * @param {string[]} keys
+ *
+ * @return {Object}
+ */
+export const keyMirror = (keys) => {
+	const out = {};
+
+	for (const key of keys) {
+		out[key] = key;
+	}
+
+	return out;
+};
+
+/**
  * Returns method for execute
  *
  * @param {string} method

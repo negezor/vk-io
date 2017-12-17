@@ -1,5 +1,7 @@
 import { version } from '../../package.json';
 
+import { keyMirror } from './helpers';
+
 /**
  * VK API version
  *
@@ -169,45 +171,56 @@ export const apiErrors = {
  *
  * @type {Object}
  */
-export const authErrors = {
-	PAGE_BLOCKED: 'PAGE_BLOCKED',
-	INVALID_PHONE_NUMBER: 'INVALID_PHONE_NUMBER',
-	AUTHORIZATION_FAILED: 'AUTHORIZATION_FAILED',
-	FAILED_PASSED_CAPTCHA: 'FAILED_PASSED_CAPTCHA',
-	MISSING_CAPTCHA_HANDLER: 'MISSING_CAPTCHA_HANDLER',
-	FAILED_PASSED_TWO_FACTOR: 'FAILED_PASSED_TWO_FACTOR',
-	MISSING_TWO_FACTOR_HANDLER: 'MISSING_TWO_FACTOR_HANDLER'
-};
+export const authErrors = keyMirror([
+	'PAGE_BLOCKED',
+	'INVALID_PHONE_NUMBER',
+	'AUTHORIZATION_FAILED',
+	'FAILED_PASSED_CAPTCHA',
+	'MISSING_CAPTCHA_HANDLER',
+	'FAILED_PASSED_TWO_FACTOR',
+	'MISSING_TWO_FACTOR_HANDLER'
+]);
 
 /**
  * Upload error codes
  *
  * @type {Object}
  */
-export const uploadErrors = {
-	NO_FILES_TO_UPLOAD: 'NO_FILES_TO_UPLOAD',
-	EXCEEDED_MAX_FILES: 'EXCEEDED_MAX_FILES',
-	UNSUPPORTED_SOURCE_TYPE: 'UNSUPPORTED_SOURCE_TYPE'
-};
+export const uploadErrors = keyMirror([
+	'NO_FILES_TO_UPLOAD',
+	'EXCEEDED_MAX_FILES',
+	'UNSUPPORTED_SOURCE_TYPE'
+]);
 
 /**
  * Updates error codes
  *
  * @type {Object}
  */
-export const updatesErrors = {
-	NEED_RESTART: 'NEED_RESTART',
-	POLLING_REQUEST_FAILED: 'POLLING_REQUEST_FAILED'
-};
+export const updatesErrors = keyMirror([
+	'NEED_RESTART',
+	'POLLING_REQUEST_FAILED'
+]);
 
 /**
  * Collect error codes
  *
  * @type {Object}
  */
-export const collectErrors = {
-	EXECUTE_ERROR: 'EXECUTE_ERROR'
-};
+export const collectErrors = keyMirror([
+	'EXECUTE_ERROR'
+]);
+
+/**
+ * Snippets error codes
+ *
+ * @type {Object}
+ */
+export const snippetsErrors = keyMirror([
+	'INVALID_URL',
+	'URL_NOT_ALLOWED',
+	'RESOURCE_NOT_FOUND'
+]);
 
 /**
  * List of user permissions and their bit mask
@@ -263,3 +276,24 @@ export const platforms = new Map([
 	[7, 'web'],
 	[8, 'standalone']
 ]);
+
+/**
+ * Parse attachments with RegExp
+ *
+ * @type {RegExp}
+ */
+export const parseAttachment = /(photo|video|audio|doc|wall|market)([-\d]+)_(\d+)_?(\d+)?/;
+
+/**
+ * Parse resource with RegExp
+ *
+ * @type {RegExp}
+ */
+export const parseResource = /(app(?:lication)|club|public|albums|tag)([-\d]+)/;
+
+/**
+ * Parse owner resource with RegExp
+ *
+ * @type {RegExp}
+ */
+export const parseOwnerResource = /(album|topic|wall|page|videos)([-\d]+)_(\d+)/;

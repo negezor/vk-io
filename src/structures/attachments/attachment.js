@@ -1,11 +1,6 @@
 import { inspect } from 'util';
 
-/**
- * Parse attachments with RegExp
- *
- * @type {RegExp}
- */
-const parseAttachment = /^([^\d-]+)([-\d]+)_(\d+)_?(\d+)?$/;
+import { parseAttachment } from '../../util/constants';
 
 export default class Attachment {
 	/**

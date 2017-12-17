@@ -1,25 +1,34 @@
 import { URL } from 'url';
 
-/**
- * Parse attachments with RegExp
- *
- * @type {RegExp}
- */
-const parseAttachment = /([^\d-]+)([-\d]+)_(\d+)_?(\d+)?/;
+import { SnippetsError } from '../errors';
+import {
+	snippetsErrors,
 
-/**
- * Parse resource with RegExp
- *
- * @type {RegExp}
- */
-const parseResource = /([^\d-]+)([-\d]+)/;
+	parseAttachment,
+
+	parseResource,
+	parseOwnerResource
+} from '../util/constants';
+
+const {
+	INVALID_URL,
+	URL_NOT_ALLOWED,
+	RESOURCE_NOT_FOUND
+} = snippetsErrors;
 
 /**
  * Remove search param
  *
  * @type {RegExp}
  */
-const removeSearchParam = /&[^=]+=/;
+const removeSearchParam = /(\?|&)[^=]+=/;
+
+/**
+ * Search dot
+ *
+ * @type {RegExp}
+ */
+const searchDot = /\./g;
 
 /**
  * Switch resource types
@@ -31,6 +40,31 @@ const enumResourceTypes = {
 	club: 'group',
 	public: 'group',
 	app: 'application'
+};
+
+/**
+ * Allowed host names
+ *
+ * @type {Array}
+ */
+const allowedHostnames = ['vk.com', 'm.vk.com'];
+
+/**
+ * Resolve the attachment resource
+ *
+ * @param {string} resource
+ * @param {RegExp} pattern
+ *
+ * @return {Object}
+ */
+const resolveOwnerResource = (resource, pattern) => {
+	const [, type, owner, id] = resource.match(pattern);
+
+	return {
+		id: Number(id),
+		owner: Number(owner),
+		type: type.toLowerCase().replace(removeSearchParam, '')
+	};
 };
 
 export default class Snippets {
@@ -60,11 +94,38 @@ export default class Snippets {
 	 * @return {Promise<Object>}
 	 */
 	async resolveResource(resource) {
+		if (!resource) {
+			throw new Error('Resource should must be');
+		}
+
+		resource = String(resource);
+
+		if (resource.startsWith('@') || resource.startsWith('*')) {
+			resource = resource.substring(1);
+		}
+
 		const numberResource = Number(resource);
 		const resourceIsNaN = Number.isNaN(numberResource);
 
-		let resourceWithSearch = resource;
+		if (!resourceIsNaN) {
+			const isUser = numberResource > 0;
+
+			return {
+				id: isUser
+					? numberResource
+					: -numberResource,
+				type: isUser
+					? 'user'
+					: 'group'
+			};
+		}
+
+		let resourceSearch;
 		try {
+			if (!resource.match(searchDot)) {
+				throw new Error('Is not URL');
+			}
+
 			let url = resource;
 
 			if (!(url.startsWith('http://') || url.startsWith('https://'))) {
@@ -73,34 +134,42 @@ export default class Snippets {
 
 			const { hostname, pathname, search } = new URL(url);
 
-			if (hostname === resource || !resourceIsNaN) {
-				throw new Error('Is not URL');
-			}
-
-			if (!['vk.com', 'm.vk.com'].includes(hostname)) {
-				throw new Error('URL not allowed');
+			if (!allowedHostnames.includes(hostname)) {
+				throw new SnippetsError({
+					code: URL_NOT_ALLOWED,
+					message: 'URL not allowed'
+				});
 			}
 
 			if (pathname === '/') {
-				throw new Error('URL should contain screen name');
+				throw new SnippetsError({
+					code: INVALID_URL,
+					message: 'URL should contain path'
+				});
 			}
 
 			resource = pathname.substring(1);
-			resourceWithSearch = `${resource}?${search}`;
+			resourceSearch = search;
 		} catch (error) {
-			if (['URL not allowed', 'URL should contain screen name'].includes(error.message)) {
+			if ([URL_NOT_ALLOWED, INVALID_URL].includes(error.code)) {
 				throw error;
 			}
 		}
 
-		if (parseAttachment.test(resourceWithSearch)) {
-			const [, type, owner, id] = resourceWithSearch.match(parseAttachment);
+		if (parseAttachment.test(resourceSearch)) {
+			return resolveOwnerResource(resourceSearch, parseAttachment);
+		}
 
-			return {
-				id: Number(id),
-				owner: Number(id),
-				type: type.toLowerCase().replace(removeSearchParam, '')
-			};
+		if (parseOwnerResource.test(resourceSearch)) {
+			return resolveOwnerResource(resourceSearch, parseOwnerResource);
+		}
+
+		if (parseAttachment.test(resource)) {
+			return resolveOwnerResource(resource, parseAttachment);
+		}
+
+		if (parseOwnerResource.test(resource)) {
+			return resolveOwnerResource(resource, parseOwnerResource);
 		}
 
 		if (parseResource.test(resource)) {
@@ -119,26 +188,15 @@ export default class Snippets {
 			};
 		}
 
-		if (!resourceIsNaN) {
-			return {
-				id: numberResource,
-				type: numberResource > 0
-					? 'user'
-					: 'group'
-			};
-		}
-
-		let screenName = resource;
-		if (screenName.startsWith('@') || screenName.startsWith('*')) {
-			screenName = screenName.substring(1);
-		}
-
 		const response = await this.vk.api.utils.resolveScreenName({
-			screen_name: screenName
+			screen_name: resource
 		});
 
 		if (Array.isArray(response)) {
-			throw new Error('Resource not found');
+			throw new SnippetsError({
+				message: 'Resource not found',
+				code: RESOURCE_NOT_FOUND
+			});
 		}
 
 		const { type, object_id: id } = response;

@@ -5,6 +5,7 @@ import UploadError from './upload';
 import CollectError from './collect';
 import UpdatesError from './updates';
 import ExecuteError from './execute';
+import SnippetsError from './snippets';
 import StreamingRuleError from './streaming-rule';
 
 export {
@@ -23,6 +24,7 @@ export {
 	CollectError,
 	UpdatesError,
 	ExecuteError,
+	SnippetsError,
 	StreamingRuleError
 };
 
