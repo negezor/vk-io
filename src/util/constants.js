@@ -289,7 +289,7 @@ export const parseAttachment = /(photo|video|audio|doc|wall|market)([-\d]+)_(\d+
  *
  * @type {RegExp}
  */
-export const parseResource = /(app(?:lication)|club|public|albums|tag)([-\d]+)/;
+export const parseResource = /(app(?:lication)|id|club|public|albums|tag)([-\d]+)/;
 
 /**
  * Parse owner resource with RegExp
