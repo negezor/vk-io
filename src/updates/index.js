@@ -46,8 +46,9 @@ export default class Updates {
 		this.started = null;
 
 		this.url = null;
-		this.pts = null;
+
 		this.ts = null;
+		this.pts = null;
 
 		/**
 		 * 2 -  Attachments
@@ -199,8 +200,9 @@ export default class Updates {
 	 *
 	 * @param {Array} update
 	 */
-	handleLongpollUpdate(update) {
+	handlePollingUpdate(update) {
 		debug('longpoll update', update);
+
 		// eslint-disable-next-line default-case
 		switch (update[0]) {
 		case 1:
@@ -354,7 +356,7 @@ export default class Updates {
 			return;
 		}
 
-		this.started = 'longpoll';
+		this.started = 'polling';
 
 		try {
 			const { server, key, ts } = await this.vk.api.messages.getLongPollServer({
@@ -369,7 +371,7 @@ export default class Updates {
 			this.url.search = new URLSearchParams({
 				act: 'a_check',
 				version: 2,
-				wait: 20,
+				wait: 25,
 				key
 			});
 
@@ -392,8 +394,8 @@ export default class Updates {
 		{
 			tls,
 			path,
-			port = 80,
-			host,
+			port,
+			host
 		} = {},
 		next
 	) {
@@ -422,13 +424,19 @@ export default class Updates {
 				? https.createServer(tls, callback)
 				: http.createServer(callback);
 
+			if (!port) {
+				port = tls
+					? 443
+					: 80;
+			}
+
 			const { webhookServer } = this;
 
 			const listen = promisify(webhookServer.listen).bind(webhookServer);
 
 			await listen(port, host);
 
-			debug(`Webhook listening on port: ${port || tls ? 443 : 80}`);
+			debug(`Webhook listening on port: ${port}`);
 		} catch (error) {
 			this.started = null;
 
@@ -442,8 +450,9 @@ export default class Updates {
 	 * @return {Promise}
 	 */
 	async stop() {
-		this.restarted = 0;
 		this.started = null;
+
+		this.restarted = 0;
 
 		if (this.webhookServer !== null) {
 			const { webhookServer } = this;
@@ -593,7 +602,7 @@ export default class Updates {
 	 */
 	async startFetchLoop() {
 		try {
-			while (this.started === 'longpoll') {
+			while (this.started === 'polling') {
 				await this.fetchUpdates();
 			}
 		} catch (error) {
@@ -613,14 +622,16 @@ export default class Updates {
 				return;
 			}
 
-			while (this.started === 'longpoll') {
+			while (this.started === 'polling') {
 				try {
 					await this.stop();
 					await this.startPolling();
+
+					break;
 				} catch (restartError) {
 					debug('longpoll restarted error', restartError);
 
-					this.started = 'longpoll';
+					this.started = 'polling';
 
 					await delay(pollingWait);
 				}
@@ -637,8 +648,8 @@ export default class Updates {
 		const { agent } = this.vk.options;
 		const { searchParams } = this.url;
 
-		searchParams.set('mode', this.mode);
 		searchParams.set('ts', this.ts);
+		searchParams.set('mode', this.mode);
 
 		debug('http -->');
 
@@ -646,12 +657,14 @@ export default class Updates {
 			agent,
 
 			method: 'GET',
-			timeout: 25e3,
+			timeout: 30e3,
 			compress: false,
 			headers: {
 				connection: 'keep-alive'
 			}
 		});
+
+		debug('http <-- %d', response.status);
 
 		if (!response.ok) {
 			throw new UpdatesError({
@@ -662,7 +675,7 @@ export default class Updates {
 
 		response = await response.json();
 
-		debug('http <--');
+		this.restarted = 0;
 
 		if ('failed' in response && response.failed !== 1) {
 			this.ts = null;
@@ -680,12 +693,13 @@ export default class Updates {
 		}
 
 		if ('updates' in response) {
-			await Promise.all(response.updates.map(async (update) => {
+			/* Async handle updates */
+			Promise.all(response.updates.map(async (update) => {
 				try {
-					await this.handleLongpollUpdate(update);
+					await this.handlePollingUpdate(update);
 				} catch (error) {
 					// eslint-disable-next-line no-console
-					console.error('Handle polling update error', error);
+					console.error('Handle polling update error:', error);
 				}
 			}));
 		}

@@ -14,6 +14,7 @@ export {
 	uploadErrors,
 	updatesErrors,
 	collectErrors,
+	snippetsErrors
 } from '../util/constants';
 
 export {

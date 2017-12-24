@@ -17,6 +17,8 @@ describe('Snippets', () => {
 				1,
 				'1',
 				'id1',
+				'*id1',
+				'@id1',
 				'durov',
 				'*durov',
 				'@durov',
@@ -67,10 +69,13 @@ describe('Snippets', () => {
 			expect(payloads).to.deep.equal(result);
 		});
 
-		it('should parse equivalent owner resource', async () => {
+		it('should parse equivalent owner resource', async function parseOwnerResource() {
+			this.timeout(1000 * 60);
+
 			const resources = [
 				-1,
 				'club1',
+				'public1',
 				'apiclub',
 				'app1',
 				'albums1',
@@ -84,6 +89,10 @@ describe('Snippets', () => {
 			)));
 
 			const result = [
+				{
+					id: 1,
+					type: 'group'
+				},
 				{
 					id: 1,
 					type: 'group'

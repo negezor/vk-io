@@ -8,9 +8,9 @@ import Request from './request';
 import methods from './methods';
 import { APIError, ExecuteError } from '../errors';
 import { getRandomId, delay } from '../util/helpers';
-import { API_VERSION, apiErrors } from '../util/constants';
 import AccountVerification from '../auth/account-verification';
 import { sequential, parallel, parallelSelected } from './workers';
+import { API_VERSION, apiErrors, captchaTypes } from '../util/constants';
 
 const {
 	CAPTCHA_REQUIRED,
@@ -291,6 +291,17 @@ export default class API {
 		const { code } = error;
 
 		if (code === TOO_MANY_REQUESTS) {
+			if (this.suspended) {
+				this.requeue(request);
+			}
+
+			this.suspended = true;
+
+			/* TODO: Refactoring */
+			await delay(1133 / 3);
+
+			this.suspended = false;
+
 			this.requeue(request);
 
 			return;
@@ -345,6 +356,7 @@ export default class API {
 		const { captchaSid } = error;
 
 		const payload = {
+			type: captchaTypes.API,
 			src: error.captchaImg,
 			sid: captchaSid,
 			request

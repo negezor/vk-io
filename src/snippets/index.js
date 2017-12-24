@@ -201,6 +201,13 @@ export default class Snippets {
 
 		const { type, object_id: id } = response;
 
+		if (type === 'page') {
+			return {
+				id,
+				type: 'group'
+			};
+		}
+
 		return { id, type };
 	}
 }

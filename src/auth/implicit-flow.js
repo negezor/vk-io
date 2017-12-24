@@ -8,8 +8,8 @@ import { URL, URLSearchParams } from 'url';
 import { AuthError, authErrors } from '../errors';
 
 import { parseFormField, getFullURL } from './helpers';
-import { DESKTOP_USER_AGENT, CALLBACK_BLANK } from '../util/constants';
 import { fetchCookieFollowRedirectsDecorator } from '../util/fetch-cookie';
+import { DESKTOP_USER_AGENT, CALLBACK_BLANK, captchaTypes } from '../util/constants';
 
 const debug = createDebug('vk-io:auth:implicit-flow');
 
@@ -344,9 +344,12 @@ export default class ImplicitFlow {
 				});
 			}
 
+			const src = $('.oauth_captcha').attr('src') || $('#captcha').attr('src');
+
 			const payload = {
-				src: $('.oauth_captcha').attr('src') || $('#captcha').attr('src'),
-				sid: fields.captcha_sid
+				type: captchaTypes.IMPLICIT_FLOW_AUTH,
+				sid: fields.captcha_sid,
+				src
 			};
 
 			await (new Promise((resolveCaptcha) => {

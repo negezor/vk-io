@@ -6,8 +6,8 @@ import { URL, URLSearchParams } from 'url';
 
 import { AuthError, authErrors } from '../errors';
 import { parseFormField, getFullURL } from './helpers';
-import { DESKTOP_USER_AGENT, CALLBACK_BLANK } from '../util/constants';
 import { fetchCookieFollowRedirectsDecorator } from '../util/fetch-cookie';
+import { DESKTOP_USER_AGENT, CALLBACK_BLANK, captchaTypes } from '../util/constants';
 
 const debug = createDebug('vk-io:auth:account-verification');
 
@@ -369,9 +369,12 @@ export default class AccountVerification {
 
 		const { action, fields } = parseFormField($);
 
+		const src = $('.captcha_img').attr('src');
+
 		const payload = {
-			src: $('.captcha_img').attr('src'),
-			sid: fields.captcha_sid
+			type: captchaTypes.ACCOUNT_VERIFICATION,
+			sid: fields.captcha_sid,
+			src
 		};
 
 		await (new Promise((resolveCaptcha) => {

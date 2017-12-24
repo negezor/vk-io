@@ -8,7 +8,7 @@ import { createReadStream } from 'fs';
 import MultipartStream from './multipart-stream';
 import { isStream, copyParams } from './helpers';
 import { UploadError, uploadErrors } from '../errors';
-import { defaultExtensions, defaultContentType } from '../util/constants';
+import { defaultExtensions, defaultContentTypes } from '../util/constants';
 
 import {
 	PhotoAttachment,
@@ -805,8 +805,8 @@ export default class Upload {
 
 					if (contentType !== null) {
 						headers['Content-Type'] = contentType;
-					} else if (attachmentType in defaultContentType) {
-						headers['Content-Type'] = defaultContentType[attachmentType];
+					} else if (attachmentType in defaultContentTypes) {
+						headers['Content-Type'] = defaultContentTypes[attachmentType];
 					}
 
 					return formData.append(name, value, { filename, headers });

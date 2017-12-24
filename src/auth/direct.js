@@ -9,7 +9,9 @@ import { fetchCookieFollowRedirectsDecorator } from '../util/fetch-cookie';
 import {
 	API_VERSION,
 	CALLBACK_BLANK,
-	DESKTOP_USER_AGENT
+	DESKTOP_USER_AGENT,
+
+	captchaTypes
 } from '../util/constants';
 import {
 	getFullURL,
@@ -294,8 +296,14 @@ export default class DirectAuth {
 			});
 		}
 
+		const payload = {
+			type: captchaTypes.DIRECT_AUTH,
+			sid,
+			src
+		};
+
 		const key = await (new Promise((resolveCaptcha) => {
-			this.vk.captchaHandler({ src, sid }, code => (
+			this.vk.captchaHandler(payload, code => (
 				new Promise((resolve, reject) => {
 					this.captcha = { resolve, reject };
 
@@ -350,7 +358,7 @@ export default class DirectAuth {
 			: 'sms';
 
 		const key = await (new Promise((resolveTwoFactor) => {
-			this.vk.captchaHandler({ type, phoneMask }, code => (
+			this.vk.twoFactorHandler({ type, phoneMask }, code => (
 				new Promise((resolve, reject) => {
 					this.twoFactor = { resolve, reject };
 

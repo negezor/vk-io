@@ -28,7 +28,7 @@ export const CALLBACK_BLANK = 'https://oauth.vk.com/blank.html';
  *
  * @type {string}
  */
-export const DESKTOP_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36';
+export const DESKTOP_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36';
 
 /**
  * Default options
@@ -121,13 +121,25 @@ export const defaultExtensions = {
  *
  * @type {Object}
  */
-export const defaultContentType = {
+export const defaultContentTypes = {
 	photo: 'image/jpeg',
 	video: 'video/mp4',
 	audio: 'audio/mp3',
 	voice: 'audio/ogg',
 	graffiti: 'image/png'
 };
+
+/**
+ * Sources of captcha
+ *
+ * @type {Object}
+ */
+export const captchaTypes = keyMirror([
+	'API',
+	'DIRECT_AUTH',
+	'IMPLICIT_FLOW_AUTH',
+	'ACCOUNT_VERIFICATION'
+]);
 
 /**
  * API error codes
