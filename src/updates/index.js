@@ -664,7 +664,7 @@ export default class Updates {
 			}
 		});
 
-		debug('http <-- %d', response.status);
+		debug(`http <-- ${response.status}`);
 
 		if (!response.ok) {
 			throw new UpdatesError({
