@@ -70,8 +70,8 @@ Promise.all([
 		// png at file without extensions
 		source: {
 			value: fs.createReadStream('./path/to/cat2'),
-			contentType: 'cat2.png',
-			filename: 'image/png'
+			contentType: 'image/png',
+			filename: 'cat2.png'
 		}
 	})
 
