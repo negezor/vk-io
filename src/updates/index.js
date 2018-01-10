@@ -167,7 +167,7 @@ export default class Updates {
 
 			const hasSome = conditions.some((condition) => {
 				if (typeof condition === 'function') {
-					return conditions(text, context);
+					return condition(text, context);
 				}
 
 				if (condition instanceof RegExp) {
