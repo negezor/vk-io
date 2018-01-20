@@ -24,7 +24,7 @@ export default class MessageContext extends Context {
 	 * @param {VK}     vk
 	 * @param {Object} payload
 	 */
-	constructor(vk, payload) {
+	constructor(vk, payload, { webhookType = null, pollingType = null }) {
 		super(vk);
 
 		this.payload = payload;
@@ -62,6 +62,21 @@ export default class MessageContext extends Context {
 			))
 		));
 
+		if (webhookType !== null) {
+			subTypes.push((
+				webhookType === 'message_edit'
+					? 'edit_message'
+					: 'new_message'
+
+			));
+		} else if (pollingType !== null) {
+			subTypes.push((
+				pollingType === 5
+					? 'edit_message'
+					: 'new_message'
+			));
+		}
+
 		if (this.hasText()) {
 			subTypes.push('text');
 		}
@@ -73,7 +88,7 @@ export default class MessageContext extends Context {
 		this.type = 'message';
 		this.subTypes = subTypes;
 
-		this.filled = this.payload.$source !== 'polling';
+		this.filled = pollingType === null;
 	}
 
 	/**
@@ -247,7 +262,7 @@ export default class MessageContext extends Context {
 	 * @return {number}
 	 */
 	getSenderId() {
-		return this.payload.from_id;
+		return this.payload.from_id || this.getUserId() || null;
 	}
 
 	/**

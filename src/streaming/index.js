@@ -193,9 +193,9 @@ export default class StreamingAPI {
 	 * @return {Promise<Array>}
 	 */
 	async getRules() {
-		const { rules } = await this.fetchRules('GET');
+		const { rules = [] } = await this.fetchRules('GET');
 
-		return rules || [];
+		return rules;
 	}
 
 	/**

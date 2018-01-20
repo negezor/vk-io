@@ -214,10 +214,14 @@ export default class Updates {
 			));
 		}
 
-		case 4: {
+		case 4:
+		case 5: {
 			return this.dispatchMiddleware(new MessageContext(
 				this.vk,
-				transformMessage(update)
+				transformMessage(update),
+				{
+					pollingType: update[0]
+				}
 			));
 		}
 
@@ -277,8 +281,11 @@ export default class Updates {
 		// eslint-disable-next-line default-case
 		switch (update.type) {
 		case 'message_new':
+		case 'message_edit':
 		case 'message_reply': {
-			return this.dispatchMiddleware(new MessageContext(this.vk, update.object));
+			return this.dispatchMiddleware(new MessageContext(this.vk, update.object, {
+				webhookType: update.type
+			}));
 		}
 
 		case 'message_allow':
