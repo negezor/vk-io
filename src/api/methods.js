@@ -220,15 +220,19 @@ export default [
 	 * Groups
 	 * Methods for working with communities
 	 */
+	'groups.addCallbackServer',
 	'groups.addLink',
 	'groups.approveRequest',
 	'groups.banUser',
 	'groups.create',
+	'groups.deleteCallbackServer',
 	'groups.deleteLink',
+	'groups.disableOnline',
 	'groups.edit',
 	'groups.editLink',
 	'groups.editManager',
 	'groups.editPlace',
+	'groups.enableOnline',
 	'groups.get',
 	'groups.getBanned',
 	'groups.getById',
@@ -239,6 +243,7 @@ export default [
 	'groups.getInvitedUsers',
 	'groups.getInvites',
 	'groups.getMembers',
+	'groups.getOnlineStatus',
 	'groups.getRequests',
 	'groups.getSettings',
 	'groups.invite',
