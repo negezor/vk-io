@@ -76,7 +76,7 @@ vk.setOptions(options); // => this
 | apiAttempts       | number   | Количество попыток повтора запроса после ошибки                           | 3                                                                        |
 | apiTimeout        | number   | Время ожидания запроса                                                    | 10000                                                                    |
 | apiHeaders        | Object   | Заголовки отправляемые вместе с запросом                                  | {'User-Agent':\`vk-io/${version} (+https://github.com/negezor/vk-io)\`}  |
-| apiExecuteCount   | number   | Количество параллельных запросов при apiMode=(parallel|parallel_selected) | 25                                                                       |
+| apiExecuteCount   | number   | Количество параллельных запросов при apiMode=(parallel\|parallel_selected) | 25                                                                       |
 | apiExecuteMethods | string[] | Методы которые будут собираться в execute при apiMode=parallel_selected   | ['messages.send']                                                        |
 
 Доступные режимы работы API
