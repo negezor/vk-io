@@ -10,6 +10,13 @@ describe('Snippets', () => {
 	const { snippets } = vk;
 
 	describe('resolveResource', () => {
+		if (TOKEN === null) {
+			// eslint-disable-next-line no-console
+			it('the test is skipped because there is no token', () => {});
+
+			return;
+		}
+
 		it('should parse equivalent user', async function resolveUserResource() {
 			this.timeout(1000 * 60);
 
