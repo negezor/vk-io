@@ -59,7 +59,7 @@ export default class Collect {
 	 *
 	 * @return {Promise<Array>}
 	 */
-	executes(method, queue) {
+	async executes(method, queue) {
 		queue = queue.map(params => (
 			getExecuteMethod(method, params)
 		));
@@ -72,7 +72,19 @@ export default class Collect {
 			promises.push(this.vk.api.execute({ code }));
 		}
 
-		return Promise.all(promises);
+		let out = {
+			response: [],
+			errors: []
+		};
+
+		for (const { response, errors } of await Promise.all(promises)) {
+			out = {
+				response: [...out.response, ...response],
+				errors: [...out.errors, ...errors]
+			};
+		}
+
+		return out;
 	}
 
 	/**

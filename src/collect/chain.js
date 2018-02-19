@@ -75,7 +75,10 @@ export default class Chain {
 			return [];
 		}
 
-		const results = [];
+		let out = {
+			response: [],
+			errors: []
+		};
 
 		while (queue.length > 0) {
 			const tasks = queue.splice(0, 25);
@@ -86,7 +89,10 @@ export default class Chain {
 
 				resolveExecuteTask(tasks, response);
 
-				results.push(response.response);
+				out = {
+					response: [...out.response, ...response.response],
+					errors: [...out.errors, ...response.errors]
+				};
 			} catch (error) {
 				for (const task of tasks) {
 					task.reject(error);
@@ -96,7 +102,7 @@ export default class Chain {
 			}
 		}
 
-		return [].concat(...results);
+		return out;
 	}
 
 	/**
