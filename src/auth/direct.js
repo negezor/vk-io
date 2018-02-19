@@ -302,9 +302,16 @@ export default class DirectAuth {
 			src
 		};
 
-		const key = await (new Promise((resolveCaptcha) => {
+		const key = await (new Promise((resolveCaptcha, rejectCaptcha) => {
 			this.vk.captchaHandler(payload, code => (
 				new Promise((resolve, reject) => {
+					if (code instanceof Error) {
+						rejectCaptcha(code);
+						reject(code);
+
+						return;
+					}
+
 					this.captcha = { resolve, reject };
 
 					resolveCaptcha(code);

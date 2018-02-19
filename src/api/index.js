@@ -364,6 +364,13 @@ export default class API {
 
 		this.vk.captchaHandler(payload, key => (
 			new Promise((resolve, reject) => {
+				if (key instanceof Error) {
+					request.reject(key);
+					reject(key);
+
+					return;
+				}
+
 				request.params.captcha_sid = captchaSid;
 				request.params.captcha_key = key;
 

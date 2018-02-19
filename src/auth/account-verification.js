@@ -377,9 +377,16 @@ export default class AccountVerification {
 			src
 		};
 
-		await (new Promise((resolveCaptcha) => {
+		await (new Promise((resolveCaptcha, rejectCaptcha) => {
 			this.vk.captchaHandler(payload, key => (
 				new Promise((resolve, reject) => {
+					if (key instanceof Error) {
+						rejectCaptcha(key);
+						reject(key);
+
+						return;
+					}
+
 					fields.captcha_key = key;
 
 					this.captcha = { resolve, reject };
