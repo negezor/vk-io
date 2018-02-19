@@ -33,6 +33,13 @@ const { NEED_RESTART, POLLING_REQUEST_FAILED } = updatesErrors;
 
 const debug = createDebug('vk-io:updates');
 
+/**
+ * Version polling
+ *
+ * @type {number}
+ */
+const POLLING_VERSION = 3;
+
 export default class Updates {
 	/**
 	 * Constructor
@@ -367,7 +374,7 @@ export default class Updates {
 
 		try {
 			const { server, key, ts } = await this.vk.api.messages.getLongPollServer({
-				lp_version: 2
+				lp_version: POLLING_VERSION
 			});
 
 			if (this.ts === null) {
@@ -377,7 +384,7 @@ export default class Updates {
 			this.url = new URL(`https://${server}`);
 			this.url.search = new URLSearchParams({
 				act: 'a_check',
-				version: 2,
+				version: POLLING_VERSION,
 				wait: 25,
 				key
 			});
