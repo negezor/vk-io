@@ -5,6 +5,7 @@
     "main": "index.js",
     "scripts": {
         "lint": "eslint ./src",
+        "lint:fix": "npm run lint -- --fix",
         "test": "mocha lib/tests",
         "build": "npm run-script babel",
         "babel": "babel src/ --out-dir lib/",
