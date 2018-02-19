@@ -38,7 +38,7 @@ const specialAttachments = {
  * @return {Object}
  */
 // eslint-disable-next-line import/prefer-default-export
-export default function transformMessage([, id, flags, peer, date, body, attachments, random]) {
+export default function transformMessage([, id, flags, peer, date, body, extra, attachments]) {
 	const message = {
 		id,
 		date,
@@ -47,11 +47,11 @@ export default function transformMessage([, id, flags, peer, date, body, attachm
 		geo: 'geo' in attachments
 			? {}
 			: null,
-		random_id: random,
+		random_id: extra.random_id || null,
 		out: Number((flags & 1) !== 0),
 		deleted: Number((flags & 128) !== 0),
 		read_state: Number((flags & 1) !== 0),
-		emoji: Number(attachments.emoji === 1)
+		emoji: Number(Boolean(extra.emoji))
 	};
 
 	const isGroup = peer < 0;
@@ -66,15 +66,15 @@ export default function transformMessage([, id, flags, peer, date, body, attachm
 	}
 
 	if (isChat) {
-		message.user_id = Number(attachments.from);
+		message.user_id = Number(extra.from);
 		message.chat_id = peer - CHAT_PEER;
 
-		message.title = attachments.title;
+		message.title = extra.title;
 
 		if ('source_act' in attachments) {
-			message.action = attachments.source_act;
-			message.action_mid = attachments.source_mid;
-			message.action_text = attachments.source_text;
+			message.action = extra.source_act;
+			message.action_mid = extra.source_mid;
+			message.action_text = extra.source_text;
 		}
 	} else {
 		message.user_id = peer;
