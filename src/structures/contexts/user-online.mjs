@@ -1,6 +1,6 @@
 import Context from './context';
 
-import { platforms } from '../../util/constants';
+import { platforms } from '../../utils/constants';
 
 export default class UserOnlineContext extends Context {
 	/**

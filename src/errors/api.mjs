@@ -1,5 +1,5 @@
 import VKError from './vk';
-import { apiErrors } from '../util/constants';
+import { apiErrors } from '../utils/constants';
 
 const { CAPTCHA_REQUIRED, USER_VALIDATION_REQUIRED, CONFIRMATION_REQUIRED } = apiErrors;
 

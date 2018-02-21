@@ -6,7 +6,7 @@ import {
 	getChainReturn,
 	getExecuteMethod,
 	resolveExecuteTask
-} from '../../util/helpers';
+} from '../../utils/helpers';
 
 export default async function parallel(next) {
 	const { queue } = this;

@@ -6,8 +6,8 @@ import { URL, URLSearchParams } from 'url';
 
 import { AuthError, authErrors } from '../errors';
 import { parseFormField, getFullURL } from './helpers';
-import { fetchCookieFollowRedirectsDecorator } from '../util/fetch-cookie';
-import { DESKTOP_USER_AGENT, CALLBACK_BLANK, captchaTypes } from '../util/constants';
+import { fetchCookieFollowRedirectsDecorator } from '../utils/fetch-cookie';
+import { DESKTOP_USER_AGENT, CALLBACK_BLANK, captchaTypes } from '../utils/constants';
 
 const debug = createDebug('vk-io:auth:account-verification');
 

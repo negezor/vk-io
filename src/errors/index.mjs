@@ -15,7 +15,7 @@ export {
 	updatesErrors,
 	collectErrors,
 	snippetsErrors
-} from '../util/constants';
+} from '../utils/constants';
 
 export {
 	VKError,

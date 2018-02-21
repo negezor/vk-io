@@ -7,10 +7,10 @@ import { URL, URLSearchParams } from 'url';
 import Request from './request';
 import methods from './methods';
 import { APIError, ExecuteError } from '../errors';
-import { getRandomId, delay } from '../util/helpers';
+import { getRandomId, delay } from '../utils/helpers';
 import AccountVerification from '../auth/account-verification';
 import { sequential, parallel, parallelSelected } from './workers';
-import { API_VERSION, apiErrors, captchaTypes } from '../util/constants';
+import { API_VERSION, apiErrors, captchaTypes } from '../utils/constants';
 
 const {
 	CAPTCHA_REQUIRED,

@@ -1,5 +1,5 @@
 import Context from './context';
-import { CHAT_PEER } from '../../util/constants';
+import { CHAT_PEER } from '../../utils/constants';
 import { unescapeHTML } from '../../updates/helpers';
 import { transformAttachments } from '../attachments/helpers';
 

@@ -1,6 +1,6 @@
 import Context from './context';
 
-import { platforms } from '../../util/constants';
+import { platforms } from '../../utils/constants';
 import { transformAttachments } from '../attachments/helpers';
 
 export default class StreamingContext extends Context {

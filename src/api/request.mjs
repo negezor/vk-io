@@ -1,6 +1,6 @@
 import { inspect } from 'util';
 
-import { getExecuteMethod } from '../util/helpers';
+import { getExecuteMethod } from '../utils/helpers';
 
 export default class Request {
 	/**

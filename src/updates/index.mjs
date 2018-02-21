@@ -25,7 +25,7 @@ import {
 	RemovedMessagesContext
 } from '../structures/contexts';
 
-import { delay } from '../util/helpers';
+import { delay } from '../utils/helpers';
 import transformMessage from './transform-message';
 import { UpdatesError, updatesErrors } from '../errors';
 

@@ -1,5 +1,5 @@
 import { parseFwds } from './helpers';
-import { CHAT_PEER } from '../util/constants';
+import { CHAT_PEER } from '../utils/constants';
 
 /**
  * Special attachments in one message

@@ -1,4 +1,4 @@
-import { getExecuteMethod } from '../util/helpers';
+import { getExecuteMethod } from '../utils/helpers';
 
 const unespaceOffset = /"offset":"(\w+)"/g;
 

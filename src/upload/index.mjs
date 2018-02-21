@@ -8,7 +8,7 @@ import { createReadStream } from 'fs';
 import MultipartStream from './multipart-stream';
 import { isStream, copyParams } from './helpers';
 import { UploadError, uploadErrors } from '../errors';
-import { defaultExtensions, defaultContentTypes } from '../util/constants';
+import { defaultExtensions, defaultContentTypes } from '../utils/constants';
 
 import {
 	PhotoAttachment,

@@ -1,6 +1,6 @@
 import Context from './context';
 
-import { CHAT_PEER } from '../../util/constants';
+import { CHAT_PEER } from '../../utils/constants';
 
 export default class TypingContext extends Context {
 	/**

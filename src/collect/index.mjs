@@ -4,7 +4,7 @@ import CollectStream from './stream';
 import LIMITS_METHODS from './limits';
 
 import Chain from './chain';
-import { getChainReturn, getExecuteMethod } from '../util/helpers';
+import { getChainReturn, getExecuteMethod } from '../utils/helpers';
 
 export default class Collect {
 	/**

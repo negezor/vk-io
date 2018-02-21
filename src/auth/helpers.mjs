@@ -1,6 +1,6 @@
 import { URL } from 'url';
 
-import { userScopes, groupScopes } from '../util/constants';
+import { userScopes, groupScopes } from '../utils/constants';
 
 /**
  * Returns the entire permission bit mask

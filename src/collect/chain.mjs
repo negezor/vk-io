@@ -1,7 +1,7 @@
 import { inspect } from 'util';
 
 import Request from '../api/request';
-import { getChainReturn, resolveExecuteTask } from '../util/helpers';
+import { getChainReturn, resolveExecuteTask } from '../utils/helpers';
 
 export default class Chain {
 	/**

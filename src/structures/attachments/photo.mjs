@@ -4,7 +4,7 @@ import {
 	getSmallPhoto,
 	getLargePhoto,
 	getMediumPhoto
-} from '../../util/helpers';
+} from '../../utils/helpers';
 
 export default class PhotoAttachment extends Attachment {
 	/**

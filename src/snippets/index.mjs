@@ -8,7 +8,7 @@ import {
 
 	parseResource,
 	parseOwnerResource
-} from '../util/constants';
+} from '../utils/constants';
 
 const {
 	INVALID_URL,

@@ -5,7 +5,7 @@ import { URL, URLSearchParams } from 'url';
 
 import ImplicitFlow from './implicit-flow';
 import { AuthError, authErrors } from '../errors';
-import { API_VERSION, CALLBACK_BLANK } from '../util/constants';
+import { API_VERSION, CALLBACK_BLANK } from '../utils/constants';
 import {
 	parseFormField,
 	getAllGroupsPermissions,

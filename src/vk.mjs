@@ -8,7 +8,7 @@ import Collect from './collect';
 import Updates from './updates';
 import Snippets from './snippets';
 import StreamingAPI from './streaming';
-import { defaultOptions } from './util/constants';
+import { defaultOptions } from './utils/constants';
 
 /**
  * Main class

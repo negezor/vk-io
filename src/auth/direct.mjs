@@ -5,14 +5,14 @@ import { URL, URLSearchParams } from 'url';
 
 import { AuthError, authErrors } from '../errors';
 
-import { fetchCookieFollowRedirectsDecorator } from '../util/fetch-cookie';
+import { fetchCookieFollowRedirectsDecorator } from '../utils/fetch-cookie';
 import {
 	API_VERSION,
 	CALLBACK_BLANK,
 	DESKTOP_USER_AGENT,
 
 	captchaTypes
-} from '../util/constants';
+} from '../utils/constants';
 import {
 	getFullURL,
 	parseFormField,
