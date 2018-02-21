@@ -645,7 +645,14 @@ export default class Upload {
 			params,
 
 			getServer: this.vk.api.stories.getPhotoUploadServer,
-			serverParams: ['user_ids', 'add_to_news'],
+			serverParams: [
+				'add_to_news',
+				'user_ids',
+				'reply_to_story',
+				'link_text',
+				'link_url',
+				'group_id'
+			],
 
 			saveFiles: save => save,
 
@@ -667,7 +674,14 @@ export default class Upload {
 			params,
 
 			getServer: this.vk.api.stories.getVideoUploadServer,
-			serverParams: ['user_ids', 'add_to_news'],
+			serverParams: [
+				'add_to_news',
+				'user_ids',
+				'reply_to_story',
+				'link_text',
+				'link_url',
+				'group_id'
+			],
 
 			saveFiles: save => save,
 

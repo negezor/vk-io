@@ -1,6 +1,6 @@
 /**
  * List methods VK
- * Last updated 05.12.2017
+ * Last updated 21.02.2018
  *
  * @type {Array}
  */
@@ -530,10 +530,19 @@ export default [
 	 * Stories
 	 * Methods for working with stories
 	 */
-	'stories.get',
+	'stories.banOwner',
 	'stories.delete',
-	'stories.getVideoUploadServer',
+	'stories.get',
+	'stories.getBanned',
+	'stories.getById',
 	'stories.getPhotoUploadServer',
+	'stories.getReplies',
+	'stories.getStats',
+	'stories.getVideoUploadServer',
+	'stories.getViewers',
+	'stories.hideAllReplies',
+	'stories.hideReply',
+	'stories.unbanOwner',
 
 	/**
 	 * Streaming
