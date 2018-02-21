@@ -5,9 +5,25 @@
 	},
     "extends": "airbnb-base",
 	"parserOptions": {
-		"ecmaVersion": 2017
+		"ecmaVersion": 2018,
+		"sourceType": "module"
+	},
+	"settings": {
+		"import/resolver": {
+			"node": {
+				"extensions": [".mjs", ".js"]
+			}
+		}
 	},
 	"rules": {
+		"import/extensions": [
+			"error",
+			"always",
+			{
+				"mjs": "never",
+				"js": "never"
+			}
+		],
 		"class-methods-use-this": 0,
 		"no-restricted-syntax": 0,
 		"no-param-reassign": 0,
