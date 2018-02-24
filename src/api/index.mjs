@@ -10,7 +10,13 @@ import { APIError, ExecuteError } from '../errors';
 import { getRandomId, delay } from '../utils/helpers';
 import AccountVerification from '../auth/account-verification';
 import { sequential, parallel, parallelSelected } from './workers';
-import { API_VERSION, apiErrors, captchaTypes } from '../utils/constants';
+import {
+	MINIMUM_TIME_INTERVAL_API,
+	API_VERSION,
+
+	apiErrors,
+	captchaTypes
+} from '../utils/constants';
 
 const {
 	CAPTCHA_REQUIRED,
@@ -175,7 +181,7 @@ export default class API {
 
 		const { apiLimit, apiMode, apiExecuteCount } = this.vk.options;
 
-		const interval = Math.round(1133 / apiLimit);
+		const interval = Math.round(MINIMUM_TIME_INTERVAL_API / apiLimit);
 		const handler = this.getRequestHandler(apiMode);
 
 		const work = async () => {
@@ -293,12 +299,13 @@ export default class API {
 		if (code === TOO_MANY_REQUESTS) {
 			if (this.suspended) {
 				this.requeue(request);
+
+				return;
 			}
 
 			this.suspended = true;
 
-			/* TODO: Refactoring */
-			await delay(1133 / 3);
+			await delay((MINIMUM_TIME_INTERVAL_API / this.vk.options.apiLimit) + 50);
 
 			this.suspended = false;
 
