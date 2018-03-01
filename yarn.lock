@@ -1726,9 +1726,9 @@ micromatch@^2.1.5, micromatch@^2.3.11:
     parse-glob "^3.0.4"
     regex-cache "^0.4.2"
 
-middleware-io@^0.0.3:
-  version "0.0.3"
-  resolved "https://registry.yarnpkg.com/middleware-io/-/middleware-io-0.0.3.tgz#71e4c6a988ec2e005b3233172eb2504c714178c3"
+middleware-io@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/middleware-io/-/middleware-io-0.0.5.tgz#ea3da1860a29acd6ecec2ca303639e7dc269d159"
 
 mime-db@~1.33.0:
   version "1.33.0"
@@ -2423,7 +2423,13 @@ to-fast-properties@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/to-fast-properties/-/to-fast-properties-2.0.0.tgz#dc5e698cbd079265bc73e0377681a4e4e83f616e"
 
-tough-cookie@^2.3.3, tough-cookie@~2.3.0:
+tough-cookie@^2.3.4:
+  version "2.3.4"
+  resolved "https://registry.yarnpkg.com/tough-cookie/-/tough-cookie-2.3.4.tgz#ec60cee38ac675063ffc97a5c18970578ee83655"
+  dependencies:
+    punycode "^1.4.1"
+
+tough-cookie@~2.3.0:
   version "2.3.3"
   resolved "https://registry.yarnpkg.com/tough-cookie/-/tough-cookie-2.3.3.tgz#0b618a5565b6dea90bf3425d04d55edc475a7561"
   dependencies:

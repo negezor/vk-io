@@ -52,10 +52,10 @@
     "dependencies": {
         "cheerio": "^1.0.0-rc.2",
         "debug": "^3.1.0",
-        "middleware-io": "^0.0.3",
+        "middleware-io": "^0.0.5",
         "node-fetch": "^2.0.0",
         "sandwich-stream": "^1.0.0",
-        "tough-cookie": "^2.3.3",
+        "tough-cookie": "^2.3.4",
         "ws": "^4.1.0"
     }
 }
