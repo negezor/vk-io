@@ -242,10 +242,13 @@ export default [
 	'groups.getCatalogInfo',
 	'groups.getInvitedUsers',
 	'groups.getInvites',
+	'groups.getLongPollServer',
+	'groups.getLongPollSettings',
 	'groups.getMembers',
 	'groups.getOnlineStatus',
 	'groups.getRequests',
 	'groups.getSettings',
+	'groups.getTokenPermissions',
 	'groups.invite',
 	'groups.isMember',
 	'groups.join',
@@ -254,6 +257,7 @@ export default [
 	'groups.reorderLink',
 	'groups.search',
 	'groups.setCallbackSettings',
+	'groups.setLongPollSettings',
 	'groups.unbanUser',
 
 	/**
