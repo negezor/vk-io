@@ -102,6 +102,7 @@ export const defaultOptions = {
 
 	pollingWait: 3e3,
 	pollingAttempts: 3,
+	pollingGroupId: null,
 
 	webhookPath: null,
 	webhookSecret: null,
@@ -274,7 +275,9 @@ export const userScopes = new Map([
  * @type {Map}
  */
 export const groupScopes = new Map([
+	['stories', 1],
 	['photos', 4],
+	// ['app_widget', 64],
 	['messages', 4096],
 	['docs', 131072],
 	['manage', 262144]

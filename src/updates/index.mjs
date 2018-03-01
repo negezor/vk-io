@@ -27,9 +27,10 @@ import {
 
 import { delay } from '../utils/helpers';
 import transformMessage from './transform-message';
-import { UpdatesError, updatesErrors } from '../errors';
+import { UpdatesError, updatesErrors, apiErrors } from '../errors';
 
 const { NEED_RESTART, POLLING_REQUEST_FAILED } = updatesErrors;
+const { AUTH_FAILURE } = apiErrors;
 
 const debug = createDebug('vk-io:updates');
 
@@ -373,15 +374,27 @@ export default class Updates {
 		this.started = 'polling';
 
 		try {
-			const { server, key, ts } = await this.vk.api.messages.getLongPollServer({
-				lp_version: POLLING_VERSION
-			});
+			const { pollingGroupId } = this.vk.options;
+
+			const isGroup = pollingGroupId !== null;
+
+			const { server, key, ts } = isGroup
+				? await this.vk.api.groups.getLongPollServer({
+					group_id: pollingGroupId
+				})
+				: await this.vk.api.messages.getLongPollServer({
+					lp_version: POLLING_VERSION
+				});
 
 			if (this.ts === null) {
 				this.ts = ts;
 			}
 
-			this.url = new URL(`https://${server}`);
+			const pollingURL = isGroup
+				? server
+				: `https://${server}`;
+
+			this.url = new URL(pollingURL);
 			this.url.search = new URLSearchParams({
 				act: 'a_check',
 				version: POLLING_VERSION,
@@ -707,10 +720,16 @@ export default class Updates {
 		}
 
 		if ('updates' in response) {
+			const isGroup = this.vk.options.pollingGroupId !== null;
+
 			/* Async handle updates */
 			Promise.all(response.updates.map(async (update) => {
 				try {
-					await this.handlePollingUpdate(update);
+					if (isGroup) {
+						await this.handleWebhookUpdate(update);
+					} else {
+						await this.handlePollingUpdate(update);
+					}
 				} catch (error) {
 					// eslint-disable-next-line no-console
 					console.error('Handle polling update error:', error);
