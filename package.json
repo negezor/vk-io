@@ -44,18 +44,18 @@
         "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.40",
         "@babel/preset-env": "^7.0.0-beta.40",
         "chai": "^4.1.2",
-        "eslint": "^4.18.1",
+        "eslint": "^4.18.2",
         "eslint-config-airbnb-base": "^12.1.0",
         "eslint-plugin-import": "^2.9.0",
-        "mocha": "^5.0.1"
+        "mocha": "^5.0.4"
     },
     "dependencies": {
         "cheerio": "^1.0.0-rc.2",
         "debug": "^3.1.0",
         "middleware-io": "^0.0.5",
-        "node-fetch": "^2.0.0",
+        "node-fetch": "^2.1.1",
         "sandwich-stream": "^1.0.0",
         "tough-cookie": "^2.3.4",
-        "ws": "^4.1.0"
+        "ws": "^5.0.0"
     }
 }
