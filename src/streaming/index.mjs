@@ -96,7 +96,8 @@ export default class StreamingAPI {
 					debug(`Unsupported message code: ${code}`);
 				}
 			} catch (error) {
-				debug('Handle event error', error);
+				// eslint-disable-next-line no-console
+				console.log('Handle event error', error);
 			}
 		});
 

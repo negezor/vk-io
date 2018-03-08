@@ -70,9 +70,11 @@ export default class Updates {
 		this.webhookServer = null;
 
 		this.stack = [];
+		this.middleware = null;
 
 		this.hears = new Middleware();
-		this.middleware = new Middleware();
+
+		this.reloadMiddleware();
 	}
 
 	/**
@@ -103,20 +105,7 @@ export default class Updates {
 	use(middleware) {
 		this.stack.push(middleware);
 
-		this.middleware = new Middleware(this.stack);
-		this.middleware.use(async (context, next) => {
-			if (!context.is('text')) {
-				await next();
-
-				return;
-			}
-
-			const { finished } = await this.hears.run(context);
-
-			if (finished) {
-				await next();
-			}
-		});
+		this.reloadMiddleware();
 
 		return this;
 	}
@@ -747,6 +736,26 @@ export default class Updates {
 	 */
 	dispatchMiddleware(context) {
 		return this.middleware.run(context);
+	}
+
+	/**
+	 * Reloads middleware
+	 */
+	reloadMiddleware() {
+		this.middleware = new Middleware(this.stack);
+		this.middleware.use(async (context, next) => {
+			if (!context.is('text')) {
+				await next();
+
+				return;
+			}
+
+			const { finished } = await this.hears.run(context);
+
+			if (finished) {
+				await next();
+			}
+		});
 	}
 
 	/**
