@@ -198,3 +198,23 @@ updates.hear(
 	async (context, next) => {...}
 );
 ```
+
+## setHearFallbackHandler
+
+Устанавливает обработчик который вызывается если не одна команда из `hear` не подошла
+
+```js
+updates.setHearFallbackHandler(handler);
+```
+
+| Параметр | Тип      | Описание   |
+|----------|----------|------------|
+| handler  | Function | Middleware |
+
+Пример использования
+
+```js
+updates.setHearFallbackHandler(async (context, next) => {
+	await context.send('Такой команды нет :(');
+});
+```

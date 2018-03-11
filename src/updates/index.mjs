@@ -74,6 +74,8 @@ export default class Updates {
 
 		this.hears = new Middleware();
 
+		this.hearFallbackHandler = (context, next) => next();
+
 		this.reloadMiddleware();
 	}
 
@@ -188,6 +190,19 @@ export default class Updates {
 
 			await handler(context, next);
 		});
+
+		return this;
+	}
+
+	/**
+	 * A handler that is called when handlers are not found
+	 *
+	 * @param {Function} handler
+	 *
+	 * @return {this}
+	 */
+	setHearFallbackHandler(handler) {
+		this.hearFallbackHandler = handler;
 
 		return this;
 	}
@@ -753,7 +768,7 @@ export default class Updates {
 			const { finished } = await this.hears.run(context);
 
 			if (finished) {
-				await next();
+				await this.hearFallbackHandler(context, next);
 			}
 		});
 	}
