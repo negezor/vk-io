@@ -306,6 +306,15 @@ export default class MessageContext extends Context {
 	}
 
 	/**
+	 * Returns the chat title
+	 *
+	 * @return {string}
+	 */
+	getTitle() {
+		return this.payload.title || null;
+	}
+
+	/**
 	 * Returns the text
 	 *
 	 * @return {?string}

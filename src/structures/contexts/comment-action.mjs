@@ -199,11 +199,11 @@ export default class CommentActionContext extends Context {
 		const { payload } = this;
 
 		return (
-			this.payload.photo_id ||
-			this.payload.video_id ||
-			this.payload.post_id ||
-			this.payload.topic_id ||
-			this.payload.item_id ||
+			payload.photo_id ||
+			payload.video_id ||
+			payload.post_id ||
+			payload.topic_id ||
+			payload.item_id ||
 			null
 		);
 	}
