@@ -39,12 +39,12 @@
     },
     "homepage": "https://github.com/negezor/vk-io#readme",
     "devDependencies": {
-        "@babel/cli": "^7.0.0-beta.40",
-        "@babel/core": "^7.0.0-beta.40",
-        "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.40",
-        "@babel/preset-env": "^7.0.0-beta.40",
+        "@babel/cli": "^7.0.0-beta.42",
+        "@babel/core": "^7.0.0-beta.42",
+        "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.42",
+        "@babel/preset-env": "^7.0.0-beta.42",
         "chai": "^4.1.2",
-        "eslint": "^4.18.2",
+        "eslint": "^4.19.0",
         "eslint-config-airbnb-base": "^12.1.0",
         "eslint-plugin-import": "^2.9.0",
         "mocha": "^5.0.4"
@@ -56,6 +56,6 @@
         "node-fetch": "^2.1.1",
         "sandwich-stream": "^1.0.0",
         "tough-cookie": "^2.3.4",
-        "ws": "^5.0.0"
+        "ws": "^5.1.0"
     }
 }
