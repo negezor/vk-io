@@ -1,8 +1,8 @@
 {
     "name": "vk-io",
-    "version": "4.0.0-beta.2",
+    "version": "4.0.0-beta.3",
     "description": "Modern VK API SDK for Node.js",
-    "main": "index.js",
+    "main": "lib/index",
     "scripts": {
         "lint": "eslint ./src",
         "lint:fix": "npm run lint -- --fix",
@@ -12,9 +12,8 @@
         "watch": "npm run-script babel -- --watch",
         "prepare": "npm run-script babel && npm run-script test"
     },
-	"license": "MIT",
-	"author": "Vladlen <negezor@gmail.com>",
-	"main": "lib/index",
+    "license": "MIT",
+    "author": "Vladlen <negezor@gmail.com>",
     "engines": {
         "node": ">=8"
     },
