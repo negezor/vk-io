@@ -1,6 +1,5 @@
+import cheerio from 'cheerio';
 import createDebug from 'debug';
-import { CookieJar } from 'tough-cookie';
-import { load as cheerioLoad } from 'cheerio';
 
 import { promisify } from 'util';
 import { URL, URLSearchParams } from 'url';
@@ -8,8 +7,10 @@ import { URL, URLSearchParams } from 'url';
 import { AuthError, authErrors } from '../errors';
 
 import { parseFormField, getFullURL } from './helpers';
-import { fetchCookieFollowRedirectsDecorator } from '../utils/fetch-cookie';
+import { CookieJar, fetchCookieFollowRedirectsDecorator } from '../utils/fetch-cookie';
 import { DESKTOP_USER_AGENT, CALLBACK_BLANK, captchaTypes } from '../utils/constants';
+
+const { load: cheerioLoad } = cheerio;
 
 const debug = createDebug('vk-io:auth:implicit-flow');
 

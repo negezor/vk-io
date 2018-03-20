@@ -1,12 +1,14 @@
 import fetch from 'node-fetch';
 import createDebug from 'debug';
-import { CookieJar } from 'tough-cookie';
+import toughCookie from 'tough-cookie';
 
 import { promisify } from 'util';
 
 const debug = createDebug('vk-io:util:fetch-cookie');
 
 const REDIRECT_CODES = [303, 301, 302];
+
+export const { CookieJar } = toughCookie;
 
 export const fetchCookieDecorator = (jar = new CookieJar()) => {
 	const setCookie = promisify(jar.setCookie).bind(jar);

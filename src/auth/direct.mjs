@@ -1,5 +1,5 @@
+import cheerio from 'cheerio';
 import createDebug from 'debug';
-import { load as cheerioLoad } from 'cheerio';
 
 import { URL, URLSearchParams } from 'url';
 
@@ -19,6 +19,8 @@ import {
 	getAllUsersPermissions,
 	getUsersPermissionsByName
 } from './helpers';
+
+const { load: cheerioLoad } = cheerio;
 
 const debug = createDebug('vk-io:auth:direct');
 

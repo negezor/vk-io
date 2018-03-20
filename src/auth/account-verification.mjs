@@ -1,13 +1,14 @@
+import cheerio from 'cheerio';
 import createDebug from 'debug';
-import { CookieJar } from 'tough-cookie';
-import { load as cheerioLoad } from 'cheerio';
 
 import { URL, URLSearchParams } from 'url';
 
 import { AuthError, authErrors } from '../errors';
 import { parseFormField, getFullURL } from './helpers';
-import { fetchCookieFollowRedirectsDecorator } from '../utils/fetch-cookie';
 import { DESKTOP_USER_AGENT, CALLBACK_BLANK, captchaTypes } from '../utils/constants';
+import { CookieJar, fetchCookieFollowRedirectsDecorator } from '../utils/fetch-cookie';
+
+const { load: cheerioLoad } = cheerio;
 
 const debug = createDebug('vk-io:auth:account-verification');
 

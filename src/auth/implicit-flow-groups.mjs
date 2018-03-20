@@ -1,5 +1,5 @@
+import cheerio from 'cheerio';
 import createDebug from 'debug';
-import { load as cheerioLoad } from 'cheerio';
 
 import { URL, URLSearchParams } from 'url';
 
@@ -11,6 +11,8 @@ import {
 	getAllGroupsPermissions,
 	getGroupsPermissionsByName
 } from './helpers';
+
+const { load: cheerioLoad } = cheerio;
 
 const debug = createDebug('vk-io:auth:implicit-flow-user');
 
