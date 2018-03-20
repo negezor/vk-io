@@ -9,6 +9,9 @@
 	"plugins": [
 		["@babel/proposal-object-rest-spread", {
 			"useBuiltIns": true
+		}],
+		["@babel/plugin-transform-modules-commonjs", {
+			"mjsStrictNamespace": false
 		}]
 	]
 }

@@ -12,6 +12,9 @@
         "watch": "npm run-script babel -- --watch",
         "prepare": "npm run-script babel && npm run-script test"
     },
+	"license": "MIT",
+	"author": "Vladlen <negezor@gmail.com>",
+	"main": "lib/index",
     "engines": {
         "node": ">=8"
     },
@@ -32,8 +35,6 @@
         "es6",
         "es7"
     ],
-    "author": "Vladlen <negezor@gmail.com>",
-    "license": "MIT",
     "bugs": {
         "url": "https://github.com/negezor/vk-io/issues"
     },
