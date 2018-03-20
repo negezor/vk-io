@@ -28,7 +28,6 @@ const [photo] = await vk.api.photos.getById({
 new PhotoAttachment(photo, vk);
 ```
 
-
 ## getUserId
 Возвращает идентификатор пользователя
 
@@ -50,22 +49,29 @@ attachment.getAlbumId(); // => ?number
 attachment.getText(); // => ?string
 ```
 
-## getDate
-Возращает дату добавления в формате Unixtime
+## getTimestamp
+Возвращает timestamp даты добавления фотографии
 
 ```js
-attachment.getDate(); // => ?number
+attachment.getTimestamp(); // => ?number
+```
+
+## getDate
+Возвращает объект `Date` даты добавления фотографии
+
+```js
+attachment.getDate(); // => ?Date
 ```
 
 ## getHeight
-Возращает ширину оригинала фотографии в пикселах
+Возвращает ширину оригинала фотографии в пикселах
 
 ```js
 attachment.getHeight(); // => ?number
 ```
 
 ## getWidth
-Возращает высоту оригинала фотографии в пикселах
+Возвращает высоту оригинала фотографии в пикселах
 
 ```js
 attachment.getWidth(); // => ?number

@@ -47,7 +47,7 @@ export default class CommentActionContext extends Context {
 		}
 
 		return this.attachments.some(attachment => (
-			attachment.type === type
+			attachment.getType() === type
 		));
 	}
 
@@ -258,7 +258,7 @@ export default class CommentActionContext extends Context {
 		}
 
 		return this.attachments.filter(attachment => (
-			attachment.type === type
+			attachment.getType() === type
 		));
 	}
 

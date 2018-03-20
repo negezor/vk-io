@@ -81,7 +81,7 @@ export default class WallAttachment extends Attachment {
 		}
 
 		return this.attachments.some(attachment => (
-			attachment.type === type
+			attachment.getType() === type
 		));
 	}
 
@@ -112,7 +112,7 @@ export default class WallAttachment extends Attachment {
 	}
 
 	/**
-	 * Checks is can this user commented post
+	 * Checks can the current user comment on the entry
 	 *
 	 * @return {?boolean}
 	 */
@@ -125,7 +125,7 @@ export default class WallAttachment extends Attachment {
 	}
 
 	/**
-	 * Checks is can groups commented post
+	 * Checks if a community can comment on a post
 	 *
 	 * @return {?boolean}
 	 */
@@ -138,20 +138,16 @@ export default class WallAttachment extends Attachment {
 	}
 
 	/**
-	 * Checks is can commented post
+	 * Checks if you can comment on a post
 	 *
 	 * @return {?boolean}
 	 */
 	isCanCommented() {
-		if (!this.filled) {
-			return null;
-		}
-
 		return this.isCanUserCommented() || this.isCanGroupsCommented();
 	}
 
 	/**
-	 * Checks is can like this post
+	 * Checks whether the current user can like the record
 	 *
 	 * @return {?boolean}
 	 */
@@ -164,7 +160,7 @@ export default class WallAttachment extends Attachment {
 	}
 
 	/**
-	 * Checks is can commented post
+	 * hecks whether the current user can repost the record
 	 *
 	 * @return {?boolean}
 	 */
@@ -187,19 +183,6 @@ export default class WallAttachment extends Attachment {
 		}
 
 		return Boolean(this.payload.can_pin);
-	}
-
-	/**
-	 * Checks is can this user edit post
-	 *
-	 * @return {?boolean}
-	 */
-	isCanPinned() {
-		if (!this.filled) {
-			return null;
-		}
-
-		return Boolean(this.payload.can_pinned);
 	}
 
 	/**
@@ -229,6 +212,19 @@ export default class WallAttachment extends Attachment {
 	}
 
 	/**
+	 * Checks is can this user edit post
+	 *
+	 * @return {?boolean}
+	 */
+	isPinned() {
+		if (!this.filled) {
+			return null;
+		}
+
+		return Boolean(this.payload.is_pinned);
+	}
+
+	/**
 	 * Checks is post created only by friends
 	 *
 	 * @return {?boolean}
@@ -242,12 +238,25 @@ export default class WallAttachment extends Attachment {
 	}
 
 	/**
-	 * Returns the date creation post
+	 * Returns the timestamp when this post was created
 	 *
-	 * @return {?number}
+	 * @return {number}
+	 */
+	getTimestamp() {
+		return this.payload.date || null;
+	}
+
+	/**
+	 * Returns the Date object when this post was created
+	 *
+	 * @return {?Date}
 	 */
 	getDate() {
-		return this.payload.date || null;
+		const { date } = this.payload;
+
+		return date
+			? new Date(date)
+			: null;
 	}
 
 	/**
@@ -290,12 +299,12 @@ export default class WallAttachment extends Attachment {
 		}
 
 		return this.attachments.filter(attachment => (
-			attachment.type === type
+			attachment.getType() === type
 		));
 	}
 
 	/**
-	 * Returns the identifier created user post
+	 * Returns the administrator identifier that posted the entry
 	 *
 	 * @return {?number}
 	 */
@@ -304,7 +313,7 @@ export default class WallAttachment extends Attachment {
 	}
 
 	/**
-	 * Returns the identifier reply owner
+	 * The identifier of the record owner, in response to which the current
 	 *
 	 * @return {?number}
 	 */
@@ -313,7 +322,7 @@ export default class WallAttachment extends Attachment {
 	}
 
 	/**
-	 * Returns the identifier reply post
+	 * The identifier of the record in response to which the current one was left.
 	 *
 	 * @return {?number}
 	 */
@@ -322,7 +331,8 @@ export default class WallAttachment extends Attachment {
 	}
 
 	/**
-	 * Returns the identifier signer user
+	 * Returns author identifier if the entry was published
+	 * on behalf of the community and signed by the user
 	 *
 	 * @return {?number}
 	 */
@@ -331,7 +341,7 @@ export default class WallAttachment extends Attachment {
 	}
 
 	/**
-	 * Returns the views count
+	 * Returns the number of record views
 	 *
 	 * @return {?number}
 	 */

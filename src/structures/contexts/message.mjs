@@ -62,19 +62,21 @@ export default class MessageContext extends Context {
 			))
 		));
 
-		if (webhookType !== null) {
-			subTypes.push((
-				webhookType === 'message_edit'
-					? 'edit_message'
-					: 'new_message'
+		if (!this.isEvent()) {
+			if (webhookType !== null) {
+				subTypes.push((
+					webhookType === 'message_edit'
+						? 'edit_message'
+						: 'new_message'
 
-			));
-		} else if (pollingType !== null) {
-			subTypes.push((
-				pollingType === 5
-					? 'edit_message'
-					: 'new_message'
-			));
+				));
+			} else if (pollingType !== null) {
+				subTypes.push((
+					pollingType === 5
+						? 'edit_message'
+						: 'new_message'
+				));
+			}
 		}
 
 		if (this.hasText()) {
@@ -126,7 +128,7 @@ export default class MessageContext extends Context {
 		}
 
 		return this.attachments.some(attachment => (
-			attachment.type === type
+			attachment.getType() === type
 		));
 	}
 
@@ -371,7 +373,7 @@ export default class MessageContext extends Context {
 		}
 
 		return this.attachments.filter(attachment => (
-			attachment.type === type
+			attachment.getType() === type
 		));
 	}
 

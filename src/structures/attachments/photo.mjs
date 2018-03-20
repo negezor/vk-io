@@ -74,12 +74,25 @@ export default class PhotoAttachment extends Attachment {
 	}
 
 	/**
-	 * Returns the photo upload date (timestamp)
+	 * Returns the timestamp when this photo was created
 	 *
-	 * @return {?number}
+	 * @return {number}
+	 */
+	getTimestamp() {
+		return this.payload.date || null;
+	}
+
+	/**
+	 * Returns the Date object when this photo was created
+	 *
+	 * @return {?Date}
 	 */
 	getDate() {
-		return this.payload.date || null;
+		const { date } = this.payload;
+
+		return date
+			? new Date(date)
+			: null;
 	}
 
 	/**

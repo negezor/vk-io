@@ -64,7 +64,7 @@ export default class NewAttachmentsContext extends Context {
 		}
 
 		return this.attachments.some(attachment => (
-			attachment.type === type
+			attachment.getType() === type
 		));
 	}
 
@@ -81,7 +81,7 @@ export default class NewAttachmentsContext extends Context {
 		}
 
 		return this.attachments.filter(attachment => (
-			attachment.type === type
+			attachment.getType() === type
 		));
 	}
 

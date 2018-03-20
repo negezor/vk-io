@@ -59,6 +59,23 @@ export default class GroupUpdateContext extends Context {
 	}
 
 	/**
+	 * Checks for the presence of attachments
+	 *
+	 * @param {?string} type
+	 *
+	 * @return {boolean}
+	 */
+	hasAttachments(type = null) {
+		if (type === null) {
+			return this.attachments.length > 0;
+		}
+
+		return this.attachments.some(attachment => (
+			attachment.getType() === type
+		));
+	}
+
+	/**
 	 * Returns the identifier admin
 	 *
 	 * @return {?number}
@@ -101,5 +118,22 @@ export default class GroupUpdateContext extends Context {
 	 */
 	getChanges() {
 		return this.payload.changes || null;
+	}
+
+	/**
+	 * Returns the attachments
+	 *
+	 * @param {?string} type
+	 *
+	 * @return {Array}
+	 */
+	getAttachments(type = null) {
+		if (type === null) {
+			return this.attachments;
+		}
+
+		return this.attachments.filter(attachment => (
+			attachment.getType() === type
+		));
 	}
 }

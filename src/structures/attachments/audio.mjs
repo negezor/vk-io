@@ -26,7 +26,7 @@ export default class AudioAttachment extends Attachment {
 			return;
 		}
 
-		const [audio] = await this.vk.api.docs.getById({
+		const [audio] = await this.vk.api.audio.getById({
 			audios: `${this.owner}_${this.id}`
 		});
 
@@ -82,12 +82,25 @@ export default class AudioAttachment extends Attachment {
 	}
 
 	/**
-	 * Returns audio upload date (timestamp)
+	 * Returns the timestamp when this audio was created
 	 *
 	 * @return {?number}
 	 */
-	getDate() {
+	getTimestamp() {
 		return this.payload.date || null;
+	}
+
+	/**
+	 * Returns the Date object when this audio was created
+	 *
+	 * @return {?Date}
+	 */
+	getDate() {
+		const { date } = this.payload;
+
+		return date
+			? new Date(date)
+			: null;
 	}
 
 	/**

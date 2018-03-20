@@ -71,7 +71,7 @@ export default function transformMessage([, id, flags, peer, date, body, extra, 
 
 		message.title = extra.title;
 
-		if ('source_act' in attachments) {
+		if ('source_act' in extra) {
 			message.action = extra.source_act;
 			message.action_mid = extra.source_mid;
 			message.action_text = extra.source_text;

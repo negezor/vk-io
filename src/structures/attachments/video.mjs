@@ -118,28 +118,54 @@ export default class VideoAttachment extends Attachment {
 	/**
 	 * Returns the duration
 	 *
-	 * @return {?string}
+	 * @return {?number}
 	 */
 	getDuration() {
 		return this.payload.duration || null;
 	}
 
 	/**
-	 * Returns the video upload date (timestamp)
+	 * Returns the timestamp when this video was created
 	 *
-	 * @return {?number}
+	 * @return {number}
 	 */
-	getDate() {
+	getTimestamp() {
 		return this.payload.date || null;
 	}
 
 	/**
-	 * Returns the video adding date (timestamp)
+	 * Returns the Date object when this video was created
 	 *
-	 * @return {?number}
+	 * @return {?Date}
+	 */
+	getDate() {
+		const { date } = this.payload;
+
+		return date
+			? new Date(date)
+			: null;
+	}
+
+	/**
+	 * Returns the timestamp when this video was added
+	 *
+	 * @return {number}
+	 */
+	getAddingTimestamp() {
+		return this.payload.adding_date || null;
+	}
+
+	/**
+	 * Returns the Date object when this video was added
+	 *
+	 * @return {?Date}
 	 */
 	getAddingDate() {
-		return this.payload.adding_date || null;
+		const { adding_date: date } = this.payload;
+
+		return date
+			? new Date(date)
+			: null;
 	}
 
 	/**
@@ -161,30 +187,22 @@ export default class VideoAttachment extends Attachment {
 	}
 
 	/**
-	 * Returns the video height
-	 *
-	 * @return {?number}
-	 */
-	getHeight() {
-		return this.payload.height || null;
-	}
-
-	/**
-	 * Returns the video width
-	 *
-	 * @return {?number}
-	 */
-	getWidth() {
-		return this.payload.width || null;
-	}
-
-	/**
 	 * Returns the URL of the page with the player
 	 *
 	 * @return {?string}
 	 */
 	getPlayer() {
 		return this.payload.player || null;
+	}
+
+
+	/**
+	 * Returns the name of the platform (for video recordings added from external sites)
+	 *
+	 * @return {?string}
+	 */
+	getPlatformName() {
+		return this.payload.platform || null;
 	}
 
 	/**

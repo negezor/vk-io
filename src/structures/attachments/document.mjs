@@ -82,7 +82,7 @@ export default class DocumentAttachment extends Attachment {
 	}
 
 	/**
-	 * Checks if the document is a gif
+	 * Checks if the document is a gif file
 	 *
 	 * @return {?boolean}
 	 */
@@ -160,7 +160,7 @@ export default class DocumentAttachment extends Attachment {
 	}
 
 	/**
-	 * Checks if the document is a video
+	 * Checks if the document is a book
 	 *
 	 * @return {?boolean}
 	 */
@@ -182,12 +182,25 @@ export default class DocumentAttachment extends Attachment {
 	}
 
 	/**
-	 * Returns document upload date (timestamp)
+	 * Returns the timestamp when this document was created
 	 *
-	 * @return {?number}
+	 * @return {number}
+	 */
+	getTimestamp() {
+		return this.payload.date || null;
+	}
+
+	/**
+	 * Returns the Date object when this document was created
+	 *
+	 * @return {?Date}
 	 */
 	getDate() {
-		return this.payload.date || null;
+		const { date } = this.payload;
+
+		return date
+			? new Date(date)
+			: null;
 	}
 
 	/**
@@ -213,7 +226,7 @@ export default class DocumentAttachment extends Attachment {
 	}
 
 	/**
-	 * Returns the size
+	 * Returns the size in bytes
 	 *
 	 * @return {?number}
 	 */
