@@ -432,7 +432,7 @@ context.markAsImportant([ids, params]); // => Promise<number[]>
 Удаляет сообщение(я)
 
 ```js
-context.markAsImportant([ids, params]); // => Promise<number[]>
+context.deleteMessage([ids, params]); // => Promise<number[]>
 ```
 
 | Параметр | Тип      | Описание                                                       |
@@ -508,7 +508,7 @@ context.inviteUser([id]); // => Promise<boolean>
 |----------|--------|----------------------------|
 | id       | number | Идентификатор пользователя |
 
-## inviteUser
+## kickUser
 
 Приглашает нового пользователя в чат
 
