@@ -9,6 +9,7 @@ export default class StreamingContext extends Context {
 	 *
 	 * @param {VK}     vk
 	 * @param {Object} payload
+	 * @param {Object} options
 	 */
 	constructor(vk, payload) {
 		super(vk);

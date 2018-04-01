@@ -4,8 +4,9 @@ export default class MessageFlagsContext extends Context {
 	/**
 	 * Constructor
 	 *
-	 * @param {VK}    vk
-	 * @param {Array} update
+	 * @param {VK}     vk
+	 * @param {Array}  payload
+	 * @param {Object} options
 	 */
 	constructor(vk, [eventId, id, flags, peer]) {
 		super(vk);

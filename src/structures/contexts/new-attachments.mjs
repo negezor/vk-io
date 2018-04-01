@@ -12,34 +12,35 @@ export default class NewAttachmentsContext extends Context {
 	 *
 	 * @param {VK}     vk
 	 * @param {Object} payload
+	 * @param {Object} options
 	 */
-	constructor(vk, { type, object: update }) {
+	constructor(vk, payload, { updateType, groupId }) {
 		super(vk);
 
-		this.payload = update;
+		this.payload = payload;
 
 		let subType;
 		let attachment;
 
 		// eslint-disable-next-line default-case
-		switch (type) {
+		switch (updateType) {
 		case 'photo_new': {
 			subType = 'new_photo_attachment';
-			attachment = new PhotoAttachment(update, vk);
+			attachment = new PhotoAttachment(payload, vk);
 
 			break;
 		}
 
 		case 'video_new': {
 			subType = 'new_video_attachment';
-			attachment = new VideoAttachment(update, vk);
+			attachment = new VideoAttachment(payload, vk);
 
 			break;
 		}
 
 		case 'audio_new': {
 			subType = 'new_audio_attachment';
-			attachment = new AudioAttachment(update, vk);
+			attachment = new AudioAttachment(payload, vk);
 
 			break;
 		}

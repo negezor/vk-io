@@ -19,15 +19,16 @@ export default class GroupUserContext extends Context {
 	 *
 	 * @param {VK}     vk
 	 * @param {Object} payload
+	 * @param {Object} options
 	 */
-	constructor(vk, { type, object: update, group_id: groupId }) {
+	constructor(vk, payload, { updateType, groupId }) {
 		super(vk);
 
-		this.payload = update;
+		this.payload = payload;
 
 		this.type = 'group_user';
 		this.subTypes = [
-			type === 'user_block'
+			updateType === 'user_block'
 				? 'block_group_user'
 				: 'unblock_group_user'
 		];

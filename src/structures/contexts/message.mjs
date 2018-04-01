@@ -1,7 +1,10 @@
 import Context from './context';
-import { CHAT_PEER } from '../../utils/constants';
+
+import transformMessage from '../../updates/transform-message';
+
 import { unescapeHTML } from '../../updates/helpers';
 import { transformAttachments } from '../attachments/helpers';
+import { CHAT_PEER, updatesSources } from '../../utils/constants';
 
 const attachmentsTypes = [
 	'doc',
@@ -23,9 +26,17 @@ export default class MessageContext extends Context {
 	 *
 	 * @param {VK}     vk
 	 * @param {Object} payload
+	 * @param {Object} options
 	 */
-	constructor(vk, payload, { webhookType = null, pollingType = null }) {
+	constructor(vk, payload, { source, updateType, groupId }) {
 		super(vk);
+
+		const isPolling = source === updatesSources.POLLING;
+		const isWebhook = source === updatesSources.WEBHOOK;
+
+		if (isPolling) {
+			payload = transformMessage(payload);
+		}
 
 		this.payload = payload;
 
@@ -63,16 +74,16 @@ export default class MessageContext extends Context {
 		));
 
 		if (!this.isEvent()) {
-			if (webhookType !== null) {
+			if (isWebhook) {
 				subTypes.push((
-					webhookType === 'message_edit'
+					updateType === 'message_edit'
 						? 'edit_message'
 						: 'new_message'
 
 				));
-			} else if (pollingType !== null) {
+			} else if (isPolling) {
 				subTypes.push((
-					pollingType === 5
+					updateType === 5
 						? 'edit_message'
 						: 'new_message'
 				));
@@ -90,7 +101,7 @@ export default class MessageContext extends Context {
 		this.type = 'message';
 		this.subTypes = subTypes;
 
-		this.filled = pollingType === null;
+		this.filled = isWebhook;
 	}
 
 	/**

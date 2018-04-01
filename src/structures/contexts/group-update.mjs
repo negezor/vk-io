@@ -8,22 +8,23 @@ export default class GroupUpdateContext extends Context {
 	 *
 	 * @param {VK}     vk
 	 * @param {Object} payload
+	 * @param {Object} options
 	 */
-	constructor(vk, { type, object: update }) {
+	constructor(vk, payload, { updateType, groupId }) {
 		super(vk);
 
-		this.payload = update;
+		this.payload = payload;
 
-		const isChangePhoto = type === 'group_change_photo';
+		const isChangePhoto = updateType === 'group_change_photo';
 
 		this.attachments = isChangePhoto
-			? [new PhotoAttachment(update.photo, vk)]
+			? [new PhotoAttachment(payload.photo, vk)]
 			: [];
 
 		this.type = 'group_update';
 		this.subTypes = [
 			// eslint-disable-next-line no-nested-ternary
-			type === 'group_change_settings'
+			updateType === 'group_change_settings'
 				? 'group_update_settings'
 				: isChangePhoto
 					? 'group_update_photo'

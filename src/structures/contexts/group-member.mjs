@@ -6,15 +6,16 @@ export default class GroupMemberContext extends Context {
 	 *
 	 * @param {VK}     vk
 	 * @param {Object} payload
+	 * @param {Object} options
 	 */
-	constructor(vk, { type, object: update }) {
+	constructor(vk, payload, { updateType, groupId }) {
 		super(vk);
 
-		this.payload = update;
+		this.payload = payload;
 
 		this.type = 'group_member';
 		this.subTypes = [
-			type === 'group_leave'
+			updateType === 'group_leave'
 				? 'leave_group_member'
 				: 'join_group_member'
 		];

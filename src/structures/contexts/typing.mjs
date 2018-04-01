@@ -6,8 +6,9 @@ export default class TypingContext extends Context {
 	/**
 	 * Constructor
 	 *
-	 * @param {VK}    vk
-	 * @param {Array} update
+	 * @param {VK}     vk
+	 * @param {Array}  payload
+	 * @param {Object} options
 	 */
 	constructor(vk, [eventId, user, extra]) {
 		super(vk);

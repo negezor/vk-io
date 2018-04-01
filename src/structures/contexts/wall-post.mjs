@@ -8,17 +8,18 @@ export default class WallPostContext extends Context {
 	 *
 	 * @param {VK}     vk
 	 * @param {Object} payload
+	 * @param {Object} options
 	 */
-	constructor(vk, { type, object: update }) {
+	constructor(vk, payload, { updateType, groupId }) {
 		super(vk);
 
-		this.payload = update;
+		this.payload = payload;
 
-		this.attachments = [new WallAttachment(update, vk)];
+		this.attachments = [new WallAttachment(payload, vk)];
 
 		this.type = 'wall_post';
 		this.subTypes = [
-			type === 'wall_post_new'
+			updateType === 'wall_post_new'
 				? 'new_wall_post'
 				: 'new_wall_repost'
 		];

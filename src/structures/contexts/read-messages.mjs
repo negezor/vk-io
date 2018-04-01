@@ -4,8 +4,9 @@ export default class ReadMessagesContext extends Context {
 	/**
 	 * Constructor
 	 *
-	 * @param {VK}    vk
-	 * @param {Array} update
+	 * @param {VK}     vk
+	 * @param {Array}  payload
+	 * @param {Object} options
 	 */
 	constructor(vk, [eventId, peer, id]) {
 		super(vk);

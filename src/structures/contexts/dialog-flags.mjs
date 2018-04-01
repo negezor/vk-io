@@ -4,8 +4,9 @@ export default class DialogFlagsContext extends Context {
 	/**
 	 * Constructor
 	 *
-	 * @param {VK}    vk
-	 * @param {Array} update
+	 * @param {VK}     vk
+	 * @param {Array}  payload
+	 * @param {Object} options
 	 */
 	constructor(vk, [eventId, peer, flags]) {
 		super(vk);

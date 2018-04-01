@@ -244,6 +244,16 @@ export const snippetsErrors = keyMirror([
 ]);
 
 /**
+ * Updates sources
+ *
+ * @type {Object}
+ */
+export const updatesSources = keyMirror([
+	'POLLING',
+	'WEBHOOK'
+]);
+
+/**
  * List of user permissions and their bit mask
  *
  * @type {Map}

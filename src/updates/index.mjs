@@ -26,8 +26,9 @@ import {
 } from '../structures/contexts';
 
 import { delay } from '../utils/helpers';
-import transformMessage from './transform-message';
 import { UpdatesError, updatesErrors, apiErrors } from '../errors';
+
+import { updatesSources } from '../utils/constants';
 
 const { NEED_RESTART, POLLING_REQUEST_FAILED } = updatesErrors;
 const { AUTH_FAILURE } = apiErrors;
@@ -40,6 +41,109 @@ const debug = createDebug('vk-io:updates');
  * @type {number}
  */
 const POLLING_VERSION = 3;
+
+const webhookContextsEvents = [
+	[
+		['message_new', 'message_edit', 'message_reply'],
+		MessageContext
+	],
+	[
+		['message_allow', 'message_deny'],
+		MessageAllowContext
+	],
+	[
+		['photo_new', 'audio_new', 'video_new'],
+		NewAttachmentsContext
+	],
+	[
+		['wall_post_new', 'wall_repost'],
+		WallPostContext
+	],
+	[
+		['group_join', 'group_leave'],
+		GroupMemberContext
+	],
+	[
+		['user_block', 'user_unblock'],
+		GroupUserContext
+	],
+	[
+		[
+			'photo_comment_new',
+			'photo_comment_edit',
+			'photo_comment_delete',
+			'photo_comment_restore',
+			'video_comment_new',
+			'video_comment_edit',
+			'video_comment_delete',
+			'video_comment_restore',
+			'wall_reply_new',
+			'wall_reply_edit',
+			'wall_reply_delete',
+			'wall_reply_restore',
+			'board_reply_new',
+			'board_reply_edit',
+			'board_reply_delete',
+			'board_reply_restore',
+			'market_reply_new',
+			'market_reply_edit',
+			'market_reply_delete',
+			'market_reply_restore'
+		],
+		CommentActionContext
+	],
+	[
+		['poll_vote_new'],
+		VoteContext
+	],
+	[
+		['group_change_photo', 'group_officers_edit', 'group_change_settings'],
+		GroupUpdateContext
+	]
+];
+
+const pollingContextsEvents = [
+	[
+		[1, 2, 3],
+		MessageFlagsContext
+	],
+	[
+		[4, 5],
+		MessageContext
+	],
+	[
+		[6, 7],
+		ReadMessagesContext
+	],
+	[
+		[8, 9],
+		UserOnlineContext
+	],
+	[
+		[10, 11, 12],
+		DialogFlagsContext
+	],
+	[
+		[13, 14],
+		RemovedMessagesContext
+	],
+	[
+		[61, 62],
+		TypingContext
+	]
+];
+
+const webhookContexts = Object.assign({}, ...webhookContextsEvents.map(([events, Context]) => (
+	Object.assign({}, ...events.map(event => ({
+		[event]: Context
+	})))
+)));
+
+const pollingContexts = Object.assign({}, ...pollingContextsEvents.map(([events, Context]) => (
+	Object.assign({}, ...events.map(event => ({
+		[event]: Context
+	})))
+)));
 
 export default class Updates {
 	/**
@@ -215,71 +319,21 @@ export default class Updates {
 	handlePollingUpdate(update) {
 		debug('longpoll update', update);
 
-		// eslint-disable-next-line default-case
-		switch (update[0]) {
-		case 1:
-		case 2:
-		case 3: {
-			return this.dispatchMiddleware(new MessageFlagsContext(
-				this.vk,
-				update
-			));
+		const [type] = update;
+
+		const Context = pollingContexts[type];
+
+		if (!Context) {
+			debug(`Unsupported polling context type ${type}`);
+
+			return null;
 		}
 
-		case 4:
-		case 5: {
-			return this.dispatchMiddleware(new MessageContext(
-				this.vk,
-				transformMessage(update),
-				{
-					pollingType: update[0]
-				}
-			));
-		}
+		return this.dispatchMiddleware(new Context(this.vk, update, {
+			source: updatesSources.POLLING,
 
-		case 6:
-		case 7: {
-			return this.dispatchMiddleware(new ReadMessagesContext(
-				this.vk,
-				update
-			));
-		}
-
-		case 8:
-		case 9: {
-			return this.dispatchMiddleware(new UserOnlineContext(
-				this.vk,
-				update
-			));
-		}
-
-		case 10:
-		case 11:
-		case 12: {
-			return this.dispatchMiddleware(new DialogFlagsContext(
-				this.vk,
-				update
-			));
-		}
-
-		case 13:
-		case 14: {
-			return this.dispatchMiddleware(new RemovedMessagesContext(
-				this.vk,
-				update
-			));
-		}
-
-		case 61:
-		case 62: {
-			return this.dispatchMiddleware(new TypingContext(
-				this.vk,
-				update
-			));
-		}
-		}
-
-		return Promise.resolve();
+			updateType: type
+		}));
 	}
 
 	/**
@@ -290,77 +344,22 @@ export default class Updates {
 	handleWebhookUpdate(update) {
 		debug('webhook update', update);
 
-		// eslint-disable-next-line default-case
-		switch (update.type) {
-		case 'message_new':
-		case 'message_edit':
-		case 'message_reply': {
-			return this.dispatchMiddleware(new MessageContext(this.vk, update.object, {
-				webhookType: update.type
-			}));
+		const { type, object: payload, group_id: groupId } = update;
+
+		const Context = webhookContexts[type];
+
+		if (!Context) {
+			debug(`Unsupported webhook context type ${type}`);
+
+			return null;
 		}
 
-		case 'message_allow':
-		case 'message_deny': {
-			return this.dispatchMiddleware(new MessageAllowContext(this.vk, update));
-		}
+		return this.dispatchMiddleware(new Context(this.vk, payload, {
+			source: updatesSources.WEBHOOK,
 
-		case 'photo_new':
-		case 'audio_new':
-		case 'video_new': {
-			return this.dispatchMiddleware(new NewAttachmentsContext(this.vk, update));
-		}
-
-		case 'wall_post_new':
-		case 'wall_repost': {
-			return this.dispatchMiddleware(new WallPostContext(this.vk, update));
-		}
-
-		case 'group_join':
-		case 'group_leave': {
-			return this.dispatchMiddleware(new GroupMemberContext(this.vk, update));
-		}
-
-		case 'user_block':
-		case 'user_unblock': {
-			return this.dispatchMiddleware(new GroupUserContext(this.vk, update));
-		}
-
-		case 'photo_comment_new':
-		case 'photo_comment_edit':
-		case 'photo_comment_delete':
-		case 'photo_comment_restore':
-		case 'video_comment_new':
-		case 'video_comment_edit':
-		case 'video_comment_delete':
-		case 'video_comment_restore':
-		case 'wall_reply_new':
-		case 'wall_reply_edit':
-		case 'wall_reply_delete':
-		case 'wall_reply_restore':
-		case 'board_reply_new':
-		case 'board_reply_edit':
-		case 'board_reply_delete':
-		case 'board_reply_restore':
-		case 'market_reply_new':
-		case 'market_reply_edit':
-		case 'market_reply_delete':
-		case 'market_reply_restore': {
-			return this.dispatchMiddleware(new CommentActionContext(this.vk, update));
-		}
-
-		case 'poll_vote_new': {
-			return this.dispatchMiddleware(new VoteContext(this.vk, update));
-		}
-
-		case 'group_change_photo':
-		case 'group_officers_edit':
-		case 'group_change_settings': {
-			return this.dispatchMiddleware(new GroupUpdateContext(this.vk, update));
-		}
-		}
-
-		return Promise.resolve();
+			updateType: type,
+			groupId
+		}));
 	}
 
 	/**

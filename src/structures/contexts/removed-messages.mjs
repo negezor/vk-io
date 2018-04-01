@@ -5,7 +5,8 @@ export default class RemovedMessagesContext extends Context {
 	 * Constructor
 	 *
 	 * @param {VK}     vk
-	 * @param {Arrray} update
+	 * @param {Arrray} payload
+	 * @param {Object} options
 	 */
 	constructor(vk, [eventId, peer, id]) {
 		super(vk);

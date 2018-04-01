@@ -6,17 +6,16 @@ export default class MessageAllowContext extends Context {
 	 *
 	 * @param {VK}     vk
 	 * @param {Object} payload
-	 *
-	 * @return {[type]}
+	 * @param {Object} options
 	 */
-	constructor(vk, { type, object: update }) {
+	constructor(vk, payload, { updateType, groupId }) {
 		super(vk);
 
-		this.payload = update;
+		this.payload = payload;
 
 		this.type = 'message_subscribers';
 		this.subTypes = [
-			type === 'message_allow'
+			updateType === 'message_allow'
 				? 'message_subscribe'
 				: 'message_unsubscribe'
 		];
