@@ -230,6 +230,13 @@ export default class DirectAuth {
 						: null
 				};
 			} else if (isJSON && 'error' in text) {
+				if (text.error === 'invalid_client') {
+					throw new AuthError({
+						message: `Invalid client (${text.error_description})`,
+						code: AUTHORIZATION_FAILED
+					});
+				}
+
 				if (text.error === 'need_captcha') {
 					response = await this.processCaptcha(text);
 
