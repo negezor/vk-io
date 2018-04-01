@@ -48,9 +48,9 @@ export default function transformMessage([, id, flags, peer, date, body, extra, 
 			? {}
 			: null,
 		random_id: extra.random_id || null,
-		out: Number((flags & 1) !== 0),
-		deleted: Number((flags & 128) !== 0),
-		read_state: Number((flags & 1) !== 0),
+		out: Number((flags & 2) === 2),
+		deleted: Number((flags & 128) === 128),
+		read_state: Number((flags & 1) === 1),
 		emoji: Number(Boolean(extra.emoji))
 	};
 
