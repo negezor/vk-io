@@ -30,6 +30,8 @@ export default class GroupUpdateContext extends Context {
 					? 'group_update_photo'
 					: 'group_update_officers'
 		];
+
+		this.$groupId = groupId;
 	}
 
 	/**

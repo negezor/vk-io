@@ -50,6 +50,8 @@ export default class NewAttachmentsContext extends Context {
 
 		this.type = 'new_attachment';
 		this.subTypes = [subType];
+
+		this.$groupId = groupId;
 	}
 
 	/**

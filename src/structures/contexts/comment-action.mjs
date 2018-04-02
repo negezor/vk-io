@@ -18,7 +18,7 @@ export default class CommentActionContext extends Context {
 	 * @param {Object} payload
 	 * @param {Object} options
 	 */
-	constructor(vk, payload, { source, updateType, groupId }) {
+	constructor(vk, payload, { updateType, groupId }) {
 		super(vk);
 
 		this.payload = payload;

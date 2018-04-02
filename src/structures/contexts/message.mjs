@@ -28,7 +28,7 @@ export default class MessageContext extends Context {
 	 * @param {Object} payload
 	 * @param {Object} options
 	 */
-	constructor(vk, payload, { source, updateType, groupId }) {
+	constructor(vk, payload, { source, updateType, groupId = null }) {
 		super(vk);
 
 		const isPolling = source === updatesSources.POLLING;
@@ -100,6 +100,8 @@ export default class MessageContext extends Context {
 
 		this.type = 'message';
 		this.subTypes = subTypes;
+
+		this.$groupId = groupId;
 
 		this.filled = isWebhook;
 	}

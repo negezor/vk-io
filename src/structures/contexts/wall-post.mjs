@@ -23,6 +23,8 @@ export default class WallPostContext extends Context {
 				? 'new_wall_post'
 				: 'new_wall_repost'
 		];
+
+		this.$groupId = groupId;
 	}
 
 	/**

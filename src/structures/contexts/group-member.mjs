@@ -19,6 +19,8 @@ export default class GroupMemberContext extends Context {
 				? 'leave_group_member'
 				: 'join_group_member'
 		];
+
+		this.$groupId = groupId;
 	}
 
 	/**

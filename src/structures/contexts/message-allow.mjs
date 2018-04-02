@@ -19,6 +19,8 @@ export default class MessageAllowContext extends Context {
 				? 'message_subscribe'
 				: 'message_unsubscribe'
 		];
+
+		this.$groupId = groupId;
 	}
 
 	/**

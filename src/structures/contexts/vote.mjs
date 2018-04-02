@@ -15,6 +15,8 @@ export default class VoteContext extends Context {
 
 		this.type = 'vote';
 		this.subTypes = ['pull_vote'];
+
+		this.$groupId = groupId;
 	}
 
 	/**
