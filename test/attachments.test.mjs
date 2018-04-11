@@ -1,4 +1,4 @@
-import { assert, expect } from 'chai';
+import chai from 'chai';
 
 import {
 	Attachment,
@@ -14,7 +14,9 @@ import {
 	DocumentAttachment,
 	WallReplyAttachment,
 	MarketAlbumAttachment
-} from '../structures/attachments';
+} from '../';
+
+const { assert, expect } = chai;
 
 const { NODE_ENV = 'development' } = process.env;
 

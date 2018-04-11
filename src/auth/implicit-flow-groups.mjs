@@ -1,7 +1,7 @@
 import cheerio from 'cheerio';
 import createDebug from 'debug';
 
-import { URL, URLSearchParams } from 'url';
+import nodeUrl from 'url';
 
 import ImplicitFlow from './implicit-flow';
 import { AuthError, authErrors } from '../errors';
@@ -13,6 +13,8 @@ import {
 } from './helpers';
 
 const { load: cheerioLoad } = cheerio;
+
+const { URL, URLSearchParams } = nodeUrl;
 
 const debug = createDebug('vk-io:auth:implicit-flow-user');
 

@@ -1,7 +1,7 @@
 import cheerio from 'cheerio';
 import createDebug from 'debug';
 
-import { URL, URLSearchParams } from 'url';
+import nodeUrl from 'url';
 
 import { AuthError, authErrors } from '../errors';
 import { parseFormField, getFullURL } from './helpers';
@@ -9,6 +9,8 @@ import { DESKTOP_USER_AGENT, CALLBACK_BLANK, captchaTypes } from '../utils/const
 import { CookieJar, fetchCookieFollowRedirectsDecorator } from '../utils/fetch-cookie';
 
 const { load: cheerioLoad } = cheerio;
+
+const { URL, URLSearchParams } = nodeUrl;
 
 const debug = createDebug('vk-io:auth:account-verification');
 

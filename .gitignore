@@ -9,3 +9,4 @@ node_modules
 # Build
 lib
 app.js
+app.mjs

@@ -1,5 +1,5 @@
-import { Agent } from 'https';
-import { inspect } from 'util';
+import nodeHttps from 'https';
+import nodeUtil from 'util';
 
 import API from './api';
 import Auth from './auth';
@@ -9,6 +9,9 @@ import Updates from './updates';
 import Snippets from './snippets';
 import StreamingAPI from './streaming';
 import { defaultOptions } from './utils/constants';
+
+const { Agent } = nodeHttps;
+const { inspect } = nodeUtil;
 
 /**
  * Main class

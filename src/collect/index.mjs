@@ -1,10 +1,12 @@
-import { inspect } from 'util';
+import nodeUtil from 'util';
 
 import CollectStream from './stream';
 import LIMITS_METHODS from './limits';
 
 import Chain from './chain';
 import { getChainReturn, getExecuteMethod } from '../utils/helpers';
+
+const { inspect } = nodeUtil;
 
 export default class Collect {
 	/**

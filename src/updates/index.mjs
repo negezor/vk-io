@@ -1,11 +1,11 @@
 import fetch from 'node-fetch';
 import createDebug from 'debug';
-import Middleware from 'middleware-io';
+import Middleware from 'middleware-io/lib/index';
 
-import http from 'http';
-import https from 'https';
-import { inspect, promisify } from 'util';
-import { URL, URLSearchParams } from 'url';
+import nodeUrl from 'url';
+import nodeUtil from 'util';
+import nodeHttp from 'http';
+import nodeHttps from 'https';
 
 import {
 	VoteContext,
@@ -29,6 +29,9 @@ import { delay } from '../utils/helpers';
 import { UpdatesError, updatesErrors, apiErrors } from '../errors';
 
 import { updatesSources } from '../utils/constants';
+
+const { URL, URLSearchParams } = nodeUrl;
+const { inspect, promisify } = nodeUtil;
 
 const { NEED_RESTART, POLLING_REQUEST_FAILED } = updatesErrors;
 const { AUTH_FAILURE } = apiErrors;
@@ -451,8 +454,8 @@ export default class Updates {
 				: webhookCallback;
 
 			this.webhookServer = tls
-				? https.createServer(tls, callback)
-				: http.createServer(callback);
+				? nodeHttps.createServer(tls, callback)
+				: nodeHttp.createServer(callback);
 
 			if (!port) {
 				port = tls

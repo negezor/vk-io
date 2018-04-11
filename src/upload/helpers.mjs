@@ -1,4 +1,6 @@
-import { Stream } from 'stream';
+import nodeStream from 'stream';
+
+const { Stream } = nodeStream;
 
 /**
  * Check object is stream

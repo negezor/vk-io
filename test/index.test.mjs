@@ -1,4 +1,6 @@
-import { assert, expect } from 'chai';
+import chai from 'chai';
+
+const { assert, expect } = chai;
 
 const { NODE_ENV = 'development' } = process.env;
 

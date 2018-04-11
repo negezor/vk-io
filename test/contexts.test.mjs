@@ -1,8 +1,8 @@
-import { assert, expect } from 'chai';
+import chai from 'chai';
 
-import VK from '../vk';
+import { VK, Context } from '../';
 
-import { Context } from '../structures/contexts';
+const { assert, expect } = chai;
 
 const { NODE_ENV = 'development' } = process.env;
 

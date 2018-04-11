@@ -2,11 +2,14 @@ import WebSocket from 'ws';
 import fetch from 'node-fetch';
 import createDebug from 'debug';
 
-import { inspect, promisify } from 'util';
-import { URL, URLSearchParams } from 'url';
+import nodeUrl from 'url';
+import nodeUtil from 'util';
 
 import { StreamingRuleError } from '../errors';
 import { StreamingContext } from '../structures/contexts';
+
+const { URL, URLSearchParams } = nodeUrl;
+const { inspect, promisify } = nodeUtil;
 
 const debug = createDebug('vk-io:streaming');
 

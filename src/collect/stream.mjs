@@ -1,12 +1,15 @@
 import createDebug from 'debug';
 
-import { inspect } from 'util';
-import { Readable } from 'stream';
+import nodeUtil from 'util';
+import nodeStream from 'stream';
 
 import { CollectError, apiErrors, collectErrors } from '../errors';
 
 import Request from '../api/request';
 import getExecuteCode from './execute-code';
+
+const { inspect } = nodeUtil;
+const { Readable } = nodeStream;
 
 const debug = createDebug('vk-io:collect:stream');
 

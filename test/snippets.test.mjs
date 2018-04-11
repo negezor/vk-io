@@ -1,6 +1,8 @@
-import { assert, expect } from 'chai';
+import chai from 'chai';
 
-import VK from '../vk';
+import { VK } from '../';
+
+const { assert, expect } = chai;
 
 const { NODE_ENV = 'development', TOKEN = null } = process.env;
 
@@ -139,7 +141,5 @@ describe('Snippets', () => {
 
 			expect(payloads).to.deep.equal(result);
 		});
-
-		it('Soon', () => {});
 	});
 });

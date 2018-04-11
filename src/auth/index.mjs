@@ -1,8 +1,10 @@
-import { inspect } from 'util';
+import nodeUtil from 'util';
 
 import DirectAuth from './direct';
 import ImplicitFlowUser from './implicit-flow-user';
 import ImplicitFlowGroups from './implicit-flow-groups';
+
+const { inspect } = nodeUtil;
 
 export default class Auth {
 	/**

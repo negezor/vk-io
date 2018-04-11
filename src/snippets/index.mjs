@@ -1,4 +1,4 @@
-import { URL } from 'url';
+import nodeUrl from 'url';
 
 import { SnippetsError } from '../errors';
 import {
@@ -9,6 +9,8 @@ import {
 	parseResource,
 	parseOwnerResource
 } from '../utils/constants';
+
+const { URL } = nodeUrl;
 
 const {
 	INVALID_URL,

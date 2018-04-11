@@ -1,8 +1,8 @@
 import cheerio from 'cheerio';
 import createDebug from 'debug';
 
-import { promisify } from 'util';
-import { URL, URLSearchParams } from 'url';
+import nodeUrl from 'url';
+import nodeUtil from 'util';
 
 import { AuthError, authErrors } from '../errors';
 
@@ -11,6 +11,9 @@ import { CookieJar, fetchCookieFollowRedirectsDecorator } from '../utils/fetch-c
 import { DESKTOP_USER_AGENT, CALLBACK_BLANK, captchaTypes } from '../utils/constants';
 
 const { load: cheerioLoad } = cheerio;
+
+const { URL, URLSearchParams } = nodeUrl;
+const { promisify } = nodeUtil;
 
 const debug = createDebug('vk-io:auth:implicit-flow');
 

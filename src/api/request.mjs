@@ -1,6 +1,8 @@
-import { inspect } from 'util';
+import nodeUtil from 'util';
 
 import { getExecuteMethod } from '../utils/helpers';
+
+const { inspect } = nodeUtil;
 
 export default class Request {
 	/**

@@ -1,7 +1,10 @@
-import { PassThrough } from 'stream';
-import { SandwichStream } from 'sandwich-stream';
+import nodeStream from 'stream';
+import sandwichStream from 'sandwich-stream';
 
 import { isStream } from './helpers';
+
+const { PassThrough } = nodeStream;
+const { SandwichStream } = sandwichStream;
 
 const CRNL = '\r\n';
 

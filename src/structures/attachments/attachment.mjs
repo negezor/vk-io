@@ -1,6 +1,8 @@
-import { inspect } from 'util';
+import nodeUtil from 'util';
 
 import { parseAttachment } from '../../utils/constants';
+
+const { inspect } = nodeUtil;
 
 export default class Attachment {
 	/**

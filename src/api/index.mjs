@@ -1,8 +1,8 @@
 import fetch from 'node-fetch';
 import createDebug from 'debug';
 
-import { inspect } from 'util';
-import { URL, URLSearchParams } from 'url';
+import nodeUtil from 'util';
+import nodeUrl from 'url';
 
 import Request from './request';
 import methods from './methods';
@@ -17,6 +17,9 @@ import {
 	apiErrors,
 	captchaTypes
 } from '../utils/constants';
+
+const { inspect } = nodeUtil;
+const { URL, URLSearchParams } = nodeUrl;
 
 const {
 	CAPTCHA_REQUIRED,

@@ -2,7 +2,9 @@ import fetch from 'node-fetch';
 import createDebug from 'debug';
 import toughCookie from 'tough-cookie';
 
-import { promisify } from 'util';
+import nodeUtil from 'util';
+
+const { promisify } = nodeUtil;
 
 const debug = createDebug('vk-io:util:fetch-cookie');
 

@@ -1,4 +1,6 @@
-import { inspect } from 'util';
+import nodeUtil from 'util';
+
+const { inspect } = nodeUtil;
 
 export default class Context {
 	/**

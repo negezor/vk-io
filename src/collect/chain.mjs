@@ -1,7 +1,9 @@
-import { inspect } from 'util';
+import nodeUtil from 'util';
 
 import Request from '../api/request';
 import { getChainReturn, resolveExecuteTask } from '../utils/helpers';
+
+const { inspect } = nodeUtil;
 
 export default class Chain {
 	/**

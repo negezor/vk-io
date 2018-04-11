@@ -1,9 +1,9 @@
 import fetch from 'node-fetch';
 
-import { URL } from 'url';
-import { inspect } from 'util';
-import { randomBytes } from 'crypto';
-import { createReadStream } from 'fs';
+import nodeFs from 'fs';
+import nodeUrl from 'url';
+import nodeUtil from 'util';
+import nodeCrypto from 'crypto';
 
 import MultipartStream from './multipart-stream';
 import { isStream, copyParams } from './helpers';
@@ -16,6 +16,11 @@ import {
 	VideoAttachment,
 	DocumentAttachment
 } from '../structures/attachments';
+
+const { createReadStream } = nodeFs;
+const { randomBytes } = nodeCrypto;
+const { inspect } = nodeUtil;
+const { URL } = nodeUrl;
 
 const {
 	NO_FILES_TO_UPLOAD,

@@ -2,18 +2,19 @@
     "name": "vk-io",
     "version": "4.0.0-beta.4",
     "description": "Modern VK API SDK for Node.js",
-    "main": "lib/index",
+    "main": "lib/index.js",
+    "module": "lib/index.mjs",
     "scripts": {
+        "rollup:build": "cross-env NODE_ENV=production rollup -c",
+        "rollup:watch": "npm run rollup:build -- -w",
         "lint": "eslint ./src",
         "lint:fix": "npm run lint -- --fix",
-        "test": "mocha lib/tests",
-        "build": "npm run-script babel",
-        "babel": "babel src/ --out-dir lib/",
-        "watch": "npm run-script babel -- --watch",
-        "prepare": "npm run-script babel && npm run-script test"
+        "test": "mocha test/*.test.mjs --require ./test/runtime.mjs",
+        "build": "npm run rollup:build",
+        "prepare": "npm run build && npm run test"
     },
     "license": "MIT",
-    "author": "Vladlen <negezor@gmail.com>",
+    "author": "Negezor <negezor@gmail.com>",
     "engines": {
         "node": ">=8"
     },
@@ -39,23 +40,29 @@
     },
     "homepage": "https://github.com/negezor/vk-io#readme",
     "devDependencies": {
-        "@babel/cli": "^7.0.0-beta.42",
-        "@babel/core": "^7.0.0-beta.42",
-        "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.42",
-        "@babel/preset-env": "^7.0.0-beta.42",
+        "@babel/core": "^7.0.0-beta.44",
+        "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.44",
+        "@babel/preset-env": "^7.0.0-beta.44",
+        "@babel/register": "^7.0.0-beta.44",
         "chai": "^4.1.2",
+        "cross-env": "^5.1.4",
         "eslint": "^4.19.1",
         "eslint-config-airbnb-base": "^12.1.0",
         "eslint-plugin-import": "^2.10.0",
-        "mocha": "^5.0.5"
+        "mocha": "^5.0.5",
+        "rollup": "^0.57.1",
+        "rollup-plugin-babel": "^4.0.0-beta.4",
+        "rollup-plugin-commonjs": "^9.1.0",
+        "rollup-plugin-json": "^2.3.0",
+        "rollup-plugin-node-resolve": "^3.3.0"
     },
     "dependencies": {
         "cheerio": "^1.0.0-rc.2",
         "debug": "^3.1.0",
-        "middleware-io": "^0.0.5",
+        "middleware-io": "^0.0.6",
         "node-fetch": "^2.1.2",
         "sandwich-stream": "^1.0.0",
         "tough-cookie": "^2.3.4",
-        "ws": "^5.1.0"
+        "ws": "^5.1.1"
     }
 }
