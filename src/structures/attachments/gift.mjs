@@ -1,4 +1,6 @@
-export default class GiftAttachment {
+import ExternalAttachment from './external';
+
+export default class GiftAttachment extends ExternalAttachment {
 	/**
 	 * Constructor
 	 *
@@ -6,8 +8,17 @@ export default class GiftAttachment {
 	 * @param {VK}     vk
 	 */
 	constructor(payload, vk) {
-		this.payload = payload;
+		super('gift', payload);
 
-		this.type = 'gift';
+		this.vk = vk;
+	}
+
+	/**
+	 * Returns the identifier gift
+	 *
+	 * @return {number}
+	 */
+	getId() {
+		return this.payload.id;
 	}
 }

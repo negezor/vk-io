@@ -1,4 +1,6 @@
-export default class LinkAttachment {
+import ExternalAttachment from './external';
+
+export default class LinkAttachment extends ExternalAttachment {
 	/**
 	 * Constructor
 	 *
@@ -6,8 +8,35 @@ export default class LinkAttachment {
 	 * @param {VK}     vk
 	 */
 	constructor(payload, vk) {
-		this.payload = payload;
+		super('link', payload);
 
-		this.type = 'link';
+		this.vk = vk;
+	}
+
+	/**
+	 * Returns the URL of the link
+	 *
+	 * @return {string}
+	 */
+	getUrl() {
+		return this.payload.url;
+	}
+
+	/**
+	 * Returns the title
+	 *
+	 * @return {string}
+	 */
+	getTitle() {
+		return this.payload.title;
+	}
+
+	/**
+	 * Returns the description
+	 *
+	 * @return {string}
+	 */
+	getDescription() {
+		return this.payload.description;
 	}
 }

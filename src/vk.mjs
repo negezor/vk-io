@@ -1,5 +1,5 @@
-import nodeHttps from 'https';
 import nodeUtil from 'util';
+import nodeHttps from 'https';
 
 import API from './api';
 import Auth from './auth';

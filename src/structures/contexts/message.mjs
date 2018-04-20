@@ -69,7 +69,7 @@ export default class MessageContext extends Context {
 
 		const subTypes = attachmentsTypes.filter(type => (
 			this.attachments.some(attachment => (
-				attachment.type === type
+				attachment.getType() === type
 			))
 		));
 

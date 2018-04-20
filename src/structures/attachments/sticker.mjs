@@ -1,4 +1,6 @@
-export default class StickerAttachment {
+import ExternalAttachment from './external';
+
+export default class StickerAttachment extends ExternalAttachment {
 	/**
 	 * Constructor
 	 *
@@ -6,8 +8,26 @@ export default class StickerAttachment {
 	 * @param {VK}     vk
 	 */
 	constructor(payload, vk) {
-		this.payload = payload;
+		super('sticker', payload);
 
-		this.type = 'sticker';
+		this.vk = vk;
+	}
+
+	/**
+	 * Returns the identifier sticker
+	 *
+	 * @return {number}
+	 */
+	getId() {
+		return this.payload.sticker_id;
+	}
+
+	/**
+	 * Returns the identifier product
+	 *
+	 * @return {number}
+	 */
+	getProductId() {
+		return this.payload.product_id;
 	}
 }

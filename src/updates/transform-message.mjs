@@ -10,7 +10,7 @@ const specialAttachments = {
 	sticker: raw => ({
 		type: 'sticker',
 		sticker: {
-			id: Number(raw.attach1),
+			sticker_id: Number(raw.attach1),
 			product_id: Number(raw.attach1_product_id)
 		}
 	}),

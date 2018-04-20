@@ -1,4 +1,6 @@
-export default class WallReplyAttachment {
+import ExternalAttachment from './external';
+
+export default class WallReplyAttachment extends ExternalAttachment {
 	/**
 	 * Constructor
 	 *
@@ -6,8 +8,8 @@ export default class WallReplyAttachment {
 	 * @param {VK}     vk
 	 */
 	constructor(payload, vk) {
-		this.payload = payload;
+		super('wall_reply', payload);
 
-		this.type = 'wall_reply';
+		this.vk = vk;
 	}
 }

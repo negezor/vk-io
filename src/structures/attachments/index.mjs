@@ -1,4 +1,5 @@
 import Attachment from './attachment';
+import ExternalAttachment from './external';
 
 import GiftAttachment from './gift';
 import WallAttachment from './wall';
@@ -14,6 +15,7 @@ import MarketAlbumAttachment from './market-album';
 
 export {
 	Attachment,
+	ExternalAttachment,
 
 	GiftAttachment,
 	WallAttachment,
