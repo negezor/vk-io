@@ -61,7 +61,7 @@ export const MINIMUM_TIME_INTERVAL_API = 1133;
  * @property {number}  [apiHeaders]          Headers sent to the API
  * @property {number}  [apiAttempts]         The number of retries at calling
  * @property {number}  [apiExecuteCount]     Number of requests per execute
- * @property {Array}   [apiExecuteMethods]   Methods for call execute (apiMode=parallel-selected)
+ * @property {Array}   [apiExecuteMethods]   Methods for call execute (apiMode=parallel_selected)
  *
  * @property {number}  [uploadTimeout]       Wait time for one request
  *

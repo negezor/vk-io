@@ -172,7 +172,7 @@ export default class Updates {
 		 *
 		 * @type {number}
 		 */
-		this.mode = 2 + 8 + 64;
+		this.mode = 2 | 8 | 64;
 
 		this.webhookServer = null;
 
