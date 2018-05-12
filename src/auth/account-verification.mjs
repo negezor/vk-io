@@ -58,13 +58,6 @@ const ACTION_CAPTCHA = 'act=captcha';
  */
 const TWO_FACTOR_ATTEMPTS = 3;
 
-/**
- * Number of captcha attempts
- *
- * @type {number}
- */
-const CAPTCHA_ATTEMPTS = 3;
-
 export default class AccountVerification {
 	/**
 	 * Constructor

@@ -1,9 +1,9 @@
 {
 	"env": {
 		"es6": true,
-        "node": true
+		"node": true
 	},
-    "extends": "airbnb-base",
+	"extends": "airbnb-base",
 	"parserOptions": {
 		"ecmaVersion": 2018,
 		"sourceType": "module"
@@ -29,7 +29,6 @@
 		"no-param-reassign": 0,
 		"no-await-in-loop": 0,
 		"no-return-await": 0,
-		"no-unused-vars": 0,
 		"comma-dangle": 0,
 		"no-continue": 0,
 		"no-bitwise": 0,
@@ -42,5 +41,27 @@
 			"error",
 			"unix"
 		]
-	}
+	},
+	"overrides": [
+		{
+			"files": ["test/**/*.mjs"],
+			"env": {
+				"jest": true
+			}
+		},
+		{
+			"files": ["examples/**/*.js"],
+			"rules": {
+				"no-console": 0,
+				"import/no-unresolved": [
+					"error",
+					{
+						"ignore": [
+							"vk-io"
+						]
+					}
+				]
+			}
+		}
+	]
 }

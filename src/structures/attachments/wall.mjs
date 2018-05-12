@@ -11,6 +11,7 @@ export default class WallAttachment extends Attachment {
 	constructor(payload, vk) {
 		super('wall', payload.owner_id, payload.id, payload.access_key);
 
+		this.vk = vk;
 		this.payload = payload;
 
 		this.attachments = transformAttachments(payload.attachments);

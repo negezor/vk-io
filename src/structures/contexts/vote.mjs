@@ -8,7 +8,7 @@ export default class VoteContext extends Context {
 	 * @param {Object} payload
 	 * @param {Object} options
 	 */
-	constructor(vk, payload, { updateType, groupId }) {
+	constructor(vk, payload, { groupId }) {
 		super(vk);
 
 		this.payload = payload;

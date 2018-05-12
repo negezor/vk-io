@@ -182,7 +182,7 @@ export default class API {
 
 		this.started = true;
 
-		const { apiLimit, apiMode, apiExecuteCount } = this.vk.options;
+		const { apiLimit, apiMode } = this.vk.options;
 
 		const interval = Math.round(MINIMUM_TIME_INTERVAL_API / apiLimit);
 		const handler = this.getRequestHandler(apiMode);

@@ -1,10 +1,6 @@
-import chai from 'chai';
-
 import { VK } from '../';
 
-const { assert, expect } = chai;
-
-const { NODE_ENV = 'development', TOKEN = null } = process.env;
+const { TOKEN = null } = process.env;
 
 const vk = new VK({ token: TOKEN });
 
@@ -19,8 +15,8 @@ describe('Snippets', () => {
 			return;
 		}
 
-		it('should parse equivalent user', async function resolveUserResource() {
-			this.timeout(1000 * 60);
+		it('should parse equivalent user', async () => {
+			jest.setTimeout(60e3);
 
 			const resources = [
 				1,
@@ -45,16 +41,14 @@ describe('Snippets', () => {
 				snippets.resolveResource(resource)
 			)));
 
-			const result = Array(payloads.length).fill({
+			expect(payloads).toContainEqual(expect.objectContaining({
 				id: 1,
 				type: 'user'
-			});
-
-			expect(payloads).to.deep.equal(result);
+			}));
 		});
 
-		it('should parse equivalent attachment', async function resolveAttachmentPhoto() {
-			this.timeout(1000 * 5);
+		it('should parse equivalent attachment', async () => {
+			jest.setTimeout(5e3);
 
 			const resources = [
 				'photo1_456264771',
@@ -69,17 +63,15 @@ describe('Snippets', () => {
 				snippets.resolveResource(resource)
 			)));
 
-			const result = Array(payloads.length).fill({
+			expect(payloads).toContainEqual(expect.objectContaining({
 				id: 456264771,
 				owner: 1,
 				type: 'photo'
-			});
-
-			expect(payloads).to.deep.equal(result);
+			}));
 		});
 
-		it('should parse equivalent owner resource', async function parseOwnerResource() {
-			this.timeout(1000 * 60);
+		it('should parse equivalent owner resource', async () => {
+			jest.setTimeout(60e3);
 
 			const resources = [
 				-1,
@@ -139,7 +131,7 @@ describe('Snippets', () => {
 				}
 			];
 
-			expect(payloads).to.deep.equal(result);
+			expect(payloads).toEqual(expect.arrayContaining(result));
 		});
 	});
 });

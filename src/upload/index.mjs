@@ -1,7 +1,6 @@
 import fetch from 'node-fetch';
 
 import nodeFs from 'fs';
-import nodeUrl from 'url';
 import nodeUtil from 'util';
 import nodeCrypto from 'crypto';
 
@@ -20,7 +19,6 @@ import {
 const { createReadStream } = nodeFs;
 const { randomBytes } = nodeCrypto;
 const { inspect } = nodeUtil;
-const { URL } = nodeUrl;
 
 const {
 	NO_FILES_TO_UPLOAD,

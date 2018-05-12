@@ -5,6 +5,8 @@ import commonjs from 'rollup-plugin-commonjs';
 
 import pkg from './package.json';
 
+const babelrc = require('./.babelrc');
+
 const dependencies = Object.keys(pkg.dependencies);
 
 export default [
@@ -21,15 +23,19 @@ export default [
 			'fs'
 		],
 		plugins: [
+			json(),
 			resolve({
 				extensions: ['.mjs', '.js'],
 				preferBuiltins: true,
 			}),
-			json(),
 			babel({
+				...babelrc,
+
 				exclude: [
 					'node_modules/**'
 				],
+
+				babelrc: false
 			}),
 			commonjs()
 		],

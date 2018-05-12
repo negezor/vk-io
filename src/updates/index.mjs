@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 import createDebug from 'debug';
-import Middleware from 'middleware-io/lib/index';
+import Middleware from 'middleware-io/lib';
 
 import nodeUrl from 'url';
 import nodeUtil from 'util';
@@ -26,7 +26,7 @@ import {
 } from '../structures/contexts';
 
 import { delay } from '../utils/helpers';
-import { UpdatesError, updatesErrors, apiErrors } from '../errors';
+import { UpdatesError, updatesErrors } from '../errors';
 
 import { updatesSources } from '../utils/constants';
 
@@ -34,7 +34,6 @@ const { URL, URLSearchParams } = nodeUrl;
 const { inspect, promisify } = nodeUtil;
 
 const { NEED_RESTART, POLLING_REQUEST_FAILED } = updatesErrors;
-const { AUTH_FAILURE } = apiErrors;
 
 const debug = createDebug('vk-io:updates');
 
@@ -593,8 +592,8 @@ export default class Updates {
 	 *
 	 * @return {Function}
 	 */
-	getKoaWebhookMiddleware(options = {}) {
-		return async (context, next) => {
+	getKoaWebhookMiddleware() {
+		return async (context) => {
 			const update = context.request.body;
 
 			const { webhookSecret, webhookConfirmation } = this.vk.options;
@@ -786,9 +785,9 @@ export default class Updates {
 	[inspect.custom](depth, options) {
 		const { name } = this.constructor;
 
-		const { started, handlers } = this;
+		const { started, stack } = this;
 
-		const payload = { started, handlers };
+		const payload = { started, stack };
 
 		return `${options.stylize(name, 'special')} ${inspect(payload, options)}`;
 	}

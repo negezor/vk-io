@@ -1,4 +1,3 @@
-import cheerio from 'cheerio';
 import createDebug from 'debug';
 
 import nodeUrl from 'url';
@@ -7,12 +6,9 @@ import ImplicitFlow from './implicit-flow';
 import { AuthError, authErrors } from '../errors';
 import { API_VERSION, CALLBACK_BLANK } from '../utils/constants';
 import {
-	parseFormField,
 	getAllUsersPermissions,
 	getUsersPermissionsByName
 } from './helpers';
-
-const { load: cheerioLoad } = cheerio;
 
 const { URL, URLSearchParams } = nodeUrl;
 

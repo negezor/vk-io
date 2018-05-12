@@ -35,13 +35,6 @@ const {
 const ACTION_BLOCKED = 'act=blocked';
 
 /**
- * Login action
- *
- * @type {string}
- */
-const ACTION_LOGIN = 'act=login';
-
-/**
  * Two-factor auth check action
  *
  * @type {string}

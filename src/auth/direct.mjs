@@ -8,7 +8,6 @@ import { AuthError, authErrors } from '../errors';
 import { fetchCookieFollowRedirectsDecorator } from '../utils/fetch-cookie';
 import {
 	API_VERSION,
-	CALLBACK_BLANK,
 	DESKTOP_USER_AGENT,
 
 	captchaTypes
@@ -27,7 +26,6 @@ const { URL, URLSearchParams } = nodeUrl;
 const debug = createDebug('vk-io:auth:direct');
 
 const {
-	PAGE_BLOCKED,
 	INVALID_PHONE_NUMBER,
 	AUTHORIZATION_FAILED,
 	FAILED_PASSED_CAPTCHA,

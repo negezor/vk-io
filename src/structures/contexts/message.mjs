@@ -396,7 +396,13 @@ export default class MessageContext extends Context {
 	 * @type {Object}
 	 */
 	getEventId() {
-		return this.payload.action_mid || null;
+		const { action_mid: id } = this.payload;
+
+		if (!id) {
+			return null;
+		}
+
+		return Number(id);
 	}
 
 	/**

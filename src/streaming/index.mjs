@@ -135,7 +135,7 @@ export default class StreamingAPI {
 	 *
 	 * @return {Promise}
 	 */
-	async handleServiceMessage({ message, service_code: code }) {
+	async handleServiceMessage({ service_code: code }) {
 		if ([3000, 3001].includes(code)) {
 			await this.stop();
 			await this.start();

@@ -21,13 +21,6 @@ export const unescapeHTML = text => (
 );
 
 /**
- * Checks the has brackets
- *
- * @type {RegExp}
- */
-const fwdHasBrackets = /(\(.*\))/;
-
-/**
  * Separates a string through a separator
  *
  * @param {string} raw

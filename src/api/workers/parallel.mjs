@@ -4,7 +4,6 @@ import sequential from './sequential';
 import {
 	delay,
 	getChainReturn,
-	getExecuteMethod,
 	resolveExecuteTask
 } from '../../utils/helpers';
 
