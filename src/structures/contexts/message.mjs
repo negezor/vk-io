@@ -4,21 +4,7 @@ import transformMessage from '../../updates/transform-message';
 
 import { unescapeHTML } from '../../updates/helpers';
 import { transformAttachments } from '../attachments/helpers';
-import { CHAT_PEER, updatesSources } from '../../utils/constants';
-
-const attachmentsTypes = [
-	'doc',
-	'gift',
-	'link',
-	'wall',
-	'photo',
-	'video',
-	'audio',
-	'market',
-	'sticker',
-	'wall_reply',
-	'market_album'
-];
+import { updatesSources, messageSources, CHAT_PEER } from '../../utils/constants';
 
 export default class MessageContext extends Context {
 	/**
@@ -45,14 +31,14 @@ export default class MessageContext extends Context {
 
 		if ('chat_id' in payload) {
 			peerId = payload.chat_id + CHAT_PEER;
-			peerType = 'chat';
+			peerType = messageSources.CHAT;
 		} else {
 			peerId = payload.user_id;
 
 			if (peerId < 0) {
-				peerType = 'group';
+				peerType = messageSources.GROUP;
 			} else {
-				peerType = 'dm';
+				peerType = messageSources.DM;
 			}
 		}
 
@@ -67,11 +53,7 @@ export default class MessageContext extends Context {
 
 		this.attachments = transformAttachments(payload.attachments, vk);
 
-		const subTypes = attachmentsTypes.filter(type => (
-			this.attachments.some(attachment => (
-				attachment.getType() === type
-			))
-		));
+		const subTypes = this.attachments.map(attachment => attachment.getType());
 
 		if (!this.isEvent()) {
 			if (isWebhook) {
@@ -178,7 +160,7 @@ export default class MessageContext extends Context {
 	 * @return {boolean}
 	 */
 	isDM() {
-		return this.from.type === 'dm';
+		return this.from.type === messageSources.DM;
 	}
 
 	/**
@@ -187,7 +169,7 @@ export default class MessageContext extends Context {
 	 * @return {boolean}
 	 */
 	isChat() {
-		return this.from.type === 'chat';
+		return this.from.type === messageSources.CHAT;
 	}
 
 	/**
@@ -196,7 +178,7 @@ export default class MessageContext extends Context {
 	 * @return {boolean}
 	 */
 	isGroup() {
-		return this.from.type === 'group';
+		return this.from.type === messageSources.GROUP;
 	}
 
 	/**

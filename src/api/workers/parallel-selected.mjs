@@ -52,9 +52,9 @@ export default async function parallelSelected(next) {
 			code: getChainReturn(chain)
 		});
 
-		next();
-
 		this.callMethod(request);
+
+		next();
 
 		resolveExecuteTask(tasks, await request.promise);
 	} catch (error) {

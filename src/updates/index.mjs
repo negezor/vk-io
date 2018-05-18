@@ -135,17 +135,20 @@ const pollingContextsEvents = [
 	]
 ];
 
-const webhookContexts = Object.assign({}, ...webhookContextsEvents.map(([events, Context]) => (
-	Object.assign({}, ...events.map(event => ({
-		[event]: Context
-	})))
-)));
+const makeContexts = (groups) => {
+	const contexts = {};
 
-const pollingContexts = Object.assign({}, ...pollingContextsEvents.map(([events, Context]) => (
-	Object.assign({}, ...events.map(event => ({
-		[event]: Context
-	})))
-)));
+	for (const [events, Context] of groups) {
+		for (const event of events) {
+			contexts[event] = Context;
+		}
+	}
+
+	return contexts;
+};
+
+const webhookContexts = makeContexts(webhookContextsEvents);
+const pollingContexts = makeContexts(pollingContextsEvents);
 
 export default class Updates {
 	/**

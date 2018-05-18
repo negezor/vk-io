@@ -10,11 +10,11 @@ export default class UserOnlineContext extends Context {
 	 * @param {Array}  payload
 	 * @param {Object} options
 	 */
-	constructor(vk, [eventId, user, extra, date]) {
+	constructor(vk, [eventId, userId, extra, date]) {
 		super(vk);
 
 		this.payload = {
-			user_id: -user,
+			user_id: -userId,
 			extra,
 			date
 		};

@@ -1,4 +1,5 @@
-import VKError from './vk';
+import VKError from './error';
+
 import APIError from './api';
 import AuthError from './auth';
 import UploadError from './upload';
@@ -19,6 +20,7 @@ export {
 
 export {
 	VKError,
+
 	APIError,
 	AuthError,
 	UploadError,

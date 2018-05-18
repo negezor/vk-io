@@ -8,11 +8,11 @@ export default class MessageFlagsContext extends Context {
 	 * @param {Array}  payload
 	 * @param {Object} options
 	 */
-	constructor(vk, [eventId, id, flags, peer]) {
+	constructor(vk, [eventId, id, flags, peerId]) {
 		super(vk);
 
 		this.payload = {
-			peer_id: peer,
+			peer_id: peerId,
 			flags,
 			id
 		};

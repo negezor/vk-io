@@ -1,4 +1,4 @@
-import VKError from './vk';
+import VKError from './error';
 
 export default class CollectError extends VKError {
 	/**

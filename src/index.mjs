@@ -5,7 +5,7 @@ export * from './errors';
 export * from './structures/contexts';
 export * from './structures/attachments';
 
-export { captchaTypes } from './utils/constants';
+export { captchaTypes, messageSources } from './utils/constants';
 
 export { VK, Request };
 

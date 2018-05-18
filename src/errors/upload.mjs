@@ -1,3 +1,3 @@
-import VKError from './vk';
+import VKError from './error';
 
 export default class UploadError extends VKError {}

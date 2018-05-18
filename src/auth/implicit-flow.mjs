@@ -207,6 +207,8 @@ export default class ImplicitFlow {
 		while (isProcessed) {
 			const { url } = response;
 
+			debug('URL', url);
+
 			if (url.includes(CALLBACK_BLANK)) {
 				return { response };
 			}
@@ -246,14 +248,16 @@ export default class ImplicitFlow {
 
 				throw new AuthError({
 					message: `Auth form error: ${errorText}`,
-					code: AUTHORIZATION_FAILED
+					code: AUTHORIZATION_FAILED,
+					pageHtml: $.html()
 				});
 			}
 
 			if (this.captcha !== null) {
 				this.captcha.reject(new AuthError({
 					message: 'Incorrect captcha code',
-					code: FAILED_PASSED_CAPTCHA
+					code: FAILED_PASSED_CAPTCHA,
+					pageHtml: $.html()
 				}));
 
 				this.captcha = null;
@@ -279,7 +283,8 @@ export default class ImplicitFlow {
 			if (url.includes('act=')) {
 				throw new AuthError({
 					message: 'Unsupported authorization event',
-					code: AUTHORIZATION_FAILED
+					code: AUTHORIZATION_FAILED,
+					pageHtml: $.html()
 				});
 			}
 
@@ -369,6 +374,8 @@ export default class ImplicitFlow {
 			}));
 		}
 
+		debug('Fields', fields);
+
 		const url = new URL(action);
 
 		url.searchParams.set('utf8', 1);
@@ -425,7 +432,8 @@ export default class ImplicitFlow {
 
 						throw new AuthError({
 							message: 'Incorrect two-factor code',
-							code: FAILED_PASSED_TWO_FACTOR
+							code: FAILED_PASSED_TWO_FACTOR,
+							pageHtml: $.html()
 						});
 					}
 
@@ -469,7 +477,8 @@ export default class ImplicitFlow {
 		} else {
 			throw new AuthError({
 				message: 'Missing phone number in the phone or login field',
-				code: INVALID_PHONE_NUMBER
+				code: INVALID_PHONE_NUMBER,
+				pageHtml: $.html()
 			});
 		}
 
@@ -498,7 +507,8 @@ export default class ImplicitFlow {
 		if (response.url.includes(ACTION_SECURITY_CODE)) {
 			throw new AuthError({
 				message: 'Invalid phone number',
-				code: INVALID_PHONE_NUMBER
+				code: INVALID_PHONE_NUMBER,
+				pageHtml: $.html()
 			});
 		}
 

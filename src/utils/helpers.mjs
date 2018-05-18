@@ -27,13 +27,9 @@ export const getExecuteMethod = (method, params = {}) => {
 	const options = {};
 
 	for (const [key, value] of Object.entries(params)) {
-		if (typeof value === 'object') {
-			options[key] = String(value);
-
-			continue;
-		}
-
-		options[key] = value;
+		options[key] = typeof value === 'object'
+			? String(value)
+			: value;
 	}
 
 	return `API.${method}(${JSON.stringify(options)})`;

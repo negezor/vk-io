@@ -8,11 +8,11 @@ export default class ReadMessagesContext extends Context {
 	 * @param {Array}  payload
 	 * @param {Object} options
 	 */
-	constructor(vk, [eventId, peer, id]) {
+	constructor(vk, [eventId, peerId, id]) {
 		super(vk);
 
 		this.payload = {
-			peer_id: peer,
+			peer_id: peerId,
 			id
 		};
 

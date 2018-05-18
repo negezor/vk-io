@@ -4,7 +4,7 @@ const vk = new VK();
 
 describe('Contexts', () => {
 	describe('Context', () => {
-		describe('#context.is', () => {
+		describe('#context.is()', () => {
 			const getContext = () => {
 				const context = new Context(vk);
 

@@ -52,7 +52,7 @@ export default class MultipartStream extends SandwichStream {
 
 		if ('headers' in part) {
 			for (const [key, header] of Object.entries(part.headers)) {
-				partStream.write(`${key}: ${header}${CRNL}`);
+				partStream.write(`${key}:${header}${CRNL}`);
 			}
 		}
 
@@ -85,7 +85,7 @@ export default class MultipartStream extends SandwichStream {
 			headers: {
 				...headers,
 
-				'content-disposition': header
+				'Content-Disposition': header
 			},
 			body
 		});

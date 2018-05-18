@@ -26,7 +26,7 @@ export const unescapeHTML = text => (
  * @param {string} raw
  * @param {string} delimiter
  *
- * @return {Array}
+ * @return {Object[]}
  */
 export const splitFwdDelimiter = (raw, delimiter) => {
 	const out = [];

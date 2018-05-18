@@ -10,19 +10,19 @@ export default class TypingContext extends Context {
 	 * @param {Array}  payload
 	 * @param {Object} options
 	 */
-	constructor(vk, [eventId, user, extra]) {
+	constructor(vk, [eventId, userId, extra]) {
 		super(vk);
 
 		const isChat = eventId === 62;
 
 		this.payload = {
-			user_id: user,
+			user_id: userId,
 			chat_id: isChat
 				? extra
 				: null,
 			peer_id: isChat
 				? extra + CHAT_PEER
-				: user
+				: userId
 
 		};
 

@@ -7,7 +7,7 @@ import { keyMirror } from './helpers';
  *
  * @type {string}
  */
-export const API_VERSION = '5.74';
+export const API_VERSION = '5.75';
 
 /**
  * Chat peer ID
@@ -28,7 +28,7 @@ export const CALLBACK_BLANK = 'https://oauth.vk.com/blank.html';
  *
  * @type {string}
  */
-export const DESKTOP_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36';
+export const DESKTOP_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36';
 
 /**
  * Minimum time interval api with error
@@ -149,6 +149,17 @@ export const captchaTypes = keyMirror([
 	'IMPLICIT_FLOW_AUTH',
 	'ACCOUNT_VERIFICATION'
 ]);
+
+/**
+ * Message source
+ *
+ * @type {Object}
+ */
+export const messageSources = {
+	DM: 'dm',
+	CHAT: 'chat',
+	GROUP: 'group'
+};
 
 /**
  * API error codes

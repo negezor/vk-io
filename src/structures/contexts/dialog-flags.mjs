@@ -8,11 +8,11 @@ export default class DialogFlagsContext extends Context {
 	 * @param {Array}  payload
 	 * @param {Object} options
 	 */
-	constructor(vk, [eventId, peer, flags]) {
+	constructor(vk, [eventId, peerId, flags]) {
 		super(vk);
 
 		this.payload = {
-			peer_id: peer,
+			peer_id: peerId,
 			flags
 		};
 

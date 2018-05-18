@@ -29,6 +29,29 @@ const {
 
 const debug = createDebug('vk-io:api');
 
+const requestHandlers = {
+	sequential,
+	parallel,
+	parallel_selected: parallelSelected
+};
+
+/**
+ * Returns request handler
+ *
+ * @param {string} mode
+ *
+ * @return {Function}
+ */
+const getRequestHandler = (mode = 'sequential') => {
+	const handler = requestHandlers[mode];
+
+	if (!handler) {
+		throw new Error('Unsuported api mode');
+	}
+
+	return handler;
+};
+
 /**
  * Working with API methods
  *
@@ -184,8 +207,8 @@ export default class API {
 
 		const { apiLimit, apiMode } = this.vk.options;
 
+		const handler = getRequestHandler(apiMode);
 		const interval = Math.round(MINIMUM_TIME_INTERVAL_API / apiLimit);
-		const handler = this.getRequestHandler(apiMode);
 
 		const work = async () => {
 			if (this.queue.length === 0 || this.suspended) {
@@ -209,7 +232,11 @@ export default class API {
 	 */
 	async callMethod(request) {
 		const {
-			token, lang, agent, apiTimeout, apiHeaders
+			token,
+			lang,
+			agent,
+			apiTimeout,
+			apiHeaders
 		} = this.vk.options;
 
 		const { method } = request;
@@ -389,32 +416,6 @@ export default class API {
 				this.requeue(request);
 			})
 		));
-	}
-
-	/**
-	 * Returns request handler
-	 *
-	 * @param {string} mode
-	 *
-	 * @return {Function}
-	 */
-	getRequestHandler(mode = 'sequential') {
-		switch (mode) {
-		case 'sequential': {
-			return sequential;
-		}
-
-		case 'parallel': {
-			return parallel;
-		}
-
-		case 'parallel_selected': {
-			return parallelSelected;
-		}
-
-		default:
-			throw new Error('Unsuported api mode');
-		}
 	}
 
 	/**
