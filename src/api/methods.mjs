@@ -1,6 +1,6 @@
 /**
  * List methods VK
- * Last updated 21.02.2018
+ * Last updated 23.05.2018
  *
  * @type {Array}
  */
@@ -325,6 +325,7 @@ export default [
 	'messages.get',
 	'messages.getById',
 	'messages.getChat',
+	'messages.getChatPreview',
 	'messages.getChatUsers',
 	'messages.getDialogs',
 	'messages.getHistory',

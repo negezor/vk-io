@@ -508,8 +508,15 @@ export default class Updates {
 	 * @return {Function}
 	 */
 	getWebhookCallback(path = null) {
+		const isEmptyPath = path !== null;
+
+		const headers = {
+			connection: 'keep-alive',
+			'content-type': 'text/plain'
+		};
+
 		return (req, res, next) => {
-			if (req.method !== 'POST' || (path !== null && req.url !== path)) {
+			if (req.method !== 'POST' || (isEmptyPath && req.url !== path)) {
 				if (typeof next === 'function') {
 					next();
 
@@ -551,11 +558,6 @@ export default class Updates {
 
 						return;
 					}
-
-					const headers = {
-						connection: 'keep-alive',
-						'content-type': 'text/plain'
-					};
 
 					if (update.type === 'confirmation') {
 						if (webhookConfirmation === null) {
