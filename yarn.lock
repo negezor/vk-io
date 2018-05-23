@@ -1218,9 +1218,9 @@ core-util-is@1.0.2, core-util-is@~1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
 
-cross-env@^5.1.5:
-  version "5.1.5"
-  resolved "https://registry.yarnpkg.com/cross-env/-/cross-env-5.1.5.tgz#31daf7f3a52ef337c8ddda585f08175cce5d1fa5"
+cross-env@^5.1.6:
+  version "5.1.6"
+  resolved "https://registry.yarnpkg.com/cross-env/-/cross-env-5.1.6.tgz#0dc05caf945b24e4b9e3b12871fe0e858d08b38d"
   dependencies:
     cross-spawn "^5.1.0"
     is-windows "^1.0.0"
@@ -3806,9 +3806,9 @@ rollup-pluginutils@^2.2.0:
     estree-walker "^0.5.2"
     micromatch "^2.3.11"
 
-rollup@^0.59.1:
-  version "0.59.1"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-0.59.1.tgz#86cbceaecd861df1317a0aa29207173de23e6a5d"
+rollup@^0.59.2:
+  version "0.59.2"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-0.59.2.tgz#37011ed83947e4e1071b66f9e7d0574b144affc9"
   dependencies:
     "@types/estree" "0.0.39"
     "@types/node" "*"
@@ -4467,9 +4467,9 @@ ws@^4.0.0:
     async-limiter "~1.0.0"
     safe-buffer "~5.1.0"
 
-ws@^5.1.1:
-  version "5.1.1"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-5.1.1.tgz#1d43704689711ac1942fd2f283e38f825c4b8b95"
+ws@^5.2.0:
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-5.2.0.tgz#9fd95e3ac7c76f6ae8bcc868a0e3f11f1290c33e"
   dependencies:
     async-limiter "~1.0.0"
 
