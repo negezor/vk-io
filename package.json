@@ -1,6 +1,6 @@
 {
     "name": "vk-io",
-    "version": "4.0.0-beta.7",
+    "version": "4.0.0-beta.8",
     "description": "Modern VK API SDK for Node.js",
     "main": "lib/index.js",
     "module": "lib/index.mjs",
