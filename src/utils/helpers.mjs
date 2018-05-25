@@ -78,39 +78,6 @@ export const getRandomId = () => (
 );
 
 /**
- * Returns the URL of a small photo
- *
- * @param {Object} photo
- *
- * @return {string}
- */
-export const getSmallPhoto = photo => (
-	photo.photo_130 || photo.photo_75
-);
-
-/**
- * Returns the URL of a medium photo
- *
- * @param {Object} photo
- *
- * @return {string}
- */
-export const getMediumPhoto = photo => (
-	photo.photo_807 || photo.photo_604 || getSmallPhoto(photo)
-);
-
-/**
- * Returns the URL of a large photo
- *
- * @param {Object} photo
- *
- * @return {string}
- */
-export const getLargePhoto = photo => (
-	photo.photo_2560 || photo.photo_1280 || getMediumPhoto(photo)
-);
-
-/**
  * Delay N-ms
  *
  * @param {number} delayed

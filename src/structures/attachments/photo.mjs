@@ -1,10 +1,8 @@
 import Attachment from './attachment';
 
-import {
-	getSmallPhoto,
-	getLargePhoto,
-	getMediumPhoto
-} from '../../utils/helpers';
+const SMALL_SIZES = ['m', 's'];
+const MEDIUM_SIZES = ['y', 'r', 'q', 'p', ...SMALL_SIZES];
+const LARGE_SIZES = ['w', 'z', ...MEDIUM_SIZES];
 
 export default class PhotoAttachment extends Attachment {
 	/**
@@ -114,6 +112,27 @@ export default class PhotoAttachment extends Attachment {
 	}
 
 	/**
+	 * Returns the sizes of the required types
+	 *
+	 * @param {string[]} sizeTypes
+	 *
+	 * @return {Object[]}
+	 */
+	getSizes(sizeTypes = null) {
+		if (sizeTypes === null) {
+			return this.payload.sizes;
+		}
+
+		const { sizes } = this.payload;
+
+		return sizeTypes
+			.map(sizeType => (
+				sizes.find(size => size.type === sizeType) || null
+			))
+			.filter(Boolean);
+	}
+
+	/**
 	 * Returns the URL of a small photo
 	 * (130 or 75)
 	 *
@@ -124,7 +143,9 @@ export default class PhotoAttachment extends Attachment {
 			return null;
 		}
 
-		return getSmallPhoto(this.payload);
+		const [size] = this.getSizes(SMALL_SIZES);
+
+		return size.url;
 	}
 
 	/**
@@ -138,7 +159,9 @@ export default class PhotoAttachment extends Attachment {
 			return null;
 		}
 
-		return getMediumPhoto(this.payload);
+		const [size] = this.getSizes(MEDIUM_SIZES);
+
+		return size.url;
 	}
 
 	/**
@@ -152,6 +175,8 @@ export default class PhotoAttachment extends Attachment {
 			return null;
 		}
 
-		return getLargePhoto(this.payload);
+		const [size] = this.getSizes(LARGE_SIZES);
+
+		return size.url;
 	}
 }
