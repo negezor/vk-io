@@ -725,7 +725,7 @@ export default class Updates {
 
 		this.ts = Number(response.ts);
 
-		if ('pts' in response && response.pts !== this.pts) {
+		if ('pts' in response) {
 			this.pts = Number(response.pts);
 		}
 

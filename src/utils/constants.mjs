@@ -17,6 +17,13 @@ export const API_VERSION = '5.78';
 export const CHAT_PEER = 2e9;
 
 /**
+ * Base URL API
+ *
+ * @type {string}
+ */
+export const BASE_URL_API = 'https://api.vk.com/method/';
+
+/**
  * Blank html redirect
  *
  * @type {string}
@@ -28,7 +35,7 @@ export const CALLBACK_BLANK = 'https://oauth.vk.com/blank.html';
  *
  * @type {string}
  */
-export const DESKTOP_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.181 Safari/537.36';
+export const DESKTOP_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.79 Safari/537.36';
 
 /**
  * Minimum time interval api with error

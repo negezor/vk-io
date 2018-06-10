@@ -12,6 +12,7 @@ import AccountVerification from '../auth/account-verification';
 import { sequential, parallel, parallelSelected } from './workers';
 import {
 	MINIMUM_TIME_INTERVAL_API,
+	BASE_URL_API,
 	API_VERSION,
 
 	apiErrors,
@@ -52,6 +53,8 @@ const getRequestHandler = (mode = 'sequential') => {
 	return handler;
 };
 
+const baseUrlSymbol = Symbol('baseURLSymbol');
+
 /**
  * Working with API methods
  *
@@ -69,6 +72,8 @@ export default class API {
 		this.queue = [];
 		this.started = false;
 		this.suspended = false;
+
+		this[baseUrlSymbol] = BASE_URL_API;
 
 		for (const method of methods) {
 			const [group, name] = method.split('.');
@@ -107,6 +112,32 @@ export default class API {
 	 */
 	get API_VERSION() {
 		return API_VERSION;
+	}
+
+	/**
+	 * Returns base URL
+	 *
+	 * @return {string}
+	 */
+	get baseUrl() {
+		return this[baseUrlSymbol];
+	}
+
+	/**
+	 * Sets base URL
+	 *
+	 * @param {string} url
+	 *
+	 * @return {string}
+	 */
+	set baseUrl(url) {
+		if (!url.endsWith('/')) {
+			url += '/';
+		}
+
+		this[baseUrlSymbol] = url;
+
+		return url;
 	}
 
 	/**
@@ -242,7 +273,7 @@ export default class API {
 		const { method } = request;
 
 		try {
-			const url = new URL(method, 'https://api.vk.com/method/');
+			const url = new URL(method, this.baseUrl);
 
 			url.searchParams.set('access_token', token);
 			url.searchParams.set('v', API_VERSION);

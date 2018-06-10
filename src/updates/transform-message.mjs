@@ -80,7 +80,7 @@ export default function transformMessage([, id, flags, peer, date, body, extra, 
 		message.user_id = peer;
 	}
 
-	if ('attach1' in attachments && attachments.attach1_type in specialAttachments) {
+	if (attachments.attach1_type in specialAttachments) {
 		message.attachments = [
 			specialAttachments[attachments.attach1_type](attachments)
 		];
