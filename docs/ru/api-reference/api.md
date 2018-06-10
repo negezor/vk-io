@@ -12,6 +12,17 @@ API предоставляет удобный интерфейс для взаи
 api.wall.get();
 ```
 
+## baseUrl
+Позволяет установить базовый URL для API (по умолчанию `https://api.vk.com/method/`)
+
+```js
+api.baseUrl = 'https://my-custom-api.com/method/';
+```
+
+```js
+api.baseUrl; // https://my-custom-api.com/method/
+```
+
 ## call
 Выполняет метод, используется как альтернативный вызов методов
 
