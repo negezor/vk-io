@@ -406,6 +406,21 @@ export default class MessageContext extends Context {
 	}
 
 	/**
+	 * Returns the message payload
+	 *
+	 * @return {?mixed}
+	 */
+	getMessagePayload() {
+		const { payload = null } = this.payload;
+
+		if (payload === null) {
+			return null;
+		}
+
+		return JSON.parse(payload);
+	}
+
+	/**
 	 * Gets a link to invite the user to a conversation
 	 *
 	 * @param {Object} params

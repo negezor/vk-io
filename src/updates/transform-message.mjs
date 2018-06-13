@@ -51,7 +51,10 @@ export default function transformMessage([, id, flags, peer, date, body, extra, 
 		out: Number((flags & 2) === 2),
 		deleted: Number((flags & 128) === 128),
 		read_state: Number((flags & 1) === 1),
-		emoji: Number(Boolean(extra.emoji))
+		emoji: Number(Boolean(extra.emoji)),
+		payload: extra.payload
+			? extra.payload
+			: null
 	};
 
 	const isGroup = peer < 0;
