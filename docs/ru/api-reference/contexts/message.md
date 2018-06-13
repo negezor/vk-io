@@ -274,6 +274,14 @@ context.getEventType(); // => ?string
 context.getEventText(); // => ?string
 ```
 
+## getMessagePayload
+
+Возвращает значение указанное в `payload`, [подробнее](https://vk.com/dev/bots_docs_3)
+
+```js
+context.getMessagePayload(); // => ?mixed
+```
+
 ## getInviteLink
 
 Получает ссылку для приглашения пользователя в беседу

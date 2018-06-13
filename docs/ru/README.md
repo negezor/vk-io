@@ -19,5 +19,6 @@
 		* [PhotoAttachment](api-reference/attachments/photo.md)
 		* [VideoAttachment](api-reference/attachments/video.md)
 		* [WallAttachment](api-reference/attachments/wall.md)
+	* [Keyboard](api-reference/buttons/keyboard.md)
 	* [Snippets](api-reference/snippets.md)
 	* ...Уже скоро
