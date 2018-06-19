@@ -1,6 +1,6 @@
 /**
  * List methods VK
- * Last updated 23.05.2018
+ * Last updated 19.06.2018
  *
  * @type {Array}
  */
@@ -318,37 +318,51 @@ export default [
 	'messages.createChat',
 	'messages.delete',
 	'messages.deleteChatPhoto',
-	'messages.deleteDialog',
+	'messages.deleteConversation',
 	'messages.denyMessagesFromGroup',
 	'messages.edit',
 	'messages.editChat',
-	'messages.get',
+	'messages.getByConversationMessageId',
 	'messages.getById',
 	'messages.getChat',
 	'messages.getChatPreview',
-	'messages.getChatUsers',
-	'messages.getDialogs',
+	'messages.getConversationMembers',
+	'messages.getConversations',
+	'messages.getConversationsById',
 	'messages.getHistory',
 	'messages.getHistoryAttachments',
 	'messages.getInviteLink',
 	'messages.getLastActivity',
 	'messages.getLongPollHistory',
 	'messages.getLongPollServer',
-	'messages.pin',
 	'messages.isMessagesFromGroupAllowed',
 	'messages.joinChatByInviteLink',
-	'messages.markAsAnsweredDialog',
+	'messages.markAsAnsweredConversation',
 	'messages.markAsImportant',
-	'messages.markAsImportantDialog',
+	'messages.markAsImportantConversation',
 	'messages.markAsRead',
+	'messages.pin',
 	'messages.removeChatUser',
 	'messages.restore',
 	'messages.search',
-	'messages.searchDialogs',
+	'messages.searchConversations',
 	'messages.send',
 	'messages.setActivity',
 	'messages.setChatPhoto',
 	'messages.unpin',
+
+	/**
+	 * On v5.80
+	 *
+	 * @deprecated
+	 */
+	'messages.get',
+	'messages.getDialogs',
+	'messages.getChatUsers',
+	'messages.searchDialogs',
+	'messages.deleteDialog',
+	'messages.markAsAnsweredDialog',
+	'messages.markAsImportantDialog',
 
 	/**
 	 * Newsfeed

@@ -29,7 +29,7 @@ export default class TypingContext extends Context {
 		this.type = 'typing';
 		this.subTypes = [
 			eventId === 61
-				? 'typing_dm'
+				? 'typing_user'
 				: 'typing_chat'
 		];
 	}
@@ -39,8 +39,8 @@ export default class TypingContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isDM() {
-		return this.subTypes.includes('typing_dm');
+	isUser() {
+		return this.subTypes.includes('typing_user');
 	}
 
 	/**

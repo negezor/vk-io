@@ -1,10 +1,25 @@
+import nodeUtil from 'util';
+
 import Context from './context';
 
 import transformMessage from '../../updates/transform-message';
 
+import { uniqueKeys } from '../../utils/helpers';
 import { unescapeHTML } from '../../updates/helpers';
 import { transformAttachments } from '../attachments/helpers';
 import { updatesSources, messageSources, CHAT_PEER } from '../../utils/constants';
+
+const getPeerType = (id) => {
+	if (CHAT_PEER < id) {
+		return messageSources.CHAT;
+	}
+
+	if (id < 0) {
+		return messageSources.GROUP;
+	}
+
+	return messageSources.USER;
+};
 
 export default class MessageContext extends Context {
 	/**
@@ -24,36 +39,30 @@ export default class MessageContext extends Context {
 			payload = transformMessage(payload);
 		}
 
+		if (!payload.action) {
+			payload.action = {};
+		}
+
 		this.payload = payload;
 
-		let peerId;
-		let peerType;
-
-		if ('chat_id' in payload) {
-			peerId = payload.chat_id + CHAT_PEER;
-			peerType = messageSources.CHAT;
-		} else {
-			peerId = payload.user_id;
-
-			if (peerId < 0) {
-				peerType = messageSources.GROUP;
-			} else {
-				peerType = messageSources.DM;
-			}
-		}
+		const { peer_id: peerId, from_id: fromId } = payload;
 
 		this.from = {
 			id: peerId,
-			type: peerType
+			type: getPeerType(peerId)
+		};
+		this.sender = {
+			id: fromId,
+			type: getPeerType(fromId)
 		};
 
-		this.text = this.payload.body
-			? unescapeHTML(this.payload.body)
+		this.text = this.payload.text
+			? unescapeHTML(this.payload.text)
 			: null;
 
 		this.attachments = transformAttachments(payload.attachments, vk);
 
-		const subTypes = this.attachments.map(attachment => attachment.getType());
+		const subTypes = uniqueKeys(this.attachments.map(attachment => attachment.getType()));
 
 		if (!this.isEvent()) {
 			if (isWebhook) {
@@ -70,14 +79,12 @@ export default class MessageContext extends Context {
 						: 'new_message'
 				));
 			}
+		} else {
+			subTypes.push(this.getEventType());
 		}
 
 		if (this.hasText()) {
 			subTypes.push('text');
-		}
-
-		if ('action' in this.payload) {
-			subTypes.push(this.payload.action);
 		}
 
 		this.type = 'message';
@@ -86,6 +93,19 @@ export default class MessageContext extends Context {
 		this.$groupId = groupId;
 
 		this.filled = isWebhook;
+
+		this.isDM = nodeUtil.deprecate(
+			() => this.isUser(),
+			'context.isDM() is deprecated. Use context.isUser() instead.'
+		);
+		this.getUserId = nodeUtil.deprecate(
+			() => this.getSenderId(),
+			'context.getUserId() is deprecated. Use context.getSenderId() instead.'
+		);
+		this.getEventId = nodeUtil.deprecate(
+			() => this.getEventMemberId(),
+			'context.getEventId() is deprecated. Use context.getEventMemberId() instead.'
+		);
 	}
 
 	/**
@@ -155,12 +175,12 @@ export default class MessageContext extends Context {
 	}
 
 	/**
-	 * Checks is a DM
+	 * Check is a user
 	 *
 	 * @return {boolean}
 	 */
-	isDM() {
-		return this.from.type === messageSources.DM;
+	isUser() {
+		return this.from.type === messageSources.USER;
 	}
 
 	/**
@@ -187,7 +207,7 @@ export default class MessageContext extends Context {
 	 * @return {boolean}
 	 */
 	isEvent() {
-		return this.isChat() && Boolean(this.payload.action);
+		return this.getEventType() !== null;
 	}
 
 	/**
@@ -211,19 +231,19 @@ export default class MessageContext extends Context {
 	/**
 	 * Checks that the message was deleted
 	 *
-	 * @return {boolean}
+	 * @deprecated
 	 */
 	isDeleted() {
-		return Boolean(this.payload.deleted);
+		throw new Error('context.isDeleted no longer supported');
 	}
 
 	/**
 	 * Checks whether the message is read
 	 *
-	 * @return {boolean}
+	 * @deprecated
 	 */
 	isRead() {
-		return Boolean(this.payload.read_state);
+		throw new Error('context.isRead no longer supported');
 	}
 
 	/**
@@ -232,7 +252,7 @@ export default class MessageContext extends Context {
 	 * @return {boolean}
 	 */
 	isImportant() {
-		return Boolean(this.payload.important);
+		return this.payload.important;
 	}
 
 	/**
@@ -241,16 +261,38 @@ export default class MessageContext extends Context {
 	 * @return {number}
 	 */
 	getId() {
-		return this.payload.id;
+		const { id } = this.payload;
+
+		return id !== 0
+			? id
+			: this.getConversationMessageId();
 	}
 
 	/**
-	 * Returns the identifier user
+	 * Returns the conversation message id
 	 *
 	 * @return {number}
 	 */
-	getUserId() {
-		return this.payload.user_id;
+	getConversationMessageId() {
+		return this.payload.conversation_message_id;
+	}
+
+	/**
+	 * Returns the destination identifier
+	 *
+	 * @return {number}
+	 */
+	getPeerId() {
+		return this.from.id;
+	}
+
+	/**
+	 * Returns the peer type
+	 *
+	 * @return {string}
+	 */
+	getPeerType() {
+		return this.from.type;
 	}
 
 	/**
@@ -259,7 +301,16 @@ export default class MessageContext extends Context {
 	 * @return {number}
 	 */
 	getSenderId() {
-		return this.payload.from_id || this.getUserId() || null;
+		return this.sender.id;
+	}
+
+	/**
+	 * Returns the sender type
+	 *
+	 * @return {string}
+	 */
+	getSenderType() {
+		return this.sender.type;
 	}
 
 	/**
@@ -272,16 +323,7 @@ export default class MessageContext extends Context {
 			return null;
 		}
 
-		return this.payload.chat_id;
-	}
-
-	/**
-	 * Returns the destination identifier
-	 *
-	 * @return {number}
-	 */
-	getPeerId() {
-		return this.from.id;
+		return this.getPeerId() - CHAT_PEER;
 	}
 
 	/**
@@ -330,6 +372,15 @@ export default class MessageContext extends Context {
 	}
 
 	/**
+	 * Returns the sender
+	 *
+	 * @return {Object}
+	 */
+	getSender() {
+		return this.sender;
+	}
+
+	/**
 	 * Returns the forwards messages
 	 *
 	 * @return {Object[]}
@@ -373,12 +424,27 @@ export default class MessageContext extends Context {
 	}
 
 	/**
-	 * Returns the event id
+	 * Returns the event name
 	 *
-	 * @type {Object}
+	 * @return {?string}
 	 */
-	getEventId() {
-		const { action_mid: id } = this.payload;
+	getEventType() {
+		const { type } = this.payload.action;
+
+		if (!type) {
+			return null;
+		}
+
+		return type;
+	}
+
+	/**
+	 * Returns the event member id
+	 *
+	 * @return {?number}
+	 */
+	getEventMemberId() {
+		const { member_id: id } = this.payload.action;
 
 		if (!id) {
 			return null;
@@ -392,17 +458,29 @@ export default class MessageContext extends Context {
 	 *
 	 * @return {?string}
 	 */
-	getEventType() {
-		return this.payload.action || null;
+	getEventText() {
+		const { text } = this.payload.action;
+
+		if (!text) {
+			return null;
+		}
+
+		return text;
 	}
 
 	/**
-	 * Returns the event name
+	 * Returns the event email
 	 *
 	 * @return {?string}
 	 */
-	getEventText() {
-		return this.payload.action_text || null;
+	getEventEmail() {
+		const { email } = this.payload.action;
+
+		if (!email) {
+			return null;
+		}
+
+		return email;
 	}
 
 	/**
@@ -485,7 +563,7 @@ export default class MessageContext extends Context {
 			params = text;
 		}
 
-		params.peer_id = this.from.id;
+		params.peer_id = this.getPeerId();
 
 		return this.vk.api.messages.send(params);
 	}
@@ -505,7 +583,7 @@ export default class MessageContext extends Context {
 			params = text;
 		}
 
-		params.forward_messages = this.payload.id;
+		params.forward_messages = this.getId();
 
 		return this.send(params);
 	}
@@ -533,7 +611,7 @@ export default class MessageContext extends Context {
 	 */
 	async sendPhoto(source, params = {}) {
 		const attachment = await this.vk.upload.messagePhoto({
-			peer_id: this.getPeerId(),
+			peer_id: this.getSenderId(),
 
 			source
 		});
@@ -555,7 +633,7 @@ export default class MessageContext extends Context {
 	 */
 	async sendDocument(source, params = {}) {
 		const attachment = await this.vk.upload.messageDocument({
-			peer_id: this.getPeerId(),
+			peer_id: this.getSenderId(),
 
 			source
 		});
@@ -577,7 +655,7 @@ export default class MessageContext extends Context {
 	 */
 	async sendVoice(source, params = {}) {
 		const attachment = await this.vk.upload.voice({
-			peer_id: this.getPeerId(),
+			peer_id: this.getSenderId(),
 
 			source
 		});
@@ -596,7 +674,7 @@ export default class MessageContext extends Context {
 	 */
 	async setActivity() {
 		const isActivited = await this.vk.api.messages.setActivity({
-			peer_id: this.from.id,
+			peer_id: this.getPeerId(),
 			type: 'typing'
 		});
 
@@ -622,7 +700,7 @@ export default class MessageContext extends Context {
 		});
 
 		if (messageIds.includes(this.getId())) {
-			this.payload.important = options.important;
+			this.payload.important = Boolean(options.important);
 		}
 
 		return messageIds;
@@ -661,12 +739,8 @@ export default class MessageContext extends Context {
 	 */
 	async restoreMessage() {
 		const isRestored = await this.vk.api.messages.restore({
-			message_id: this.payload.id
+			message_id: this.getId()
 		});
-
-		if (this.isDeleted() && isRestored) {
-			this.payload.deleted = 0;
-		}
 
 		return Boolean(isRestored);
 	}
