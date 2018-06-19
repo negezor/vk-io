@@ -78,12 +78,12 @@ context.hasForwards(); // => boolean
 context.hasGeo(); // => boolean
 ```
 
-## isDM
+## isUser
 
-Проверяет что сообщение пришло из личных сообщений
+Проверяет что сообщение пришло от пользователя
 
 ```js
-context.isDM(); // => boolean
+context.isUser(); // => boolean
 ```
 
 ## isChat
@@ -100,6 +100,16 @@ context.isChat(); // => boolean
 
 ```js
 context.isGroup(); // => boolean
+```
+
+## isDM
+
+Проверяет что сообщение пришло из личных сообщений
+
+> Устарело, используйте `isUser()`
+
+```js
+context.isDM(); // => boolean
 ```
 
 ## isEvent
@@ -131,6 +141,8 @@ context.isInbox(); // => boolean
 
 Проверяет что сообщение, является удалённым
 
+> Удалено
+
 ```js
 context.isDeleted(); // => boolean
 ```
@@ -138,6 +150,8 @@ context.isDeleted(); // => boolean
 ## isRead
 
 Проверяет что сообщение, является прочитанным
+
+> Удалено
 
 ```js
 context.isRead(); // => boolean
@@ -153,15 +167,25 @@ context.isImportant(); // => boolean
 
 ## getId
 
-Возвращает идентификатор сообщения
+Возвращает идентификатор сообщения или сообщения беседы
 
 ```js
 context.getId(); // => number
 ```
 
+## getConversationMessageId
+
+Возвращает идентификатор сообщения из беседы
+
+```js
+context.getConversationMessageId(); // => number
+```
+
 ## getUserId
 
 Возвращает идентификатор пользователя
+
+> Устарело, используйте `getSenderId()`
 
 ```js
 context.getUserId(); // => number
@@ -181,6 +205,30 @@ context.getChatId(); // => ?number
 
 ```js
 context.getPeerId(); // => number
+```
+
+## getPeerType
+
+Возвращает тип идентификатора назначения
+
+```js
+context.getPeerType(); // => string
+```
+
+## getSenderId
+
+Возвращает идентификатор отправителя
+
+```js
+context.getSenderId(); // => number
+```
+
+## getSenderType
+
+Возвращает тип идентификатора отправителя
+
+```js
+context.getSenderType(); // => string
 ```
 
 ## getTimestamp
@@ -220,6 +268,19 @@ context.getFrom(); // => Object
 | id       | number | Идентификатор назначения |
 | type     | string | Тип откуда отправлено    |
 
+## getSender
+
+Возвращает того кто отправил сообщение
+
+```js
+context.getSender(); // => Object
+```
+
+| Свойство | Тип    | Описание                  |
+|----------|--------|---------------------------|
+| id       | number | Идентификатор отправителя |
+| type     | string | Тип кем было отправлено   |
+
 ## getForwards
 
 Возвращает пересланные сообщение
@@ -250,13 +311,6 @@ context.getAttachments([type]); // => Attachment[]
 |----------|--------|------------------|
 | type     | string | Тип прикрепления |
 
-## getEventId
-
-Возвращает идентификатор события
-
-```js
-context.getEventId(); // => ?number
-```
 
 ## getEventType
 
@@ -266,12 +320,39 @@ context.getEventId(); // => ?number
 context.getEventType(); // => ?string
 ```
 
+## getEventMemberId
+
+Возвращает идентификатор пользователя на которого произошло событие
+
+```js
+context.getEventMemberId(); // => ?number
+```
+
+
 ## getEventText
 
 Возвращает текст события
 
 ```js
 context.getEventText(); // => ?string
+```
+
+## getEventEmail
+
+Возвращает email события
+
+```js
+context.getEventEmail(); // => ?string
+```
+
+## getEventId
+
+Возвращает идентификатор события
+
+> Устарело, используйте `getEventMemberId()`
+
+```js
+context.getEventId(); // => ?number
 ```
 
 ## getMessagePayload
