@@ -135,6 +135,22 @@ Keyboard.NEGATIVE_COLOR; // => string
 Keyboard.POSITIVE_COLOR; // => string
 ```
 
+## oneTime
+
+Указывает, что клавиатура будет закрыта при нажатии на любую кнопку
+
+```js
+keyboard.oneTime(); // => this
+```
+
+Пример использования
+
+```js
+const kyeboard = Keyboard
+	.keyboard([...])
+	.oneTime();
+```
+
 ## toString
 Возвращает строковое представление клавиатуры
 

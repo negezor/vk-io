@@ -78,14 +78,14 @@ export default class Keyboard {
 	static keyboard(rows, options) {
 		if (rows.length > 10) {
 			throw new VKError({
-				message: 'Max count of rows 10'
+				message: 'Max count of keyboard rows 10'
 			});
 		}
 
 		const keyboard = new Keyboard(options);
 
 		for (const buttons of rows) {
-			keyboard.addButtons(buttons);
+			keyboard.addButtonsRow(buttons);
 		}
 
 		return keyboard;
@@ -103,18 +103,29 @@ export default class Keyboard {
 	}
 
 	/**
-	 * Add button
+	 * The keyboard will open only once
+	 *
+	 * @return {this}
+	 */
+	oneTime() {
+		this.oneTime = true;
+
+		return this;
+	}
+
+	/**
+	 * Add buttons row
 	 *
 	 * @param {Button[]} buttons
 	 */
-	addButtons(buttons) {
+	addButtonsRow(buttons) {
 		if (!Array.isArray(buttons)) {
 			buttons = [buttons];
 		}
 
 		if (buttons.length > 4) {
 			throw new VKError({
-				message: 'Max count of columns 4'
+				message: 'Max count of buttons at columns 4'
 			});
 		}
 
