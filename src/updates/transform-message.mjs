@@ -1,5 +1,3 @@
-import { parseFwds } from './helpers';
-
 /**
  * Special attachments in one message
  *
@@ -131,8 +129,25 @@ export default function transformMessage([, id, flags, peer, date, text, extra, 
 		}
 	}
 
-	if ('fwd' in attachments) {
-		message.fwd_messages = parseFwds(attachments.fwd);
+	let { fwd = null } = attachments;
+
+	// Now long poll receive such forward messages 0_0,0_0
+	if (fwd !== null) {
+		const indexColon = fwd.indexOf(':');
+		if (indexColon !== -1) {
+			fwd = fwd.substring(0, indexColon);
+		}
+
+		message.fwd_messages = fwd
+			.split(',')
+			.map((attachment) => {
+				const [owner] = attachment.split('_');
+
+				return {
+					from_id: Number(owner),
+					fwd_messages: []
+				};
+			});
 	}
 
 	return message;
