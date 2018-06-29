@@ -4,31 +4,9 @@ import Context from './context';
 
 import transformMessage from '../../updates/transform-message';
 
-import { uniqueKeys } from '../../utils/helpers';
 import { transformAttachments } from '../attachments/helpers';
+import { uniqueKeys, unescapeHTML } from '../../utils/helpers';
 import { updatesSources, messageSources, CHAT_PEER } from '../../utils/constants';
-
-const lt = /&lt;/g;
-const qt = /&gt;/g;
-const br = /<br>/g;
-const amp = /&amp;/g;
-const quot = /&quot;/g;
-
-/**
- * Decodes HTML entities
- *
- * @param {string} text
- *
- * @return {string}
- */
-export const unescapeHTML = text => (
-	text
-		.replace(lt, '<')
-		.replace(qt, '>')
-		.replace(br, '\n')
-		.replace(amp, '&')
-		.replace(quot, '"')
-);
 
 /**
  * Returns peer id type
