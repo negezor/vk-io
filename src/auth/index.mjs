@@ -1,10 +1,20 @@
 import nodeUtil from 'util';
+import nodeCrypto from 'crypto';
 
 import DirectAuth from './direct';
 import ImplicitFlowUser from './implicit-flow-user';
 import ImplicitFlowGroups from './implicit-flow-groups';
 
 const { inspect } = nodeUtil;
+const { createHash } = nodeCrypto;
+
+const openAPIParams = [
+	'expire',
+	'secret',
+	'mid',
+	'sid',
+	'sig'
+];
 
 export default class Auth {
 	/**
@@ -115,6 +125,43 @@ export default class Auth {
 			app: 3682744,
 			key: 'mY6CDUswIVdJLCD3j15n'
 		});
+	}
+
+	/**
+	 * Verifies that the user is authorized through the Open API
+	 *
+	 * @param {Object} params
+	 *
+	 * @return {Promise<Object>}
+	 */
+	async userAuthorizedThroughOpenAPI(params) {
+		const paramsKeys = Object.keys(params)
+			.filter(key => openAPIParams.includes(key))
+			.sort();
+
+		let sign = '';
+		for (const key of paramsKeys) {
+			if (key !== 'sig') {
+				sign += `${key}=${params[key]}`;
+			}
+		}
+
+		sign += this.vk.options.key;
+		sign = createHash('md5')
+			.update(sign)
+			.digest('hex');
+
+		let authorized = false;
+
+		const isNotExpire = params.expire > (Date.now() / 1000);
+
+		if (params.sig === sign && isNotExpire) {
+			authorized = true;
+		}
+
+		return {
+			authorized
+		};
 	}
 
 	/**

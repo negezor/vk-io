@@ -154,6 +154,62 @@ implicitFlow.run()
 		}
 	});
 ```
+
+## Open API
+### userAuthorizedThroughOpenAPI
+
+Проверяет что пользователь был авторизован через Open API, требует опцию [key](vk.md#options)
+
+Подробнее в разделе авторизации [Open API](https://vk.com/dev/openapi?f=3.1.%20VK.Auth.login)
+
+```js
+auth.userAuthorizedThroughOpenAPI(params); // => Promise<Object>
+```
+
+| Параметр | Тип    | Описание  |
+|----------|--------|-----------|
+| params   | Object | Параметры |
+
+Возвращает объект со следующими свойствами
+
+| Свойство   | Тип     | Описание                                     |
+|------------|---------|----------------------------------------------|
+| authorized | boolean | Авторизовался ли пользователь через Open API |
+
+Пример использования
+
+Как разобрать cookie вида `vk_app_[APP_ID]` в `express` (предполагается что у вас уже разобраны cookies):
+
+```js
+const { URLSearchParams } = require('url');
+
+const APP_ID = '17071010';
+
+app.get('/vk/valid-auth', async (req, res, next) => {
+	const cookie = req.cookies[`vk_app_${APP_ID}`];
+
+	if (!cookie) {
+		res.status(502).json({
+			message: 'Cookie not set',
+			authorized: false
+		});
+		
+		return;
+	}
+
+	const params = {};
+	for (const [key, value] of new URLSearchParams(cookie)) {
+		params[key] = value;
+	}
+
+	const { authorized } = await auth.userAuthorizedThroughOpenAPI(params);
+
+	res.status(200).json({
+		authorized
+	});
+});
+```
+
 ## Errors
 Обработка ошибок авторизации
 
