@@ -5,7 +5,7 @@ import commonjs from 'rollup-plugin-commonjs';
 
 import pkg from './package.json';
 
-const babelrc = require('./.babelrc');
+const babelConfig = require('./babel.config.js');
 
 const dependencies = Object.keys(pkg.dependencies);
 
@@ -29,7 +29,7 @@ export default [
 				preferBuiltins: true,
 			}),
 			babel({
-				...babelrc,
+				...babelConfig,
 
 				exclude: [
 					'node_modules/**'

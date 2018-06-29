@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 const babelJest = require('babel-jest');
 
-const babelrc = require('./.babelrc');
+const babelConfig = require('./babel.config.js');
 
-module.exports = babelJest.createTransformer(babelrc);
+module.exports = babelJest.createTransformer(babelConfig);
