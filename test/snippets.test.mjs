@@ -1,4 +1,4 @@
-import { VK } from '../';
+import { VK } from '..';
 
 const { TOKEN = null } = process.env;
 

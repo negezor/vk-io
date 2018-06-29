@@ -8,7 +8,7 @@ import {
 	MarketAttachment,
 	DocumentAttachment,
 	MarketAlbumAttachment
-} from '../';
+} from '..';
 
 describe('Attachments', () => {
 	it('the main class must be equivalent to a string', () => {

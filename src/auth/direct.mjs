@@ -210,57 +210,61 @@ export default class DirectAuth {
 				isJSON = false;
 			}
 
-			if (isJSON && 'access_token' in text) {
-				const {
-					email = null,
-					user_id: user = null,
-					expires_in: expires = null,
-					access_token: token,
-				} = text;
+			if (isJSON) {
+				if ('access_token' in text) {
+					const {
+						email = null,
+						user_id: user = null,
+						expires_in: expires = null,
+						access_token: token,
+					} = text;
 
-				return {
-					email,
-					user: user !== null
-						? Number(user)
-						: null,
+					return {
+						email,
+						user: user !== null
+							? Number(user)
+							: null,
 
-					token,
-					expires: expires !== null
-						? Number(expires)
-						: null
-				};
-			} else if (isJSON && 'error' in text) {
-				if (text.error === 'invalid_client') {
-					throw new AuthError({
-						message: `Invalid client (${text.error_description})`,
-						code: AUTHORIZATION_FAILED
-					});
+						token,
+						expires: expires !== null
+							? Number(expires)
+							: null
+					};
 				}
 
-				if (text.error === 'need_captcha') {
-					response = await this.processCaptcha(text);
+				if ('error' in text) {
+					if (text.error === 'invalid_client') {
+						throw new AuthError({
+							message: `Invalid client (${text.error_description})`,
+							code: AUTHORIZATION_FAILED
+						});
+					}
 
-					continue;
-				}
-
-				if (text.error === 'need_validation') {
-					if ('validation_type' in text) {
-						response = await this.processTwoFactor(text);
+					if (text.error === 'need_captcha') {
+						response = await this.processCaptcha(text);
 
 						continue;
 					}
 
-					const $ = cheerioLoad(text);
+					if (text.error === 'need_validation') {
+						if ('validation_type' in text) {
+							response = await this.processTwoFactor(text);
 
-					response = this.processSecurityForm(response, $);
+							continue;
+						}
 
-					continue;
+						const $ = cheerioLoad(text);
+
+						response = this.processSecurityForm(response, $);
+
+						continue;
+					}
+
+					throw new AuthError({
+						message: 'Unsupported type validation',
+						code: AUTHORIZATION_FAILED
+					});
 				}
-
-				throw new AuthError({
-					message: 'Unsupported type validation',
-					code: AUTHORIZATION_FAILED
-				});
 			}
 
 			throw new AuthError({

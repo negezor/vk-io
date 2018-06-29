@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-cycle
 import {
 	GiftAttachment,
 	WallAttachment,
@@ -10,7 +11,7 @@ import {
 	DocumentAttachment,
 	WallReplyAttachment,
 	MarketAlbumAttachment
-} from './';
+} from '.';
 
 const attachmentsTypes = {
 	gift: () => GiftAttachment,

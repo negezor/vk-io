@@ -1,4 +1,4 @@
-import { VK, Context } from '../';
+import { VK, Context } from '..';
 
 const vk = new VK();
 

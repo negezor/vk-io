@@ -1,4 +1,5 @@
 import Attachment from './attachment';
+// eslint-disable-next-line import/no-cycle
 import { transformAttachments } from './helpers';
 
 export default class WallAttachment extends Attachment {

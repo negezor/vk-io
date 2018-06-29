@@ -48,6 +48,7 @@ export default class ImplicitFlowGroups extends ImplicitFlow {
 			return group;
 		});
 	}
+
 	/**
 	 * Returns permission page
 	 *

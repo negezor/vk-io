@@ -2,6 +2,7 @@ import Attachment from './attachment';
 import ExternalAttachment from './external';
 
 import GiftAttachment from './gift';
+// eslint-disable-next-line import/no-cycle
 import WallAttachment from './wall';
 import LinkAttachment from './link';
 import PhotoAttachment from './photo';

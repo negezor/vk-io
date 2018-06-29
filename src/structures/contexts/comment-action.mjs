@@ -167,9 +167,9 @@ export default class CommentActionContext extends Context {
 	 */
 	getUserId() {
 		return (
-			this.payload.from_id ||
-			this.payload.user_id ||
-			null
+			this.payload.from_id
+			|| this.payload.user_id
+			|| null
 		);
 	}
 
@@ -200,12 +200,12 @@ export default class CommentActionContext extends Context {
 		const { payload } = this;
 
 		return (
-			payload.photo_id ||
-			payload.video_id ||
-			payload.post_id ||
-			payload.topic_id ||
-			payload.item_id ||
-			null
+			payload.photo_id
+			|| payload.video_id
+			|| payload.post_id
+			|| payload.topic_id
+			|| payload.item_id
+			|| null
 		);
 	}
 
@@ -218,13 +218,13 @@ export default class CommentActionContext extends Context {
 		const { payload } = this;
 
 		return (
-			payload.owner_id ||
-			payload.photo_owner_id ||
-			payload.video_owner_id ||
-			payload.post_owner_id ||
-			payload.topic_owner_id ||
-			payload.market_owner_id ||
-			null
+			payload.owner_id
+			|| payload.photo_owner_id
+			|| payload.video_owner_id
+			|| payload.post_owner_id
+			|| payload.topic_owner_id
+			|| payload.market_owner_id
+			|| null
 		);
 	}
 
