@@ -8,22 +8,22 @@
 
 VK-IO - This is a powerful [Node.js](https://nodejs.org) module that allows you to easily interact with the VK API 🚀
 
-| 📖 [Documentation](docs/) | 🤖 [Examples](examples/) |
-|----------------------------|--------------------------|
+📖 [Documentation](docs/) | 🤖 [Examples](examples/)
+---|---
 
 ## Features
 - 100% coverage of the VKontakte API
 - Predictable abstraction
-- Working with large collections of data
-- Support for all types authorization of login and password
+- Works with large collections of data
+- Support for all types of authorization, including via login and password
 
 ## Migrating to 4.0.0
-You can read the about [migration guide here](Upgrade-RU.md)
+You can read the [migration guide here](Upgrade-RU.md).
 
-Old version of the library [here](https://github.com/negezor/vk-io/tree/v3.2.0)
+Old version of the library is located [here](https://github.com/negezor/vk-io/tree/v3.2.0).
 
 ## Installation
-**[Node.js](https://nodejs.org/) 8.0.0 or newer is required**  
+> **[Node.js](https://nodejs.org/) 8.0.0 or newer is required**  
 
 ### Yarn
 Recommended, auto assembly
@@ -33,7 +33,7 @@ yarn add vk-io
 
 ### NPM
 ```shell
-npm install vk-io --save
+npm i vk-io
 ```
 
 ## Example usage
