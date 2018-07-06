@@ -27,7 +27,7 @@ export default class MarketAlbumAttachment extends Attachment {
 		}
 
 		const [album] = await this.vk.api.market.getAlbumById({
-			owner_id: this.owner,
+			owner_id: this.ownerId,
 			album_ids: this.id
 		});
 

@@ -31,7 +31,7 @@ export default class PhotoAttachment extends Attachment {
 		}
 
 		const [photo] = await this.vk.api.photos.getById({
-			photos: `${this.owner}_${this.id}`,
+			photos: `${this.ownerId}_${this.id}`,
 			extended: 0
 		});
 
@@ -49,7 +49,7 @@ export default class PhotoAttachment extends Attachment {
 	 *
 	 * @return {?number}
 	 */
-	getUserId() {
+	get userId() {
 		return this.payload.user_id || null;
 	}
 
@@ -58,7 +58,7 @@ export default class PhotoAttachment extends Attachment {
 	 *
 	 * @return {?number}
 	 */
-	getAlbumId() {
+	get albumId() {
 		return this.payload.album_id || null;
 	}
 
@@ -67,17 +67,8 @@ export default class PhotoAttachment extends Attachment {
 	 *
 	 * @return {?string}
 	 */
-	getText() {
+	get text() {
 		return this.payload.text || null;
-	}
-
-	/**
-	 * Returns the timestamp when this photo was created
-	 *
-	 * @return {number}
-	 */
-	getTimestamp() {
-		return this.payload.date || null;
 	}
 
 	/**
@@ -85,12 +76,8 @@ export default class PhotoAttachment extends Attachment {
 	 *
 	 * @return {?Date}
 	 */
-	getDate() {
-		const { date } = this.payload;
-
-		return date
-			? new Date(date)
-			: null;
+	get date() {
+		return this.payload.date || null;
 	}
 
 	/**
@@ -98,7 +85,7 @@ export default class PhotoAttachment extends Attachment {
 	 *
 	 * @return {?number}
 	 */
-	getHeight() {
+	get height() {
 		return this.payload.height || null;
 	}
 
@@ -107,29 +94,17 @@ export default class PhotoAttachment extends Attachment {
 	 *
 	 * @return {?number}
 	 */
-	getWidth() {
+	get width() {
 		return this.payload.width || null;
 	}
 
 	/**
-	 * Returns the sizes of the required types
+	 * Returns the sizes
 	 *
-	 * @param {string[]} sizeTypes
-	 *
-	 * @return {Object[]}
+	 * @return {?Object[]}
 	 */
-	getSizes(sizeTypes = null) {
-		if (sizeTypes === null) {
-			return this.payload.sizes;
-		}
-
-		const { sizes } = this.payload;
-
-		return sizeTypes
-			.map(sizeType => (
-				sizes.find(size => size.type === sizeType) || null
-			))
-			.filter(Boolean);
+	get sizes() {
+		return this.payload.sizes || null;
 	}
 
 	/**
@@ -138,7 +113,7 @@ export default class PhotoAttachment extends Attachment {
 	 *
 	 * @return {?string}
 	 */
-	getSmallPhoto() {
+	get smallPhoto() {
 		if (!this.$filled) {
 			return null;
 		}
@@ -154,7 +129,7 @@ export default class PhotoAttachment extends Attachment {
 	 *
 	 * @return {?string}
 	 */
-	getMediumPhoto() {
+	get mediumPhoto() {
 		if (!this.$filled) {
 			return null;
 		}
@@ -170,7 +145,7 @@ export default class PhotoAttachment extends Attachment {
 	 *
 	 * @return {?string}
 	 */
-	getLargePhoto() {
+	get largePhoto() {
 		if (!this.$filled) {
 			return null;
 		}
@@ -178,5 +153,22 @@ export default class PhotoAttachment extends Attachment {
 		const [size] = this.getSizes(LARGE_SIZES);
 
 		return size.url;
+	}
+
+	/**
+	 * Returns the sizes of the required types
+	 *
+	 * @param {string[]} sizeTypes
+	 *
+	 * @return {Object[]}
+	 */
+	getSizes(sizeTypes) {
+		const { sizes } = this;
+
+		return sizeTypes
+			.map(sizeType => (
+				sizes.find(size => size.type === sizeType) || null
+			))
+			.filter(Boolean);
 	}
 }

@@ -27,7 +27,7 @@ export default class VideoAttachment extends Attachment {
 		}
 
 		const { items } = await this.vk.api.video.get({
-			videos: `${this.owner}_${this.id}`,
+			videos: `${this.ownerId}_${this.id}`,
 			extended: 0
 		});
 
@@ -47,7 +47,7 @@ export default class VideoAttachment extends Attachment {
 	 *
 	 * @return {?boolean}
 	 */
-	isRepeat() {
+	get isRepeat() {
 		return this.checkBooleanInProperty('repeat');
 	}
 
@@ -56,7 +56,7 @@ export default class VideoAttachment extends Attachment {
 	 *
 	 * @return {?boolean}
 	 */
-	isCanAdd() {
+	get isCanAdd() {
 		return this.checkBooleanInProperty('can_add');
 	}
 
@@ -65,7 +65,7 @@ export default class VideoAttachment extends Attachment {
 	 *
 	 * @return {?boolean}
 	 */
-	isCanEdit() {
+	get isCanEdit() {
 		return this.checkBooleanInProperty('can_edit');
 	}
 
@@ -74,7 +74,7 @@ export default class VideoAttachment extends Attachment {
 	 *
 	 * @return {?boolean}
 	 */
-	isProcessing() {
+	get isProcessing() {
 		return this.checkBooleanInProperty('processing');
 	}
 
@@ -83,7 +83,7 @@ export default class VideoAttachment extends Attachment {
 	 *
 	 * @return {?boolean}
 	 */
-	isBroadcast() {
+	get isBroadcast() {
 		return this.checkBooleanInProperty('live');
 	}
 
@@ -92,7 +92,7 @@ export default class VideoAttachment extends Attachment {
 	 *
 	 * @return {?boolean}
 	 */
-	isUpcoming() {
+	get isUpcoming() {
 		return this.checkBooleanInProperty('upcoming');
 	}
 
@@ -101,7 +101,7 @@ export default class VideoAttachment extends Attachment {
 	 *
 	 * @return {?string}
 	 */
-	getTitle() {
+	get title() {
 		return this.payload.title || null;
 	}
 
@@ -110,7 +110,7 @@ export default class VideoAttachment extends Attachment {
 	 *
 	 * @return {?string}
 	 */
-	getDescription() {
+	get description() {
 		return this.payload.description || null;
 	}
 
@@ -119,52 +119,26 @@ export default class VideoAttachment extends Attachment {
 	 *
 	 * @return {?number}
 	 */
-	getDuration() {
+	get duration() {
 		return this.payload.duration || null;
 	}
 
 	/**
-	 * Returns the timestamp when this video was created
+	 * Returns the date object when this video was created
 	 *
-	 * @return {number}
+	 * @return {?Date}
 	 */
-	getTimestamp() {
+	get date() {
 		return this.payload.date || null;
 	}
 
 	/**
-	 * Returns the Date object when this video was created
+	 * Returns the date object when this video was added
 	 *
 	 * @return {?Date}
 	 */
-	getDate() {
-		const { date } = this.payload;
-
-		return date
-			? new Date(date)
-			: null;
-	}
-
-	/**
-	 * Returns the timestamp when this video was added
-	 *
-	 * @return {number}
-	 */
-	getAddingTimestamp() {
+	get addingDate() {
 		return this.payload.adding_date || null;
-	}
-
-	/**
-	 * Returns the Date object when this video was added
-	 *
-	 * @return {?Date}
-	 */
-	getAddingDate() {
-		const { adding_date: date } = this.payload;
-
-		return date
-			? new Date(date)
-			: null;
 	}
 
 	/**
@@ -172,7 +146,7 @@ export default class VideoAttachment extends Attachment {
 	 *
 	 * @return {?number}
 	 */
-	getViewsCount() {
+	get viewsCount() {
 		return this.payload.views || null;
 	}
 
@@ -181,7 +155,7 @@ export default class VideoAttachment extends Attachment {
 	 *
 	 * @return {?number}
 	 */
-	getCommentsCount() {
+	get commentsCount() {
 		return this.payload.comments || null;
 	}
 
@@ -190,7 +164,7 @@ export default class VideoAttachment extends Attachment {
 	 *
 	 * @return {?string}
 	 */
-	getPlayer() {
+	get player() {
 		return this.payload.player || null;
 	}
 
@@ -200,7 +174,7 @@ export default class VideoAttachment extends Attachment {
 	 *
 	 * @return {?string}
 	 */
-	getPlatformName() {
+	get platformName() {
 		return this.payload.platform || null;
 	}
 

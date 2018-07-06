@@ -9,14 +9,14 @@ export default class Attachment {
 	 * Constructor
 	 *
 	 * @param {string} type
-	 * @param {number} owner
+	 * @param {number} ownerId
 	 * @param {number} id
 	 * @param {string} accessKey
 	 */
-	constructor(type, owner, id, accessKey = null) {
+	constructor(type, ownerId, id, accessKey = null) {
 		this.type = type;
 
-		this.owner = Number(owner);
+		this.ownerId = Number(ownerId);
 		this.id = Number(id);
 
 		this.accessKey = accessKey;
@@ -45,9 +45,9 @@ export default class Attachment {
 			throw new Error('Incorrect attachment');
 		}
 
-		const [, type, owner, id, accessKey] = attachment.match(parseAttachment);
+		const [, type, ownerId, id, accessKey] = attachment.match(parseAttachment);
 
-		return new Attachment(type, owner, id, accessKey);
+		return new Attachment(type, ownerId, id, accessKey);
 	}
 
 	/**
@@ -55,35 +55,8 @@ export default class Attachment {
 	 *
 	 * @return {boolean}
 	 */
-	isFilled() {
+	get isFilled() {
 		return this.$filled;
-	}
-
-	/**
-	 * Returns type attachment
-	 *
-	 * @return {string}
-	 */
-	getType() {
-		return this.type;
-	}
-
-	/**
-	 * Returns the identifier owner
-	 *
-	 * @return {number}
-	 */
-	getOwnerId() {
-		return this.owner;
-	}
-
-	/**
-	 * Returns the identifier attachment
-	 *
-	 * @return {number}
-	 */
-	getId() {
-		return this.id;
 	}
 
 	/**
@@ -98,15 +71,15 @@ export default class Attachment {
 			return false;
 		}
 
-		if (this.getType() !== attachment.getType()) {
+		if (this.type !== attachment.type) {
 			return false;
 		}
 
-		if (this.getOwnerId() !== attachment.getOwnerId()) {
+		if (this.ownerId !== attachment.ownerId) {
 			return false;
 		}
 
-		if (this.getId() !== attachment.getId()) {
+		if (this.id !== attachment.id) {
 			return false;
 		}
 
@@ -134,7 +107,7 @@ export default class Attachment {
 			? `_${this.accessKey}`
 			: '';
 
-		return `${this.type}${this.owner}_${this.id}${accessKey}`;
+		return `${this.type}${this.ownerId}_${this.id}${accessKey}`;
 	}
 
 	/**

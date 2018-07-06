@@ -25,6 +25,7 @@ export default class GroupUserContext extends Context {
 		super(vk);
 
 		this.payload = payload;
+		this.$groupId = groupId;
 
 		this.type = 'group_user';
 		this.subTypes = [
@@ -32,8 +33,6 @@ export default class GroupUserContext extends Context {
 				? 'block_group_user'
 				: 'unblock_group_user'
 		];
-
-		this.$groupId = groupId;
 	}
 
 	/**
@@ -41,7 +40,7 @@ export default class GroupUserContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isBlock() {
+	get isBlock() {
 		return this.subTypes.includes('block_group_user');
 	}
 
@@ -50,7 +49,7 @@ export default class GroupUserContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isUnblock() {
+	get isUnblock() {
 		return this.subTypes.includes('unblock_group_user');
 	}
 
@@ -59,7 +58,7 @@ export default class GroupUserContext extends Context {
 	 *
 	 * @return {?boolean}
 	 */
-	isExpired() {
+	get isExpired() {
 		if (this.isBlock()) {
 			return null;
 		}
@@ -72,7 +71,7 @@ export default class GroupUserContext extends Context {
 	 *
 	 * @return {?number}
 	 */
-	getAdminId() {
+	get adminId() {
 		return this.payload.admin_id;
 	}
 
@@ -81,7 +80,7 @@ export default class GroupUserContext extends Context {
 	 *
 	 * @return {number}
 	 */
-	getUserId() {
+	get userId() {
 		return this.payload.user_id;
 	}
 
@@ -90,7 +89,7 @@ export default class GroupUserContext extends Context {
 	 *
 	 * @return {?number}
 	 */
-	getReasonId() {
+	get reasonId() {
 		return this.payload.reason || null;
 	}
 
@@ -99,8 +98,8 @@ export default class GroupUserContext extends Context {
 	 *
 	 * @return {?string}
 	 */
-	getReasonName() {
-		return reasonNames.get(this.payload.reason);
+	get reasonName() {
+		return reasonNames.get(this.reasonId);
 	}
 
 	/**
@@ -108,7 +107,7 @@ export default class GroupUserContext extends Context {
 	 *
 	 * @return {?string}
 	 */
-	getComment() {
+	get comment() {
 		return this.payload.comment || null;
 	}
 
@@ -128,7 +127,7 @@ export default class GroupUserContext extends Context {
 			...params,
 
 			group_id: this.$groupId,
-			user_id: this.payload.user_id
+			user_id: this.userId
 		});
 	}
 
@@ -144,7 +143,7 @@ export default class GroupUserContext extends Context {
 
 		return this.vk.api.groups.unbanUser({
 			group_id: this.$groupId,
-			user_id: this.payload.user_id
+			user_id: this.userId
 		});
 	}
 }

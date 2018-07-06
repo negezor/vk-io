@@ -27,7 +27,7 @@ export default class MarketAttachment extends Attachment {
 		}
 
 		const [market] = await this.vk.api.market.getById({
-			item_ids: `${this.owner}_${this.id}`,
+			item_ids: `${this.ownerId}_${this.id}`,
 			extended: 0
 		});
 

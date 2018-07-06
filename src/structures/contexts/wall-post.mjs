@@ -14,6 +14,7 @@ export default class WallPostContext extends Context {
 		super(vk);
 
 		this.payload = payload;
+		this.$groupId = groupId;
 
 		this.attachments = [new WallAttachment(payload, vk)];
 
@@ -23,8 +24,6 @@ export default class WallPostContext extends Context {
 				? 'new_wall_post'
 				: 'new_wall_repost'
 		];
-
-		this.$groupId = groupId;
 	}
 
 	/**
@@ -32,7 +31,7 @@ export default class WallPostContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isRepost() {
+	get isRepost() {
 		return this.subTypes.includes('new_wall_repost');
 	}
 
@@ -41,7 +40,7 @@ export default class WallPostContext extends Context {
 	 *
 	 * @return {WallAttachment}
 	 */
-	getWall() {
+	get wall() {
 		return this.attachments[0];
 	}
 
@@ -51,11 +50,11 @@ export default class WallPostContext extends Context {
 	 * @return {Promise}
 	 */
 	deletePost() {
-		const wall = this.getWall();
+		const wall = this.getWall;
 
 		return this.vk.api.wall.delete({
-			post_id: wall.getId(),
-			owner_id: wall.getOwnerId()
+			post_id: wall.id,
+			owner_id: wall.ownerId
 		});
 	}
 }

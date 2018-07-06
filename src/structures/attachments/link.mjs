@@ -18,7 +18,7 @@ export default class LinkAttachment extends ExternalAttachment {
 	 *
 	 * @return {string}
 	 */
-	getUrl() {
+	get url() {
 		return this.payload.url;
 	}
 
@@ -27,7 +27,7 @@ export default class LinkAttachment extends ExternalAttachment {
 	 *
 	 * @return {string}
 	 */
-	getTitle() {
+	get title() {
 		return this.payload.title;
 	}
 
@@ -36,7 +36,7 @@ export default class LinkAttachment extends ExternalAttachment {
 	 *
 	 * @return {string}
 	 */
-	getDescription() {
+	get description() {
 		return this.payload.description;
 	}
 }

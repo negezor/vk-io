@@ -12,11 +12,10 @@ export default class VoteContext extends Context {
 		super(vk);
 
 		this.payload = payload;
+		this.$groupId = groupId;
 
 		this.type = 'vote';
 		this.subTypes = ['pull_vote'];
-
-		this.$groupId = groupId;
 	}
 
 	/**
@@ -24,7 +23,7 @@ export default class VoteContext extends Context {
 	 *
 	 * @return {number}
 	 */
-	getId() {
+	get id() {
 		return this.payload.poll_id;
 	}
 
@@ -33,7 +32,7 @@ export default class VoteContext extends Context {
 	 *
 	 * @return {number}
 	 */
-	getUserId() {
+	get userId() {
 		return this.payload.user_id;
 	}
 
@@ -42,7 +41,7 @@ export default class VoteContext extends Context {
 	 *
 	 * @return {number}
 	 */
-	getOwnerId() {
+	get ownerId() {
 		return this.payload.owner_id;
 	}
 
@@ -51,7 +50,7 @@ export default class VoteContext extends Context {
 	 *
 	 * @return {number}
 	 */
-	getOptionId() {
+	get optionId() {
 		return this.payload.option_id;
 	}
 }

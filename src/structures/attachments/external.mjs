@@ -30,17 +30,8 @@ export default class ExternalAttachment {
 	 *
 	 * @return {boolean}
 	 */
-	isFilled() {
+	get isFilled() {
 		return this.$filled;
-	}
-
-	/**
-	 * Returns type attachment
-	 *
-	 * @return {string}
-	 */
-	getType() {
-		return this.type;
 	}
 
 	/**

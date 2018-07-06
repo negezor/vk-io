@@ -32,7 +32,7 @@ export default class UserOnlineContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isUserOnline() {
+	get isUserOnline() {
 		return this.subTypes.includes('user_online');
 	}
 
@@ -41,7 +41,7 @@ export default class UserOnlineContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isUserOffline() {
+	get isUserOffline() {
 		return this.subTypes.includes('user_offline');
 	}
 
@@ -50,7 +50,7 @@ export default class UserOnlineContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isSelfExit() {
+	get isSelfExit() {
 		return this.isUserOffline() && !this.payload.extra;
 	}
 
@@ -59,7 +59,7 @@ export default class UserOnlineContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isTimeoutExit() {
+	get isTimeoutExit() {
 		return this.isUserOffline() && Boolean(this.payload.extra);
 	}
 
@@ -68,7 +68,7 @@ export default class UserOnlineContext extends Context {
 	 *
 	 * @return {number}
 	 */
-	getDate() {
+	get date() {
 		return this.payload.date;
 	}
 
@@ -77,7 +77,7 @@ export default class UserOnlineContext extends Context {
 	 *
 	 * @return {?string}
 	 */
-	getPlatformName() {
+	get platformName() {
 		return platforms.get(this.payload.extra);
 	}
 }

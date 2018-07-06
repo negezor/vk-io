@@ -39,7 +39,7 @@ export default class TypingContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isUser() {
+	get isUser() {
 		return this.subTypes.includes('typing_user');
 	}
 
@@ -48,8 +48,17 @@ export default class TypingContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isChat() {
+	get isChat() {
 		return this.subTypes.includes('typing_chat');
+	}
+
+	/**
+	 * Returns the identifier peer
+	 *
+	 * @return {number}
+	 */
+	get peerId() {
+		return this.payload.peer_id;
 	}
 
 	/**
@@ -57,7 +66,7 @@ export default class TypingContext extends Context {
 	 *
 	 * @return {number}
 	 */
-	getUserId() {
+	get userId() {
 		return this.payload.user_id;
 	}
 
@@ -66,7 +75,7 @@ export default class TypingContext extends Context {
 	 *
 	 * @return {?number}
 	 */
-	getChatId() {
+	get chatId() {
 		return this.payload.chat_id;
 	}
 }

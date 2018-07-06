@@ -14,6 +14,7 @@ export default class GroupUpdateContext extends Context {
 		super(vk);
 
 		this.payload = payload;
+		this.$groupId = groupId;
 
 		const isChangePhoto = updateType === 'group_change_photo';
 
@@ -30,8 +31,6 @@ export default class GroupUpdateContext extends Context {
 					? 'group_update_photo'
 					: 'group_update_officers'
 		];
-
-		this.$groupId = groupId;
 	}
 
 	/**
@@ -39,7 +38,7 @@ export default class GroupUpdateContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isChangePhoto() {
+	get isChangePhoto() {
 		return this.subTypes.includes('group_change_photo');
 	}
 
@@ -48,7 +47,7 @@ export default class GroupUpdateContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isChangeOfficers() {
+	get isChangeOfficers() {
 		return this.subTypes.includes('group_change_officers');
 	}
 
@@ -57,7 +56,7 @@ export default class GroupUpdateContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isChangeSettings() {
+	get isChangeSettings() {
 		return this.subTypes.includes('group_change_settings');
 	}
 
@@ -74,7 +73,7 @@ export default class GroupUpdateContext extends Context {
 		}
 
 		return this.attachments.some(attachment => (
-			attachment.getType() === type
+			attachment.type === type
 		));
 	}
 
@@ -83,7 +82,7 @@ export default class GroupUpdateContext extends Context {
 	 *
 	 * @return {?number}
 	 */
-	getAdminId() {
+	get adminId() {
 		return this.payload.admin_id;
 	}
 
@@ -92,7 +91,7 @@ export default class GroupUpdateContext extends Context {
 	 *
 	 * @return {number}
 	 */
-	getUserId() {
+	get userId() {
 		return this.payload.user_id;
 	}
 
@@ -101,7 +100,7 @@ export default class GroupUpdateContext extends Context {
 	 *
 	 * @return {?number}
 	 */
-	getOldLevel() {
+	get oldLevel() {
 		return this.payload.level_old || null;
 	}
 
@@ -110,7 +109,7 @@ export default class GroupUpdateContext extends Context {
 	 *
 	 * @return {?number}
 	 */
-	getNewLevel() {
+	get newLevel() {
 		return this.payload.level_new || null;
 	}
 
@@ -119,7 +118,7 @@ export default class GroupUpdateContext extends Context {
 	 *
 	 * @return {?Object}
 	 */
-	getChanges() {
+	get changes() {
 		return this.payload.changes || null;
 	}
 
@@ -136,7 +135,7 @@ export default class GroupUpdateContext extends Context {
 		}
 
 		return this.attachments.filter(attachment => (
-			attachment.getType() === type
+			attachment.type === type
 		));
 	}
 }

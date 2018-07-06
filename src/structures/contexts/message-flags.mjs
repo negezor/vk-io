@@ -33,8 +33,8 @@ export default class MessageFlagsContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isUnread() {
-		return Boolean(this.payload.flags & 1);
+	get isUnread() {
+		return Boolean(this.flags & 1);
 	}
 
 	/**
@@ -42,8 +42,8 @@ export default class MessageFlagsContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isOutbox() {
-		return Boolean(this.payload.flags & 2);
+	get isOutbox() {
+		return Boolean(this.flags & 2);
 	}
 
 	/**
@@ -51,8 +51,8 @@ export default class MessageFlagsContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isReplied() {
-		return Boolean(this.payload.flags & 4);
+	get isReplied() {
+		return Boolean(this.flags & 4);
 	}
 
 	/**
@@ -60,8 +60,8 @@ export default class MessageFlagsContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isImportant() {
-		return Boolean(this.payload.flags & 8);
+	get isImportant() {
+		return Boolean(this.flags & 8);
 	}
 
 	/**
@@ -69,8 +69,8 @@ export default class MessageFlagsContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isChat() {
-		return Boolean(this.payload.flags & 16);
+	get isChat() {
+		return Boolean(this.flags & 16);
 	}
 
 	/**
@@ -78,8 +78,8 @@ export default class MessageFlagsContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isFriends() {
-		return Boolean(this.payload.flags & 32);
+	get isFriends() {
+		return Boolean(this.flags & 32);
 	}
 
 	/**
@@ -87,8 +87,8 @@ export default class MessageFlagsContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isSpam() {
-		return Boolean(this.payload.flags & 64);
+	get isSpam() {
+		return Boolean(this.flags & 64);
 	}
 
 	/**
@@ -96,8 +96,8 @@ export default class MessageFlagsContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isDeleted() {
-		return Boolean(this.payload.flags & 128);
+	get isDeleted() {
+		return Boolean(this.flags & 128);
 	}
 
 	/**
@@ -105,8 +105,8 @@ export default class MessageFlagsContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isFixed() {
-		return Boolean(this.payload.flags & 256);
+	get isFixed() {
+		return Boolean(this.flags & 256);
 	}
 
 	/**
@@ -114,8 +114,8 @@ export default class MessageFlagsContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isMedia() {
-		return Boolean(this.payload.flags & 512);
+	get isMedia() {
+		return Boolean(this.flags & 512);
 	}
 
 	/**
@@ -123,8 +123,8 @@ export default class MessageFlagsContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isHidden() {
-		return Boolean(this.payload.flags & 65536);
+	get isHidden() {
+		return Boolean(this.flags & 65536);
 	}
 
 	/**
@@ -132,7 +132,7 @@ export default class MessageFlagsContext extends Context {
 	 *
 	 * @return {number}
 	 */
-	getId() {
+	get id() {
 		return this.payload.id;
 	}
 
@@ -141,7 +141,7 @@ export default class MessageFlagsContext extends Context {
 	 *
 	 * @return {number}
 	 */
-	getPeerId() {
+	get peerId() {
 		return this.payload.peer_id;
 	}
 
@@ -150,7 +150,7 @@ export default class MessageFlagsContext extends Context {
 	 *
 	 * @return {number}
 	 */
-	getFlags() {
+	get flags() {
 		return this.payload.flags;
 	}
 }

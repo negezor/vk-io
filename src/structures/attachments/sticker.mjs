@@ -18,7 +18,7 @@ export default class StickerAttachment extends ExternalAttachment {
 	 *
 	 * @return {number}
 	 */
-	getId() {
+	get id() {
 		return this.payload.sticker_id;
 	}
 
@@ -27,7 +27,7 @@ export default class StickerAttachment extends ExternalAttachment {
 	 *
 	 * @return {number}
 	 */
-	getProductId() {
+	get productId() {
 		return this.payload.product_id;
 	}
 }

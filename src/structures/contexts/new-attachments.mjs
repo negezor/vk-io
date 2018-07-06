@@ -18,6 +18,7 @@ export default class NewAttachmentsContext extends Context {
 		super(vk);
 
 		this.payload = payload;
+		this.$groupId = groupId;
 
 		let subType;
 		let attachment;
@@ -50,8 +51,33 @@ export default class NewAttachmentsContext extends Context {
 
 		this.type = 'new_attachment';
 		this.subTypes = [subType];
+	}
 
-		this.$groupId = groupId;
+	/**
+	 * Checks is attachment photo
+	 *
+	 * @return {boolean}
+	 */
+	get isPhoto() {
+		return this.subTypes.includes('new_photo');
+	}
+
+	/**
+	 * Checks is attachment video
+	 *
+	 * @return {boolean}
+	 */
+	get isVideo() {
+		return this.subTypes.includes('new_video');
+	}
+
+	/**
+	 * Checks is attachment audio
+	 *
+	 * @return {boolean}
+	 */
+	get isAudio() {
+		return this.subTypes.includes('new_audio');
 	}
 
 	/**
@@ -67,7 +93,7 @@ export default class NewAttachmentsContext extends Context {
 		}
 
 		return this.attachments.some(attachment => (
-			attachment.getType() === type
+			attachment.type === type
 		));
 	}
 
@@ -84,35 +110,8 @@ export default class NewAttachmentsContext extends Context {
 		}
 
 		return this.attachments.filter(attachment => (
-			attachment.getType() === type
+			attachment.type === type
 		));
-	}
-
-	/**
-	 * Checks is attachment photo
-	 *
-	 * @return {boolean}
-	 */
-	isPhoto() {
-		return this.subTypes.includes('new_photo');
-	}
-
-	/**
-	 * Checks is attachment video
-	 *
-	 * @return {boolean}
-	 */
-	isVideo() {
-		return this.subTypes.includes('new_video');
-	}
-
-	/**
-	 * Checks is attachment audio
-	 *
-	 * @return {boolean}
-	 */
-	isAudio() {
-		return this.subTypes.includes('new_audio');
 	}
 
 	/**
@@ -125,8 +124,8 @@ export default class NewAttachmentsContext extends Context {
 			const [photo] = this.getAttachments('photo');
 
 			return this.vk.api.photos.delete({
-				owner_id: photo.getOwnerId(),
-				photo_id: photo.getId()
+				owner_id: photo.ownerId,
+				photo_id: photo.id
 			});
 		}
 
@@ -134,8 +133,8 @@ export default class NewAttachmentsContext extends Context {
 			const [video] = this.getAttachments('video');
 
 			return this.vk.api.video.delete({
-				owner_id: video.getOwnerId(),
-				video_id: video.getId()
+				owner_id: video.ownerId,
+				video_id: video.id
 			});
 		}
 
@@ -143,8 +142,8 @@ export default class NewAttachmentsContext extends Context {
 			const [audio] = this.getAttachments('audio');
 
 			return this.vk.api.audio.delete({
-				owner_id: audio.getOwnerId(),
-				audio_id: audio.getId()
+				owner_id: audio.ownerId,
+				audio_id: audio.id
 			});
 		}
 

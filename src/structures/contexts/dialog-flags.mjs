@@ -32,8 +32,8 @@ export default class DialogFlagsContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isImportant() {
-		return Boolean(this.payload.flags & 1);
+	get isImportant() {
+		return Boolean(this.flags & 1);
 	}
 
 	/**
@@ -41,8 +41,8 @@ export default class DialogFlagsContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isUnanswered() {
-		return Boolean(this.payload.flags & 2);
+	get isUnanswered() {
+		return Boolean(this.flags & 2);
 	}
 
 	/**
@@ -50,7 +50,7 @@ export default class DialogFlagsContext extends Context {
 	 *
 	 * @return {number}
 	 */
-	getPeerId() {
+	get peerId() {
 		return this.payload.peer_id;
 	}
 
@@ -59,7 +59,7 @@ export default class DialogFlagsContext extends Context {
 	 *
 	 * @return {number}
 	 */
-	getFlags() {
+	get flags() {
 		return this.payload.flags;
 	}
 
@@ -74,7 +74,7 @@ export default class DialogFlagsContext extends Context {
 		return this.vk.api.messages.markAsAnsweredDialog({
 			...params,
 
-			peer_id: this.payload.peer_id
+			peer_id: this.peerId
 		});
 	}
 
@@ -89,7 +89,7 @@ export default class DialogFlagsContext extends Context {
 		return this.vk.api.messages.markAsImportantDialog({
 			...params,
 
-			peer_id: this.payload.peer_id
+			peer_id: this.peerId
 		});
 	}
 }

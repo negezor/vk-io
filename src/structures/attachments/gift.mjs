@@ -18,7 +18,7 @@ export default class GiftAttachment extends ExternalAttachment {
 	 *
 	 * @return {number}
 	 */
-	getId() {
+	get id() {
 		return this.payload.id;
 	}
 }

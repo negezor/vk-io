@@ -33,8 +33,8 @@ export default class StreamingContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isNew() {
-		return this.payload.action === 'new';
+	get isNew() {
+		return this.actionType === 'new';
 	}
 
 	/**
@@ -42,8 +42,8 @@ export default class StreamingContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isUpdate() {
-		return this.payload.action === 'update';
+	get isUpdate() {
+		return this.actionType === 'update';
 	}
 
 	/**
@@ -51,8 +51,8 @@ export default class StreamingContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isDelete() {
-		return this.payload.action === 'delete';
+	get isDelete() {
+		return this.actionType === 'delete';
 	}
 
 	/**
@@ -60,8 +60,8 @@ export default class StreamingContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isRestore() {
-		return this.payload.action === 'restore';
+	get isRestore() {
+		return this.actionType === 'restore';
 	}
 
 	/**
@@ -69,8 +69,8 @@ export default class StreamingContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isPost() {
-		return this.payload.event_type === 'post';
+	get isPost() {
+		return this.eventType === 'post';
 	}
 
 	/**
@@ -78,8 +78,8 @@ export default class StreamingContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isShare() {
-		return this.payload.event_type === 'share';
+	get isShare() {
+		return this.eventType === 'share';
 	}
 
 	/**
@@ -87,8 +87,8 @@ export default class StreamingContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isComment() {
-		return this.payload.event_type === 'comment';
+	get isComment() {
+		return this.eventType === 'comment';
 	}
 
 	/**
@@ -104,7 +104,7 @@ export default class StreamingContext extends Context {
 		}
 
 		return this.attachments.some(attachment => (
-			attachment.getType() === type
+			attachment.type === type
 		));
 	}
 
@@ -113,7 +113,7 @@ export default class StreamingContext extends Context {
 	 *
 	 * @return {string}
 	 */
-	getUrl() {
+	get url() {
 		return this.payload.event_url;
 	}
 
@@ -122,7 +122,7 @@ export default class StreamingContext extends Context {
 	 *
 	 * @return {number}
 	 */
-	getDate() {
+	get date() {
 		return this.payload.creation_time;
 	}
 
@@ -131,8 +131,134 @@ export default class StreamingContext extends Context {
 	 *
 	 * @return {string}
 	 */
-	getText() {
+	get text() {
 		return this.payload.text;
+	}
+
+	/**
+	 * Returns the text of the shared post
+	 *
+	 * @return {?string}
+	 */
+	get sharedText() {
+		return this.payload.shared_post_text || null;
+	}
+
+	/**
+	 * Returns the creation time from original post
+	 *
+	 * @return {?number}
+	 */
+	get sharedDate() {
+		return this.payload.shared_post_creation_time || null;
+	}
+
+	/**
+	 * Returns the action type
+	 *
+	 * @return {string}
+	 */
+	get actionType() {
+		return this.payload.action;
+	}
+
+	/**
+	 * Returns the event type
+	 *
+	 * @return {string}
+	 */
+	get eventType() {
+		return this.payload.event_type;
+	}
+
+	/**
+	 * Returns the creation time from
+	 *
+	 * @return {number}
+	 */
+	get actionDate() {
+		return this.payload.action_time;
+	}
+
+	/**
+	 * Returns the geo location
+	 *
+	 * @return {Object}
+	 */
+	get geo() {
+		return this.payload.geo;
+	}
+
+	/**
+	 * Returns the rule tags
+	 *
+	 * @return {Array}
+	 */
+	get tags() {
+		return this.payload.tags;
+	}
+
+	/**
+	 * Returns the identifier signer user
+	 *
+	 * @return {number}
+	 */
+	get signerId() {
+		return this.payload.signer_id;
+	}
+
+	/**
+	 * Returns the information of author
+	 *
+	 * @return {Object}
+	 */
+	get author() {
+		return this.payload.author;
+	}
+
+	/**
+	 * Returns the identifier author
+	 *
+	 * @return {number}
+	 */
+	get authorId() {
+		return this.payload.author.id;
+	}
+
+	/**
+	 * Returns the author url
+	 *
+	 * @return {string}
+	 */
+	get authorUrl() {
+		return this.payload.author.author_url;
+	}
+
+	/**
+	 * Returns the identifier of the author of the original post
+	 *
+	 * @return {?number}
+	 */
+	get sharedAuthorId() {
+		return this.payload.author.shared_post_author_id || null;
+	}
+
+	/**
+	 * Returns the author url of the original post
+	 *
+	 * @return {?string}
+	 */
+	get sharedAuthorUrl() {
+		return this.payload.author.shared_post_author_url || null;
+	}
+
+	/**
+	 * Returns the author platform
+	 *
+	 * @return {?string}
+	 */
+	get authorPlatform() {
+		return platforms.get(this.payload.author.platform);
 	}
 
 	/**
@@ -148,124 +274,7 @@ export default class StreamingContext extends Context {
 		}
 
 		return this.attachments.filter(attachment => (
-			attachment.getType() === type
+			attachment.type === type
 		));
-	}
-
-	/**
-	 * Returns the text of the shared post
-	 *
-	 * @return {?string}
-	 */
-	getSharedText() {
-		return this.payload.shared_post_text || null;
-	}
-
-	/**
-	 * Returns the creation time from original post
-	 *
-	 * @return {?number}
-	 */
-	getSharedDate() {
-		return this.payload.shared_post_creation_time || null;
-	}
-
-	/**
-	 * Returns the action type
-	 *
-	 * @return {string}
-	 */
-	getActionType() {
-		return this.payload.action;
-	}
-
-	/**
-	 * Returns the creation time from
-	 *
-	 * @return {number}
-	 */
-	getActionDate() {
-		return this.payload.action_time;
-	}
-
-	/**
-	 * Returns the geo location
-	 *
-	 * @return {Object}
-	 */
-	getGeo() {
-		return this.payload.geo;
-	}
-
-	/**
-	 * Returns the rule tags
-	 *
-	 * @return {Array}
-	 */
-	getTags() {
-		return this.payload.tags;
-	}
-
-	/**
-	 * Returns the identifier signer user
-	 *
-	 * @return {number}
-	 */
-	getSignerId() {
-		return this.payload.signer_id;
-	}
-
-	/**
-	 * Returns the information of author
-	 *
-	 * @return {Object}
-	 */
-	getAuthor() {
-		return this.payload.author;
-	}
-
-	/**
-	 * Returns the identifier author
-	 *
-	 * @return {number}
-	 */
-	getAuthorId() {
-		return this.payload.author.id;
-	}
-
-	/**
-	 * Returns the author url
-	 *
-	 * @return {string}
-	 */
-	getAuthorUrl() {
-		return this.payload.author.author_url;
-	}
-
-	/**
-	 * Returns the identifier of the author of the original post
-	 *
-	 * @return {?number}
-	 */
-	getSharedAuthorId() {
-		return this.payload.author.shared_post_author_id || null;
-	}
-
-	/**
-	 * Returns the author url of the original post
-	 *
-	 * @return {?string}
-	 */
-	getSharedAuthorUrl() {
-		return this.payload.author.shared_post_author_url || null;
-	}
-
-	/**
-	 * Returns the author platform
-	 *
-	 * @return {?string}
-	 */
-	getAuthorPlatform() {
-		return platforms.get(this.payload.author.platform);
 	}
 }

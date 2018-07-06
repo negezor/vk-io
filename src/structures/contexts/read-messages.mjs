@@ -29,7 +29,7 @@ export default class ReadMessagesContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isInbox() {
+	get isInbox() {
 		return this.subTypes.includes('read_inbox_messages');
 	}
 
@@ -38,7 +38,7 @@ export default class ReadMessagesContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isOutbox() {
+	get isOutbox() {
 		return this.subTypes.includes('read_oubox_messages');
 	}
 
@@ -47,7 +47,7 @@ export default class ReadMessagesContext extends Context {
 	 *
 	 * @return {number}
 	 */
-	getId() {
+	get id() {
 		return this.payload.id;
 	}
 
@@ -56,7 +56,7 @@ export default class ReadMessagesContext extends Context {
 	 *
 	 * @return {number}
 	 */
-	getPeerId() {
+	get peerId() {
 		return this.payload.peer_id;
 	}
 }

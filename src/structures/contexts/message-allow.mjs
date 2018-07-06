@@ -12,6 +12,7 @@ export default class MessageAllowContext extends Context {
 		super(vk);
 
 		this.payload = payload;
+		this.$groupId = groupId;
 
 		this.type = 'message_subscribers';
 		this.subTypes = [
@@ -19,8 +20,6 @@ export default class MessageAllowContext extends Context {
 				? 'message_subscribe'
 				: 'message_unsubscribe'
 		];
-
-		this.$groupId = groupId;
 	}
 
 	/**
@@ -28,7 +27,7 @@ export default class MessageAllowContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isSubscribed() {
+	get isSubscribed() {
 		return this.subTypes.includes('message_subscribe');
 	}
 
@@ -37,7 +36,7 @@ export default class MessageAllowContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isUbsubscribed() {
+	get isUbsubscribed() {
 		return this.subTypes.includes('message_unsubscribe');
 	}
 
@@ -46,7 +45,7 @@ export default class MessageAllowContext extends Context {
 	 *
 	 * @return {number}
 	 */
-	getUserId() {
+	get userId() {
 		return this.payload.user_id;
 	}
 
@@ -55,7 +54,7 @@ export default class MessageAllowContext extends Context {
 	 *
 	 * @return {?string}
 	 */
-	getKey() {
+	get key() {
 		return this.payload.key || null;
 	}
 }

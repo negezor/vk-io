@@ -43,7 +43,7 @@ export default class DocumentAttachment extends Attachment {
 		}
 
 		const [document] = await this.vk.api.docs.getById({
-			docs: `${this.owner}_${this.id}`,
+			docs: `${this.ownerId}_${this.id}`,
 		});
 
 		this.payload = document;
@@ -60,12 +60,12 @@ export default class DocumentAttachment extends Attachment {
 	 *
 	 * @return {?boolean}
 	 */
-	isText() {
+	get isText() {
 		if (!this.$filled) {
 			return null;
 		}
 
-		return this.payload.type === 1;
+		return this.typeId === 1;
 	}
 
 	/**
@@ -73,12 +73,12 @@ export default class DocumentAttachment extends Attachment {
 	 *
 	 * @return {?boolean}
 	 */
-	isArchive() {
+	get isArchive() {
 		if (!this.$filled) {
 			return null;
 		}
 
-		return this.payload.type === 2;
+		return this.typeId === 2;
 	}
 
 	/**
@@ -86,12 +86,12 @@ export default class DocumentAttachment extends Attachment {
 	 *
 	 * @return {?boolean}
 	 */
-	isGif() {
+	get isGif() {
 		if (!this.$filled) {
 			return null;
 		}
 
-		return this.payload.type === 3;
+		return this.typeId === 3;
 	}
 
 	/**
@@ -99,12 +99,12 @@ export default class DocumentAttachment extends Attachment {
 	 *
 	 * @return {?boolean}
 	 */
-	isImage() {
+	get isImage() {
 		if (!this.$filled) {
 			return null;
 		}
 
-		return this.payload.type === 4;
+		return this.typeId === 4;
 	}
 
 	/**
@@ -112,7 +112,7 @@ export default class DocumentAttachment extends Attachment {
 	 *
 	 * @return {?boolean}
 	 */
-	isGraffiti() {
+	get isGraffiti() {
 		if (!this.$filled) {
 			return null;
 		}
@@ -125,12 +125,12 @@ export default class DocumentAttachment extends Attachment {
 	 *
 	 * @return {?boolean}
 	 */
-	isAudio() {
+	get isAudio() {
 		if (!this.$filled) {
 			return null;
 		}
 
-		return this.payload.type === 5;
+		return this.typeId === 5;
 	}
 
 	/**
@@ -138,7 +138,7 @@ export default class DocumentAttachment extends Attachment {
 	 *
 	 * @return {?boolean}
 	 */
-	isVoice() {
+	get isVoice() {
 		if (!this.$filled) {
 			return null;
 		}
@@ -151,12 +151,12 @@ export default class DocumentAttachment extends Attachment {
 	 *
 	 * @return {?boolean}
 	 */
-	isVideo() {
+	get isVideo() {
 		if (!this.$filled) {
 			return null;
 		}
 
-		return this.payload.type === 6;
+		return this.typeId === 6;
 	}
 
 	/**
@@ -164,12 +164,12 @@ export default class DocumentAttachment extends Attachment {
 	 *
 	 * @return {?boolean}
 	 */
-	isBook() {
+	get isBook() {
 		if (!this.$filled) {
 			return null;
 		}
 
-		return this.payload.type === 7;
+		return this.typeId === 7;
 	}
 
 	/**
@@ -177,30 +177,17 @@ export default class DocumentAttachment extends Attachment {
 	 *
 	 * @return {?string}
 	 */
-	getTitle() {
+	get title() {
 		return this.payload.title || null;
 	}
 
 	/**
-	 * Returns the timestamp when this document was created
+	 * Returns the date when this document was created
 	 *
 	 * @return {number}
 	 */
-	getTimestamp() {
+	get date() {
 		return this.payload.date || null;
-	}
-
-	/**
-	 * Returns the Date object when this document was created
-	 *
-	 * @return {?Date}
-	 */
-	getDate() {
-		const { date } = this.payload;
-
-		return date
-			? new Date(date)
-			: null;
 	}
 
 	/**
@@ -208,7 +195,7 @@ export default class DocumentAttachment extends Attachment {
 	 *
 	 * @return {?number}
 	 */
-	getTypeId() {
+	get typeId() {
 		return this.payload.type || null;
 	}
 
@@ -217,12 +204,12 @@ export default class DocumentAttachment extends Attachment {
 	 *
 	 * @return {?string}
 	 */
-	getTypeName() {
+	get typeName() {
 		if (!this.$filled) {
 			return null;
 		}
 
-		return documentTypes.get(this.payload.type);
+		return documentTypes.get(this.typeId);
 	}
 
 	/**
@@ -230,7 +217,7 @@ export default class DocumentAttachment extends Attachment {
 	 *
 	 * @return {?number}
 	 */
-	getSize() {
+	get size() {
 		return this.payload.size || null;
 	}
 
@@ -239,7 +226,7 @@ export default class DocumentAttachment extends Attachment {
 	 *
 	 * @return {?string}
 	 */
-	getExtension() {
+	get extension() {
 		return this.payload.ext || null;
 	}
 
@@ -248,7 +235,7 @@ export default class DocumentAttachment extends Attachment {
 	 *
 	 * @return {?string}
 	 */
-	getUrl() {
+	get url() {
 		return this.payload.url || null;
 	}
 
@@ -257,7 +244,7 @@ export default class DocumentAttachment extends Attachment {
 	 *
 	 * @return {?Object}
 	 */
-	getPreview() {
+	get preview() {
 		return this.payload.preview || null;
 	}
 
@@ -269,7 +256,7 @@ export default class DocumentAttachment extends Attachment {
 	 * @return {boolean}
 	 */
 	hasPreviewProperty(name) {
-		const preview = this.getPreview();
+		const { preview } = this;
 
 		if (preview === null) {
 			return false;

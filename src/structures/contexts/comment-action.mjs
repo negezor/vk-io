@@ -22,6 +22,8 @@ export default class CommentActionContext extends Context {
 		super(vk);
 
 		this.payload = payload;
+		this.$groupId = groupId;
+
 		this.attachments = transformAttachments(payload.attachments, vk);
 
 		const { 1: initsiator, 3: action } = updateType.match(findTypes);
@@ -31,8 +33,6 @@ export default class CommentActionContext extends Context {
 			`${initsiator}_comment`,
 			`${action}_${initsiator}_comment`,
 		];
-
-		this.$groupId = groupId;
 	}
 
 	/**
@@ -48,7 +48,7 @@ export default class CommentActionContext extends Context {
 		}
 
 		return this.attachments.some(attachment => (
-			attachment.getType() === type
+			attachment.type === type
 		));
 	}
 
@@ -57,7 +57,7 @@ export default class CommentActionContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isNew() {
+	get isNew() {
 		return this.includesFromSubType('new');
 	}
 
@@ -66,7 +66,7 @@ export default class CommentActionContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isEdit() {
+	get isEdit() {
 		return this.includesFromSubType('edit');
 	}
 
@@ -75,7 +75,7 @@ export default class CommentActionContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isDelete() {
+	get isDelete() {
 		return this.includesFromSubType('delete');
 	}
 
@@ -84,7 +84,7 @@ export default class CommentActionContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isRestore() {
+	get isRestore() {
 		return this.includesFromSubType('restore');
 	}
 
@@ -93,7 +93,7 @@ export default class CommentActionContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isPhotoComment() {
+	get isPhotoComment() {
 		return this.includesFromSubType('photo');
 	}
 
@@ -102,7 +102,7 @@ export default class CommentActionContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isWallComment() {
+	get isWallComment() {
 		return this.includesFromSubType('wall');
 	}
 
@@ -111,7 +111,7 @@ export default class CommentActionContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isVideoComment() {
+	get isVideoComment() {
 		return this.includesFromSubType('video');
 	}
 
@@ -120,7 +120,7 @@ export default class CommentActionContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isBoardComment() {
+	get isBoardComment() {
 		return this.includesFromSubType('board');
 	}
 
@@ -129,7 +129,7 @@ export default class CommentActionContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isMarketComment() {
+	get isMarketComment() {
 		return this.includesFromSubType('market');
 	}
 
@@ -138,7 +138,7 @@ export default class CommentActionContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isReply() {
+	get isReply() {
 		return 'reply_to_comment' in this.payload;
 	}
 
@@ -147,7 +147,7 @@ export default class CommentActionContext extends Context {
 	 *
 	 * @return {number}
 	 */
-	getId() {
+	get id() {
 		return this.payload.id;
 	}
 
@@ -156,7 +156,7 @@ export default class CommentActionContext extends Context {
 	 *
 	 * @return {?number}
 	 */
-	getReplyId() {
+	get replyId() {
 		return this.payload.reply_to_comment || null;
 	}
 
@@ -165,7 +165,7 @@ export default class CommentActionContext extends Context {
 	 *
 	 * @return {?number}
 	 */
-	getUserId() {
+	get userId() {
 		return (
 			this.payload.from_id
 			|| this.payload.user_id
@@ -178,7 +178,7 @@ export default class CommentActionContext extends Context {
 	 *
 	 * @return {?number}
 	 */
-	getReplyUserId() {
+	get replyUserId() {
 		return this.payload.reply_to_user || null;
 	}
 
@@ -187,7 +187,7 @@ export default class CommentActionContext extends Context {
 	 *
 	 * @return {?number}
 	 */
-	getRemoverUserId() {
+	get removerUserId() {
 		return this.payload.deleter_id || null;
 	}
 
@@ -196,7 +196,7 @@ export default class CommentActionContext extends Context {
 	 *
 	 * @return {?number}
 	 */
-	getObjectId() {
+	get objectId() {
 		const { payload } = this;
 
 		return (
@@ -214,7 +214,7 @@ export default class CommentActionContext extends Context {
 	 *
 	 * @return {?number}
 	 */
-	getOwnerId() {
+	get ownerId() {
 		const { payload } = this;
 
 		return (
@@ -233,7 +233,7 @@ export default class CommentActionContext extends Context {
 	 *
 	 * @return {?number}
 	 */
-	getDate() {
+	get date() {
 		return this.payload.date || null;
 	}
 
@@ -242,8 +242,17 @@ export default class CommentActionContext extends Context {
 	 *
 	 * @return {?string}
 	 */
-	getText() {
+	get text() {
 		return this.payload.text || null;
+	}
+
+	/**
+	 * Returns the likes
+	 *
+	 * @return {?Object}
+	 */
+	get likes() {
+		return this.payload.likes;
 	}
 
 	/**
@@ -259,17 +268,8 @@ export default class CommentActionContext extends Context {
 		}
 
 		return this.attachments.filter(attachment => (
-			attachment.getType() === type
+			attachment.type === type
 		));
-	}
-
-	/**
-	 * Returns the likes
-	 *
-	 * @return {?Object}
-	 */
-	getLikes() {
-		return this.payload.likes;
 	}
 
 	/**
@@ -299,8 +299,8 @@ export default class CommentActionContext extends Context {
 			return this.vk.api.board.editComment({
 				...options,
 
-				topic_id: this.getObjectId(),
-				comment_id: this.getId(),
+				comment_id: this.id,
+				topic_id: this.objectId,
 				group_id: this.$groupId
 			});
 		}
@@ -308,8 +308,8 @@ export default class CommentActionContext extends Context {
 		const params = {
 			...options,
 
-			comment_id: this.getId(),
-			owner_id: this.getOwnerId()
+			comment_id: this.id,
+			owner_id: this.ownerId
 		};
 
 		if (this.isPhotoComment()) {
@@ -343,15 +343,15 @@ export default class CommentActionContext extends Context {
 
 		if (this.isBoardComment()) {
 			return this.vk.api.board.deleteComment({
-				topic_id: this.getObjectId(),
-				comment_id: this.getId(),
+				comment_id: this.id,
+				topic_id: this.objectId,
 				group_id: this.$groupId
 			});
 		}
 
 		const params = {
-			comment_id: this.getId(),
-			owner_id: this.getOwnerId()
+			comment_id: this.id,
+			owner_id: this.ownerId
 		};
 
 		if (this.isPhotoComment()) {

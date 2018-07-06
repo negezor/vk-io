@@ -29,7 +29,7 @@ export default class RemovedMessagesContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isRemoved() {
+	get isRemoved() {
 		return this.subTypes.includes('delete_messages');
 	}
 
@@ -38,7 +38,7 @@ export default class RemovedMessagesContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isRecovery() {
+	get isRecovery() {
 		return this.subTypes.includes('restore_messages');
 	}
 
@@ -47,7 +47,7 @@ export default class RemovedMessagesContext extends Context {
 	 *
 	 * @return {string}
 	 */
-	getId() {
+	get id() {
 		return this.payload.id;
 	}
 
@@ -56,7 +56,7 @@ export default class RemovedMessagesContext extends Context {
 	 *
 	 * @return {number}
 	 */
-	getPeerId() {
+	get peerId() {
 		return this.payload.peer_id;
 	}
 }

@@ -27,7 +27,7 @@ export default class AudioAttachment extends Attachment {
 		}
 
 		const [audio] = await this.vk.api.audio.getById({
-			audios: `${this.owner}_${this.id}`
+			audios: `${this.ownerId}_${this.id}`
 		});
 
 		this.payload = audio;
@@ -44,7 +44,7 @@ export default class AudioAttachment extends Attachment {
 	 *
 	 * @return {?boolean}
 	 */
-	isHq() {
+	get isHq() {
 		const { is_hq: isHq } = this.payload;
 
 		if (!isHq) {
@@ -59,7 +59,7 @@ export default class AudioAttachment extends Attachment {
 	 *
 	 * @return {?string}
 	 */
-	getArtist() {
+	get artist() {
 		return this.payload.artist || null;
 	}
 
@@ -68,7 +68,7 @@ export default class AudioAttachment extends Attachment {
 	 *
 	 * @return {?string}
 	 */
-	getTitle() {
+	get title() {
 		return this.payload.title || null;
 	}
 
@@ -77,30 +77,17 @@ export default class AudioAttachment extends Attachment {
 	 *
 	 * @return {?number}
 	 */
-	getDuration() {
+	get duration() {
 		return this.payload.duration || null;
 	}
 
 	/**
-	 * Returns the timestamp when this audio was created
+	 * Returns the date object when this audio was created
 	 *
 	 * @return {?number}
 	 */
-	getTimestamp() {
+	get date() {
 		return this.payload.date || null;
-	}
-
-	/**
-	 * Returns the Date object when this audio was created
-	 *
-	 * @return {?Date}
-	 */
-	getDate() {
-		const { date } = this.payload;
-
-		return date
-			? new Date(date)
-			: null;
 	}
 
 	/**
@@ -108,7 +95,7 @@ export default class AudioAttachment extends Attachment {
 	 *
 	 * @return {?string}
 	 */
-	getUrl() {
+	get url() {
 		return this.payload.url || null;
 	}
 
@@ -117,7 +104,7 @@ export default class AudioAttachment extends Attachment {
 	 *
 	 * @return {?number}
 	 */
-	getLyricsId() {
+	get lyricsId() {
 		return this.payload.lyrics_id || null;
 	}
 
@@ -126,7 +113,7 @@ export default class AudioAttachment extends Attachment {
 	 *
 	 * @return {?number}
 	 */
-	getAlbumId() {
+	get albumId() {
 		return this.payload.album_id || null;
 	}
 
@@ -135,7 +122,7 @@ export default class AudioAttachment extends Attachment {
 	 *
 	 * @return {?number}
 	 */
-	getGenreId() {
+	get genreId() {
 		return this.payload.album_id || null;
 	}
 }

@@ -12,6 +12,7 @@ export default class GroupMemberContext extends Context {
 		super(vk);
 
 		this.payload = payload;
+		this.$groupId = groupId;
 
 		this.type = 'group_member';
 		this.subTypes = [
@@ -19,8 +20,6 @@ export default class GroupMemberContext extends Context {
 				? 'leave_group_member'
 				: 'join_group_member'
 		];
-
-		this.$groupId = groupId;
 	}
 
 	/**
@@ -28,7 +27,7 @@ export default class GroupMemberContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isJoin() {
+	get isJoin() {
 		return this.subTypes.includes('join_group_member');
 	}
 
@@ -37,7 +36,7 @@ export default class GroupMemberContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	isLeave() {
+	get isLeave() {
 		return this.subTypes.includes('leave_group_member');
 	}
 
@@ -46,7 +45,7 @@ export default class GroupMemberContext extends Context {
 	 *
 	 * @return {?boolean}
 	 */
-	isSelfLeave() {
+	get isSelfLeave() {
 		if (this.isJoin()) {
 			return null;
 		}
@@ -59,7 +58,7 @@ export default class GroupMemberContext extends Context {
 	 *
 	 * @return {number}
 	 */
-	getUserId() {
+	get userId() {
 		return this.payload.user_id;
 	}
 
@@ -68,7 +67,7 @@ export default class GroupMemberContext extends Context {
 	 *
 	 * @return {?string}
 	 */
-	getJoinType() {
+	get joinType() {
 		if (this.isLeave()) {
 			return null;
 		}
