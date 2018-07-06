@@ -240,15 +240,11 @@ export default class Updates {
 			throw new Error('Events should be not null');
 		}
 
-		return this.use(async (context, next) => {
-			if (context.is(events)) {
-				await handler(context, next);
-
-				return;
-			}
-
-			await next();
-		});
+		return this.use((context, next) => (
+			context.is(events)
+				? handler(context, next)
+				: next()
+		));
 	}
 
 	/**
@@ -270,8 +266,8 @@ export default class Updates {
 			throw new Error('Condition should be not null');
 		}
 
-		this.hears.use(async (context, next) => {
-			const text = context.getText();
+		this.hears.use((context, next) => {
+			const { text } = context;
 
 			const hasSome = conditions.some((condition) => {
 				if (typeof condition === 'function') {
@@ -291,13 +287,9 @@ export default class Updates {
 				return text === condition;
 			});
 
-			if (!hasSome) {
-				await next();
-
-				return;
-			}
-
-			await handler(context, next);
+			return hasSome
+				? handler(context, next)
+				: next();
 		});
 
 		return this;
@@ -320,6 +312,8 @@ export default class Updates {
 	 * Handles longpoll event
 	 *
 	 * @param {Array} update
+	 *
+	 * @return {Promise}
 	 */
 	handlePollingUpdate(update) {
 		debug('longpoll update', update);
@@ -345,6 +339,8 @@ export default class Updates {
 	 * Handles webhook event
 	 *
 	 * @param {Object} update
+	 *
+	 * @return {Promise}
 	 */
 	handleWebhookUpdate(update) {
 		debug('webhook update', update);
