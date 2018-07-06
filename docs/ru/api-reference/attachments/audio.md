@@ -32,68 +32,61 @@ new AudioAttachment(audio, vk);
 Проверяет, является ли запись в высоком качестве
 
 ```js
-attachment.isHq(); // => ?boolean
+attachment.isHq; // => ?boolean
 ```
 
-## getArtist
+## artist
 Возвращает исполнителя
 
 ```js
-attachment.getArtist(); // => ?string
+attachment.artist; // => ?string
 ```
 
-## getTitle
+## title
 Возвращает название композиции
 
 ```js
-attachment.getTitle(); // => ?string
+attachment.title; // => ?string
 ```
 
-## getDuration
+## duration
 Возвращает длительность аудиозаписи в секундах
 
 ```js
-attachment.getDuration(); // => ?number
+attachment.duration; // => ?number
 ```
 
-## getTimestamp
-Возвращает timestamp даты добавления аудиозаписи
+## date
+Возвращает метку времени даты добавления аудиозаписи
 
 ```js
-attachment.getTimestamp(); // => ?number
+attachment.date; // => ?number
 ```
 
-## getDate
-Возвращает объект `Date` даты добавления аудиозаписи
-
-```js
-attachment.getDate(); // => ?Date
-```
-
-## getUrl
+## url
 Возвращает ссылку на mp3
 
 ```js
-attachment.getUrl(); // => ?string
+attachment.url; // => ?string
 ```
 
-## getLyricsId
+## lyricsId
 Возвращает идентификатор текста аудиозаписи (если доступно)
 
 ```js
-attachment.getLyricsId(); // => ?number
+attachment.lyricsId; // => ?number
 ```
 
-## getAlbumId
+## albumId
 Возвращает идентификатор альбома, в котором находится аудиозапись (если присвоен)
 
 ```js
-attachment.getAlbumId(); // => ?number
+attachment.albumId; // => ?number
 ```
 
-## getGenreId
+## genreId
 Возвращает идентификатор жанра из [списка аудио жанров](https://vk.com/dev/objects/audio_genres)
 
 ```js
-attachment.getGenreId(); // => ?number
+attachment.genreId; // => ?number
 ```

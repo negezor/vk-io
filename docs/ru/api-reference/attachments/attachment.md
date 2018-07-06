@@ -10,7 +10,7 @@ import { Attachment } from 'vk-io';
 Инициализация новой инстанции
 
 ```js
-new Attachment(type, owner, id, accessKey);
+new Attachment(type, ownerId, id, accessKey);
 ```
 
 Пример использования
@@ -22,7 +22,7 @@ new Attachment('photo', 1, 456264771);
 | Параметр  | Тип    | Описание                     |
 |-----------|--------|------------------------------|
 | type      | string | Тип прикрепления             |
-| owner     | number | Идентификатор владелеца      |
+| ownerId   | number | Идентификатор владелеца      |
 | id        | number | Идентификатор прикрепления   |
 | accessKey | string | Ключ доступа (необязательно) |
 
@@ -47,28 +47,35 @@ Attachment.fromString('photo1_456264771'); // => Attachment
 Заполнен ли объект прикрепления, используется в классах наследниках
 
 ```js
-attachment.isFilled(); // => boolean
+attachment.isFilled; // => boolean
 ```
 
-## getType
+## type
 Возвращает тип прикрепления
 
 ```js
-attachment.getType(); // => string
+attachment.type; // => string
 ```
 
-## getOwnerId
+## ownerId
 Возвращает идентификатор владельца
 
 ```js
-attachment.getOwnerId(); // => number
+attachment.ownerId; // => number
 ```
 
-## getId
+## id
 Возвращает идентификатор прикрепления
 
 ```js
-attachment.getId(); // => number
+attachment.id; // => number
+```
+
+## accessKey
+Возвращает ключ доступа
+
+```js
+attachment.accessKey; // => ?string
 ```
 
 ## equals

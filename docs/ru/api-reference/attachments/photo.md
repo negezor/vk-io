@@ -28,72 +28,79 @@ const [photo] = await vk.api.photos.getById({
 new PhotoAttachment(photo, vk);
 ```
 
-## getUserId
+## userId
 Возвращает идентификатор пользователя
 
 ```js
-attachment.getUserId(); // => ?number
+attachment.userId; // => ?number
 ```
 
-## getAlbumId
+## albumId
 Возвращает идентификатор альбома
 
 ```js
-attachment.getAlbumId(); // => ?number
+attachment.albumId; // => ?number
 ```
 
-## getText
+## text
 Возвращает текст описания фотографии
 
 ```js
-attachment.getText(); // => ?string
+attachment.text; // => ?string
 ```
 
-## getTimestamp
-Возвращает timestamp даты добавления фотографии
+## date
+Возвращает метку времени даты добавления фотографии
 
 ```js
-attachment.getTimestamp(); // => ?number
+attachment.date; // => ?number
 ```
 
-## getDate
-Возвращает объект `Date` даты добавления фотографии
-
-```js
-attachment.getDate(); // => ?Date
-```
-
-## getHeight
+## height
 Возвращает ширину оригинала фотографии в пикселах
 
 ```js
-attachment.getHeight(); // => ?number
+attachment.getHeight; // => ?number
 ```
 
-## getWidth
+## width
 Возвращает высоту оригинала фотографии в пикселах
 
 ```js
-attachment.getWidth(); // => ?number
+attachment.getWidth; // => ?number
 ```
 
-## getSmallPhoto
+## sizes
+Возвращает размеры изображения
+
+```js
+attachment.sizes; // => ?Object[]
+```
+
+## smallPhoto
 Возвращает URL-адрес маленькой фотографии (130 или 75)
 
 ```js
-attachment.getSmallPhoto(); // => ?string
+attachment.smallPhoto; // => ?string
 ```
 
-## getMediumPhoto
+## mediumPhoto
 Возвращает URL-адрес средней фотографии (807 или 604 или меньше)
 
 ```js
-attachment.getMediumPhoto(); // => ?string
+attachment.mediumPhoto; // => ?string
 ```
 
-## getLargePhoto
+## largePhoto
 Возвращает URL-адрес большой фотографии (2560 или 1280 или меньше)
 
 ```js
-attachment.getLargePhoto(); // => ?string
+attachment.largePhoto; // => ?string
+```
+
+## getSizes
+Возвращает указанные размеры фотографий
+
+```js
+attachment.getSizes(sizeTypes); // => Object[]
 ```

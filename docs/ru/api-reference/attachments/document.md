@@ -32,124 +32,117 @@ new DocumentAttachment(document, vk);
 Проверяет, является ли документ текстовым
 
 ```js
-attachment.isText(); // => ?boolean
+attachment.isText; // => ?boolean
 ```
 
 ## isArchive
 Проверяет, является ли документ архивом
 
 ```js
-attachment.isArchive(); // => ?boolean
+attachment.isArchive; // => ?boolean
 ```
 
 ## isGif
 Проверяет, является ли документ gif файлом
 
 ```js
-attachment.isGif(); // => ?boolean
+attachment.isGif; // => ?boolean
 ```
 
 ## isImage
 Проверяет, является ли документ изображением
 
 ```js
-attachment.isImage(); // => ?boolean
+attachment.isImage; // => ?boolean
 ```
 
 ## isGraffiti
 Проверяет, является ли документ граффити
 
 ```js
-attachment.isGraffiti(); // => ?boolean
+attachment.isGraffiti; // => ?boolean
 ```
 
 ## isAudio
 Проверяет, является ли документ аудиозаписью
 
 ```js
-attachment.isAudio(); // => ?boolean
+attachment.isAudio; // => ?boolean
 ```
 
 ## isVoice
 Проверяет, является ли документ голосовой записью
 
 ```js
-attachment.isVoice(); // => ?boolean
+attachment.isVoice; // => ?boolean
 ```
 
 ## isVideo
 Проверяет, является ли документ видеозаписью
 
 ```js
-attachment.isVideo(); // => ?boolean
+attachment.isVideo; // => ?boolean
 ```
 
 ## isBook
 Проверяет, является ли документ электронной книгой
 
 ```js
-attachment.isBook(); // => ?boolean
+attachment.isBook; // => ?boolean
 ```
 
-## getTitle
+## title
 Возвращает название документа
 
 ```js
-attachment.getTitle(); // => ?string
+attachment.title; // => ?string
 ```
 
-## getTimestamp
-Возвращает timestamp даты добавления документа
+## date
+Возвращает метку времени даты добавления документа
 
 ```js
-attachment.getTimestamp();
+attachment.date; // => ?number
 ```
 
-## getDate
-Возвращает объект `Date` даты добавления документа
-
-```js
-attachment.getDate(); // => ?number
-```
-
-## getTypeId
+## typeId
 Возвращает идентификатор типа документа
 
 ```js
-attachment.getTypeId(); // => ?number
+attachment.typeId; // => ?number
 ```
 
-## getTypeName
+## typeName
 Возвращает название типа документа
 
 ```js
-attachment.getTypeName(); // => ?string
+attachment.typeName; // => ?string
 ```
 
-## getSize
+## size
 Возвращает размер документа в байтах
 
 ```js
-attachment.getSize(); // => ?number
+attachment.size; // => ?number
 ```
 
-## getExtension
+## extension
 Возвращает расширение документа
 
 ```js
-attachment.getExtension(); // => ?string
+attachment.extension; // => ?string
 ```
 
-## getUrl
+## url
 Возвращает адрес документа
 
 ```js
-attachment.getUrl(); // => ?string
+attachment.url; // => ?string
 ```
 
-## getPreview
+## preview
 Возвращает превью документа
 
 ```js
-attachment.getPreview(); // => ?Object
+attachment.preview; // => ?Object
 ```

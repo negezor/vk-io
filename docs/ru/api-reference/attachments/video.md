@@ -32,117 +32,103 @@ new VideoAttachment(video, vk);
 Проверяет, является ли видео зацикленным
 
 ```js
-attachment.isRepeat(); // => ?boolean
+attachment.isRepeat; // => ?boolean
 ```
 
 ## isCanAdd
 Проверяет может ли пользователь добавить видеозапись себе
 
 ```js
-attachment.isCanAdd(); // => ?boolean
+attachment.isCanAdd; // => ?boolean
 ```
 
 ## isCanEdit
 Проверяет может ли пользователь редактировать видеозапись
 
 ```js
-attachment.isCanEdit(); // => ?boolean
+attachment.isCanEdit; // => ?boolean
 ```
 
 ## isProcessing
 Проверяет, обрабатывается ли видео
 
 ```js
-attachment.isProcessing(); // => ?boolean
+attachment.isProcessing; // => ?boolean
 ```
 
 ## isBroadcast
 Проверяет, является ли видео трансляцией
 
 ```js
-attachment.isBroadcast(); // => ?boolean
+attachment.isBroadcast; // => ?boolean
 ```
 
 ## isUpcoming
 Проверяет что трансляция скоро начнётся
 
 ```js
-attachment.isUpcoming(); // => ?boolean
+attachment.isUpcoming; // => ?boolean
 ```
 
-## getTitle
+## title
 Возвращает название видеозаписи
 
 ```js
-attachment.getTitle(); // => ?string
+attachment.title; // => ?string
 ```
 
-## getDescription
+## description
 Возвращает описание видеозаписи
 
 ```js
-attachment.getDescription(); // => ?string
+attachment.description; // => ?string
 ```
 
-## getDuration
+## duration
 Возвращает длительность ролика в секундах
 
 ```js
-attachment.getDuration(); // => ?number
+attachment.duration; // => ?number
 ```
 
-## getTimestamp
-Возвращает timestamp дату создания видеозаписи
+## date
+Возвращает метку времени даты создания видеозаписи
 
 ```js
-attachment.getTimestamp(); // => ?number
+attachment.date; // => ?number
 ```
 
-## getDate
-Возвращает объект `Date` дату создания видеозаписи
+## addingDate
+Возвращает  метку времени даты добавления видеозаписи
 
 ```js
-attachment.getDate(); // => ?Date
+attachment.addingDate; // => ?number
 ```
 
-## getAddingTimestamp
-Возвращает timestamp даты добавления видеозаписи
-
-```js
-attachment.getAddingTimestamp(); // => ?number
-```
-
-## getAddingDate
-Возвращает объект `Date` даты добавления видеозаписи
-
-```js
-attachment.getAddingDate(); // => ?Date
-```
-
-## getViewsCount
+## viewsCount
 Возвращает количество просмотров видеозаписи
 
 ```js
-attachment.getViewsCount(); // => ?number
+attachment.viewsCount; // => ?number
 ```
 
-## getCommentsCount
+## commentsCount
 Возвращает количество комментариев к видеозаписи
 
 ```js
-attachment.getCommentsCount(); // => ?number
+attachment.commentsCount; // => ?number
 ```
 
-## getPlayer
+## player
 Возвращает URL страницы с плеером, который можно использовать для воспроизведения ролика в браузере
 
 ```js
-attachment.getPlayer(); // => ?string
+attachment.player; // => ?string
 ```
 
-## getPlatformName
+## platformName
 Возвращает название платформы (для видеозаписей, добавленных с внешних сайтов)
 
 ```js
-attachment.getPlatformName(); // => ?string
+attachment.platformName; // => ?string
 ```

@@ -59,7 +59,7 @@ context.hasAttachments([type]); // => boolean
 Проверяет наличие текста
 
 ```js
-context.hasText(); // => boolean
+context.hasText; // => boolean
 ```
 
 ## hasForwards
@@ -67,7 +67,7 @@ context.hasText(); // => boolean
 Проверяет наличие пересланных сообщений
 
 ```js
-context.hasForwards(); // => boolean
+context.hasForwards; // => boolean
 ```
 
 ## hasGeo
@@ -75,7 +75,7 @@ context.hasForwards(); // => boolean
 Проверяет наличие геолокации
 
 ```js
-context.hasGeo(); // => boolean
+context.hasGeo; // => boolean
 ```
 
 ## isUser
@@ -83,7 +83,7 @@ context.hasGeo(); // => boolean
 Проверяет что сообщение пришло от пользователя
 
 ```js
-context.isUser(); // => boolean
+context.isUser; // => boolean
 ```
 
 ## isChat
@@ -91,7 +91,7 @@ context.isUser(); // => boolean
 Проверяет что сообщение пришло из чата (беседы)
 
 ```js
-context.isChat(); // => boolean
+context.isChat; // => boolean
 ```
 
 ## isGroup
@@ -99,17 +99,7 @@ context.isChat(); // => boolean
 Проверяет что сообщение пришло из группы
 
 ```js
-context.isGroup(); // => boolean
-```
-
-## isDM
-
-Проверяет что сообщение пришло из личных сообщений
-
-> Устарело, используйте `isUser()`
-
-```js
-context.isDM(); // => boolean
+context.isGroup; // => boolean
 ```
 
 ## isEvent
@@ -117,7 +107,7 @@ context.isDM(); // => boolean
 Проверяет что сообщение, является событием (например приглашение пользователя)
 
 ```js
-context.isEvent(); // => boolean
+context.isEvent; // => boolean
 ```
 
 ## isOutbox
@@ -125,36 +115,15 @@ context.isEvent(); // => boolean
 Проверяет что сообщение, является исходящим
 
 ```js
-context.isOutbox(); // => boolean
+context.isOutbox; // => boolean
 ```
-
 
 ## isInbox
 
 Проверяет что сообщение, является входящим
 
 ```js
-context.isInbox(); // => boolean
-```
-
-## isDeleted
-
-Проверяет что сообщение, является удалённым
-
-> Удалено
-
-```js
-context.isDeleted(); // => boolean
-```
-
-## isRead
-
-Проверяет что сообщение, является прочитанным
-
-> Удалено
-
-```js
-context.isRead(); // => boolean
+context.isInbox; // => boolean
 ```
 
 ## isImportant
@@ -162,139 +131,140 @@ context.isRead(); // => boolean
 Проверяет что сообщение, является важным
 
 ```js
-context.isImportant(); // => boolean
+context.isImportant; // => boolean
 ```
 
-## getId
+## id
 
 Возвращает идентификатор сообщения или сообщения беседы
 
 ```js
-context.getId(); // => number
+context.id; // => number
 ```
 
-## getConversationMessageId
+## conversationMessageId
 
 Возвращает идентификатор сообщения из беседы
 
 ```js
-context.getConversationMessageId(); // => number
+context.conversationMessageId; // => number
 ```
 
-## getUserId
-
-Возвращает идентификатор пользователя
-
-> Устарело, используйте `getSenderId()`
-
-```js
-context.getUserId(); // => number
-```
-
-## getChatId
-
-Возвращает идентификатор чата
-
-```js
-context.getChatId(); // => ?number
-```
-
-## getPeerId
+## peerId
 
 Возвращает идентификатор назначения
 
 ```js
-context.getPeerId(); // => number
+context.peerId; // => number
 ```
 
-## getPeerType
+## peerType
 
 Возвращает тип идентификатора назначения
 
 ```js
-context.getPeerType(); // => string
+context.peerType; // => string
 ```
 
-## getSenderId
+## senderId
 
 Возвращает идентификатор отправителя
 
 ```js
-context.getSenderId(); // => number
+context.senderId; // => number
 ```
 
-## getSenderType
+## senderType
 
 Возвращает тип идентификатора отправителя
 
 ```js
-context.getSenderType(); // => string
+context.senderType; // => string
 ```
 
-## getTimestamp
+## chatId
+
+Возвращает идентификатор чата
+
+```js
+context.chatId; // => ?number
+```
+
+## date
 
 Возвращает метку времени отправки сообщения в формате Unixtime
 
 ```js
-context.getTimestamp(); // => number
+context.date; // => number
 ```
 
-## getDate
-
-Возвращает объект даты времени отправки сообщения
-
-```js
-context.getDate(); // => Date
-```
-
-## getText
+## text
 
 Возвращает текст сообщения
 
 ```js
-context.getText(); // => ?string
+context.text; // => ?string
 ```
 
-## getFrom
-
-Возвращает откуда пришло сообщение
-
-```js
-context.getFrom(); // => Object
-```
-
-| Свойство | Тип    | Описание                 |
-|----------|--------|--------------------------|
-| id       | number | Идентификатор назначения |
-| type     | string | Тип откуда отправлено    |
-
-## getSender
-
-Возвращает того кто отправил сообщение
-
-```js
-context.getSender(); // => Object
-```
-
-| Свойство | Тип    | Описание                  |
-|----------|--------|---------------------------|
-| id       | number | Идентификатор отправителя |
-| type     | string | Тип кем было отправлено   |
-
-## getForwards
+## forwards
 
 Возвращает пересланные сообщение
 
 ```js
-context.getForwards(); // => Object[]
+context.forwards; // => Object[]
 ```
 
-## getGeo
+## geo
 
 Возвращает геолокацию
 
 ```js
-context.getGeo(); // => Object
+context.geo; // => Object
+```
+
+| Параметр | Тип    | Описание         |
+|----------|--------|------------------|
+| type     | string | Тип прикрепления |
+
+
+## eventType
+
+Возвращает тип события
+
+```js
+context.eventType; // => ?string
+```
+
+## eventMemberId
+
+Возвращает идентификатор пользователя на которого произошло событие
+
+```js
+context.eventMemberId; // => ?number
+```
+
+## eventText
+
+Возвращает текст события
+
+```js
+context.eventText; // => ?string
+```
+
+## eventEmail
+
+Возвращает email события
+
+```js
+context.eventEmail; // => ?string
+```
+
+## messagePayload
+
+Возвращает значение указанное в `payload`, [подробнее](https://vk.com/dev/bots_docs_3)
+
+```js
+context.messagePayload; // => ?mixed
 ```
 
 ## getAttachments
@@ -305,62 +275,6 @@ context.getGeo(); // => Object
 
 ```js
 context.getAttachments([type]); // => Attachment[]
-```
-
-| Параметр | Тип    | Описание         |
-|----------|--------|------------------|
-| type     | string | Тип прикрепления |
-
-
-## getEventType
-
-Возвращает тип события
-
-```js
-context.getEventType(); // => ?string
-```
-
-## getEventMemberId
-
-Возвращает идентификатор пользователя на которого произошло событие
-
-```js
-context.getEventMemberId(); // => ?number
-```
-
-
-## getEventText
-
-Возвращает текст события
-
-```js
-context.getEventText(); // => ?string
-```
-
-## getEventEmail
-
-Возвращает email события
-
-```js
-context.getEventEmail(); // => ?string
-```
-
-## getEventId
-
-Возвращает идентификатор события
-
-> Устарело, используйте `getEventMemberId()`
-
-```js
-context.getEventId(); // => ?number
-```
-
-## getMessagePayload
-
-Возвращает значение указанное в `payload`, [подробнее](https://vk.com/dev/bots_docs_3)
-
-```js
-context.getMessagePayload(); // => ?mixed
 ```
 
 ## getInviteLink
