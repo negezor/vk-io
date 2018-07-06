@@ -12,7 +12,7 @@ const { updates } = vk;
 
 // Skip outbox message and handle errors
 updates.use(async (context, next) => {
-	if (context.is('message') && context.isOutbox()) {
+	if (context.is('message') && context.isOutbox) {
 		return;
 	}
 
@@ -26,10 +26,10 @@ updates.use(async (context, next) => {
 // Handle message payload
 updates.use(async (context, next) => {
 	if (context.is('message')) {
-		const payload = context.getMessagePayload();
+		const { messagePayload } = context;
 
-		context.state.command = payload && payload.command
-			? payload.command
+		context.state.command = messagePayload && messagePayload.command
+			? messagePayload.command
 			: null;
 	}
 

@@ -12,7 +12,7 @@ const { updates } = vk;
 
 // Skip outbox message and handle errors
 updates.use(async (context, next) => {
-	if (context.is('message') && context.isOutbox()) {
+	if (context.is('message') && context.isOutbox) {
 		return;
 	}
 
@@ -27,7 +27,7 @@ const memoryStorage = new Map();
 
 // Simple session middleware
 updates.on('message', async (context, next) => {
-	const peerId = context.getPeerId();
+	const { peerId } = context;
 
 	const session = memoryStorage.has(peerId)
 		? memoryStorage.get(peerId)
