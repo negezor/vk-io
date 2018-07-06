@@ -13,7 +13,7 @@ export default class ExternalAttachment {
 		this.type = type;
 		this.payload = payload;
 
-		this.filled = false;
+		this.$filled = false;
 	}
 
 	/**
@@ -31,7 +31,7 @@ export default class ExternalAttachment {
 	 * @return {boolean}
 	 */
 	isFilled() {
-		return this.filled;
+		return this.$filled;
 	}
 
 	/**
@@ -54,7 +54,7 @@ export default class ExternalAttachment {
 	[inspect.custom](depth, options) {
 		const { name } = this.constructor;
 
-		const payload = this.filled
+		const payload = this.$filled
 			? ` ${inspect(this.payload, options)} `
 			: '';
 

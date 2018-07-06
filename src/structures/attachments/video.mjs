@@ -13,7 +13,7 @@ export default class VideoAttachment extends Attachment {
 		this.vk = vk;
 		this.payload = payload;
 
-		this.filled = 'date' in payload;
+		this.$filled = 'date' in payload;
 	}
 
 	/**
@@ -22,7 +22,7 @@ export default class VideoAttachment extends Attachment {
 	 * @return {Promise}
 	 */
 	async loadAttachmentPayload() {
-		if (this.filled) {
+		if (this.$filled) {
 			return;
 		}
 
@@ -39,7 +39,7 @@ export default class VideoAttachment extends Attachment {
 			this.accessKey = this.payload.access_key;
 		}
 
-		this.filled = true;
+		this.$filled = true;
 	}
 
 	/**

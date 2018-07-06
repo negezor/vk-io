@@ -13,7 +13,7 @@ export default class AudioAttachment extends Attachment {
 		this.vk = vk;
 		this.payload = payload;
 
-		this.filled = 'duration' in payload && 'date' in payload;
+		this.$filled = 'duration' in payload && 'date' in payload;
 	}
 
 	/**
@@ -22,7 +22,7 @@ export default class AudioAttachment extends Attachment {
 	 * @return {Promise}
 	 */
 	async loadAttachmentPayload() {
-		if (this.filled) {
+		if (this.$filled) {
 			return;
 		}
 
@@ -36,7 +36,7 @@ export default class AudioAttachment extends Attachment {
 			this.accessKey = this.payload.access_key;
 		}
 
-		this.filled = true;
+		this.$filled = true;
 	}
 
 	/**

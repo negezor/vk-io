@@ -17,7 +17,7 @@ export default class WallAttachment extends Attachment {
 
 		this.attachments = transformAttachments(payload.attachments);
 
-		this.filled = 'date' in payload;
+		this.$filled = 'date' in payload;
 	}
 
 	/**
@@ -26,7 +26,7 @@ export default class WallAttachment extends Attachment {
 	 * @return {Promise}
 	 */
 	async loadAttachmentPayload() {
-		if (this.filled) {
+		if (this.$filled) {
 			return;
 		}
 
@@ -41,7 +41,7 @@ export default class WallAttachment extends Attachment {
 			this.accessKey = this.payload.access_key;
 		}
 
-		this.filled = true;
+		this.$filled = true;
 	}
 
 	/**
@@ -50,7 +50,7 @@ export default class WallAttachment extends Attachment {
 	 * @return {?boolean}
 	 */
 	hasComments() {
-		if (!this.filled) {
+		if (!this.$filled) {
 			return null;
 		}
 
@@ -63,7 +63,7 @@ export default class WallAttachment extends Attachment {
 	 * @return {?boolean}
 	 */
 	hasAds() {
-		if (!this.filled) {
+		if (!this.$filled) {
 			return null;
 		}
 
@@ -93,7 +93,7 @@ export default class WallAttachment extends Attachment {
 	 * @return {?boolean}
 	 */
 	hasUserReposted() {
-		if (!this.filled) {
+		if (!this.$filled) {
 			return null;
 		}
 
@@ -106,7 +106,7 @@ export default class WallAttachment extends Attachment {
 	 * @return {?boolean}
 	 */
 	hasUserLike() {
-		if (!this.filled) {
+		if (!this.$filled) {
 			return null;
 		}
 
@@ -119,7 +119,7 @@ export default class WallAttachment extends Attachment {
 	 * @return {?boolean}
 	 */
 	isCanUserCommented() {
-		if (!this.filled) {
+		if (!this.$filled) {
 			return null;
 		}
 
@@ -132,7 +132,7 @@ export default class WallAttachment extends Attachment {
 	 * @return {?boolean}
 	 */
 	isCanGroupsCommented() {
-		if (!this.filled) {
+		if (!this.$filled) {
 			return null;
 		}
 
@@ -154,7 +154,7 @@ export default class WallAttachment extends Attachment {
 	 * @return {?boolean}
 	 */
 	isCanLike() {
-		if (!this.filled) {
+		if (!this.$filled) {
 			return null;
 		}
 
@@ -167,7 +167,7 @@ export default class WallAttachment extends Attachment {
 	 * @return {?boolean}
 	 */
 	isCanReposted() {
-		if (!this.filled) {
+		if (!this.$filled) {
 			return null;
 		}
 
@@ -180,7 +180,7 @@ export default class WallAttachment extends Attachment {
 	 * @return {?boolean}
 	 */
 	isCanPin() {
-		if (!this.filled) {
+		if (!this.$filled) {
 			return null;
 		}
 
@@ -193,7 +193,7 @@ export default class WallAttachment extends Attachment {
 	 * @return {?boolean}
 	 */
 	isCanDelete() {
-		if (!this.filled) {
+		if (!this.$filled) {
 			return null;
 		}
 
@@ -206,7 +206,7 @@ export default class WallAttachment extends Attachment {
 	 * @return {?boolean}
 	 */
 	isCanEdit() {
-		if (!this.filled) {
+		if (!this.$filled) {
 			return null;
 		}
 
@@ -219,7 +219,7 @@ export default class WallAttachment extends Attachment {
 	 * @return {?boolean}
 	 */
 	isPinned() {
-		if (!this.filled) {
+		if (!this.$filled) {
 			return null;
 		}
 
@@ -232,7 +232,7 @@ export default class WallAttachment extends Attachment {
 	 * @return {?boolean}
 	 */
 	isFriendsOnly() {
-		if (!this.filled) {
+		if (!this.$filled) {
 			return null;
 		}
 
@@ -348,7 +348,7 @@ export default class WallAttachment extends Attachment {
 	 * @return {?number}
 	 */
 	getViewsCount() {
-		if (!this.filled) {
+		if (!this.$filled) {
 			return null;
 		}
 
@@ -379,7 +379,7 @@ export default class WallAttachment extends Attachment {
 	 * @return {?number}
 	 */
 	getLikesCount() {
-		if (!this.filled) {
+		if (!this.$filled) {
 			return null;
 		}
 
@@ -392,7 +392,7 @@ export default class WallAttachment extends Attachment {
 	 * @return {?number}
 	 */
 	getRepostsCount() {
-		if (!this.filled) {
+		if (!this.$filled) {
 			return null;
 		}
 

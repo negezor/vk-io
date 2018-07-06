@@ -29,7 +29,7 @@ export default class DocumentAttachment extends Attachment {
 		this.vk = vk;
 		this.payload = payload;
 
-		this.filled = 'ext' in payload && 'date' in payload;
+		this.$filled = 'ext' in payload && 'date' in payload;
 	}
 
 	/**
@@ -38,7 +38,7 @@ export default class DocumentAttachment extends Attachment {
 	 * @return {Promise}
 	 */
 	async loadAttachmentPayload() {
-		if (this.filled) {
+		if (this.$filled) {
 			return;
 		}
 
@@ -52,7 +52,7 @@ export default class DocumentAttachment extends Attachment {
 			this.accessKey = this.payload.access_key;
 		}
 
-		this.filled = true;
+		this.$filled = true;
 	}
 
 	/**
@@ -61,7 +61,7 @@ export default class DocumentAttachment extends Attachment {
 	 * @return {?boolean}
 	 */
 	isText() {
-		if (!this.filled) {
+		if (!this.$filled) {
 			return null;
 		}
 
@@ -74,7 +74,7 @@ export default class DocumentAttachment extends Attachment {
 	 * @return {?boolean}
 	 */
 	isArchive() {
-		if (!this.filled) {
+		if (!this.$filled) {
 			return null;
 		}
 
@@ -87,7 +87,7 @@ export default class DocumentAttachment extends Attachment {
 	 * @return {?boolean}
 	 */
 	isGif() {
-		if (!this.filled) {
+		if (!this.$filled) {
 			return null;
 		}
 
@@ -100,7 +100,7 @@ export default class DocumentAttachment extends Attachment {
 	 * @return {?boolean}
 	 */
 	isImage() {
-		if (!this.filled) {
+		if (!this.$filled) {
 			return null;
 		}
 
@@ -113,7 +113,7 @@ export default class DocumentAttachment extends Attachment {
 	 * @return {?boolean}
 	 */
 	isGraffiti() {
-		if (!this.filled) {
+		if (!this.$filled) {
 			return null;
 		}
 
@@ -126,7 +126,7 @@ export default class DocumentAttachment extends Attachment {
 	 * @return {?boolean}
 	 */
 	isAudio() {
-		if (!this.filled) {
+		if (!this.$filled) {
 			return null;
 		}
 
@@ -139,7 +139,7 @@ export default class DocumentAttachment extends Attachment {
 	 * @return {?boolean}
 	 */
 	isVoice() {
-		if (!this.filled) {
+		if (!this.$filled) {
 			return null;
 		}
 
@@ -152,7 +152,7 @@ export default class DocumentAttachment extends Attachment {
 	 * @return {?boolean}
 	 */
 	isVideo() {
-		if (!this.filled) {
+		if (!this.$filled) {
 			return null;
 		}
 
@@ -165,7 +165,7 @@ export default class DocumentAttachment extends Attachment {
 	 * @return {?boolean}
 	 */
 	isBook() {
-		if (!this.filled) {
+		if (!this.$filled) {
 			return null;
 		}
 
@@ -218,7 +218,7 @@ export default class DocumentAttachment extends Attachment {
 	 * @return {?string}
 	 */
 	getTypeName() {
-		if (!this.filled) {
+		if (!this.$filled) {
 			return null;
 		}
 
