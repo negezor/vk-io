@@ -115,11 +115,27 @@ export default [
 	 * Audio
 	 * Methods for working with audio
 	 */
+	'audio.get',
+	'audio.getById',
+	'audio.getLyrics',
+	'audio.search',
 	'audio.getUploadServer',
 	'audio.save',
 	'audio.add',
+	'audio.delete',
 	'audio.edit',
+	'audio.reorder',
+	'audio.restore',
+	'audio.getAlbums',
+	'audio.addAlbum',
+	'audio.editAlbum',
+	'audio.deleteAlbum',
 	'audio.moveToAlbum',
+	'audio.setBroadcast',
+	'audio.getBroadcastList',
+	'audio.getRecommendations',
+	'audio.getPopular',
+	'audio.getCount',
 
 	/**
 	 * Board
