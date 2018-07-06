@@ -1,6 +1,6 @@
 /**
- * List methods VK
- * Last updated 19.06.2018
+ * List of VK API methods
+ * Last updated: API v5.80 03.07.2018
  *
  * @type {Array}
  */
@@ -9,7 +9,7 @@ export default [
 	 * Account
 	 * Methods for working with your account
 	 */
-	'account.banUser',
+	'account.ban',
 	'account.changePassword',
 	'account.getActiveOffers',
 	'account.getAppPermissions',
@@ -18,7 +18,6 @@ export default [
 	'account.getInfo',
 	'account.getProfileInfo',
 	'account.getPushSettings',
-	'account.lookupContacts',
 	'account.registerDevice',
 	'account.saveProfileInfo',
 	'account.setInfo',
@@ -27,8 +26,21 @@ export default [
 	'account.setOnline',
 	'account.setPushSettings',
 	'account.setSilenceMode',
-	'account.unbanUser',
+	'account.unban',
 	'account.unregisterDevice',
+
+	/**
+	 * AppWidgets
+	 * Methods for working with application widgets
+	 */
+	'appWidgets.getAppImageUploadServer',
+	'appWidgets.getAppImages',
+	'appWidgets.getGroupImageUploadServer',
+	'appWidgets.getGroupImages',
+	'appWidgets.getImagesById',
+	'appWidgets.saveAppImages',
+	'appWidgets.saveGroupImage',
+	'appWidgets.update',
 
 	/**
 	 * Ads
@@ -39,11 +51,14 @@ export default [
 	'ads.createAds',
 	'ads.createCampaigns',
 	'ads.createClients',
+	'ads.createLookalikeRequest',
 	'ads.createTargetGroup',
+	'ads.createTargetPixel',
 	'ads.deleteAds',
 	'ads.deleteCampaigns',
 	'ads.deleteClients',
 	'ads.deleteTargetGroup',
+	'ads.deleteTargetPixel',
 	'ads.getAccounts',
 	'ads.getAds',
 	'ads.getAdsLayout',
@@ -54,21 +69,27 @@ export default [
 	'ads.getClients',
 	'ads.getDemographics',
 	'ads.getFloodStats',
+	'ads.getLookalikeRequests',
 	'ads.getOfficeUsers',
 	'ads.getPostsReach',
 	'ads.getRejectionReason',
 	'ads.getStatistics',
 	'ads.getSuggestions',
 	'ads.getTargetGroups',
+	'ads.getTargetPixels',
 	'ads.getTargetingStats',
 	'ads.getUploadURL',
 	'ads.getVideoUploadURL',
 	'ads.importTargetContacts',
 	'ads.removeOfficeUsers',
+	'ads.removeTargetContacts',
+	'ads.saveLookalikeRequestResult',
+	'ads.shareTargetGroup',
 	'ads.updateAds',
 	'ads.updateCampaigns',
 	'ads.updateClients',
 	'ads.updateTargetGroup',
+	'ads.updateTargetPixel',
 
 	/**
 	 * Apps
@@ -81,6 +102,14 @@ export default [
 	'apps.getLeaderboard',
 	'apps.getScore',
 	'apps.sendRequest',
+
+	/**
+	 * Auth
+	 * Methods for working with authorization
+	 */
+	'auth.checkPhone',
+	'auth.confirm',
+	'auth.restore',
 
 	/**
 	 * Audio
@@ -107,15 +136,6 @@ export default [
 	'audio.getRecommendations',
 	'audio.getPopular',
 	'audio.getCount',
-
-	/**
-	 * Auth
-	 * Methods for working with authorization
-	 */
-	'auth.checkPhone',
-	'auth.confirm',
-	'auth.restore',
-	'auth.signup',
 
 	/**
 	 * Board
@@ -148,7 +168,6 @@ export default [
 	'database.getRegions',
 	'database.getSchoolClasses',
 	'database.getSchools',
-	'database.getStreetsById',
 	'database.getUniversities',
 
 	/**
@@ -160,9 +179,9 @@ export default [
 	'docs.edit',
 	'docs.get',
 	'docs.getById',
+	'docs.getMessagesUploadServer',
 	'docs.getTypes',
 	'docs.getUploadServer',
-	'docs.getMessagesUploadServer',
 	'docs.getWallUploadServer',
 	'docs.save',
 	'docs.search',
@@ -212,7 +231,7 @@ export default [
 	 * Methods for working with gifts
 	 */
 	'gifts.get',
-	/* Unofficially */
+	/* Unofficially: */
 	'gifts.send',
 	'gifts.getCatalog',
 
@@ -223,12 +242,13 @@ export default [
 	'groups.addCallbackServer',
 	'groups.addLink',
 	'groups.approveRequest',
-	'groups.banUser',
+	'groups.ban',
 	'groups.create',
 	'groups.deleteCallbackServer',
 	'groups.deleteLink',
 	'groups.disableOnline',
 	'groups.edit',
+	'groups.editCallbackServer',
 	'groups.editLink',
 	'groups.editManager',
 	'groups.editPlace',
@@ -237,6 +257,7 @@ export default [
 	'groups.getBanned',
 	'groups.getById',
 	'groups.getCallbackConfirmationCode',
+	'groups.getCallbackServers',
 	'groups.getCallbackSettings',
 	'groups.getCatalog',
 	'groups.getCatalogInfo',
@@ -258,7 +279,7 @@ export default [
 	'groups.search',
 	'groups.setCallbackSettings',
 	'groups.setLongPollSettings',
-	'groups.unbanUser',
+	'groups.unban',
 
 	/**
 	 * Leads
@@ -410,10 +431,14 @@ export default [
 	 * Orders
 	 * Order management completed in applications
 	 */
+	'orders.cancelSubscription',
 	'orders.changeState',
 	'orders.get',
 	'orders.getAmount',
 	'orders.getById',
+	'orders.getUserSubscriptionById',
+	'orders.getUserSubscriptions',
+	'orders.updateSubscription',
 
 	/**
 	 * Pages
@@ -627,13 +652,14 @@ export default [
 	'video.restoreComment',
 	'video.save',
 	'video.search',
-	/* Unofficially */
+	/* Unofficially: */
 	'video.getRecommendedLiveVideos',
 
 	/**
 	 * Wall
 	 * Methods for working with posts on the wall
 	 */
+	'wall.closeComments',
 	'wall.createComment',
 	'wall.delete',
 	'wall.deleteComment',
@@ -644,6 +670,7 @@ export default [
 	'wall.getById',
 	'wall.getComments',
 	'wall.getReposts',
+	'wall.openComments',
 	'wall.pin',
 	'wall.post',
 	'wall.postAdsStealth',
