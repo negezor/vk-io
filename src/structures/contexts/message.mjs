@@ -151,7 +151,7 @@ export default class MessageContext extends Context {
 	 * @return {boolean}
 	 */
 	get hasForwards() {
-		return 'fwd_messages' in this.payload;
+		return this.forwards.length > 0;
 	}
 
 	/**
@@ -232,11 +232,7 @@ export default class MessageContext extends Context {
 	 * @return {number}
 	 */
 	get id() {
-		const { id } = this.payload;
-
-		return id !== 0
-			? id
-			: this.conversationMessageId;
+		return this.payload.id;
 	}
 
 	/**
