@@ -241,7 +241,7 @@ export default class API {
 		const handler = getRequestHandler(apiMode);
 		const interval = Math.round(MINIMUM_TIME_INTERVAL_API / apiLimit);
 
-		const work = async () => {
+		const work = () => {
 			if (this.queue.length === 0 || this.suspended) {
 				this.started = false;
 
@@ -262,80 +262,49 @@ export default class API {
 	 * @param {Object} request
 	 */
 	async callMethod(request) {
-		const {
-			token,
-			lang,
-			agent,
-			apiTimeout,
-			apiHeaders
-		} = this.vk.options;
-
+		const { options } = this.vk;
 		const { method } = request;
 
+		const url = new URL(method, this.baseUrl);
+
+		const params = {
+			access_token: options.token,
+			v: API_VERSION,
+
+			...request.params
+		};
+
+		if (options.lang !== null) {
+			params.lang = options.lang;
+		}
+
+		debug(`http --> ${method}`);
+
+		const startTime = Date.now();
+
+		let response;
 		try {
-			const url = new URL(method, this.baseUrl);
-
-			url.searchParams.set('access_token', token);
-			url.searchParams.set('v', API_VERSION);
-
-			if (lang !== null) {
-				url.searchParams.append('lang', lang);
-			}
-
-			debug(`http --> ${method}`);
-
-			const startTime = Date.now();
-
-			let response = await fetch(url, {
-				agent,
+			response = await fetch(url, {
 				method: 'POST',
 				compress: false,
-				timeout: apiTimeout,
+				agent: options.agent,
+				timeout: options.apiTimeout,
 				headers: {
-					...apiHeaders,
+					...options.apiHeaders,
 
 					connection: 'keep-alive'
 				},
-				body: new URLSearchParams(request.params)
+				body: new URLSearchParams(params)
 			});
 
 			response = await response.json();
-
-			const endTime = (Date.now() - startTime).toLocaleString();
-
-			debug(`http <-- ${method} ${endTime}ms`);
-
-			if ('error' in response) {
-				this.handleError(request, new APIError(response.error));
-
-				return;
-			}
-
-			if ('captcha' in request) {
-				request.captcha.resolve();
-			}
-
-			if (method.startsWith('execute')) {
-				request.resolve({
-					response: response.response,
-					errors: (response.execute_errors || []).map(error => (
-						new ExecuteError(error)
-					))
-				});
-
-				return;
-			}
-
-			request.resolve(('response' in response) ? response.response : response);
 		} catch (error) {
-			const { apiWait, apiAttempts } = this.vk.options;
-
-			if (request.addAttempt() <= apiAttempts) {
+			if (request.addAttempt() <= options.apiAttempts) {
 				setTimeout(() => {
 					debug(`Request ${method} restarted ${request.attempts} times`);
 
 					this.requeue(request);
-				}, apiWait);
+				}, options.apiWait);
 
 				return;
 			}
@@ -345,7 +314,36 @@ export default class API {
 			}
 
 			request.reject(error);
+
+			return;
 		}
+
+		const endTime = (Date.now() - startTime).toLocaleString();
+
+		debug(`http <-- ${method} ${endTime}ms`);
+
+		if ('error' in response) {
+			this.handleError(request, new APIError(response.error));
+
+			return;
+		}
+
+		if ('captcha' in request) {
+			request.captcha.resolve();
+		}
+
+		if (method.startsWith('execute')) {
+			request.resolve({
+				response: response.response,
+				errors: (response.execute_errors || []).map(error => (
+					new ExecuteError(error)
+				))
+			});
+
+			return;
+		}
+
+		request.resolve(('response' in response) ? response.response : response);
 	}
 
 	/**
