@@ -1,11 +1,10 @@
 import fetch from 'node-fetch';
+import FormData from 'form-data';
 
 import nodeFs from 'fs';
 import nodeUtil from 'util';
-import nodeCrypto from 'crypto';
 
-import MultipartStream from './multipart-stream';
-import { isStream, copyParams } from './helpers';
+import { isStream, copyParams, streamToBuffer } from './helpers';
 import { UploadError, uploadErrors } from '../errors';
 import { defaultExtensions, defaultContentTypes } from '../utils/constants';
 
@@ -17,7 +16,6 @@ import {
 } from '../structures/attachments';
 
 const { createReadStream } = nodeFs;
-const { randomBytes } = nodeCrypto;
 const { inspect } = nodeUtil;
 
 const {
@@ -785,8 +783,7 @@ export default class Upload {
 		maxFiles,
 		attachmentType
 	}) {
-		const boundary = randomBytes(32).toString('hex');
-		const formData = new MultipartStream(boundary);
+		const formData = new FormData();
 
 		const isMultipart = maxFiles > 1;
 
@@ -803,7 +800,7 @@ export default class Upload {
 					if (isURL.test(value)) {
 						const response = await fetch(value);
 
-						value = response.body;
+						value = await response.buffer();
 					} else {
 						value = createReadStream(value);
 					}
@@ -813,20 +810,37 @@ export default class Upload {
 					filename = `file${i}.${defaultExtensions[attachmentType] || 'dat'}`;
 				}
 
-				if (isStream(value) || Buffer.isBuffer(value)) {
+				if (Buffer.isBuffer(value)) {
 					const name = isMultipart
 						? field + (i + 1)
 						: field;
 
-					const headers = {};
-
-					if (contentType !== null) {
-						headers['Content-Type'] = contentType;
-					} else if (attachmentType in defaultContentTypes) {
-						headers['Content-Type'] = defaultContentTypes[attachmentType];
+					if (contentType === null && attachmentType in defaultContentTypes) {
+						contentType = defaultContentTypes[attachmentType];
 					}
 
-					return formData.append(name, value, { filename, headers });
+					formData.append(name, value, {
+						filename,
+						contentType
+					});
+					return formData;
+				}
+
+				if (isStream(value)) {
+					const name = isMultipart
+						? field + (i + 1)
+						: field;
+
+					if (contentType === null && attachmentType in defaultContentTypes) {
+						contentType = defaultContentTypes[attachmentType];
+					}
+
+					const buffer = await streamToBuffer(value);
+					formData.append(name, buffer, {
+						filename,
+						contentType
+					});
+					return formData;
 				}
 
 				throw new UploadError({
@@ -844,7 +858,7 @@ export default class Upload {
 	 * Upload form data
 	 *
 	 * @param {URL|string}      url
-	 * @param {MultipartStream} formData
+	 * @param {FormData}        formData
 	 * @param {Object}          options
 	 *
 	 * @return {Promise<Object>}

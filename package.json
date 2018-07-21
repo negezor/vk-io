@@ -51,6 +51,7 @@
 	"dependencies": {
 		"cheerio": "^1.0.0-rc.2",
 		"debug": "^3.1.0",
+		"form-data": "^2.3.2",
 		"middleware-io": "^0.0.6",
 		"node-fetch": "^2.1.2",
 		"sandwich-stream": "^1.0.0",
