@@ -5,7 +5,6 @@ import nodeUtil from 'util';
 import nodeUrl from 'url';
 
 import Request from './request';
-import methods from './methods';
 import { APIError, ExecuteError } from '../errors';
 import { getRandomId, delay } from '../utils/helpers';
 import AccountVerification from '../auth/account-verification';
@@ -55,6 +54,47 @@ const getRequestHandler = (mode = 'sequential') => {
 
 const baseUrlSymbol = Symbol('baseURLSymbol');
 
+const groupMethods = [
+	'account',
+	'appWidgets',
+	'ads',
+	'apps',
+	'auth',
+	'audio',
+	'board',
+	'database',
+	'docs',
+	'fave',
+	'friends',
+	'gifts',
+	'groups',
+	'leads',
+	'likes',
+	'market',
+	'messages',
+	'newsfeed',
+	'notes',
+	'notifications',
+	'orders',
+	'pages',
+	'photos',
+	'places',
+	'polls',
+	'search',
+	'secure',
+	'stats',
+	'status',
+	'storage',
+	'stories',
+	'streaming',
+	'users',
+	'utils',
+	'video',
+	'wall',
+	'widgets'
+];
+
+
 /**
  * Working with API methods
  *
@@ -75,25 +115,45 @@ export default class API {
 
 		this[baseUrlSymbol] = BASE_URL_API;
 
-		for (const method of methods) {
-			const [group, name] = method.split('.');
+		for (const group of groupMethods) {
+			const isMessagesGroup = group === 'messages';
 
-			if (!(group in this)) {
-				this[group] = {};
-			}
+			/**
+			 * NOTE: Optimization for other methods
+			 *
+			 * Instead of checking everywhere the presence of a property in an object
+			 * The check is only for the messages group
+			 * Since it is necessary to change the behavior of the sending method
+			 */
+			this[group] = new Proxy(
+				isMessagesGroup
+					? {
+						send: (params = {}) => {
+							if (!('random_id' in params)) {
+								params = {
+									...params,
 
-			this[group][name] = params => (
-				this.enqueue(method, params)
+									random_id: getRandomId()
+								};
+							}
+
+							return this.enqueue('messages.send', params);
+						}
+					}
+					: {},
+				{
+					get: isMessagesGroup
+						? (obj, prop) => obj[prop] || (
+							params => (
+								this.enqueue(`${group}.${prop}`, params)
+							)
+						)
+						: (obj, prop) => params => (
+							this.enqueue(`${group}.${prop}`, params)
+						)
+				}
 			);
 		}
-
-		this.messages.send = (params = {}) => {
-			if (!('random_id' in params)) {
-				params.random_id = getRandomId();
-			}
-
-			return this.enqueue('messages.send', params);
-		};
 	}
 
 	/**
@@ -138,17 +198,6 @@ export default class API {
 		this[baseUrlSymbol] = url;
 
 		return url;
-	}
-
-	/**
-	 * Checks that this is a API method
-	 *
-	 * @param {string} method
-	 *
-	 * @return {boolean}
-	 */
-	isMethod(method) {
-		return methods.includes(method);
 	}
 
 	/**
@@ -259,7 +308,7 @@ export default class API {
 	/**
 	 * Calls the api method
 	 *
-	 * @param {Object} request
+	 * @param {Request} request
 	 */
 	async callMethod(request) {
 		const { options } = this.vk;
@@ -300,11 +349,11 @@ export default class API {
 			response = await response.json();
 		} catch (error) {
 			if (request.addAttempt() <= options.apiAttempts) {
-				setTimeout(() => {
-					debug(`Request ${method} restarted ${request.attempts} times`);
+				await delay(options.apiWait);
 
-					this.requeue(request);
-				}, options.apiWait);
+				debug(`Request ${method} restarted ${request.attempts} times`);
+
+				this.requeue(request);
 
 				return;
 			}
@@ -343,14 +392,18 @@ export default class API {
 			return;
 		}
 
-		request.resolve(('response' in response) ? response.response : response);
+		request.resolve(
+			'response' in response
+				? response.response
+				: response
+		);
 	}
 
 	/**
 	 * Error API handler
 	 *
 	 * @param {Request} request
-	 * @param {Object} error
+	 * @param {Object}  error
 	 */
 	async handleError(request, error) {
 		const { code } = error;

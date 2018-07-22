@@ -13,7 +13,7 @@ export default class Request {
 	 */
 	constructor(method, params = {}) {
 		this.method = method;
-		this.params = params;
+		this.params = { ...params };
 
 		this.attempts = 0;
 
