@@ -58,10 +58,10 @@
 		"ws": "^6.0.0"
 	},
 	"scripts": {
-		"prepare": "npm run rollup:build && npm run test",
+		"prepare": "yarn run rollup:build && yarn run test",
 		"rollup:build": "cross-env NODE_ENV=production rollup -c",
-		"rollup:watch": "npm run rollup:build -- -w",
-		"test": "npm run test:jest && npm run test:eslint",
+		"rollup:watch": "yarn run rollup:build -- -w",
+		"test": "yarn run test:jest && yarn run test:eslint",
 		"test:jest": "cross-env BABEL_ENV=test jest --config jest.config.json --no-cache",
 		"test:eslint": "eslint ./src --ext .mjs,.js --ignore-path .gitignore ."
 	}
