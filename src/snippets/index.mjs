@@ -15,6 +15,7 @@ const { URL } = nodeUrl;
 const {
 	INVALID_URL,
 	URL_NOT_ALLOWED,
+	INVALID_RESOURCE,
 	RESOURCE_NOT_FOUND
 } = snippetsErrors;
 
@@ -97,7 +98,10 @@ export default class Snippets {
 	 */
 	async resolveResource(resource) {
 		if (!resource) {
-			throw new Error('Resource should must be');
+			throw new SnippetsError({
+				code: INVALID_RESOURCE,
+				message: 'Resource should must be'
+			});
 		}
 
 		resource = String(resource);
@@ -125,7 +129,10 @@ export default class Snippets {
 		let resourceSearch;
 		try {
 			if (!resource.match(searchDot)) {
-				throw new Error('Is not URL');
+				throw new SnippetsError({
+					code: INVALID_RESOURCE,
+					message: 'Is not URL'
+				});
 			}
 
 			let url = resource;

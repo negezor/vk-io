@@ -259,7 +259,8 @@ export const collectErrors = keyMirror([
 export const snippetsErrors = keyMirror([
 	'INVALID_URL',
 	'URL_NOT_ALLOWED',
-	'RESOURCE_NOT_FOUND'
+	'INVALID_RESOURCE',
+	'RESOURCE_NOT_FOUND',
 ]);
 
 /**

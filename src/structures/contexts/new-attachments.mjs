@@ -1,5 +1,7 @@
 import Context from './context';
 
+import { VKError } from '../../errors';
+
 import {
 	PhotoAttachment,
 	VideoAttachment,
@@ -147,6 +149,8 @@ export default class NewAttachmentsContext extends Context {
 			});
 		}
 
-		return Promise.reject(new Error('Unsupported event for deleting attachment'));
+		return Promise.reject(new VKError({
+			message: 'Unsupported event for deleting attachment'
+		}));
 	}
 }

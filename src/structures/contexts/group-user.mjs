@@ -1,5 +1,7 @@
 import Context from './context';
 
+import { VKError } from '../../errors';
+
 /**
  * Causes of blocking
  *
@@ -40,7 +42,7 @@ export default class GroupUserContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	get isBlock() {
+	get isBlocked() {
 		return this.subTypes.includes('block_group_user');
 	}
 
@@ -49,7 +51,7 @@ export default class GroupUserContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
-	get isUnblock() {
+	get isUnblocked() {
 		return this.subTypes.includes('unblock_group_user');
 	}
 
@@ -120,7 +122,9 @@ export default class GroupUserContext extends Context {
 	 */
 	banUser(params) {
 		if (this.isBlock()) {
-			return Promise.reject(new Error('User is blocked'));
+			return Promise.reject(new VKError({
+				message: 'User is blocked'
+			}));
 		}
 
 		return this.vk.api.groups.banUser({
@@ -138,7 +142,9 @@ export default class GroupUserContext extends Context {
 	 */
 	unbanUser() {
 		if (this.isUnblock()) {
-			return Promise.reject(new Error('User is not blocked'));
+			return Promise.reject(new VKError({
+				message: 'User is not blocked'
+			}));
 		}
 
 		return this.vk.api.groups.unbanUser({

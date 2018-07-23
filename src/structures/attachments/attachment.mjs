@@ -1,5 +1,7 @@
 import nodeUtil from 'util';
 
+import { VKError } from '../../errors';
+
 import { parseAttachment } from '../../utils/constants';
 
 const { inspect } = nodeUtil;
@@ -42,7 +44,9 @@ export default class Attachment {
 	 */
 	static fromString(attachment) {
 		if (!parseAttachment.test(attachment)) {
-			throw new Error('Incorrect attachment');
+			throw new VKError({
+				message: 'Incorrect attachment'
+			});
 		}
 
 		const [, type, ownerId, id, accessKey] = attachment.match(parseAttachment);

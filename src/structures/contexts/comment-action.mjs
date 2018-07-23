@@ -1,4 +1,5 @@
 import Context from './context';
+import { VKError } from '../../errors';
 import { transformAttachments } from '../attachments/helpers';
 
 /**
@@ -292,7 +293,9 @@ export default class CommentActionContext extends Context {
 	 */
 	editComment(options) {
 		if (this.isDelete()) {
-			return Promise.reject(new Error('Comment is deleted'));
+			return Promise.reject(new VKError({
+				message: 'Comment is deleted'
+			}));
 		}
 
 		if (this.isBoardComment()) {
@@ -328,7 +331,9 @@ export default class CommentActionContext extends Context {
 			return this.vk.api.market.editComment(params);
 		}
 
-		return Promise.reject(new Error('Unsupported event for editing comment'));
+		return Promise.reject(new VKError({
+			message: 'Unsupported event for editing comment'
+		}));
 	}
 
 	/**
@@ -338,7 +343,9 @@ export default class CommentActionContext extends Context {
 	 */
 	deleteComment() {
 		if (this.isDelete()) {
-			return Promise.reject(new Error('Comment is deleted'));
+			return Promise.reject(new VKError({
+				message: 'Comment is deleted'
+			}));
 		}
 
 		if (this.isBoardComment()) {
@@ -370,6 +377,8 @@ export default class CommentActionContext extends Context {
 			return this.vk.api.market.deleteComment(params);
 		}
 
-		return Promise.reject(new Error('Unsupported event for deleting comment'));
+		return Promise.reject(new VKError({
+			message: 'Unsupported event for deleting comment'
+		}));
 	}
 }

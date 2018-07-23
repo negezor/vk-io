@@ -1,5 +1,7 @@
 import Context from './context';
 
+import { VKError } from '../../errors';
+
 import transformMessage from '../../updates/transform-message';
 
 import { transformAttachments } from '../attachments/helpers';
@@ -322,7 +324,9 @@ export default class MessageContext extends Context {
 		}
 
 		if (!this.$filled) {
-			throw new Error('The message payload is not fully loaded');
+			throw new VKError({
+				message: 'The message payload is not fully loaded'
+			});
 		}
 
 		return this.payload.geo;
@@ -676,7 +680,9 @@ export default class MessageContext extends Context {
 	 */
 	assertIsChat() {
 		if (!this.isChat) {
-			throw new Error('This method is only available in chat');
+			throw new VKError({
+				message: 'This method is only available in chat'
+			});
 		}
 	}
 

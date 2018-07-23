@@ -5,7 +5,7 @@ import nodeUtil from 'util';
 import nodeUrl from 'url';
 
 import Request from './request';
-import { APIError, ExecuteError } from '../errors';
+import { VKError, APIError, ExecuteError } from '../errors';
 import { getRandomId, delay } from '../utils/helpers';
 import AccountVerification from '../auth/account-verification';
 import { sequential, parallel, parallelSelected } from './workers';
@@ -46,7 +46,9 @@ const getRequestHandler = (mode = 'sequential') => {
 	const handler = requestHandlers[mode];
 
 	if (!handler) {
-		throw new Error('Unsuported api mode');
+		throw new VKError({
+			message: 'Unsuported api mode'
+		});
 	}
 
 	return handler;

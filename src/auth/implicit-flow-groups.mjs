@@ -3,7 +3,7 @@ import createDebug from 'debug';
 import nodeUrl from 'url';
 
 import ImplicitFlow from './implicit-flow';
-import { AuthError, authErrors } from '../errors';
+import { VKError, AuthError, authErrors } from '../errors';
 import { API_VERSION, CALLBACK_BLANK } from '../utils/constants';
 import {
 	getAllGroupsPermissions,
@@ -29,7 +29,9 @@ export default class ImplicitFlowGroups extends ImplicitFlow {
 		let { groups = null } = options;
 
 		if (groups === null) {
-			throw Error('Groups list must have');
+			throw new VKError({
+				message: 'Groups list must have'
+			});
 		}
 
 		if (!Array.isArray(groups)) {

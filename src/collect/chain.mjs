@@ -1,5 +1,7 @@
 import nodeUtil from 'util';
 
+import { VKError } from '../errors';
+
 import Request from '../api/request';
 import { getChainReturn, resolveExecuteTask } from '../utils/helpers';
 
@@ -37,7 +39,9 @@ export default class Chain {
 	 */
 	append(method, params) {
 		if (this.started) {
-			throw new Error('Chain already started');
+			return Promise.reject(new VKError({
+				message: 'Chain already started'
+			}));
 		}
 
 		const request = new Request(method, params);
@@ -66,7 +70,9 @@ export default class Chain {
 	 */
 	async run() {
 		if (this.started) {
-			throw new Error('Chain already started');
+			throw new VKError({
+				message: 'Chain already started'
+			});
 		}
 
 		this.started = true;

@@ -26,7 +26,7 @@ import {
 } from '../structures/contexts';
 
 import { delay } from '../utils/helpers';
-import { UpdatesError, updatesErrors } from '../errors';
+import { VKError, UpdatesError, updatesErrors } from '../errors';
 
 import { updatesSources } from '../utils/constants';
 
@@ -237,7 +237,9 @@ export default class Updates {
 		const hasNull = events.some(event => !event);
 
 		if (hasNull) {
-			throw new Error('Events should be not null');
+			throw new VKError({
+				message: 'Events should be not null'
+			});
 		}
 
 		return this.use((context, next) => (
@@ -263,7 +265,9 @@ export default class Updates {
 		const hasNull = conditions.some(condition => !condition);
 
 		if (hasNull) {
-			throw new Error('Condition should be not null');
+			throw new VKError({
+				message: 'Condition should be not null'
+			});
 		}
 
 		this.hears.use((context, next) => {
