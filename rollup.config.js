@@ -41,12 +41,12 @@ export default [
 		],
 		output: [
 			{
-				file: pkg.main,
+				file: `${pkg.main}.js`,
 				format: 'cjs',
 				exports: 'named'
 			},
 			{
-				file: pkg.module,
+				file: `${pkg.main}.mjs`,
 				format: 'esm'
 			}
 		]

@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 import createDebug from 'debug';
-import Middleware from 'middleware-io/lib';
+import Middleware from 'middleware-io';
 
 import nodeUrl from 'url';
 import nodeUtil from 'util';

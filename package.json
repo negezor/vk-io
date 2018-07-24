@@ -26,7 +26,7 @@
 	"files": [
 		"lib"
 	],
-	"main": "lib/index.js",
+	"main": "lib/index",
 	"module": "lib/index.mjs",
 	"engines": {
 		"node": ">=8.0.0"
