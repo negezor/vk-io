@@ -1,5 +1,9 @@
 import Attachment from './attachment';
 
+import { attachmentTypes } from '../../utils/constants';
+
+const { DOCUMENT } = attachmentTypes;
+
 /**
  * Types of documents
  *
@@ -24,7 +28,7 @@ export default class DocumentAttachment extends Attachment {
 	 * @param {VK}     vk
 	 */
 	constructor(payload, vk) {
-		super('doc', payload.owner_id, payload.id, payload.access_key);
+		super(DOCUMENT, payload.owner_id, payload.id, payload.access_key);
 
 		this.vk = vk;
 		this.payload = payload;

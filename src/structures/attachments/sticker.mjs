@@ -1,5 +1,9 @@
 import ExternalAttachment from './external';
 
+import { attachmentTypes } from '../../utils/constants';
+
+const { STICKER } = attachmentTypes;
+
 export default class StickerAttachment extends ExternalAttachment {
 	/**
 	 * Constructor
@@ -8,7 +12,7 @@ export default class StickerAttachment extends ExternalAttachment {
 	 * @param {VK}     vk
 	 */
 	constructor(payload, vk) {
-		super('sticker', payload);
+		super(STICKER, payload);
 
 		this.vk = vk;
 	}

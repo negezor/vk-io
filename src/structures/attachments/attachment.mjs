@@ -71,34 +71,16 @@ export default class Attachment {
 	 * @return {boolean}
 	 */
 	equals(attachment) {
-		if (!attachment) {
-			return false;
+		const source = String(this);
+		const target = String(attachment);
+
+		if (!parseAttachment.test(target)) {
+			throw new VKError({
+				message: 'Incorrect attachment'
+			});
 		}
 
-		if (this.type !== attachment.type) {
-			return false;
-		}
-
-		if (this.ownerId !== attachment.ownerId) {
-			return false;
-		}
-
-		if (this.id !== attachment.id) {
-			return false;
-		}
-
-		return true;
-	}
-
-	/**
-	 * Checks that the attachment is equivalent with string
-	 *
-	 * @param {string} attachment
-	 *
-	 * @return {boolean}
-	 */
-	equalString(attachment) {
-		return this.equals(Attachment.fromString(attachment));
+		return target.startsWith(source);
 	}
 
 	/**

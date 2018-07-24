@@ -90,18 +90,6 @@ attachment.equals(attachment); // => boolean
 |------------|------------|--------------|
 | attachment | Attachment | Прикрепление |
 
-## equalString
-
-Проверяет эквивалентность прикрепления строки с объектом
-
-```js
-attachment.equalString(attachment); // => boolean
-```
-
-| Параметр   | Тип    | Описание     |
-|------------|--------|--------------|
-| attachment | string | Прикрепление |
-
 ## toString
 Возвращает строковое представление прикрепления
 

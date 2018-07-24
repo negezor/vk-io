@@ -120,6 +120,25 @@ export const defaultOptions = {
 };
 
 /**
+ * The attachment types
+ *
+ * @type {Object}
+ */
+export const attachmentTypes = {
+	AUDIO: 'audio',
+	DOCUMENT: 'doc',
+	GIFT: 'gift',
+	LINK: 'link',
+	MARKET_ALBUM: 'market_album',
+	MARKET: 'market',
+	PHOTO: 'photo',
+	STICKER: 'sticker',
+	VIDEO: 'video',
+	WALL_REPLY: 'wall_reply',
+	WALL: 'wall'
+};
+
+/**
  * Default extensions for attachments
  *
  * @type {Object}

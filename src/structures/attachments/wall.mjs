@@ -1,6 +1,9 @@
 import Attachment from './attachment';
 // eslint-disable-next-line import/no-cycle
 import { transformAttachments } from './helpers';
+import { attachmentTypes } from '../../utils/constants';
+
+const { WALL } = attachmentTypes;
 
 export default class WallAttachment extends Attachment {
 	/**
@@ -10,7 +13,7 @@ export default class WallAttachment extends Attachment {
 	 * @param {VK}     vk
 	 */
 	constructor(payload, vk) {
-		super('wall', payload.owner_id, payload.id, payload.access_key);
+		super(WALL, payload.owner_id, payload.id, payload.access_key);
 
 		this.vk = vk;
 		this.payload = payload;

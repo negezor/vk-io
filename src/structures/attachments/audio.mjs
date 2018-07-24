@@ -1,5 +1,9 @@
 import Attachment from './attachment';
 
+import { attachmentTypes } from '../../utils/constants';
+
+const { AUDIO } = attachmentTypes;
+
 export default class AudioAttachment extends Attachment {
 	/**
 	 * Constructor
@@ -8,7 +12,7 @@ export default class AudioAttachment extends Attachment {
 	 * @param {VK}     vk
 	 */
 	constructor(payload, vk) {
-		super('audio', payload.owner_id, payload.id, payload.access_key);
+		super(AUDIO, payload.owner_id, payload.id, payload.access_key);
 
 		this.vk = vk;
 		this.payload = payload;

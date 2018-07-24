@@ -1,5 +1,9 @@
 import ExternalAttachment from './external';
 
+import { attachmentTypes } from '../../utils/constants';
+
+const { LINK } = attachmentTypes;
+
 export default class LinkAttachment extends ExternalAttachment {
 	/**
 	 * Constructor
@@ -8,7 +12,7 @@ export default class LinkAttachment extends ExternalAttachment {
 	 * @param {VK}     vk
 	 */
 	constructor(payload, vk) {
-		super('link', payload);
+		super(LINK, payload);
 
 		this.vk = vk;
 	}

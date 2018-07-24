@@ -1,5 +1,9 @@
 import ExternalAttachment from './external';
 
+import { attachmentTypes } from '../../utils/constants';
+
+const { WALL_REPLY } = attachmentTypes;
+
 export default class WallReplyAttachment extends ExternalAttachment {
 	/**
 	 * Constructor
@@ -8,7 +12,7 @@ export default class WallReplyAttachment extends ExternalAttachment {
 	 * @param {VK}     vk
 	 */
 	constructor(payload, vk) {
-		super('wall_reply', payload);
+		super(WALL_REPLY, payload);
 
 		this.vk = vk;
 	}

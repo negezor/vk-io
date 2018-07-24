@@ -1,5 +1,9 @@
 import Attachment from './attachment';
 
+import { attachmentTypes } from '../../utils/constants';
+
+const { VIDEO } = attachmentTypes;
+
 export default class VideoAttachment extends Attachment {
 	/**
 	 * Constructor
@@ -8,7 +12,7 @@ export default class VideoAttachment extends Attachment {
 	 * @param {VK}     vk
 	 */
 	constructor(payload, vk) {
-		super('video', payload.owner_id, payload.id, payload.access_key);
+		super(VIDEO, payload.owner_id, payload.id, payload.access_key);
 
 		this.vk = vk;
 		this.payload = payload;

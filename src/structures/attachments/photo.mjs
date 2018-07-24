@@ -1,5 +1,9 @@
 import Attachment from './attachment';
 
+import { attachmentTypes } from '../../utils/constants';
+
+const { PHOTO } = attachmentTypes;
+
 const SMALL_SIZES = ['m', 's'];
 const MEDIUM_SIZES = ['y', 'r', 'q', 'p', ...SMALL_SIZES];
 const LARGE_SIZES = ['w', 'z', ...MEDIUM_SIZES];
@@ -12,7 +16,7 @@ export default class PhotoAttachment extends Attachment {
 	 * @param {VK}     vk
 	 */
 	constructor(payload, vk) {
-		super('photo', payload.owner_id, payload.id, payload.access_key);
+		super(PHOTO, payload.owner_id, payload.id, payload.access_key);
 
 		this.vk = vk;
 		this.payload = payload;

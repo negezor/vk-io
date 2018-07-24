@@ -1,5 +1,9 @@
 import Attachment from './attachment';
 
+import { attachmentTypes } from '../../utils/constants';
+
+const { MARKET_ALBUM } = attachmentTypes;
+
 export default class MarketAlbumAttachment extends Attachment {
 	/**
 	 * Constructor
@@ -8,7 +12,7 @@ export default class MarketAlbumAttachment extends Attachment {
 	 * @param {VK}     vk
 	 */
 	constructor(payload, vk) {
-		super('market_album', payload.owner_id, payload.id, payload.access_key);
+		super(MARKET_ALBUM, payload.owner_id, payload.id, payload.access_key);
 
 		this.vk = vk;
 		this.payload = payload;
