@@ -2,9 +2,9 @@
 	"name": "vk-io",
 	"verbose": true,
 	"testEnvironment": "node",
-	"moduleFileExtensions": ["mjs", "js", "json"],
-	"testRegex": "./test/.+\\.test\\.mjs$",
+	"moduleFileExtensions": ["js", "json"],
+	"testRegex": "./test/.+\\.test\\.js$",
 	"transform": {
-		"^.+\\.mjs$": "<rootDir>/jest.preprocess.js"
+		"^.+\\.js$": "<rootDir>/jest.preprocess.js"
 	}
 }

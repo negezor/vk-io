@@ -1,5 +1,7 @@
 const { engines } = require('./package.json');
 
+const isTest = process.env.BABEL_ENV === 'test';
+
 module.exports = {
 	presets: [
 		['@babel/env', {
@@ -8,11 +10,14 @@ module.exports = {
 				node: engines.node.substring(2)
 			},
 			useBuiltIns: 'usage',
-			modules: process.env.BABEL_ENV === 'test'
+			modules: isTest
 				? 'cjs'
 				: false
 		}]
 	],
 	plugins: ['@babel/proposal-object-rest-spread'],
-	comments: false
+	comments: false,
+	exclude: isTest
+		? /node_modules\/(?!(node-fetch|middleware-io)\/).*/
+		: /node_modules\/.*/,
 };
