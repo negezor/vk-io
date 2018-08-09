@@ -59,6 +59,7 @@ export default [
 	/**
 	 * Fave
 	 */
+	['fave.getPosts', 100],
 	['fave.getLinks', 100],
 	['fave.getMarketItems', 100],
 	['fave.getPhotos', 100],
