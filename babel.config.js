@@ -15,7 +15,6 @@ module.exports = {
 				: false
 		}]
 	],
-	plugins: ['@babel/proposal-object-rest-spread'],
 	comments: false,
 	exclude: isTest
 		? /node_modules\/(?!(node-fetch|middleware-io)\/).*/
