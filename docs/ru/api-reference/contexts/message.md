@@ -377,10 +377,10 @@ context.sendSticker(id); // => Promise<number>
 context.sendPhoto(source [, params]); // => Promise<number>
 ```
 
-| Параметр | Тип    | Описание                                                               |
-|----------|--------|------------------------------------------------------------------------|
-| source   | mixed  | [Источник загрузки](../upload.md#messagephoto)                         |
-| params   | Object | [Дополнительные параметры сообщения](https://vk.com/dev/messages.send) |
+| Параметр | Тип     | Описание                                                               |
+|----------|---------|------------------------------------------------------------------------|
+| source   | mixed[] | [Источник загрузки](../upload.md#messagephoto)                         |
+| params   | Object  | [Дополнительные параметры сообщения](https://vk.com/dev/messages.send) |
 
 
 ## sendDocument
@@ -391,10 +391,10 @@ context.sendPhoto(source [, params]); // => Promise<number>
 context.sendDocument(source [, params]); // => Promise<number>
 ```
 
-| Параметр | Тип    | Описание                                                               |
-|----------|--------|------------------------------------------------------------------------|
-| source   | mixed  | [Источник загрузки](../upload.md#messagedocument)                      |
-| params   | Object | [Дополнительные параметры сообщения](https://vk.com/dev/messages.send) |
+| Параметр | Тип     | Описание                                                               |
+|----------|---------|------------------------------------------------------------------------|
+| source   | mixed[] | [Источник загрузки](../upload.md#messagedocument)                      |
+| params   | Object  | [Дополнительные параметры сообщения](https://vk.com/dev/messages.send) |
 
 ## sendVoice
 
