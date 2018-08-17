@@ -526,17 +526,23 @@ export default class MessageContext extends Context {
 	/**
 	 * Sends a photo to the current dialog
 	 *
-	 * @param {mixed}  sourxe
-	 * @param {Object} params
+	 * @param {mixed[]} sources
+	 * @param {Object}  params
 	 *
 	 * @return {Promise}
 	 */
-	async sendPhoto(source, params = {}) {
-		const attachment = await this.vk.upload.messagePhoto({
-			peer_id: this.senderId,
+	async sendPhoto(sources, params = {}) {
+		if (!Array.isArray(sources)) {
+			sources = [sources];
+		}
 
-			source
-		});
+		const attachment = await Promise.all(sources.map(source => (
+			this.vk.upload.messagePhoto({
+				peer_id: this.senderId,
+
+				source
+			})
+		)));
 
 		return await this.send({
 			...params,
@@ -548,17 +554,23 @@ export default class MessageContext extends Context {
 	/**
 	 * Sends a document to the current dialog
 	 *
-	 * @param {mixed}  sourxe
-	 * @param {Object} params
+	 * @param {mixed[]} sources
+	 * @param {Object}  params
 	 *
 	 * @return {Promise}
 	 */
-	async sendDocument(source, params = {}) {
-		const attachment = await this.vk.upload.messageDocument({
-			peer_id: this.senderId,
+	async sendDocument(sources, params = {}) {
+		if (!Array.isArray(sources)) {
+			sources = [sources];
+		}
 
-			source
-		});
+		const attachment = await Promise.all(sources.map(source => (
+			this.vk.upload.messageDocument({
+				peer_id: this.senderId,
+
+				source
+			})
+		)));
 
 		return await this.send({
 			...params,
