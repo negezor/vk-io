@@ -10,6 +10,8 @@ const {
 	POSITIVE_COLOR
 } = Button;
 
+const kOneTime = Symbol('oneTime');
+
 export default class Keyboard {
 	/**
 	 * Constructor
@@ -17,7 +19,7 @@ export default class Keyboard {
 	 * @param {Object} options
 	 */
 	constructor({ oneTime = false } = {}) {
-		this.oneTime = oneTime;
+		this[kOneTime] = oneTime;
 
 		this.buttons = [];
 	}
@@ -103,12 +105,21 @@ export default class Keyboard {
 	}
 
 	/**
+	 * Checks is a one time
+	 *
+	 * @return {boolean}
+	 */
+	get isOneTime() {
+		return this[kOneTime];
+	}
+
+	/**
 	 * The keyboard will open only once
 	 *
 	 * @return {this}
 	 */
 	oneTime() {
-		this.oneTime = true;
+		this[kOneTime] = true;
 
 		return this;
 	}
@@ -149,7 +160,7 @@ export default class Keyboard {
 		});
 
 		return JSON.stringify({
-			one_time: this.oneTime,
+			one_time: this[kOneTime],
 			buttons
 		});
 	}
