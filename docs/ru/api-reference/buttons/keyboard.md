@@ -146,7 +146,7 @@ keyboard.oneTime(); // => this
 Пример использования
 
 ```js
-const kyeboard = Keyboard
+const keyboard = Keyboard
 	.keyboard([...])
 	.oneTime();
 ```
