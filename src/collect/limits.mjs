@@ -116,9 +116,9 @@ export default [
 	 * messages
 	 */
 	['messages.get', 200],
-	['messages.getDialogs', 200],
 	['messages.getHistory', 200],
 	['messages.search', 100],
+	['messages.getConversations', 200],
 
 	/**
 	 * Notes
