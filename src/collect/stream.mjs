@@ -99,14 +99,18 @@ export default class CollectStream extends Readable {
 	 */
 	then(thenFn, catchFn) {
 		if (this.promise === null) {
-			let collect = [];
+			let collectItems = [];
+			let collectProfiles = [];
+			let collectGroups = [];
 
 			this.promise = new Promise((resolve, reject) => {
 				this
 					.on('error', reject)
-					.on('end', () => resolve(collect))
-					.on('data', ({ items }) => {
-						collect = [...collect, ...items];
+					.on('end', () => resolve(collectItems, collectProfiles, collectGroups))
+					.on('data', ({ items, profiles, groups }) => {
+						collectItems = [...collectItems, ...items];
+						collectProfiles = [...collectProfiles, ...profiles];
+						collectGroups = [...collectGroups, ...groups];
 					});
 			});
 		}
@@ -129,6 +133,8 @@ export default class CollectStream extends Readable {
 		}
 
 		let items;
+		let profiles;
+		let groups;
 
 		if (!this.supportExecute || this.parallelCount === 1) {
 			const request = new Request(this.method, {
@@ -157,13 +163,13 @@ export default class CollectStream extends Readable {
 				return;
 			}
 
-			const { count, items: collect } = result;
+			const { count, items: collectItems, profiles: collectProfiles, groups: collectGroups } = result;
 
 			if (this.total === null || this.total > count) {
 				this.total = count;
 			}
 
-			items = collect;
+			[items, profiles, groups] = [collectItems, collectProfiles, collectGroups];
 		} else {
 			let result;
 			try {
@@ -228,11 +234,11 @@ export default class CollectStream extends Readable {
 				return;
 			}
 
-			const { total, items: collect } = response;
+			const { total, items: collectItems, profiles: collectProfiles, groups: collectGroups } = response;
 
 			this.total = total;
 
-			items = collect;
+			[items, profiles, groups] = [collectItems, collectProfiles, collectGroups];
 		}
 
 		const { length } = items;
@@ -258,7 +264,9 @@ export default class CollectStream extends Readable {
 			received,
 			percent,
 			total,
-			items
+			items,
+			profiles,
+			groups
 		});
 	}
 
