@@ -16,7 +16,7 @@ export default ({ method, params, parallelCount }) => {
 
 		var proceed = total == 0 || received < total;
 
-		var i = 0, items = [], result, length;
+		var i = 0, items = [], profiles = [], groups = [], result, length;
 
 		while (i < ${parallelCount} && proceed) {
 			result = ${methodCode};
@@ -27,6 +27,10 @@ export default ({ method, params, parallelCount }) => {
 			}
 
 			items = items + result.items;
+			if (result.profiles)
+				profiles = profiles + result.profiles;
+			if (result.groups)
+				groups = groups + result.groups;
 
 			offset = offset + length;
 			received = received + length;
@@ -37,7 +41,9 @@ export default ({ method, params, parallelCount }) => {
 
 		return {
 			total: total,
-			items: items.splice(0, total)
+			items: items.splice(0, total),
+			profiles: profiles.splice(0, total),
+			groups: groups.splice(0, total)
 		};
 	`;
 
