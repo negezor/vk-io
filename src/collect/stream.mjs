@@ -163,11 +163,11 @@ export default class CollectStream extends Readable {
 				return;
 			}
 
-			const { 
-				count, 
-				items: collectItems, 
-				profiles: collectProfiles, 
-				groups: collectGroups 
+			const {
+				count,
+				items: collectItems,
+				profiles: collectProfiles,
+				groups: collectGroups
 			} = result;
 
 			if (this.total === null || this.total > count) {
@@ -239,11 +239,11 @@ export default class CollectStream extends Readable {
 				return;
 			}
 
-			const { 
-				total, 
-				items: collectItems, 
-				profiles: collectProfiles, 
-				groups: collectGroups 
+			const {
+				total,
+				items: collectItems,
+				profiles: collectProfiles,
+				groups: collectGroups
 			} = response;
 
 			this.total = total;
