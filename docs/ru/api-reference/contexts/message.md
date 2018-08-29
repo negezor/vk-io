@@ -78,14 +78,6 @@ context.hasForwards; // => boolean
 context.hasGeo; // => boolean
 ```
 
-## isUser
-
-Проверяет что сообщение пришло от пользователя
-
-```js
-context.isUser; // => boolean
-```
-
 ## isChat
 
 Проверяет что сообщение пришло из чата (беседы)
@@ -94,12 +86,36 @@ context.isUser; // => boolean
 context.isChat; // => boolean
 ```
 
+## isUser
+
+Проверяет что сообщение пришло от пользователя
+
+```js
+context.isUser; // => boolean
+```
+
 ## isGroup
 
-Проверяет что сообщение пришло из группы
+Проверяет что сообщение пришло от группы
 
 ```js
 context.isGroup; // => boolean
+```
+
+## isFromUser
+
+Проверяет что сообщение пришло в диалоге с пользователем
+
+```js
+context.isFromUser; // => boolean
+```
+
+## isFromGroup
+
+Проверяет что сообщение пришло в диалоге с группой
+
+```js
+context.isFromGroup; // => boolean
 ```
 
 ## isEvent
