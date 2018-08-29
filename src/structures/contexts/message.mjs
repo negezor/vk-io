@@ -166,15 +166,6 @@ export default class MessageContext extends Context {
 	}
 
 	/**
-	 * Check is a user
-	 *
-	 * @return {boolean}
-	 */
-	get isUser() {
-		return this.peerType === messageSources.USER;
-	}
-
-	/**
 	 * Checks is a chat
 	 *
 	 * @return {boolean}
@@ -184,11 +175,38 @@ export default class MessageContext extends Context {
 	}
 
 	/**
+	 * Check is a user
+	 *
+	 * @return {boolean}
+	 */
+	get isUser() {
+		return this.senderType === messageSources.USER;
+	}
+
+	/**
 	 * Checks is a group
 	 *
 	 * @return {boolean}
 	 */
 	get isGroup() {
+		return this.senderType === messageSources.GROUP;
+	}
+
+	/**
+	 * Checks is from the user
+	 *
+	 * @return {boolean}
+	 */
+	get isFromUser() {
+		return this.peerType === messageSources.USER;
+	}
+
+	/**
+	 * Checks is from the group
+	 *
+	 * @return {boolean}
+	 */
+	get isFromGroup() {
 		return this.peerType === messageSources.GROUP;
 	}
 
