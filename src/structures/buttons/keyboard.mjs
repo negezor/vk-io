@@ -116,10 +116,12 @@ export default class Keyboard {
 	/**
 	 * The keyboard will open only once
 	 *
+	 * @param {boolean} enabled
+	 *
 	 * @return {this}
 	 */
-	oneTime() {
-		this[kOneTime] = true;
+	oneTime(enabled = true) {
+		this[kOneTime] = enabled;
 
 		return this;
 	}
