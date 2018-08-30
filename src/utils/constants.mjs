@@ -162,8 +162,8 @@ export const defaultContentTypes = {
 	photo: 'image/jpeg',
 	video: 'video/mp4',
 	audio: 'audio/mp3',
-	voice: 'audio/ogg',
-	graffiti: 'image/png'
+	graffiti: 'image/png',
+	audioMessage: 'audio/ogg'
 };
 
 /**

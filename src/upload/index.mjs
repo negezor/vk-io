@@ -13,7 +13,9 @@ import {
 	PhotoAttachment,
 	AudioAttachment,
 	VideoAttachment,
-	DocumentAttachment
+	DocumentAttachment,
+	GraffitiAttachment,
+	AudioMessageAttachment
 } from '../structures/attachments';
 
 const { createReadStream } = nodeFs;
@@ -438,14 +440,28 @@ export default class Upload {
 	 *
 	 * @param {Object} params
 	 *
-	 * @return {Promise<DocumentAttachment>}
+	 * @return {Promise<AudioMessageAttachment>}
 	 */
-	audioMessage(params) {
-		params.type = 'audio_message';
+	async audioMessage(params) {
+		const { payload } = await this.messageDocument(
+			{
+				...params,
+				type: 'audio_message'
+			},
+			{
+				attachmentType: 'audioMessage'
+			}
+		);
 
-		return this.messageDocument(params, {
-			attachmentType: 'voice'
+		const audioMessageAttachment = new AudioMessageAttachment({
+			id: payload.id,
+			owner_id: payload.owner_id,
+			access_key: payload.access_key,
+
+			...payload.preview.audio_msg
 		});
+
+		return audioMessageAttachment;
 
 		// [{
 		// 	id: 450654090,
@@ -459,108 +475,7 @@ export default class Upload {
 		// 	preview: {
 		// 		audio_msg: {
 		// 			duration: 243,
-		// 			waveform: [5,
-		// 				6,
-		// 				5,
-		// 				5,
-		// 				4,
-		// 				3,
-		// 				4,
-		// 				2,
-		// 				4,
-		// 				3,
-		// 				4,
-		// 				4,
-		// 				3,
-		// 				2,
-		// 				1,
-		// 				1,
-		// 				2,
-		// 				3,
-		// 				4,
-		// 				4,
-		// 				6,
-		// 				8,
-		// 				13,
-		// 				13,
-		// 				11,
-		// 				6,
-		// 				5,
-		// 				4,
-		// 				3,
-		// 				3,
-		// 				1,
-		// 				2,
-		// 				1,
-		// 				2,
-		// 				1,
-		// 				4,
-		// 				8,
-		// 				10,
-		// 				12,
-		// 				10,
-		// 				13,
-		// 				12,
-		// 				14,
-		// 				16,
-		// 				16,
-		// 				17,
-		// 				11,
-		// 				9,
-		// 				8,
-		// 				9,
-		// 				10,
-		// 				10,
-		// 				7,
-		// 				1,
-		// 				3,
-		// 				1,
-		// 				2,
-		// 				5,
-		// 				8,
-		// 				10,
-		// 				10,
-		// 				11,
-		// 				13,
-		// 				14,
-		// 				18,
-		// 				19,
-		// 				20,
-		// 				22,
-		// 				20,
-		// 				22,
-		// 				24,
-		// 				25,
-		// 				27,
-		// 				25,
-		// 				21,
-		// 				20,
-		// 				18,
-		// 				15,
-		// 				12,
-		// 				6,
-		// 				3,
-		// 				4,
-		// 				6,
-		// 				10,
-		// 				13,
-		// 				10,
-		// 				9,
-		// 				8,
-		// 				5,
-		// 				3,
-		// 				2,
-		// 				3,
-		// 				8,
-		// 				11,
-		// 				10,
-		// 				2,
-		// 				2,
-		// 				9,
-		// 				12,
-		// 				19,
-		// 				...23 more items
-		// 			],
+		// 			waveform: [...],
 		// 			link_ogg: 'https://cs540101.userapi.com/c807320/u195624402/audio/440482857b.ogg',
 		// 			link_mp3: 'https://cs540101.userapi.com/c807320/u195624402/audio/440482857b.mp3'
 		// 		}
@@ -573,14 +488,32 @@ export default class Upload {
 	 *
 	 * @param {Object} params
 	 *
-	 * @return {Promise<DocumentAttachment>}
+	 * @return {Promise<GraffitiAttachment>}
 	 */
-	graffiti(params) {
-		params.type = 'graffiti';
+	async graffiti(params) {
+		const { payload } = await this.document(
+			{
+				...params,
+				type: 'graffiti'
+			},
+			{
+				attachmentType: 'graffiti'
+			}
+		);
 
-		return this.document(params, {
-			attachmentType: 'graffiti'
+		const { graffiti } = payload.preview;
+
+		const graffitiAttachment = new GraffitiAttachment({
+			id: payload.id,
+			owner_id: payload.owner_id,
+			access_key: payload.access_key,
+
+			url: graffiti.src,
+			width: graffiti.width,
+			height: graffiti.height
 		});
+
+		return graffitiAttachment;
 	}
 
 	/**
