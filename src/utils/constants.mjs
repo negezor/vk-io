@@ -7,7 +7,7 @@ import { keyMirror } from './helpers';
  *
  * @type {string}
  */
-export const API_VERSION = '5.80';
+export const API_VERSION = '5.84';
 
 /**
  * Chat peer ID
