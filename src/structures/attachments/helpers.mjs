@@ -8,23 +8,29 @@ import {
 	VideoAttachment,
 	MarketAttachment,
 	StickerAttachment,
+	GraffitiAttachment,
 	DocumentAttachment,
 	WallReplyAttachment,
-	MarketAlbumAttachment
+	MarketAlbumAttachment,
+	AudioMessageAttachment
 } from '.';
 
+import { attachmentTypes } from '../../utils/constants';
+
 const attachmentsTypes = {
-	gift: () => GiftAttachment,
-	wall: () => WallAttachment,
-	link: () => LinkAttachment,
-	photo: () => PhotoAttachment,
-	audio: () => AudioAttachment,
-	video: () => VideoAttachment,
-	doc: () => DocumentAttachment,
-	market: () => MarketAttachment,
-	sticker: () => StickerAttachment,
-	wall_reply: () => WallReplyAttachment,
-	market_album: () => MarketAlbumAttachment
+	[attachmentTypes.GIFT]: () => GiftAttachment,
+	[attachmentTypes.WALL]: () => WallAttachment,
+	[attachmentTypes.LINK]: () => LinkAttachment,
+	[attachmentTypes.PHOTO]: () => PhotoAttachment,
+	[attachmentTypes.AUDIO]: () => AudioAttachment,
+	[attachmentTypes.VIDEO]: () => VideoAttachment,
+	[attachmentTypes.DOCUMENT]: () => DocumentAttachment,
+	[attachmentTypes.MARKET]: () => MarketAttachment,
+	[attachmentTypes.STICKER]: () => StickerAttachment,
+	[attachmentTypes.GRAFFITI]: () => GraffitiAttachment,
+	[attachmentTypes.WALL_REPLY]: () => WallReplyAttachment,
+	[attachmentTypes.MARKET_ALBUM]: () => MarketAlbumAttachment,
+	[attachmentTypes.AUDIO_MESSAGE]: () => AudioMessageAttachment
 };
 
 /**
