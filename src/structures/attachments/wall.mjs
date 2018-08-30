@@ -86,7 +86,7 @@ export default class WallAttachment extends Attachment {
 		}
 
 		return this.attachments.some(attachment => (
-			attachment.getType() === type
+			attachment.type === type
 		));
 	}
 
@@ -394,7 +394,7 @@ export default class WallAttachment extends Attachment {
 		}
 
 		return this.attachments.filter(attachment => (
-			attachment.getType() === type
+			attachment.type === type
 		));
 	}
 }
