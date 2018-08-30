@@ -587,7 +587,8 @@ export default class Upload {
 				'reply_to_story',
 				'link_text',
 				'link_url',
-				'group_id'
+				'group_id',
+				'attach_access_key'
 			],
 
 			saveFiles: save => save,
@@ -606,7 +607,7 @@ export default class Upload {
 	 */
 	storiesVideo(params) {
 		return this.conduct({
-			field: 'file',
+			field: 'video_file',
 			params,
 
 			getServer: this.vk.api.stories.getVideoUploadServer,
