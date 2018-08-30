@@ -272,11 +272,11 @@ upload.messageDoc(params); // => Promise<DocumentAttachment>
 | title    | string | Название документа                |
 | tags     | string | Метки для поиска                  |
 
-## voice
+## audioMessage
 Загрузка аудио сообщения
 
 ```js
-upload.voice(params); // => Promise<DocumentAttachment>
+upload.audioMessage(params); // => Promise<DocumentAttachment>
 ```
 
 | Параметр | Тип    | Описание           |

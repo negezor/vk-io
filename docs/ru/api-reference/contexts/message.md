@@ -412,12 +412,12 @@ context.sendDocument(source [, params]); // => Promise<number>
 | source   | mixed[] | [Источник загрузки](../upload.md#messagedocument)                      |
 | params   | Object  | [Дополнительные параметры сообщения](https://vk.com/dev/messages.send) |
 
-## sendVoice
+## sendAudioMessage
 
 Отправляет голосовое сообщение в текущий диалог
 
 ```js
-context.sendVoice(source [, params]); // => Promise<number>
+context.sendAudioMessage(source [, params]); // => Promise<number>
 ```
 
 | Параметр | Тип    | Описание                                                               |
