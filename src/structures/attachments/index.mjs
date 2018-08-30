@@ -10,9 +10,11 @@ import AudioAttachment from './audio';
 import VideoAttachment from './video';
 import MarketAttachment from './market';
 import StickerAttachment from './sticker';
+import GraffitiAttachment from './graffiti';
 import DocumentAttachment from './document';
 import WallReplyAttachment from './wall-reply';
 import MarketAlbumAttachment from './market-album';
+import AudioMessageAttachment from './audio-message';
 
 export {
 	Attachment,
@@ -26,9 +28,11 @@ export {
 	VideoAttachment,
 	MarketAttachment,
 	StickerAttachment,
+	GraffitiAttachment,
 	DocumentAttachment,
 	WallReplyAttachment,
-	MarketAlbumAttachment
+	MarketAlbumAttachment,
+	AudioMessageAttachment
 };
 
 export default Attachment;

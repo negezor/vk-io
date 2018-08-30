@@ -126,6 +126,8 @@ export const defaultOptions = {
  */
 export const attachmentTypes = {
 	AUDIO: 'audio',
+	AUDIO_MESSAGE: 'audio_message',
+	GRAFFITI: 'graffiti',
 	DOCUMENT: 'doc',
 	GIFT: 'gift',
 	LINK: 'link',
