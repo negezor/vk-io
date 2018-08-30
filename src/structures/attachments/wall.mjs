@@ -152,6 +152,32 @@ export default class WallAttachment extends Attachment {
 	}
 
 	/**
+	 * Checks if a user can close on a comments
+	 *
+	 * @return {?boolean}
+	 */
+	isCanCloseComments() {
+		if (!this.$filled) {
+			return null;
+		}
+
+		return Boolean(this.payload.comments.can_close);
+	}
+
+	/**
+	 * Checks if a user can open on a comments
+	 *
+	 * @return {?boolean}
+	 */
+	isCanOpenComments() {
+		if (!this.$filled) {
+			return null;
+		}
+
+		return Boolean(this.payload.comments.can_open);
+	}
+
+	/**
 	 * Checks whether the current user can like the record
 	 *
 	 * @return {?boolean}
