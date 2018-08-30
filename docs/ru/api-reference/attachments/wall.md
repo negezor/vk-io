@@ -91,6 +91,20 @@ attachment.isCanGroupsCommented; // => ?boolean
 attachment.isCanCommented; // => ?boolean
 ```
 
+## isCanCloseComments
+Проверяет может ли текущий пользователь закрыть комментарии к записи
+
+```js
+attachment.isCanCloseComments; // => ?boolean
+```
+
+## isCanOpenComments
+Проверяет может ли текущий пользователь открыть комментарии к записи
+
+```js
+attachment.isCanOpenComments; // => ?boolean
+```
+
 ## isCanLike
 Проверяет можно ли текущий пользователь лайкнуть запись
 
