@@ -66,7 +66,7 @@ updates.hear('/purr', async (context) => {
 	await Promise.all([
 		context.send('Wait for the uploads purring 😻'),
 
-		context.sendVoice(link)
+		context.sendAudioMessage(link)
 	]);
 });
 
