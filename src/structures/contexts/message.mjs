@@ -598,15 +598,15 @@ export default class MessageContext extends Context {
 	}
 
 	/**
-	 * Sends a voice to the current dialog
+	 * Sends a audio message to the current dialog
 	 *
 	 * @param {mixed}  sourxe
 	 * @param {Object} params
 	 *
 	 * @return {Promise}
 	 */
-	async sendVoice(source, params = {}) {
-		const attachment = await this.vk.upload.voice({
+	async sendAudioMessage(source, params = {}) {
+		const attachment = await this.vk.upload.audioMessage({
 			peer_id: this.senderId,
 
 			source

@@ -440,7 +440,7 @@ export default class Upload {
 	 *
 	 * @return {Promise<DocumentAttachment>}
 	 */
-	voice(params) {
+	audioMessage(params) {
 		params.type = 'audio_message';
 
 		return this.messageDocument(params, {
