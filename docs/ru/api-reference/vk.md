@@ -90,7 +90,7 @@ vk.setOptions(options); // => this
 |---------------|--------|---------------------------------|--------------|
 | uploadTimeout | number | Время ожидания запроса загрузки | 20000        |
 
-### Опции polling ([long poll](vk.com/dev/using_longpoll))
+### Опции polling ([User Long Poll API](https://vk.com/dev/using_longpoll) и [Bots Long Poll API](https://vk.com/dev/bots_longpoll))
 
 | Опция           | Тип    | Описание                                                  | По умолчанию |
 |-----------------|--------|-----------------------------------------------------------|--------------|
@@ -98,7 +98,7 @@ vk.setOptions(options); // => this
 | pollingGroupId  | number | ID группы для [polling](https://vk.com/dev/bots_longpoll) | null         |
 | pollingAttempts | number | Количество попыток повтора запроса после ошибки           | 3            |
 
-### Опции webhook ([callback api](vk.com/dev/callback_api))
+### Опции webhook ([Callback API](https://vk.com/dev/callback_api))
 
 | Опция               | Тип    | Описание                                              | По умолчанию |
 |---------------------|--------|-------------------------------------------------------|--------------|
