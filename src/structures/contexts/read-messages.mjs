@@ -20,7 +20,7 @@ export default class ReadMessagesContext extends Context {
 		this.subTypes = [
 			eventId === 6
 				? 'read_inbox_messages'
-				: 'read_oubox_messages'
+				: 'read_outbox_messages'
 		];
 	}
 
@@ -39,7 +39,7 @@ export default class ReadMessagesContext extends Context {
 	 * @return {boolean}
 	 */
 	get isOutbox() {
-		return this.subTypes.includes('read_oubox_messages');
+		return this.subTypes.includes('read_outbox_messages');
 	}
 
 	/**
