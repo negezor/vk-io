@@ -5,6 +5,6 @@
 	"moduleFileExtensions": ["js", "json"],
 	"testRegex": "./test/.+\\.test\\.js$",
 	"transform": {
-		"^.+\\.js$": "<rootDir>/jest.preprocess.js"
+		"^.+\\.js$": "babel-jest"
 	}
 }
