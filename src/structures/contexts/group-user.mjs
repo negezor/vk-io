@@ -61,7 +61,7 @@ export default class GroupUserContext extends Context {
 	 * @return {?boolean}
 	 */
 	get isExpired() {
-		if (this.isBlocked()) {
+		if (this.isBlocked) {
 			return null;
 		}
 
@@ -121,7 +121,7 @@ export default class GroupUserContext extends Context {
 	 * @return {Promise}
 	 */
 	banUser(params) {
-		if (this.isBlocked()) {
+		if (this.isBlocked) {
 			return Promise.reject(new VKError({
 				message: 'User is blocked'
 			}));
@@ -141,7 +141,7 @@ export default class GroupUserContext extends Context {
 	 * @return {Promise}
 	 */
 	unbanUser() {
-		if (this.isUnblocked()) {
+		if (this.isUnblocked) {
 			return Promise.reject(new VKError({
 				message: 'User is not blocked'
 			}));
