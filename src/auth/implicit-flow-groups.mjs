@@ -56,7 +56,7 @@ export default class ImplicitFlowGroups extends ImplicitFlow {
 	 *
 	 * @param {Array} groups
 	 *
-	 * @return {Response}
+	 * @return {Promise<Response>}
 	 */
 	getPermissionsPage() {
 		const { app } = this;
@@ -124,7 +124,7 @@ export default class ImplicitFlowGroups extends ImplicitFlow {
 			}
 
 			/* Example group access_token_XXXXX */
-			const [,, group] = name.split('_');
+			const { 2: group } = name.split('_');
 
 			tokens.push({
 				group: Number(group),

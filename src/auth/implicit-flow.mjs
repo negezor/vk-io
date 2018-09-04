@@ -115,7 +115,7 @@ export default class ImplicitFlow {
 	 *
 	 * @return {CookieJar}
 	 */
-	getCookieJar() {
+	get cookieJar() {
 		return this.jar;
 	}
 
@@ -126,10 +126,8 @@ export default class ImplicitFlow {
 	 *
 	 * @return {this}
 	 */
-	setCookieJar(jar) {
+	set cookieJar(jar) {
 		this.jar = jar;
-
-		return this;
 	}
 
 	/**
@@ -137,7 +135,7 @@ export default class ImplicitFlow {
 	 *
 	 * @return {Promise<Object>}
 	 */
-	async getCookie() {
+	async getCookies() {
 		const { jar } = this;
 
 		const getCookieString = promisify(jar.getCookieString).bind(jar);

@@ -95,7 +95,7 @@ export default class CollectStream extends Readable {
 	 * @param {Function} thenFn
 	 * @param {Function} catchFn
 	 *
-	 * @return {Promise<Object>}
+	 * @return {Promise<Object[]>}
 	 */
 	then(thenFn, catchFn) {
 		if (this.promise === null) {

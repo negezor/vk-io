@@ -57,7 +57,7 @@ export default class Chain {
 	 * @param {Function} thenFn
 	 * @param {Function} catchFn
 	 *
-	 * @return {Promise<Object>}
+	 * @return {Promise<Object[]>}
 	 */
 	then(thenFn, catchFn) {
 		return Promise.resolve(this.run()).then(thenFn, catchFn);

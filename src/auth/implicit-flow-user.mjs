@@ -20,7 +20,7 @@ export default class ImplicitFlowUser extends ImplicitFlow {
 	/**
 	 * Returns permission page
 	 *
-	 * @return {Response}
+	 * @return {Promise<Response>}
 	 */
 	getPermissionsPage() {
 		const { app } = this;

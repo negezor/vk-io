@@ -68,7 +68,7 @@ export default class StreamingAPI {
 
 		this.close = promisify(socket.close).bind(socket);
 
-		socket.on('message', (data) => {
+		socket.on('message', async (data) => {
 			let message;
 
 			try {
@@ -84,13 +84,13 @@ export default class StreamingAPI {
 			try {
 				switch (code) {
 				case 100: {
-					this.handleEvent(message.event);
+					await this.handleEvent(message.event);
 
 					break;
 				}
 
 				case 300: {
-					this.handleServiceMessage(message.service_message);
+					await this.handleServiceMessage(message.service_message);
 
 					break;
 				}
@@ -149,10 +149,10 @@ export default class StreamingAPI {
 	 *
 	 * @return {Promise}
 	 */
-	async handleEvent(event) {
+	handleEvent(event) {
 		const context = new StreamingContext(this.vk, event);
 
-		return await this.vk.updates.dispatchMiddleware(context);
+		return this.vk.updates.dispatchMiddleware(context);
 	}
 
 	/**

@@ -202,7 +202,7 @@ export default class Updates {
 	 *
 	 * @return {boolean}
 	 */
-	isStarted() {
+	get isStarted() {
 		return this.started !== null;
 	}
 
@@ -373,7 +373,7 @@ export default class Updates {
 	 * @return {Promise}
 	 */
 	async startPolling() {
-		if (this.started !== null) {
+		if (this.isStarted) {
 			debug(`Updates already started: ${this.started}`);
 
 			return;
@@ -434,7 +434,7 @@ export default class Updates {
 		} = {},
 		next
 	) {
-		if (this.started !== null) {
+		if (this.isStarted) {
 			debug(`Updates already started: ${this.started}`);
 
 			return;
