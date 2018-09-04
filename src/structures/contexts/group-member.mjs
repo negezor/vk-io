@@ -46,7 +46,7 @@ export default class GroupMemberContext extends Context {
 	 * @return {?boolean}
 	 */
 	get isSelfLeave() {
-		if (this.isJoin()) {
+		if (this.isJoin) {
 			return null;
 		}
 
@@ -68,7 +68,7 @@ export default class GroupMemberContext extends Context {
 	 * @return {?string}
 	 */
 	get joinType() {
-		if (this.isLeave()) {
+		if (this.isLeave) {
 			return null;
 		}
 

@@ -122,7 +122,7 @@ export default class NewAttachmentsContext extends Context {
 	 * @return {Promise}
 	 */
 	deleteAttachment() {
-		if (this.isPhoto()) {
+		if (this.isPhoto) {
 			const [photo] = this.getAttachments('photo');
 
 			return this.vk.api.photos.delete({
@@ -131,7 +131,7 @@ export default class NewAttachmentsContext extends Context {
 			});
 		}
 
-		if (this.isVideo()) {
+		if (this.isVideo) {
 			const [video] = this.getAttachments('video');
 
 			return this.vk.api.video.delete({
@@ -140,7 +140,7 @@ export default class NewAttachmentsContext extends Context {
 			});
 		}
 
-		if (this.isAudio()) {
+		if (this.isAudio) {
 			const [audio] = this.getAttachments('audio');
 
 			return this.vk.api.audio.delete({

@@ -292,13 +292,13 @@ export default class CommentActionContext extends Context {
 	 * @return {Promise}
 	 */
 	editComment(options) {
-		if (this.isDelete()) {
+		if (this.isDelete) {
 			return Promise.reject(new VKError({
 				message: 'Comment is deleted'
 			}));
 		}
 
-		if (this.isBoardComment()) {
+		if (this.isBoardComment) {
 			return this.vk.api.board.editComment({
 				...options,
 
@@ -315,19 +315,19 @@ export default class CommentActionContext extends Context {
 			owner_id: this.ownerId
 		};
 
-		if (this.isPhotoComment()) {
+		if (this.isPhotoComment) {
 			return this.vk.api.photos.editComment(params);
 		}
 
-		if (this.isVideoComment()) {
+		if (this.isVideoComment) {
 			return this.vk.api.video.editComment(params);
 		}
 
-		if (this.isWallComment()) {
+		if (this.isWallComment) {
 			return this.vk.api.wall.editComment(params);
 		}
 
-		if (this.isMarketComment()) {
+		if (this.isMarketComment) {
 			return this.vk.api.market.editComment(params);
 		}
 
@@ -342,13 +342,13 @@ export default class CommentActionContext extends Context {
 	 * @return {Promise}
 	 */
 	deleteComment() {
-		if (this.isDelete()) {
+		if (this.isDelete) {
 			return Promise.reject(new VKError({
 				message: 'Comment is deleted'
 			}));
 		}
 
-		if (this.isBoardComment()) {
+		if (this.isBoardComment) {
 			return this.vk.api.board.deleteComment({
 				comment_id: this.id,
 				topic_id: this.objectId,
@@ -361,19 +361,19 @@ export default class CommentActionContext extends Context {
 			owner_id: this.ownerId
 		};
 
-		if (this.isPhotoComment()) {
+		if (this.isPhotoComment) {
 			return this.vk.api.photos.deleteComment(params);
 		}
 
-		if (this.isVideoComment()) {
+		if (this.isVideoComment) {
 			return this.vk.api.video.deleteComment(params);
 		}
 
-		if (this.isWallComment()) {
+		if (this.isWallComment) {
 			return this.vk.api.wall.deleteComment(params);
 		}
 
-		if (this.isMarketComment()) {
+		if (this.isMarketComment) {
 			return this.vk.api.market.deleteComment(params);
 		}
 

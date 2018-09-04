@@ -99,7 +99,6 @@ const groupMethods = [
 	'widgets'
 ];
 
-
 /**
  * Working with API methods
  *

@@ -50,7 +50,7 @@ export default class WallPostContext extends Context {
 	 * @return {Promise}
 	 */
 	deletePost() {
-		const wall = this.getWall;
+		const { wall } = this;
 
 		return this.vk.api.wall.delete({
 			post_id: wall.id,

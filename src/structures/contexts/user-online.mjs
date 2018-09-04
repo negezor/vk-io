@@ -51,7 +51,7 @@ export default class UserOnlineContext extends Context {
 	 * @return {boolean}
 	 */
 	get isSelfExit() {
-		return this.isUserOffline() && !this.payload.extra;
+		return this.isUserOffline && !this.payload.extra;
 	}
 
 	/**
@@ -60,7 +60,7 @@ export default class UserOnlineContext extends Context {
 	 * @return {boolean}
 	 */
 	get isTimeoutExit() {
-		return this.isUserOffline() && Boolean(this.payload.extra);
+		return this.isUserOffline && Boolean(this.payload.extra);
 	}
 
 	/**
