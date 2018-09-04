@@ -106,7 +106,11 @@ export default class CollectStream extends Readable {
 			this.promise = new Promise((resolve, reject) => {
 				this
 					.on('error', reject)
-					.on('end', () => resolve(collectItems, collectProfiles, collectGroups))
+					.on('end', () => resolve({
+						items: collectItems,
+						profiles: collectProfiles,
+						groups: collectGroups
+					}))
 					.on('data', ({ items, profiles, groups }) => {
 						collectItems = [...collectItems, ...items];
 						collectProfiles = [...collectProfiles, ...profiles];
