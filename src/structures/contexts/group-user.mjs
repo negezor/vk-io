@@ -141,7 +141,7 @@ export default class GroupUserContext extends Context {
 	 * @return {Promise}
 	 */
 	unbanUser() {
-		if (this.isBlocked) {
+		if (this.isUnblocked) {
 			return Promise.reject(new VKError({
 				message: 'User is not blocked'
 			}));
