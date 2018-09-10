@@ -109,9 +109,15 @@ export default class MessageContext extends Context {
 			return;
 		}
 
-		const { items } = await this.vk.api.messages.getById({
-			message_ids: this.id
-		});
+		const { items } = this.id !== 0
+			? await this.vk.api.messages.getById({
+				message_ids: this.id
+			})
+			: await this.vk.api.messages.getByConversationMessageId({
+				peer_id: this.peerId,
+				conversation_message_ids: this.conversationMessageId
+			});
+
 		const [message] = items;
 
 		this.payload = message;
