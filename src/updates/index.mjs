@@ -234,11 +234,11 @@ export default class Updates {
 			events = [events];
 		}
 
-		const hasNull = events.some(event => !event);
+		const hasEvents = events.every(Boolean);
 
-		if (hasNull) {
+		if (!hasEvents) {
 			throw new VKError({
-				message: 'Events should be not null'
+				message: 'Events should be not empty'
 			});
 		}
 
@@ -262,11 +262,11 @@ export default class Updates {
 			conditions = [conditions];
 		}
 
-		const hasNull = conditions.some(condition => !condition);
+		const hasConditions = conditions.every(Boolean);
 
-		if (hasNull) {
+		if (!hasConditions) {
 			throw new VKError({
-				message: 'Condition should be not null'
+				message: 'Condition should be not empty'
 			});
 		}
 
