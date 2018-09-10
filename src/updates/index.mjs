@@ -296,6 +296,10 @@ export default class Updates {
 				: next();
 		});
 
+		if (this.hears.length === 1) {
+			this.reloadMiddleware();
+		}
+
 		return this;
 	}
 
@@ -764,6 +768,11 @@ export default class Updates {
 	 */
 	reloadMiddleware() {
 		this.middleware = new Middleware(this.stack);
+
+		if (this.hears.length === 0) {
+			return;
+		}
+
 		this.middleware.use(async (context, next) => {
 			if (!context.is('text')) {
 				await next();
