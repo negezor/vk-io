@@ -39,7 +39,7 @@ export default class GroupUpdateContext extends Context {
 	 * @return {boolean}
 	 */
 	get isChangePhoto() {
-		return this.subTypes.includes('group_change_photo');
+		return this.subTypes.includes('group_update_photo');
 	}
 
 	/**
@@ -48,7 +48,7 @@ export default class GroupUpdateContext extends Context {
 	 * @return {boolean}
 	 */
 	get isChangeOfficers() {
-		return this.subTypes.includes('group_change_officers');
+		return this.subTypes.includes('group_update_officers');
 	}
 
 	/**
@@ -57,7 +57,7 @@ export default class GroupUpdateContext extends Context {
 	 * @return {boolean}
 	 */
 	get isChangeSettings() {
-		return this.subTypes.includes('group_change_settings');
+		return this.subTypes.includes('group_update_settings');
 	}
 
 	/**
