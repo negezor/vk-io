@@ -85,14 +85,14 @@ attachment.smallPhoto; // => ?string
 ```
 
 ## mediumPhoto
-Возвращает URL-адрес средней фотографии (807 или 604 или меньше)
+Возвращает URL-адрес средней фотографии (807, 604 или меньше)
 
 ```js
 attachment.mediumPhoto; // => ?string
 ```
 
 ## largePhoto
-Возвращает URL-адрес большой фотографии (2560 или 1280 или меньше)
+Возвращает URL-адрес большой фотографии (2560, 1280 или меньше)
 
 ```js
 attachment.largePhoto; // => ?string
