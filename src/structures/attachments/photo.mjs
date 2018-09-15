@@ -76,9 +76,9 @@ export default class PhotoAttachment extends Attachment {
 	}
 
 	/**
-	 * Returns the Date object when this photo was created
+	 * Returns the date when this photo was created
 	 *
-	 * @return {?Date}
+	 * @return {?number}
 	 */
 	get date() {
 		return this.payload.date || null;
