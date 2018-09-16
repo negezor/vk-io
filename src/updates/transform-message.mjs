@@ -44,25 +44,24 @@ export default function transformMessage([, id, flags, peer, date, text, extra, 
 			? {}
 			: null,
 		random_id: extra.random_id || null,
-		out: Number((flags & 2) === 2),
 		payload: extra.payload
 			? extra.payload
 			: null
 	};
-
-	if (peer < 0) {
-		message.out = Number((flags & 2) === 0);
-		message.important = (flags & 1) !== 0;
-	} else {
-		message.out = Number((flags & 2) !== 0);
-		message.important = (flags & 8) !== 0;
-	}
 
 	message.peer_id = peer;
 	message.from_id = peer;
 
 	if ('from' in extra) {
 		message.from_id = Number(extra.from);
+	}
+
+	if (peer < 0 && message.peer_id !== message.from_id) {
+		message.out = Number((flags & 2) === 0);
+		message.important = (flags & 1) !== 0;
+	} else {
+		message.out = Number((flags & 2) !== 0);
+		message.important = (flags & 8) !== 0;
 	}
 
 	if ('source_act' in extra) {
