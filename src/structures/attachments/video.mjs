@@ -128,20 +128,20 @@ export default class VideoAttachment extends Attachment {
 	}
 
 	/**
-	 * Returns the date object when this video was created
+	 * Returns the date when this video was created
 	 *
-	 * @return {?Date}
+	 * @return {?number}
 	 */
-	get date() {
+	get createdAt() {
 		return this.payload.date || null;
 	}
 
 	/**
-	 * Returns the date object when this video was added
+	 * Returns the date when this video was added
 	 *
 	 * @return {?Date}
 	 */
-	get addingDate() {
+	get addedAt() {
 		return this.payload.adding_date || null;
 	}
 

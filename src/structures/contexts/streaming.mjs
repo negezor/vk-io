@@ -122,7 +122,7 @@ export default class StreamingContext extends Context {
 	 *
 	 * @return {number}
 	 */
-	get date() {
+	get createdAt() {
 		return this.payload.creation_time;
 	}
 
@@ -149,7 +149,7 @@ export default class StreamingContext extends Context {
 	 *
 	 * @return {?number}
 	 */
-	get sharedDate() {
+	get sharedAt() {
 		return this.payload.shared_post_creation_time || null;
 	}
 
@@ -176,7 +176,7 @@ export default class StreamingContext extends Context {
 	 *
 	 * @return {number}
 	 */
-	get actionDate() {
+	get actionAt() {
 		return this.payload.action_time;
 	}
 

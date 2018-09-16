@@ -68,7 +68,7 @@ export default class UserOnlineContext extends Context {
 	 *
 	 * @return {number}
 	 */
-	get date() {
+	get createdAt() {
 		return this.payload.date;
 	}
 

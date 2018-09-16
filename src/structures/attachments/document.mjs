@@ -188,9 +188,9 @@ export default class DocumentAttachment extends Attachment {
 	/**
 	 * Returns the date when this document was created
 	 *
-	 * @return {number}
+	 * @return {?number}
 	 */
-	get date() {
+	get createdAt() {
 		return this.payload.date || null;
 	}
 

@@ -271,11 +271,11 @@ export default class WallAttachment extends Attachment {
 	}
 
 	/**
-	 * Returns the date object when this post was created
+	 * Returns the date when this post was created
 	 *
-	 * @return {?Date}
+	 * @return {?number}
 	 */
-	get date() {
+	get createdAt() {
 		return this.payload.date || null;
 	}
 

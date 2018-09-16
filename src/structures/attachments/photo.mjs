@@ -80,7 +80,7 @@ export default class PhotoAttachment extends Attachment {
 	 *
 	 * @return {?number}
 	 */
-	get date() {
+	get createdAt() {
 		return this.payload.date || null;
 	}
 

@@ -234,7 +234,7 @@ export default class CommentActionContext extends Context {
 	 *
 	 * @return {?number}
 	 */
-	get date() {
+	get createdAt() {
 		return this.payload.date || null;
 	}
 

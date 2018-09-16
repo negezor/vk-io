@@ -324,7 +324,7 @@ export default class MessageContext extends Context {
 	 *
 	 * @return {number}
 	 */
-	get date() {
+	get createdAt() {
 		return this.payload.date;
 	}
 
