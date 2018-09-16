@@ -158,6 +158,15 @@ export default class PollAttachment extends Attachment {
 	}
 
 	/**
+	 * Returns the identifiers of the response options selected by the current user
+	 *
+	 * @return {?number[]}
+	 */
+	get answerIds() {
+		return this.payload.answer_ids || null;
+	}
+
+	/**
 	 * Returns the identifiers of 3 friends who voted in the poll
 	 *
 	 * @return {?Object[]}
@@ -171,8 +180,21 @@ export default class PollAttachment extends Attachment {
 	 *
 	 * @return {?number}
 	 */
-	get created() {
+	get createdAt() {
 		return this.payload.created || null;
+	}
+
+	/**
+	 * Returns the end date of the poll in Unixtime. 0, if the poll is unlimited
+	 *
+	 * @return {?number}
+	 */
+	get endedAt() {
+		if (!this.$filled) {
+			return null;
+		}
+
+		return this.payload.end_date;
 	}
 
 	/**
