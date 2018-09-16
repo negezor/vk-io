@@ -40,6 +40,8 @@ export default class WallAttachment extends Attachment {
 
 		this.payload = post;
 
+		this.attachments = transformAttachments(post.attachments);
+
 		if ('access_key' in this.payload) {
 			this.accessKey = this.payload.access_key;
 		}
