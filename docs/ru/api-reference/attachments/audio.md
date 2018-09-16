@@ -56,11 +56,11 @@ attachment.title; // => ?string
 attachment.duration; // => ?number
 ```
 
-## date
+## createdAt
 Возвращает метку времени даты добавления аудиозаписи
 
 ```js
-attachment.date; // => ?number
+attachment.createdAt; // => ?number
 ```
 
 ## url

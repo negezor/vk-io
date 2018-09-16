@@ -49,11 +49,11 @@ attachment.albumId; // => ?number
 attachment.text; // => ?string
 ```
 
-## date
+## createdAt
 Возвращает метку времени даты добавления фотографии
 
 ```js
-attachment.date; // => ?number
+attachment.createdAt; // => ?number
 ```
 
 ## height

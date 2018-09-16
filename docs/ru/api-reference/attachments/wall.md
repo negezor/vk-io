@@ -155,11 +155,11 @@ attachment.isPinned; // => ?boolean
 attachment.isFriendsOnly; // => ?boolean
 ```
 
-## date
+## createdAt
 Возвращает метку времени даты создания записи
 
 ```js
-attachment.date; // => ?number
+attachment.createdAt; // => ?number
 ```
 
 ## authorId

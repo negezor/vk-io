@@ -98,11 +98,11 @@ attachment.isBook; // => ?boolean
 attachment.title; // => ?string
 ```
 
-## date
+## createdAt
 Возвращает метку времени даты добавления документа
 
 ```js
-attachment.date; // => ?number
+attachment.createdAt; // => ?number
 ```
 
 ## typeId

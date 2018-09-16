@@ -206,12 +206,12 @@ context.senderType; // => string
 context.chatId; // => ?number
 ```
 
-## date
+## createdAt
 
 Возвращает метку времени отправки сообщения в формате Unixtime
 
 ```js
-context.date; // => number
+context.createdAt; // => number
 ```
 
 ## text

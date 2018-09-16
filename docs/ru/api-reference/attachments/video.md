@@ -91,18 +91,18 @@ attachment.description; // => ?string
 attachment.duration; // => ?number
 ```
 
-## date
+## createdAt
 Возвращает метку времени даты создания видеозаписи
 
 ```js
-attachment.date; // => ?number
+attachment.createdAt; // => ?number
 ```
 
-## addingDate
+## addedAt
 Возвращает  метку времени даты добавления видеозаписи
 
 ```js
-attachment.addingDate; // => ?number
+attachment.addedAt; // => ?number
 ```
 
 ## viewsCount
