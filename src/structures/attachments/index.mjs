@@ -1,6 +1,7 @@
 import Attachment from './attachment';
 import ExternalAttachment from './external';
 
+import PollAttachment from './poll';
 import GiftAttachment from './gift';
 // eslint-disable-next-line import/no-cycle
 import WallAttachment from './wall';
@@ -20,6 +21,7 @@ export {
 	Attachment,
 	ExternalAttachment,
 
+	PollAttachment,
 	GiftAttachment,
 	WallAttachment,
 	LinkAttachment,

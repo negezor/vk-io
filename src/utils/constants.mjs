@@ -137,7 +137,8 @@ export const attachmentTypes = {
 	STICKER: 'sticker',
 	VIDEO: 'video',
 	WALL_REPLY: 'wall_reply',
-	WALL: 'wall'
+	WALL: 'wall',
+	POLL: 'poll'
 };
 
 /**

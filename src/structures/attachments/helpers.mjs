@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/no-cycle
 import {
+	PollAttachment,
 	GiftAttachment,
 	WallAttachment,
 	LinkAttachment,
@@ -18,6 +19,7 @@ import {
 import { attachmentTypes } from '../../utils/constants';
 
 const attachmentsTypes = {
+	[attachmentTypes.POLL]: () => PollAttachment,
 	[attachmentTypes.GIFT]: () => GiftAttachment,
 	[attachmentTypes.WALL]: () => WallAttachment,
 	[attachmentTypes.LINK]: () => LinkAttachment,

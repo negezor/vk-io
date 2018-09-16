@@ -628,6 +628,28 @@ export default class Upload {
 	}
 
 	/**
+	 * Uploads poll photo
+	 *
+	 * @param {Object}
+	 *
+	 * @return {Promise<Object>}
+	 */
+	pollPhoto(params) {
+		return this.conduct({
+			field: 'file',
+			params,
+
+			getServer: this.vk.api.polls.getPhotoUploadServer,
+			serverParams: ['owner_id'],
+
+			saveFiles: this.vk.api.polls.savePhoto,
+
+			maxFiles: 1,
+			attachmentType: 'photo'
+		});
+	}
+
+	/**
 	 * Behavior for the upload method
 	 *
 	 * @param {Object} conduct
