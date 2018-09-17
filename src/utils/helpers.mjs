@@ -118,3 +118,21 @@ export const unescapeHTML = text => (
 		.replace(amp, '&')
 		.replace(quot, '"')
 );
+
+/**
+ * Copies object params to new object
+ *
+ * @param {Object} params
+ * @param {Array}  properties
+ *
+ * @return {Object}
+ */
+export const copyParams = (params, properties) => {
+	const copies = {};
+
+	for (const property of properties) {
+		copies[property] = params[property];
+	}
+
+	return copies;
+};

@@ -1,6 +1,7 @@
 import Attachment from './attachment';
 
-import { attachmentTypes } from '../../utils/constants';
+import { copyParams } from '../../utils/helpers';
+import { attachmentTypes, inspectCustomData } from '../../utils/constants';
 
 const { DOCUMENT } = attachmentTypes;
 
@@ -222,7 +223,11 @@ export default class DocumentAttachment extends Attachment {
 	 * @return {?number}
 	 */
 	get size() {
-		return this.payload.size || null;
+		if (!this.$filled) {
+			return null;
+		}
+
+		return this.payload.size;
 	}
 
 	/**
@@ -267,5 +272,21 @@ export default class DocumentAttachment extends Attachment {
 		}
 
 		return name in preview;
+	}
+
+	/**
+	 * Returns the custom data
+	 *
+	 * @type {Object}
+	 */
+	[inspectCustomData]() {
+		return copyParams(this, [
+			'title',
+			'typeId',
+			'typeName',
+			'createdAt',
+			'extension',
+			'url'
+		]);
 	}
 }

@@ -1,6 +1,7 @@
 import Attachment from './attachment';
 
-import { attachmentTypes } from '../../utils/constants';
+import { copyParams } from '../../utils/helpers';
+import { attachmentTypes, inspectCustomData } from '../../utils/constants';
 
 const { AUDIO_MESSAGE } = attachmentTypes;
 
@@ -49,7 +50,11 @@ export default class AudioMessageAttachment extends Attachment {
 	 * @return {?number}
 	 */
 	get duration() {
-		return this.payload.duration || null;
+		if (!this.$filled) {
+			return null;
+		}
+
+		return this.payload.duration;
 	}
 
 	/**
@@ -86,5 +91,24 @@ export default class AudioMessageAttachment extends Attachment {
 	 */
 	get url() {
 		return this.mp3Url || this.oggUrl;
+	}
+
+	/**
+	 * Returns the custom data
+	 *
+	 * @type {Object}
+	 */
+	[inspectCustomData]() {
+		const payload = copyParams(this, [
+			'duration',
+			'waveform',
+			'oggUrl',
+			'mp3Url',
+			'url',
+		]);
+
+		payload.waveform = `[...${this.waveform.length} elements]`;
+
+		return payload;
 	}
 }

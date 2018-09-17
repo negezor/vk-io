@@ -1,6 +1,6 @@
 import ExternalAttachment from './external';
 
-import { attachmentTypes } from '../../utils/constants';
+import { attachmentTypes, inspectCustomData } from '../../utils/constants';
 
 const { GIFT } = attachmentTypes;
 
@@ -24,5 +24,16 @@ export default class GiftAttachment extends ExternalAttachment {
 	 */
 	get id() {
 		return this.payload.id;
+	}
+
+	/**
+	 * Returns the custom data
+	 *
+	 * @type {Object}
+	 */
+	[inspectCustomData]() {
+		return {
+			id: this.id
+		};
 	}
 }

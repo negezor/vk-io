@@ -372,3 +372,10 @@ export const parseResource = /(app(?:lication)|id|club|public|albums|tag)([-\d]+
  * @type {RegExp}
  */
 export const parseOwnerResource = /(album|topic|wall|page|videos)([-\d]+)_(\d+)/;
+
+/**
+ * Inspect custom data
+ *
+ * @type {Symbol}
+ */
+export const inspectCustomData = Symbol('inspectCustomData');

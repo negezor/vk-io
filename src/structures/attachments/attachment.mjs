@@ -2,7 +2,7 @@ import nodeUtil from 'util';
 
 import { VKError } from '../../errors';
 
-import { parseAttachment } from '../../utils/constants';
+import { parseAttachment, inspectCustomData } from '../../utils/constants';
 
 const { inspect } = nodeUtil;
 
@@ -97,6 +97,15 @@ export default class Attachment {
 	}
 
 	/**
+	 * Returns the custom data
+	 *
+	 * @type {Object}
+	 */
+	[inspectCustomData]() {
+		return this.payload;
+	}
+
+	/**
 	 * Custom inspect object
 	 *
 	 * @param {?number} depth
@@ -107,10 +116,17 @@ export default class Attachment {
 	[inspect.custom](depth, options) {
 		const { name } = this.constructor;
 
-		const payload = this.$filled
-			? ` ${inspect(this.payload, options)} `
-			: '';
+		const customData = {
+			id: this.id,
+			ownerId: this.ownerId,
+			accessKey: this.accessKey,
+			...this[inspectCustomData]()
+		};
 
-		return `${options.stylize(name, 'special')} { ${options.stylize(this, 'string')} ${payload}}`;
+		const payload = this.$filled
+			? `${inspect(customData, { ...options, compact: false })}`
+			: '{}';
+
+		return `${options.stylize(name, 'special')} <${options.stylize(this, 'string')}> ${payload}`;
 	}
 }

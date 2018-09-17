@@ -1,6 +1,7 @@
 import Attachment from './attachment';
 
-import { attachmentTypes } from '../../utils/constants';
+import { copyParams } from '../../utils/helpers';
+import { attachmentTypes, inspectCustomData } from '../../utils/constants';
 
 const { GRAFFITI } = attachmentTypes;
 
@@ -44,15 +45,6 @@ export default class GraffitiAttachment extends Attachment {
 	}
 
 	/**
-	 * Returns the URL of the document
-	 *
-	 * @return {?string}
-	 */
-	get url() {
-		return this.payload.url || null;
-	}
-
-	/**
 	 * Returns the graffiti height
 	 *
 	 * @return {?number}
@@ -68,5 +60,27 @@ export default class GraffitiAttachment extends Attachment {
 	 */
 	get width() {
 		return this.payload.width || null;
+	}
+
+	/**
+	 * Returns the URL of the document
+	 *
+	 * @return {?string}
+	 */
+	get url() {
+		return this.payload.url || null;
+	}
+
+	/**
+	 * Returns the custom data
+	 *
+	 * @type {Object}
+	 */
+	[inspectCustomData]() {
+		return copyParams(this, [
+			'height',
+			'width',
+			'url'
+		]);
 	}
 }

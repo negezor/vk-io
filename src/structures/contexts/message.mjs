@@ -2,11 +2,17 @@ import Context from './context';
 
 import { VKError } from '../../errors';
 
+import MessageForward from '../shared/message-forward';
 import transformMessage from '../../updates/transform-message';
 
 import { transformAttachments } from '../attachments/helpers';
-import { uniqueKeys, unescapeHTML } from '../../utils/helpers';
-import { updatesSources, messageSources, CHAT_PEER } from '../../utils/constants';
+import { uniqueKeys, unescapeHTML, copyParams } from '../../utils/helpers';
+import {
+	updatesSources,
+	messageSources,
+	CHAT_PEER,
+	inspectCustomData
+} from '../../utils/constants';
 
 /**
  * Returns peer id type
@@ -68,6 +74,11 @@ export default class MessageContext extends Context {
 		this.text = this.payload.text
 			? unescapeHTML(this.payload.text)
 			: null;
+		this.forwards = payload.fwd_messages
+			? payload.fwd_messages.map(forward => (
+				new MessageForward(forward, vk)
+			))
+			: [];
 		this.attachments = transformAttachments(payload.attachments, vk);
 
 		const subTypes = uniqueKeys(this.attachments.map(attachment => attachment.type));
@@ -160,6 +171,15 @@ export default class MessageContext extends Context {
 	 */
 	get hasForwards() {
 		return this.forwards.length > 0;
+	}
+
+	/**
+	 * Checks for hast message payload
+	 *
+	 * @return {boolean}
+	 */
+	get hasMessagePayload() {
+		return Boolean(this.payload.payload);
 	}
 
 	/**
@@ -326,15 +346,6 @@ export default class MessageContext extends Context {
 	 */
 	get createdAt() {
 		return this.payload.date;
-	}
-
-	/**
-	 * Returns the forwards messages
-	 *
-	 * @return {Object[]}
-	 */
-	get forwards() {
-		return this.payload.fwd_messages || [];
 	}
 
 	/**
@@ -838,5 +849,43 @@ export default class MessageContext extends Context {
 		});
 
 		return Boolean(isUnpinned);
+	}
+
+	/**
+	 * Returns the custom data
+	 *
+	 * @type {Object}
+	 */
+	[inspectCustomData]() {
+		let events = [];
+
+		if (this.isEvent) {
+			events = [
+				'eventType',
+				'eventMemberId',
+				'eventText',
+				'eventEmail'
+			];
+		}
+
+		const other = this.hasMessagePayload
+			? ['messagePayload']
+			: [];
+
+		return copyParams(this, [
+			'id',
+			'conversationMessageId',
+			'peerId',
+			'peerType',
+			'senderId',
+			'senderType',
+			'createdAt',
+			'text',
+			...events,
+			'forwards',
+			'attachments',
+			...other,
+			'isOutbox'
+		]);
 	}
 }

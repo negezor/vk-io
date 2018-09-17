@@ -1,5 +1,7 @@
 import nodeUtil from 'util';
 
+import { inspectCustomData } from '../../utils/constants';
+
 const { inspect } = nodeUtil;
 
 export default class ExternalAttachment {
@@ -35,6 +37,15 @@ export default class ExternalAttachment {
 	}
 
 	/**
+	 * Returns the custom data
+	 *
+	 * @type {Object}
+	 */
+	[inspectCustomData]() {
+		return this.payload;
+	}
+
+	/**
 	 * Custom inspect object
 	 *
 	 * @param {?number} depth
@@ -45,10 +56,12 @@ export default class ExternalAttachment {
 	[inspect.custom](depth, options) {
 		const { name } = this.constructor;
 
-		const payload = this.$filled
-			? ` ${inspect(this.payload, options)} `
-			: '';
+		const customData = this[inspectCustomData]();
 
-		return `${options.stylize(name, 'special')} { ${options.stylize(this, 'string')} ${payload}}`;
+		const payload = this.$filled
+			? `${inspect(customData, { ...options, compact: false })}`
+			: '{}';
+
+		return `${options.stylize(name, 'special')} ${payload}`;
 	}
 }

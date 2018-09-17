@@ -1,5 +1,7 @@
 import nodeUtil from 'util';
 
+import { inspectCustomData } from '../../utils/constants';
+
 const { inspect } = nodeUtil;
 
 export default class Context {
@@ -44,6 +46,17 @@ export default class Context {
 	}
 
 	/**
+	 * Returns the custom data
+	 *
+	 * @type {Object}
+	 */
+	[inspectCustomData]() {
+		const { vk, ...payload } = this;
+
+		return payload;
+	}
+
+	/**
 	 * Custom inspect object
 	 *
 	 * @param {?number} depth
@@ -54,6 +67,18 @@ export default class Context {
 	[inspect.custom](depth, options) {
 		const { name } = this.constructor;
 
-		return `${options.stylize(name, 'special')} ${inspect({ ...this, vk: '<VK>' }, options)}`;
+		const customData = {
+			...this[inspectCustomData](),
+
+			type: this.type,
+			subTypes: this.subTypes,
+			state: this.state
+		};
+
+		const payload = this.$filled
+			? `${inspect(customData, { ...options, compact: false })}`
+			: '{}';
+
+		return `${options.stylize(name, 'special')} ${payload}`;
 	}
 }

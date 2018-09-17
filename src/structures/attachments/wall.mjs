@@ -1,7 +1,8 @@
 import Attachment from './attachment';
 // eslint-disable-next-line import/no-cycle
 import { transformAttachments } from './helpers';
-import { attachmentTypes } from '../../utils/constants';
+import { copyParams } from '../../utils/helpers';
+import { attachmentTypes, inspectCustomData } from '../../utils/constants';
 
 const { WALL } = attachmentTypes;
 
@@ -271,39 +272,12 @@ export default class WallAttachment extends Attachment {
 	}
 
 	/**
-	 * Returns the date when this post was created
-	 *
-	 * @return {?number}
-	 */
-	get createdAt() {
-		return this.payload.date || null;
-	}
-
-	/**
 	 * Returns the identifier author
 	 *
 	 * @return {?number}
 	 */
 	get authorId() {
 		return this.payload.from_id || null;
-	}
-
-	/**
-	 * Returns the post type
-	 *
-	 * @return {?string}
-	 */
-	get postType() {
-		return this.payload.post_type || null;
-	}
-
-	/**
-	 * Returns the post text
-	 *
-	 * @return {?string}
-	 */
-	get text() {
-		return this.payload.text || null;
 	}
 
 	/**
@@ -344,6 +318,33 @@ export default class WallAttachment extends Attachment {
 	}
 
 	/**
+	 * Returns the date when this post was created
+	 *
+	 * @return {?number}
+	 */
+	get createdAt() {
+		return this.payload.date || null;
+	}
+
+	/**
+	 * Returns the post type
+	 *
+	 * @return {?string}
+	 */
+	get postType() {
+		return this.payload.post_type || null;
+	}
+
+	/**
+	 * Returns the post text
+	 *
+	 * @return {?string}
+	 */
+	get text() {
+		return this.payload.text || null;
+	}
+
+	/**
 	 * Returns the number of record views
 	 *
 	 * @return {?number}
@@ -354,24 +355,6 @@ export default class WallAttachment extends Attachment {
 		}
 
 		return this.payload.views.count;
-	}
-
-	/**
-	 * Returns the geo location
-	 *
-	 * @return {?Object}
-	 */
-	get geo() {
-		return this.payload.geo || null;
-	}
-
-	/**
-	 * Returns the likes info
-	 *
-	 * @return {?Object}
-	 */
-	get likes() {
-		return this.payload.likes || null;
 	}
 
 	/**
@@ -401,12 +384,30 @@ export default class WallAttachment extends Attachment {
 	}
 
 	/**
+	 * Returns the likes info
+	 *
+	 * @return {?Object}
+	 */
+	get likes() {
+		return this.payload.likes || null;
+	}
+
+	/**
 	 * Returns the post source
 	 *
 	 * @return {?Object}
 	 */
 	get postSource() {
 		return this.payload.post_source || null;
+	}
+
+	/**
+	 * Returns the geo location
+	 *
+	 * @return {?Object}
+	 */
+	get geo() {
+		return this.payload.geo || null;
 	}
 
 	/**
@@ -424,5 +425,29 @@ export default class WallAttachment extends Attachment {
 		return this.attachments.filter(attachment => (
 			attachment.type === type
 		));
+	}
+
+	/**
+	 * Returns the custom data
+	 *
+	 * @type {Object}
+	 */
+	[inspectCustomData]() {
+		return copyParams(this, [
+			'authorId',
+			'createdUserId',
+			'replyOwnerId',
+			'replyPostId',
+			'signerId',
+			'createdAt',
+			'postType',
+			'text',
+			'viewsCount',
+			'likesCount',
+			'repostsCount',
+			'likes',
+			'postSource',
+			'geo'
+		]);
 	}
 }

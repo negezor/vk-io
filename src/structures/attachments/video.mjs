@@ -1,6 +1,7 @@
 import Attachment from './attachment';
 
-import { attachmentTypes } from '../../utils/constants';
+import { copyParams } from '../../utils/helpers';
+import { attachmentTypes, inspectCustomData } from '../../utils/constants';
 
 const { VIDEO } = attachmentTypes;
 
@@ -124,7 +125,11 @@ export default class VideoAttachment extends Attachment {
 	 * @return {?number}
 	 */
 	get duration() {
-		return this.payload.duration || null;
+		if (!this.$filled) {
+			return null;
+		}
+
+		return this.payload.duration;
 	}
 
 	/**
@@ -197,5 +202,24 @@ export default class VideoAttachment extends Attachment {
 		}
 
 		return property === 1;
+	}
+
+	/**
+	 * Returns the custom data
+	 *
+	 * @type {Object}
+	 */
+	[inspectCustomData]() {
+		return copyParams(this, [
+			'title',
+			'description',
+			'duration',
+			'createdAt',
+			'addedAt',
+			'viewsCount',
+			'commentsCount',
+			'player',
+			'platformName'
+		]);
 	}
 }

@@ -1,6 +1,7 @@
 import ExternalAttachment from './external';
 
-import { attachmentTypes } from '../../utils/constants';
+import { copyParams } from '../../utils/helpers';
+import { attachmentTypes, inspectCustomData } from '../../utils/constants';
 
 const { STICKER } = attachmentTypes;
 
@@ -33,5 +34,17 @@ export default class StickerAttachment extends ExternalAttachment {
 	 */
 	get productId() {
 		return this.payload.product_id;
+	}
+
+	/**
+	 * Returns the custom data
+	 *
+	 * @type {Object}
+	 */
+	[inspectCustomData]() {
+		return copyParams(this, [
+			'id',
+			'productId'
+		]);
 	}
 }

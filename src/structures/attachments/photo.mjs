@@ -1,6 +1,7 @@
 import Attachment from './attachment';
 
-import { attachmentTypes } from '../../utils/constants';
+import { copyParams } from '../../utils/helpers';
+import { attachmentTypes, inspectCustomData } from '../../utils/constants';
 
 const { PHOTO } = attachmentTypes;
 
@@ -103,15 +104,6 @@ export default class PhotoAttachment extends Attachment {
 	}
 
 	/**
-	 * Returns the sizes
-	 *
-	 * @return {?Object[]}
-	 */
-	get sizes() {
-		return this.payload.sizes || null;
-	}
-
-	/**
 	 * Returns the URL of a small photo
 	 * (130 or 75)
 	 *
@@ -160,6 +152,15 @@ export default class PhotoAttachment extends Attachment {
 	}
 
 	/**
+	 * Returns the sizes
+	 *
+	 * @return {?Object[]}
+	 */
+	get sizes() {
+		return this.payload.sizes || null;
+	}
+
+	/**
 	 * Returns the sizes of the required types
 	 *
 	 * @param {string[]} sizeTypes
@@ -174,5 +175,25 @@ export default class PhotoAttachment extends Attachment {
 				sizes.find(size => size.type === sizeType) || null
 			))
 			.filter(Boolean);
+	}
+
+	/**
+	 * Returns the custom data
+	 *
+	 * @type {Object}
+	 */
+	[inspectCustomData]() {
+		return copyParams(this, [
+			'userId',
+			'albumId',
+			'text',
+			'createdAt',
+			'height',
+			'width',
+			'smallPhoto',
+			'mediumPhoto',
+			'largePhoto',
+			'sizes'
+		]);
 	}
 }

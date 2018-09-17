@@ -1,6 +1,7 @@
 import Attachment from './attachment';
 
-import { attachmentTypes } from '../../utils/constants';
+import { copyParams } from '../../utils/helpers';
+import { attachmentTypes, inspectCustomData } from '../../utils/constants';
 
 const { POLL } = attachmentTypes;
 
@@ -158,21 +159,12 @@ export default class PollAttachment extends Attachment {
 	}
 
 	/**
-	 * Returns the identifiers of the response options selected by the current user
+	 * Returns the question text
 	 *
-	 * @return {?number[]}
+	 * @return {?string}
 	 */
-	get answerIds() {
-		return this.payload.answer_ids || null;
-	}
-
-	/**
-	 * Returns the identifiers of 3 friends who voted in the poll
-	 *
-	 * @return {?Object[]}
-	 */
-	get friends() {
-		return this.payload.friends || null;
+	get question() {
+		return this.payload.question || null;
 	}
 
 	/**
@@ -198,21 +190,34 @@ export default class PollAttachment extends Attachment {
 	}
 
 	/**
-	 * Returns the question text
-	 *
-	 * @return {?string}
-	 */
-	get question() {
-		return this.payload.question || null;
-	}
-
-	/**
 	 * Returns the number of votes
 	 *
 	 * @return {?number}
 	 */
 	get votes() {
 		return this.payload.votes || null;
+	}
+
+	/**
+	 * Returns the identifiers of the response options selected by the current user
+	 *
+	 * @return {?number[]}
+	 */
+	get answerIds() {
+		return this.payload.answer_ids || null;
+	}
+
+	/**
+	 * Returns the identifiers of 3 friends who voted in the poll
+	 *
+	 * @return {?Object[]}
+	 */
+	get friends() {
+		if (!this.$filled) {
+			return null;
+		}
+
+		return this.payload.friends || [];
 	}
 
 	/**
@@ -225,6 +230,15 @@ export default class PollAttachment extends Attachment {
 	}
 
 	/**
+	 * Returns the poll snippet background
+	 *
+	 * @return {?Object}
+	 */
+	get background() {
+		return this.payload.background || null;
+	}
+
+	/**
 	 * Returns a photo - the poll snippet background
 	 *
 	 * @return {?Object}
@@ -234,11 +248,22 @@ export default class PollAttachment extends Attachment {
 	}
 
 	/**
-	 * Returns the poll snippet background
+	 * Returns the custom data
 	 *
-	 * @return {?Object}
+	 * @type {Object}
 	 */
-	get background() {
-		return this.payload.background || null;
+	[inspectCustomData]() {
+		return copyParams(this, [
+			'authorId',
+			'question',
+			'createdAt',
+			'endedAt',
+			'votes',
+			'answerIds',
+			'friends',
+			'answers',
+			'background',
+			'photo'
+		]);
 	}
 }

@@ -1,6 +1,7 @@
 import Attachment from './attachment';
 
-import { attachmentTypes } from '../../utils/constants';
+import { copyParams } from '../../utils/helpers';
+import { attachmentTypes, inspectCustomData } from '../../utils/constants';
 
 const { AUDIO } = attachmentTypes;
 
@@ -59,51 +60,6 @@ export default class AudioAttachment extends Attachment {
 	}
 
 	/**
-	 * Returns the artist
-	 *
-	 * @return {?string}
-	 */
-	get artist() {
-		return this.payload.artist || null;
-	}
-
-	/**
-	 * Returns the title
-	 *
-	 * @return {?string}
-	 */
-	get title() {
-		return this.payload.title || null;
-	}
-
-	/**
-	 * Returns the duration
-	 *
-	 * @return {?number}
-	 */
-	get duration() {
-		return this.payload.duration || null;
-	}
-
-	/**
-	 * Returns the date object when this audio was created
-	 *
-	 * @return {?number}
-	 */
-	get createdAt() {
-		return this.payload.date || null;
-	}
-
-	/**
-	 * Returns the URL of the audio
-	 *
-	 * @return {?string}
-	 */
-	get url() {
-		return this.payload.url || null;
-	}
-
-	/**
 	 * Returns the ID of the lyric
 	 *
 	 * @return {?number}
@@ -128,5 +84,72 @@ export default class AudioAttachment extends Attachment {
 	 */
 	get genreId() {
 		return this.payload.album_id || null;
+	}
+
+	/**
+	 * Returns the title
+	 *
+	 * @return {?string}
+	 */
+	get title() {
+		return this.payload.title || null;
+	}
+
+	/**
+	 * Returns the artist
+	 *
+	 * @return {?string}
+	 */
+	get artist() {
+		return this.payload.artist || null;
+	}
+
+	/**
+	 * Returns the duration
+	 *
+	 * @return {?number}
+	 */
+	get duration() {
+		if (!this.$filled) {
+			return null;
+		}
+
+		return this.payload.duration;
+	}
+
+	/**
+	 * Returns the date object when this audio was created
+	 *
+	 * @return {?number}
+	 */
+	get createdAt() {
+		return this.payload.date || null;
+	}
+
+	/**
+	 * Returns the URL of the audio
+	 *
+	 * @return {?string}
+	 */
+	get url() {
+		return this.payload.url || null;
+	}
+
+	/**
+	 * Returns the custom data
+	 *
+	 * @type {Object}
+	 */
+	[inspectCustomData]() {
+		return copyParams(this, [
+			'lyricsId',
+			'albumId',
+			'genreId',
+			'title',
+			'artist',
+			'duration',
+			'createdAt',
+			'url'
+		]);
 	}
 }

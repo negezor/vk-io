@@ -1,7 +1,8 @@
 import ExternalAttachment from './external';
 
 import PhotoAttachment from './photo';
-import { attachmentTypes } from '../../utils/constants';
+import { copyParams } from '../../utils/helpers';
+import { attachmentTypes, inspectCustomData } from '../../utils/constants';
 
 const { LINK } = attachmentTypes;
 
@@ -32,15 +33,6 @@ export default class LinkAttachment extends ExternalAttachment {
 	}
 
 	/**
-	 * Returns the URL of the link
-	 *
-	 * @return {string}
-	 */
-	get url() {
-		return this.payload.url;
-	}
-
-	/**
 	 * Returns the title
 	 *
 	 * @return {string}
@@ -68,12 +60,12 @@ export default class LinkAttachment extends ExternalAttachment {
 	}
 
 	/**
-	 * Returns the photo
+	 * Returns the URL of the link
 	 *
-	 * @return {?PhotoAttachment}
+	 * @return {string}
 	 */
-	get photo() {
-		return this.attachments[0] || null;
+	get url() {
+		return this.payload.url;
 	}
 
 	/**
@@ -92,5 +84,31 @@ export default class LinkAttachment extends ExternalAttachment {
 	 */
 	get button() {
 		return this.payload.button || null;
+	}
+
+	/**
+	 * Returns the photo
+	 *
+	 * @return {?PhotoAttachment}
+	 */
+	get photo() {
+		return this.attachments[0] || null;
+	}
+
+	/**
+	 * Returns the custom data
+	 *
+	 * @type {Object}
+	 */
+	[inspectCustomData]() {
+		return copyParams(this, [
+			'title',
+			'caption',
+			'description',
+			'url',
+			'product',
+			'button',
+			'photo'
+		]);
 	}
 }
