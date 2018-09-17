@@ -143,8 +143,12 @@ export default function transformMessage([, id, flags, peer, date, text, extra, 
 				const [owner] = attachment.split('_');
 
 				return {
+					date: 0,
 					from_id: Number(owner),
-					fwd_messages: []
+					text: '',
+					fwd_messages: [],
+					attachments: [],
+					update_time: 0
 				};
 			});
 	}
