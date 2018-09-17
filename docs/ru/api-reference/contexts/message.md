@@ -227,7 +227,7 @@ context.text; // => ?string
 Возвращает пересланные сообщение
 
 ```js
-context.forwards; // => Object[]
+context.forwards; // => MessageForward[]
 ```
 
 ## geo
