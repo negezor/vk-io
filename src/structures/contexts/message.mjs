@@ -284,9 +284,13 @@ export default class MessageContext extends Context {
 	/**
 	 * Returns the conversation message id
 	 *
-	 * @return {number}
+	 * @return {?number}
 	 */
 	get conversationMessageId() {
+		if (!this.$filled) {
+			return null;
+		}
+
 		return this.payload.conversation_message_id;
 	}
 

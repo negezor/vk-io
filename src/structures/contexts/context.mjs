@@ -53,7 +53,7 @@ export default class Context {
 	[inspectCustomData]() {
 		const { vk, ...payload } = this;
 
-		return payload;
+		return { payload };
 	}
 
 	/**
@@ -75,9 +75,7 @@ export default class Context {
 			state: this.state
 		};
 
-		const payload = this.$filled
-			? `${inspect(customData, { ...options, compact: false })}`
-			: '{}';
+		const payload = inspect(customData, { ...options, compact: false });
 
 		return `${options.stylize(name, 'special')} ${payload}`;
 	}
