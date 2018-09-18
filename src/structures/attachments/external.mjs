@@ -58,9 +58,7 @@ export default class ExternalAttachment {
 
 		const customData = this[inspectCustomData]();
 
-		const payload = this.$filled
-			? `${inspect(customData, { ...options, compact: false })}`
-			: '{}';
+		const payload = inspect(customData, { ...options, compact: false });
 
 		return `${options.stylize(name, 'special')} ${payload}`;
 	}
