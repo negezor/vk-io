@@ -23,9 +23,7 @@ export default class MessageForward {
 			))
 			: [];
 		this.attachments = payload.attachments.length > 0
-			? payload.attachments.map(attachment => (
-				transformAttachments(attachment, vk)
-			))
+			? transformAttachments(payload.attachments, vk)
 			: [];
 	}
 
