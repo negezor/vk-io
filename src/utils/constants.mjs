@@ -352,12 +352,29 @@ export const platforms = new Map([
 	[8, 'standalone']
 ]);
 
+export const attachmentTypes = {
+	AUDIO: 'audio',
+	AUDIO_MESSAGE: 'audio_message',
+	GRAFFITI: 'graffiti',
+	DOCUMENT: 'doc',
+	GIFT: 'gift',
+	LINK: 'link',
+	MARKET_ALBUM: 'market_album',
+	MARKET: 'market',
+	PHOTO: 'photo',
+	STICKER: 'sticker',
+	VIDEO: 'video',
+	WALL_REPLY: 'wall_reply',
+	WALL: 'wall',
+	POLL: 'poll'
+};
+
 /**
  * Parse attachments with RegExp
  *
  * @type {RegExp}
  */
-export const parseAttachment = /(photo|video|audio|doc|wall|market)([-\d]+)_(\d+)_?(\w+)?/;
+export const parseAttachment = /(photo|video|audio|doc|audio_message|graffiti|wall|market|poll|gift)([-\d]+)_(\d+)_?(\w+)?/;
 
 /**
  * Parse resource with RegExp
