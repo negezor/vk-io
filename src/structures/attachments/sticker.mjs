@@ -37,6 +37,24 @@ export default class StickerAttachment extends ExternalAttachment {
 	}
 
 	/**
+	 * Returns the images sizes
+	 *
+	 * @return {Object[]}
+	 */
+	get images() {
+		return this.payload.images || [];
+	}
+
+	/**
+	 * Returns the images sizes with backgrounds
+	 *
+	 * @return {Object[]}
+	 */
+	get imagesWithBackground() {
+		return this.payload.images_with_background || [];
+	}
+
+	/**
 	 * Returns the custom data
 	 *
 	 * @type {Object}
@@ -44,7 +62,9 @@ export default class StickerAttachment extends ExternalAttachment {
 	[inspectCustomData]() {
 		return copyParams(this, [
 			'id',
-			'productId'
+			'productId',
+			'images',
+			'imagesWithBackground'
 		]);
 	}
 }
