@@ -357,7 +357,7 @@ export const platforms = new Map([
  *
  * @type {RegExp}
  */
-export const parseAttachment = /(photo|video|audio|doc|wall|market)([-\d]+)_(\d+)_?(\d+)?/;
+export const parseAttachment = /(photo|video|audio|doc|wall|market)([-\d]+)_(\d+)_?(\w+)?/;
 
 /**
  * Parse resource with RegExp
