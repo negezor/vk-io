@@ -25,7 +25,6 @@ export default [
 		plugins: [
 			json(),
 			resolve({
-				extensions: ['.mjs', '.js'],
 				preferBuiltins: true,
 			}),
 			babel({
