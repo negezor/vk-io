@@ -101,7 +101,9 @@ export default class Attachment {
 	 * @type {Object}
 	 */
 	[inspectCustomData]() {
-		return this.payload;
+		return {
+			payload: this.payload
+		};
 	}
 
 	/**
