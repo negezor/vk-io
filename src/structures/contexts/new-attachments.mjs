@@ -61,7 +61,7 @@ export default class NewAttachmentsContext extends Context {
 	 * @return {boolean}
 	 */
 	get isPhoto() {
-		return this.subTypes.includes('new_photo');
+		return this.subTypes.includes('new_photo_attachment');
 	}
 
 	/**
@@ -70,7 +70,7 @@ export default class NewAttachmentsContext extends Context {
 	 * @return {boolean}
 	 */
 	get isVideo() {
-		return this.subTypes.includes('new_video');
+		return this.subTypes.includes('new_video_attachment');
 	}
 
 	/**
@@ -79,7 +79,7 @@ export default class NewAttachmentsContext extends Context {
 	 * @return {boolean}
 	 */
 	get isAudio() {
-		return this.subTypes.includes('new_audio');
+		return this.subTypes.includes('new_audio_attachment');
 	}
 
 	/**
