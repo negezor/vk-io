@@ -1,5 +1,11 @@
 import Context from './context';
 
+const subTypes = {
+	1: 'update_message_flags',
+	2: 'set_message_flags',
+	3: 'remove_message_flags'
+};
+
 export default class MessageFlagsContext extends Context {
 	/**
 	 * Constructor
@@ -19,12 +25,7 @@ export default class MessageFlagsContext extends Context {
 
 		this.type = 'message_flags';
 		this.subTypes = [
-			// eslint-disable-next-line no-nested-ternary
-			eventId === 1
-				? 'update_message_flags'
-				: eventId === 2
-					? 'set_message_flags'
-					: 'remove_message_flags'
+			subTypes[eventId]
 		];
 	}
 

@@ -2,6 +2,12 @@ import Context from './context';
 
 import { PhotoAttachment } from '../attachments';
 
+const subTypes = {
+	group_change_photo: 'group_update_photo',
+	group_update_officers: 'group_update_officers',
+	group_change_settings: 'group_update_settings'
+};
+
 export default class GroupUpdateContext extends Context {
 	/**
 	 * Constructor
@@ -16,20 +22,13 @@ export default class GroupUpdateContext extends Context {
 		this.payload = payload;
 		this.$groupId = groupId;
 
-		const isChangePhoto = updateType === 'group_change_photo';
-
-		this.attachments = isChangePhoto
+		this.attachments = updateType === 'group_change_photo'
 			? [new PhotoAttachment(payload.photo, vk)]
 			: [];
 
 		this.type = 'group_update';
 		this.subTypes = [
-			// eslint-disable-next-line no-nested-ternary
-			updateType === 'group_change_settings'
-				? 'group_update_settings'
-				: isChangePhoto
-					? 'group_update_photo'
-					: 'group_update_officers'
+			subTypes[updateType]
 		];
 	}
 

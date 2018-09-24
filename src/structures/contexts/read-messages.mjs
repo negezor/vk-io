@@ -1,5 +1,10 @@
 import Context from './context';
 
+const subTypes = {
+	6: 'read_inbox_messages',
+	7: 'read_outbox_messages'
+};
+
 export default class ReadMessagesContext extends Context {
 	/**
 	 * Constructor
@@ -18,9 +23,7 @@ export default class ReadMessagesContext extends Context {
 
 		this.type = 'read_messages';
 		this.subTypes = [
-			eventId === 6
-				? 'read_inbox_messages'
-				: 'read_outbox_messages'
+			subTypes[eventId]
 		];
 	}
 

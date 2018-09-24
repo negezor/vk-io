@@ -2,6 +2,11 @@ import Context from './context';
 
 import { CHAT_PEER } from '../../utils/constants';
 
+const subTypes = {
+	61: 'typing_user',
+	62: 'typing_chat'
+};
+
 export default class TypingContext extends Context {
 	/**
 	 * Constructor
@@ -28,9 +33,7 @@ export default class TypingContext extends Context {
 
 		this.type = 'typing';
 		this.subTypes = [
-			eventId === 61
-				? 'typing_user'
-				: 'typing_chat'
+			subTypes[eventId]
 		];
 	}
 

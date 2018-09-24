@@ -8,6 +8,12 @@ import {
 	AudioAttachment
 } from '../attachments';
 
+const subTypes = {
+	photo_new: ['new_photo_attachment', PhotoAttachment],
+	video_new: ['new_video_attachment', VideoAttachment],
+	audio_new: ['new_audio_attachment', AudioAttachment]
+};
+
 export default class NewAttachmentsContext extends Context {
 	/**
 	 * Constructor
@@ -22,34 +28,9 @@ export default class NewAttachmentsContext extends Context {
 		this.payload = payload;
 		this.$groupId = groupId;
 
-		let subType;
-		let attachment;
+		const [subType, Attachment] = subTypes[updateType];
 
-		// eslint-disable-next-line default-case
-		switch (updateType) {
-		case 'photo_new': {
-			subType = 'new_photo_attachment';
-			attachment = new PhotoAttachment(payload, vk);
-
-			break;
-		}
-
-		case 'video_new': {
-			subType = 'new_video_attachment';
-			attachment = new VideoAttachment(payload, vk);
-
-			break;
-		}
-
-		case 'audio_new': {
-			subType = 'new_audio_attachment';
-			attachment = new AudioAttachment(payload, vk);
-
-			break;
-		}
-		}
-
-		this.attachments = [attachment];
+		this.attachments = [new Attachment(payload, vk)];
 
 		this.type = 'new_attachment';
 		this.subTypes = [subType];

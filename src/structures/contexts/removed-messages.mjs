@@ -1,5 +1,10 @@
 import Context from './context';
 
+const subTypes = {
+	13: 'delete_messages',
+	14: 'restore_messages'
+};
+
 export default class RemovedMessagesContext extends Context {
 	/**
 	 * Constructor
@@ -18,9 +23,7 @@ export default class RemovedMessagesContext extends Context {
 
 		this.type = 'removed_messages';
 		this.subTypes = [
-			eventId === 13
-				? 'delete_messages'
-				: 'restore_messages'
+			subTypes[eventId]
 		];
 	}
 

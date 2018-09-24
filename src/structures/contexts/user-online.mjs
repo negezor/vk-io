@@ -2,6 +2,11 @@ import Context from './context';
 
 import { platforms } from '../../utils/constants';
 
+const subTypes = {
+	8: 'user_online',
+	9: 'user_offline'
+};
+
 export default class UserOnlineContext extends Context {
 	/**
 	 * Constructor
@@ -21,9 +26,7 @@ export default class UserOnlineContext extends Context {
 
 		this.type = 'user_active';
 		this.subTypes = [
-			eventId === 8
-				? 'user_online'
-				: 'user_offline'
+			subTypes[eventId]
 		];
 	}
 

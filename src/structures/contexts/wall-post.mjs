@@ -2,6 +2,11 @@ import Context from './context';
 
 import { WallAttachment } from '../attachments';
 
+const subTypes = {
+	wall_post_new: 'new_wall_post',
+	wall_repost: 'new_wall_repost'
+};
+
 export default class WallPostContext extends Context {
 	/**
 	 * constructor
@@ -20,9 +25,7 @@ export default class WallPostContext extends Context {
 
 		this.type = 'wall_post';
 		this.subTypes = [
-			updateType === 'wall_post_new'
-				? 'new_wall_post'
-				: 'new_wall_repost'
+			subTypes[updateType]
 		];
 	}
 

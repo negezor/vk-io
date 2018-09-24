@@ -15,6 +15,11 @@ const reasonNames = new Map([
 	[4, 'messages_off_topic']
 ]);
 
+const subTypes = {
+	user_block: 'block_group_user',
+	user_unblock: 'unblock_group_user'
+};
+
 export default class GroupUserContext extends Context {
 	/**
 	 * Constructror
@@ -31,9 +36,7 @@ export default class GroupUserContext extends Context {
 
 		this.type = 'group_user';
 		this.subTypes = [
-			updateType === 'user_block'
-				? 'block_group_user'
-				: 'unblock_group_user'
+			subTypes[updateType]
 		];
 	}
 

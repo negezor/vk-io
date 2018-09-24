@@ -1,5 +1,10 @@
 import Context from './context';
 
+const subTypes = {
+	message_allow: 'message_subscribe',
+	message_deny: 'message_unsubscribe'
+};
+
 export default class MessageAllowContext extends Context {
 	/**
 	 * Constructor
@@ -16,9 +21,7 @@ export default class MessageAllowContext extends Context {
 
 		this.type = 'message_subscribers';
 		this.subTypes = [
-			updateType === 'message_allow'
-				? 'message_subscribe'
-				: 'message_unsubscribe'
+			subTypes[updateType]
 		];
 	}
 

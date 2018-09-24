@@ -1,5 +1,10 @@
 import Context from './context';
 
+const subTypes = {
+	group_leave: 'leave_group_member',
+	group_join: 'join_group_member'
+};
+
 export default class GroupMemberContext extends Context {
 	/**
 	 * Constructro
@@ -16,9 +21,7 @@ export default class GroupMemberContext extends Context {
 
 		this.type = 'group_member';
 		this.subTypes = [
-			updateType === 'group_leave'
-				? 'leave_group_member'
-				: 'join_group_member'
+			subTypes[updateType]
 		];
 	}
 

@@ -1,5 +1,11 @@
 import Context from './context';
 
+const subTypes = {
+	10: 'remove_dialog_flags',
+	11: 'update_dialog_flags',
+	12: 'set_dialog_flags'
+};
+
 export default class DialogFlagsContext extends Context {
 	/**
 	 * Constructor
@@ -18,12 +24,7 @@ export default class DialogFlagsContext extends Context {
 
 		this.type = 'dialog_flags';
 		this.subTypes = [
-			// eslint-disable-next-line no-nested-ternary
-			eventId === 10
-				? 'remove_dialog_flags'
-				: eventId === 11
-					? 'update_dialog_flags'
-					: 'set_dialog_flags'
+			subTypes[eventId]
 		];
 	}
 
