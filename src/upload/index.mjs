@@ -680,20 +680,22 @@ export default class Upload {
 		maxFiles = 1,
 		attachmentType
 	}) {
-		if (!Array.isArray(params.source)) {
-			params.source = [params.source];
+		let { source: sources } = params;
+
+		if (!Array.isArray(sources)) {
+			sources = [sources];
 		}
 
-		params.source = params.source.filter(Boolean);
+		sources = sources.filter(Boolean);
 
-		if (params.source.length === 0) {
+		if (sources.length === 0) {
 			throw new UploadError({
 				message: 'No files to upload',
 				code: NO_FILES_TO_UPLOAD
 			});
 		}
 
-		if (params.source.length > maxFiles) {
+		if (sources.length > maxFiles) {
 			throw new UploadError({
 				message: 'The number of files uploaded has exceeded',
 				code: EXCEEDED_MAX_FILES
@@ -706,17 +708,17 @@ export default class Upload {
 			});
 		}
 
-		const [{ upload_url: url }, formData] = await Promise.all([
+		const [{ upload_url: url }, options] = await Promise.all([
 			getServer(copyParams(params, serverParams)),
 			this.buildPayload({
 				field,
+				sources,
 				maxFiles,
-				attachmentType,
-				sources: params.source
+				attachmentType
 			})
 		]);
 
-		const uploaded = await this.upload(url, formData, params);
+		const uploaded = await this.upload(url, options);
 
 		if (typeof uploaded !== 'object') {
 			return await saveFiles(uploaded);
@@ -746,6 +748,8 @@ export default class Upload {
 
 		const isMultipart = maxFiles > 1;
 
+		let maxTimeout = 0;
+
 		const tasks = sources
 			.map((source) => {
 				if (typeof source === 'object' && 'value' in source) {
@@ -754,7 +758,16 @@ export default class Upload {
 
 				return { value: source };
 			})
-			.map(async ({ value, filename, contentType = null }, i) => {
+			.map(async ({
+				value,
+				filename,
+				timeout = 0,
+				contentType = null
+			}, i) => {
+				if (maxTimeout < timeout) {
+					maxTimeout = timeout;
+				}
+
 				if (typeof value === 'string') {
 					if (isURL.test(value)) {
 						const response = await fetch(value);
@@ -774,13 +787,11 @@ export default class Upload {
 						? field + (i + 1)
 						: field;
 
-					const headers = {};
-
-					if (contentType !== null) {
-						headers['Content-Type'] = contentType;
-					} else if (attachmentType in defaultContentTypes) {
-						headers['Content-Type'] = defaultContentTypes[attachmentType];
-					}
+					const headers = {
+						'Content-Type': contentType === null
+							? defaultContentTypes[attachmentType]
+							: contentType
+					};
 
 					return formData.append(name, value, { filename, headers });
 				}
@@ -793,19 +804,21 @@ export default class Upload {
 
 		await Promise.all(tasks);
 
-		return formData;
+		return {
+			formData,
+			timeout: maxTimeout
+		};
 	}
 
 	/**
 	 * Upload form data
 	 *
-	 * @param {URL|string}      url
-	 * @param {MultipartStream} formData
-	 * @param {Object}          options
+	 * @param {URL|string} url
+	 * @param {Object}     options
 	 *
 	 * @return {Promise<Object>}
 	 */
-	async upload(url, formData, { timeout } = {}) {
+	async upload(url, { formData, timeout }) {
 		const { agent, uploadTimeout } = this.vk.options;
 
 		let response = await fetch(url, {
@@ -820,17 +833,15 @@ export default class Upload {
 			body: formData
 		});
 
-		if (response.status !== 200) {
+		if (!response.ok) {
 			throw new Error(response.statusText);
 		}
 
 		response = await response.json();
 
-		if ('response' in response) {
-			return response.response;
-		}
-
-		return response;
+		return 'response' in response
+			? response.response
+			: response;
 	}
 
 	/**
