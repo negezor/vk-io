@@ -1,34 +1,21 @@
 {
 	"env": {
-		"es6": true,
 		"node": true
 	},
-	"extends": "airbnb-base",
+	"extends": [
+		"airbnb-base",
+		"plugin:import/errors",
+		"plugin:import/warnings"
+	],
 	"parserOptions": {
-		"ecmaVersion": 2018,
+		"ecmaVersion": 2019,
 		"sourceType": "module"
 	},
-	"settings": {
-		"import/resolver": {
-			"node": {
-				"extensions": [".mjs", ".js"]
-			}
-		}
-	},
 	"rules": {
-		"import/extensions": [
-			"error",
-			"always",
-			{
-				"mjs": "never",
-				"js": "never"
-			}
-		],
+		"no-restricted-syntax": ["error", "WithStatement"],
 		"class-methods-use-this": 0,
-		"no-restricted-syntax": 0,
 		"no-param-reassign": 0,
 		"no-await-in-loop": 0,
-		"no-return-await": 0,
 		"comma-dangle": 0,
 		"no-continue": 0,
 		"no-bitwise": 0,
