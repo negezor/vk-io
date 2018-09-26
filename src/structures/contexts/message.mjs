@@ -817,7 +817,7 @@ export default class MessageContext extends Context {
 
 		const isKicked = await this.vk.api.messages.removeChatUser({
 			chat_id: this.chatId,
-			user_id: id
+			member_id: id
 		});
 
 		return Boolean(isKicked);
