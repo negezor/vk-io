@@ -327,11 +327,11 @@ export default class AccountVerification {
 	 *
 	 * @return {Promise<Response>}
 	 */
-	async processValidateForm(response, $) {
+	processValidateForm(response, $) {
 		const href = $('#activation_wrap a').attr('href');
 		const url = getFullURL(href, response);
 
-		return await this.fetch(url, {
+		return this.fetch(url, {
 			method: 'GET'
 		});
 	}
@@ -396,9 +396,11 @@ export default class AccountVerification {
 
 		url.searchParams.set('utf8', 1);
 
-		return await this.fetch(url, {
+		const pageResponse = await this.fetch(url, {
 			method: 'POST',
 			body: new URLSearchParams(fields)
 		});
+
+		return pageResponse;
 	}
 }

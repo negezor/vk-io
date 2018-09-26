@@ -245,9 +245,11 @@ export default class StreamingAPI {
 	async deleteRules() {
 		const rules = await this.getRules();
 
-		return await Promise.all(rules.map(({ tag }) => (
+		const response = await Promise.all(rules.map(({ tag }) => (
 			this.deleteRule(tag)
 		)));
+
+		return response;
 	}
 
 	/**

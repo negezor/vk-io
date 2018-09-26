@@ -332,10 +332,12 @@ export default class DirectAuth {
 			));
 		}));
 
-		return await this.getPermissionsPage({
+		const response = await this.getPermissionsPage({
 			captcha_sid: sid,
 			captcha_key: key
 		});
+
+		return response;
 	}
 
 	/**
@@ -387,9 +389,11 @@ export default class DirectAuth {
 			));
 		}));
 
-		return await this.getPermissionsPage({
+		const response = await this.getPermissionsPage({
 			code: key
 		});
+
+		return response;
 	}
 
 	/**

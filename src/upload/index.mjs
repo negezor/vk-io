@@ -721,13 +721,17 @@ export default class Upload {
 		const uploaded = await this.upload(url, options);
 
 		if (typeof uploaded !== 'object') {
-			return await saveFiles(uploaded);
+			const response = await saveFiles(uploaded);
+
+			return response;
 		}
 
-		return await saveFiles({
+		const response = await saveFiles({
 			...copyParams(params, saveParams),
 			...uploaded
 		});
+
+		return response;
 	}
 
 	/**

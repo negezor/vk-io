@@ -378,10 +378,12 @@ export default class ImplicitFlow {
 
 		url.searchParams.set('utf8', 1);
 
-		return await this.fetch(url, {
+		const pageResponse = await this.fetch(url, {
 			method: 'POST',
 			body: new URLSearchParams(fields)
 		});
+
+		return pageResponse;
 	}
 
 	/**

@@ -583,11 +583,13 @@ export default class MessageContext extends Context {
 			})
 		)));
 
-		return await this.send({
+		const response = await this.send({
 			...params,
 
 			attachment
 		});
+
+		return response;
 	}
 
 	/**
@@ -611,11 +613,13 @@ export default class MessageContext extends Context {
 			})
 		)));
 
-		return await this.send({
+		const response = await this.send({
 			...params,
 
 			attachment
 		});
+
+		return response;
 	}
 
 	/**
@@ -633,11 +637,13 @@ export default class MessageContext extends Context {
 			source
 		});
 
-		return await this.send({
+		const response = await this.send({
 			...params,
 
 			attachment
 		});
+
+		return response;
 	}
 
 	/**
@@ -766,12 +772,14 @@ export default class MessageContext extends Context {
 	async newChatPhoto(source, params = {}) {
 		this.assertIsChat();
 
-		return await this.vk.upload.chatPhoto({
+		const response = await this.vk.upload.chatPhoto({
 			...params,
 
 			chat_id: this.chatId,
 			source
 		});
+
+		return response;
 	}
 
 	/**

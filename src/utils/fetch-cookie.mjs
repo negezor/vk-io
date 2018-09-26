@@ -67,11 +67,13 @@ export const fetchCookieFollowRedirectsDecorator = (jar) => {
 				follow = options.follow - 1;
 			}
 
-			return await fetchCookieFollowRedirects(response.headers.get('location'), {
+			const redirectResponse = await fetchCookieFollowRedirects(response.headers.get('location'), {
 				method: 'GET',
 				body: null,
 				follow
 			});
+
+			return redirectResponse;
 		}
 
 		return response;
