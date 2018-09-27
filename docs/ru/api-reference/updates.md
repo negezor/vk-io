@@ -14,6 +14,8 @@ updates.isStarted(); // => boolean
 ## startPolling
 Запускает запрос сервера для получения обновлений
 
+Если вам нужно использовать Bots Long Poll API для этого нужно передать свойство [pollingGroupId](./vk.md#Опции-polling-user-long-poll-api-и-bots-long-poll-api)
+
 > Обратите внимание
 
 > Если вы используете Webhook не получится запустить одновременно опрос
