@@ -7,13 +7,11 @@ import pkg from './package.json';
 
 const babelConfig = require('./babel.config');
 
-const dependencies = Object.keys(pkg.dependencies);
-
 export default [
 	{
 		input: 'src/index.mjs',
 		external: [
-			...dependencies,
+			...Object.keys(pkg.dependencies),
 			'crypto',
 			'stream',
 			'https',
