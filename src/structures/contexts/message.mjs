@@ -5,6 +5,7 @@ import { VKError } from '../../errors';
 import MessageForward from '../shared/message-forward';
 import transformMessage from '../../updates/transform-message';
 
+import { getPeerType } from '../shared/helpers';
 import { transformAttachments } from '../attachments/helpers';
 import { uniqueKeys, unescapeHTML, copyParams } from '../../utils/helpers';
 import {
@@ -14,23 +15,11 @@ import {
 	inspectCustomData
 } from '../../utils/constants';
 
-/**
- * Returns peer id type
- *
- * @param {number} id
- *
- * @return {string}
- */
-const getPeerType = (id) => {
-	if (CHAT_PEER < id) {
-		return messageSources.CHAT;
-	}
-
-	if (id < 0) {
-		return messageSources.GROUP;
-	}
-
-	return messageSources.USER;
+const subTypesEnum = {
+	4: 'new_message',
+	5: 'edit_message',
+	message_new: 'new_message',
+	message_edit: 'edit_message'
 };
 
 export default class MessageContext extends Context {
@@ -44,10 +33,7 @@ export default class MessageContext extends Context {
 	constructor(vk, payload, { source, updateType, groupId = null }) {
 		super(vk);
 
-		const isPolling = source === updatesSources.POLLING;
-		const isWebhook = source === updatesSources.WEBHOOK;
-
-		if (isPolling) {
+		if (source === updatesSources.POLLING) {
 			payload = transformMessage(payload);
 		}
 
@@ -55,10 +41,10 @@ export default class MessageContext extends Context {
 			payload.action = {};
 		}
 
-		this.payload = payload;
-
-		this.$filled = isWebhook;
 		this.$groupId = groupId;
+		this.$filled = source === updatesSources.WEBHOOK;
+
+		this.applyPayload(payload);
 
 		const { peer_id: peerId, from_id: fromId } = payload;
 
@@ -71,36 +57,13 @@ export default class MessageContext extends Context {
 			type: getPeerType(fromId)
 		};
 
-		this.text = this.payload.text
-			? unescapeHTML(this.payload.text)
-			: null;
-		this.forwards = payload.fwd_messages
-			? payload.fwd_messages.map(forward => (
-				new MessageForward(forward, vk)
-			))
-			: [];
-		this.attachments = transformAttachments(payload.attachments, vk);
-
 		const subTypes = uniqueKeys(this.attachments.map(attachment => attachment.type));
 
-		if (!this.isEvent) {
-			if (isWebhook) {
-				subTypes.push((
-					updateType === 'message_edit'
-						? 'edit_message'
-						: 'new_message'
-
-				));
-			} else if (isPolling) {
-				subTypes.push((
-					updateType === 5
-						? 'edit_message'
-						: 'new_message'
-				));
-			}
-		} else {
-			subTypes.push(this.eventType);
-		}
+		subTypes.push(
+			!this.isEvent
+				? subTypesEnum[updateType]
+				: this.eventType
+		);
 
 		if (this.hasText) {
 			subTypes.push('text');
@@ -131,9 +94,7 @@ export default class MessageContext extends Context {
 
 		const [message] = items;
 
-		this.payload = message;
-
-		this.attachments = transformAttachments(message.attachments, this.vk);
+		this.applyPayload(message);
 
 		this.$filled = true;
 	}
@@ -861,6 +822,27 @@ export default class MessageContext extends Context {
 		});
 
 		return Boolean(isUnpinned);
+	}
+
+	/**
+	 * Applies the payload
+	 *
+	 * @param {Object} payload
+	 */
+	applyPayload(payload) {
+		this.payload = payload;
+
+		const { vk } = this;
+
+		this.text = payload.text
+			? unescapeHTML(payload.text)
+			: null;
+		this.forwards = payload.fwd_messages
+			? payload.fwd_messages.map(forward => (
+				new MessageForward(forward, vk)
+			))
+			: [];
+		this.attachments = transformAttachments(payload.attachments, vk);
 	}
 
 	/**

@@ -33,7 +33,7 @@ export const fetchCookieDecorator = (jar = new CookieJar()) => {
 			headers
 		});
 
-		const cookies = response.headers.raw()['set-cookie'] || [];
+		const { 'set-cookie': cookies = [] } = response.headers.raw();
 
 		if (cookies.length === 0) {
 			return response;
