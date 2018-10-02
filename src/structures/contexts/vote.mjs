@@ -1,5 +1,8 @@
 import Context from './context';
 
+import { copyParams } from '../../utils/helpers';
+import { inspectCustomData } from '../../utils/constants';
+
 export default class VoteContext extends Context {
 	/**
 	 * Constructor
@@ -52,5 +55,19 @@ export default class VoteContext extends Context {
 	 */
 	get optionId() {
 		return this.payload.option_id;
+	}
+
+	/**
+	 * Returns the custom data
+	 *
+	 * @type {Object}
+	 */
+	[inspectCustomData]() {
+		return copyParams(this, [
+			'id',
+			'userId',
+			'ownerId',
+			'optionId'
+		]);
 	}
 }

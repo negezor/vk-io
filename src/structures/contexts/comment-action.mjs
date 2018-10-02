@@ -1,5 +1,9 @@
 import Context from './context';
+
 import { VKError } from '../../errors';
+
+import { copyParams } from '../../utils/helpers';
+import { inspectCustomData } from '../../utils/constants';
 import { transformAttachments } from '../attachments/helpers';
 
 /**
@@ -380,5 +384,33 @@ export default class CommentActionContext extends Context {
 		return Promise.reject(new VKError({
 			message: 'Unsupported event for deleting comment'
 		}));
+	}
+
+	/**
+	 * Returns the custom data
+	 *
+	 * @type {Object}
+	 */
+	[inspectCustomData]() {
+		const propertyies = [
+			'id',
+			'replyId',
+			'userId',
+			'replyUserId',
+			'removerUserId',
+			'objectId',
+			'ownerId',
+			'createdAt',
+			'text',
+			'likes',
+			'attachments',
+			'isReply'
+		];
+
+		const filtredEmptyProperties = propertyies.filter(property => (
+			this[property] !== null
+		));
+
+		return copyParams(this, filtredEmptyProperties);
 	}
 }

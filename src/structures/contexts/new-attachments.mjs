@@ -8,6 +8,9 @@ import {
 	AudioAttachment
 } from '../attachments';
 
+import { copyParams } from '../../utils/helpers';
+import { inspectCustomData } from '../../utils/constants';
+
 const subTypes = {
 	photo_new: ['new_photo_attachment', PhotoAttachment],
 	video_new: ['new_video_attachment', VideoAttachment],
@@ -133,5 +136,19 @@ export default class NewAttachmentsContext extends Context {
 		return Promise.reject(new VKError({
 			message: 'Unsupported event for deleting attachment'
 		}));
+	}
+
+	/**
+	 * Returns the custom data
+	 *
+	 * @type {Object}
+	 */
+	[inspectCustomData]() {
+		return copyParams(this, [
+			'attachments',
+			'isPhoto',
+			'isVideo',
+			'isAudio'
+		]);
 	}
 }

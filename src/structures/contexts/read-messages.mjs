@@ -1,5 +1,8 @@
 import Context from './context';
 
+import { copyParams } from '../../utils/helpers';
+import { inspectCustomData } from '../../utils/constants';
+
 const subTypes = {
 	6: 'read_inbox_messages',
 	7: 'read_outbox_messages'
@@ -61,5 +64,19 @@ export default class ReadMessagesContext extends Context {
 	 */
 	get peerId() {
 		return this.payload.peer_id;
+	}
+
+	/**
+	 * Returns the custom data
+	 *
+	 * @type {Object}
+	 */
+	[inspectCustomData]() {
+		return copyParams(this, [
+			'id',
+			'peerId',
+			'isInbox',
+			'isOutbox'
+		]);
 	}
 }

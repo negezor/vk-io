@@ -1,6 +1,7 @@
 import Context from './context';
 
-import { platforms } from '../../utils/constants';
+import { copyParams } from '../../utils/helpers';
+import { platforms, inspectCustomData } from '../../utils/constants';
 
 const subTypes = {
 	8: 'user_online',
@@ -91,5 +92,22 @@ export default class UserOnlineContext extends Context {
 	 */
 	get platformName() {
 		return platforms.get(this.payload.extra);
+	}
+
+	/**
+	 * Returns the custom data
+	 *
+	 * @type {Object}
+	 */
+	[inspectCustomData]() {
+		return copyParams(this, [
+			'userId',
+			'createdAt',
+			'platformName',
+			'isSelfExit',
+			'isTimeoutExit',
+			'isUserOnline',
+			'isUserOffline'
+		]);
 	}
 }

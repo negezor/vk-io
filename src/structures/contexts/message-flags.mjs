@@ -1,5 +1,8 @@
 import Context from './context';
 
+import { copyParams } from '../../utils/helpers';
+import { inspectCustomData } from '../../utils/constants';
+
 const subTypes = {
 	1: 'update_message_flags',
 	2: 'set_message_flags',
@@ -153,5 +156,18 @@ export default class MessageFlagsContext extends Context {
 	 */
 	get flags() {
 		return this.payload.flags;
+	}
+
+	/**
+	 * Returns the custom data
+	 *
+	 * @type {Object}
+	 */
+	[inspectCustomData]() {
+		return copyParams(this, [
+			'id',
+			'peerId',
+			'flags'
+		]);
 	}
 }

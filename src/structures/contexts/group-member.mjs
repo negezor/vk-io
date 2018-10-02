@@ -1,5 +1,8 @@
 import Context from './context';
 
+import { copyParams } from '../../utils/helpers';
+import { inspectCustomData } from '../../utils/constants';
+
 const subTypes = {
 	group_leave: 'leave_group_member',
 	group_join: 'join_group_member'
@@ -76,5 +79,20 @@ export default class GroupMemberContext extends Context {
 		}
 
 		return this.payload.join_type;
+	}
+
+	/**
+	 * Returns the custom data
+	 *
+	 * @type {Object}
+	 */
+	[inspectCustomData]() {
+		return copyParams(this, [
+			'userId',
+			'joinType',
+			'isJoin',
+			'isLeave',
+			'isSelfLeave'
+		]);
 	}
 }

@@ -1,5 +1,8 @@
 import Context from './context';
 
+import { copyParams } from '../../utils/helpers';
+import { inspectCustomData } from '../../utils/constants';
+
 const subTypes = {
 	message_allow: 'message_subscribe',
 	message_deny: 'message_unsubscribe'
@@ -59,5 +62,19 @@ export default class MessageAllowContext extends Context {
 	 */
 	get key() {
 		return this.payload.key || null;
+	}
+
+	/**
+	 * Returns the custom data
+	 *
+	 * @type {Object}
+	 */
+	[inspectCustomData]() {
+		return copyParams(this, [
+			'userId',
+			'key',
+			'isSubscribed',
+			'isUbsubscribed'
+		]);
 	}
 }

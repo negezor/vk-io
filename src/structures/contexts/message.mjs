@@ -851,20 +851,28 @@ export default class MessageContext extends Context {
 	 * @type {Object}
 	 */
 	[inspectCustomData]() {
-		let events = [];
+		const beforeAttachments = [];
 
 		if (this.isEvent) {
-			events = [
+			beforeAttachments.push(
 				'eventType',
 				'eventMemberId',
 				'eventText',
 				'eventEmail'
-			];
+			);
 		}
 
-		const other = this.hasMessagePayload
-			? ['messagePayload']
-			: [];
+		const afterAttachments = [];
+
+		if (this.hasMessagePayload) {
+			afterAttachments.push('messagePayload');
+		}
+
+		afterAttachments.push('isOutbox');
+
+		if (this.$match) {
+			afterAttachments.push('$match');
+		}
 
 		return copyParams(this, [
 			'id',
@@ -875,11 +883,10 @@ export default class MessageContext extends Context {
 			'senderType',
 			'createdAt',
 			'text',
-			...events,
+			...beforeAttachments,
 			'forwards',
 			'attachments',
-			...other,
-			'isOutbox'
+			...afterAttachments
 		]);
 	}
 }

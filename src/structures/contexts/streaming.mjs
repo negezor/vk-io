@@ -1,7 +1,8 @@
 import Context from './context';
 
-import { platforms } from '../../utils/constants';
+import { copyParams } from '../../utils/helpers';
 import { transformAttachments } from '../attachments/helpers';
+import { platforms, inspectCustomData } from '../../utils/constants';
 
 export default class StreamingContext extends Context {
 	/**
@@ -276,5 +277,45 @@ export default class StreamingContext extends Context {
 		return this.attachments.filter(attachment => (
 			attachment.type === type
 		));
+	}
+
+	/**
+	 * Returns the custom data
+	 *
+	 * @type {Object}
+	 */
+	[inspectCustomData]() {
+		const propertyies = [
+			'url',
+			'created',
+			'text',
+			'sharedText',
+			'sharedAt',
+			'actionType',
+			'eventType',
+			'actionAt',
+			'geo',
+			'tags',
+			'signerId',
+			'author',
+			'authorId',
+			'authorUrl',
+			'sharedAuthorId',
+			'sharedAuthorUrl',
+			'authorPlatform',
+			'isNew',
+			'isUpdate',
+			'isDelete',
+			'isRestore',
+			'isPost',
+			'isShare',
+			'isComment'
+		];
+
+		const filtredEmptyProperties = propertyies.filter(property => (
+			this[property] !== null
+		));
+
+		return copyParams(this, filtredEmptyProperties);
 	}
 }

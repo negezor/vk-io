@@ -2,6 +2,9 @@ import Context from './context';
 
 import { VKError } from '../../errors';
 
+import { copyParams } from '../../utils/helpers';
+import { inspectCustomData } from '../../utils/constants';
+
 /**
  * Causes of blocking
  *
@@ -154,5 +157,23 @@ export default class GroupUserContext extends Context {
 			group_id: this.$groupId,
 			user_id: this.userId
 		});
+	}
+
+	/**
+	 * Returns the custom data
+	 *
+	 * @type {Object}
+	 */
+	[inspectCustomData]() {
+		return copyParams(this, [
+			'adminId',
+			'userId',
+			'reasonId',
+			'reasonName',
+			'comment',
+			'isExpired',
+			'isBlocked',
+			'isUnblocked'
+		]);
 	}
 }

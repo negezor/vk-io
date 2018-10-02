@@ -1,6 +1,7 @@
 import Context from './context';
 
-import { CHAT_PEER } from '../../utils/constants';
+import { copyParams } from '../../utils/helpers';
+import { CHAT_PEER, inspectCustomData } from '../../utils/constants';
 
 const subTypes = {
 	61: 'typing_user',
@@ -80,5 +81,20 @@ export default class TypingContext extends Context {
 	 */
 	get chatId() {
 		return this.payload.chat_id;
+	}
+
+	/**
+	 * Returns the custom data
+	 *
+	 * @type {Object}
+	 */
+	[inspectCustomData]() {
+		return copyParams(this, [
+			'peerId',
+			'userId',
+			'chatId',
+			'isUser',
+			'isChat'
+		]);
 	}
 }

@@ -1,5 +1,8 @@
 import Context from './context';
 
+import { copyParams } from '../../utils/helpers';
+import { inspectCustomData } from '../../utils/constants';
+
 const subTypes = {
 	10: 'remove_dialog_flags',
 	11: 'update_dialog_flags',
@@ -92,5 +95,19 @@ export default class DialogFlagsContext extends Context {
 
 			peer_id: this.peerId
 		});
+	}
+
+	/**
+	 * Returns the custom data
+	 *
+	 * @type {Object}
+	 */
+	[inspectCustomData]() {
+		return copyParams(this, [
+			'peerId',
+			'flags',
+			'isImportant',
+			'isUnanswered'
+		]);
 	}
 }

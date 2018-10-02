@@ -2,6 +2,9 @@ import Context from './context';
 
 import { PhotoAttachment } from '../attachments';
 
+import { copyParams } from '../../utils/helpers';
+import { inspectCustomData } from '../../utils/constants';
+
 const subTypes = {
 	group_change_photo: 'group_update_photo',
 	group_update_officers: 'group_update_officers',
@@ -136,5 +139,21 @@ export default class GroupUpdateContext extends Context {
 		return this.attachments.filter(attachment => (
 			attachment.type === type
 		));
+	}
+
+	/**
+	 * Returns the custom data
+	 *
+	 * @type {Object}
+	 */
+	[inspectCustomData]() {
+		return copyParams(this, [
+			'adminId',
+			'userId',
+			'oldLevel',
+			'newLevel',
+			'changes',
+			'attachments'
+		]);
 	}
 }
