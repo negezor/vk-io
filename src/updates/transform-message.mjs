@@ -77,7 +77,7 @@ export default function transformMessage([, id, flags, peer, date, text, extra, 
 			specialAttachments[attachments.attach1_type](attachments)
 		];
 	} else {
-		message.attachments = [];
+		const messageAttachments = [];
 
 		for (let i = 1, key = 'attach1'; key in attachments; i += 1, key = `attach${i}`) {
 			const type = attachments[`${key}_type`];
@@ -103,7 +103,7 @@ export default function transformMessage([, id, flags, peer, date, text, extra, 
 					};
 				}
 
-				message.attachments.push(attachment);
+				messageAttachments.push(attachment);
 
 				continue;
 			}
@@ -124,8 +124,10 @@ export default function transformMessage([, id, flags, peer, date, text, extra, 
 				attachment[type].kind = attachments[kindKey];
 			}
 
-			message.attachments.push(attachment);
+			messageAttachments.push(attachment);
 		}
+
+		message.attachments = messageAttachments;
 	}
 
 	let { fwd = null } = attachments;
