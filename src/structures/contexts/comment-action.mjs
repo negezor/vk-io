@@ -253,7 +253,7 @@ export default class CommentActionContext extends Context {
 	 * @return {?Object}
 	 */
 	get likes() {
-		return this.payload.likes;
+		return this.payload.likes || null;
 	}
 
 	/**

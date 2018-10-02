@@ -129,10 +129,10 @@ export default class StreamingContext extends Context {
 	/**
 	 * Returns the text of the post
 	 *
-	 * @return {string}
+	 * @return {?string}
 	 */
 	get text() {
-		return this.payload.text;
+		return this.payload.text || null;
 	}
 
 	/**
@@ -192,7 +192,7 @@ export default class StreamingContext extends Context {
 	/**
 	 * Returns the rule tags
 	 *
-	 * @return {Array}
+	 * @return {string[]}
 	 */
 	get tags() {
 		return this.payload.tags;

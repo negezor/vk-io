@@ -67,6 +67,15 @@ export default class UserOnlineContext extends Context {
 	}
 
 	/**
+	 * Returns the user id
+	 *
+	 * @return {?number}
+	 */
+	get userId() {
+		return this.payload.user_id || null;
+	}
+
+	/**
 	 * Returns the date when this event was created
 	 *
 	 * @return {number}

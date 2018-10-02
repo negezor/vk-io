@@ -82,7 +82,7 @@ export default class GroupUpdateContext extends Context {
 	 * @return {?number}
 	 */
 	get adminId() {
-		return this.payload.admin_id;
+		return this.payload.admin_id || null;
 	}
 
 	/**
