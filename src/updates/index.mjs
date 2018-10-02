@@ -83,14 +83,14 @@ const webhookContextsEvents = [
 			'wall_reply_edit',
 			'wall_reply_delete',
 			'wall_reply_restore',
-			'board_reply_new',
-			'board_reply_edit',
-			'board_reply_delete',
-			'board_reply_restore',
-			'market_reply_new',
-			'market_reply_edit',
-			'market_reply_delete',
-			'market_reply_restore'
+			'board_post_new',
+			'board_post_edit',
+			'board_post_delete',
+			'board_post_restore',
+			'market_comment_new',
+			'market_comment_edit',
+			'market_comment_delete',
+			'market_comment_restore'
 		],
 		CommentActionContext
 	],
