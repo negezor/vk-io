@@ -19,7 +19,10 @@ export default class WallAttachment extends Attachment {
 		this.vk = vk;
 		this.payload = payload;
 
-		this.attachments = transformAttachments(payload.attachments);
+		this.attachments = transformAttachments(payload.attachments || []);
+		this.copyHistoryAttachments = payload.copy_history
+			? payload.copy_history.map(history => new WallAttachment(history, vk))
+			: [];
 
 		this.$filled = 'date' in payload;
 	}
@@ -60,7 +63,11 @@ export default class WallAttachment extends Attachment {
 			return null;
 		}
 
-		return this.payload.comments.count > 0;
+		const { commentsCount } = this;
+
+		return commentsCount !== null
+			? commentsCount > 0
+			: null;
 	}
 
 	/**
@@ -354,7 +361,9 @@ export default class WallAttachment extends Attachment {
 			return null;
 		}
 
-		return this.payload.views.count;
+		return 'views' in this.payload
+			? this.payload.views.count
+			: null;
 	}
 
 	/**
@@ -367,7 +376,9 @@ export default class WallAttachment extends Attachment {
 			return null;
 		}
 
-		return this.payload.likes.count;
+		return 'likes' in this.payload
+			? this.payload.likes.count
+			: null;
 	}
 
 	/**
@@ -380,7 +391,24 @@ export default class WallAttachment extends Attachment {
 			return null;
 		}
 
-		return this.payload.reposts.count;
+		return 'reposts' in this.payload
+			? this.payload.reposts.count
+			: null;
+	}
+
+	/**
+	 * Returns the comments count
+	 *
+	 * @return {?number}
+	 */
+	get commentsCount() {
+		if (!this.$filled) {
+			return null;
+		}
+
+		return 'comments' in this.payload
+			? this.payload.comments.count
+			: null;
 	}
 
 	/**
@@ -408,6 +436,15 @@ export default class WallAttachment extends Attachment {
 	 */
 	get geo() {
 		return this.payload.geo || null;
+	}
+
+	/**
+	 * Returns the history of reposts for post
+	 *
+	 * @return {WallAttachment[]}
+	 */
+	get copyHistory() {
+		return this.copyHistoryAttachments;
 	}
 
 	/**
@@ -445,9 +482,12 @@ export default class WallAttachment extends Attachment {
 			'viewsCount',
 			'likesCount',
 			'repostsCount',
+			'commentsCount',
 			'likes',
 			'postSource',
-			'geo'
+			'geo',
+			'copyHistory',
+			'attachments'
 		]);
 	}
 }
