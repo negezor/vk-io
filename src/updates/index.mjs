@@ -535,6 +535,7 @@ export default class Updates {
 
 			let body = '';
 
+			req.on('error', debug);
 			req.on('data', (chunk) => {
 				if (body.length > 1e6) {
 					body = null;
