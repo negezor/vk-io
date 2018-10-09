@@ -39,6 +39,8 @@ export default class Request {
 	 */
 	addAttempt() {
 		this.attempts += 1;
+
+		return this.attempts;
 	}
 
 	/**
