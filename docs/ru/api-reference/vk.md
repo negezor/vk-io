@@ -112,29 +112,28 @@ vk.setOptions(options); // => this
 |-----------------|--------|-------------------------------------------------|--------------|
 | collectAttempts | number | Количество попыток повтора запроса после ошибки | 3            |
 
-## setToken
+## token
 Устанавливает токен
 
 ```js
-vk.setToken(token); // => this
+vk.token = token;
 ```
 
 | Параметр | Тип    | Описание |
 |----------|--------|----------|
 | token    | string | Токен    |
 
-## getToken
 Возвращает токен
 
 ```js
-vk.getToken(); // ?string
+vk.token; // ?string
 ```
 
-### setCaptchaHandler
+### captchaHandler
 Устанавливает обработчик капчи
 
 ```js
-vk.setCaptchaHandler(handler); // => this
+vk.captchaHandler = handler;
 ```
 
 | Параметр | Тип      | Описание         |
@@ -142,7 +141,7 @@ vk.setCaptchaHandler(handler); // => this
 | handler  | Function | Обработчик капчи |
 
 ```js
-vk.setCaptchaHandler((payload, retry) => {...}); // => this
+vk.captchaHandler = (payload, retry) => {...};
 ```
 
 | Параметр | Тип      | Описание                       |
@@ -161,7 +160,7 @@ vk.setCaptchaHandler((payload, retry) => {...}); // => this
 Пример использования
 
 ```js
-vk.setCaptchaHandler(async ({ src }, retry) => {
+vk.captchaHandler = async ({ src }, retry) => {
 	const key = await myAwesomeCaptchaHandler(src);
 
 	try {
@@ -171,14 +170,14 @@ vk.setCaptchaHandler(async ({ src }, retry) => {
 	} catch (error) {
 		console.log('Капча неверная');
 	}
-});
+};
 ```
 
-## setTwoFactorHandler
-Устанавливает обработчик двух факторной защиты
+## twoFactorHandler
+Устанавливает обработчик двухфакторной защиты
 
 ```js
-vk.setTwoFactorHandler(handler); // => this
+vk.twoFactorHandler = handler;
 ```
 
 | Параметр | Тип      | Описание                         |
@@ -186,7 +185,7 @@ vk.setTwoFactorHandler(handler); // => this
 | handler  | Function | Обработчик двух факторной защиты |
 
 ```js
-vk.setTwoFactorHandler((payload, retry) => {...});
+vk.twoFactorHandler = (payload, retry) => {...};
 ```
 
 | Параметр | Тип      | Описание                                       |
@@ -197,15 +196,15 @@ vk.setTwoFactorHandler((payload, retry) => {...});
 Пример использования
 
 ```js
-vk.setCaptchaHandler(async (payload, retry) => {
+vk.twoFactorHandler = async (payload, retry) => {
 	const code = await getTwoFactorCode();
 
 	try {
 		await retry(code);
 
-		console.log('Двух факторная авторизация пройдена');
+		console.log('Двухфакторная авторизация пройдена');
 	} catch (error) {
-		console.log('Двух факторная авторизация провалилась');
+		console.log('Двухфакторная авторизация провалилась');
 	}
-});
+};
 ```

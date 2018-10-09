@@ -448,7 +448,7 @@ export default class API {
 
 				debug('Account verification passed');
 
-				this.vk.setToken(token);
+				this.vk.token = token;
 
 				this.suspended = false;
 
