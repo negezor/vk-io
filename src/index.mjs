@@ -6,7 +6,11 @@ export * from './structures/buttons';
 export * from './structures/contexts';
 export * from './structures/attachments';
 
-export { captchaTypes, messageSources } from './utils/constants';
+export {
+	captchaTypes,
+	messageSources,
+	attachmentTypes
+} from './utils/constants';
 
 export { VK, Request };
 
