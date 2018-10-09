@@ -8,7 +8,6 @@ import Collect from './collect';
 import Updates from './updates';
 import Snippets from './snippets';
 import StreamingAPI from './streaming';
-
 import CallbackService from './utils/callback-service';
 
 import { defaultOptions } from './utils/constants';
@@ -76,13 +75,9 @@ export default class VK {
 	 * Sets token
 	 *
 	 * @param {string} token
-	 *
-	 * @return {this}
 	 */
-	setToken(token) {
+	set token(token) {
 		this.options.token = token;
-
-		return this;
 	}
 
 	/**
@@ -90,7 +85,7 @@ export default class VK {
 	 *
 	 * @return {?string}
 	 */
-	getToken() {
+	get token() {
 		return this.options.token;
 	}
 
@@ -102,12 +97,10 @@ export default class VK {
 	 * @return {this}
 	 *
 	 * @example
-	 * 	vk.setCaptchaHandler((payload, retry) => {...});
+	 * 	vk.captchaHandler = (payload, retry) => {...};
 	 */
-	setCaptchaHandler(handler) {
+	set captchaHandler(handler) {
 		this.callbackService.captchaHandler = handler;
-
-		return this;
 	}
 
 	/**
@@ -118,12 +111,10 @@ export default class VK {
 	 * @return {this}
 	 *
 	 * @example
-	 * 	vk.setTwoFactorHandler((payload, retry) => {...});
+	 * 	vk.twoFactorHandler = (payload, retry) => {...};
 	 */
-	setTwoFactorHandler(handler) {
+	set twoFactorHandler(handler) {
 		this.callbackService.twoFactorHandler = handler;
-
-		return this;
 	}
 
 	/**
