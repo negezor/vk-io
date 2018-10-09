@@ -59,7 +59,7 @@ export default class ImplicitFlowGroups extends ImplicitFlow {
 	 * @return {Promise<Response>}
 	 */
 	getPermissionsPage() {
-		const { app } = this;
+		const { appId } = this;
 		let { scope } = this;
 
 		if (scope === 'all' || scope === null) {
@@ -76,7 +76,7 @@ export default class ImplicitFlowGroups extends ImplicitFlow {
 			response_type: 'token',
 			display: 'page',
 			v: API_VERSION,
-			client_id: app,
+			client_id: appId,
 			scope
 		});
 

@@ -21,7 +21,7 @@ const { auth } = vk;
 
 ## direct
 
-Прямая авторизация по логину и паролю с указанием `app` и `key` в [опциях](vk.md#Опции-авторизации)
+Прямая авторизация по логину и паролю с указанием `appId` и `appSecret` в [опциях](vk.md#Опции-авторизации)
 
 ```js
 const direct = auth.direct(); // => DirectAuth
@@ -31,8 +31,9 @@ const direct = auth.direct(); // => DirectAuth
 
 ```js
 vk.setOptions({
-	app: process.env.APP,
-	key: process.env.KEY,
+	appId: process.env.APP_ID,
+	appSecret: process.env.APP_SECRET,
+
 	login: process.env.LOGIN,
 	password: process.env.PASSORD
 });
@@ -106,7 +107,7 @@ const implicitFlow = auth.implicitFlowUser(); // => ImplicitFlowUser
 
 ```js
 vk.setOptions({
-	app: process.env.APP,
+	appId: process.env.APP,
 	login: process.env.LOGIN,
 	password: process.env.PASSORD
 });
@@ -138,7 +139,7 @@ const implicitFlow = auth.implicitFlowGroups(groups); // => ImplicitFlowGroups
 
 ```js
 vk.setOptions({
-	app: process.env.APP,
+	appId: process.env.APP,
 	login: process.env.LOGIN,
 	password: process.env.PASSORD
 });
@@ -158,7 +159,7 @@ implicitFlow.run()
 ## Open API
 ### userAuthorizedThroughOpenAPI
 
-Проверяет что пользователь был авторизован через Open API, требует опцию [key](vk.md#options)
+Проверяет что пользователь был авторизован через Open API, требует опцию [appSecret](vk.md#options)
 
 Подробнее в разделе авторизации [Open API](https://vk.com/dev/openapi?f=3.1.%20VK.Auth.login)
 

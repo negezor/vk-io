@@ -17,7 +17,7 @@ new VK([options]);
 Например
 ```js
 new VK({
-	app: 1707
+	appId: 1707
 });
 ```
 
@@ -39,11 +39,11 @@ vk.setOptions(options); // => this
 ## Options
 ### Общие опции
 
-| Опция | Тип    | Описание                                                                 | По умолчанию |
-|-------|--------|--------------------------------------------------------------------------|--------------|
-| token | string | Токен                                                                    | null         |
-| agent | Agent  | [HTTPS агент](https://nodejs.org/api/https.html#https_class_https_agent) | https.Agent  |
-| lang  | string | Язык возвращаемых данных                                                 | null         |
+| Опция    | Тип    | Описание                                                                 | По умолчанию |
+|----------|--------|--------------------------------------------------------------------------|--------------|
+| token    | string | Токен                                                                    | null         |
+| language | string | Язык возвращаемых данных                                                 | null         |
+| agent    | Agent  | [HTTPS агент](https://nodejs.org/api/https.html#https_class_https_agent) | https.Agent  |
 
 Доступные языки возвращаемых данных
 - `ru` - русский
@@ -57,14 +57,14 @@ vk.setOptions(options); // => this
 
 ### Опции авторизации
 
-| Опция    | Тип    | Описание                  | По умолчанию |
-|----------|--------|---------------------------|--------------|
-| login    | string | Логин (email)             | null         |
-| phone    | string | Телефон                   | null         |
-| password | string | Пароль                    | null         |
-| app      | number | Идентификатор приложения  | null         |
-| key      | string | Секретный ключ приложения | null         |
-| scope    | string | Доступ приложения         | all          |
+| Опция     | Тип    | Описание                  | По умолчанию |
+|-----------|--------|---------------------------|--------------|
+| appId     | number | Идентификатор приложения  | null         |
+| appSecret | string | Секретный ключ приложения | null         |
+| login     | string | Логин (email)             | null         |
+| phone     | string | Телефон                   | null         |
+| password  | string | Пароль                    | null         |
+| authScope | string | Доступ приложения         | all          |
 
 ### Опции запросов к API
 

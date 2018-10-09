@@ -138,13 +138,11 @@ export default class VK {
 		const {
 			api,
 			updates,
-			streaming,
-			captchaHandler,
-			twoFactorHandler
+			streaming
 		} = this;
 
 		const {
-			app,
+			appId,
 			token,
 			login,
 			phone
@@ -152,13 +150,11 @@ export default class VK {
 
 		const payload = {
 			options: {
-				app,
+				appId,
 				login,
 				phone,
 				token
 			},
-			captchaHandler,
-			twoFactorHandler,
 			api,
 			updates,
 			streaming

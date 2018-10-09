@@ -51,15 +51,16 @@ export const MINIMUM_TIME_INTERVAL_API = 1133;
  *
  * @property {?string} [token]               Access token
  * @property {Agent}   [agent]               HTTPS agent
- * @property {?string} [lang]                The return data language
+ * @property {?string} [language]            The return data language
+ *
+ * @property {?number} [appId]               Application ID
+ * @property {?number} [appSecret]           Secret application key
  *
  * @property {?string} [login]               User login (phone number or email)
  * @property {?string} [phone]               User phone number
  * @property {?string} [password]            User password
  *
- * @property {?number} [app]                 Application ID
- * @property {?number} [key]                 Secret application key
- * @property {?number} [scope]               List of permissions
+ * @property {?number} [authScope]           List of permissions
  *
  * @property {string}  [apiMode]             Query mode (sequential|parallel|parallel_selected)
  * @property {number}  [apiWait]             Time to wait before re-querying
@@ -85,15 +86,16 @@ export const MINIMUM_TIME_INTERVAL_API = 1133;
 export const defaultOptions = {
 	token: null,
 	agent: null,
-	lang: null,
+	language: null,
+
+	appId: null,
+	appSecret: null,
 
 	login: null,
 	phone: null,
 	password: null,
 
-	app: null,
-	key: null,
-	scope: 'all',
+	authScope: 'all',
 
 	apiMode: 'sequential',
 	apiWait: 3e3,

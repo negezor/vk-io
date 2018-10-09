@@ -63,27 +63,28 @@ export default class DirectAuth {
 	 * @param {Object} options
 	 */
 	constructor(vk, {
-		app = vk.options.app,
-		key = vk.options.key,
+		appId = vk.options.appId,
+		appSecret = vk.options.appSecret,
 
-		agent = vk.options.agent,
-
-		scope = vk.options.scope,
 		login = vk.options.login,
 		phone = vk.options.phone,
-		password = vk.options.password
+		password = vk.options.password,
+
+		scope = vk.options.authScope,
+		agent = vk.options.agent
+
 	} = {}) {
 		this.vk = vk;
 
-		this.app = app;
-		this.key = key;
+		this.appId = appId;
+		this.appSecret = appSecret;
 
-		this.agent = agent;
-
-		this.scope = scope;
 		this.login = login;
 		this.phone = phone;
 		this.password = password;
+
+		this.agent = agent;
+		this.scope = scope;
 
 		this.started = false;
 
@@ -149,8 +150,8 @@ export default class DirectAuth {
 		debug('auth scope %s', scope);
 
 		const {
-			app,
-			key,
+			appId,
+			appSecret,
 			login,
 			phone,
 			password
@@ -160,12 +161,12 @@ export default class DirectAuth {
 			...query,
 			username: login || phone,
 			grant_type: 'password',
-			client_secret: key,
+			client_secret: appSecret,
 			'2fa_supported': this.vk.twoFactorHandler !== null
 				? 1
 				: 0,
 			v: API_VERSION,
-			client_id: app,
+			client_id: appId,
 			password,
 			scope
 		});

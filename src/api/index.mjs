@@ -327,8 +327,8 @@ export default class API {
 			...request.params
 		};
 
-		if (options.lang !== null) {
-			params.lang = options.lang;
+		if (options.language !== null) {
+			params.lang = options.language;
 		}
 
 		debug(`http --> ${method}`);

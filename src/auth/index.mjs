@@ -62,9 +62,9 @@ export default class Auth {
 	 * @return {DirectAuth}
 	 */
 	direct() {
-		const { app, key } = this.vk.options;
+		const { appId, appSecret } = this.vk.options;
 
-		return new DirectAuth(this.vk, { app, key });
+		return new DirectAuth(this.vk, { appId, appSecret });
 	}
 
 	/**
@@ -74,8 +74,8 @@ export default class Auth {
 	 */
 	androidApp() {
 		return new DirectAuth(this.vk, {
-			app: 2274003,
-			key: 'hHbZxrka2uZ6jB1inYsH'
+			appId: 2274003,
+			appSecret: 'hHbZxrka2uZ6jB1inYsH'
 		});
 	}
 
@@ -86,8 +86,8 @@ export default class Auth {
 	 */
 	windowsApp() {
 		return new DirectAuth(this.vk, {
-			app: 3697615,
-			key: 'AlVXZFMUqyrnABp8ncuU'
+			appId: 3697615,
+			appSecret: 'AlVXZFMUqyrnABp8ncuU'
 		});
 	}
 
@@ -98,8 +98,8 @@ export default class Auth {
 	 */
 	windowsPhoneApp() {
 		return new DirectAuth(this.vk, {
-			app: 3502557,
-			key: 'PEObAuQi6KloPM4T30DV'
+			appId: 3502557,
+			appSecret: 'PEObAuQi6KloPM4T30DV'
 		});
 	}
 
@@ -110,8 +110,8 @@ export default class Auth {
 	 */
 	iphoneApp() {
 		return new DirectAuth(this.vk, {
-			app: 3140623,
-			key: 'VeWdmVclDCtn6ihuP1nt'
+			appId: 3140623,
+			appSecret: 'VeWdmVclDCtn6ihuP1nt'
 		});
 	}
 
@@ -122,8 +122,8 @@ export default class Auth {
 	 */
 	ipadApp() {
 		return new DirectAuth(this.vk, {
-			app: 3682744,
-			key: 'mY6CDUswIVdJLCD3j15n'
+			appId: 3682744,
+			appSecret: 'mY6CDUswIVdJLCD3j15n'
 		});
 	}
 
@@ -146,7 +146,7 @@ export default class Auth {
 			}
 		}
 
-		sign += this.vk.options.key;
+		sign += this.vk.options.appSecret;
 		sign = createHash('md5')
 			.update(sign)
 			.digest('hex');

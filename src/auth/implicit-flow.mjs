@@ -70,27 +70,27 @@ export default class ImplicitFlow {
 	 * @param {Object} options
 	 */
 	constructor(vk, {
-		app = vk.options.app,
-		key = vk.options.key,
+		appId = vk.options.appId,
+		appSecret = vk.options.appSecret,
 
-		agent = vk.options.agent,
-
-		scope = vk.options.scope,
 		login = vk.options.login,
 		phone = vk.options.phone,
-		password = vk.options.password
+		password = vk.options.password,
+
+		agent = vk.options.agent,
+		scope = vk.options.authScope
 	} = {}) {
 		this.vk = vk;
 
-		this.app = app;
-		this.key = key;
+		this.appId = appId;
+		this.appSecret = appSecret;
 
-		this.agent = agent;
-
-		this.scope = scope;
 		this.login = login;
 		this.phone = phone;
 		this.password = password;
+
+		this.agent = agent;
+		this.scope = scope;
 
 		this.jar = new CookieJar();
 
