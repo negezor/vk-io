@@ -54,7 +54,7 @@ export default class CallbackService {
 				return;
 			}
 
-			this.vk.captchaHandler(payload, key => (
+			this.captchaHandler(payload, key => (
 				new Promise((resolve, reject) => {
 					if (key instanceof Error) {
 						reject(key);
@@ -93,7 +93,7 @@ export default class CallbackService {
 				return;
 			}
 
-			this.vk.twoFactorHandler(payload, code => (
+			this.twoFactorHandler(payload, code => (
 				new Promise((resolve, reject) => {
 					if (code instanceof Error) {
 						reject(code);
