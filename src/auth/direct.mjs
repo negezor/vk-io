@@ -29,9 +29,7 @@ const {
 	INVALID_PHONE_NUMBER,
 	AUTHORIZATION_FAILED,
 	FAILED_PASSED_CAPTCHA,
-	MISSING_CAPTCHA_HANDLER,
-	FAILED_PASSED_TWO_FACTOR,
-	MISSING_TWO_FACTOR_HANDLER
+	FAILED_PASSED_TWO_FACTOR
 } = authErrors;
 
 /**
@@ -88,10 +86,10 @@ export default class DirectAuth {
 
 		this.started = false;
 
-		this.captcha = null;
-		this.twoFactor = null;
-
+		this.captchaValidate = null;
 		this.captchaAttempts = 0;
+
+		this.twoFactorValidate = null;
 		this.twoFactorAttempts = 0;
 	}
 
@@ -162,7 +160,7 @@ export default class DirectAuth {
 			username: login || phone,
 			grant_type: 'password',
 			client_secret: appSecret,
-			'2fa_supported': this.vk.twoFactorHandler !== null
+			'2fa_supported': this.vk.callbackService.hasTwoFactorHandler
 				? 1
 				: 0,
 			v: API_VERSION,
@@ -285,22 +283,15 @@ export default class DirectAuth {
 	async processCaptcha({ captcha_sid: sid, captcha_img: src }) {
 		debug('captcha process');
 
-		if (this.captcha !== null) {
-			this.captcha.reject(new AuthError({
+		if (this.captchaValidate !== null) {
+			this.captchaValidate.reject(new AuthError({
 				message: 'Incorrect captcha code',
 				code: FAILED_PASSED_CAPTCHA
 			}));
 
-			this.captcha = null;
+			this.captchaValidate = null;
 
 			this.captchaAttempts += 1;
-		}
-
-		if (this.vk.captchaHandler === null) {
-			throw new AuthError({
-				message: 'Missing captcha handler',
-				code: MISSING_CAPTCHA_HANDLER
-			});
 		}
 
 		if (this.captchaAttempts >= CAPTCHA_ATTEMPTS) {
@@ -310,28 +301,13 @@ export default class DirectAuth {
 			});
 		}
 
-		const payload = {
+		const { key, validate } = await this.vk.callbackService.processingCaptcha({
 			type: captchaTypes.DIRECT_AUTH,
 			sid,
 			src
-		};
+		});
 
-		const key = await (new Promise((resolveCaptcha, rejectCaptcha) => {
-			this.vk.captchaHandler(payload, code => (
-				new Promise((resolve, reject) => {
-					if (code instanceof Error) {
-						rejectCaptcha(code);
-						reject(code);
-
-						return;
-					}
-
-					this.captcha = { resolve, reject };
-
-					resolveCaptcha(code);
-				})
-			));
-		}));
+		this.captchaValidate = validate;
 
 		const response = await this.getPermissionsPage({
 			captcha_sid: sid,
@@ -351,22 +327,15 @@ export default class DirectAuth {
 	async processTwoFactor({ validation_type: validationType, phone_mask: phoneMask }) {
 		debug('process two-factor handle');
 
-		if (this.twoFactor !== null) {
-			this.twoFactor.reject(new AuthError({
+		if (this.twoFactorValidate !== null) {
+			this.twoFactorValidate.reject(new AuthError({
 				message: 'Incorrect two-factor code',
 				code: FAILED_PASSED_TWO_FACTOR
 			}));
 
-			this.twoFactor = null;
+			this.twoFactorValidate = null;
 
 			this.twoFactorAttempts += 1;
-		}
-
-		if (this.vk.twoFactorHandler === null) {
-			throw new AuthError({
-				message: 'Missing two-factor handler',
-				code: MISSING_TWO_FACTOR_HANDLER
-			});
 		}
 
 		if (this.twoFactorAttempts >= TWO_FACTOR_ATTEMPTS) {
@@ -376,23 +345,16 @@ export default class DirectAuth {
 			});
 		}
 
-		const type = validationType === '2fa_app'
-			? 'app'
-			: 'sms';
-
-		const key = await (new Promise((resolveTwoFactor) => {
-			this.vk.twoFactorHandler({ type, phoneMask }, code => (
-				new Promise((resolve, reject) => {
-					this.twoFactor = { resolve, reject };
-
-					resolveTwoFactor(code);
-				})
-			));
-		}));
-
-		const response = await this.getPermissionsPage({
-			code: key
+		const { code, validate } = await this.vk.callbackService.processingTwoFactor({
+			phoneMask,
+			type: validationType === '2fa_app'
+				? 'app'
+				: 'sms'
 		});
+
+		this.twoFactorValidate = validate;
+
+		const response = await this.getPermissionsPage({ code });
 
 		return response;
 	}

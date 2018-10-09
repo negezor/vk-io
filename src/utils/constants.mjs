@@ -240,9 +240,7 @@ export const authErrors = keyMirror([
 	'INVALID_PHONE_NUMBER',
 	'AUTHORIZATION_FAILED',
 	'FAILED_PASSED_CAPTCHA',
-	'MISSING_CAPTCHA_HANDLER',
 	'FAILED_PASSED_TWO_FACTOR',
-	'MISSING_TWO_FACTOR_HANDLER'
 ]);
 
 /**
@@ -285,6 +283,16 @@ export const snippetsErrors = keyMirror([
 	'URL_NOT_ALLOWED',
 	'INVALID_RESOURCE',
 	'RESOURCE_NOT_FOUND',
+]);
+
+/**
+ * Snippets error codes
+ *
+ * @type {Object}
+ */
+export const sharedErrors = keyMirror([
+	'MISSING_CAPTCHA_HANDLER',
+	'MISSING_TWO_FACTOR_HANDLER'
 ]);
 
 /**

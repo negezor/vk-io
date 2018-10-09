@@ -18,9 +18,7 @@ const {
 	INVALID_PHONE_NUMBER,
 	AUTHORIZATION_FAILED,
 	FAILED_PASSED_CAPTCHA,
-	MISSING_CAPTCHA_HANDLER,
-	FAILED_PASSED_TWO_FACTOR,
-	MISSING_TWO_FACTOR_HANDLER,
+	FAILED_PASSED_TWO_FACTOR
 } = authErrors;
 
 /**
@@ -69,15 +67,18 @@ export default class AccountVerification {
 
 		const { agent, login, phone } = vk.options;
 
-		this.agent = agent;
 		this.login = login;
 		this.phone = phone;
+
+		this.agent = agent;
 
 		this.jar = new CookieJar();
 		this.fetchCookie = fetchCookieFollowRedirectsDecorator(this.jar);
 
-		this.captcha = null;
+		this.captchaValidate = null;
 		this.captchaAttempts = 0;
+
+		this.twoFactorValidate = null;
 		this.twoFactorAttempts = 0;
 	}
 
@@ -204,62 +205,43 @@ export default class AccountVerification {
 	async processTwoFactorForm(response, $) {
 		debug('process two-factor handle');
 
-		if (this.vk.twoFactorHandler === null) {
-			throw new AuthError({
-				message: 'Missing two-factor handler',
-				code: MISSING_TWO_FACTOR_HANDLER
-			});
-		}
-
-		let isProcessed = true;
-
-		while (this.twoFactorAttempts < TWO_FACTOR_ATTEMPTS && isProcessed) {
-			// eslint-disable-next-line no-loop-func
-			await (new Promise((resolve, reject) => {
-				this.vk.twoFactorHandler({}, async (code) => {
-					const { action, fields } = parseFormField($);
-
-					fields.code = code;
-
-					try {
-						const url = getFullURL(action, response);
-
-						response = await this.fetch(url, {
-							method: 'POST',
-							body: new URLSearchParams(fields)
-						});
-					} catch (error) {
-						reject(error);
-
-						throw error;
-					}
-
-					if (response.url.includes(ACTION_AUTH_CODE)) {
-						resolve();
-
-						throw new AuthError({
-							message: 'Incorrect two-factor code',
-							code: FAILED_PASSED_TWO_FACTOR
-						});
-					}
-
-					isProcessed = false;
-
-					resolve();
-				});
+		if (this.twoFactorValidate !== null) {
+			this.twoFactorValidate.reject(new AuthError({
+				message: 'Incorrect two-factor code',
+				code: FAILED_PASSED_TWO_FACTOR,
+				pageHtml: $.html()
 			}));
 
 			this.twoFactorAttempts += 1;
 		}
 
-		if (this.twoFactorAttempts >= TWO_FACTOR_ATTEMPTS && isProcessed) {
+		if (this.twoFactorAttempts >= TWO_FACTOR_ATTEMPTS) {
 			throw new AuthError({
 				message: 'Failed passed two-factor authentication',
 				code: FAILED_PASSED_TWO_FACTOR
 			});
 		}
 
-		return response;
+		const { action, fields } = parseFormField($);
+
+		const { code, validate } = await this.vk.callbackService.processingTwoFactor({});
+
+		fields.code = code;
+
+		try {
+			const url = getFullURL(action, response);
+
+			response = await this.fetch(url, {
+				method: 'POST',
+				body: new URLSearchParams(fields)
+			});
+
+			return response;
+		} catch (error) {
+			validate.reject(error);
+
+			throw error;
+		}
 	}
 
 	/**
@@ -345,20 +327,13 @@ export default class AccountVerification {
 	 * @return {Promise<Response>}
 	 */
 	async processCaptchaForm(response, $) {
-		if (this.vk.captchaHandler === null) {
-			throw new AuthError({
-				message: 'Missing captcha handler',
-				code: MISSING_CAPTCHA_HANDLER
-			});
-		}
-
-		if (this.captcha !== null) {
-			this.captcha.reject(new AuthError({
+		if (this.captchaValidate !== null) {
+			this.captchaValidate.reject(new AuthError({
 				message: 'Incorrect captcha code',
 				code: FAILED_PASSED_CAPTCHA
 			}));
 
-			this.captcha = null;
+			this.captchaValidate = null;
 
 			this.captchaAttempts += 1;
 		}
@@ -367,30 +342,15 @@ export default class AccountVerification {
 
 		const src = $('.captcha_img').attr('src');
 
-		const payload = {
+		const { key, validate } = await this.vk.callbackService.processingCaptcha({
 			type: captchaTypes.ACCOUNT_VERIFICATION,
 			sid: fields.captcha_sid,
 			src
-		};
+		});
 
-		await (new Promise((resolveCaptcha, rejectCaptcha) => {
-			this.vk.captchaHandler(payload, key => (
-				new Promise((resolve, reject) => {
-					if (key instanceof Error) {
-						rejectCaptcha(key);
-						reject(key);
+		this.captchaValidate = validate;
 
-						return;
-					}
-
-					fields.captcha_key = key;
-
-					this.captcha = { resolve, reject };
-
-					resolveCaptcha();
-				})
-			));
-		}));
+		fields.captcha_key = key;
 
 		const url = getFullURL(action, response);
 

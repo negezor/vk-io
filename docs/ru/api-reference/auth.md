@@ -226,9 +226,7 @@ import { AuthError, authErrors } from 'vk-io';
 | INVALID_PHONE_NUMBER       | string | Неправильный номер телефона                       |
 | AUTHORIZATION_FAILED       | string | Авторизация провалилась                           |
 | FAILED_PASSED_CAPTCHA      | string | Не удалось пройти капчу                           |
-| MISSING_CAPTCHA_HANDLER    | string | Отсутствует обработчик капчи                      |
 | FAILED_PASSED_TWO_FACTOR   | string | Не удалось пройти двух факторную авторизацию      |
-| MISSING_TWO_FACTOR_HANDLER | string | Отсутствует обработчик двух факторной авторизации |
 
 Пример использования
 

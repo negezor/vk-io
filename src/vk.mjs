@@ -8,6 +8,9 @@ import Collect from './collect';
 import Updates from './updates';
 import Snippets from './snippets';
 import StreamingAPI from './streaming';
+
+import CallbackService from './utils/callback-service';
+
 import { defaultOptions } from './utils/constants';
 
 const { Agent } = nodeHttps;
@@ -44,8 +47,7 @@ export default class VK {
 		this.snippets = new Snippets(this);
 		this.streaming = new StreamingAPI(this);
 
-		this.captchaHandler = null;
-		this.twoFactorHandler = null;
+		this.callbackService = new CallbackService(this);
 	}
 
 	/**
@@ -103,7 +105,7 @@ export default class VK {
 	 * 	vk.setCaptchaHandler((payload, retry) => {...});
 	 */
 	setCaptchaHandler(handler) {
-		this.captchaHandler = handler;
+		this.callbackService.captchaHandler = handler;
 
 		return this;
 	}
@@ -119,7 +121,7 @@ export default class VK {
 	 * 	vk.setTwoFactorHandler((payload, retry) => {...});
 	 */
 	setTwoFactorHandler(handler) {
-		this.twoFactorHandler = handler;
+		this.callbackService.twoFactorHandler = handler;
 
 		return this;
 	}

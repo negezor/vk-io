@@ -22,9 +22,7 @@ const {
 	INVALID_PHONE_NUMBER,
 	AUTHORIZATION_FAILED,
 	FAILED_PASSED_CAPTCHA,
-	MISSING_CAPTCHA_HANDLER,
-	FAILED_PASSED_TWO_FACTOR,
-	MISSING_TWO_FACTOR_HANDLER
+	FAILED_PASSED_TWO_FACTOR
 } = authErrors;
 
 /**
@@ -96,8 +94,10 @@ export default class ImplicitFlow {
 
 		this.started = false;
 
-		this.captcha = null;
+		this.captchaValidate = null;
 		this.captchaAttempts = 0;
+
+		this.twoFactorValidate = null;
 		this.twoFactorAttempts = 0;
 	}
 
@@ -239,7 +239,7 @@ export default class ImplicitFlow {
 
 			const isError = $error.length !== 0;
 
-			if (this.captcha === null && (isError || $service.length !== 0)) {
+			if (this.captchaValidate === null && (isError || $service.length !== 0)) {
 				const errorText = isError
 					? $error.text()
 					: $service.text();
@@ -251,28 +251,7 @@ export default class ImplicitFlow {
 				});
 			}
 
-			if (this.captcha !== null) {
-				this.captcha.reject(new AuthError({
-					message: 'Incorrect captcha code',
-					code: FAILED_PASSED_CAPTCHA,
-					pageHtml: $.html()
-				}));
-
-				this.captcha = null;
-
-				this.captchaAttempts += 1;
-			}
-
-			if (this.captchaAttempts > CAPTCHA_ATTEMPTS) {
-				throw new AuthError({
-					message: 'Maximum attempts passage captcha',
-					code: FAILED_PASSED_CAPTCHA
-				});
-			}
-
 			if ($('input[name="pass"]').length !== 0) {
-				debug('authorization form');
-
 				response = await this.processAuthForm(response, $);
 
 				continue;
@@ -329,6 +308,25 @@ export default class ImplicitFlow {
 	async processAuthForm(response, $) {
 		debug('process login handle');
 
+		if (this.captchaValidate !== null) {
+			this.captchaValidate.reject(new AuthError({
+				message: 'Incorrect captcha code',
+				code: FAILED_PASSED_CAPTCHA,
+				pageHtml: $.html()
+			}));
+
+			this.captchaValidate = null;
+
+			this.captchaAttempts += 1;
+		}
+
+		if (this.captchaAttempts > CAPTCHA_ATTEMPTS) {
+			throw new AuthError({
+				message: 'Maximum attempts passage captcha',
+				code: FAILED_PASSED_CAPTCHA
+			});
+		}
+
 		const { login, password, phone } = this;
 
 		const { action, fields } = parseFormField($);
@@ -337,39 +335,17 @@ export default class ImplicitFlow {
 		fields.pass = password;
 
 		if ('captcha_sid' in fields) {
-			if (this.vk.captchaHandler === null) {
-				throw new AuthError({
-					message: 'Missing captcha handler',
-					code: MISSING_CAPTCHA_HANDLER
-				});
-			}
-
 			const src = $('.oauth_captcha').attr('src') || $('#captcha').attr('src');
 
-			const payload = {
+			const { key, validate } = await this.vk.callbackService.processingCaptcha({
 				type: captchaTypes.IMPLICIT_FLOW_AUTH,
 				sid: fields.captcha_sid,
 				src
-			};
+			});
 
-			await (new Promise((resolveCaptcha, rejectCaptcha) => {
-				this.vk.captchaHandler(payload, key => (
-					new Promise((resolve, reject) => {
-						if (key instanceof Error) {
-							rejectCaptcha(key);
-							reject(key);
+			this.captchaValidate = validate;
 
-							return;
-						}
-
-						fields.captcha_key = key;
-
-						this.captcha = { resolve, reject };
-
-						resolveCaptcha();
-					})
-				));
-			}));
+			fields.captcha_key = key;
 		}
 
 		debug('Fields', fields);
@@ -397,63 +373,43 @@ export default class ImplicitFlow {
 	async processTwoFactorForm(response, $) {
 		debug('process two-factor handle');
 
-		if (this.vk.twoFactorHandler === null) {
-			throw new AuthError({
-				message: 'Missing two-factor handler',
-				code: MISSING_TWO_FACTOR_HANDLER
-			});
-		}
-
-		let isProcessed = true;
-
-		while (this.twoFactorAttempts < TWO_FACTOR_ATTEMPTS && isProcessed) {
-			// eslint-disable-next-line no-loop-func
-			await (new Promise((resolve, reject) => {
-				this.vk.twoFactorHandler({}, async (code) => {
-					const { action, fields } = parseFormField($);
-
-					fields.code = code;
-
-					try {
-						const url = getFullURL(action, response);
-
-						response = await this.fetch(url, {
-							method: 'POST',
-							body: new URLSearchParams(fields)
-						});
-					} catch (error) {
-						reject(error);
-
-						throw error;
-					}
-
-					if (response.url.includes(ACTION_AUTH_CODE)) {
-						resolve();
-
-						throw new AuthError({
-							message: 'Incorrect two-factor code',
-							code: FAILED_PASSED_TWO_FACTOR,
-							pageHtml: $.html()
-						});
-					}
-
-					isProcessed = false;
-
-					resolve();
-				});
+		if (this.twoFactorValidate !== null) {
+			this.twoFactorValidate.reject(new AuthError({
+				message: 'Incorrect two-factor code',
+				code: FAILED_PASSED_TWO_FACTOR,
+				pageHtml: $.html()
 			}));
 
 			this.twoFactorAttempts += 1;
 		}
 
-		if (this.twoFactorAttempts >= TWO_FACTOR_ATTEMPTS && isProcessed) {
+		if (this.twoFactorAttempts >= TWO_FACTOR_ATTEMPTS) {
 			throw new AuthError({
 				message: 'Failed passed two-factor authentication',
 				code: FAILED_PASSED_TWO_FACTOR
 			});
 		}
 
-		return response;
+		const { action, fields } = parseFormField($);
+
+		const { code, validate } = await this.vk.callbackService.processingTwoFactor({});
+
+		fields.code = code;
+
+		try {
+			const url = getFullURL(action, response);
+
+			response = await this.fetch(url, {
+				method: 'POST',
+				body: new URLSearchParams(fields)
+			});
+
+			return response;
+		} catch (error) {
+			validate.reject(error);
+
+			throw error;
+		}
 	}
 
 	/**

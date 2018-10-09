@@ -362,8 +362,8 @@ export default class API {
 				return;
 			}
 
-			if ('captcha' in request) {
-				request.captcha.reject(error);
+			if ('captchaValidate' in request) {
+				request.captchaValidate.reject(error);
 			}
 
 			request.reject(error);
@@ -381,8 +381,8 @@ export default class API {
 			return;
 		}
 
-		if ('captcha' in request) {
-			request.captcha.resolve();
+		if ('captchaValidate' in request) {
+			request.captchaValidate.resolve();
 		}
 
 		if (method.startsWith('execute')) {
@@ -430,8 +430,8 @@ export default class API {
 			return;
 		}
 
-		if ('captcha' in request) {
-			request.captcha.reject(error);
+		if ('captchaValidate' in request) {
+			request.captchaValidate.reject(error);
 		}
 
 		if (code === USER_VALIDATION_REQUIRED) {
@@ -468,40 +468,31 @@ export default class API {
 			return;
 		}
 
-		const isCaptcha = code === CAPTCHA_REQUIRED;
-
-		if ((isCaptcha && this.vk.captchaHandler === null) || !isCaptcha) {
+		if (code !== CAPTCHA_REQUIRED || !this.vk.callbackService.hasCaptchaHandler) {
 			request.reject(error);
 
 			return;
 		}
 
-		const { captchaSid } = error;
+		try {
+			const { captchaSid } = error;
 
-		const payload = {
-			type: captchaTypes.API,
-			src: error.captchaImg,
-			sid: captchaSid,
-			request
-		};
+			const { key, validate } = await this.vk.callbackService.processingCaptcha({
+				type: captchaTypes.API,
+				src: error.captchaImg,
+				sid: captchaSid,
+				request
+			});
 
-		this.vk.captchaHandler(payload, key => (
-			new Promise((resolve, reject) => {
-				if (key instanceof Error) {
-					request.reject(key);
-					reject(key);
+			request.captchaValidate = validate;
 
-					return;
-				}
+			request.params.captcha_sid = captchaSid;
+			request.params.captcha_key = key;
 
-				request.params.captcha_sid = captchaSid;
-				request.params.captcha_key = key;
-
-				request.captcha = { resolve, reject };
-
-				this.requeue(request);
-			})
-		));
+			this.requeue(request);
+		} catch (e) {
+			request.reject(e);
+		}
 	}
 
 	/**

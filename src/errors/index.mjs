@@ -12,6 +12,7 @@ import StreamingRuleError from './streaming-rule';
 export {
 	apiErrors,
 	authErrors,
+	sharedErrors,
 	uploadErrors,
 	updatesErrors,
 	collectErrors,
