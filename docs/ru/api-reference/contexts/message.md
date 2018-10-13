@@ -238,11 +238,6 @@ context.forwards; // => MessageForward[]
 context.geo; // => Object
 ```
 
-| Параметр | Тип    | Описание         |
-|----------|--------|------------------|
-| type     | string | Тип прикрепления |
-
-
 ## eventType
 
 Возвращает тип события
