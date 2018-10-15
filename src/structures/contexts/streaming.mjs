@@ -285,7 +285,7 @@ export default class StreamingContext extends Context {
 	 * @type {Object}
 	 */
 	[inspectCustomData]() {
-		const propertyies = [
+		const properties = [
 			'url',
 			'created',
 			'text',
@@ -312,7 +312,7 @@ export default class StreamingContext extends Context {
 			'isComment'
 		];
 
-		const filtredEmptyProperties = propertyies.filter(property => (
+		const filtredEmptyProperties = properties.filter(property => (
 			this[property] !== null
 		));
 

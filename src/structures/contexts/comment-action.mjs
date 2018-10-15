@@ -392,7 +392,7 @@ export default class CommentActionContext extends Context {
 	 * @type {Object}
 	 */
 	[inspectCustomData]() {
-		const propertyies = [
+		const properties = [
 			'id',
 			'replyId',
 			'userId',
@@ -407,7 +407,7 @@ export default class CommentActionContext extends Context {
 			'isReply'
 		];
 
-		const filtredEmptyProperties = propertyies.filter(property => (
+		const filtredEmptyProperties = properties.filter(property => (
 			this[property] !== null
 		));
 
