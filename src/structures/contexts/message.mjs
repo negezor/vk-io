@@ -4,6 +4,7 @@ import { VKError } from '../../errors';
 
 import MessageForward from '../shared/message-forward';
 import transformMessage from '../../updates/transform-message';
+import MessageForwardsCollection from '../shared/message-forwards-collection';
 
 import { getPeerType } from '../shared/helpers';
 import { transformAttachments } from '../attachments/helpers';
@@ -838,10 +839,10 @@ export default class MessageContext extends Context {
 			? unescapeHTML(payload.text)
 			: null;
 		this.forwards = payload.fwd_messages
-			? payload.fwd_messages.map(forward => (
+			? new MessageForwardsCollection(...payload.fwd_messages.map(forward => (
 				new MessageForward(forward, vk)
-			))
-			: [];
+			)))
+			: new MessageForwardsCollection();
 		this.attachments = transformAttachments(payload.attachments, vk);
 	}
 
