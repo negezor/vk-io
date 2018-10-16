@@ -116,6 +116,22 @@ export default class MessageForward {
 	}
 
 	/**
+	 * Returns data for JSON
+	 *
+	 * @return {Object}
+	 */
+	toJSON() {
+		return copyParams(this, [
+			'senderId',
+			'createdAt',
+			'updatedAt',
+			'text',
+			'attachments',
+			'forwards'
+		]);
+	}
+
+	/**
 	 * Custom inspect object
 	 *
 	 * @param {?number} depth

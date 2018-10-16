@@ -46,6 +46,21 @@ export default class Context {
 	}
 
 	/**
+	 * Returns data for JSON
+	 *
+	 * @return {Object}
+	 */
+	toJSON() {
+		return {
+			...this[inspectCustomData](),
+
+			type: this.type,
+			subTypes: this.subTypes,
+			state: this.state
+		};
+	}
+
+	/**
 	 * Returns the custom data
 	 *
 	 * @type {Object}
@@ -53,7 +68,7 @@ export default class Context {
 	[inspectCustomData]() {
 		const { vk, ...payload } = this;
 
-		return { payload };
+		return payload;
 	}
 
 	/**

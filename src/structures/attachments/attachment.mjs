@@ -96,6 +96,15 @@ export default class Attachment {
 	}
 
 	/**
+	 * Returns data for JSON
+	 *
+	 * @return {Object}
+	 */
+	toJSON() {
+		return this[inspectCustomData]();
+	}
+
+	/**
 	 * Returns the custom data
 	 *
 	 * @type {Object}
@@ -121,6 +130,7 @@ export default class Attachment {
 			id: this.id,
 			ownerId: this.ownerId,
 			accessKey: this.accessKey,
+
 			...this[inspectCustomData]()
 		};
 

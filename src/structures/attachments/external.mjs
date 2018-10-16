@@ -37,6 +37,15 @@ export default class ExternalAttachment {
 	}
 
 	/**
+	 * Returns data for JSON
+	 *
+	 * @return {Object}
+	 */
+	toJSON() {
+		return this[inspectCustomData]();
+	}
+
+	/**
 	 * Returns the custom data
 	 *
 	 * @type {Object}
