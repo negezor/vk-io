@@ -8,6 +8,19 @@ const vk = new VK({
 });
 
 /**
+ * Sets custom uploadUrl or timeout
+ */
+vk.upload.photoAlbum({
+	source: {
+		uploadUrl: '<custom upload url>',
+		timeout: 60e3,
+		values: [
+			// Examples of parameters below
+		]
+	}
+});
+
+/**
  * Uploads photo for wall
  *
  * Auto filename and contentType
