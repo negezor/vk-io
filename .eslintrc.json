@@ -37,7 +37,7 @@
 			}
 		},
 		{
-			"files": ["examples/**/*.js"],
+			"files": ["docs/examples/**/*.js"],
 			"rules": {
 				"no-console": 0,
 				"import/no-unresolved": [
