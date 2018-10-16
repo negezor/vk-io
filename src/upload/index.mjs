@@ -680,45 +680,54 @@ export default class Upload {
 		maxFiles = 1,
 		attachmentType
 	}) {
-		let { source: sources } = params;
+		let { source } = params;
 
-		if (!Array.isArray(sources)) {
-			sources = [sources];
+		if (typeof source !== 'object' || !('values' in source)) {
+			source = {
+				values: source
+			};
 		}
 
-		sources = sources.filter(Boolean);
+		if (!Array.isArray(source.values)) {
+			source.values = [source.values];
+		}
 
-		if (sources.length === 0) {
+		if ('uploadUrl' in source) {
+			getServer = () => ({
+				upload_url: source.uploadUrl
+			});
+		}
+
+		const { length: valuesLength } = source.values;
+
+		if (valuesLength === 0) {
 			throw new UploadError({
 				message: 'No files to upload',
 				code: NO_FILES_TO_UPLOAD
 			});
 		}
 
-		if (sources.length > maxFiles) {
+		if (valuesLength > maxFiles) {
 			throw new UploadError({
 				message: 'The number of files uploaded has exceeded',
 				code: EXCEEDED_MAX_FILES
 			});
 		}
 
-		if ('uploadUrl' in params) {
-			getServer = () => ({
-				upload_url: params.uploadUrl
-			});
-		}
-
-		const [{ upload_url: url }, options] = await Promise.all([
+		const [{ upload_url: url }, formData] = await Promise.all([
 			getServer(copyParams(params, serverParams)),
 			this.buildPayload({
 				field,
-				sources,
+				values: source.values,
 				maxFiles,
 				attachmentType
 			})
 		]);
 
-		const uploaded = await this.upload(url, options);
+		const uploaded = await this.upload(url, {
+			formData,
+			timeout: source.timeout
+		});
 
 		if (typeof uploaded !== 'object') {
 			const response = await saveFiles(uploaded);
@@ -743,7 +752,7 @@ export default class Upload {
 	 */
 	async buildPayload({
 		field,
-		sources,
+		values,
 		maxFiles,
 		attachmentType
 	}) {
@@ -752,26 +761,20 @@ export default class Upload {
 
 		const isMultipart = maxFiles > 1;
 
-		let maxTimeout = 0;
-
-		const tasks = sources
-			.map((source) => {
-				if (typeof source === 'object' && 'value' in source) {
-					return source;
-				}
-
-				return { value: source };
-			})
-			.map(async ({
-				value,
-				filename,
-				timeout = 0,
-				contentType = null
-			}, i) => {
-				if (maxTimeout < timeout) {
-					maxTimeout = timeout;
-				}
-
+		const tasks = values
+			.map(value => (
+				typeof value === 'object' && 'value' in value
+					? value
+					: { value }
+			))
+			.map(async (
+				{
+					value,
+					filename,
+					contentType = null
+				},
+				i
+			) => {
 				if (typeof value === 'string') {
 					if (isURL.test(value)) {
 						const response = await fetch(value);
@@ -808,10 +811,7 @@ export default class Upload {
 
 		await Promise.all(tasks);
 
-		return {
-			formData,
-			timeout: maxTimeout
-		};
+		return formData;
 	}
 
 	/**
