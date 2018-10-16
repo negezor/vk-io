@@ -68,16 +68,17 @@ vk.setOptions(options); // => this
 
 ### Опции запросов к API
 
-| Опция             | Тип      | Описание                                                                  | По умолчанию                                                             |
-|-------------------|----------|---------------------------------------------------------------------------|--------------------------------------------------------------------------|
-| apiMode           | string   | Режим работы API                                                          | sequential                                                               |
-| apiWait           | number   | Время ожидания следующей попытки запроса после ошибки                     | 3000                                                                     |
-| apiLimit          | number   | Количество запрос к API в секунду                                         | 3                                                                        |
-| apiAttempts       | number   | Количество попыток повтора запроса после ошибки                           | 3                                                                        |
-| apiTimeout        | number   | Время ожидания запроса                                                    | 10000                                                                    |
-| apiHeaders        | Object   | Заголовки отправляемые вместе с запросом                                  | {'User-Agent':\`vk-io/${version} (+https://github.com/negezor/vk-io)\`}  |
-| apiExecuteCount   | number   | Количество параллельных запросов при apiMode=(parallel/parallel_selected) | 25                                                                       |
-| apiExecuteMethods | string[] | Методы которые будут собираться в execute при apiMode=parallel_selected   | ['messages.send']                                                        |
+| Опция             | Тип      | Описание                                                                  | По умолчанию                                                            |
+|-------------------|----------|---------------------------------------------------------------------------|-------------------------------------------------------------------------|
+| apiMode           | string   | Режим работы API                                                          | sequential                                                              |
+| apiWait           | number   | Время ожидания следующей попытки запроса после ошибки                     | 3000                                                                    |
+| apiLimit          | number   | Количество запрос к API в секунду                                         | 3                                                                       |
+| apiBaseUrl        | string   | Базовый URL для API                                                       | https://api.vk.com/method                                               |
+| apiAttempts       | number   | Количество попыток повтора запроса после ошибки                           | 3                                                                       |
+| apiTimeout        | number   | Время ожидания запроса                                                    | 10000                                                                   |
+| apiHeaders        | Object   | Заголовки отправляемые вместе с запросом                                  | {'User-Agent':\`vk-io/${version} (+https://github.com/negezor/vk-io)\`} |
+| apiExecuteCount   | number   | Количество параллельных запросов при apiMode=(parallel/parallel_selected) | 25                                                                      |
+| apiExecuteMethods | string[] | Методы которые будут собираться в execute при apiMode=parallel_selected   | ['messages.send']                                                       |
 
 Доступные режимы работы API
 - `sequential` - Все запросы идут последовательно

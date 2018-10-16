@@ -17,13 +17,6 @@ export const API_VERSION = '5.85';
 export const CHAT_PEER = 2e9;
 
 /**
- * Base URL API
- *
- * @type {string}
- */
-export const BASE_URL_API = 'https://api.vk.com/method/';
-
-/**
  * Blank html redirect
  *
  * @type {string}
@@ -65,6 +58,7 @@ export const MINIMUM_TIME_INTERVAL_API = 1133;
  * @property {string}  [apiMode]             Query mode (sequential|parallel|parallel_selected)
  * @property {number}  [apiWait]             Time to wait before re-querying
  * @property {number}  [apiLimit]            Requests per second
+ * @property {string}  [apiBaseUrl]          Base API URL
  * @property {number}  [apiTimeout]          Wait time for one request
  * @property {number}  [apiHeaders]          Headers sent to the API
  * @property {number}  [apiAttempts]         The number of retries at calling
@@ -100,6 +94,7 @@ export const defaultOptions = {
 	apiMode: 'sequential',
 	apiWait: 3e3,
 	apiLimit: 3,
+	apiBaseUrl: 'https://api.vk.com/method',
 	apiAttempts: 3,
 	apiTimeout: 10e3,
 	apiHeaders: {

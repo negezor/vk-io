@@ -11,7 +11,6 @@ import AccountVerification from '../auth/account-verification';
 import { sequential, parallel, parallelSelected } from './workers';
 import {
 	MINIMUM_TIME_INTERVAL_API,
-	BASE_URL_API,
 	API_VERSION,
 
 	apiErrors,
@@ -19,7 +18,7 @@ import {
 } from '../utils/constants';
 
 const { inspect } = nodeUtil;
-const { URL, URLSearchParams } = nodeUrl;
+const { URLSearchParams } = nodeUrl;
 
 const {
 	CAPTCHA_REQUIRED,
@@ -53,8 +52,6 @@ const getRequestHandler = (mode = 'sequential') => {
 
 	return handler;
 };
-
-const baseUrlSymbol = Symbol('baseURLSymbol');
 
 const groupMethods = [
 	'account',
@@ -117,8 +114,6 @@ export default class API {
 		this.started = false;
 		this.suspended = false;
 
-		this[baseUrlSymbol] = BASE_URL_API;
-
 		for (const group of groupMethods) {
 			const isMessagesGroup = group === 'messages';
 
@@ -176,32 +171,6 @@ export default class API {
 	 */
 	get API_VERSION() {
 		return API_VERSION;
-	}
-
-	/**
-	 * Returns base URL
-	 *
-	 * @return {string}
-	 */
-	get baseUrl() {
-		return this[baseUrlSymbol];
-	}
-
-	/**
-	 * Sets base URL
-	 *
-	 * @param {string} url
-	 *
-	 * @return {string}
-	 */
-	set baseUrl(url) {
-		if (!url.endsWith('/')) {
-			url += '/';
-		}
-
-		this[baseUrlSymbol] = url;
-
-		return url;
 	}
 
 	/**
@@ -318,8 +287,6 @@ export default class API {
 		const { options } = this.vk;
 		const { method } = request;
 
-		const url = new URL(method, this.baseUrl);
-
 		const params = {
 			access_token: options.token,
 			v: API_VERSION,
@@ -337,7 +304,7 @@ export default class API {
 
 		let response;
 		try {
-			response = await fetch(url, {
+			response = await fetch(`${options.apiBaseUrl}/${method}`, {
 				method: 'POST',
 				compress: false,
 				agent: options.agent,
