@@ -9,6 +9,15 @@ const SMALL_SIZES = ['m', 's'];
 const MEDIUM_SIZES = ['y', 'r', 'q', 'p', ...SMALL_SIZES];
 const LARGE_SIZES = ['w', 'z', ...MEDIUM_SIZES];
 
+const POST_SIZES = new Map([
+	['w', 'photo_2560'],
+	['z', 'photo_1280'],
+	['y', 'photo_807'],
+	['x', 'photo_604'],
+	['m', 'photo_130'],
+	['s', 'photo_75']
+]);
+
 export default class PhotoAttachment extends Attachment {
 	/**
 	 * Constructor
@@ -157,7 +166,18 @@ export default class PhotoAttachment extends Attachment {
 	 * @return {?Object[]}
 	 */
 	get sizes() {
-		return this.payload.sizes || null;
+		if (this.payload.sizes) {
+			return this.payload.sizes;
+		}
+
+		const sizes = [];
+		POST_SIZES.forEach((photo, type) => {
+			if (photo in this.payload) {
+				sizes.push({ type, src: this.payload[photo] });
+			}
+		});
+
+		return sizes.length > 0 ? sizes : null;
 	}
 
 	/**
