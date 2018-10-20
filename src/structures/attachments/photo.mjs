@@ -125,7 +125,7 @@ export default class PhotoAttachment extends Attachment {
 
 		const [size] = this.getSizes(SMALL_SIZES);
 
-		return size.url;
+		return size ? size.url : null;
 	}
 
 	/**
@@ -141,7 +141,7 @@ export default class PhotoAttachment extends Attachment {
 
 		const [size] = this.getSizes(MEDIUM_SIZES);
 
-		return size.url;
+		return size ? size.url : null;
 	}
 
 	/**
@@ -157,7 +157,7 @@ export default class PhotoAttachment extends Attachment {
 
 		const [size] = this.getSizes(LARGE_SIZES);
 
-		return size.url;
+		return size ? size.url : null;
 	}
 
 	/**
@@ -189,6 +189,10 @@ export default class PhotoAttachment extends Attachment {
 	 */
 	getSizes(sizeTypes) {
 		const { sizes } = this;
+
+		if (!sizes) {
+			return [];
+		}
 
 		return sizeTypes
 			.map(sizeType => (
