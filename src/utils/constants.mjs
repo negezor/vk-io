@@ -7,7 +7,7 @@ import { keyMirror } from './helpers';
  *
  * @type {string}
  */
-export const API_VERSION = '5.85';
+export const API_VERSION = '5.87';
 
 /**
  * Chat peer ID
@@ -28,7 +28,7 @@ export const CALLBACK_BLANK = 'https://oauth.vk.com/blank.html';
  *
  * @type {string}
  */
-export const DESKTOP_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36';
+export const DESKTOP_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.67 Safari/537.36';
 
 /**
  * Minimum time interval api with error
