@@ -73,7 +73,6 @@ export default class ResourceResolver {
 	 * Constructor
 	 *
 	 * @param {VK} vk
-	 * @param {*}  resource
 	 */
 	constructor(vk) {
 		this.vk = vk;
