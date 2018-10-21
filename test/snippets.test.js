@@ -28,6 +28,7 @@ describe('Snippets', () => {
 				'*durov',
 				'@durov',
 				'vk.com/id1',
+				'[id1|Durov]',
 				'vk.com/durov',
 				'm.vk.com/id1',
 				'm.vk.com/durov',
@@ -76,6 +77,8 @@ describe('Snippets', () => {
 			const resources = [
 				-1,
 				'club1',
+				'[club1|VK API]',
+				'[public1|APICLUB]',
 				'public1',
 				'apiclub',
 				'app1',
@@ -90,6 +93,14 @@ describe('Snippets', () => {
 			)));
 
 			const result = [
+				{
+					id: 1,
+					type: 'group'
+				},
+				{
+					id: 1,
+					type: 'group'
+				},
 				{
 					id: 1,
 					type: 'group'
