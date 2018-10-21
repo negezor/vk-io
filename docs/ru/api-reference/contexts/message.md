@@ -275,7 +275,7 @@ context.eventEmail; // => ?string
 Возвращает значение указанное в `payload`, [подробнее](https://vk.com/dev/bots_docs_3)
 
 ```js
-context.messagePayload; // => ?mixed
+context.messagePayload; // => ?*
 ```
 
 ## getAttachments
@@ -388,10 +388,10 @@ context.sendSticker(id); // => Promise<number>
 context.sendPhoto(source [, params]); // => Promise<number>
 ```
 
-| Параметр | Тип     | Описание                                                               |
-|----------|---------|------------------------------------------------------------------------|
-| source   | mixed[] | [Источник загрузки](../upload.md#messagephoto)                         |
-| params   | Object  | [Дополнительные параметры сообщения](https://vk.com/dev/messages.send) |
+| Параметр | Тип    | Описание                                                               |
+|----------|--------|------------------------------------------------------------------------|
+| source   | *[]    | [Источник загрузки](../upload.md#messagephoto)                         |
+| params   | Object | [Дополнительные параметры сообщения](https://vk.com/dev/messages.send) |
 
 
 ## sendDocument
@@ -402,10 +402,10 @@ context.sendPhoto(source [, params]); // => Promise<number>
 context.sendDocument(source [, params]); // => Promise<number>
 ```
 
-| Параметр | Тип     | Описание                                                               |
-|----------|---------|------------------------------------------------------------------------|
-| source   | mixed[] | [Источник загрузки](../upload.md#messagedocument)                      |
-| params   | Object  | [Дополнительные параметры сообщения](https://vk.com/dev/messages.send) |
+| Параметр | Тип    | Описание                                                               |
+|----------|--------|------------------------------------------------------------------------|
+| source   | *[]    | [Источник загрузки](../upload.md#messagedocument)                      |
+| params   | Object | [Дополнительные параметры сообщения](https://vk.com/dev/messages.send) |
 
 ## sendAudioMessage
 
@@ -417,7 +417,7 @@ context.sendAudioMessage(source [, params]); // => Promise<number>
 
 | Параметр | Тип    | Описание                                                               |
 |----------|--------|------------------------------------------------------------------------|
-| source   | mixed  | [Источник загрузки](../upload.md#voice)                                |
+| source   | *      | [Источник загрузки](../upload.md#voice)                                |
 | params   | Object | [Дополнительные параметры сообщения](https://vk.com/dev/messages.send) |
 
 ## setActivity
@@ -497,7 +497,7 @@ context.newChatPhoto(source [, params]); // => Promise<Object>
 
 | Параметр | Тип    | Описание                                                    |
 |----------|--------|-------------------------------------------------------------|
-| source   | mixed  | [Источник загрузки](../upload.md#chatphoto)                 |
+| source   | *      | [Источник загрузки](../upload.md#chatphoto)                 |
 | params   | Object | [Дополнительные параметры загрузки](../upload.md#chatphoto) |
 
 ## deleteChatPhoto

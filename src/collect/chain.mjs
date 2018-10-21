@@ -35,7 +35,7 @@ export default class Chain {
 	 * @param {string} method
 	 * @param {Object} params
 	 *
-	 * @return {Promise<mixed>}
+	 * @return {Promise<*>}
 	 */
 	append(method, params) {
 		if (this.started) {

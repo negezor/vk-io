@@ -396,7 +396,7 @@ export default class MessageContext extends Context {
 	/**
 	 * Returns the message payload
 	 *
-	 * @return {?mixed}
+	 * @return {?*}
 	 */
 	get messagePayload() {
 		const { payload = null } = this.payload;
@@ -527,7 +527,7 @@ export default class MessageContext extends Context {
 	/**
 	 * Sends a photo to the current dialog
 	 *
-	 * @param {mixed[]} sources
+	 * @param {*[]} sources
 	 * @param {Object}  params
 	 *
 	 * @return {Promise}
@@ -557,7 +557,7 @@ export default class MessageContext extends Context {
 	/**
 	 * Sends a document to the current dialog
 	 *
-	 * @param {mixed[]} sources
+	 * @param {*[]} sources
 	 * @param {Object}  params
 	 *
 	 * @return {Promise}
@@ -587,7 +587,7 @@ export default class MessageContext extends Context {
 	/**
 	 * Sends a audio message to the current dialog
 	 *
-	 * @param {mixed}  sourxe
+	 * @param {*}  sourxe
 	 * @param {Object} params
 	 *
 	 * @return {Promise}
@@ -726,7 +726,7 @@ export default class MessageContext extends Context {
 	/**
 	 * Sets a new image for the chat
 	 *
-	 * @param {mixed}  source
+	 * @param {*}  source
 	 * @param {Object} params
 	 *
 	 * @return {Promise<Object>}

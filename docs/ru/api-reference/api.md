@@ -20,7 +20,7 @@ api.wall.get();
 > Вместо прямого вызова `api.call` стоит использовать алиасы
 
 ```js
-api.call(method, params); // => Promise<Mixed>
+api.call(method, params); // => Promise<*>
 ```
 
 | Параметр | Тип    | Описание          |
@@ -42,7 +42,7 @@ api.messages.send({...});
 Вызов метода через объект `Request`
 
 ```js
-api.callWithRequest(request); // => Promise<mixed>
+api.callWithRequest(request); // => Promise<*>
 ```
 
 | Параметр | Тип                   | Описание       |
@@ -53,7 +53,7 @@ api.callWithRequest(request); // => Promise<mixed>
 Выполняет процедуру сохраненную в приложении
 
 ```js
-api.procedure(name, params); // => Promise<Mixed>
+api.procedure(name, params); // => Promise<*>
 ```
 
 | Параметр | Тип    | Описание           |

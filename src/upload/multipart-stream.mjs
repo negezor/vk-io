@@ -71,7 +71,7 @@ export default class MultipartStream extends SandwichStream {
 	 * Adds form data
 	 *
 	 * @param {string} field
-	 * @param {mixed}  body
+	 * @param {*}  body
 	 * @param {Object} options
 	 */
 	append(field, body, { filename = null, headers = {} }) {

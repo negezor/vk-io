@@ -252,7 +252,7 @@ export default class Updates {
 	/**
 	 * Listen text
 	 *
-	 * @param {Mixed[]}  condition
+	 * @param {*[]}  condition
 	 * @param {Function} handler
 	 *
 	 * @return {this}

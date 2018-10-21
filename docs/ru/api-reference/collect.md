@@ -40,7 +40,7 @@ collect.chain(); // => Chain
 Множественный вызов одного метода с массивом параметров через `execute`
 
 ```js
-collect.executes(method, params); // => Promise<Mixed[]>
+collect.executes(method, params); // => Promise<*[]>
 ```
 
 | Параметр | Тип      | Описание  |
