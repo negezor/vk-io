@@ -8,6 +8,7 @@ export * from './structures/attachments';
 
 export {
 	captchaTypes,
+	resourceTypes,
 	messageSources,
 	attachmentTypes
 } from './utils/constants';

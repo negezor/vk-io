@@ -189,6 +189,17 @@ export const messageSources = {
 };
 
 /**
+ * Resource types
+ *
+ * @type {Object}
+ */
+export const resourceTypes = {
+	USER: 'user',
+	GROUP: 'group',
+	APPLICATION: 'application'
+};
+
+/**
  * API error codes
  *
  * @type {Object}
@@ -275,9 +286,8 @@ export const collectErrors = keyMirror([
  */
 export const snippetsErrors = keyMirror([
 	'INVALID_URL',
-	'URL_NOT_ALLOWED',
 	'INVALID_RESOURCE',
-	'RESOURCE_NOT_FOUND',
+	'RESOURCE_NOT_FOUND'
 ]);
 
 /**
@@ -369,7 +379,7 @@ export const parseAttachment = /(photo|video|audio|doc|audio_message|graffiti|wa
  *
  * @type {RegExp}
  */
-export const parseResource = /(app(?:lication)|id|club|public|albums|tag)([-\d]+)/;
+export const parseResource = /(id|club|public|albums|tag|app(?:lication))([-\d]+)/;
 
 /**
  * Parse owner resource with RegExp
