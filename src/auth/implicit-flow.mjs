@@ -60,6 +60,13 @@ const TWO_FACTOR_ATTEMPTS = 3;
  */
 const CAPTCHA_ATTEMPTS = 3;
 
+/**
+ * Removes the prefix
+ *
+ * @type {RegExp}
+ */
+const REPLACE_PREFIX_RE = /^[+|0]+/;
+
 export default class ImplicitFlow {
 	/**
 	 * Constructor
@@ -438,16 +445,12 @@ export default class ImplicitFlow {
 			});
 		}
 
-		if (typeof number === 'string') {
-			number = number.trim().replace(/^(\+|00)/, '');
-		}
-
-		number = String(number);
+		number = String(number).trim().replace(REPLACE_PREFIX_RE, '');
 
 		const $field = $('.field_prefix');
 
-		const prefix = $field.first().text().trim().replace('+', '').length;
-		const postfix = $field.last().text().trim().length;
+		const { length: prefix } = $field.first().text().trim().replace(REPLACE_PREFIX_RE, '');
+		const { length: postfix } = $field.last().text().trim();
 
 		const { action, fields } = parseFormField($);
 
