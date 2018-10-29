@@ -23,6 +23,7 @@ const { randomBytes } = nodeCrypto;
 const { inspect } = nodeUtil;
 
 const {
+	MISSING_PARAMETERS,
 	NO_FILES_TO_UPLOAD,
 	EXCEEDED_MAX_FILES,
 	UNSUPPORTED_SOURCE_TYPE
@@ -680,9 +681,16 @@ export default class Upload {
 		maxFiles = 1,
 		attachmentType
 	}) {
+		if (!params || !params.source) {
+			throw new UploadError({
+				message: 'Missing upload params',
+				code: MISSING_PARAMETERS
+			});
+		}
+
 		let { source } = params;
 
-		if (typeof source !== 'object' || !('values' in source)) {
+		if (typeof source !== 'object' || source.constructor !== Object) {
 			source = {
 				values: source
 			};
@@ -763,7 +771,7 @@ export default class Upload {
 
 		const tasks = values
 			.map(value => (
-				typeof value === 'object' && 'value' in value
+				typeof value === 'object' && value.constructor === Object
 					? value
 					: { value }
 			))

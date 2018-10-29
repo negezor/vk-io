@@ -255,6 +255,7 @@ export const authErrors = keyMirror([
  * @type {Object}
  */
 export const uploadErrors = keyMirror([
+	'MISSING_PARAMETERS',
 	'NO_FILES_TO_UPLOAD',
 	'EXCEEDED_MAX_FILES',
 	'UNSUPPORTED_SOURCE_TYPE'
