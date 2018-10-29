@@ -516,16 +516,14 @@ export default class Updates {
 	 *
 	 * @return {Function}
 	 */
-	getWebhookCallback(path = null) {
-		const isEmptyPath = path !== null;
-
+	getWebhookCallback(path = '/') {
 		const headers = {
 			connection: 'keep-alive',
 			'content-type': 'text/plain'
 		};
 
 		return (req, res, next) => {
-			if (req.method !== 'POST' || (isEmptyPath && req.url !== path)) {
+			if (req.method !== 'POST' || req.url !== path) {
 				next();
 
 				return;
