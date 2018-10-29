@@ -9,7 +9,6 @@ describe('Snippets', () => {
 
 	describe('resolveResource', () => {
 		if (TOKEN === null) {
-			// eslint-disable-next-line no-console
 			it('the test is skipped because there is no token', () => {});
 
 			return;
