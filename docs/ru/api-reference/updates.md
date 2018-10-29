@@ -31,12 +31,35 @@ updates.startPolling(); // => Promise
 updates.startWebhook(options, next); // => Promise
 ```
 
-| Параметр | Тип      | Описание    |
-|----------|----------|-------------|
-| options  | Object   | Опции       |
-| next     | Function | Обработчик  |
+| Параметр | Тип      | Описание          |
+|----------|----------|-------------------|
+| options  | Object   | Опции             |
+| next     | Function | Переброс запросов |
+
+Опции
+
+| Свойство | Тип    | Описание                                                            |
+|----------|--------|---------------------------------------------------------------------|
+| tls      | Object | [TLS Options Server](https://nodejs.org/docs/latest/api/https.html) |
+| path     | string | Путь обработки запроса                                              |
+| port     | number | Порт сервера                                                        |
+| host     | string | Хост сервера                                                        |
 
 Если адрес не задан, то будет использоваться `/`
+
+```js
+updates.startWebhook({
+	path: '/super-secret-webhook-path'
+});
+```
+
+Если запрос не будет обработан, он будет передан в этот `callback`. В случае его отсутствия будет ответ `HTTP Response 403`
+
+```js
+updates.startWebhook({...}, (req, res) => {
+	// ...
+});
+```
 
 ## stop
 Останавливает любое получение обновлений
