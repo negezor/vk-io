@@ -457,7 +457,12 @@ export default class Updates {
 						next(req, res)
 					))
 				)
-				: webhookCallback;
+				: (req, res) => (
+					webhookCallback(req, res, () => {
+						res.writeHead(403);
+						res.end();
+					})
+				);
 
 			this.webhookServer = tls
 				? nodeHttps.createServer(tls, callback)
@@ -521,14 +526,7 @@ export default class Updates {
 
 		return (req, res, next) => {
 			if (req.method !== 'POST' || (isEmptyPath && req.url !== path)) {
-				if (typeof next === 'function') {
-					next();
-
-					return;
-				}
-
-				res.writeHead(403);
-				res.end();
+				next();
 
 				return;
 			}
