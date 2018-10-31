@@ -52,7 +52,7 @@
 		"debug": "^4.1.0",
 		"middleware-io": "^0.0.8",
 		"node-fetch": "^2.2.0",
-		"sandwich-stream": "^1.0.0",
+		"sandwich-stream": "^2.0.2",
 		"tough-cookie": "^2.4.3",
 		"ws": "^6.1.0"
 	},
