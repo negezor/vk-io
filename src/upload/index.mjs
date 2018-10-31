@@ -342,18 +342,29 @@ export default class Upload {
 			return new VideoAttachment(save, this.vk);
 		}
 
-		if (!Array.isArray(params.source)) {
-			params.source = [params.source];
+		let { source } = params;
+
+		if (typeof source !== 'object' || source.constructor !== Object) {
+			source = {
+				values: source
+			};
+		}
+
+		if (!Array.isArray(source.values)) {
+			source.values = [source.values];
 		}
 
 		const formData = await this.buildPayload({
 			maxFiles: 1,
 			field: 'video_file',
 			attachmentType: 'video',
-			sources: params.source
+			values: source.values
 		});
 
-		const video = await this.upload(save.upload_url, formData);
+		const video = await this.upload(save.upload_url, {
+			formData,
+			timeout: source.timeout
+		});
 
 		return new VideoAttachment({ ...save, ...video }, this.vk);
 	}
