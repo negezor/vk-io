@@ -42,7 +42,7 @@ import VK from 'vk-io';
 
 const vk = new VK();
 
-vk.setToken(process.env.TOKEN);
+vk.token = process.env.TOKEN;
 
 async function run() {
 	const response = await vk.api.wall.get({
@@ -52,5 +52,5 @@ async function run() {
 	console.log(response);
 }
 
-run().catch(console.log); // async/await "sugar"
+run().catch(console.log);
 ```
