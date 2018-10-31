@@ -16,7 +16,5 @@ module.exports = {
 		}]
 	],
 	comments: false,
-	exclude: isTest
-		? /node_modules\/(?!(node-fetch|middleware-io)\/).*/
-		: /node_modules\/.*/,
+	exclude: /node_modules\/.*/
 };
