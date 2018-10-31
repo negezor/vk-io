@@ -840,7 +840,7 @@ export default class Upload {
 			timeout: timeout || uploadTimeout,
 			headers: {
 				Connection: 'keep-alive',
-				'Content-Type': `multipart/form-data; boundary=${formData.getBoundary()}`
+				'Content-Type': `multipart/form-data; boundary=${formData.boundary}`
 			},
 			body: formData
 		});

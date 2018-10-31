@@ -33,15 +33,6 @@ export default class MultipartStream extends SandwichStream {
 	}
 
 	/**
-	 * Returns boundary
-	 *
-	 * @return {string}
-	 */
-	getBoundary() {
-		return this.boundary;
-	}
-
-	/**
 	 * Adds part
 	 *
 	 * @param {Object} part
