@@ -462,19 +462,6 @@ context.deleteMessage([ids, params]); // => Promise<number[]>
 context.restoreMessage(); // => Promise<boolean>
 ```
 
-## joinChatByInviteLink
-
-Позволяет присоединиться к чату по ссылке-приглашению
-
-```js
-context.joinChatByInviteLink(link [, params]); // => Promise<Object>
-```
-
-| Параметр | Тип    | Описание                                                                     |
-|----------|--------|------------------------------------------------------------------------------|
-| link     | string | Ссылка на беседу                                                             |
-| params   | Object | [Дополнительные параметры](https://vk.com/dev/messages.joinChatByInviteLink) |
-
 ## renameChat
 
 Переименовывает чат (беседу)

@@ -679,22 +679,6 @@ export default class MessageContext extends Context {
 	}
 
 	/**
-	 * Allows you to join the chat by an invitation link
-	 *
-	 * @param {string} params
-	 * @param {Object} params
-	 *
-	 * @return {Promise<Object>}
-	 */
-	joinChatByInviteLink(link, params = {}) {
-		return this.vk.api.messages.joinChatByInviteLink({
-			...params,
-
-			link
-		});
-	}
-
-	/**
 	 * Checks that in a chat
 	 */
 	assertIsChat() {
