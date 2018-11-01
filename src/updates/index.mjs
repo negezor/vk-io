@@ -214,6 +214,12 @@ export default class Updates {
 	 * @return {this}
 	 */
 	use(middleware) {
+		if (typeof middleware !== 'function') {
+			throw new VKError({
+				message: 'Middleware must be a function'
+			});
+		}
+
 		this.stack.push(middleware);
 
 		this.reloadMiddleware();
