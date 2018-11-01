@@ -242,6 +242,12 @@ export default class Updates {
 			});
 		}
 
+		if (typeof handler !== 'function') {
+			throw new VKError({
+				message: 'Handler must be a function'
+			});
+		}
+
 		return this.use((context, next) => (
 			context.is(events)
 				? handler(context, next)
@@ -252,7 +258,7 @@ export default class Updates {
 	/**
 	 * Listen text
 	 *
-	 * @param {*[]}  condition
+	 * @param {*[]}      condition
 	 * @param {Function} handler
 	 *
 	 * @return {this}
@@ -267,6 +273,12 @@ export default class Updates {
 		if (!hasConditions) {
 			throw new VKError({
 				message: 'Condition should be not empty'
+			});
+		}
+
+		if (typeof handler !== 'function') {
+			throw new VKError({
+				message: 'Handler must be a function'
 			});
 		}
 
