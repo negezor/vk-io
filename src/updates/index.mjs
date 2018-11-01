@@ -26,6 +26,7 @@ import {
 } from '../structures/contexts';
 
 import { delay } from '../utils/helpers';
+import { parseRequestJSON } from './helpers';
 import { VKError, UpdatesError, updatesErrors } from '../errors';
 
 import { updatesSources } from '../utils/constants';
@@ -540,72 +541,61 @@ export default class Updates {
 			'content-type': 'text/plain'
 		};
 
-		return (req, res, next) => {
+		return async (req, res, next) => {
 			if (req.method !== 'POST' || req.url !== path) {
 				next();
 
 				return;
 			}
 
-			let body = '';
+			let update;
+			try {
+				update = typeof req.body !== 'object'
+					? await parseRequestJSON(req, res)
+					: req.body;
+			} catch (e) {
+				debug(e);
 
-			req.on('error', debug);
-			req.on('data', (chunk) => {
-				if (body.length > 1e6) {
-					body = null;
+				return;
+			}
 
-					res.writeHead(413);
+			try {
+				const { webhookSecret, webhookConfirmation } = this.vk.options;
+
+				if (webhookSecret !== null && update.secret !== webhookSecret) {
+					res.writeHead(403);
 					res.end();
-
-					req.connection.destroy();
 
 					return;
 				}
 
-				body += String(chunk);
-			});
-
-			req.on('end', () => {
-				try {
-					const update = JSON.parse(body);
-
-					const { webhookSecret, webhookConfirmation } = this.vk.options;
-
-					if (webhookSecret !== null && update.secret !== webhookSecret) {
-						res.writeHead(403);
+				if (update.type === 'confirmation') {
+					if (webhookConfirmation === null) {
+						res.writeHead(500);
 						res.end();
 
 						return;
 					}
 
-					if (update.type === 'confirmation') {
-						if (webhookConfirmation === null) {
-							res.writeHead(500);
-							res.end();
-
-							return;
-						}
-
-						res.writeHead(200, headers);
-						res.end(String(webhookConfirmation));
-
-						return;
-					}
-
 					res.writeHead(200, headers);
-					res.end('ok');
+					res.end(String(webhookConfirmation));
 
-					this.handleWebhookUpdate(update).catch((error) => {
-						// eslint-disable-next-line no-console
-						console.error('Handle webhook update error', error);
-					});
-				} catch (error) {
-					debug('webhook error', error);
-
-					res.writeHead(415);
-					res.end();
+					return;
 				}
-			});
+
+				res.writeHead(200, headers);
+				res.end('ok');
+
+				this.handleWebhookUpdate(update).catch((error) => {
+					// eslint-disable-next-line no-console
+					console.error('Handle webhook update error', error);
+				});
+			} catch (error) {
+				debug('webhook error', error);
+
+				res.writeHead(415);
+				res.end();
+			}
 		};
 	}
 
