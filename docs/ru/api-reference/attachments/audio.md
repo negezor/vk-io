@@ -15,7 +15,7 @@ new AudioAttachment(audio, vk);
 
 | Параметр | Тип    | Описание                                               |
 |----------|--------|--------------------------------------------------------|
-| photo    | Object | [Объект аудиозапись](https://vk.com/dev/objects/audio) |
+| audio    | Object | [Объект аудиозапись](https://vk.com/dev/objects/audio) |
 | vk       | VK     | Объект VK                                              |
 
 Пример использования
