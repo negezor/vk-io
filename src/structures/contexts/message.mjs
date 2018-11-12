@@ -249,11 +249,7 @@ export default class MessageContext extends Context {
 	 * @return {?number}
 	 */
 	get conversationMessageId() {
-		if (!this.$filled) {
-			return null;
-		}
-
-		return this.payload.conversation_message_id;
+		return this.payload.conversation_message_id || null;
 	}
 
 	/**
