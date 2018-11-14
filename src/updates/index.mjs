@@ -466,7 +466,7 @@ export default class Updates {
 		this.started = 'webhook';
 
 		try {
-			const { webhookPath } = this.vk.options;
+			const { webhookPath, listenPort } = this.vk.options;
 
 			const webhookCallback = this.getWebhookCallback(path || webhookPath || '/');
 
@@ -488,9 +488,9 @@ export default class Updates {
 				: nodeHttp.createServer(callback);
 
 			if (!port) {
-				port = tls
-					? 443
-					: 80;
+				port = tls 
+					?  listenPort || 443
+					:  listenPort || 80;
 			}
 
 			const { webhookServer } = this;

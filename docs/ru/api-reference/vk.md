@@ -43,6 +43,7 @@ vk.setOptions(options); // => this
 |----------|--------|--------------------------------------------------------------------------|--------------|
 | token    | string | Токен                                                                    | null         |
 | language | string | Язык возвращаемых данных                                                 | null         |
+| listenPort | number | Прослушиваемый порт                                                 | 80         |
 | agent    | Agent  | [HTTPS агент](https://nodejs.org/api/https.html#https_class_https_agent) | https.Agent  |
 
 Доступные языки возвращаемых данных
