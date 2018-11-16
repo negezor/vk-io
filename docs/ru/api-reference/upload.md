@@ -58,7 +58,7 @@ upload.photoAlbum(params); // => Promise<PhotoAttachment[]>
 | longitude | float   | Географическая долгота, заданная в градусах (от -180 до 180) |
 
 ## wallPhoto
-Загрузка фотографию на стенку пользователя или сообщества
+Загрузка фотографии на стенку пользователя или сообщества
 
 ```js
 upload.wallPhoto(params); // => Promise<PhotoAttachment>
