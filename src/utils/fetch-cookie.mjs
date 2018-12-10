@@ -12,6 +12,23 @@ const REDIRECT_CODES = [303, 301, 302];
 
 export const { CookieJar } = toughCookie;
 
+const USER_AGENT_RE = /^User-Agent$/i;
+
+const findUserAgent = (headers) => {
+	if (!headers) {
+		return null;
+	}
+
+	const key = Object.keys(headers)
+		.find(header => USER_AGENT_RE.test(header));
+
+	if (!key) {
+		return null;
+	}
+
+	return headers[key];
+};
+
 export const fetchCookieDecorator = (jar = new CookieJar()) => {
 	const setCookie = promisify(jar.setCookie).bind(jar);
 	const getCookieString = promisify(jar.getCookieString).bind(jar);
@@ -67,9 +84,16 @@ export const fetchCookieFollowRedirectsDecorator = (jar) => {
 				follow = options.follow - 1;
 			}
 
+			const userAgent = findUserAgent(options.headers);
+
+			const headers = userAgent
+				? { 'User-Agent': userAgent }
+				: {};
+
 			const redirectResponse = await fetchCookieFollowRedirects(response.headers.get('location'), {
 				method: 'GET',
 				body: null,
+				headers,
 				follow
 			});
 
