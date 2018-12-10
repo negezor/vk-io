@@ -375,10 +375,10 @@ export default class Upload {
 	 * @param {Object} params
 	 * @param {Object} options
 	 *
-	 * @return {Promise<DocumentAttachment>}
+	 * @return {Promise<Object>}
 	 */
-	async document(params, { attachmentType = null } = {}) {
-		const [document] = await this.conduct({
+	async conductDocument(params, { attachmentType = 'doc' }) {
+		return this.conduct({
 			field: 'file',
 			params,
 
@@ -389,7 +389,21 @@ export default class Upload {
 			saveParams: ['title', 'tags'],
 
 			maxFiles: 1,
-			attachmentType: attachmentType || 'doc'
+			attachmentType
+		});
+	}
+
+	/**
+	 * Uploads document
+	 *
+	 * @param {Object} params
+	 * @param {Object} options
+	 *
+	 * @return {Promise<DocumentAttachment>}
+	 */
+	async document(params) {
+		const { doc: document } = await this.conductDocument(params, {
+			attachmentType: 'doc'
 		});
 
 		return new DocumentAttachment(document, this.vk);
@@ -401,10 +415,10 @@ export default class Upload {
 	 * @param {Object} params
 	 * @param {Object} options
 	 *
-	 * @return {Promise<DocumentAttachment>}
+	 * @return {Promise<Object>}
 	 */
-	async wallDocument(params, { attachmentType = null } = {}) {
-		const [document] = await this.conduct({
+	async conductWallDocument(params, { attachmentType = 'doc' } = {}) {
+		return this.conduct({
 			field: 'file',
 			params,
 
@@ -415,22 +429,36 @@ export default class Upload {
 			saveParams: ['title', 'tags'],
 
 			maxFiles: 1,
-			attachmentType: attachmentType || 'doc'
+			attachmentType
 		});
-
-		return new DocumentAttachment(document, this.vk);
 	}
 
 	/**
-	 * Uploads message document
+	 * Uploads wall document
 	 *
 	 * @param {Object} params
 	 * @param {Object} options
 	 *
 	 * @return {Promise<DocumentAttachment>}
 	 */
-	async messageDocument(params, { attachmentType = null } = {}) {
-		const [document] = await this.conduct({
+	async wallDocument(params) {
+		const { doc: document } = await this.conductWallDocument(params, {
+			attachmentType: 'doc'
+		});
+
+		return new DocumentAttachment(document, this.vk);
+	}
+
+	/**
+	 * Uploads wall document
+	 *
+	 * @param {Object} params
+	 * @param {Object} options
+	 *
+	 * @return {Promise<Object>}
+	 */
+	async conductMessageDocument(params, { attachmentType = 'doc' } = {}) {
+		return this.conduct({
 			field: 'file',
 			params,
 
@@ -441,7 +469,21 @@ export default class Upload {
 			saveParams: ['title', 'tags'],
 
 			maxFiles: 1,
-			attachmentType: attachmentType || 'doc'
+			attachmentType
+		});
+	}
+
+	/**
+	 * Uploads message document
+	 *
+	 * @param {Object} params
+	 * @param {Object} options
+	 *
+	 * @return {Promise<DocumentAttachment>}
+	 */
+	async messageDocument(params) {
+		const { doc: document } = await this.conductMessageDocument(params, {
+			attachmentType: 'doc'
 		});
 
 		return new DocumentAttachment(document, this.vk);
@@ -455,7 +497,7 @@ export default class Upload {
 	 * @return {Promise<AudioMessageAttachment>}
 	 */
 	async audioMessage(params) {
-		const { payload } = await this.messageDocument(
+		const { audio_message: audioMessage } = await this.conductMessageDocument(
 			{
 				...params,
 				type: 'audio_message'
@@ -465,34 +507,21 @@ export default class Upload {
 			}
 		);
 
-		const audioMessageAttachment = new AudioMessageAttachment({
-			id: payload.id,
-			owner_id: payload.owner_id,
-			access_key: payload.access_key,
-
-			...payload.preview.audio_msg
-		});
+		const audioMessageAttachment = new AudioMessageAttachment(audioMessage, this.vk);
 
 		return audioMessageAttachment;
 
-		// [{
-		// 	id: 450654090,
+		// { type: 'audio_message',
+		// audio_message: {
+		// id: 484017542,
 		// 	owner_id: 195624402,
-		// 	title: 'file0.dat',
-		// 	size: 6893689,
-		// 	ext: 'ogg',
-		// 	url: 'https://vk.com/doc195624402_450654090?hash=4885f0597af540ea3c&dl=GE4TKNRSGQ2DAMQ:1505453671:d23a533d7c485e7426&api=1&no_preview=1',
-		// 	date: 1505453671,
-		// 	type: 5,
-		// 	preview: {
-		// 		audio_msg: {
-		// 			duration: 243,
-		// 			waveform: [...],
-		// 			link_ogg: 'https://cs540101.userapi.com/c807320/u195624402/audio/440482857b.ogg',
-		// 			link_mp3: 'https://cs540101.userapi.com/c807320/u195624402/audio/440482857b.mp3'
-		// 		}
-		// 	}
-		// }]
+		// 	duration: 48,
+		// 	waveform: [...],
+		// 	link_ogg:
+		// 	'https://psv4.userapi.com/c805324//u195624402/audiomsg/15734aa6bb.ogg',
+		// 	link_mp3:
+		// 	'https://psv4.userapi.com/c805324//u195624402/audiomsg/15734aa6bb.mp3',
+		// 	access_key: '295cc90411e6222db0' } }
 	}
 
 	/**
@@ -503,7 +532,7 @@ export default class Upload {
 	 * @return {Promise<GraffitiAttachment>}
 	 */
 	async graffiti(params) {
-		const { payload } = await this.document(
+		const { graffiti } = await this.conductMessageDocument(
 			{
 				...params,
 				type: 'graffiti'
@@ -513,17 +542,7 @@ export default class Upload {
 			}
 		);
 
-		const { graffiti } = payload.preview;
-
-		const graffitiAttachment = new GraffitiAttachment({
-			id: payload.id,
-			owner_id: payload.owner_id,
-			access_key: payload.access_key,
-
-			url: graffiti.src,
-			width: graffiti.width,
-			height: graffiti.height
-		});
+		const graffitiAttachment = new GraffitiAttachment(graffiti, this.vk);
 
 		return graffitiAttachment;
 	}
