@@ -4,6 +4,7 @@ const vk = new VK();
 
 vk.setOptions({
 	token: process.env.TOKEN,
+	pollingGroupId: process.env.GROUP_ID,
 	apiMode: 'parallel_selected',
 	webhookPath: '/webhook/secret-path'
 });
