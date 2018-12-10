@@ -102,6 +102,10 @@ const webhookContextsEvents = [
 	[
 		['group_change_photo', 'group_officers_edit', 'group_change_settings'],
 		GroupUpdateContext
+	],
+	[
+		['message_typing_state'],
+		TypingContext
 	]
 ];
 

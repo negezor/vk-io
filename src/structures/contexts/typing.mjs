@@ -1,12 +1,22 @@
 import Context from './context';
 
-import { copyParams } from '../../utils/helpers';
-import { CHAT_PEER, inspectCustomData } from '../../utils/constants';
+import { getPeerType } from '../shared/helpers';
+import { copyParams, showDeprecatedMessage } from '../../utils/helpers';
+import {
+	CHAT_PEER,
 
-const subTypes = {
-	61: 'typing_user',
-	62: 'typing_chat'
-};
+	updatesSources,
+	inspectCustomData
+} from '../../utils/constants';
+
+const transformPolling = ({ 1: fromId, 2: toId }, updateType) => ({
+	from_id: fromId,
+	to_id: updateType === 62
+		? toId + CHAT_PEER
+		: fromId,
+
+	state: 'typing'
+});
 
 export default class TypingContext extends Context {
 	/**
@@ -16,26 +26,37 @@ export default class TypingContext extends Context {
 	 * @param {Array}  payload
 	 * @param {Object} options
 	 */
-	constructor(vk, [eventId, userId, extra]) {
+	constructor(vk, payload, { source, updateType, groupId = null }) {
 		super(vk);
 
-		const isChat = eventId === 62;
-
-		this.payload = {
-			user_id: userId,
-			chat_id: isChat
-				? extra
-				: null,
-			peer_id: isChat
-				? extra + CHAT_PEER
-				: userId
-
-		};
+		this.payload = source === updatesSources.POLLING
+			? transformPolling(payload, updateType)
+			: payload;
 
 		this.type = 'typing';
 		this.subTypes = [
-			subTypes[eventId]
+			`typing_${getPeerType(this.fromId)}`
 		];
+
+		this.$groupId = groupId;
+	}
+
+	/**
+	 * Checks is typing
+	 *
+	 * @return {boolean}
+	 */
+	get isTyping() {
+		return this.payload.state === 'typing';
+	}
+
+	/**
+	 * Checks is record audio message
+	 *
+	 * @return {boolean}
+	 */
+	get isAudioMessage() {
+		return this.payload.state === 'audiomessage';
 	}
 
 	/**
@@ -52,8 +73,35 @@ export default class TypingContext extends Context {
 	 *
 	 * @return {boolean}
 	 */
+	get isGroup() {
+		return this.subTypes.includes('typing_group');
+	}
+
+	/**
+	 * Checks that the message is typed in the chat
+	 *
+	 * @return {boolean}
+	 */
 	get isChat() {
-		return this.subTypes.includes('typing_chat');
+		return this.chatId !== null;
+	}
+
+	/**
+	 * Returns the identifier sender
+	 *
+	 * @return {number}
+	 */
+	get fromId() {
+		return this.payload.from_id;
+	}
+
+	/**
+	 * Returns the identifier destination
+	 *
+	 * @return {number}
+	 */
+	get toId() {
+		return this.payload.to_id;
 	}
 
 	/**
@@ -61,8 +109,11 @@ export default class TypingContext extends Context {
 	 *
 	 * @return {number}
 	 */
+	// DEPRECATED: Remove in release version
 	get peerId() {
-		return this.payload.peer_id;
+		showDeprecatedMessage('TypingContext, use toId instead of peerId');
+
+		return this.toId;
 	}
 
 	/**
@@ -70,8 +121,11 @@ export default class TypingContext extends Context {
 	 *
 	 * @return {number}
 	 */
+	// DEPRECATED: Remove in release version
 	get userId() {
-		return this.payload.user_id;
+		showDeprecatedMessage('TypingContext, use fromId instead of userId');
+
+		return this.fromId;
 	}
 
 	/**
@@ -80,7 +134,11 @@ export default class TypingContext extends Context {
 	 * @return {?number}
 	 */
 	get chatId() {
-		return this.payload.chat_id;
+		const chatId = this.toId - CHAT_PEER;
+
+		return chatId > 0
+			? chatId
+			: null;
 	}
 
 	/**
@@ -90,11 +148,14 @@ export default class TypingContext extends Context {
 	 */
 	[inspectCustomData]() {
 		return copyParams(this, [
-			'peerId',
-			'userId',
+			'fromId',
+			'toId',
 			'chatId',
 			'isUser',
-			'isChat'
+			'isGroup',
+			'isChat',
+			'isTyping',
+			'isAudioMessage'
 		]);
 	}
 }
