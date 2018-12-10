@@ -136,3 +136,13 @@ export const copyParams = (params, properties) => {
 
 	return copies;
 };
+
+/**
+ * Displays deprecated message
+ *
+ * @param {string} message
+ */
+export const showDeprecatedMessage = (message) => {
+	// eslint-disable-next-line no-console
+	console.log(' \u001b[31mDeprecated:\u001b[39m', message);
+};
