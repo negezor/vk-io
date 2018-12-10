@@ -102,6 +102,20 @@ export default class VideoAttachment extends Attachment {
 	}
 
 	/**
+	 * Checks is bookmarked current user
+	 *
+	 * @return {?boolean}
+	 */
+	isFavorited() {
+		if (!this.$filled) {
+			return null;
+		}
+
+		return Boolean(this.payload.is_favorite);
+	}
+
+
+	/**
 	 * Returns the title
 	 *
 	 * @return {?string}

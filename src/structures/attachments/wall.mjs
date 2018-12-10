@@ -279,6 +279,19 @@ export default class WallAttachment extends Attachment {
 	}
 
 	/**
+	 * Checks is bookmarked current user
+	 *
+	 * @return {?boolean}
+	 */
+	isFavorited() {
+		if (!this.$filled) {
+			return null;
+		}
+
+		return Boolean(this.payload.is_favorite);
+	}
+
+	/**
 	 * Returns the identifier author
 	 *
 	 * @return {?number}

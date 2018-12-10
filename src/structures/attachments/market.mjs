@@ -43,4 +43,17 @@ export default class MarketAttachment extends Attachment {
 
 		this.$filled = true;
 	}
+
+	/**
+	 * Checks is bookmarked current user
+	 *
+	 * @return {?boolean}
+	 */
+	isFavorited() {
+		if (!this.$filled) {
+			return null;
+		}
+
+		return Boolean(this.payload.is_favorite);
+	}
 }
