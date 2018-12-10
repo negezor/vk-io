@@ -38,7 +38,7 @@ updates.hear('/cat', async (context) => {
 	await Promise.all([
 		context.send('Wait for the uploads awesome 😻'),
 
-		context.sendPhoto('http://lorempixel.com/400/200/cats/')
+		context.sendPhoto('https://loremflickr.com/400/300/')
 	]);
 });
 
