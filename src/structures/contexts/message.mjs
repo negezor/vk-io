@@ -2,6 +2,7 @@ import Context from './context';
 
 import { VKError } from '../../errors';
 
+import MessageReply from '../shared/message-reply';
 import MessageForward from '../shared/message-forward';
 import transformMessage from '../../updates/transform-message';
 import MessageForwardsCollection from '../shared/message-forwards-collection';
@@ -124,6 +125,15 @@ export default class MessageContext extends Context {
 	 */
 	get hasText() {
 		return this.text !== null;
+	}
+
+	/**
+	 * Checks for reply message
+	 *
+	 * @return {boolean}
+	 */
+	get hasReplyMessage() {
+		return this.replyMessage !== null;
 	}
 
 	/**
@@ -818,6 +828,9 @@ export default class MessageContext extends Context {
 		this.text = payload.text
 			? unescapeHTML(payload.text)
 			: null;
+		this.replyMessage = payload.reply_message
+			? new MessageReply(payload.reply_message, vk)
+			: null;
 		this.forwards = payload.fwd_messages
 			? new MessageForwardsCollection(...payload.fwd_messages.map(forward => (
 				new MessageForward(forward, vk)
@@ -841,6 +854,10 @@ export default class MessageContext extends Context {
 				'eventText',
 				'eventEmail'
 			);
+		}
+
+		if (this.hasReplyMessage) {
+			beforeAttachments.push('replyMessage');
 		}
 
 		const afterAttachments = [];
