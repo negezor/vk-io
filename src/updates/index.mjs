@@ -293,15 +293,13 @@ export default class Updates {
 			});
 		}
 
-		this.hears.use((context, next) => {
-			const { text } = context;
+		conditions = conditions.map((condition) => {
+			if (typeof condition === 'function') {
+				return condition;
+			}
 
-			const hasSome = conditions.some((condition) => {
-				if (typeof condition === 'function') {
-					return condition(text, context);
-				}
-
-				if (condition instanceof RegExp) {
+			if (condition instanceof RegExp) {
+				return (text, context) => {
 					const passed = condition.test(text);
 
 					if (passed) {
@@ -309,10 +307,18 @@ export default class Updates {
 					}
 
 					return passed;
-				}
+				};
+			}
 
-				return text === condition;
-			});
+			return text => text === condition;
+		});
+
+		this.hears.use((context, next) => {
+			const { text } = context;
+
+			const hasSome = conditions.some(condition => (
+				condition(text, context)
+			));
 
 			return hasSome
 				? handler(context, next)
@@ -349,7 +355,7 @@ export default class Updates {
 	handlePollingUpdate(update) {
 		debug('longpoll update', update);
 
-		const [type] = update;
+		const { 0: type } = update;
 
 		const Context = pollingContexts[type];
 
@@ -421,6 +427,10 @@ export default class Updates {
 					lp_version: POLLING_VERSION
 				});
 
+			this.pollingHandler = isGroup
+				? this.handleWebhookUpdate.bind(this)
+				: this.handlePollingUpdate.bind(this);
+
 			if (this.ts === null) {
 				this.ts = ts;
 			}
@@ -431,10 +441,11 @@ export default class Updates {
 
 			this.url = new URL(pollingURL);
 			this.url.search = new URLSearchParams({
+				key,
 				act: 'a_check',
-				version: POLLING_VERSION,
 				wait: 25,
-				key
+				mode: this.mode,
+				version: POLLING_VERSION
 			});
 
 			this.startFetchLoop();
@@ -695,17 +706,12 @@ export default class Updates {
 	 * @return {Promise}
 	 */
 	async fetchUpdates() {
-		const { agent } = this.vk.options;
-		const { searchParams } = this.url;
-
-		searchParams.set('ts', this.ts);
-		searchParams.set('mode', this.mode);
+		this.url.searchParams.set('ts', this.ts);
 
 		debug('http -->');
 
 		let response = await fetch(this.url, {
-			agent,
-
+			agent: this.vk.options.agent,
 			method: 'GET',
 			timeout: 30e3,
 			compress: false,
@@ -725,9 +731,13 @@ export default class Updates {
 
 		response = await response.json();
 
-		this.restarted = 0;
+		if ('failed' in response) {
+			if (response.failed === 1) {
+				this.ts = response.ts;
 
-		if ('failed' in response && response.failed !== 1) {
+				return;
+			}
+
 			this.ts = null;
 
 			throw new UpdatesError({
@@ -736,29 +746,22 @@ export default class Updates {
 			});
 		}
 
-		this.ts = Number(response.ts);
+		this.restarted = 0;
+		this.ts = response.ts;
 
 		if ('pts' in response) {
 			this.pts = Number(response.pts);
 		}
 
-		if ('updates' in response) {
-			const isGroup = this.vk.options.pollingGroupId !== null;
-
-			/* Async handle updates */
-			Promise.all(response.updates.map(async (update) => {
-				try {
-					if (isGroup) {
-						await this.handleWebhookUpdate(update);
-					} else {
-						await this.handlePollingUpdate(update);
-					}
-				} catch (error) {
-					// eslint-disable-next-line no-console
-					console.error('Handle polling update error:', error);
-				}
-			}));
-		}
+		/* Async handle updates */
+		response.updates.forEach(async (update) => {
+			try {
+				await this.pollingHandler(update);
+			} catch (error) {
+				// eslint-disable-next-line no-console
+				console.error('Handle polling update error:', error);
+			}
+		});
 	}
 
 	/**
@@ -783,7 +786,7 @@ export default class Updates {
 		}
 
 		this.middleware.use(async (context, next) => {
-			if (!context.is('text')) {
+			if (context.type !== 'message' || !context.hasText) {
 				await next();
 
 				return;

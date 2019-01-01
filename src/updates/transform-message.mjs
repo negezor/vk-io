@@ -34,7 +34,15 @@ const specialAttachments = {
  *
  * @return {Object}
  */
-export default function transformMessage([, id, flags, peer, date, text, extra, attachments]) {
+export default function transformMessage({
+	1: id,
+	2: flags,
+	3: peer,
+	4: date,
+	5: text,
+	6: extra,
+	7: attachments
+}) {
 	const message = {
 		id,
 		date,
@@ -50,10 +58,11 @@ export default function transformMessage([, id, flags, peer, date, text, extra, 
 	};
 
 	message.peer_id = peer;
-	message.from_id = peer;
 
 	if ('from' in extra) {
 		message.from_id = Number(extra.from);
+	} else {
+		message.from_id = peer;
 	}
 
 	if (peer < 0 && message.peer_id !== message.from_id) {

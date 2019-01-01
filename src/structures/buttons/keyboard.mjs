@@ -153,13 +153,9 @@ export default class Keyboard {
 	 * @return {string}
 	 */
 	toString() {
-		const buttons = this.buttons.map((buttonRow) => {
-			if (!Array.isArray(buttonRow)) {
-				return buttonRow.toJSON();
-			}
-
-			return buttonRow.map(button => button.toJSON());
-		});
+		const buttons = this.buttons.map(buttonRow => (
+			buttonRow.map(button => button.toJSON())
+		));
 
 		return JSON.stringify({
 			one_time: this[kOneTime],
