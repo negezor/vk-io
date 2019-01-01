@@ -5,6 +5,9 @@ import { transformAttachments } from '../attachments/helpers';
 
 const { inspect } = nodeUtil;
 
+const kForwards = Symbol('forwards');
+const kAttachments = Symbol('attachments');
+
 export default class MessageForward {
 	/**
 	 * Constructor
@@ -16,15 +19,6 @@ export default class MessageForward {
 		this.vk = vk;
 
 		this.payload = payload;
-
-		this.forwards = payload.fwd_messages
-			? payload.fwd_messages.map(forward => (
-				new MessageForward(forward, vk)
-			))
-			: [];
-		this.attachments = payload.attachments.length > 0
-			? transformAttachments(payload.attachments, vk)
-			: [];
 	}
 
 	/**
@@ -43,6 +37,23 @@ export default class MessageForward {
 	 */
 	get hasText() {
 		return this.text !== null;
+	}
+
+	/**
+	 * Checks for the presence of attachments
+	 *
+	 * @param {?string} type
+	 *
+	 * @return {boolean}
+	 */
+	hasAttachments(type = null) {
+		if (type === null) {
+			return this.attachments.length > 0;
+		}
+
+		return this.attachments.some(attachment => (
+			attachment.type === type
+		));
 	}
 
 	/**
@@ -82,20 +93,33 @@ export default class MessageForward {
 	}
 
 	/**
-	 * Checks for the presence of attachments
+	 * Returns the forwards
 	 *
-	 * @param {?string} type
-	 *
-	 * @return {boolean}
+	 * @return {MessageForward[]}
 	 */
-	hasAttachments(type = null) {
-		if (type === null) {
-			return this.attachments.length > 0;
+	get forwards() {
+		if (!this[kForwards]) {
+			this[kForwards] = this.payload.fwd_messages
+				? this.payload.fwd_messages.map(forward => (
+					new MessageForward(forward, this.vk)
+				))
+				: [];
 		}
 
-		return this.attachments.some(attachment => (
-			attachment.type === type
-		));
+		return this[kForwards];
+	}
+
+	/**
+	 * Returns the attachments
+	 *
+	 * @return {Attachment[]}
+	 */
+	get attachments() {
+		if (!this[kAttachments]) {
+			this[kAttachments] = transformAttachments(this.payload.attachments, this.vk);
+		}
+
+		return this[kAttachments];
 	}
 
 	/**

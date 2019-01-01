@@ -24,6 +24,11 @@ const subTypesEnum = {
 	message_edit: 'edit_message'
 };
 
+const kForwards = Symbol('forwards');
+const kReplyMessage = Symbol('replyMessage');
+
+const kAttachments = Symbol('attachments');
+
 export default class MessageContext extends Context {
 	/**
 	 * Constructor
@@ -37,14 +42,13 @@ export default class MessageContext extends Context {
 
 		if (source === updatesSources.POLLING) {
 			payload = transformMessage(payload);
-		}
 
-		if (!payload.action) {
-			payload.action = {};
+			this.$filled = false;
+		} else {
+			this.$filled = true;
 		}
 
 		this.$groupId = groupId;
-		this.$filled = source === updatesSources.WEBHOOK;
 
 		this.applyPayload(payload);
 
@@ -59,12 +63,14 @@ export default class MessageContext extends Context {
 			type: getPeerType(fromId)
 		};
 
-		const subTypes = uniqueKeys(this.attachments.map(attachment => attachment.type));
+		const subTypes = uniqueKeys(payload.attachments.map(attachment => attachment.type));
+
+		const { eventType } = this;
 
 		subTypes.push(
-			!this.isEvent
+			!eventType
 				? subTypesEnum[updateType]
-				: this.eventType
+				: eventType
 		);
 
 		if (this.hasText) {
@@ -95,6 +101,10 @@ export default class MessageContext extends Context {
 			});
 
 		const [message] = items;
+
+		this[kForwards] = null;
+		this[kReplyMessage] = null;
+		this[kAttachments] = null;
 
 		this.applyPayload(message);
 
@@ -345,13 +355,10 @@ export default class MessageContext extends Context {
 	 * @return {?string}
 	 */
 	get eventType() {
-		const { type } = this.payload.action;
-
-		if (!type) {
-			return null;
-		}
-
-		return type;
+		return (
+			this.payload.action
+			&& this.payload.action.type
+		) || null;
 	}
 
 	/**
@@ -360,13 +367,10 @@ export default class MessageContext extends Context {
 	 * @return {?number}
 	 */
 	get eventMemberId() {
-		const { member_id: id } = this.payload.action;
-
-		if (!id) {
-			return null;
-		}
-
-		return Number(id);
+		return (
+			this.payload.action
+			&& this.payload.action.member_id
+		) || null;
 	}
 
 	/**
@@ -375,13 +379,10 @@ export default class MessageContext extends Context {
 	 * @return {?string}
 	 */
 	get eventText() {
-		const { text } = this.payload.action;
-
-		if (!text) {
-			return null;
-		}
-
-		return text;
+		return (
+			this.payload.action
+			&& this.payload.action.text
+		) || null;
 	}
 
 	/**
@@ -390,13 +391,10 @@ export default class MessageContext extends Context {
 	 * @return {?string}
 	 */
 	get eventEmail() {
-		const { email } = this.payload.action;
-
-		if (!email) {
-			return null;
-		}
-
-		return email;
+		return (
+			this.payload.action
+			&& this.payload.action.email
+		) || null;
 	}
 
 	/**
@@ -412,6 +410,45 @@ export default class MessageContext extends Context {
 		}
 
 		return JSON.parse(payload);
+	}
+
+	/**
+	 * Returns the forwards
+	 */
+	get forwards() {
+		if (!this[kForwards]) {
+			this[kForwards] = this.payload.fwd_messages
+				? new MessageForwardsCollection(...this.payload.fwd_messages.map(forward => (
+					new MessageForward(forward, this.vk)
+				)))
+				: new MessageForwardsCollection();
+		}
+
+		return this[kForwards];
+	}
+
+	/**
+	 * Returns the reply message
+	 */
+	get replyMessage() {
+		if (!this[kReplyMessage]) {
+			this[kReplyMessage] = this.payload.reply_message
+				? new MessageReply(this.payload.reply_message, this.vk)
+				: null;
+		}
+
+		return this[kReplyMessage];
+	}
+
+	/**
+	 * Returns the attachments
+	 */
+	get attachments() {
+		if (!this[kAttachments]) {
+			this[kAttachments] = transformAttachments(this.payload.attachments, this.vk);
+		}
+
+		return this[kAttachments];
 	}
 
 	/**
@@ -823,20 +860,9 @@ export default class MessageContext extends Context {
 	applyPayload(payload) {
 		this.payload = payload;
 
-		const { vk } = this;
-
 		this.text = payload.text
 			? unescapeHTML(payload.text)
 			: null;
-		this.replyMessage = payload.reply_message
-			? new MessageReply(payload.reply_message, vk)
-			: null;
-		this.forwards = payload.fwd_messages
-			? new MessageForwardsCollection(...payload.fwd_messages.map(forward => (
-				new MessageForward(forward, vk)
-			)))
-			: new MessageForwardsCollection();
-		this.attachments = transformAttachments(payload.attachments, vk);
 	}
 
 	/**

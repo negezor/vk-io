@@ -6,6 +6,8 @@ import { attachmentTypes, inspectCustomData } from '../../utils/constants';
 
 const { LINK } = attachmentTypes;
 
+const kPhoto = Symbol('kPhoto');
+
 export default class LinkAttachment extends ExternalAttachment {
 	/**
 	 * Constructor
@@ -17,10 +19,6 @@ export default class LinkAttachment extends ExternalAttachment {
 		super(LINK, payload);
 
 		this.vk = vk;
-
-		this.attachments = payload.photo
-			? [new PhotoAttachment(payload.photo, vk)]
-			: [];
 	}
 
 	/**
@@ -92,7 +90,13 @@ export default class LinkAttachment extends ExternalAttachment {
 	 * @return {?PhotoAttachment}
 	 */
 	get photo() {
-		return this.attachments[0] || null;
+		if (!this[kPhoto]) {
+			this[kPhoto] = this.payload.photo
+				? new PhotoAttachment(this.payload.photo, this.vk)
+				: null;
+		}
+
+		return this[kPhoto];
 	}
 
 	/**

@@ -24,7 +24,7 @@ export default class WallPostContext extends Context {
 		this.payload = payload;
 		this.$groupId = groupId;
 
-		this.attachments = [new WallAttachment(payload, vk)];
+		this.wall = new WallAttachment(payload, vk);
 
 		this.type = 'wall_post';
 		this.subTypes = [
@@ -39,15 +39,6 @@ export default class WallPostContext extends Context {
 	 */
 	get isRepost() {
 		return this.subTypes.includes('new_wall_repost');
-	}
-
-	/**
-	 * Returns the wall attachment
-	 *
-	 * @return {WallAttachment}
-	 */
-	get wall() {
-		return this.attachments[0];
 	}
 
 	/**

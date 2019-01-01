@@ -5,6 +5,8 @@ import { transformAttachments } from '../attachments/helpers';
 
 const { inspect } = nodeUtil;
 
+const kAttachments = Symbol('attachments');
+
 export default class MessageReply {
 	/**
 	 * Constructor
@@ -16,10 +18,6 @@ export default class MessageReply {
 		this.vk = vk;
 
 		this.payload = payload;
-
-		this.attachments = payload.attachments.length > 0
-			? transformAttachments(payload.attachments, vk)
-			: [];
 	}
 
 	/**
@@ -38,6 +36,23 @@ export default class MessageReply {
 	 */
 	get hasText() {
 		return this.text !== null;
+	}
+
+	/**
+	 * Checks for the presence of attachments
+	 *
+	 * @param {?string} type
+	 *
+	 * @return {boolean}
+	 */
+	hasAttachments(type = null) {
+		if (type === null) {
+			return this.attachments.length > 0;
+		}
+
+		return this.attachments.some(attachment => (
+			attachment.type === type
+		));
 	}
 
 	/**
@@ -104,20 +119,16 @@ export default class MessageReply {
 	}
 
 	/**
-	 * Checks for the presence of attachments
+	 * Returns the attachments
 	 *
-	 * @param {?string} type
-	 *
-	 * @return {boolean}
+	 * @return {Attachment[]}
 	 */
-	hasAttachments(type = null) {
-		if (type === null) {
-			return this.attachments.length > 0;
+	get attachments() {
+		if (!this[kAttachments]) {
+			this[kAttachments] = transformAttachments(this.payload.attachments, this.vk);
 		}
 
-		return this.attachments.some(attachment => (
-			attachment.type === type
-		));
+		return this[kAttachments];
 	}
 
 	/**

@@ -6,6 +6,9 @@ import { attachmentTypes, inspectCustomData } from '../../utils/constants';
 
 const { WALL } = attachmentTypes;
 
+const kAttachments = Symbol('attachments');
+const kCopyHistoryAttachments = Symbol('copyHistoryAttachments');
+
 export default class WallAttachment extends Attachment {
 	/**
 	 * Constructor
@@ -18,11 +21,6 @@ export default class WallAttachment extends Attachment {
 
 		this.vk = vk;
 		this.payload = payload;
-
-		this.attachments = transformAttachments(payload.attachments || []);
-		this.copyHistoryAttachments = payload.copy_history
-			? payload.copy_history.map(history => new WallAttachment(history, vk))
-			: [];
 
 		this.$filled = 'date' in payload;
 	}
@@ -44,7 +42,8 @@ export default class WallAttachment extends Attachment {
 
 		this.payload = post;
 
-		this.attachments = transformAttachments(post.attachments);
+		this[kAttachments] = null;
+		this[kCopyHistoryAttachments] = null;
 
 		if ('access_key' in this.payload) {
 			this.accessKey = this.payload.access_key;
@@ -457,7 +456,24 @@ export default class WallAttachment extends Attachment {
 	 * @return {WallAttachment[]}
 	 */
 	get copyHistory() {
-		return this.copyHistoryAttachments;
+		if (!this[kCopyHistoryAttachments]) {
+			this[kCopyHistoryAttachments] = this.payload.copy_history
+				? this.payload.copy_history.map(history => new WallAttachment(history, this.vk))
+				: [];
+		}
+
+		return this[kCopyHistoryAttachments];
+	}
+
+	/**
+	 * Returns the attachments
+	 */
+	get attachments() {
+		if (!this[kAttachments]) {
+			this[kAttachments] = transformAttachments(this.payload.attachments || [], this.vk);
+		}
+
+		return this[kAttachments];
 	}
 
 	/**
