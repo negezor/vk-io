@@ -13,7 +13,7 @@ const { updates } = vk;
 
 // Skip outbox message and handle errors
 updates.use(async (context, next) => {
-	if (context.is('message') && context.isOutbox) {
+	if (context.type === 'message' && context.isOutbox) {
 		return;
 	}
 
@@ -58,11 +58,18 @@ const hearCommand = (name, conditions, handle) => {
 	);
 };
 
-hearCommand('start', async (context, next) => {
-	context.state.command = 'help';
+// Handle start button
+vk.updates.hear(
+	(text, { state }) => state.command === 'start',
+	(context, next) => {
+		context.state.command = 'help';
 
-	await next();
-});
+		return Promise.all([
+			context.send('Hello!'),
+			next()
+		]);
+	}
+);
 
 hearCommand('help', async (context) => {
 	await context.send({

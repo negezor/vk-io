@@ -13,7 +13,7 @@ const { updates } = vk;
 
 // Skip outbox message and handle errors
 updates.use(async (context, next) => {
-	if (context.is('message') && context.isOutbox) {
+	if (context.type === 'message' && context.isOutbox) {
 		return;
 	}
 
