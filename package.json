@@ -28,12 +28,14 @@
 	],
 	"main": "lib/index",
 	"module": "lib/index.mjs",
+	"types": "./typings/index.d.ts",
 	"engines": {
 		"node": ">=8.0.0"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.2.2",
 		"@babel/preset-env": "^7.2.3",
+		"@types/node": "^10.12.18",
 		"babel-core": "^7.0.0-0",
 		"babel-jest": "^23.6.0",
 		"cross-env": "^5.2.0",
@@ -45,7 +47,10 @@
 		"rollup-plugin-babel": "^4.2.0",
 		"rollup-plugin-commonjs": "^9.2.0",
 		"rollup-plugin-json": "^3.1.0",
-		"rollup-plugin-node-resolve": "^4.0.0"
+		"rollup-plugin-node-resolve": "^4.0.0",
+		"tslint": "^5.12.0",
+		"tslint-config-airbnb": "^5.11.1",
+		"typescript": "^3.2.2"
 	},
 	"dependencies": {
 		"cheerio": "^1.0.0-rc.2",
@@ -62,6 +67,7 @@
 		"rollup:watch": "yarn run rollup:build -w",
 		"test": "yarn run test:jest && yarn run test:eslint",
 		"test:jest": "cross-env BABEL_ENV=test jest --config jest.config.json --no-cache",
-		"test:eslint": "eslint ./src --ext .mjs,.js --ignore-path .gitignore ."
+		"test:eslint": "eslint ./src --ext .mjs,.js --ignore-path .gitignore .",
+		"test:typings": "tslint typings/index.d.ts"
 	}
 }
