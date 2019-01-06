@@ -24,7 +24,8 @@
 		"es7"
 	],
 	"files": [
-		"lib"
+		"lib",
+		"typings"
 	],
 	"main": "lib/index",
 	"module": "lib/index.mjs",
