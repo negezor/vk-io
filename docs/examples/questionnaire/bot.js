@@ -19,10 +19,13 @@ for (const scene of scenes) {
 
 vk.updates.use(async (context, next) => {
 	if (
-		// Ignore is outbox message
-		(context.type === 'message' && context.isOutbox)
-		// Ignore is bot (group)
-		|| context.senderId < 0
+		context.type === 'message'
+		&& (
+			// Ignore is outbox message
+			context.isOutbox
+			// Ignore is bot (group)
+			|| context.senderId < 0
+		)
 	) {
 		return;
 	}
