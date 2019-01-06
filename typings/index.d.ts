@@ -1,3 +1,6 @@
+// Definitions by:
+//  Ilya Sinkin (https://github.com/isinkin)
+
 declare module 'vk-io' {
 	import WebSocket from 'ws';
 	import Cheerio from 'cheerio';
