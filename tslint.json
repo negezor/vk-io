@@ -6,6 +6,7 @@
     "jsRules": {},
     "rules": {
 		"import-name": false,
+		"max-line-length": false,
 		"indent": [true, "tabs"],
 		"ter-indent": [true, "tab"],
 		"trailing-comma": [true, "never"]

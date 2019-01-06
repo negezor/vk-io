@@ -1776,7 +1776,7 @@ declare module 'vk-io' {
 		 */
 		constructor(vk: VK, payload: Object, options: Object);
 
-		 /**
+		/**
 		 * Checks is new comment
 		 */
 		public readonly isNew: boolean;
@@ -1908,7 +1908,7 @@ declare module 'vk-io' {
 		 */
 		constructor(vk: VK, payload: any[]);
 
-		 /**
+		/**
 		 * Checks that an important dialogue
 		 */
 		public readonly isImportant: boolean;
@@ -1992,7 +1992,7 @@ declare module 'vk-io' {
 		 */
 		public readonly isChangeSettings: boolean;
 
-		 /**
+		/**
 		 * Returns the identifier admin
 		 */
 		public readonly adminId?: number;
@@ -2030,59 +2030,59 @@ declare module 'vk-io' {
 
 	export class GroupUserContext extends Context {
 		/**
-		* Checks is join user
-		*/
-	   public readonly isBlocked: boolean;
+		 * Checks is join user
+		 */
+		public readonly isBlocked: boolean;
 
-	   /**
-		* Checks is leave user
-		*/
-	   public readonly isUnblocked: boolean;
+		/**
+		 * Checks is leave user
+		 */
+		public readonly isUnblocked: boolean;
 
-	   /**
-		* Checks that the block has expired
-		*/
-	   public readonly isExpired?: boolean;
+		/**
+		 * Checks that the block has expired
+		 */
+		public readonly isExpired?: boolean;
 
-	   /**
-		* Returns the identifier admin
-		*/
-	   public readonly adminId?: number;
+		/**
+		 * Returns the identifier admin
+		 */
+		public readonly adminId?: number;
 
-	   /**
-		* Returns the identifier user
-		*/
-	   public readonly userId: number;
+		/**
+		 * Returns the identifier user
+		 */
+		public readonly userId: number;
 
-	   /**
-		* Returns the reason for the ban
-		*/
-	   public readonly reasonId?: number;
+		/**
+		 * Returns the reason for the ban
+		 */
+		public readonly reasonId?: number;
 
-	   /**
-		* Returns the reason name for the ban
-		*/
-	   public readonly reasonName?: string;
+		/**
+		 * Returns the reason name for the ban
+		 */
+		public readonly reasonName?: string;
 
-	   /**
-		* Returns the administrator comment to block
-		*/
-	   public readonly comment?: string;
+		/**
+		 * Returns the administrator comment to block
+		 */
+		public readonly comment?: string;
 
-	   /**
-		* Constructror
-		*/
-	   public constructor(vk: VK, payload: Object, options: Object);
+		/**
+		 * Constructror
+		 */
+		public constructor(vk: VK, payload: Object, options: Object);
 
-	   /**
-		* Adds a user to the community blacklist
-		*/
-	   public banUser(params: Object): Promise<Object>;
+		/**
+		 * Adds a user to the community blacklist
+		 */
+		public banUser(params: Object): Promise<Object>;
 
-	   /**
-		* Adds a user to the community blacklist
-		*/
-	   public unbanUser(): Promise<Object>;
+		/**
+		 * Adds a user to the community blacklist
+		 */
+		public unbanUser(): Promise<Object>;
 	}
 
 	export class MessageAllowContext extends Context {
@@ -3090,12 +3090,12 @@ declare module 'vk-io' {
 		 */
 		public static textButton(options: Object): TextButton;
 
-		 /**
+		/**
 		 * The keyboard will open only once
 		 */
 		public oneTime(enabled: boolean): this;
 
-		 /**
+		/**
 		 * Add buttons row
 		 */
 		public addButtonsRow(buttons: Button[]): this;
