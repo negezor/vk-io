@@ -9,7 +9,7 @@
  * @return {string}
  */
 exports.getAttachment = (type, attachment) => (
-	type + attachment.owner_id + '_' + attachment.id
+	type + (attachment.owner_id===undefined?attachment.owner:attachment.owner_id) + '_' + attachment.id
 );
 
 /**
@@ -20,7 +20,7 @@ exports.getAttachment = (type, attachment) => (
  * @return {string}
  */
 const getSmallPhoto = (photo) => (
-	photo.photo_130 || photo.photo_75
+	photo.photo_130 || photo.photo_75 || photo.sizes.find(x => x.type == "s").url
 );
 
 exports.getSmallPhoto = getSmallPhoto;
@@ -33,7 +33,7 @@ exports.getSmallPhoto = getSmallPhoto;
  * @return {string}
  */
 const getMediumPhoto = (photo) => (
-	photo.photo_807 || photo.photo_604 || getSmallPhoto(photo)
+	photo.photo_807 || photo.photo_604 || photo.sizes.find(x => x.type == "m").url || getSmallPhoto(photo)
 );
 
 exports.getMediumPhoto = getMediumPhoto;
@@ -46,5 +46,5 @@ exports.getMediumPhoto = getMediumPhoto;
  * @return {string}
  */
 exports.getLargePhoto = (photo) => (
-	photo.photo_2560 || photo.photo_1280 || getMediumPhoto(photo)
+	photo.photo_2560 || photo.photo_1280 || photo.sizes.find(x => x.type == "r").url || photo.sizes.find(x => x.type == "x").url || getMediumPhoto(photo)
 );
