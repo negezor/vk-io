@@ -1,6 +1,6 @@
 'use strict';
 
-const { Message, actions } = require('./messages');
+const { Message, MessageEdited, actions } = require('./messages');
 const { parseFlags } = require('./helpers');
 
 const similarEvents = {
@@ -65,6 +65,16 @@ module.exports = {
 				return null;
 			}
 
+			if (this.listenerCount('message') === 0) {
+				return null;
+			}
+
+			return new Message(this.vk, message);
+		}
+	},
+	5: {
+		name: 'message.edited',
+		action: function (message) {
 			if (this.listenerCount('message') === 0) {
 				return null;
 			}

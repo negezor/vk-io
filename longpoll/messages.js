@@ -53,6 +53,28 @@ class BaseMessage {
 	}
 
 	/**
+	 * Редактирует сообщение
+	 *
+	 * @param {mixed}  text
+	 * @param {Object} params
+	 *
+	 * @return {Promise<Number>}
+	 */
+	edit (text, params = {}) {
+		if (typeof text === 'object') {
+			params = text;
+		} else {
+			params.message = text;
+		}
+
+		params.peer_id = this.peer;
+		params.message_id = this.id;
+
+		return this.vk.api.messages.edit(params);
+	}
+
+
+	/**
 	 * Отправляет стикер в текущий диалог
 	 *
 	 * @param {number} id
@@ -203,6 +225,25 @@ class Message extends BaseMessage {
 		this._fwd = attachments.fwd || null;
 	}
 
+		
+	pinMessage () {
+		if(this.from != 'chat')
+			return false
+		return this.vk.api.messages.pin({
+			peer_id: this.peer,
+			message_id: this.id
+		});
+	}
+	
+	unpinMessage () {
+		if(this.from != 'chat')
+			return false
+		return this.vk.api.messages.unpin({
+			peer_id: this.peer,
+			message_id: this.id
+		});
+	}
+	
 	/**
 	 * Отвечает на сообщение
 	 *
@@ -330,6 +371,196 @@ class Message extends BaseMessage {
 }
 
 exports.Message = Message;
+
+/**
+ * Сообщение Edited
+ *
+ * @public
+ */
+class MessageEdited extends BaseMessage {
+	/**
+	 * Конструктор
+	 *
+	 * @param {VK}     vk
+	 * @param {Object} message
+	 */
+	constructor (vk, message) {
+		super(vk, message);
+
+		this.chat = null;
+
+		const attachments = message[7];
+
+		if (this.peer > SHEAR_CHAT_PEER) {
+			this.user = +attachments.from;
+			this.title = unescape(message[5]);
+
+			this.chat = this.peer - SHEAR_CHAT_PEER;
+
+			this.from = 'chat';
+		} else if (this.peer < 0) {
+			this.user = null;
+			this.title = null;
+
+			this.admin = +attachments.from_admin;
+
+			this.from = 'group';
+		} else {
+			this.user = this.peer;
+			this.title = null;
+
+			this.from = 'dm';
+		}
+
+		if (message[6].length !== 0) {
+			this.text = unescape(message[6]).replace(brReplace, '\n');
+		} else {
+			this.text = null;
+		}
+
+		this.flags = parseFlags(message[2], this.isGroup());
+		this.attachments = parseAttachments(attachments);
+
+		this.hasEmoji = 'emoji' in attachments;
+
+		if ('geo' in attachments) {
+			this.attachments.geo = {
+				id: attachments.geo,
+				provider: +attachments.geo_provider
+			};
+		}
+
+		this._fwd = attachments.fwd || null;
+	}
+
+	/**
+	 * Отвечает на сообщение
+	 *
+	 * @param {mixed}  text
+	 * @param {Object} params
+	 *
+	 * @return {Promise<Number>}
+	 */
+	reply (text, params = {}) {
+		if (typeof text === 'object') {
+			params = text;
+		} else {
+			params.message = text;
+		}
+
+		params.forward_messages = this.id;
+
+		return this.send(params);
+	}
+
+	/**
+	 * Проверяет наличие флага
+	 *
+	 * @param {string} name
+	 *
+	 * @return {boolean}
+	 */
+	hasFlag (name) {
+		return this.flags.includes(name);
+	}
+
+	/**
+	 * Проверяет наличие прикриплений
+	 *
+	 * @return {boolean}
+	 */
+	hasAttachments () {
+		return Object.keys(this.attachments).length > 0;
+	}
+
+	/**
+	 * Проверяет наличие прикрипления
+	 *
+	 * @param {string} name
+	 *
+	 * @return {boolean}
+	 */
+	hasAttachment (name) {
+		return name in this.attachments;
+	}
+
+	/**
+	 * Проверяет наличие пересылаемых сообщений
+	 *
+	 * @return {boolean}
+	 */
+	hasFwd () {
+		return this._fwd !== null;
+	}
+
+	/**
+	 * Сообщение из диалога
+	 *
+	 * @return {boolean}
+	 */
+	isDM () {
+		return this.from === 'dm';
+	}
+
+	/**
+	 * Сообщение из беседы
+	 *
+	 * @return {boolean}
+	 */
+	isChat () {
+		return this.from === 'chat';
+	}
+
+	/**
+	 * Сообщения из сообщества
+	 *
+	 * @return {boolean}
+	 */
+	isGroup () {
+		return this.from === 'group';
+	}
+
+	/**
+	 * Возвращает пересылаемые сообщения
+	 *
+	 * @return {Array}
+	 */
+	getFwd () {
+		if (!this.hasFwd()) {
+			return [];
+		}
+
+		if (Array.isArray(this._fwd)) {
+			return this._fwd;
+		}
+
+		this._fwd = parseFwds(this._fwd);
+
+		return this._fwd;
+	}
+
+	/**
+	 * Возвращает свойства которые нужно вывести
+	 *
+	 * @return object
+	 */
+	inspect (depth, options) {
+		const print = Object.assign(super.inspect(depth, options), {
+			user: this.user,
+			chat: this.chat,
+			title: this.title,
+			text: this.text,
+			from: this.from,
+			hasEmoji: this.hasEmoji,
+			flags: this.flags,
+			attachments: this.attachments
+		});
+
+		return this.constructor.name + ' ' + inspect(print, options);
+	}
+}
+
+// exports.MessageEdited = MessageEdited;
 
 /**
  * Создание чата
