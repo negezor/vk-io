@@ -235,6 +235,7 @@ module.exports = [
 	'groups.getBanned',
 	'groups.getById',
 	'groups.getCallbackConfirmationCode',
+	'groups.getCallbackServerSettings',
 	'groups.getCallbackSettings',
 	'groups.getCatalog',
 	'groups.getCatalogInfo',
@@ -250,6 +251,8 @@ module.exports = [
 	'groups.removeUser',
 	'groups.reorderLink',
 	'groups.search',
+	'groups.setCallbackServer',
+	'groups.setCallbackServerSettings',
 	'groups.setCallbackSettings',
 	'groups.unbanUser',
 
@@ -306,6 +309,9 @@ module.exports = [
 	 * Messages
 	 * Методы для работы с личными сообщениями
 	 */
+	'messages.pin',
+	'messages.unpin',
+	'messages.edit',
 	'messages.addChatUser',
 	'messages.allowMessagesFromGroup',
 	'messages.createChat',
@@ -336,6 +342,7 @@ module.exports = [
 	'messages.send',
 	'messages.setActivity',
 	'messages.setChatPhoto',
+	'messages.getConversations',
 
 	/**
 	 * Newsfeed
