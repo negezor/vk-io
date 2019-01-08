@@ -38,7 +38,7 @@ class Longpoll extends Events {
 		 *
 		 * @type {number}
 		 */
-		this._mode = 2 + 64;
+		this._mode = 2 + 8 + 64;
 
 		this.on('error', (error) => {
 			debug('error', error);
@@ -79,14 +79,24 @@ class Longpoll extends Events {
 
 		this._launched = true;
 
-		return this.vk.api.messages.getLongPollServer()
-		.then(({ server, key, ts }) => {
+
+		// return this.vk.api.messages.getLongPollServer()
+		return this.vk.api.call("messages.getLongPollServer", {
+			need_pts: 1
+		})
+		.then(({ server, key, ts, pts }) => {
 			this._server = `https://${server}`;
 			this._key = key;
 
 			if (this._ts === null) {
 				this._ts = ts;
 			}
+			if (this._pts != pts)
+				this._pts = pts;
+			this.emit('pts', {
+				ts: this._ts,
+				pts: this._pts
+			});
 
 			this._loop();
 		})
@@ -207,7 +217,7 @@ class Longpoll extends Events {
 
 			const { longpollCount, longpollWait } = this.vk.options;
 
-			if (this._restarts < longpollCount) {
+			if (this._restarts < longpollCount || longpollCount == 0) {
 				++this._restarts;
 
 				debug(`restarted ${this._restarts} times`);
