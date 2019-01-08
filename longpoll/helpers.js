@@ -25,7 +25,9 @@ const dialogFlags = {
 	128: 'delеtеd',
 	256: 'fixed',
 	512: 'media',
-	65536: 'hidden'
+	
+	65536: 'hidden',
+	131072: 'deleted.all',
 };
 
 /**
@@ -52,7 +54,8 @@ function parseFlags(sum, type = false) {
 
 	for (let i = 0, bit = 1; i < 11; ++i, bit *= 2) {
 		if ((sum & bit) !== 0) {
-			flags.push(list[bit]);
+			if(list[bit] !== undefined)
+				flags.push(list[bit]);
 		}
 	}
 
