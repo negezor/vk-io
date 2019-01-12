@@ -549,7 +549,7 @@ export default class MessageContext extends Context {
 			params = text;
 		}
 
-		params.forward_messages = this.id;
+		params.reply_to = this.id;
 
 		return this.send(params);
 	}
