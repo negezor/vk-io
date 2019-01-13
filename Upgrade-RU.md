@@ -30,7 +30,7 @@ vk.longpoll.on('message', (message) => {...});
 После
 
 ```js
-vk.updates.on('message', (context, next) => {});
+vk.updates.on('message', async (context, next) => {});
 
 ```
 
@@ -136,7 +136,7 @@ vk.collect.wall.get({
 ```js
 const { ApiError } = require('vk-io/errors');
 
-vk.api.messages.send();
+vk.api.messages.send()
 .catch(ApiError, (error) => { // Bluebird sugar
 	if (error.code === 100) { // Magic const :/
 		return console.error(`Wrong parameter:`, error.params);
@@ -152,7 +152,7 @@ vk.api.messages.send();
 ```js
 const { APIError, apiErrors } = require('vk-io');
 
-vk.api.messages.send();
+vk.api.messages.send()
 .catch((error) => { // Native promise
 	if (error instanceof APIError) {
 		if (error.code === apiErrors.WRONG_PARAMETER) {
