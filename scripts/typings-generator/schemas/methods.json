@@ -12780,7 +12780,8 @@
         {
           "name": "random_id",
           "description": "Unique identifier to avoid resending the message.",
-          "type": "integer"
+					"type": "integer",
+					"required": true
         },
         {
           "name": "peer_id",
@@ -12850,10 +12851,20 @@
           "type": "boolean"
         },
         {
+          "name": "dont_parse_links",
+          "description": "1 - do not create a snippet link from the message",
+          "type": "boolean"
+        },
+        {
           "name": "group_id",
           "description": "Group ID (for group messages with group access token)",
           "type": "integer",
           "minimum": 0
+				},
+				{
+          "name": "keyboard",
+          "description": "Object describing the keyboard for the bot",
+          "type": "any"
         }
       ],
       "errors": [
