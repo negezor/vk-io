@@ -117,6 +117,26 @@ async function generate() {
 			params.addProperty(parsedParameter);
 		}
 
+		params.methods.push(
+			ts.createIndexSignature(
+				undefined,
+				undefined,
+				[ts.createParameter(
+					undefined,
+					undefined,
+					undefined,
+					'key',
+					undefined,
+					ts.createKeywordTypeNode(
+						ts.SyntaxKind.StringKeyword
+					)
+				)],
+				ts.createKeywordTypeNode(
+					ts.SyntaxKind.AnyKeyword
+				)
+			)
+		);
+
 		apiParams.push(params);
 
 		const group = apiGroups[groupName];

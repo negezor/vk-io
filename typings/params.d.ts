@@ -5,6 +5,7 @@ export interface UsersGetParams {
     name_case?: "nom" | "gen" | "dat" | "acc" | "ins" | "abl";
     user_ids?: string[];
     fields?: string[];
+    [key: string]: any;
 };
 
 export interface UsersSearchParams {
@@ -131,10 +132,12 @@ export interface UsersSearchParams {
     fields?: string[];
     school_class?: number;
     from_list?: string[];
+    [key: string]: any;
 };
 
 export interface UsersIsAppUserParams {
     user_id?: number;
+    [key: string]: any;
 };
 
 export interface UsersGetSubscriptionsParams {
@@ -155,6 +158,7 @@ export interface UsersGetSubscriptionsParams {
      */
     count?: number;
     fields?: string[];
+    [key: string]: any;
 };
 
 export interface UsersGetFollowersParams {
@@ -175,6 +179,7 @@ export interface UsersGetFollowersParams {
      */
     name_case?: "nom" | "gen" | "dat" | "acc" | "ins" | "abl";
     fields?: string[];
+    [key: string]: any;
 };
 
 export interface UsersReportParams {
@@ -190,6 +195,7 @@ export interface UsersReportParams {
      * Comment describing the complaint.
      */
     comment?: string;
+    [key: string]: any;
 };
 
 export interface UsersGetNearbyParams {
@@ -218,6 +224,7 @@ export interface UsersGetNearbyParams {
      */
     name_case?: "nom" | "gen" | "dat" | "acc" | "ins" | "abl";
     fields?: string[];
+    [key: string]: any;
 };
 
 export interface AuthCheckPhoneParams {
@@ -231,6 +238,7 @@ export interface AuthCheckPhoneParams {
     client_id?: number;
     client_secret: string;
     auth_by_phone?: boolean;
+    [key: string]: any;
 };
 
 export interface AuthSignupParams {
@@ -275,6 +283,7 @@ export interface AuthSignupParams {
      */
     sid?: string;
     client_secret: string;
+    [key: string]: any;
 };
 
 export interface AuthConfirmParams {
@@ -285,6 +294,7 @@ export interface AuthConfirmParams {
     password?: string;
     test_mode?: boolean;
     intro?: number;
+    [key: string]: any;
 };
 
 export interface AuthRestoreParams {
@@ -296,6 +306,7 @@ export interface AuthRestoreParams {
      * User last name.
      */
     last_name: string;
+    [key: string]: any;
 };
 
 export interface WallGetParams {
@@ -324,6 +335,7 @@ export interface WallGetParams {
      */
     extended?: boolean;
     fields?: string[];
+    [key: string]: any;
 };
 
 export interface WallSearchParams {
@@ -356,6 +368,7 @@ export interface WallSearchParams {
      */
     extended?: boolean;
     fields?: string[];
+    [key: string]: any;
 };
 
 export interface PhotosCreateAlbumParams {
@@ -375,6 +388,7 @@ export interface PhotosCreateAlbumParams {
     privacy_comment?: string[];
     upload_by_admins_only?: boolean;
     comments_disabled?: boolean;
+    [key: string]: any;
 };
 
 export interface PhotosEditAlbumParams {
@@ -398,6 +412,7 @@ export interface PhotosEditAlbumParams {
     privacy_comment?: string[];
     upload_by_admins_only?: boolean;
     comments_disabled?: boolean;
+    [key: string]: any;
 };
 
 export interface PhotosGetAlbumsParams {
@@ -426,6 +441,7 @@ export interface PhotosGetAlbumsParams {
      */
     photo_sizes?: boolean;
     album_ids?: number[];
+    [key: string]: any;
 };
 
 export interface PhotosGetParams {
@@ -460,6 +476,7 @@ export interface PhotosGetParams {
     photo_ids?: string[];
     offset?: number;
     count?: number;
+    [key: string]: any;
 };
 
 export interface PhotosGetAlbumsCountParams {
@@ -471,6 +488,7 @@ export interface PhotosGetAlbumsCountParams {
      * Community ID.
      */
     group_id?: number;
+    [key: string]: any;
 };
 
 export interface PhotosGetByIdParams {
@@ -483,6 +501,7 @@ export interface PhotosGetByIdParams {
      */
     photo_sizes?: boolean;
     photos?: string[];
+    [key: string]: any;
 };
 
 export interface PhotosGetUploadServerParams {
@@ -494,6 +513,7 @@ export interface PhotosGetUploadServerParams {
      * ID of community that owns the album (if the photo will be uploaded to a community album).
      */
     group_id?: number;
+    [key: string]: any;
 };
 
 export interface PhotosGetOwnerCoverPhotoUploadServerParams {
@@ -517,6 +537,7 @@ export interface PhotosGetOwnerCoverPhotoUploadServerParams {
      * Y coordinate of the right-bottom corner
      */
     crop_y2?: number;
+    [key: string]: any;
 };
 
 export interface PhotosGetOwnerPhotoUploadServerParams {
@@ -524,6 +545,7 @@ export interface PhotosGetOwnerPhotoUploadServerParams {
      * identifier of a community or current user. "Note that community id must be negative. 'owner_id=1' – user, 'owner_id=-1' – community, "
      */
     owner_id?: number;
+    [key: string]: any;
 };
 
 export interface PhotosGetChatUploadServerParams {
@@ -537,6 +559,7 @@ export interface PhotosGetChatUploadServerParams {
     crop_width?: number;
     crop_x?: number;
     crop_y?: number;
+    [key: string]: any;
 };
 
 export interface PhotosGetMarketUploadServerParams {
@@ -560,6 +583,7 @@ export interface PhotosGetMarketUploadServerParams {
      * Width of the cropped photo in px.
      */
     crop_width?: number;
+    [key: string]: any;
 };
 
 export interface PhotosGetMarketAlbumUploadServerParams {
@@ -567,6 +591,7 @@ export interface PhotosGetMarketAlbumUploadServerParams {
      * Community ID.
      */
     group_id: number;
+    [key: string]: any;
 };
 
 export interface PhotosSaveMarketPhotoParams {
@@ -594,6 +619,7 @@ export interface PhotosSaveMarketPhotoParams {
      * Parameter returned when photos are [vk.com/dev/upload_files|uploaded to server].
      */
     crop_hash?: string;
+    [key: string]: any;
 };
 
 export interface PhotosSaveOwnerCoverPhotoParams {
@@ -605,6 +631,7 @@ export interface PhotosSaveOwnerCoverPhotoParams {
      * Parameter returned when photos are [vk.com/dev/upload_files|uploaded to server].
      */
     hash: string;
+    [key: string]: any;
 };
 
 export interface PhotosSaveMarketAlbumPhotoParams {
@@ -624,6 +651,7 @@ export interface PhotosSaveMarketAlbumPhotoParams {
      * Parameter returned when photos are [vk.com/dev/upload_files|uploaded to server].
      */
     hash: string;
+    [key: string]: any;
 };
 
 export interface PhotosSaveOwnerPhotoParams {
@@ -639,6 +667,7 @@ export interface PhotosSaveOwnerPhotoParams {
      * parameter returned after [vk.com/dev/upload_files|photo upload].
      */
     photo?: string;
+    [key: string]: any;
 };
 
 export interface PhotosSaveWallPhotoParams {
@@ -668,6 +697,7 @@ export interface PhotosSaveWallPhotoParams {
     caption?: string;
     server?: number;
     hash?: string;
+    [key: string]: any;
 };
 
 export interface PhotosGetWallUploadServerParams {
@@ -675,6 +705,7 @@ export interface PhotosGetWallUploadServerParams {
      * ID of community to whose wall the photo will be uploaded.
      */
     group_id?: number;
+    [key: string]: any;
 };
 
 export interface PhotosGetMessagesUploadServerParams {
@@ -682,6 +713,7 @@ export interface PhotosGetMessagesUploadServerParams {
      * Destination ID. "For user: 'User ID', e.g. '12345'. For chat: '2000000000' + 'Chat ID', e.g. '2000000001'. For community: '- Community ID', e.g. '-12345'. "
      */
     peer_id?: number;
+    [key: string]: any;
 };
 
 export interface PhotosSaveMessagesPhotoParams {
@@ -691,6 +723,7 @@ export interface PhotosSaveMessagesPhotoParams {
     photo: string;
     server?: number;
     hash?: string;
+    [key: string]: any;
 };
 
 export interface PhotosReportParams {
@@ -706,6 +739,7 @@ export interface PhotosReportParams {
      * Reason for the complaint: '0' – spam, '1' – child pornography, '2' – extremism, '3' – violence, '4' – drug propaganda, '5' – adult material, '6' – insult, abuse
      */
     reason?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+    [key: string]: any;
 };
 
 export interface PhotosReportCommentParams {
@@ -721,6 +755,7 @@ export interface PhotosReportCommentParams {
      * Reason for the complaint: '0' – spam, '1' – child pornography, '2' – extremism, '3' – violence, '4' – drug propaganda, '5' – adult material, '6' – insult, abuse
      */
     reason?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+    [key: string]: any;
 };
 
 export interface PhotosSearchParams {
@@ -754,6 +789,7 @@ export interface PhotosSearchParams {
     radius?: number;
     start_time?: number;
     end_time?: number;
+    [key: string]: any;
 };
 
 export interface FriendsGetParams {
@@ -782,6 +818,7 @@ export interface FriendsGetParams {
      */
     name_case?: "nom" | "gen" | "dat" | "acc" | "ins" | "abl";
     fields?: string[];
+    [key: string]: any;
 };
 
 export interface FriendsGetOnlineParams {
@@ -809,6 +846,7 @@ export interface FriendsGetOnlineParams {
      * Offset needed to return a specific subset of friends.
      */
     offset?: number;
+    [key: string]: any;
 };
 
 export interface FriendsGetMutualParams {
@@ -833,6 +871,7 @@ export interface FriendsGetMutualParams {
      */
     offset?: number;
     target_uids?: number[];
+    [key: string]: any;
 };
 
 export interface FriendsGetRecentParams {
@@ -840,6 +879,7 @@ export interface FriendsGetRecentParams {
      * Number of recently added friends to return.
      */
     count?: number;
+    [key: string]: any;
 };
 
 export interface FriendsGetRequestsParams {
@@ -871,6 +911,7 @@ export interface FriendsGetRequestsParams {
      * '1' — to return a list of suggested friends, '0' — to return friend requests (default)
      */
     suggested?: boolean;
+    [key: string]: any;
 };
 
 export interface FriendsAddParams {
@@ -886,6 +927,7 @@ export interface FriendsAddParams {
      * '1' to pass an incoming request to followers list.
      */
     follow?: boolean;
+    [key: string]: any;
 };
 
 export interface FriendsEditParams {
@@ -894,6 +936,7 @@ export interface FriendsEditParams {
      */
     user_id: number;
     list_ids?: number[];
+    [key: string]: any;
 };
 
 export interface FriendsDeleteParams {
@@ -901,6 +944,7 @@ export interface FriendsDeleteParams {
      * ID of the user whose friend request is to be declined or who is to be deleted from the current user's friend list.
      */
     user_id: number;
+    [key: string]: any;
 };
 
 export interface FriendsGetListsParams {
@@ -912,6 +956,7 @@ export interface FriendsGetListsParams {
      * '1' — to return system friend lists. By default: '0'.
      */
     return_system?: boolean;
+    [key: string]: any;
 };
 
 export interface FriendsAddListParams {
@@ -920,6 +965,7 @@ export interface FriendsAddListParams {
      */
     name: string;
     user_ids?: number[];
+    [key: string]: any;
 };
 
 export interface FriendsEditListParams {
@@ -934,6 +980,7 @@ export interface FriendsEditListParams {
     user_ids?: number[];
     add_user_ids?: number[];
     delete_user_ids?: number[];
+    [key: string]: any;
 };
 
 export interface FriendsDeleteListParams {
@@ -941,17 +988,21 @@ export interface FriendsDeleteListParams {
      * ID of the friend list to delete.
      */
     list_id: number;
+    [key: string]: any;
 };
 
 export interface FriendsGetAppUsersParams {
+    [key: string]: any;
 };
 
 export interface FriendsGetByPhonesParams {
     phones?: string[];
     fields?: string[];
+    [key: string]: any;
 };
 
 export interface FriendsDeleteAllRequestsParams {
+    [key: string]: any;
 };
 
 export interface FriendsGetSuggestionsParams {
@@ -969,6 +1020,7 @@ export interface FriendsGetSuggestionsParams {
     name_case?: "nom" | "gen" | "dat" | "acc" | "ins" | "abl";
     filter?: ("mutual" | "contacts" | "mutual_contacts")[];
     fields?: string[];
+    [key: string]: any;
 };
 
 export interface FriendsAreFriendsParams {
@@ -977,6 +1029,7 @@ export interface FriendsAreFriendsParams {
      */
     need_sign?: boolean;
     user_ids?: number[];
+    [key: string]: any;
 };
 
 export interface FriendsGetAvailableForCallParams {
@@ -985,6 +1038,7 @@ export interface FriendsGetAvailableForCallParams {
      */
     name_case?: "nom" | "gen" | "dat" | "acc" | "ins" | "abl";
     fields?: string[];
+    [key: string]: any;
 };
 
 export interface FriendsSearchParams {
@@ -1009,6 +1063,7 @@ export interface FriendsSearchParams {
      */
     count?: number;
     fields?: string[];
+    [key: string]: any;
 };
 
 export interface WidgetsGetCommentsParams {
@@ -1018,6 +1073,7 @@ export interface WidgetsGetCommentsParams {
     order?: string;
     fields?: string[];
     count?: number;
+    [key: string]: any;
 };
 
 export interface WidgetsGetPagesParams {
@@ -1025,10 +1081,12 @@ export interface WidgetsGetPagesParams {
     order?: string;
     period?: string;
     count?: number;
+    [key: string]: any;
 };
 
 export interface StoriesBanOwnerParams {
     owners_ids?: number[];
+    [key: string]: any;
 };
 
 export interface StoriesDeleteParams {
@@ -1040,6 +1098,7 @@ export interface StoriesDeleteParams {
      * Story ID.
      */
     story_id: number;
+    [key: string]: any;
 };
 
 export interface StoriesGetParams {
@@ -1051,6 +1110,7 @@ export interface StoriesGetParams {
      * '1' — to return additional fields for users and communities. Default value is 0.
      */
     extended?: boolean;
+    [key: string]: any;
 };
 
 export interface StoriesGetBannedParams {
@@ -1059,6 +1119,7 @@ export interface StoriesGetBannedParams {
      */
     extended?: boolean;
     fields?: string[];
+    [key: string]: any;
 };
 
 export interface StoriesGetByIdParams {
@@ -1068,6 +1129,7 @@ export interface StoriesGetByIdParams {
     extended?: boolean;
     stories?: string[];
     fields?: string[];
+    [key: string]: any;
 };
 
 export interface StoriesGetPhotoUploadServerParams {
@@ -1092,6 +1154,7 @@ export interface StoriesGetPhotoUploadServerParams {
      */
     group_id?: number;
     user_ids?: number[];
+    [key: string]: any;
 };
 
 export interface StoriesGetRepliesParams {
@@ -1112,6 +1175,7 @@ export interface StoriesGetRepliesParams {
      */
     extended?: boolean;
     fields?: string[];
+    [key: string]: any;
 };
 
 export interface StoriesGetStatsParams {
@@ -1123,6 +1187,7 @@ export interface StoriesGetStatsParams {
      * Story ID.
      */
     story_id: number;
+    [key: string]: any;
 };
 
 export interface StoriesGetVideoUploadServerParams {
@@ -1147,6 +1212,7 @@ export interface StoriesGetVideoUploadServerParams {
      */
     group_id?: number;
     user_ids?: number[];
+    [key: string]: any;
 };
 
 export interface StoriesGetViewersParams {
@@ -1170,6 +1236,7 @@ export interface StoriesGetViewersParams {
      * '1' — to return detailed information about photos
      */
     extended?: boolean;
+    [key: string]: any;
 };
 
 export interface StoriesHideAllRepliesParams {
@@ -1177,6 +1244,7 @@ export interface StoriesHideAllRepliesParams {
      * ID of the user whose replies should be hidden.
      */
     owner_id: number;
+    [key: string]: any;
 };
 
 export interface StoriesHideReplyParams {
@@ -1192,16 +1260,20 @@ export interface StoriesHideReplyParams {
      * Access key for the private object.
      */
     access_key?: string;
+    [key: string]: any;
 };
 
 export interface StoriesUnbanOwnerParams {
     owners_ids?: number[];
+    [key: string]: any;
 };
 
 export interface SecureGetAppBalanceParams {
+    [key: string]: any;
 };
 
 export interface SecureGetTransactionsHistoryParams {
+    [key: string]: any;
 };
 
 export interface SecureGetSMSHistoryParams {
@@ -1218,6 +1290,7 @@ export interface SecureGetSMSHistoryParams {
      */
     limit?: number;
     user_id?: number;
+    [key: string]: any;
 };
 
 export interface SecureSendSMSNotificationParams {
@@ -1229,6 +1302,7 @@ export interface SecureSendSMSNotificationParams {
      * 'SMS' text to be sent in 'UTF-8' encoding. Only Latin letters and numbers are allowed. Maximum size is '160' characters.
      */
     message: string;
+    [key: string]: any;
 };
 
 export interface SecureSendNotificationParams {
@@ -1238,6 +1312,7 @@ export interface SecureSendNotificationParams {
     message: string;
     user_ids?: number[];
     user_id?: number;
+    [key: string]: any;
 };
 
 export interface SecureSetCounterParams {
@@ -1247,6 +1322,7 @@ export interface SecureSetCounterParams {
     counter?: number;
     counters?: string[];
     user_id?: number;
+    [key: string]: any;
 };
 
 export interface SecureSetUserLevelParams {
@@ -1256,25 +1332,30 @@ export interface SecureSetUserLevelParams {
     level?: number;
     levels?: string[];
     user_id?: number;
+    [key: string]: any;
 };
 
 export interface SecureGetUserLevelParams {
     user_ids?: number[];
+    [key: string]: any;
 };
 
 export interface StreamingGetServerUrlParams {
+    [key: string]: any;
 };
 
 export interface StorageGetParams {
     key?: string;
     keys?: string[];
     user_id?: number;
+    [key: string]: any;
 };
 
 export interface StorageSetParams {
     key: string;
     value?: string;
     user_id?: number;
+    [key: string]: any;
 };
 
 export interface StorageGetKeysParams {
@@ -1286,6 +1367,7 @@ export interface StorageGetKeysParams {
      * amount of variable names the info needs to be collected from.
      */
     count?: number;
+    [key: string]: any;
 };
 
 export interface OrdersGetParams {
@@ -1297,6 +1379,7 @@ export interface OrdersGetParams {
      * if this parameter is set to 1, this method returns a list of test mode orders. By default — 0.
      */
     test_mode?: boolean;
+    [key: string]: any;
 };
 
 export interface OrdersGetByIdParams {
@@ -1309,6 +1392,7 @@ export interface OrdersGetByIdParams {
      */
     test_mode?: boolean;
     order_ids?: number[];
+    [key: string]: any;
 };
 
 export interface OrdersChangeStateParams {
@@ -1328,11 +1412,13 @@ export interface OrdersChangeStateParams {
      * if this parameter is set to 1, this method returns a list of test mode orders. By default — 0.
      */
     test_mode?: boolean;
+    [key: string]: any;
 };
 
 export interface OrdersGetAmountParams {
     user_id: number;
     votes?: string[];
+    [key: string]: any;
 };
 
 export interface PhotosSaveParams {
@@ -1368,6 +1454,7 @@ export interface PhotosSaveParams {
      * Text describing the photo. 2048 digits max.
      */
     caption?: string;
+    [key: string]: any;
 };
 
 export interface PhotosCopyParams {
@@ -1383,6 +1470,7 @@ export interface PhotosCopyParams {
      * for private photos
      */
     access_key?: string;
+    [key: string]: any;
 };
 
 export interface PhotosEditParams {
@@ -1403,6 +1491,7 @@ export interface PhotosEditParams {
     place_str?: string;
     foursquare_id?: string;
     delete_place?: boolean;
+    [key: string]: any;
 };
 
 export interface PhotosMoveParams {
@@ -1418,6 +1507,7 @@ export interface PhotosMoveParams {
      * Photo ID.
      */
     photo_id: number;
+    [key: string]: any;
 };
 
 export interface PhotosMakeCoverParams {
@@ -1433,6 +1523,7 @@ export interface PhotosMakeCoverParams {
      * Album ID.
      */
     album_id?: number;
+    [key: string]: any;
 };
 
 export interface PhotosReorderAlbumsParams {
@@ -1452,6 +1543,7 @@ export interface PhotosReorderAlbumsParams {
      * ID of the album after which the album in question shall be placed.
      */
     after?: number;
+    [key: string]: any;
 };
 
 export interface PhotosReorderPhotosParams {
@@ -1471,6 +1563,7 @@ export interface PhotosReorderPhotosParams {
      * ID of the photo after which the photo in question shall be placed.
      */
     after?: number;
+    [key: string]: any;
 };
 
 export interface PhotosGetAllParams {
@@ -1506,6 +1599,7 @@ export interface PhotosGetAllParams {
      * '1' – not to return photos being hidden from the block above the wall. Works only with owner_id>0, no_service_albums is ignored.
      */
     skip_hidden?: boolean;
+    [key: string]: any;
 };
 
 export interface PhotosGetUserPhotosParams {
@@ -1529,6 +1623,7 @@ export interface PhotosGetUserPhotosParams {
      * Sort order: '1' — by date the tag was added in ascending order, '0' — by date the tag was added in descending order
      */
     sort?: string;
+    [key: string]: any;
 };
 
 export interface PhotosDeleteAlbumParams {
@@ -1540,6 +1635,7 @@ export interface PhotosDeleteAlbumParams {
      * ID of the community that owns the album.
      */
     group_id?: number;
+    [key: string]: any;
 };
 
 export interface PhotosDeleteParams {
@@ -1551,6 +1647,7 @@ export interface PhotosDeleteParams {
      * Photo ID.
      */
     photo_id: number;
+    [key: string]: any;
 };
 
 export interface PhotosRestoreParams {
@@ -1562,6 +1659,7 @@ export interface PhotosRestoreParams {
      * Photo ID.
      */
     photo_id: number;
+    [key: string]: any;
 };
 
 export interface PhotosConfirmTagParams {
@@ -1577,6 +1675,7 @@ export interface PhotosConfirmTagParams {
      * Tag ID.
      */
     tag_id: number;
+    [key: string]: any;
 };
 
 export interface PhotosGetCommentsParams {
@@ -1608,6 +1707,7 @@ export interface PhotosGetCommentsParams {
     access_key?: string;
     extended?: boolean;
     fields?: string[];
+    [key: string]: any;
 };
 
 export interface PhotosGetAllCommentsParams {
@@ -1631,6 +1731,7 @@ export interface PhotosGetAllCommentsParams {
      * Number of comments to return. By default, '20'. Maximum value, '100'.
      */
     count?: number;
+    [key: string]: any;
 };
 
 export interface PhotosCreateCommentParams {
@@ -1655,6 +1756,7 @@ export interface PhotosCreateCommentParams {
     sticker_id?: number;
     access_key?: string;
     guid?: string;
+    [key: string]: any;
 };
 
 export interface PhotosDeleteCommentParams {
@@ -1666,6 +1768,7 @@ export interface PhotosDeleteCommentParams {
      * Comment ID.
      */
     comment_id: number;
+    [key: string]: any;
 };
 
 export interface PhotosRestoreCommentParams {
@@ -1677,6 +1780,7 @@ export interface PhotosRestoreCommentParams {
      * ID of the deleted comment.
      */
     comment_id: number;
+    [key: string]: any;
 };
 
 export interface PhotosEditCommentParams {
@@ -1693,6 +1797,7 @@ export interface PhotosEditCommentParams {
      */
     message?: string;
     attachments?: string[];
+    [key: string]: any;
 };
 
 export interface PhotosGetTagsParams {
@@ -1705,6 +1810,7 @@ export interface PhotosGetTagsParams {
      */
     photo_id: number;
     access_key?: string;
+    [key: string]: any;
 };
 
 export interface PhotosPutTagParams {
@@ -1736,6 +1842,7 @@ export interface PhotosPutTagParams {
      * Lower right-corner coordinate of the tagged area (as a percentage of the photo's height).
      */
     y2?: number;
+    [key: string]: any;
 };
 
 export interface PhotosRemoveTagParams {
@@ -1751,6 +1858,7 @@ export interface PhotosRemoveTagParams {
      * Tag ID.
      */
     tag_id: number;
+    [key: string]: any;
 };
 
 export interface PhotosGetNewTagsParams {
@@ -1762,6 +1870,7 @@ export interface PhotosGetNewTagsParams {
      * Number of photos to return.
      */
     count?: number;
+    [key: string]: any;
 };
 
 export interface WallGetByIdParams {
@@ -1775,6 +1884,7 @@ export interface WallGetByIdParams {
     copy_history_depth?: number;
     posts?: string[];
     fields?: string[];
+    [key: string]: any;
 };
 
 export interface WallPostParams {
@@ -1825,6 +1935,7 @@ export interface WallPostParams {
     attachments?: string[];
     guid?: string;
     mark_as_ads?: boolean;
+    [key: string]: any;
 };
 
 export interface WallPostAdsStealthParams {
@@ -1873,6 +1984,7 @@ export interface WallPostAdsStealthParams {
      */
     link_image?: string;
     attachments?: string[];
+    [key: string]: any;
 };
 
 export interface WallRepostParams {
@@ -1889,6 +2001,7 @@ export interface WallRepostParams {
      */
     group_id?: number;
     mark_as_ads?: boolean;
+    [key: string]: any;
 };
 
 export interface WallGetRepostsParams {
@@ -1908,6 +2021,7 @@ export interface WallGetRepostsParams {
      * Number of reposts to return.
      */
     count?: number;
+    [key: string]: any;
 };
 
 export interface WallEditParams {
@@ -1953,6 +2067,7 @@ export interface WallEditParams {
     place_id?: number;
     attachments?: string[];
     mark_as_ads?: boolean;
+    [key: string]: any;
 };
 
 export interface WallEditAdsStealthParams {
@@ -2001,6 +2116,7 @@ export interface WallEditAdsStealthParams {
      */
     link_image?: string;
     attachments?: string[];
+    [key: string]: any;
 };
 
 export interface WallDeleteParams {
@@ -2012,6 +2128,7 @@ export interface WallDeleteParams {
      * ID of the post to be deleted.
      */
     post_id?: number;
+    [key: string]: any;
 };
 
 export interface WallRestoreParams {
@@ -2023,6 +2140,7 @@ export interface WallRestoreParams {
      * ID of the post to be restored.
      */
     post_id?: number;
+    [key: string]: any;
 };
 
 export interface WallPinParams {
@@ -2034,6 +2152,7 @@ export interface WallPinParams {
      * Post ID.
      */
     post_id: number;
+    [key: string]: any;
 };
 
 export interface WallUnpinParams {
@@ -2045,6 +2164,7 @@ export interface WallUnpinParams {
      * Post ID.
      */
     post_id: number;
+    [key: string]: any;
 };
 
 export interface WallGetCommentsParams {
@@ -2078,6 +2198,7 @@ export interface WallGetCommentsParams {
     preview_length?: number;
     start_comment_id?: number;
     extended?: boolean;
+    [key: string]: any;
 };
 
 export interface WallCreateCommentParams {
@@ -2110,6 +2231,7 @@ export interface WallCreateCommentParams {
      */
     guid?: string;
     attachments?: string[];
+    [key: string]: any;
 };
 
 export interface WallEditCommentParams {
@@ -2126,6 +2248,7 @@ export interface WallEditCommentParams {
      */
     message?: string;
     attachments?: string[];
+    [key: string]: any;
 };
 
 export interface WallDeleteCommentParams {
@@ -2137,6 +2260,7 @@ export interface WallDeleteCommentParams {
      * Comment ID.
      */
     comment_id: number;
+    [key: string]: any;
 };
 
 export interface WallRestoreCommentParams {
@@ -2148,6 +2272,7 @@ export interface WallRestoreCommentParams {
      * Comment ID.
      */
     comment_id: number;
+    [key: string]: any;
 };
 
 export interface WallReportPostParams {
@@ -2163,6 +2288,7 @@ export interface WallReportPostParams {
      * Reason for the complaint: '0' – spam, '1' – child pornography, '2' – extremism, '3' – violence, '4' – drug propaganda, '5' – adult material, '6' – insult, abuse
      */
     reason?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+    [key: string]: any;
 };
 
 export interface WallReportCommentParams {
@@ -2178,6 +2304,7 @@ export interface WallReportCommentParams {
      * Reason for the complaint: '0' – spam, '1' – child pornography, '2' – extremism, '3' – violence, '4' – drug propaganda, '5' – adult material, '6' – insult, abuse
      */
     reason?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+    [key: string]: any;
 };
 
 export interface StatusGetParams {
@@ -2186,6 +2313,7 @@ export interface StatusGetParams {
      */
     user_id?: number;
     group_id?: number;
+    [key: string]: any;
 };
 
 export interface StatusSetParams {
@@ -2197,6 +2325,7 @@ export interface StatusSetParams {
      * Identifier of a community to set a status in. If left blank the status is set to current user.
      */
     group_id?: number;
+    [key: string]: any;
 };
 
 export interface LeadsCompleteParams {
@@ -2212,6 +2341,7 @@ export interface LeadsCompleteParams {
      * Comment text.
      */
     comment?: string;
+    [key: string]: any;
 };
 
 export interface LeadsStartParams {
@@ -2223,6 +2353,7 @@ export interface LeadsStartParams {
      * Secret key from the lead testing interface.
      */
     secret: string;
+    [key: string]: any;
 };
 
 export interface LeadsGetStatsParams {
@@ -2242,6 +2373,7 @@ export interface LeadsGetStatsParams {
      * Day to finish stats (YYYY_MM_DD, e.g.2011-09-17).
      */
     date_end?: string;
+    [key: string]: any;
 };
 
 export interface LeadsGetUsersParams {
@@ -2269,6 +2401,7 @@ export interface LeadsGetUsersParams {
      * Sort order. Possible values: *'1' — chronological,, *'0' — reverse chronological.
      */
     reverse?: boolean;
+    [key: string]: any;
 };
 
 export interface LeadsCheckUserParams {
@@ -2288,6 +2421,7 @@ export interface LeadsCheckUserParams {
      * User country code.
      */
     country?: string;
+    [key: string]: any;
 };
 
 export interface LeadsMetricHitParams {
@@ -2295,6 +2429,7 @@ export interface LeadsMetricHitParams {
      * Metric data obtained in the lead interface.
      */
     data: string;
+    [key: string]: any;
 };
 
 export interface PagesGetParams {
@@ -2323,6 +2458,7 @@ export interface PagesGetParams {
      */
     need_html?: boolean;
     need_source?: boolean;
+    [key: string]: any;
 };
 
 export interface PagesSaveParams {
@@ -2346,6 +2482,7 @@ export interface PagesSaveParams {
      * Wiki page title.
      */
     title?: string;
+    [key: string]: any;
 };
 
 export interface PagesSaveAccessParams {
@@ -2366,6 +2503,7 @@ export interface PagesSaveAccessParams {
      */
     edit?: 0 | 1 | 2;
     user_id?: number;
+    [key: string]: any;
 };
 
 export interface PagesGetHistoryParams {
@@ -2378,6 +2516,7 @@ export interface PagesGetHistoryParams {
      */
     group_id?: number;
     user_id?: number;
+    [key: string]: any;
 };
 
 export interface PagesGetTitlesParams {
@@ -2385,6 +2524,7 @@ export interface PagesGetTitlesParams {
      * ID of the community that owns the wiki page.
      */
     group_id?: number;
+    [key: string]: any;
 };
 
 export interface PagesGetVersionParams {
@@ -2398,6 +2538,7 @@ export interface PagesGetVersionParams {
     need_html?: boolean;
     version_id: number;
     user_id?: number;
+    [key: string]: any;
 };
 
 export interface PagesParseWikiParams {
@@ -2409,6 +2550,7 @@ export interface PagesParseWikiParams {
      * ID of the group in the context of which this markup is interpreted.
      */
     group_id?: number;
+    [key: string]: any;
 };
 
 export interface PagesClearCacheParams {
@@ -2416,6 +2558,7 @@ export interface PagesClearCacheParams {
      * Address of the page where you need to refesh the cached version
      */
     url: string;
+    [key: string]: any;
 };
 
 export interface GroupsIsMemberParams {
@@ -2432,6 +2575,7 @@ export interface GroupsIsMemberParams {
      */
     extended?: boolean;
     user_ids?: number[];
+    [key: string]: any;
 };
 
 export interface GroupsGetByIdParams {
@@ -2441,6 +2585,7 @@ export interface GroupsGetByIdParams {
     group_id?: string;
     group_ids?: string[];
     fields?: string[];
+    [key: string]: any;
 };
 
 export interface GroupsGetParams {
@@ -2462,6 +2607,7 @@ export interface GroupsGetParams {
     count?: number;
     filter?: ("admin" | "editor" | "moder" | "groups" | "publics" | "events")[];
     fields?: string[];
+    [key: string]: any;
 };
 
 export interface GroupsGetMembersParams {
@@ -2486,6 +2632,7 @@ export interface GroupsGetMembersParams {
      */
     filter?: "friends" | "unsure";
     fields?: ("sex" | "bdate" | "city" | "country" | "photo_50" | "photo_100" | "photo_200_orig" | "photo_200" | "photo_400_orig" | "photo_max" | "photo_max_orig" | "online" | "online_mobile" | "lists" | "domain" | "has_mobile" | "contacts" | "connections" | "site" | "education" | "universities" | "schools" | "can_post" | "can_see_all_posts" | "can_see_audio" | "can_write_private_message" | "status" | "last_seen" | "common_count" | "relation" | "relatives" | "counters")[];
+    [key: string]: any;
 };
 
 export interface GroupsJoinParams {
@@ -2497,6 +2644,7 @@ export interface GroupsJoinParams {
      * Optional parameter which is taken into account when 'gid' belongs to the event: '1' — Perhaps I will attend, '0' — I will be there for sure (default), ,
      */
     not_sure?: string;
+    [key: string]: any;
 };
 
 export interface GroupsLeaveParams {
@@ -2504,6 +2652,7 @@ export interface GroupsLeaveParams {
      * ID or screen name of the community.
      */
     group_id: number;
+    [key: string]: any;
 };
 
 export interface GroupsSearchParams {
@@ -2543,6 +2692,7 @@ export interface GroupsSearchParams {
      * Number of communities to return. "Note that you can not receive more than first thousand of results, regardless of 'count' and 'offset' values."
      */
     count?: number;
+    [key: string]: any;
 };
 
 export interface GroupsGetCatalogParams {
@@ -2554,6 +2704,7 @@ export interface GroupsGetCatalogParams {
      * Subcategory id received from [vk.com/dev/groups.getCatalogInfo|groups.getCatalogInfo].
      */
     subcategory_id?: number;
+    [key: string]: any;
 };
 
 export interface GroupsGetCatalogInfoParams {
@@ -2565,6 +2716,7 @@ export interface GroupsGetCatalogInfoParams {
      * 1 – to return subcategories info. By default: 0.
      */
     subcategories?: boolean;
+    [key: string]: any;
 };
 
 export interface GroupsGetInvitesParams {
@@ -2580,6 +2732,7 @@ export interface GroupsGetInvitesParams {
      * '1' — to return additional [vk.com/dev/fields_groups|fields] for communities..
      */
     extended?: boolean;
+    [key: string]: any;
 };
 
 export interface GroupsGetInvitedUsersParams {
@@ -2600,6 +2753,7 @@ export interface GroupsGetInvitedUsersParams {
      */
     name_case?: "nom" | "gen" | "dat" | "acc" | "ins" | "abl";
     fields?: ("sex" | "bdate" | "city" | "country" | "photo_50" | "photo_100" | "photo_200_orig" | "photo_200" | "photo_400_orig" | "photo_max" | "photo_max_orig" | "online" | "online_mobile" | "lists" | "domain" | "has_mobile" | "contacts" | "connections" | "site" | "education" | "universities" | "schools" | "can_post" | "can_see_all_posts" | "can_see_audio" | "can_write_private_message" | "status" | "last_seen" | "common_count" | "relation" | "relatives" | "counters")[];
+    [key: string]: any;
 };
 
 export interface GroupsBanUserParams {
@@ -2627,6 +2781,7 @@ export interface GroupsBanUserParams {
      * '1' — text of comment will be visible to the user,, '0' — text of comment will be invisible to the user. By default: '0'.
      */
     comment_visible?: boolean;
+    [key: string]: any;
 };
 
 export interface GroupsUnbanUserParams {
@@ -2638,6 +2793,7 @@ export interface GroupsUnbanUserParams {
      * User ID.
      */
     user_id: number;
+    [key: string]: any;
 };
 
 export interface GroupsGetBannedParams {
@@ -2655,6 +2811,7 @@ export interface GroupsGetBannedParams {
     count?: number;
     fields?: string[];
     user_id?: number;
+    [key: string]: any;
 };
 
 export interface GroupsCreateParams {
@@ -2678,6 +2835,7 @@ export interface GroupsCreateParams {
      * Public page subtype. Possible values: *'1' – place or small business,, *'2' – company, organization or website,, *'3' – famous person or group of people,, *'4' – product or work of art.
      */
     subtype?: 1 | 2 | 3 | 4;
+    [key: string]: any;
 };
 
 export interface GroupsEditParams {
@@ -2828,6 +2986,7 @@ export interface GroupsEditParams {
     market_country?: number[];
     market_city?: number[];
     obscene_words?: string[];
+    [key: string]: any;
 };
 
 export interface GroupsEditPlaceParams {
@@ -2859,6 +3018,7 @@ export interface GroupsEditPlaceParams {
      * Geographical longitude.
      */
     longitude?: number;
+    [key: string]: any;
 };
 
 export interface GroupsGetSettingsParams {
@@ -2866,6 +3026,7 @@ export interface GroupsGetSettingsParams {
      * Community ID.
      */
     group_id: number;
+    [key: string]: any;
 };
 
 export interface GroupsGetRequestsParams {
@@ -2882,6 +3043,7 @@ export interface GroupsGetRequestsParams {
      */
     count?: number;
     fields?: string[];
+    [key: string]: any;
 };
 
 export interface GroupsEditManagerParams {
@@ -2913,6 +3075,7 @@ export interface GroupsEditManagerParams {
      * Contact e-mail.
      */
     contact_email?: string;
+    [key: string]: any;
 };
 
 export interface GroupsInviteParams {
@@ -2924,6 +3087,7 @@ export interface GroupsInviteParams {
      * User ID.
      */
     user_id: number;
+    [key: string]: any;
 };
 
 export interface GroupsAddLinkParams {
@@ -2939,6 +3103,7 @@ export interface GroupsAddLinkParams {
      * Description text for the link.
      */
     text?: string;
+    [key: string]: any;
 };
 
 export interface GroupsDeleteLinkParams {
@@ -2950,6 +3115,7 @@ export interface GroupsDeleteLinkParams {
      * Link ID.
      */
     link_id: number;
+    [key: string]: any;
 };
 
 export interface GroupsEditLinkParams {
@@ -2965,6 +3131,7 @@ export interface GroupsEditLinkParams {
      * New description text for the link.
      */
     text?: string;
+    [key: string]: any;
 };
 
 export interface GroupsReorderLinkParams {
@@ -2980,6 +3147,7 @@ export interface GroupsReorderLinkParams {
      * ID of the link after which to place the link with 'link_id'.
      */
     after?: number;
+    [key: string]: any;
 };
 
 export interface GroupsRemoveUserParams {
@@ -2991,6 +3159,7 @@ export interface GroupsRemoveUserParams {
      * User ID.
      */
     user_id: number;
+    [key: string]: any;
 };
 
 export interface GroupsApproveRequestParams {
@@ -3002,6 +3171,7 @@ export interface GroupsApproveRequestParams {
      * User ID.
      */
     user_id: number;
+    [key: string]: any;
 };
 
 export interface GroupsGetCallbackConfirmationCodeParams {
@@ -3009,6 +3179,7 @@ export interface GroupsGetCallbackConfirmationCodeParams {
      * Community ID.
      */
     group_id: number;
+    [key: string]: any;
 };
 
 export interface GroupsGetCallbackSettingsParams {
@@ -3020,6 +3191,7 @@ export interface GroupsGetCallbackSettingsParams {
      * Server ID.
      */
     server_id?: number;
+    [key: string]: any;
 };
 
 export interface GroupsSetCallbackSettingsParams {
@@ -3171,6 +3343,7 @@ export interface GroupsSetCallbackSettingsParams {
      * New form in lead forms
      */
     lead_forms_new?: boolean;
+    [key: string]: any;
 };
 
 export interface GroupsGetLongPollServerParams {
@@ -3178,6 +3351,7 @@ export interface GroupsGetLongPollServerParams {
      * Community ID
      */
     group_id: number;
+    [key: string]: any;
 };
 
 export interface GroupsGetLongPollSettingsParams {
@@ -3185,6 +3359,7 @@ export interface GroupsGetLongPollSettingsParams {
      * Community ID.
      */
     group_id: number;
+    [key: string]: any;
 };
 
 export interface GroupsSetLongPollSettingsParams {
@@ -3336,6 +3511,7 @@ export interface GroupsSetLongPollSettingsParams {
      * User removed from community blacklist
      */
     user_unblock?: boolean;
+    [key: string]: any;
 };
 
 export interface BoardGetTopicsParams {
@@ -3368,6 +3544,7 @@ export interface BoardGetTopicsParams {
      */
     preview_length?: number;
     topic_ids?: number[];
+    [key: string]: any;
 };
 
 export interface BoardGetCommentsParams {
@@ -3400,6 +3577,7 @@ export interface BoardGetCommentsParams {
      */
     sort?: "asc" | "desc";
     start_comment_id?: number;
+    [key: string]: any;
 };
 
 export interface BoardAddTopicParams {
@@ -3420,6 +3598,7 @@ export interface BoardAddTopicParams {
      */
     from_group?: boolean;
     attachments?: string[];
+    [key: string]: any;
 };
 
 export interface BoardCreateCommentParams {
@@ -3448,6 +3627,7 @@ export interface BoardCreateCommentParams {
      */
     guid?: string;
     attachments?: string[];
+    [key: string]: any;
 };
 
 export interface BoardDeleteTopicParams {
@@ -3459,6 +3639,7 @@ export interface BoardDeleteTopicParams {
      * Topic ID.
      */
     topic_id: number;
+    [key: string]: any;
 };
 
 export interface BoardEditTopicParams {
@@ -3474,6 +3655,7 @@ export interface BoardEditTopicParams {
      * New title of the topic.
      */
     title: string;
+    [key: string]: any;
 };
 
 export interface BoardEditCommentParams {
@@ -3494,6 +3676,7 @@ export interface BoardEditCommentParams {
      */
     message?: string;
     attachments?: string[];
+    [key: string]: any;
 };
 
 export interface BoardRestoreCommentParams {
@@ -3509,6 +3692,7 @@ export interface BoardRestoreCommentParams {
      * Comment ID.
      */
     comment_id: number;
+    [key: string]: any;
 };
 
 export interface BoardDeleteCommentParams {
@@ -3524,6 +3708,7 @@ export interface BoardDeleteCommentParams {
      * Comment ID.
      */
     comment_id: number;
+    [key: string]: any;
 };
 
 export interface BoardOpenTopicParams {
@@ -3535,6 +3720,7 @@ export interface BoardOpenTopicParams {
      * Topic ID.
      */
     topic_id: number;
+    [key: string]: any;
 };
 
 export interface BoardCloseTopicParams {
@@ -3546,6 +3732,7 @@ export interface BoardCloseTopicParams {
      * Topic ID.
      */
     topic_id: number;
+    [key: string]: any;
 };
 
 export interface BoardFixTopicParams {
@@ -3557,6 +3744,7 @@ export interface BoardFixTopicParams {
      * Topic ID.
      */
     topic_id: number;
+    [key: string]: any;
 };
 
 export interface BoardUnfixTopicParams {
@@ -3568,6 +3756,7 @@ export interface BoardUnfixTopicParams {
      * Topic ID.
      */
     topic_id: number;
+    [key: string]: any;
 };
 
 export interface VideoGetParams {
@@ -3592,6 +3781,7 @@ export interface VideoGetParams {
      */
     extended?: boolean;
     videos?: string[];
+    [key: string]: any;
 };
 
 export interface VideoEditParams {
@@ -3621,6 +3811,7 @@ export interface VideoEditParams {
     repeat?: boolean;
     privacy_view?: string[];
     privacy_comment?: string[];
+    [key: string]: any;
 };
 
 export interface VideoAddParams {
@@ -3636,6 +3827,7 @@ export interface VideoAddParams {
      * ID of the user or community that owns the video. Use a negative value to designate a community ID.
      */
     owner_id: number;
+    [key: string]: any;
 };
 
 export interface VideoSaveParams {
@@ -3674,6 +3866,7 @@ export interface VideoSaveParams {
     privacy_view?: string[];
     privacy_comment?: string[];
     no_comments?: boolean;
+    [key: string]: any;
 };
 
 export interface VideoDeleteParams {
@@ -3686,6 +3879,7 @@ export interface VideoDeleteParams {
      */
     owner_id?: number;
     target_id?: number;
+    [key: string]: any;
 };
 
 export interface VideoRestoreParams {
@@ -3697,6 +3891,7 @@ export interface VideoRestoreParams {
      * ID of the user or community that owns the video.
      */
     owner_id?: number;
+    [key: string]: any;
 };
 
 export interface VideoSearchParams {
@@ -3729,6 +3924,7 @@ export interface VideoSearchParams {
     longer?: number;
     shorter?: number;
     extended?: boolean;
+    [key: string]: any;
 };
 
 export interface VideoGetUserVideosParams {
@@ -3745,6 +3941,7 @@ export interface VideoGetUserVideosParams {
      */
     count?: number;
     extended?: boolean;
+    [key: string]: any;
 };
 
 export interface VideoGetAlbumsParams {
@@ -3764,6 +3961,7 @@ export interface VideoGetAlbumsParams {
      * '1' — to return additional information about album privacy settings for the current user
      */
     extended?: boolean;
+    [key: string]: any;
 };
 
 export interface VideoGetAlbumByIdParams {
@@ -3775,6 +3973,7 @@ export interface VideoGetAlbumByIdParams {
      * Album ID.
      */
     album_id: number;
+    [key: string]: any;
 };
 
 export interface VideoAddAlbumParams {
@@ -3787,6 +3986,7 @@ export interface VideoAddAlbumParams {
      */
     title?: string;
     privacy?: ("0" | "1" | "2" | "3")[];
+    [key: string]: any;
 };
 
 export interface VideoEditAlbumParams {
@@ -3803,6 +4003,7 @@ export interface VideoEditAlbumParams {
      */
     title: string;
     privacy?: ("0" | "1" | "2" | "3")[];
+    [key: string]: any;
 };
 
 export interface VideoDeleteAlbumParams {
@@ -3814,6 +4015,7 @@ export interface VideoDeleteAlbumParams {
      * Album ID.
      */
     album_id: number;
+    [key: string]: any;
 };
 
 export interface VideoReorderAlbumsParams {
@@ -3833,6 +4035,7 @@ export interface VideoReorderAlbumsParams {
      * ID of the album after which the album in question shall be placed.
      */
     after?: number;
+    [key: string]: any;
 };
 
 export interface VideoReorderVideosParams {
@@ -3868,6 +4071,7 @@ export interface VideoReorderVideosParams {
      * ID of the video after which the photo in question shall be placed.
      */
     after_video_id?: number;
+    [key: string]: any;
 };
 
 export interface VideoAddToAlbumParams {
@@ -3876,6 +4080,7 @@ export interface VideoAddToAlbumParams {
     album_ids?: number[];
     owner_id: number;
     video_id: number;
+    [key: string]: any;
 };
 
 export interface VideoRemoveFromAlbumParams {
@@ -3884,6 +4089,7 @@ export interface VideoRemoveFromAlbumParams {
     album_ids?: number[];
     owner_id: number;
     video_id: number;
+    [key: string]: any;
 };
 
 export interface VideoGetAlbumsByVideoParams {
@@ -3891,6 +4097,7 @@ export interface VideoGetAlbumsByVideoParams {
     owner_id: number;
     video_id: number;
     extended?: boolean;
+    [key: string]: any;
 };
 
 export interface VideoGetCommentsParams {
@@ -3920,6 +4127,7 @@ export interface VideoGetCommentsParams {
     sort?: "asc" | "desc";
     start_comment_id?: number;
     extended?: boolean;
+    [key: string]: any;
 };
 
 export interface VideoCreateCommentParams {
@@ -3943,6 +4151,7 @@ export interface VideoCreateCommentParams {
     reply_to_comment?: number;
     sticker_id?: number;
     guid?: string;
+    [key: string]: any;
 };
 
 export interface VideoDeleteCommentParams {
@@ -3954,6 +4163,7 @@ export interface VideoDeleteCommentParams {
      * ID of the comment to be deleted.
      */
     comment_id: number;
+    [key: string]: any;
 };
 
 export interface VideoRestoreCommentParams {
@@ -3965,6 +4175,7 @@ export interface VideoRestoreCommentParams {
      * ID of the deleted comment.
      */
     comment_id: number;
+    [key: string]: any;
 };
 
 export interface VideoEditCommentParams {
@@ -3981,6 +4192,7 @@ export interface VideoEditCommentParams {
      */
     message?: string;
     attachments?: string[];
+    [key: string]: any;
 };
 
 export interface VideoGetTagsParams {
@@ -3992,6 +4204,7 @@ export interface VideoGetTagsParams {
      * Video ID.
      */
     video_id: number;
+    [key: string]: any;
 };
 
 export interface VideoPutTagParams {
@@ -4011,6 +4224,7 @@ export interface VideoPutTagParams {
      * Tag text.
      */
     tagged_name?: string;
+    [key: string]: any;
 };
 
 export interface VideoRemoveTagParams {
@@ -4026,6 +4240,7 @@ export interface VideoRemoveTagParams {
      * Video ID.
      */
     video_id: number;
+    [key: string]: any;
 };
 
 export interface VideoGetNewTagsParams {
@@ -4037,6 +4252,7 @@ export interface VideoGetNewTagsParams {
      * Number of videos to return.
      */
     count?: number;
+    [key: string]: any;
 };
 
 export interface VideoReportParams {
@@ -4060,6 +4276,7 @@ export interface VideoReportParams {
      * (If the video was found in search results.) Search query string.
      */
     search_query?: string;
+    [key: string]: any;
 };
 
 export interface VideoReportCommentParams {
@@ -4075,6 +4292,7 @@ export interface VideoReportCommentParams {
      * Reason for the complaint: , 0 – spam , 1 – child pornography , 2 – extremism , 3 – violence , 4 – drug propaganda , 5 – adult material , 6 – insult, abuse
      */
     reason?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+    [key: string]: any;
 };
 
 export interface VideoGetCatalogParams {
@@ -4095,6 +4313,7 @@ export interface VideoGetCatalogParams {
      */
     extended?: boolean;
     filters?: string[];
+    [key: string]: any;
 };
 
 export interface VideoGetCatalogSectionParams {
@@ -4114,6 +4333,7 @@ export interface VideoGetCatalogSectionParams {
      * 1 – return additional infor about users and communities in profiles and groups fields.
      */
     extended?: boolean;
+    [key: string]: any;
 };
 
 export interface VideoHideCatalogSectionParams {
@@ -4121,6 +4341,7 @@ export interface VideoHideCatalogSectionParams {
      * 'id' value returned with a block to hide by the '' method.
      */
     section_id: number;
+    [key: string]: any;
 };
 
 export interface NotesGetParams {
@@ -4133,6 +4354,7 @@ export interface NotesGetParams {
      */
     count?: number;
     note_ids?: number[];
+    [key: string]: any;
 };
 
 export interface NotesGetByIdParams {
@@ -4144,6 +4366,7 @@ export interface NotesGetByIdParams {
      * Note owner ID.
      */
     owner_id?: number;
+    [key: string]: any;
 };
 
 export interface NotesAddParams {
@@ -4157,6 +4380,7 @@ export interface NotesAddParams {
     text: string;
     privacy_view?: string[];
     privacy_comment?: string[];
+    [key: string]: any;
 };
 
 export interface NotesEditParams {
@@ -4174,6 +4398,7 @@ export interface NotesEditParams {
     text: string;
     privacy_view?: string[];
     privacy_comment?: string[];
+    [key: string]: any;
 };
 
 export interface NotesDeleteParams {
@@ -4181,6 +4406,7 @@ export interface NotesDeleteParams {
      * Note ID.
      */
     note_id: number;
+    [key: string]: any;
 };
 
 export interface NotesGetCommentsParams {
@@ -4196,6 +4422,7 @@ export interface NotesGetCommentsParams {
      * Number of comments to return.
      */
     count?: number;
+    [key: string]: any;
 };
 
 export interface NotesCreateCommentParams {
@@ -4216,6 +4443,7 @@ export interface NotesCreateCommentParams {
      */
     message: string;
     guid?: string;
+    [key: string]: any;
 };
 
 export interface NotesEditCommentParams {
@@ -4231,6 +4459,7 @@ export interface NotesEditCommentParams {
      * New comment text.
      */
     message?: string;
+    [key: string]: any;
 };
 
 export interface NotesDeleteCommentParams {
@@ -4242,6 +4471,7 @@ export interface NotesDeleteCommentParams {
      * Note owner ID.
      */
     owner_id?: number;
+    [key: string]: any;
 };
 
 export interface NotesRestoreCommentParams {
@@ -4253,6 +4483,7 @@ export interface NotesRestoreCommentParams {
      * Note owner ID.
      */
     owner_id?: number;
+    [key: string]: any;
 };
 
 export interface PlacesAddParams {
@@ -4284,10 +4515,12 @@ export interface PlacesAddParams {
      * Street address of the location (e.g., '125 Elm Street').
      */
     address?: string;
+    [key: string]: any;
 };
 
 export interface PlacesGetByIdParams {
     places?: number[];
+    [key: string]: any;
 };
 
 export interface PlacesSearchParams {
@@ -4319,6 +4552,7 @@ export interface PlacesSearchParams {
      * Number of locations to return.
      */
     count?: number;
+    [key: string]: any;
 };
 
 export interface PlacesCheckinParams {
@@ -4343,6 +4577,7 @@ export interface PlacesCheckinParams {
      */
     friends_only?: boolean;
     services?: string[];
+    [key: string]: any;
 };
 
 export interface PlacesGetCheckinsParams {
@@ -4379,13 +4614,16 @@ export interface PlacesGetCheckinsParams {
      */
     need_places?: boolean;
     user_id?: number;
+    [key: string]: any;
 };
 
 export interface PlacesGetTypesParams {
+    [key: string]: any;
 };
 
 export interface AccountGetCountersParams {
     filter?: ("friends" | "messages" | "photos" | "videos" | "notes" | "gifts" | "events" | "groups" | "sdk" | "friends_suggestions")[];
+    [key: string]: any;
 };
 
 export interface AccountSetNameInMenuParams {
@@ -4397,6 +4635,7 @@ export interface AccountSetNameInMenuParams {
      * Application screen name.
      */
     name?: string;
+    [key: string]: any;
 };
 
 export interface AccountSetOnlineParams {
@@ -4404,9 +4643,11 @@ export interface AccountSetOnlineParams {
      * '1' if videocalls are available for current device.
      */
     voip?: boolean;
+    [key: string]: any;
 };
 
 export interface AccountSetOfflineParams {
+    [key: string]: any;
 };
 
 export interface AccountLookupContactsParams {
@@ -4424,6 +4665,7 @@ export interface AccountLookupContactsParams {
     return_all?: boolean;
     contacts?: string[];
     fields?: ("nickname" | "domain" | "sex" | "bdate" | "city" | "country" | "timezone" | "photo_50" | "photo_100" | "photo_200_orig" | "has_mobile" | "contacts" | "education" | "online" | "relation" | "last_seen" | "status" | "can_write_private_message" | "can_see_all_posts" | "can_post" | "universities")[];
+    [key: string]: any;
 };
 
 export interface AccountRegisterDeviceParams {
@@ -4451,6 +4693,7 @@ export interface AccountRegisterDeviceParams {
      * Push settings in a [vk.com/dev/push_settings|special format].
      */
     settings?: string;
+    [key: string]: any;
 };
 
 export interface AccountUnregisterDeviceParams {
@@ -4458,6 +4701,7 @@ export interface AccountUnregisterDeviceParams {
      * Unique device ID.
      */
     device_id?: string;
+    [key: string]: any;
 };
 
 export interface AccountSetSilenceModeParams {
@@ -4477,6 +4721,7 @@ export interface AccountSetSilenceModeParams {
      * '1' — to enable sound in this dialog, '0' — to disable sound. Only if 'peer_id' contains user or community ID.
      */
     sound?: number;
+    [key: string]: any;
 };
 
 export interface AccountGetPushSettingsParams {
@@ -4484,6 +4729,7 @@ export interface AccountGetPushSettingsParams {
      * Unique device ID.
      */
     device_id?: string;
+    [key: string]: any;
 };
 
 export interface AccountSetPushSettingsParams {
@@ -4500,6 +4746,7 @@ export interface AccountSetPushSettingsParams {
      */
     key?: string;
     value?: string[];
+    [key: string]: any;
 };
 
 export interface AccountGetAppPermissionsParams {
@@ -4507,6 +4754,7 @@ export interface AccountGetAppPermissionsParams {
      * User ID whose settings information shall be got. By default: current user.
      */
     user_id: number;
+    [key: string]: any;
 };
 
 export interface AccountGetActiveOffersParams {
@@ -4514,6 +4762,7 @@ export interface AccountGetActiveOffersParams {
      * Number of results to return.
      */
     count?: number;
+    [key: string]: any;
 };
 
 export interface AccountBanUserParams {
@@ -4521,6 +4770,7 @@ export interface AccountBanUserParams {
      * User ID.
      */
     user_id: number;
+    [key: string]: any;
 };
 
 export interface AccountUnbanUserParams {
@@ -4528,6 +4778,7 @@ export interface AccountUnbanUserParams {
      * User ID.
      */
     user_id: number;
+    [key: string]: any;
 };
 
 export interface AccountGetBannedParams {
@@ -4539,10 +4790,12 @@ export interface AccountGetBannedParams {
      * Number of results to return.
      */
     count?: number;
+    [key: string]: any;
 };
 
 export interface AccountGetInfoParams {
     fields?: ("country" | "https_required" | "own_posts_default" | "no_wall_replies" | "intro" | "lang")[];
+    [key: string]: any;
 };
 
 export interface AccountSetInfoParams {
@@ -4554,6 +4807,7 @@ export interface AccountSetInfoParams {
      * Setting value.
      */
     value?: string;
+    [key: string]: any;
 };
 
 export interface AccountChangePasswordParams {
@@ -4573,9 +4827,11 @@ export interface AccountChangePasswordParams {
      * New password that will be set as a current
      */
     new_password: string;
+    [key: string]: any;
 };
 
 export interface AccountGetProfileInfoParams {
+    [key: string]: any;
 };
 
 export interface AccountSaveProfileInfoParams {
@@ -4635,6 +4891,7 @@ export interface AccountSaveProfileInfoParams {
      * Status text.
      */
     status?: string;
+    [key: string]: any;
 };
 
 export interface MessagesGetConversationsParams {
@@ -4663,6 +4920,7 @@ export interface MessagesGetConversationsParams {
      */
     start_message_id?: number;
     fields?: string[];
+    [key: string]: any;
 };
 
 export interface MessagesGetConversationsByIdParams {
@@ -4676,6 +4934,7 @@ export interface MessagesGetConversationsByIdParams {
     group_id?: number;
     peer_ids?: number[];
     fields?: string[];
+    [key: string]: any;
 };
 
 export interface MessagesGetByIdParams {
@@ -4693,6 +4952,7 @@ export interface MessagesGetByIdParams {
     group_id?: number;
     message_ids?: number[];
     fields?: string[];
+    [key: string]: any;
 };
 
 export interface MessagesGetByConversationMessageIdParams {
@@ -4710,6 +4970,7 @@ export interface MessagesGetByConversationMessageIdParams {
     group_id?: number;
     conversation_message_ids?: number[];
     fields?: string[];
+    [key: string]: any;
 };
 
 export interface MessagesSearchParams {
@@ -4741,6 +5002,7 @@ export interface MessagesSearchParams {
      * Group ID (for group messages with group access token)
      */
     group_id?: number;
+    [key: string]: any;
 };
 
 export interface MessagesGetHistoryParams {
@@ -4774,6 +5036,7 @@ export interface MessagesGetHistoryParams {
     rev?: 1 | 0;
     peer_id?: number;
     fields?: string[];
+    [key: string]: any;
 };
 
 export interface MessagesGetHistoryAttachmentsParams {
@@ -4802,6 +5065,7 @@ export interface MessagesGetHistoryAttachmentsParams {
      */
     group_id?: number;
     fields?: string[];
+    [key: string]: any;
 };
 
 export interface MessagesSendParams {
@@ -4855,6 +5119,7 @@ export interface MessagesSendParams {
     group_id?: number;
     user_ids?: number[];
     attachment?: string[];
+    [key: string]: any;
 };
 
 export interface MessagesEditParams {
@@ -4887,6 +5152,7 @@ export interface MessagesEditParams {
      */
     group_id?: number;
     attachment?: string[];
+    [key: string]: any;
 };
 
 export interface MessagesDeleteParams {
@@ -4903,6 +5169,7 @@ export interface MessagesDeleteParams {
      */
     group_id?: number;
     message_ids?: number[];
+    [key: string]: any;
 };
 
 export interface MessagesDeleteConversationParams {
@@ -4926,6 +5193,7 @@ export interface MessagesDeleteConversationParams {
      * Number of conversations to delete. "NOTE: If the number of messages exceeds the maximum, the method shall be called several times."
      */
     count?: number;
+    [key: string]: any;
 };
 
 export interface MessagesRestoreParams {
@@ -4937,6 +5205,7 @@ export interface MessagesRestoreParams {
      * Group ID (for group messages with user access token)
      */
     group_id?: number;
+    [key: string]: any;
 };
 
 export interface MessagesMarkAsReadParams {
@@ -4953,6 +5222,7 @@ export interface MessagesMarkAsReadParams {
      */
     group_id?: number;
     message_ids?: number[];
+    [key: string]: any;
 };
 
 export interface MessagesMarkAsImportantParams {
@@ -4961,6 +5231,7 @@ export interface MessagesMarkAsImportantParams {
      */
     important?: boolean;
     message_ids?: number[];
+    [key: string]: any;
 };
 
 export interface MessagesMarkAsImportantConversationParams {
@@ -4976,6 +5247,7 @@ export interface MessagesMarkAsImportantConversationParams {
      * '1' — to add a star (mark as important), '0' — to remove the star
      */
     important?: boolean;
+    [key: string]: any;
 };
 
 export interface MessagesMarkAsAnsweredConversationParams {
@@ -4991,6 +5263,7 @@ export interface MessagesMarkAsAnsweredConversationParams {
      * '1' — to mark as answered, '0' — to remove the mark
      */
     answered?: boolean;
+    [key: string]: any;
 };
 
 export interface MessagesGetLongPollServerParams {
@@ -5006,6 +5279,7 @@ export interface MessagesGetLongPollServerParams {
      * Group ID (for group messages with user access token)
      */
     group_id?: number;
+    [key: string]: any;
 };
 
 export interface MessagesGetLongPollHistoryParams {
@@ -5042,6 +5316,7 @@ export interface MessagesGetLongPollHistoryParams {
      */
     group_id?: number;
     fields?: string[];
+    [key: string]: any;
 };
 
 export interface MessagesCreateChatParams {
@@ -5050,6 +5325,7 @@ export interface MessagesCreateChatParams {
      */
     title?: string;
     user_ids?: number[];
+    [key: string]: any;
 };
 
 export interface MessagesEditChatParams {
@@ -5061,6 +5337,7 @@ export interface MessagesEditChatParams {
      * New title of the chat.
      */
     title: string;
+    [key: string]: any;
 };
 
 export interface MessagesGetConversationMembersParams {
@@ -5077,6 +5354,7 @@ export interface MessagesGetConversationMembersParams {
      */
     name_case?: "nom" | "gen" | "dat" | "acc" | "ins" | "abl";
     fields?: string[];
+    [key: string]: any;
 };
 
 export interface MessagesSetActivityParams {
@@ -5096,6 +5374,7 @@ export interface MessagesSetActivityParams {
      * Group ID (for group messages with group access token)
      */
     group_id?: number;
+    [key: string]: any;
 };
 
 export interface MessagesSearchConversationsParams {
@@ -5116,6 +5395,7 @@ export interface MessagesSearchConversationsParams {
      */
     group_id?: number;
     fields?: string[];
+    [key: string]: any;
 };
 
 export interface MessagesAddChatUserParams {
@@ -5127,6 +5407,7 @@ export interface MessagesAddChatUserParams {
      * ID of the user to be added to the chat.
      */
     user_id: number;
+    [key: string]: any;
 };
 
 export interface MessagesRemoveChatUserParams {
@@ -5138,6 +5419,7 @@ export interface MessagesRemoveChatUserParams {
      * ID of the user to be removed from the chat.
      */
     user_id: string;
+    [key: string]: any;
 };
 
 export interface MessagesGetLastActivityParams {
@@ -5145,6 +5427,7 @@ export interface MessagesGetLastActivityParams {
      * User ID.
      */
     user_id: number;
+    [key: string]: any;
 };
 
 export interface MessagesSetChatPhotoParams {
@@ -5152,6 +5435,7 @@ export interface MessagesSetChatPhotoParams {
      * Upload URL from the 'response' field returned by the [vk.com/dev/photos.getChatUploadServer|photos.getChatUploadServer] method upon successfully uploading an image.
      */
     file: string;
+    [key: string]: any;
 };
 
 export interface MessagesDeleteChatPhotoParams {
@@ -5159,6 +5443,7 @@ export interface MessagesDeleteChatPhotoParams {
      * Chat ID.
      */
     chat_id: number;
+    [key: string]: any;
 };
 
 export interface MessagesDenyMessagesFromGroupParams {
@@ -5166,6 +5451,7 @@ export interface MessagesDenyMessagesFromGroupParams {
      * Group ID.
      */
     group_id: number;
+    [key: string]: any;
 };
 
 export interface MessagesAllowMessagesFromGroupParams {
@@ -5173,6 +5459,7 @@ export interface MessagesAllowMessagesFromGroupParams {
      * Group ID.
      */
     group_id: number;
+    [key: string]: any;
 };
 
 export interface MessagesIsMessagesFromGroupAllowedParams {
@@ -5184,6 +5471,7 @@ export interface MessagesIsMessagesFromGroupAllowedParams {
      * User ID.
      */
     user_id: number;
+    [key: string]: any;
 };
 
 export interface NewsfeedGetParams {
@@ -5214,6 +5502,7 @@ export interface NewsfeedGetParams {
     filters?: ("post" | "photo" | "photo_tag" | "wall_photo" | "friend" | "note")[];
     source_ids?: string[];
     fields?: string[];
+    [key: string]: any;
 };
 
 export interface NewsfeedGetRecommendedParams {
@@ -5238,6 +5527,7 @@ export interface NewsfeedGetRecommendedParams {
      */
     count?: number;
     fields?: string[];
+    [key: string]: any;
 };
 
 export interface NewsfeedGetCommentsParams {
@@ -5263,6 +5553,7 @@ export interface NewsfeedGetCommentsParams {
     start_from?: string;
     filters?: ("post" | "photo" | "video" | "topic" | "note")[];
     fields?: string[];
+    [key: string]: any;
 };
 
 export interface NewsfeedGetMentionsParams {
@@ -5286,6 +5577,7 @@ export interface NewsfeedGetMentionsParams {
      * Number of posts to return.
      */
     count?: number;
+    [key: string]: any;
 };
 
 export interface NewsfeedGetBannedParams {
@@ -5298,16 +5590,19 @@ export interface NewsfeedGetBannedParams {
      */
     name_case?: "nom" | "gen" | "dat" | "acc" | "ins" | "abl";
     fields?: string[];
+    [key: string]: any;
 };
 
 export interface NewsfeedAddBanParams {
     user_ids?: number[];
     group_ids?: number[];
+    [key: string]: any;
 };
 
 export interface NewsfeedDeleteBanParams {
     user_ids?: number[];
     group_ids?: number[];
+    [key: string]: any;
 };
 
 export interface NewsfeedIgnoreItemParams {
@@ -5323,6 +5618,7 @@ export interface NewsfeedIgnoreItemParams {
      * Item identifier
      */
     item_id: number;
+    [key: string]: any;
 };
 
 export interface NewsfeedUnignoreItemParams {
@@ -5338,6 +5634,7 @@ export interface NewsfeedUnignoreItemParams {
      * Item identifier
      */
     item_id: number;
+    [key: string]: any;
 };
 
 export interface NewsfeedSearchParams {
@@ -5371,6 +5668,7 @@ export interface NewsfeedSearchParams {
     end_time?: number;
     start_from?: string;
     fields?: string[];
+    [key: string]: any;
 };
 
 export interface NewsfeedGetListsParams {
@@ -5379,6 +5677,7 @@ export interface NewsfeedGetListsParams {
      */
     extended?: boolean;
     list_ids?: number[];
+    [key: string]: any;
 };
 
 export interface NewsfeedSaveListParams {
@@ -5395,10 +5694,12 @@ export interface NewsfeedSaveListParams {
      */
     no_reposts?: boolean;
     source_ids?: number[];
+    [key: string]: any;
 };
 
 export interface NewsfeedDeleteListParams {
     list_id: number;
+    [key: string]: any;
 };
 
 export interface NewsfeedUnsubscribeParams {
@@ -5414,6 +5715,7 @@ export interface NewsfeedUnsubscribeParams {
      * Object ID.
      */
     item_id: number;
+    [key: string]: any;
 };
 
 export interface NewsfeedGetSuggestedSourcesParams {
@@ -5430,6 +5732,7 @@ export interface NewsfeedGetSuggestedSourcesParams {
      */
     shuffle?: boolean;
     fields?: string[];
+    [key: string]: any;
 };
 
 export interface LikesGetListParams {
@@ -5470,6 +5773,7 @@ export interface LikesGetListParams {
      */
     count?: number;
     skip_own?: boolean;
+    [key: string]: any;
 };
 
 export interface LikesAddParams {
@@ -5489,6 +5793,7 @@ export interface LikesAddParams {
      * Access key required for an object owned by a private entity.
      */
     access_key?: string;
+    [key: string]: any;
 };
 
 export interface LikesDeleteParams {
@@ -5504,6 +5809,7 @@ export interface LikesDeleteParams {
      * Object ID.
      */
     item_id: number;
+    [key: string]: any;
 };
 
 export interface LikesIsLikedParams {
@@ -5523,6 +5829,7 @@ export interface LikesIsLikedParams {
      * Object ID.
      */
     item_id: number;
+    [key: string]: any;
 };
 
 export interface PollsGetByIdParams {
@@ -5538,6 +5845,7 @@ export interface PollsGetByIdParams {
      * Poll ID.
      */
     poll_id: number;
+    [key: string]: any;
 };
 
 export interface PollsAddVoteParams {
@@ -5554,6 +5862,7 @@ export interface PollsAddVoteParams {
      */
     answer_id: number;
     is_board?: boolean;
+    [key: string]: any;
 };
 
 export interface PollsDeleteVoteParams {
@@ -5570,6 +5879,7 @@ export interface PollsDeleteVoteParams {
      */
     answer_id: number;
     is_board?: boolean;
+    [key: string]: any;
 };
 
 export interface PollsGetVotersParams {
@@ -5600,6 +5910,7 @@ export interface PollsGetVotersParams {
     answer_ids?: number[];
     is_board?: boolean;
     fields?: string[];
+    [key: string]: any;
 };
 
 export interface PollsCreateParams {
@@ -5619,6 +5930,7 @@ export interface PollsCreateParams {
      * available answers list, for example: " ["yes","no","maybe"]", There can be from 1 to 10 answers.
      */
     add_answers?: string;
+    [key: string]: any;
 };
 
 export interface PollsEditParams {
@@ -5646,6 +5958,7 @@ export interface PollsEditParams {
      * list of answer ids to be deleted. For example: "[382967099, 382967103]"
      */
     delete_answers?: string;
+    [key: string]: any;
 };
 
 export interface DocsGetParams {
@@ -5661,10 +5974,12 @@ export interface DocsGetParams {
      * ID of the user or community that owns the documents. Use a negative value to designate a community ID.
      */
     owner_id?: number;
+    [key: string]: any;
 };
 
 export interface DocsGetByIdParams {
     docs?: string[];
+    [key: string]: any;
 };
 
 export interface DocsGetUploadServerParams {
@@ -5672,6 +5987,7 @@ export interface DocsGetUploadServerParams {
      * Community ID (if the document will be uploaded to the community).
      */
     group_id?: number;
+    [key: string]: any;
 };
 
 export interface DocsGetWallUploadServerParams {
@@ -5679,6 +5995,7 @@ export interface DocsGetWallUploadServerParams {
      * Community ID (if the document will be uploaded to the community).
      */
     group_id?: number;
+    [key: string]: any;
 };
 
 export interface DocsGetMessagesUploadServerParams {
@@ -5690,6 +6007,7 @@ export interface DocsGetMessagesUploadServerParams {
      * Destination ID. "For user: 'User ID', e.g. '12345'. For chat: '2000000000' + 'Chat ID', e.g. '2000000001'. For community: '- Community ID', e.g. '-12345'. "
      */
     peer_id?: number;
+    [key: string]: any;
 };
 
 export interface DocsSaveParams {
@@ -5705,6 +6023,7 @@ export interface DocsSaveParams {
      * Document tags.
      */
     tags?: string;
+    [key: string]: any;
 };
 
 export interface DocsDeleteParams {
@@ -5716,6 +6035,7 @@ export interface DocsDeleteParams {
      * Document ID.
      */
     doc_id: number;
+    [key: string]: any;
 };
 
 export interface DocsAddParams {
@@ -5731,6 +6051,7 @@ export interface DocsAddParams {
      * Access key. This parameter is required if 'access_key' was returned with the document's data.
      */
     access_key?: string;
+    [key: string]: any;
 };
 
 export interface DocsGetTypesParams {
@@ -5738,6 +6059,7 @@ export interface DocsGetTypesParams {
      * ID of the user or community that owns the documents. Use a negative value to designate a community ID.
      */
     owner_id: number;
+    [key: string]: any;
 };
 
 export interface DocsSearchParams {
@@ -5754,6 +6076,7 @@ export interface DocsSearchParams {
      */
     offset?: number;
     search_own?: boolean;
+    [key: string]: any;
 };
 
 export interface DocsEditParams {
@@ -5770,6 +6093,7 @@ export interface DocsEditParams {
      */
     title?: string;
     tags?: string[];
+    [key: string]: any;
 };
 
 export interface FaveGetUsersParams {
@@ -5781,6 +6105,7 @@ export interface FaveGetUsersParams {
      * Number of users to return.
      */
     count?: number;
+    [key: string]: any;
 };
 
 export interface FaveGetPhotosParams {
@@ -5796,6 +6121,7 @@ export interface FaveGetPhotosParams {
      * '1' — to return photo sizes in a [vk.com/dev/photo_sizes|special format].
      */
     photo_sizes?: boolean;
+    [key: string]: any;
 };
 
 export interface FaveGetPostsParams {
@@ -5811,6 +6137,7 @@ export interface FaveGetPostsParams {
      * '1' — to return additional 'wall', 'profiles', and 'groups' fields. By default: '0'.
      */
     extended?: boolean;
+    [key: string]: any;
 };
 
 export interface FaveGetVideosParams {
@@ -5826,6 +6153,7 @@ export interface FaveGetVideosParams {
      * Return an additional information about videos. Also returns all owners profiles and groups.
      */
     extended?: boolean;
+    [key: string]: any;
 };
 
 export interface FaveGetLinksParams {
@@ -5837,6 +6165,7 @@ export interface FaveGetLinksParams {
      * Number of results to return.
      */
     count?: number;
+    [key: string]: any;
 };
 
 export interface FaveGetMarketItemsParams {
@@ -5848,6 +6177,7 @@ export interface FaveGetMarketItemsParams {
      * '1' – to return additional fields 'likes, can_comment, can_repost, photos'. By default: '0'.
      */
     extended?: boolean;
+    [key: string]: any;
 };
 
 export interface FaveAddUserParams {
@@ -5855,6 +6185,7 @@ export interface FaveAddUserParams {
      * Profile ID.
      */
     user_id: number;
+    [key: string]: any;
 };
 
 export interface FaveRemoveUserParams {
@@ -5862,6 +6193,7 @@ export interface FaveRemoveUserParams {
      * Profile ID.
      */
     user_id: number;
+    [key: string]: any;
 };
 
 export interface FaveAddGroupParams {
@@ -5869,6 +6201,7 @@ export interface FaveAddGroupParams {
      * Community ID.
      */
     group_id: number;
+    [key: string]: any;
 };
 
 export interface FaveRemoveGroupParams {
@@ -5876,6 +6209,7 @@ export interface FaveRemoveGroupParams {
      * Community ID.
      */
     group_id: number;
+    [key: string]: any;
 };
 
 export interface FaveAddLinkParams {
@@ -5887,6 +6221,7 @@ export interface FaveAddLinkParams {
      * Description text.
      */
     text?: string;
+    [key: string]: any;
 };
 
 export interface FaveRemoveLinkParams {
@@ -5894,6 +6229,7 @@ export interface FaveRemoveLinkParams {
      * Link ID (can be obtained by [vk.com/dev/faves.getLinks|faves.getLinks] method).
      */
     link_id: string;
+    [key: string]: any;
 };
 
 export interface NotificationsGetParams {
@@ -5911,9 +6247,11 @@ export interface NotificationsGetParams {
     end_time?: number;
     start_from?: string;
     filters?: ("wall" | "mentions" | "comments" | "likes" | "reposted" | "followers" | "friends")[];
+    [key: string]: any;
 };
 
 export interface NotificationsMarkAsViewedParams {
+    [key: string]: any;
 };
 
 export interface StatsGetParams {
@@ -5933,9 +6271,11 @@ export interface StatsGetParams {
      * End datestamp (in Unix time) of statistics to return.
      */
     date_to?: string;
+    [key: string]: any;
 };
 
 export interface StatsTrackVisitorParams {
+    [key: string]: any;
 };
 
 export interface StatsGetPostReachParams {
@@ -5947,6 +6287,7 @@ export interface StatsGetPostReachParams {
      * wall post id. Note that stats are available only for '300' last (newest) posts on a community wall.
      */
     post_id: number;
+    [key: string]: any;
 };
 
 export interface SearchGetHintsParams {
@@ -5964,6 +6305,7 @@ export interface SearchGetHintsParams {
     limit?: number;
     filters?: string[];
     search_global?: boolean;
+    [key: string]: any;
 };
 
 export interface AppsGetCatalogParams {
@@ -5996,6 +6338,7 @@ export interface AppsGetCatalogParams {
     fields?: string[];
     name_case?: string;
     genre_id?: number;
+    [key: string]: any;
 };
 
 export interface AppsGetParams {
@@ -6013,6 +6356,7 @@ export interface AppsGetParams {
     name_case?: "nom" | "gen" | "dat" | "acc" | "ins" | "abl";
     app_ids?: string[];
     fields?: string[];
+    [key: string]: any;
 };
 
 export interface AppsSendRequestParams {
@@ -6034,9 +6378,11 @@ export interface AppsSendRequestParams {
     key?: string;
     name?: string;
     separate?: boolean;
+    [key: string]: any;
 };
 
 export interface AppsDeleteAppRequestsParams {
+    [key: string]: any;
 };
 
 export interface AppsGetFriendsListParams {
@@ -6049,6 +6395,7 @@ export interface AppsGetFriendsListParams {
      */
     type?: "request" | "invite";
     fields?: string[];
+    [key: string]: any;
 };
 
 export interface AppsGetLeaderboardParams {
@@ -6064,6 +6411,7 @@ export interface AppsGetLeaderboardParams {
      * 1 — to return additional info about users
      */
     extended?: boolean;
+    [key: string]: any;
 };
 
 export interface SecureAddAppEventParams {
@@ -6079,10 +6427,12 @@ export interface SecureAddAppEventParams {
      * depends on activity_id: * 1 – number, current level number,, * 2 – number, current user's points amount, , Any other value is ignored
      */
     value?: number;
+    [key: string]: any;
 };
 
 export interface AppsGetScoreParams {
     user_id: number;
+    [key: string]: any;
 };
 
 export interface UtilsCheckLinkParams {
@@ -6090,6 +6440,7 @@ export interface UtilsCheckLinkParams {
      * Link to check (e.g., 'http://google.com').
      */
     url: string;
+    [key: string]: any;
 };
 
 export interface UtilsDeleteFromLastShortenedParams {
@@ -6097,6 +6448,7 @@ export interface UtilsDeleteFromLastShortenedParams {
      * Link key (characters after vk.cc/).
      */
     key: string;
+    [key: string]: any;
 };
 
 export interface UtilsGetLastShortenedLinksParams {
@@ -6108,6 +6460,7 @@ export interface UtilsGetLastShortenedLinksParams {
      * Offset needed to return a specific subset of links.
      */
     offset?: number;
+    [key: string]: any;
 };
 
 export interface UtilsGetLinkStatsParams {
@@ -6131,6 +6484,7 @@ export interface UtilsGetLinkStatsParams {
      * 1 — to return extended stats data (sex, age, geo). 0 — to return views number only.
      */
     extended?: boolean;
+    [key: string]: any;
 };
 
 export interface UtilsGetShortLinkParams {
@@ -6142,6 +6496,7 @@ export interface UtilsGetShortLinkParams {
      * 1 — private stats, 0 — public stats.
      */
     private?: boolean;
+    [key: string]: any;
 };
 
 export interface UtilsResolveScreenNameParams {
@@ -6149,9 +6504,11 @@ export interface UtilsResolveScreenNameParams {
      * Screen name of the user, community (e.g., 'apiclub,' 'andrew', or 'rules_of_war'), or application.
      */
     screen_name: string;
+    [key: string]: any;
 };
 
 export interface UtilsGetServerTimeParams {
+    [key: string]: any;
 };
 
 export interface DatabaseGetCountriesParams {
@@ -6171,6 +6528,7 @@ export interface DatabaseGetCountriesParams {
      * Number of countries to return.
      */
     count?: number;
+    [key: string]: any;
 };
 
 export interface DatabaseGetRegionsParams {
@@ -6190,14 +6548,17 @@ export interface DatabaseGetRegionsParams {
      * Number of regions to return.
      */
     count?: number;
+    [key: string]: any;
 };
 
 export interface DatabaseGetStreetsByIdParams {
     street_ids?: number[];
+    [key: string]: any;
 };
 
 export interface DatabaseGetCountriesByIdParams {
     country_ids?: number[];
+    [key: string]: any;
 };
 
 export interface DatabaseGetCitiesParams {
@@ -6225,10 +6586,12 @@ export interface DatabaseGetCitiesParams {
      * Number of cities to return.
      */
     count?: number;
+    [key: string]: any;
 };
 
 export interface DatabaseGetCitiesByIdParams {
     city_ids?: number[];
+    [key: string]: any;
 };
 
 export interface DatabaseGetUniversitiesParams {
@@ -6252,6 +6615,7 @@ export interface DatabaseGetUniversitiesParams {
      * Number of universities to return.
      */
     count?: number;
+    [key: string]: any;
 };
 
 export interface DatabaseGetSchoolsParams {
@@ -6271,6 +6635,7 @@ export interface DatabaseGetSchoolsParams {
      * Number of schools to return.
      */
     count?: number;
+    [key: string]: any;
 };
 
 export interface DatabaseGetSchoolClassesParams {
@@ -6278,6 +6643,7 @@ export interface DatabaseGetSchoolClassesParams {
      * Country ID.
      */
     country_id?: number;
+    [key: string]: any;
 };
 
 export interface DatabaseGetFacultiesParams {
@@ -6293,6 +6659,7 @@ export interface DatabaseGetFacultiesParams {
      * Number of faculties to return.
      */
     count?: number;
+    [key: string]: any;
 };
 
 export interface DatabaseGetChairsParams {
@@ -6308,6 +6675,7 @@ export interface DatabaseGetChairsParams {
      * amount of chairs to get
      */
     count?: number;
+    [key: string]: any;
 };
 
 export interface GiftsGetParams {
@@ -6323,9 +6691,11 @@ export interface GiftsGetParams {
      * Offset needed to return a specific subset of results.
      */
     offset?: number;
+    [key: string]: any;
 };
 
 export interface AdsGetAccountsParams {
+    [key: string]: any;
 };
 
 export interface AdsGetClientsParams {
@@ -6333,6 +6703,7 @@ export interface AdsGetClientsParams {
      * Advertising account ID.
      */
     account_id: number;
+    [key: string]: any;
 };
 
 export interface AdsCreateClientsParams {
@@ -6344,6 +6715,7 @@ export interface AdsCreateClientsParams {
      * Serialized JSON array of objects that describe created campaigns. Description of 'client_specification' objects see below.
      */
     data: string;
+    [key: string]: any;
 };
 
 export interface AdsUpdateClientsParams {
@@ -6355,6 +6727,7 @@ export interface AdsUpdateClientsParams {
      * Serialized JSON array of objects that describe changes in clients. Description of 'client_mod' objects see below.
      */
     data: string;
+    [key: string]: any;
 };
 
 export interface AdsDeleteClientsParams {
@@ -6366,6 +6739,7 @@ export interface AdsDeleteClientsParams {
      * Serialized JSON array with IDs of deleted clients.
      */
     ids: string;
+    [key: string]: any;
 };
 
 export interface AdsGetCampaignsParams {
@@ -6385,6 +6759,7 @@ export interface AdsGetCampaignsParams {
      * Filter of advertising campaigns to show. Serialized JSON array with campaign IDs. Only campaigns that exist in 'campaign_ids' and belong to the specified advertising account will be shown. If the parameter is null, all campaigns will be shown.
      */
     campaign_ids?: string;
+    [key: string]: any;
 };
 
 export interface AdsCreateCampaignsParams {
@@ -6396,6 +6771,7 @@ export interface AdsCreateCampaignsParams {
      * Serialized JSON array of objects that describe created campaigns. Description of 'campaign_specification' objects see below.
      */
     data: string;
+    [key: string]: any;
 };
 
 export interface AdsUpdateCampaignsParams {
@@ -6407,6 +6783,7 @@ export interface AdsUpdateCampaignsParams {
      * Serialized JSON array of objects that describe changes in campaigns. Description of 'campaign_mod' objects see below.
      */
     data: string;
+    [key: string]: any;
 };
 
 export interface AdsDeleteCampaignsParams {
@@ -6418,6 +6795,7 @@ export interface AdsDeleteCampaignsParams {
      * Serialized JSON array with IDs of deleted campaigns.
      */
     ids: string;
+    [key: string]: any;
 };
 
 export interface AdsGetAdsParams {
@@ -6449,6 +6827,7 @@ export interface AdsGetAdsParams {
      * Offset. Used in the same cases as 'limit' parameter.
      */
     offset?: number;
+    [key: string]: any;
 };
 
 export interface AdsGetAdsLayoutParams {
@@ -6480,6 +6859,7 @@ export interface AdsGetAdsLayoutParams {
      * Offset. Used in the same cases as 'limit' parameter.
      */
     offset?: number;
+    [key: string]: any;
 };
 
 export interface AdsGetAdsTargetingParams {
@@ -6511,6 +6891,7 @@ export interface AdsGetAdsTargetingParams {
      * Offset needed to return a specific subset of results.
      */
     offset?: number;
+    [key: string]: any;
 };
 
 export interface AdsCreateAdsParams {
@@ -6522,6 +6903,7 @@ export interface AdsCreateAdsParams {
      * Serialized JSON array of objects that describe created ads. Description of 'ad_specification' objects see below.
      */
     data: string;
+    [key: string]: any;
 };
 
 export interface AdsUpdateAdsParams {
@@ -6533,6 +6915,7 @@ export interface AdsUpdateAdsParams {
      * Serialized JSON array of objects that describe changes in ads. Description of 'ad_edit_specification' objects see below.
      */
     data: string;
+    [key: string]: any;
 };
 
 export interface AdsDeleteAdsParams {
@@ -6544,6 +6927,7 @@ export interface AdsDeleteAdsParams {
      * Serialized JSON array with ad IDs.
      */
     ids: string;
+    [key: string]: any;
 };
 
 export interface AdsCheckLinkParams {
@@ -6563,6 +6947,7 @@ export interface AdsCheckLinkParams {
      * Campaign ID
      */
     campaign_id?: number;
+    [key: string]: any;
 };
 
 export interface AdsGetStatisticsParams {
@@ -6590,6 +6975,7 @@ export interface AdsGetStatisticsParams {
      * Date to show statistics to. For different value of 'period' different date format is used: *day: YYYY-MM-DD, example: 2011-09-27 — September 27, 2011, **0 — current day,, *month: YYYY-MM, example: 2011-09 — September 2011, **0 — current month,, *overall: 0.
      */
     date_to: string;
+    [key: string]: any;
 };
 
 export interface AdsGetDemographicsParams {
@@ -6617,6 +7003,7 @@ export interface AdsGetDemographicsParams {
      * Date to show statistics to. For different value of 'period' different date format is used: *day: YYYY-MM-DD, example: 2011-09-27 — September 27, 2011, **0 — current day,, *month: YYYY-MM, example: 2011-09 — September 2011, **0 — current month,, *overall: 0.
      */
     date_to: string;
+    [key: string]: any;
 };
 
 export interface AdsGetAdsPostsReachParams {
@@ -6628,6 +7015,7 @@ export interface AdsGetAdsPostsReachParams {
      * Ads IDS separated by comma.
      */
     ads_ids: string;
+    [key: string]: any;
 };
 
 export interface AdsGetBudgetParams {
@@ -6635,6 +7023,7 @@ export interface AdsGetBudgetParams {
      * Advertising account ID.
      */
     account_id: number;
+    [key: string]: any;
 };
 
 export interface AdsGetOfficeUsersParams {
@@ -6642,6 +7031,7 @@ export interface AdsGetOfficeUsersParams {
      * Advertising account ID.
      */
     account_id: number;
+    [key: string]: any;
 };
 
 export interface AdsAddOfficeUsersParams {
@@ -6653,6 +7043,7 @@ export interface AdsAddOfficeUsersParams {
      * Serialized JSON array of objects that describe added managers. Description of 'user_specification' objects see below.
      */
     data: string;
+    [key: string]: any;
 };
 
 export interface AdsRemoveOfficeUsersParams {
@@ -6664,6 +7055,7 @@ export interface AdsRemoveOfficeUsersParams {
      * Serialized JSON array with IDs of deleted managers.
      */
     ids: string;
+    [key: string]: any;
 };
 
 export interface AdsGetTargetingStatsParams {
@@ -6695,6 +7087,7 @@ export interface AdsGetTargetingStatsParams {
      * Domain of the advertised object.
      */
     link_domain?: string;
+    [key: string]: any;
 };
 
 export interface AdsGetSuggestionsParams {
@@ -6722,6 +7115,7 @@ export interface AdsGetSuggestionsParams {
      * Language of the returned string values. Supported languages: *ru — Russian,, *ua — Ukrainian,, *en — English.
      */
     lang?: "ru" | "ua" | "en";
+    [key: string]: any;
 };
 
 export interface AdsGetCategoriesParams {
@@ -6729,6 +7123,7 @@ export interface AdsGetCategoriesParams {
      * Language. The full list of supported languages is [vk.com/dev/api_requests|here].
      */
     lang?: string;
+    [key: string]: any;
 };
 
 export interface AdsGetUploadURLParams {
@@ -6736,9 +7131,11 @@ export interface AdsGetUploadURLParams {
      * Ad format: *1 — image and text,, *2 — big image,, *3 — exclusive format,, *4 — community, square image,, *7 — special app format.
      */
     ad_format: 1 | 2 | 3 | 4 | 7;
+    [key: string]: any;
 };
 
 export interface AdsGetVideoUploadURLParams {
+    [key: string]: any;
 };
 
 export interface AdsGetFloodStatsParams {
@@ -6746,6 +7143,7 @@ export interface AdsGetFloodStatsParams {
      * Advertising account ID.
      */
     account_id: number;
+    [key: string]: any;
 };
 
 export interface AdsGetRejectionReasonParams {
@@ -6757,6 +7155,7 @@ export interface AdsGetRejectionReasonParams {
      * Ad ID.
      */
     ad_id: number;
+    [key: string]: any;
 };
 
 export interface AdsCreateTargetGroupParams {
@@ -6780,6 +7179,7 @@ export interface AdsCreateTargetGroupParams {
      * 'For groups with auditory created with pixel code only.', , Number of days after that users will be automatically removed from the group. '0' — not to remove users.
      */
     lifetime?: number;
+    [key: string]: any;
 };
 
 export interface AdsUpdateTargetGroupParams {
@@ -6807,6 +7207,7 @@ export interface AdsUpdateTargetGroupParams {
      * 'Only for the groups that get audience from sites with user accounting code.', Time in days when users added to a retarget group will be automatically excluded from it. '0' – automatic exclusion is off.
      */
     lifetime?: number;
+    [key: string]: any;
 };
 
 export interface AdsDeleteTargetGroupParams {
@@ -6822,6 +7223,7 @@ export interface AdsDeleteTargetGroupParams {
      * Group ID.
      */
     target_group_id: number;
+    [key: string]: any;
 };
 
 export interface AdsGetTargetGroupsParams {
@@ -6837,6 +7239,7 @@ export interface AdsGetTargetGroupsParams {
      * '1' — to return pixel code.
      */
     extended?: boolean;
+    [key: string]: any;
 };
 
 export interface AdsImportTargetContactsParams {
@@ -6856,6 +7259,7 @@ export interface AdsImportTargetContactsParams {
      * List of phone numbers, emails or user IDs separated with a comma.
      */
     contacts: string;
+    [key: string]: any;
 };
 
 export interface SecureCheckTokenParams {
@@ -6867,6 +7271,7 @@ export interface SecureCheckTokenParams {
      * user 'ip address'. Note that user may access using the 'ipv6' address, in this case it is required to transmit the 'ipv6' address. If not transmitted, the address will not be checked.
      */
     ip?: string;
+    [key: string]: any;
 };
 
 export interface MarketGetParams {
@@ -6886,6 +7291,7 @@ export interface MarketGetParams {
      * '1' – method will return additional fields: 'likes, can_comment, car_repost, photos'. These parameters are not returned by default.
      */
     extended?: boolean;
+    [key: string]: any;
 };
 
 export interface MarketGetByIdParams {
@@ -6894,6 +7300,7 @@ export interface MarketGetByIdParams {
      */
     extended?: boolean;
     item_ids?: string[];
+    [key: string]: any;
 };
 
 export interface MarketSearchParams {
@@ -6930,6 +7337,7 @@ export interface MarketSearchParams {
      */
     extended?: boolean;
     tags?: number[];
+    [key: string]: any;
 };
 
 export interface MarketGetAlbumsParams {
@@ -6945,6 +7353,7 @@ export interface MarketGetAlbumsParams {
      * Number of items to return.
      */
     count?: number;
+    [key: string]: any;
 };
 
 export interface MarketGetAlbumByIdParams {
@@ -6953,6 +7362,7 @@ export interface MarketGetAlbumByIdParams {
      */
     owner_id: number;
     album_ids?: number[];
+    [key: string]: any;
 };
 
 export interface MarketCreateCommentParams {
@@ -6985,6 +7395,7 @@ export interface MarketCreateCommentParams {
      */
     guid?: string;
     attachments?: string[];
+    [key: string]: any;
 };
 
 export interface MarketGetCommentsParams {
@@ -7017,6 +7428,7 @@ export interface MarketGetCommentsParams {
      */
     extended?: boolean;
     fields?: string[];
+    [key: string]: any;
 };
 
 export interface MarketDeleteCommentParams {
@@ -7028,6 +7440,7 @@ export interface MarketDeleteCommentParams {
      * comment id
      */
     comment_id: number;
+    [key: string]: any;
 };
 
 export interface MarketRestoreCommentParams {
@@ -7039,6 +7452,7 @@ export interface MarketRestoreCommentParams {
      * deleted comment id
      */
     comment_id: number;
+    [key: string]: any;
 };
 
 export interface MarketEditCommentParams {
@@ -7055,6 +7469,7 @@ export interface MarketEditCommentParams {
      */
     message?: string;
     attachments?: string[];
+    [key: string]: any;
 };
 
 export interface MarketReportCommentParams {
@@ -7070,6 +7485,7 @@ export interface MarketReportCommentParams {
      * Complaint reason. Possible values: *'0' — spam,, *'1' — child porn,, *'2' — extremism,, *'3' — violence,, *'4' — drugs propaganda,, *'5' — adult materials,, *'6' — insult.
      */
     reason: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+    [key: string]: any;
 };
 
 export interface MarketGetCategoriesParams {
@@ -7081,6 +7497,7 @@ export interface MarketGetCategoriesParams {
      * Offset needed to return a specific subset of results.
      */
     offset?: number;
+    [key: string]: any;
 };
 
 export interface MarketReportParams {
@@ -7096,6 +7513,7 @@ export interface MarketReportParams {
      * Complaint reason. Possible values: *'0' — spam,, *'1' — child porn,, *'2' — extremism,, *'3' — violence,, *'4' — drugs propaganda,, *'5' — adult materials,, *'6' — insult.
      */
     reason: 0 | 1 | 2 | 3 | 4 | 5 | 6;
+    [key: string]: any;
 };
 
 export interface MarketAddParams {
@@ -7128,6 +7546,7 @@ export interface MarketAddParams {
      */
     main_photo_id: number;
     photo_ids?: number[];
+    [key: string]: any;
 };
 
 export interface MarketEditParams {
@@ -7164,6 +7583,7 @@ export interface MarketEditParams {
      */
     main_photo_id: number;
     photo_ids?: number[];
+    [key: string]: any;
 };
 
 export interface MarketDeleteParams {
@@ -7175,6 +7595,7 @@ export interface MarketDeleteParams {
      * Item ID.
      */
     item_id: number;
+    [key: string]: any;
 };
 
 export interface MarketRestoreParams {
@@ -7186,6 +7607,7 @@ export interface MarketRestoreParams {
      * Deleted item ID.
      */
     item_id: number;
+    [key: string]: any;
 };
 
 export interface MarketReorderItemsParams {
@@ -7209,6 +7631,7 @@ export interface MarketReorderItemsParams {
      * ID of an item to place current item after it.
      */
     after?: number;
+    [key: string]: any;
 };
 
 export interface MarketReorderAlbumsParams {
@@ -7228,6 +7651,7 @@ export interface MarketReorderAlbumsParams {
      * ID of a collection to place current collection after it.
      */
     after?: number;
+    [key: string]: any;
 };
 
 export interface MarketAddAlbumParams {
@@ -7247,6 +7671,7 @@ export interface MarketAddAlbumParams {
      * Set as main ('1' – set, '0' – no).
      */
     main_album?: boolean;
+    [key: string]: any;
 };
 
 export interface MarketEditAlbumParams {
@@ -7270,6 +7695,7 @@ export interface MarketEditAlbumParams {
      * Set as main ('1' – set, '0' – no).
      */
     main_album?: boolean;
+    [key: string]: any;
 };
 
 export interface MarketDeleteAlbumParams {
@@ -7281,6 +7707,7 @@ export interface MarketDeleteAlbumParams {
      * Collection ID.
      */
     album_id: number;
+    [key: string]: any;
 };
 
 export interface MarketRemoveFromAlbumParams {
@@ -7293,6 +7720,7 @@ export interface MarketRemoveFromAlbumParams {
      */
     item_id: number;
     album_ids?: number[];
+    [key: string]: any;
 };
 
 export interface MarketAddToAlbumParams {
@@ -7305,5 +7733,6 @@ export interface MarketAddToAlbumParams {
      */
     item_id: number;
     album_ids?: number[];
+    [key: string]: any;
 };
 
