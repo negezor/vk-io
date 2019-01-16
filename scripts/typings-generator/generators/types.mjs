@@ -1,6 +1,10 @@
 import ts from 'typescript';
 
 export default class TypesGenerator {
+	static get any() {
+		return ts.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword);
+	}
+
 	static get string() {
 		return ts.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
 	}

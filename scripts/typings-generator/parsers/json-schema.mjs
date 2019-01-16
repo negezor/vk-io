@@ -101,7 +101,18 @@ const jsonSchemaTypes = {
 			? type.required
 			: false
 	}),
-	number: payload => jsonSchemaTypes.integer(payload)
+	number: payload => jsonSchemaTypes.integer(payload),
+
+	any: ({ type }) => ({
+		kind: 'type',
+		description: type.description && formatTSComments(
+			type.description
+		),
+		type: TypesGenerator.any,
+		required: typeof type.required === 'boolean'
+			? type.required
+			: false
+	})
 };
 
 export function parseJSONObject(name, type, payload = {}) {
