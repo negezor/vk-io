@@ -72,7 +72,7 @@ Promise.all([
 	vk.upload.wallPhoto({
 		// jpeg at dat file
 		source: {
-			value: './path/to/cat1.dat',
+			values: './path/to/cat1.dat',
 			contentType: 'image/jpeg',
 			filename: 'cat1.jpg'
 		}
@@ -82,7 +82,7 @@ Promise.all([
 	vk.upload.wallPhoto({
 		// png at file without extensions
 		source: {
-			value: fs.createReadStream('./path/to/cat2'),
+			values: fs.createReadStream('./path/to/cat2'),
 			contentType: 'image/png',
 			filename: 'cat2.png'
 		}
@@ -105,7 +105,7 @@ vk.upload.photoAlbum({
 		'http://lorempixel.com/400/200/cats/',
 
 		{
-			value: './path/to/cat5.dat',
+			values: './path/to/cat5.dat',
 			contentType: 'image/jpeg',
 			filename: 'cat5.jpg'
 		}
