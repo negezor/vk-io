@@ -56,7 +56,7 @@
 	"dependencies": {
 		"cheerio": "^1.0.0-rc.2",
 		"debug": "^4.1.1",
-		"middleware-io": "^0.0.8",
+		"middleware-io": "^1.0.0",
 		"node-fetch": "^2.3.0",
 		"sandwich-stream": "^2.0.2",
 		"tough-cookie": "^2.5.0",

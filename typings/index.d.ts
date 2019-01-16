@@ -6,6 +6,7 @@ declare module 'vk-io' {
 	import Cheerio from 'cheerio';
 	import { Response } from 'node-fetch';
 	import { CookieJar } from 'tough-cookie';
+	import { Middleware, NextMiddleware } from 'middleware-io';
 
 	import { URL } from 'url';
 	import { Agent } from 'https';
@@ -677,9 +678,6 @@ declare module 'vk-io' {
 		public run(): Promise<any[]>;
 	}
 
-	type nextFunction = () => Promise<any>;
-	type DefaultHandler<T> = (ctx: Object & T, next: nextFunction) => any;
-
 	class Updates {
 		/**
 		 * Constructor
@@ -694,32 +692,32 @@ declare module 'vk-io' {
 		/**
 		 * Added middleware
 		 */
-		public use<T>(middleware: DefaultHandler<T>): this;
+		public use<T>(middleware: Middleware<T>): this;
 
 		/**
 		 * Subscribe to events
 		 */
-		public on<T>(events: 'message' | 'new_message' | 'edit_message', handler: (ctx: MessageContext & T, next: nextFunction) => any): this;
-		public on<T>(events: 'message_subscribers' | 'message_subscribe' | 'message_unsubscribe', handler: (ctx: MessageAllowContext & T, next: nextFunction) => any): this;
-		public on<T>(events: 'new_attachment' | 'new_photo_attachment' | 'new_video_attachment' | 'new_audio_attachment', handler: (ctx: NewAttachmentsContext & T, next: nextFunction) => any): this;
-		public on<T>(events: 'wall_post' | 'new_wall_post' | 'new_wall_repost', handler: (ctx: WallPostContext & T, next: nextFunction) => any): this;
-		public on<T>(events: 'group_member' | 'join_group_member' | 'leave_group_member', handler: (ctx: GroupMemberContext & T, next: nextFunction) => any): this;
-		public on<T>(events: 'group_user' | 'block_group_user' | 'unblock_group_user', handler: (ctx: GroupUserContext & T, next: nextFunction) => any): this;
-		public on<T>(events: 'comment' | 'photo_comment' | 'video_comment' | 'wall_comment' | 'board_comment' | 'market_comment' | 'new_photo_comment' | 'edit_photo_comment' | 'delete_photo_comment' | 'restore_photo_comment' | 'new_video_comment' | 'edit_video_comment' | 'delete_video_comment' | 'restore_video_comment' | 'new_wall_comment' | 'edit_wall_comment' | 'delete_wall_comment' | 'restore_wall_comment' | 'new_board_comment' | 'edit_board_comment' | 'delete_board_comment' | 'restore_board_comment' | 'new_market_comment' | 'edit_market_comment' | 'delete_market_comment' | 'restore_market_comment', handler: (ctx: CommentActionContext & T, next: nextFunction) => any): this;
-		public on<T>(events: 'vote' | 'pull_vote', handler: (ctx: VoteContext & T, next: nextFunction) => any): this;
-		public on<T>(events: 'group_update' | 'group_update_photo' | 'group_update_officers' | 'group_update_settings', handler: (ctx: GroupUpdateContext & T, next: nextFunction) => any): this;
-		public on<T>(events: 'typing' | 'typing_user' | 'typing_group', handler: (ctx: TypingContext & T, next: nextFunction) => any): this;
-		public on<T>(events: string | string[], handler: DefaultHandler<T>): this;
+		public on<T>(events: 'message' | 'new_message' | 'edit_message', handler: Middleware<MessageContext & T>): this;
+		public on<T>(events: 'message_subscribers' | 'message_subscribe' | 'message_unsubscribe', handler: Middleware<MessageAllowContext & T>): this;
+		public on<T>(events: 'new_attachment' | 'new_photo_attachment' | 'new_video_attachment' | 'new_audio_attachment', handler: Middleware<NewAttachmentsContext & T>): this;
+		public on<T>(events: 'wall_post' | 'new_wall_post' | 'new_wall_repost', handler: Middleware<WallPostContext & T>): this;
+		public on<T>(events: 'group_member' | 'join_group_member' | 'leave_group_member', handler: Middleware<GroupMemberContext & T>): this;
+		public on<T>(events: 'group_user' | 'block_group_user' | 'unblock_group_user', handler: Middleware<GroupUserContext & T>): this;
+		public on<T>(events: 'comment' | 'photo_comment' | 'video_comment' | 'wall_comment' | 'board_comment' | 'market_comment' | 'new_photo_comment' | 'edit_photo_comment' | 'delete_photo_comment' | 'restore_photo_comment' | 'new_video_comment' | 'edit_video_comment' | 'delete_video_comment' | 'restore_video_comment' | 'new_wall_comment' | 'edit_wall_comment' | 'delete_wall_comment' | 'restore_wall_comment' | 'new_board_comment' | 'edit_board_comment' | 'delete_board_comment' | 'restore_board_comment' | 'new_market_comment' | 'edit_market_comment' | 'delete_market_comment' | 'restore_market_comment', handler: Middleware<CommentActionContext & T>): this;
+		public on<T>(events: 'vote' | 'pull_vote', handler: Middleware<VoteContext & T>): this;
+		public on<T>(events: 'group_update' | 'group_update_photo' | 'group_update_officers' | 'group_update_settings', handler: Middleware<GroupUpdateContext & T>): this;
+		public on<T>(events: 'typing' | 'typing_user' | 'typing_group', handler: Middleware<TypingContext & T>): this;
+		public on<T>(events: string | string[], handler: Middleware<T>): this;
 
 		/**
 		 * Listen text
 		 */
-		public hear<T>(conditions: any, handler: (ctx: MessageContext & T, next: nextFunction) => any): this;
+		public hear<T>(conditions: any, handler: Middleware<MessageContext>): this;
 
 		/**
 		 * A handler that is called when handlers are not found
 		 */
-		public setHearFallbackHandler(handler: Function): this;
+		public setHearFallbackHandler<T>(handler: Middleware<MessageContext & T>): this;
 
 		/**
 		 * Handles longpoll event

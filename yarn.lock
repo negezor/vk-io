@@ -3343,10 +3343,10 @@ micromatch@^3.1.4:
     snapdragon "^0.8.1"
     to-regex "^3.0.2"
 
-middleware-io@^0.0.8:
-  version "0.0.8"
-  resolved "https://registry.yarnpkg.com/middleware-io/-/middleware-io-0.0.8.tgz#5532b59d2263d9ca5ce13295309c11be4f72da9e"
-  integrity sha512-/xEU3gMvqc6Ggo6+aKfDMx2s9nvpTBoSrE47QTIrDj2JFbAQyXWwleyCPvOD2rmaXyGyTacdWtxYHmw3PXdTdQ==
+middleware-io@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/middleware-io/-/middleware-io-1.0.0.tgz#5fedd0bd75e940ef252519022e3a65db6ca99f0a"
+  integrity sha512-FeLxbJ9uuuYrwx6A+4zrfxbRC421b88UIYimPp13jFbftCW8SWLwX3Kzs2bwPMvDzXFNyiqyyLbeSBodJk4JEw==
 
 mime-db@~1.37.0:
   version "1.37.0"
