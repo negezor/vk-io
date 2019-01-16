@@ -12780,8 +12780,7 @@
         {
           "name": "random_id",
           "description": "Unique identifier to avoid resending the message.",
-					"type": "integer",
-					"required": true
+					"type": "integer"
         },
         {
           "name": "peer_id",

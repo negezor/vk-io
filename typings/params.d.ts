@@ -5114,9 +5114,17 @@ export interface MessagesSendParams {
      */
     notification?: boolean;
     /**
+     * 1 - do not create a snippet link from the message
+     */
+    dont_parse_links?: boolean;
+    /**
      * Group ID (for group messages with group access token)
      */
     group_id?: number;
+    /**
+     * Object describing the keyboard for the bot
+     */
+    keyboard?: any;
     user_ids?: number[];
     attachment?: string[];
     [key: string]: any;
