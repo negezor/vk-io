@@ -444,7 +444,7 @@ declare module 'vk-io' {
 		public processSecurityForm(response: Response, $: Cheerio): Promise<Response>;
 	}
 
-	class ImplicitFlow extends DirectAuth {
+	class ImplicitFlow {
 		/**
 		 * CookieJar
 		 */
@@ -486,7 +486,7 @@ declare module 'vk-io' {
 		expires: number;
 	}
 
-	class ImplicitFlowGroup extends ImplicitFlow {
+	class ImplicitFlowGroups extends ImplicitFlow {
 		/**
 		 * Returns cookie
 		 */
@@ -1761,6 +1761,11 @@ declare module 'vk-io' {
 		 * Returns data for JSON
 		 */
 		public toJSON(): Object;
+
+		/**
+		 * Partial content
+		 */
+		[key: string]: any;
 	}
 
 	export class CommentActionContext extends Context {
