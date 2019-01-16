@@ -122,11 +122,6 @@ declare module 'vk-io' {
 		pollingAttempts?: number;
 
 		/**
-		 * Webhook path
-		 */
-		webhookPath?: string;
-
-		/**
 		 * Webhook secret key
 		 */
 		webhookSecret?: string;

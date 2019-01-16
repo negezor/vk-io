@@ -481,9 +481,7 @@ export default class Updates {
 		this.started = 'webhook';
 
 		try {
-			const { webhookPath } = this.vk.options;
-
-			const webhookCallback = this.getWebhookCallback(path || webhookPath || '/');
+			const webhookCallback = this.getWebhookCallback(path || '/');
 
 			const callback = typeof next === 'function'
 				? (req, res) => (
