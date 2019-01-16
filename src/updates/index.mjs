@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 import createDebug from 'debug';
-import Middleware from 'middleware-io';
+import MiddlewareStatus from 'middleware-io';
 
 import nodeUrl from 'url';
 import nodeUtil from 'util';
@@ -186,7 +186,7 @@ export default class Updates {
 		this.stack = [];
 		this.middleware = null;
 
-		this.hears = new Middleware();
+		this.hears = new MiddlewareStatus();
 
 		this.hearFallbackHandler = (context, next) => next();
 
@@ -777,7 +777,7 @@ export default class Updates {
 	 * Reloads middleware
 	 */
 	reloadMiddleware() {
-		this.middleware = new Middleware(this.stack);
+		this.middleware = new MiddlewareStatus(this.stack);
 
 		if (this.hears.length === 0) {
 			return;
