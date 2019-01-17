@@ -226,7 +226,13 @@ export interface AccountUserSettings {
     relation_requests?: UsersUserMin[];
 };
 
-export type AccountUserXtrContact = any;
+export interface AccountUserXtrContact1 {
+    contact?: string;
+    request_sent?: number;
+    sort_num?: number;
+};
+
+export type AccountUserXtrContact = UsersUserFull & AccountUserXtrContact1;
 
 export interface AccountInfo {
     /**
@@ -823,7 +829,18 @@ export interface AdsTargSuggestionsSchools {
     [key: string]: any;
 };
 
-export type AdsTargSettings = any;
+export interface AdsTargSettings1 {
+    /**
+     * Ad ID
+     */
+    id?: number;
+    /**
+     * Campaign ID
+     */
+    campaign_id?: number;
+};
+
+export type AdsTargSettings = AdsTargSettings1 & AdsCriteria;
 
 export interface AdsTargetGroup {
     /**
@@ -862,7 +879,14 @@ export interface AdsUsers {
     accesses: AdsAccesses[];
 };
 
-export type AdsPostStats = any;
+export interface AdsPostStats1 {
+    /**
+     * Object ID
+     */
+    ad_id?: number;
+};
+
+export type AdsPostStats = AdsPostStats1 & StatsWallpostStat;
 
 export type AppsAppType = "app" | "game" | "site" | "standalone";
 
@@ -1009,7 +1033,32 @@ export interface AudioAudio {
     [key: string]: any;
 };
 
-export type AudioAudioFull = any;
+export interface AudioAudioFull1 {
+    /**
+     * Duration in seconds
+     */
+    duration?: number;
+    /**
+     * Date when uploaded
+     */
+    date?: number;
+    /**
+     * Album ID
+     */
+    album_id?: number;
+    /**
+     * Lyrics ID
+     */
+    lyrics_id?: number;
+    /**
+     * Genre ID
+     */
+    genre_id?: number;
+    no_search?: BaseBoolInt;
+    is_hq?: BaseBoolInt;
+};
+
+export type AudioAudioFull = AudioAudio & AudioAudioFull1;
 
 export interface AudioLyrics {
     /**
@@ -1534,7 +1583,19 @@ export interface MessagesConversationPushSettings {
     [key: string]: any;
 };
 
-export type DatabaseCity = any;
+export interface DatabaseCity1 {
+    /**
+     * Area title
+     */
+    area?: string;
+    /**
+     * Region title
+     */
+    region?: string;
+    important?: BaseBoolInt;
+};
+
+export type DatabaseCity = BaseObject & DatabaseCity1;
 
 export interface DatabaseFaculty {
     /**
@@ -1807,9 +1868,23 @@ export interface FriendsFriendStatus {
     [key: string]: any;
 };
 
-export type FriendsUserXtrLists = any;
+export interface FriendsUserXtrLists1 {
+    /**
+     * IDs of friend lists with user
+     */
+    lists?: number[];
+};
 
-export type FriendsUserXtrPhone = any;
+export type FriendsUserXtrLists = UsersUserFull & FriendsUserXtrLists1;
+
+export interface FriendsUserXtrPhone1 {
+    /**
+     * User phone
+     */
+    phone?: string;
+};
+
+export type FriendsUserXtrPhone = UsersUserFull & FriendsUserXtrPhone1;
 
 export interface GiftsLayout {
     /**
@@ -2035,7 +2110,73 @@ export type GroupsGroupFullMainSection = 0 | 1 | 2 | 3 | 4 | 5;
 
 export type GroupsGroupFullAgeLimits = 1 | 2 | 3;
 
-export type GroupsGroupFull = any;
+export interface GroupsGroupFull1 {
+    /**
+     * Community description
+     */
+    description?: string;
+    /**
+     * Community's main wiki page title
+     */
+    wiki_page?: string;
+    /**
+     * Community members number
+     */
+    members_count?: number;
+    /**
+     * Type of group, start date of event or category of public page
+     */
+    activity?: string;
+    /**
+     * Fixed post ID
+     */
+    fixed_post?: number;
+    /**
+     * Community status
+     */
+    status?: string;
+    /**
+     * Community's main photo album ID
+     */
+    main_album_id?: number;
+    /**
+     * Community's website
+     */
+    site?: string;
+    /**
+     * Start date of event in Unixtime
+     */
+    start_date?: number;
+    /**
+     * Finish date of event in Unixtime
+     */
+    finish_date?: number;
+    market?: GroupsMarketInfo;
+    member_status?: GroupsGroupFullMemberStatus;
+    is_favorite?: BaseBoolInt;
+    is_subscribed?: BaseBoolInt;
+    city?: BaseObject;
+    country?: BaseCountry;
+    verified?: BaseBoolInt;
+    counters?: GroupsCountersGroup;
+    cover?: GroupsCover;
+    can_post?: BaseBoolInt;
+    can_see_all_posts?: BaseBoolInt;
+    can_create_topic?: BaseBoolInt;
+    can_upload_video?: BaseBoolInt;
+    has_photo?: BaseBoolInt;
+    links?: GroupsLinksItem[];
+    contacts?: GroupsContactsItem[];
+    main_section?: GroupsGroupFullMainSection;
+    trending?: BaseBoolInt;
+    can_message?: BaseBoolInt;
+    is_messages_blocked?: BaseBoolInt;
+    online_status?: GroupsOnlineStatus;
+    age_limits?: GroupsGroupFullAgeLimits;
+    ban_info?: GroupsGroupBanInfo;
+};
+
+export type GroupsGroupFull = GroupsGroup & GroupsGroupFull1;
 
 export type GroupsGroupXtrInvitedByType = "group" | "page" | "event";
 
@@ -2274,7 +2415,11 @@ export interface GroupsOwnerXtrBanInfo {
 
 export type GroupsRoleOptions = "moderator" | "editor" | "administrator" | "creator";
 
-export type GroupsUserXtrRole = any;
+export interface GroupsUserXtrRole1 {
+    role?: GroupsRoleOptions;
+};
+
+export type GroupsUserXtrRole = UsersUserFull & GroupsUserXtrRole1;
 
 export interface GroupsTokenPermissionSetting {
     [key: string]: any;
@@ -2539,7 +2684,18 @@ export interface MarketMarketItem {
     [key: string]: any;
 };
 
-export type MarketMarketItemFull = any;
+export interface MarketMarketItemFull1 {
+    /**
+     * Views number
+     */
+    views_count?: number;
+    photos?: PhotosPhoto[];
+    can_comment?: BaseBoolInt;
+    can_repost?: BaseBoolInt;
+    likes?: BaseLikes;
+};
+
+export type MarketMarketItemFull = MarketMarketItem & MarketMarketItemFull1;
 
 export interface MarketPrice {
     /**
@@ -2936,11 +3092,30 @@ export interface MessagesChatSettingsPhoto {
 
 export type MessagesChatSettingsState = "in" | "kicked" | "left";
 
-export type MessagesUserXtrInvitedBy = any;
+export interface MessagesUserXtrInvitedBy1 {
+    /**
+     * ID of the inviter
+     */
+    invited_by?: number;
+};
+
+export type MessagesUserXtrInvitedBy = UsersUserXtrType & MessagesUserXtrInvitedBy1;
 
 export type NewsfeedNewsfeedItemType = "post" | "photo" | "photo_tag" | "wall_photo" | "friend" | "note" | "audio" | "video" | "topic";
 
-export type NewsfeedNewsfeedItem = any;
+export interface NewsfeedNewsfeedItem1 {
+    /**
+     * Item source ID
+     */
+    source_id?: number;
+    /**
+     * Date when item has been added in Unixtime
+     */
+    date?: number;
+    type?: NewsfeedNewsfeedItemType;
+};
+
+export type NewsfeedNewsfeedItem = NewsfeedNewsfeedItem1;
 
 export interface NewsfeedItemAudio {
     /**
@@ -3072,7 +3247,15 @@ export interface NewsfeedList {
     [key: string]: any;
 };
 
-export type NewsfeedListFull = any;
+export interface NewsfeedListFull1 {
+    /**
+     * Users and communities IDs
+     */
+    source_ids?: number[];
+    no_reposts?: BaseBoolInt;
+};
+
+export type NewsfeedListFull = NewsfeedList & NewsfeedListFull1;
 
 export interface NewsfeedNewsfeedNote {
     /**
@@ -3094,7 +3277,14 @@ export interface NewsfeedNewsfeedNote {
     [key: string]: any;
 };
 
-export type NewsfeedNewsfeedPhoto = any;
+export interface NewsfeedNewsfeedPhoto1 {
+    likes?: BaseLikes;
+    comments?: BaseObjectCount;
+    can_comment?: BaseBoolInt;
+    can_repost?: BaseBoolInt;
+};
+
+export type NewsfeedNewsfeedPhoto = PhotosPhoto & NewsfeedNewsfeedPhoto1;
 
 export interface NotesNoteComment {
     /**
@@ -3184,7 +3374,7 @@ export interface NotificationsNotificationsComment {
     [key: string]: any;
 };
 
-export type NotificationsNotificationParent = any;
+export type NotificationsNotificationParent = WallWallpostToId & PhotosPhoto & BoardTopic & VideoVideo & NotificationsNotificationsComment;
 
 export interface NotificationsNotification {
     /**
@@ -4637,7 +4827,27 @@ export interface StoriesStoryStats {
     [key: string]: any;
 };
 
-export type StoriesStoryVideo = any;
+export interface StoriesStoryVideo1 {
+    /**
+     * URL of the first frame for the corresponding width.
+     */
+    first_frame_800?: string;
+    /**
+     * URL of the first frame for the corresponding width.
+     */
+    first_frame_320?: string;
+    /**
+     * URL of the first frame for the corresponding width.
+     */
+    first_frame_160?: string;
+    /**
+     * URL of the first frame for the corresponding width.
+     */
+    first_frame_130?: string;
+    is_private?: BaseBoolInt;
+};
+
+export type StoriesStoryVideo = VideoVideo & StoriesStoryVideo1;
 
 export type StoriesStoryType = "photo" | "video";
 
@@ -4935,13 +5145,43 @@ export interface UsersUserCounters {
     [key: string]: any;
 };
 
-export type UsersUser = any;
+export interface UsersUser1 {
+    /**
+     * Domain name of the user's page
+     */
+    screen_name?: string;
+    /**
+     * URL of square photo of the user with 50 pixels in width
+     */
+    photo_50?: string;
+    /**
+     * URL of square photo of the user with 100 pixels in width
+     */
+    photo_100?: string;
+    /**
+     * Application ID
+     */
+    online_app?: number;
+    sex?: BaseSex;
+    online?: BaseBoolInt;
+    online_mobile?: BaseBoolInt;
+};
+
+export type UsersUser = UsersUserMin & UsersUser1;
 
 export type UsersUserType = "profile";
 
-export type UsersUserFullXtrType = any;
+export interface UsersUserFullXtrType1 {
+    type?: UsersUserType;
+};
 
-export type UsersUserXtrType = any;
+export type UsersUserFullXtrType = UsersUserFull & UsersUserFullXtrType1;
+
+export interface UsersUserXtrType1 {
+    type?: UsersUserType;
+};
+
+export type UsersUserXtrType = UsersUser & UsersUserXtrType1;
 
 export interface UsersUserMin {
     /**
@@ -4967,9 +5207,217 @@ export interface UsersUserMin {
     [key: string]: any;
 };
 
-export type UsersUserBroadcast = any;
+export interface UsersUserBroadcast1 {
+    status_audio?: AudioAudioFull;
+};
 
-export type UsersUserFull = any;
+export type UsersUserBroadcast = UsersUserMin & UsersUserBroadcast1;
+
+export interface UsersUserFull1 {
+    /**
+     * User nickname
+     */
+    nickname?: string;
+    /**
+     * User maiden name
+     */
+    maiden_name?: string;
+    /**
+     * Domain name of the user's page
+     */
+    domain?: string;
+    /**
+     * User's date of birth
+     */
+    bdate?: string;
+    /**
+     * User's timezone
+     */
+    timezone?: number;
+    /**
+     * URL of square photo of the user with 200 pixels in width
+     */
+    photo_200?: string;
+    /**
+     * URL of square photo of the user with maximum width
+     */
+    photo_max?: string;
+    /**
+     * URL of user's photo with 200 pixels in width
+     */
+    photo_200_orig?: string;
+    /**
+     * URL of user's photo with 400 pixels in width
+     */
+    photo_400_orig?: string;
+    /**
+     * URL of user's photo of maximum size
+     */
+    photo_max_orig?: string;
+    /**
+     * ID of the user's main photo
+     */
+    photo_id?: string;
+    /**
+     * Friend status for current user
+     */
+    friend_status?: number;
+    /**
+     * Information whether current user can see
+     */
+    mobile_phone?: string;
+    /**
+     * User's mobile phone number
+     */
+    home_phone?: string;
+    /**
+     * User's Skype nickname
+     */
+    skype?: string;
+    /**
+     * User's Facebook account
+     */
+    facebook?: string;
+    /**
+     * User's Facebook name
+     */
+    facebook_name?: string;
+    /**
+     * User's Twitter account
+     */
+    twitter?: string;
+    /**
+     * User's Livejournal account
+     */
+    livejournal?: string;
+    /**
+     * User's Instagram account
+     */
+    instagram?: string;
+    /**
+     * User's website
+     */
+    site?: string;
+    /**
+     * User's status
+     */
+    status?: string;
+    /**
+     * User's status
+     */
+    activity?: string;
+    /**
+     * Number of user's followers
+     */
+    followers_count?: number;
+    /**
+     * Number of common friends with current user
+     */
+    common_count?: number;
+    /**
+     * University ID
+     */
+    university?: number;
+    /**
+     * University name
+     */
+    university_name?: string;
+    /**
+     * Faculty ID
+     */
+    faculty?: number;
+    /**
+     * Faculty name
+     */
+    faculty_name?: string;
+    /**
+     * Graduation year
+     */
+    graduation?: number;
+    /**
+     * Education form
+     */
+    education_form?: string;
+    /**
+     * User's education status
+     */
+    education_status?: string;
+    /**
+     * User hometown
+     */
+    home_town?: string;
+    /**
+     * User relationship status
+     */
+    relation?: number;
+    /**
+     * User's interests
+     */
+    interests?: string;
+    /**
+     * User's favorite music
+     */
+    music?: string;
+    /**
+     * User's activities
+     */
+    activities?: string;
+    /**
+     * User's favorite movies
+     */
+    movies?: string;
+    /**
+     * User's favorite tv shows
+     */
+    tv?: string;
+    /**
+     * User's favorite books
+     */
+    books?: string;
+    /**
+     * User's favorite games
+     */
+    games?: string;
+    /**
+     * About me field
+     */
+    about?: string;
+    /**
+     * Favorite quotes
+     */
+    quotes?: string;
+    city?: BaseObject;
+    country?: BaseCountry;
+    has_photo?: BaseBoolInt;
+    trending?: BaseBoolInt;
+    has_mobile?: BaseBoolInt;
+    is_friend?: BaseBoolInt;
+    wall_comments?: BaseBoolInt;
+    can_post?: BaseBoolInt;
+    can_see_all_posts?: BaseBoolInt;
+    can_see_audio?: BaseBoolInt;
+    can_write_private_message?: BaseBoolInt;
+    can_send_friend_request?: BaseBoolInt;
+    status_audio?: AudioAudioFull;
+    last_seen?: UsersLastSeen;
+    exports?: UsersExports;
+    crop_photo?: UsersCropPhoto;
+    verified?: BaseBoolInt;
+    blacklisted?: BaseBoolInt;
+    blacklisted_by_me?: BaseBoolInt;
+    is_favorite?: BaseBoolInt;
+    is_hidden_from_feed?: BaseBoolInt;
+    occupation?: UsersOccupation;
+    career?: UsersCareer[];
+    military?: UsersMilitary[];
+    relation_partner?: UsersUserMin;
+    personal?: UsersPersonal;
+    universities?: UsersUniversity[];
+    schools?: UsersSchool[];
+    relatives?: UsersRelative[];
+};
+
+export type UsersUserFull = UsersUser & UsersUserFull1;
 
 export interface UsersCareer {
     /**
@@ -5266,7 +5714,11 @@ export interface UsersPersonal {
     [key: string]: any;
 };
 
-export type UsersUserXtrCounters = any;
+export interface UsersUserXtrCounters1 {
+    counters?: UsersUserCounters;
+};
+
+export type UsersUserXtrCounters = UsersUserFull & UsersUserXtrCounters1;
 
 export interface VideoVideoAlbum {
     /**
@@ -5977,7 +6429,26 @@ export interface WallWallpostToId {
     attachments?: WallWallpostAttachment[];
 };
 
-export type WallWallpostFull = any;
+export interface WallWallpostFull1 {
+    /**
+     * Post creator ID (if post still can be edited)
+     */
+    created_by?: number;
+    /**
+     * Information whether the post is pinned
+     */
+    is_pinned?: number;
+    copy_history?: WallWallpost[];
+    can_edit?: BaseBoolInt;
+    can_delete?: BaseBoolInt;
+    can_pin?: BaseBoolInt;
+    comments?: BaseCommentsInfo;
+    likes?: BaseLikesInfo;
+    reposts?: BaseRepostsInfo;
+    marked_as_ads?: BaseBoolInt;
+};
+
+export type WallWallpostFull = WallWallpost & WallWallpostFull1;
 
 export interface WidgetsWidgetComment {
     /**

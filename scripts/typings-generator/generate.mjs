@@ -190,6 +190,12 @@ async function generate() {
 	}
 
 	for (const object of parseJSONSchema(objects)) {
+		if (object.exportedNodes) {
+			for (const exportedNode of object.exportedNodes) {
+				writeObjectsNode(exportedNode);
+			}
+		}
+
 		writeObjectsNode(
 			object.kind === 'interface'
 				? object.type.toASTNode({ exported: true })

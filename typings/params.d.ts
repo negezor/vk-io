@@ -3,8 +3,8 @@ export interface UsersGetParams {
      * Case for declension of user name and surname: 'nom' — nominative (default), 'gen' — genitive , 'dat' — dative, 'acc' — accusative , 'ins' — instrumental , 'abl' — prepositional
      */
     name_case?: "nom" | "gen" | "dat" | "acc" | "ins" | "abl";
-    user_ids?: string[];
-    fields?: string[];
+    user_ids?: string[] | string;
+    fields?: string[] | string;
     [key: string]: any;
 };
 
@@ -129,9 +129,9 @@ export interface UsersSearchParams {
      * ID of a community to search in communities.
      */
     group_id?: number;
-    fields?: string[];
+    fields?: string[] | string;
     school_class?: number;
-    from_list?: string[];
+    from_list?: string[] | string;
     [key: string]: any;
 };
 
@@ -157,7 +157,7 @@ export interface UsersGetSubscriptionsParams {
      * Number of users and communities to return.
      */
     count?: number;
-    fields?: string[];
+    fields?: string[] | string;
     [key: string]: any;
 };
 
@@ -178,7 +178,7 @@ export interface UsersGetFollowersParams {
      * Case for declension of user name and surname: 'nom' — nominative (default), 'gen' — genitive , 'dat' — dative, 'acc' — accusative , 'ins' — instrumental , 'abl' — prepositional
      */
     name_case?: "nom" | "gen" | "dat" | "acc" | "ins" | "abl";
-    fields?: string[];
+    fields?: string[] | string;
     [key: string]: any;
 };
 
@@ -223,7 +223,7 @@ export interface UsersGetNearbyParams {
      * Case for declension of user name and surname: , nom –nominative (default) , gen – genitive , dat – dative , acc – accusative , ins – instrumental , abl – prepositional
      */
     name_case?: "nom" | "gen" | "dat" | "acc" | "ins" | "abl";
-    fields?: string[];
+    fields?: string[] | string;
     [key: string]: any;
 };
 
@@ -334,7 +334,7 @@ export interface WallGetParams {
      * '1' — to return 'wall', 'profiles', and 'groups' fields, '0' — to return no additional fields (default)
      */
     extended?: boolean;
-    fields?: string[];
+    fields?: string[] | string;
     [key: string]: any;
 };
 
@@ -367,7 +367,7 @@ export interface WallSearchParams {
      * show extended post info.
      */
     extended?: boolean;
-    fields?: string[];
+    fields?: string[] | string;
     [key: string]: any;
 };
 
@@ -384,8 +384,8 @@ export interface PhotosCreateAlbumParams {
      * Album description.
      */
     description?: string;
-    privacy_view?: string[];
-    privacy_comment?: string[];
+    privacy_view?: string[] | string;
+    privacy_comment?: string[] | string;
     upload_by_admins_only?: boolean;
     comments_disabled?: boolean;
     [key: string]: any;
@@ -408,8 +408,8 @@ export interface PhotosEditAlbumParams {
      * ID of the user or community that owns the album.
      */
     owner_id?: number;
-    privacy_view?: string[];
-    privacy_comment?: string[];
+    privacy_view?: string[] | string;
+    privacy_comment?: string[] | string;
     upload_by_admins_only?: boolean;
     comments_disabled?: boolean;
     [key: string]: any;
@@ -440,7 +440,7 @@ export interface PhotosGetAlbumsParams {
      * '1' — to return photo sizes in a
      */
     photo_sizes?: boolean;
-    album_ids?: number[];
+    album_ids?: number[] | number;
     [key: string]: any;
 };
 
@@ -473,7 +473,7 @@ export interface PhotosGetParams {
      * '1' — to return photo sizes in a [vk.com/dev/photo_sizes|special format]
      */
     photo_sizes?: boolean;
-    photo_ids?: string[];
+    photo_ids?: string[] | string;
     offset?: number;
     count?: number;
     [key: string]: any;
@@ -500,7 +500,7 @@ export interface PhotosGetByIdParams {
      * '1' — to return photo sizes in a
      */
     photo_sizes?: boolean;
-    photos?: string[];
+    photos?: string[] | string;
     [key: string]: any;
 };
 
@@ -817,7 +817,7 @@ export interface FriendsGetParams {
      * Case for declension of user name and surname: , 'nom' — nominative (default) , 'gen' — genitive , 'dat' — dative , 'acc' — accusative , 'ins' — instrumental , 'abl' — prepositional
      */
     name_case?: "nom" | "gen" | "dat" | "acc" | "ins" | "abl";
-    fields?: string[];
+    fields?: string[] | string;
     [key: string]: any;
 };
 
@@ -870,7 +870,7 @@ export interface FriendsGetMutualParams {
      * Offset needed to return a specific subset of mutual friends.
      */
     offset?: number;
-    target_uids?: number[];
+    target_uids?: number[] | number;
     [key: string]: any;
 };
 
@@ -935,7 +935,7 @@ export interface FriendsEditParams {
      * ID of the user whose friend list is to be edited.
      */
     user_id: number;
-    list_ids?: number[];
+    list_ids?: number[] | number;
     [key: string]: any;
 };
 
@@ -964,7 +964,7 @@ export interface FriendsAddListParams {
      * Name of the friend list.
      */
     name: string;
-    user_ids?: number[];
+    user_ids?: number[] | number;
     [key: string]: any;
 };
 
@@ -977,9 +977,9 @@ export interface FriendsEditListParams {
      * Friend list ID.
      */
     list_id: number;
-    user_ids?: number[];
-    add_user_ids?: number[];
-    delete_user_ids?: number[];
+    user_ids?: number[] | number;
+    add_user_ids?: number[] | number;
+    delete_user_ids?: number[] | number;
     [key: string]: any;
 };
 
@@ -996,8 +996,8 @@ export interface FriendsGetAppUsersParams {
 };
 
 export interface FriendsGetByPhonesParams {
-    phones?: string[];
-    fields?: string[];
+    phones?: string[] | string;
+    fields?: string[] | string;
     [key: string]: any;
 };
 
@@ -1018,8 +1018,8 @@ export interface FriendsGetSuggestionsParams {
      * Case for declension of user name and surname: , 'nom' — nominative (default) , 'gen' — genitive , 'dat' — dative , 'acc' — accusative , 'ins' — instrumental , 'abl' — prepositional
      */
     name_case?: "nom" | "gen" | "dat" | "acc" | "ins" | "abl";
-    filter?: ("mutual" | "contacts" | "mutual_contacts")[];
-    fields?: string[];
+    filter?: ("mutual" | "contacts" | "mutual_contacts")[] | ("mutual" | "contacts" | "mutual_contacts");
+    fields?: string[] | string;
     [key: string]: any;
 };
 
@@ -1028,7 +1028,7 @@ export interface FriendsAreFriendsParams {
      * '1' — to return 'sign' field. 'sign' is md5("{id}_{user_id}_{friends_status}_{application_secret}"), where id is current user ID. This field allows to check that data has not been modified by the client. By default: '0'.
      */
     need_sign?: boolean;
-    user_ids?: number[];
+    user_ids?: number[] | number;
     [key: string]: any;
 };
 
@@ -1037,7 +1037,7 @@ export interface FriendsGetAvailableForCallParams {
      * Case for declension of user name and surname: , 'nom' — nominative (default) , 'gen' — genitive , 'dat' — dative , 'acc' — accusative , 'ins' — instrumental , 'abl' — prepositional
      */
     name_case?: "nom" | "gen" | "dat" | "acc" | "ins" | "abl";
-    fields?: string[];
+    fields?: string[] | string;
     [key: string]: any;
 };
 
@@ -1062,7 +1062,7 @@ export interface FriendsSearchParams {
      * Number of friends to return.
      */
     count?: number;
-    fields?: string[];
+    fields?: string[] | string;
     [key: string]: any;
 };
 
@@ -1071,7 +1071,7 @@ export interface WidgetsGetCommentsParams {
     url?: string;
     page_id?: string;
     order?: string;
-    fields?: string[];
+    fields?: string[] | string;
     count?: number;
     [key: string]: any;
 };
@@ -1085,7 +1085,7 @@ export interface WidgetsGetPagesParams {
 };
 
 export interface StoriesBanOwnerParams {
-    owners_ids?: number[];
+    owners_ids?: number[] | number;
     [key: string]: any;
 };
 
@@ -1118,7 +1118,7 @@ export interface StoriesGetBannedParams {
      * '1' — to return additional fields for users and communities. Default value is 0.
      */
     extended?: boolean;
-    fields?: string[];
+    fields?: string[] | string;
     [key: string]: any;
 };
 
@@ -1127,8 +1127,8 @@ export interface StoriesGetByIdParams {
      * '1' — to return additional fields for users and communities. Default value is 0.
      */
     extended?: boolean;
-    stories?: string[];
-    fields?: string[];
+    stories?: string[] | string;
+    fields?: string[] | string;
     [key: string]: any;
 };
 
@@ -1153,7 +1153,7 @@ export interface StoriesGetPhotoUploadServerParams {
      * ID of the community to upload the story (should be verified or with the "fire" icon).
      */
     group_id?: number;
-    user_ids?: number[];
+    user_ids?: number[] | number;
     [key: string]: any;
 };
 
@@ -1174,7 +1174,7 @@ export interface StoriesGetRepliesParams {
      * '1' — to return additional fields for users and communities. Default value is 0.
      */
     extended?: boolean;
-    fields?: string[];
+    fields?: string[] | string;
     [key: string]: any;
 };
 
@@ -1211,7 +1211,7 @@ export interface StoriesGetVideoUploadServerParams {
      * ID of the community to upload the story (should be verified or with the "fire" icon).
      */
     group_id?: number;
-    user_ids?: number[];
+    user_ids?: number[] | number;
     [key: string]: any;
 };
 
@@ -1264,7 +1264,7 @@ export interface StoriesHideReplyParams {
 };
 
 export interface StoriesUnbanOwnerParams {
-    owners_ids?: number[];
+    owners_ids?: number[] | number;
     [key: string]: any;
 };
 
@@ -1310,7 +1310,7 @@ export interface SecureSendNotificationParams {
      * notification text which should be sent in 'UTF-8' encoding ('254' characters maximum).
      */
     message: string;
-    user_ids?: number[];
+    user_ids?: number[] | number;
     user_id?: number;
     [key: string]: any;
 };
@@ -1320,7 +1320,7 @@ export interface SecureSetCounterParams {
      * counter value.
      */
     counter?: number;
-    counters?: string[];
+    counters?: string[] | string;
     user_id?: number;
     [key: string]: any;
 };
@@ -1330,13 +1330,13 @@ export interface SecureSetUserLevelParams {
      * level value.
      */
     level?: number;
-    levels?: string[];
+    levels?: string[] | string;
     user_id?: number;
     [key: string]: any;
 };
 
 export interface SecureGetUserLevelParams {
-    user_ids?: number[];
+    user_ids?: number[] | number;
     [key: string]: any;
 };
 
@@ -1346,7 +1346,7 @@ export interface StreamingGetServerUrlParams {
 
 export interface StorageGetParams {
     key?: string;
-    keys?: string[];
+    keys?: string[] | string;
     user_id?: number;
     [key: string]: any;
 };
@@ -1391,7 +1391,7 @@ export interface OrdersGetByIdParams {
      * if this parameter is set to 1, this method returns a list of test mode orders. By default — 0.
      */
     test_mode?: boolean;
-    order_ids?: number[];
+    order_ids?: number[] | number;
     [key: string]: any;
 };
 
@@ -1417,7 +1417,7 @@ export interface OrdersChangeStateParams {
 
 export interface OrdersGetAmountParams {
     user_id: number;
-    votes?: string[];
+    votes?: string[] | string;
     [key: string]: any;
 };
 
@@ -1706,7 +1706,7 @@ export interface PhotosGetCommentsParams {
     start_comment_id?: number;
     access_key?: string;
     extended?: boolean;
-    fields?: string[];
+    fields?: string[] | string;
     [key: string]: any;
 };
 
@@ -1751,7 +1751,7 @@ export interface PhotosCreateCommentParams {
      * '1' — to post a comment from the community
      */
     from_group?: boolean;
-    attachments?: string[];
+    attachments?: string[] | string;
     reply_to_comment?: number;
     sticker_id?: number;
     access_key?: string;
@@ -1796,7 +1796,7 @@ export interface PhotosEditCommentParams {
      * New text of the comment.
      */
     message?: string;
-    attachments?: string[];
+    attachments?: string[] | string;
     [key: string]: any;
 };
 
@@ -1882,8 +1882,8 @@ export interface WallGetByIdParams {
      * Sets the number of parent elements to include in the array 'copy_history' that is returned if the post is a repost from another wall.
      */
     copy_history_depth?: number;
-    posts?: string[];
-    fields?: string[];
+    posts?: string[] | string;
+    fields?: string[] | string;
     [key: string]: any;
 };
 
@@ -1932,7 +1932,7 @@ export interface WallPostParams {
      * Post ID. Used for publishing of scheduled and suggested posts.
      */
     post_id?: number;
-    attachments?: string[];
+    attachments?: string[] | string;
     guid?: string;
     mark_as_ads?: boolean;
     [key: string]: any;
@@ -1983,7 +1983,7 @@ export interface WallPostAdsStealthParams {
      * Link image url
      */
     link_image?: string;
-    attachments?: string[];
+    attachments?: string[] | string;
     [key: string]: any;
 };
 
@@ -2065,7 +2065,7 @@ export interface WallEditParams {
      * ID of the location where the user was tagged.
      */
     place_id?: number;
-    attachments?: string[];
+    attachments?: string[] | string;
     mark_as_ads?: boolean;
     [key: string]: any;
 };
@@ -2115,7 +2115,7 @@ export interface WallEditAdsStealthParams {
      * Link image url
      */
     link_image?: string;
-    attachments?: string[];
+    attachments?: string[] | string;
     [key: string]: any;
 };
 
@@ -2230,7 +2230,7 @@ export interface WallCreateCommentParams {
      * Unique identifier to avoid repeated comments.
      */
     guid?: string;
-    attachments?: string[];
+    attachments?: string[] | string;
     [key: string]: any;
 };
 
@@ -2247,7 +2247,7 @@ export interface WallEditCommentParams {
      * New comment text.
      */
     message?: string;
-    attachments?: string[];
+    attachments?: string[] | string;
     [key: string]: any;
 };
 
@@ -2574,7 +2574,7 @@ export interface GroupsIsMemberParams {
      * '1' — to return an extended response with additional fields. By default: '0'.
      */
     extended?: boolean;
-    user_ids?: number[];
+    user_ids?: number[] | number;
     [key: string]: any;
 };
 
@@ -2583,8 +2583,8 @@ export interface GroupsGetByIdParams {
      * ID or screen name of the community.
      */
     group_id?: string;
-    group_ids?: string[];
-    fields?: string[];
+    group_ids?: string[] | string;
+    fields?: string[] | string;
     [key: string]: any;
 };
 
@@ -2605,8 +2605,8 @@ export interface GroupsGetParams {
      * Number of communities to return.
      */
     count?: number;
-    filter?: ("admin" | "editor" | "moder" | "groups" | "publics" | "events")[];
-    fields?: string[];
+    filter?: ("admin" | "editor" | "moder" | "groups" | "publics" | "events")[] | ("admin" | "editor" | "moder" | "groups" | "publics" | "events");
+    fields?: string[] | string;
     [key: string]: any;
 };
 
@@ -2631,7 +2631,7 @@ export interface GroupsGetMembersParams {
      * *'friends' – only friends in this community will be returned,, *'unsure' – only those who pressed 'I may attend' will be returned (if it's an event).
      */
     filter?: "friends" | "unsure";
-    fields?: ("sex" | "bdate" | "city" | "country" | "photo_50" | "photo_100" | "photo_200_orig" | "photo_200" | "photo_400_orig" | "photo_max" | "photo_max_orig" | "online" | "online_mobile" | "lists" | "domain" | "has_mobile" | "contacts" | "connections" | "site" | "education" | "universities" | "schools" | "can_post" | "can_see_all_posts" | "can_see_audio" | "can_write_private_message" | "status" | "last_seen" | "common_count" | "relation" | "relatives" | "counters")[];
+    fields?: ("sex" | "bdate" | "city" | "country" | "photo_50" | "photo_100" | "photo_200_orig" | "photo_200" | "photo_400_orig" | "photo_max" | "photo_max_orig" | "online" | "online_mobile" | "lists" | "domain" | "has_mobile" | "contacts" | "connections" | "site" | "education" | "universities" | "schools" | "can_post" | "can_see_all_posts" | "can_see_audio" | "can_write_private_message" | "status" | "last_seen" | "common_count" | "relation" | "relatives" | "counters")[] | ("sex" | "bdate" | "city" | "country" | "photo_50" | "photo_100" | "photo_200_orig" | "photo_200" | "photo_400_orig" | "photo_max" | "photo_max_orig" | "online" | "online_mobile" | "lists" | "domain" | "has_mobile" | "contacts" | "connections" | "site" | "education" | "universities" | "schools" | "can_post" | "can_see_all_posts" | "can_see_audio" | "can_write_private_message" | "status" | "last_seen" | "common_count" | "relation" | "relatives" | "counters");
     [key: string]: any;
 };
 
@@ -2752,7 +2752,7 @@ export interface GroupsGetInvitedUsersParams {
      * Case for declension of user name and surname. Possible values: *'nom' — nominative (default),, *'gen' — genitive,, *'dat' — dative,, *'acc' — accusative, , *'ins' — instrumental,, *'abl' — prepositional.
      */
     name_case?: "nom" | "gen" | "dat" | "acc" | "ins" | "abl";
-    fields?: ("sex" | "bdate" | "city" | "country" | "photo_50" | "photo_100" | "photo_200_orig" | "photo_200" | "photo_400_orig" | "photo_max" | "photo_max_orig" | "online" | "online_mobile" | "lists" | "domain" | "has_mobile" | "contacts" | "connections" | "site" | "education" | "universities" | "schools" | "can_post" | "can_see_all_posts" | "can_see_audio" | "can_write_private_message" | "status" | "last_seen" | "common_count" | "relation" | "relatives" | "counters")[];
+    fields?: ("sex" | "bdate" | "city" | "country" | "photo_50" | "photo_100" | "photo_200_orig" | "photo_200" | "photo_400_orig" | "photo_max" | "photo_max_orig" | "online" | "online_mobile" | "lists" | "domain" | "has_mobile" | "contacts" | "connections" | "site" | "education" | "universities" | "schools" | "can_post" | "can_see_all_posts" | "can_see_audio" | "can_write_private_message" | "status" | "last_seen" | "common_count" | "relation" | "relatives" | "counters")[] | ("sex" | "bdate" | "city" | "country" | "photo_50" | "photo_100" | "photo_200_orig" | "photo_200" | "photo_400_orig" | "photo_max" | "photo_max_orig" | "online" | "online_mobile" | "lists" | "domain" | "has_mobile" | "contacts" | "connections" | "site" | "education" | "universities" | "schools" | "can_post" | "can_see_all_posts" | "can_see_audio" | "can_write_private_message" | "status" | "last_seen" | "common_count" | "relation" | "relatives" | "counters");
     [key: string]: any;
 };
 
@@ -2809,7 +2809,7 @@ export interface GroupsGetBannedParams {
      * Number of users to return.
      */
     count?: number;
-    fields?: string[];
+    fields?: string[] | string;
     user_id?: number;
     [key: string]: any;
 };
@@ -2983,9 +2983,9 @@ export interface GroupsEditParams {
      * Stopwords filter in comments. Possible values: , *'0' – disabled,, *'1' – enabled.
      */
     obscene_stopwords?: boolean;
-    market_country?: number[];
-    market_city?: number[];
-    obscene_words?: string[];
+    market_country?: number[] | number;
+    market_city?: number[] | number;
+    obscene_words?: string[] | string;
     [key: string]: any;
 };
 
@@ -3042,7 +3042,7 @@ export interface GroupsGetRequestsParams {
      * Number of results to return.
      */
     count?: number;
-    fields?: string[];
+    fields?: string[] | string;
     [key: string]: any;
 };
 
@@ -3543,7 +3543,7 @@ export interface BoardGetTopicsParams {
      * Number of characters after which to truncate the previewed comment. To preview the full comment, specify '0'.
      */
     preview_length?: number;
-    topic_ids?: number[];
+    topic_ids?: number[] | number;
     [key: string]: any;
 };
 
@@ -3597,7 +3597,7 @@ export interface BoardAddTopicParams {
      * For a community: '1' — to post the topic as by the community, '0' — to post the topic as by the user (default)
      */
     from_group?: boolean;
-    attachments?: string[];
+    attachments?: string[] | string;
     [key: string]: any;
 };
 
@@ -3626,7 +3626,7 @@ export interface BoardCreateCommentParams {
      * Unique identifier to avoid repeated comments.
      */
     guid?: string;
-    attachments?: string[];
+    attachments?: string[] | string;
     [key: string]: any;
 };
 
@@ -3675,7 +3675,7 @@ export interface BoardEditCommentParams {
      * (Required if 'attachments' is not set). New comment text.
      */
     message?: string;
-    attachments?: string[];
+    attachments?: string[] | string;
     [key: string]: any;
 };
 
@@ -3780,7 +3780,7 @@ export interface VideoGetParams {
      * '1' — to return an extended response with additional fields
      */
     extended?: boolean;
-    videos?: string[];
+    videos?: string[] | string;
     [key: string]: any;
 };
 
@@ -3809,8 +3809,8 @@ export interface VideoEditParams {
      * '1' — to repeat the playback of the video, '0' — to play the video once,
      */
     repeat?: boolean;
-    privacy_view?: string[];
-    privacy_comment?: string[];
+    privacy_view?: string[] | string;
+    privacy_comment?: string[] | string;
     [key: string]: any;
 };
 
@@ -3863,8 +3863,8 @@ export interface VideoSaveParams {
      * '1' — to repeat the playback of the video, '0' — to play the video once,
      */
     repeat?: boolean;
-    privacy_view?: string[];
-    privacy_comment?: string[];
+    privacy_view?: string[] | string;
+    privacy_comment?: string[] | string;
     no_comments?: boolean;
     [key: string]: any;
 };
@@ -3919,7 +3919,7 @@ export interface VideoSearchParams {
      * Number of videos to return.
      */
     count?: number;
-    filters?: ("youtube" | "vimeo" | "short" | "long")[];
+    filters?: ("youtube" | "vimeo" | "short" | "long")[] | ("youtube" | "vimeo" | "short" | "long");
     search_own?: boolean;
     longer?: number;
     shorter?: number;
@@ -3985,7 +3985,7 @@ export interface VideoAddAlbumParams {
      * Album title.
      */
     title?: string;
-    privacy?: ("0" | "1" | "2" | "3")[];
+    privacy?: ("0" | "1" | "2" | "3")[] | ("0" | "1" | "2" | "3");
     [key: string]: any;
 };
 
@@ -4002,7 +4002,7 @@ export interface VideoEditAlbumParams {
      * New album title.
      */
     title: string;
-    privacy?: ("0" | "1" | "2" | "3")[];
+    privacy?: ("0" | "1" | "2" | "3")[] | ("0" | "1" | "2" | "3");
     [key: string]: any;
 };
 
@@ -4077,7 +4077,7 @@ export interface VideoReorderVideosParams {
 export interface VideoAddToAlbumParams {
     target_id?: number;
     album_id?: number;
-    album_ids?: number[];
+    album_ids?: number[] | number;
     owner_id: number;
     video_id: number;
     [key: string]: any;
@@ -4086,7 +4086,7 @@ export interface VideoAddToAlbumParams {
 export interface VideoRemoveFromAlbumParams {
     target_id?: number;
     album_id?: number;
-    album_ids?: number[];
+    album_ids?: number[] | number;
     owner_id: number;
     video_id: number;
     [key: string]: any;
@@ -4147,7 +4147,7 @@ export interface VideoCreateCommentParams {
      * '1' — to post the comment from a community name (only if 'owner_id'<0)
      */
     from_group?: boolean;
-    attachments?: string[];
+    attachments?: string[] | string;
     reply_to_comment?: number;
     sticker_id?: number;
     guid?: string;
@@ -4191,7 +4191,7 @@ export interface VideoEditCommentParams {
      * New comment text.
      */
     message?: string;
-    attachments?: string[];
+    attachments?: string[] | string;
     [key: string]: any;
 };
 
@@ -4312,7 +4312,7 @@ export interface VideoGetCatalogParams {
      * 1 – return additional infor about users and communities in profiles and groups fields.
      */
     extended?: boolean;
-    filters?: string[];
+    filters?: string[] | string;
     [key: string]: any;
 };
 
@@ -4353,7 +4353,7 @@ export interface NotesGetParams {
      * Number of notes to return.
      */
     count?: number;
-    note_ids?: number[];
+    note_ids?: number[] | number;
     [key: string]: any;
 };
 
@@ -4378,8 +4378,8 @@ export interface NotesAddParams {
      * Note text.
      */
     text: string;
-    privacy_view?: string[];
-    privacy_comment?: string[];
+    privacy_view?: string[] | string;
+    privacy_comment?: string[] | string;
     [key: string]: any;
 };
 
@@ -4396,8 +4396,8 @@ export interface NotesEditParams {
      * Note text.
      */
     text: string;
-    privacy_view?: string[];
-    privacy_comment?: string[];
+    privacy_view?: string[] | string;
+    privacy_comment?: string[] | string;
     [key: string]: any;
 };
 
@@ -4519,7 +4519,7 @@ export interface PlacesAddParams {
 };
 
 export interface PlacesGetByIdParams {
-    places?: number[];
+    places?: number[] | number;
     [key: string]: any;
 };
 
@@ -4576,7 +4576,7 @@ export interface PlacesCheckinParams {
      * '1' — Check-in will be available only for friends. '0' — Check-in will be available for all users (default).
      */
     friends_only?: boolean;
-    services?: string[];
+    services?: string[] | string;
     [key: string]: any;
 };
 
@@ -4622,7 +4622,7 @@ export interface PlacesGetTypesParams {
 };
 
 export interface AccountGetCountersParams {
-    filter?: ("friends" | "messages" | "photos" | "videos" | "notes" | "gifts" | "events" | "groups" | "sdk" | "friends_suggestions")[];
+    filter?: ("friends" | "messages" | "photos" | "videos" | "notes" | "gifts" | "events" | "groups" | "sdk" | "friends_suggestions")[] | ("friends" | "messages" | "photos" | "videos" | "notes" | "gifts" | "events" | "groups" | "sdk" | "friends_suggestions");
     [key: string]: any;
 };
 
@@ -4663,8 +4663,8 @@ export interface AccountLookupContactsParams {
      * '1' – also return contacts found using this service before, '0' – return only contacts found using 'contacts' field.
      */
     return_all?: boolean;
-    contacts?: string[];
-    fields?: ("nickname" | "domain" | "sex" | "bdate" | "city" | "country" | "timezone" | "photo_50" | "photo_100" | "photo_200_orig" | "has_mobile" | "contacts" | "education" | "online" | "relation" | "last_seen" | "status" | "can_write_private_message" | "can_see_all_posts" | "can_post" | "universities")[];
+    contacts?: string[] | string;
+    fields?: ("nickname" | "domain" | "sex" | "bdate" | "city" | "country" | "timezone" | "photo_50" | "photo_100" | "photo_200_orig" | "has_mobile" | "contacts" | "education" | "online" | "relation" | "last_seen" | "status" | "can_write_private_message" | "can_see_all_posts" | "can_post" | "universities")[] | ("nickname" | "domain" | "sex" | "bdate" | "city" | "country" | "timezone" | "photo_50" | "photo_100" | "photo_200_orig" | "has_mobile" | "contacts" | "education" | "online" | "relation" | "last_seen" | "status" | "can_write_private_message" | "can_see_all_posts" | "can_post" | "universities");
     [key: string]: any;
 };
 
@@ -4745,7 +4745,7 @@ export interface AccountSetPushSettingsParams {
      * Notification key.
      */
     key?: string;
-    value?: string[];
+    value?: string[] | string;
     [key: string]: any;
 };
 
@@ -4794,7 +4794,7 @@ export interface AccountGetBannedParams {
 };
 
 export interface AccountGetInfoParams {
-    fields?: ("country" | "https_required" | "own_posts_default" | "no_wall_replies" | "intro" | "lang")[];
+    fields?: ("country" | "https_required" | "own_posts_default" | "no_wall_replies" | "intro" | "lang")[] | ("country" | "https_required" | "own_posts_default" | "no_wall_replies" | "intro" | "lang");
     [key: string]: any;
 };
 
@@ -4919,7 +4919,7 @@ export interface MessagesGetConversationsParams {
      * ID of the message from what to return dialogs.
      */
     start_message_id?: number;
-    fields?: string[];
+    fields?: string[] | string;
     [key: string]: any;
 };
 
@@ -4932,8 +4932,8 @@ export interface MessagesGetConversationsByIdParams {
      * Group ID (for group messages with group access token)
      */
     group_id?: number;
-    peer_ids?: number[];
-    fields?: string[];
+    peer_ids?: number[] | number;
+    fields?: string[] | string;
     [key: string]: any;
 };
 
@@ -4950,8 +4950,8 @@ export interface MessagesGetByIdParams {
      * Group ID (for group messages with group access token)
      */
     group_id?: number;
-    message_ids?: number[];
-    fields?: string[];
+    message_ids?: number[] | number;
+    fields?: string[] | string;
     [key: string]: any;
 };
 
@@ -4968,8 +4968,8 @@ export interface MessagesGetByConversationMessageIdParams {
      * Group ID (for group messages with group access token)
      */
     group_id?: number;
-    conversation_message_ids?: number[];
-    fields?: string[];
+    conversation_message_ids?: number[] | number;
+    fields?: string[] | string;
     [key: string]: any;
 };
 
@@ -5035,7 +5035,7 @@ export interface MessagesGetHistoryParams {
      */
     rev?: 1 | 0;
     peer_id?: number;
-    fields?: string[];
+    fields?: string[] | string;
     [key: string]: any;
 };
 
@@ -5064,7 +5064,7 @@ export interface MessagesGetHistoryAttachmentsParams {
      * Group ID (for group messages with group access token)
      */
     group_id?: number;
-    fields?: string[];
+    fields?: string[] | string;
     [key: string]: any;
 };
 
@@ -5125,8 +5125,8 @@ export interface MessagesSendParams {
      * Object describing the keyboard for the bot
      */
     keyboard?: any;
-    user_ids?: number[];
-    attachment?: string[];
+    user_ids?: number[] | number;
+    attachment?: string[] | string;
     [key: string]: any;
 };
 
@@ -5159,7 +5159,7 @@ export interface MessagesEditParams {
      * Group ID (for group messages with user access token)
      */
     group_id?: number;
-    attachment?: string[];
+    attachment?: string[] | string;
     [key: string]: any;
 };
 
@@ -5176,7 +5176,7 @@ export interface MessagesDeleteParams {
      * Group ID (for group messages with user access token)
      */
     group_id?: number;
-    message_ids?: number[];
+    message_ids?: number[] | number;
     [key: string]: any;
 };
 
@@ -5229,7 +5229,7 @@ export interface MessagesMarkAsReadParams {
      * Group ID (for group messages with user access token)
      */
     group_id?: number;
-    message_ids?: number[];
+    message_ids?: number[] | number;
     [key: string]: any;
 };
 
@@ -5238,7 +5238,7 @@ export interface MessagesMarkAsImportantParams {
      * '1' — to add a star (mark as important), '0' — to remove the star
      */
     important?: boolean;
-    message_ids?: number[];
+    message_ids?: number[] | number;
     [key: string]: any;
 };
 
@@ -5323,7 +5323,7 @@ export interface MessagesGetLongPollHistoryParams {
      * Group ID (for group messages with user access token)
      */
     group_id?: number;
-    fields?: string[];
+    fields?: string[] | string;
     [key: string]: any;
 };
 
@@ -5332,7 +5332,7 @@ export interface MessagesCreateChatParams {
      * Chat title.
      */
     title?: string;
-    user_ids?: number[];
+    user_ids?: number[] | number;
     [key: string]: any;
 };
 
@@ -5361,7 +5361,7 @@ export interface MessagesGetConversationMembersParams {
      * Case for declension of user name and surname: 'nom' — nominative (default), 'gen' — genitive, 'dat' — dative, 'acc' — accusative, 'ins' — instrumental, 'abl' — prepositional
      */
     name_case?: "nom" | "gen" | "dat" | "acc" | "ins" | "abl";
-    fields?: string[];
+    fields?: string[] | string;
     [key: string]: any;
 };
 
@@ -5402,7 +5402,7 @@ export interface MessagesSearchConversationsParams {
      * Group ID (for group messages with user access token)
      */
     group_id?: number;
-    fields?: string[];
+    fields?: string[] | string;
     [key: string]: any;
 };
 
@@ -5507,9 +5507,9 @@ export interface NewsfeedGetParams {
      * Number of news items to return (default 50, maximum 100). For auto feed, you can use the 'new_offset' parameter returned by this method.
      */
     count?: number;
-    filters?: ("post" | "photo" | "photo_tag" | "wall_photo" | "friend" | "note")[];
-    source_ids?: string[];
-    fields?: string[];
+    filters?: ("post" | "photo" | "photo_tag" | "wall_photo" | "friend" | "note")[] | ("post" | "photo" | "photo_tag" | "wall_photo" | "friend" | "note");
+    source_ids?: string[] | string;
+    fields?: string[] | string;
     [key: string]: any;
 };
 
@@ -5534,7 +5534,7 @@ export interface NewsfeedGetRecommendedParams {
      * Number of news items to return.
      */
     count?: number;
-    fields?: string[];
+    fields?: string[] | string;
     [key: string]: any;
 };
 
@@ -5559,8 +5559,8 @@ export interface NewsfeedGetCommentsParams {
      * Identificator needed to return the next page with results. Value for this parameter returns in 'next_from' field.
      */
     start_from?: string;
-    filters?: ("post" | "photo" | "video" | "topic" | "note")[];
-    fields?: string[];
+    filters?: ("post" | "photo" | "video" | "topic" | "note")[] | ("post" | "photo" | "video" | "topic" | "note");
+    fields?: string[] | string;
     [key: string]: any;
 };
 
@@ -5597,19 +5597,19 @@ export interface NewsfeedGetBannedParams {
      * Case for declension of user name and surname: 'nom' — nominative (default), 'gen' — genitive , 'dat' — dative, 'acc' — accusative , 'ins' — instrumental , 'abl' — prepositional
      */
     name_case?: "nom" | "gen" | "dat" | "acc" | "ins" | "abl";
-    fields?: string[];
+    fields?: string[] | string;
     [key: string]: any;
 };
 
 export interface NewsfeedAddBanParams {
-    user_ids?: number[];
-    group_ids?: number[];
+    user_ids?: number[] | number;
+    group_ids?: number[] | number;
     [key: string]: any;
 };
 
 export interface NewsfeedDeleteBanParams {
-    user_ids?: number[];
-    group_ids?: number[];
+    user_ids?: number[] | number;
+    group_ids?: number[] | number;
     [key: string]: any;
 };
 
@@ -5675,7 +5675,7 @@ export interface NewsfeedSearchParams {
      */
     end_time?: number;
     start_from?: string;
-    fields?: string[];
+    fields?: string[] | string;
     [key: string]: any;
 };
 
@@ -5684,7 +5684,7 @@ export interface NewsfeedGetListsParams {
      * Return additional list info
      */
     extended?: boolean;
-    list_ids?: number[];
+    list_ids?: number[] | number;
     [key: string]: any;
 };
 
@@ -5701,7 +5701,7 @@ export interface NewsfeedSaveListParams {
      * reposts display on and off ('1' is for off).
      */
     no_reposts?: boolean;
-    source_ids?: number[];
+    source_ids?: number[] | number;
     [key: string]: any;
 };
 
@@ -5739,7 +5739,7 @@ export interface NewsfeedGetSuggestedSourcesParams {
      * shuffle the returned list or not.
      */
     shuffle?: boolean;
-    fields?: string[];
+    fields?: string[] | string;
     [key: string]: any;
 };
 
@@ -5915,9 +5915,9 @@ export interface PollsGetVotersParams {
      * Case for declension of user name and surname: , 'nom' — nominative (default) , 'gen' — genitive , 'dat' — dative , 'acc' — accusative , 'ins' — instrumental , 'abl' — prepositional
      */
     name_case?: "nom" | "gen" | "dat" | "acc" | "ins" | "abl";
-    answer_ids?: number[];
+    answer_ids?: number[] | number;
     is_board?: boolean;
-    fields?: string[];
+    fields?: string[] | string;
     [key: string]: any;
 };
 
@@ -5986,7 +5986,7 @@ export interface DocsGetParams {
 };
 
 export interface DocsGetByIdParams {
-    docs?: string[];
+    docs?: string[] | string;
     [key: string]: any;
 };
 
@@ -6100,7 +6100,7 @@ export interface DocsEditParams {
      * Document title.
      */
     title?: string;
-    tags?: string[];
+    tags?: string[] | string;
     [key: string]: any;
 };
 
@@ -6254,7 +6254,7 @@ export interface NotificationsGetParams {
      */
     end_time?: number;
     start_from?: string;
-    filters?: ("wall" | "mentions" | "comments" | "likes" | "reposted" | "followers" | "friends")[];
+    filters?: ("wall" | "mentions" | "comments" | "likes" | "reposted" | "followers" | "friends")[] | ("wall" | "mentions" | "comments" | "likes" | "reposted" | "followers" | "friends");
     [key: string]: any;
 };
 
@@ -6311,7 +6311,7 @@ export interface SearchGetHintsParams {
      * Maximum number of results to return.
      */
     limit?: number;
-    filters?: string[];
+    filters?: string[] | string;
     search_global?: boolean;
     [key: string]: any;
 };
@@ -6343,7 +6343,7 @@ export interface AppsGetCatalogParams {
     filter?: string;
     platform?: string;
     return_friends?: boolean;
-    fields?: string[];
+    fields?: string[] | string;
     name_case?: string;
     genre_id?: number;
     [key: string]: any;
@@ -6362,8 +6362,8 @@ export interface AppsGetParams {
      * Case for declension of user name and surname: 'nom' — nominative (default),, 'gen' — genitive,, 'dat' — dative,, 'acc' — accusative,, 'ins' — instrumental,, 'abl' — prepositional. (only if 'return_friends' = '1')
      */
     name_case?: "nom" | "gen" | "dat" | "acc" | "ins" | "abl";
-    app_ids?: string[];
-    fields?: string[];
+    app_ids?: string[] | string;
+    fields?: string[] | string;
     [key: string]: any;
 };
 
@@ -6402,7 +6402,7 @@ export interface AppsGetFriendsListParams {
      * List type. Possible values: * 'invite' — available for invites (don't play the game),, * 'request' — available for request (play the game). By default: 'invite'.
      */
     type?: "request" | "invite";
-    fields?: string[];
+    fields?: string[] | string;
     [key: string]: any;
 };
 
@@ -6560,12 +6560,12 @@ export interface DatabaseGetRegionsParams {
 };
 
 export interface DatabaseGetStreetsByIdParams {
-    street_ids?: number[];
+    street_ids?: number[] | number;
     [key: string]: any;
 };
 
 export interface DatabaseGetCountriesByIdParams {
-    country_ids?: number[];
+    country_ids?: number[] | number;
     [key: string]: any;
 };
 
@@ -6598,7 +6598,7 @@ export interface DatabaseGetCitiesParams {
 };
 
 export interface DatabaseGetCitiesByIdParams {
-    city_ids?: number[];
+    city_ids?: number[] | number;
     [key: string]: any;
 };
 
@@ -7307,7 +7307,7 @@ export interface MarketGetByIdParams {
      * '1' – to return additional fields: 'likes, can_comment, car_repost, photos'. By default: '0'.
      */
     extended?: boolean;
-    item_ids?: string[];
+    item_ids?: string[] | string;
     [key: string]: any;
 };
 
@@ -7344,7 +7344,7 @@ export interface MarketSearchParams {
      * '1' – to return additional fields: 'likes, can_comment, car_repost, photos'. By default: '0'.
      */
     extended?: boolean;
-    tags?: number[];
+    tags?: number[] | number;
     [key: string]: any;
 };
 
@@ -7369,7 +7369,7 @@ export interface MarketGetAlbumByIdParams {
      * identifier of an album owner community, "Note that community id in the 'owner_id' parameter should be negative number. For example 'owner_id'=-1 matches the [vk.com/apiclub|VK API] community "
      */
     owner_id: number;
-    album_ids?: number[];
+    album_ids?: number[] | number;
     [key: string]: any;
 };
 
@@ -7402,7 +7402,7 @@ export interface MarketCreateCommentParams {
      * Random value to avoid resending one comment.
      */
     guid?: string;
-    attachments?: string[];
+    attachments?: string[] | string;
     [key: string]: any;
 };
 
@@ -7435,7 +7435,7 @@ export interface MarketGetCommentsParams {
      * '1' — comments will be returned as numbered objects, in addition lists of 'profiles' and 'groups' objects will be returned.
      */
     extended?: boolean;
-    fields?: string[];
+    fields?: string[] | string;
     [key: string]: any;
 };
 
@@ -7476,7 +7476,7 @@ export interface MarketEditCommentParams {
      * New comment text (required if 'attachments' are not specified), , 2048 symbols maximum.
      */
     message?: string;
-    attachments?: string[];
+    attachments?: string[] | string;
     [key: string]: any;
 };
 
@@ -7553,7 +7553,7 @@ export interface MarketAddParams {
      * Cover photo ID.
      */
     main_photo_id: number;
-    photo_ids?: number[];
+    photo_ids?: number[] | number;
     [key: string]: any;
 };
 
@@ -7590,7 +7590,7 @@ export interface MarketEditParams {
      * Cover photo ID.
      */
     main_photo_id: number;
-    photo_ids?: number[];
+    photo_ids?: number[] | number;
     [key: string]: any;
 };
 
@@ -7727,7 +7727,7 @@ export interface MarketRemoveFromAlbumParams {
      * Item ID.
      */
     item_id: number;
-    album_ids?: number[];
+    album_ids?: number[] | number;
     [key: string]: any;
 };
 
@@ -7740,7 +7740,7 @@ export interface MarketAddToAlbumParams {
      * Item ID.
      */
     item_id: number;
-    album_ids?: number[];
+    album_ids?: number[] | number;
     [key: string]: any;
 };
 

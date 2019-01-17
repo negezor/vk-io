@@ -7,7 +7,7 @@ import { formatTSComments, toPascalCase } from '../utils/helpers';
 const MATCH_REF_RE = /^([^#]+)?#\/definitions\/(.+)/;
 
 const jsonSchemaTypes = {
-	array({ type, namespace }) {
+	array({ type, namespace, arrayUnion = false }) {
 		const { items } = type;
 
 		if (items.type in jsonSchemaTypes) {
@@ -25,7 +25,13 @@ const jsonSchemaTypes = {
 				required,
 
 				kind: 'type',
-				type: TypesGenerator.array(arrayType),
+				// Just array in VK that string (N, N, ...)
+				type: arrayUnion
+					? TypesGenerator.union([
+						TypesGenerator.array(arrayType),
+						arrayType
+					])
+					: TypesGenerator.array(arrayType)
 			};
 		}
 
@@ -134,6 +140,101 @@ export function parseJSONObject(name, type, payload = {}) {
 			name,
 			type: refIdentifier
 		};
+	}
+
+	if (type.allOf && Array.isArray(type.allOf)) {
+		const allOf = [];
+		const exportedNodes = [];
+
+		let interfacesCount = 0;
+		for (const obj of type.allOf) {
+			if (obj.$ref) {
+				const [, group, refName] = obj.$ref.match(MATCH_REF_RE);
+
+				const refIdentifierName = ts.createIdentifier(
+					toPascalCase(refName)
+				);
+
+				const refIdentifier = group !== '' && payload.namespace
+					? ts.createQualifiedName(
+						payload.namespace,
+						refIdentifierName
+					)
+					: refIdentifierName;
+
+				allOf.push(refIdentifier);
+
+				continue;
+			}
+
+			if (obj.properties) {
+				interfacesCount += 1;
+
+				const interfaceType = new InterfaceGenerator({
+					name: toPascalCase(name + interfacesCount),
+					description: type.description
+				});
+
+				for (const [propertyName, propertyValue] of Object.entries(obj.properties)) {
+					if (propertyValue.$ref) {
+						const [, group, refName] = propertyValue.$ref.match(MATCH_REF_RE);
+
+						const refIdentifierName = ts.createIdentifier(
+							toPascalCase(refName)
+						);
+
+						const refIdentifier = group !== '' && payload.namespace
+							? ts.createQualifiedName(
+								payload.namespace,
+								refIdentifierName
+							)
+							: refIdentifierName;
+
+						interfaceType.addProperty({
+							name: propertyName,
+
+							type: refIdentifier,
+							required: false
+						});
+
+						continue;
+					}
+
+					if (propertyValue.type in jsonSchemaTypes) {
+						const { type: nodeType, description } = jsonSchemaTypes[propertyValue.type]({
+							...payload,
+							type: propertyValue
+						});
+
+						interfaceType.addProperty({
+							description,
+							name: propertyName,
+
+							type: nodeType,
+							required: false
+						});
+					}
+				}
+
+				allOf.push(interfaceType.name);
+
+				exportedNodes.push(
+					interfaceType.toASTNode({
+						exported: true
+					})
+				);
+			}
+		}
+
+		if (allOf.length !== 0) {
+			return {
+				exportedNodes,
+
+				name: toPascalCase(name),
+				kind: 'type',
+				type: ts.createIntersectionTypeNode(allOf)
+			};
+		}
 	}
 
 	if (type.type !== 'object') {

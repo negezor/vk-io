@@ -2447,12 +2447,12 @@ export class MessageContext extends Context {
 	/**
 	 * Gets a link to invite the user to a conversation
 	 */
-	public getInviteLink(params?: Partial): Promise<Partial>;
+	public getInviteLink(params: Partial): Promise<Partial>;
 
 	/**
 	 * Edits a message
 	 */
-	public editMessage(params?: Params.MessagesSendParams): Promise<Partial>;
+	public editMessage(params: Params.MessagesSendParams): Promise<Partial>;
 
 	/**
 	 * Edits a message text
@@ -2462,13 +2462,13 @@ export class MessageContext extends Context {
 	/**
 	 * Sends a message to the current dialog
 	 */
-	public send(text: string, params: Params.MessagesSendParams): Promise<number>;
+	public send(text: string, params?: Params.MessagesSendParams): Promise<number>;
 	public send(text: Params.MessagesSendParams): Promise<number>;
 
 	/**
 	 * Responds to the current message
 	 */
-	public reply(text: string, params: Params.MessagesSendParams): Promise<number>;
+	public reply(text: string, params?: Params.MessagesSendParams): Promise<number>;
 	public reply(text: Params.MessagesSendParams): Promise<number>;
 
 	/**

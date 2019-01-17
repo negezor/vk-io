@@ -1,7 +1,9 @@
 import { parseJSONObject } from './json-schema';
 
 export function parseParameter(rawParameter) {
-	return parseJSONObject(rawParameter.name, rawParameter);
+	return parseJSONObject(rawParameter.name, rawParameter, {
+		arrayUnion: true
+	});
 }
 
 export default function parseParameters(rawParameters) {
