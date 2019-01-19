@@ -1712,10 +1712,10 @@ eslint-visitor-keys@^1.0.0:
   resolved "https://registry.yarnpkg.com/eslint-visitor-keys/-/eslint-visitor-keys-1.0.0.tgz#3f3180fb2e291017716acb4c9d6d5b5c34a6a81d"
   integrity sha512-qzm/XxIbxm/FHyH341ZrbnMUpe+5Bocte9xkmFMzPMjRaZMcXww+MpBptFvtU+79L362nqiLhekCxCxDPaUMBQ==
 
-eslint@^5.12.0:
-  version "5.12.0"
-  resolved "https://registry.yarnpkg.com/eslint/-/eslint-5.12.0.tgz#fab3b908f60c52671fb14e996a450b96c743c859"
-  integrity sha512-LntwyPxtOHrsJdcSwyQKVtHofPHdv+4+mFwEe91r2V13vqpM8yLr7b1sW+Oo/yheOPkWYsYlYJCkzlFAt8KV7g==
+eslint@^5.12.1:
+  version "5.12.1"
+  resolved "https://registry.yarnpkg.com/eslint/-/eslint-5.12.1.tgz#5ca9931fb9029d04e7be92b03ce3b58edfac7e3b"
+  integrity sha512-54NV+JkTpTu0d8+UYSA8mMKAG4XAsaOrozA9rCW7tgneg1mevcL7wIotPC+fZ0SkWwdhNqoXoxnQCTBp7UvTsg==
   dependencies:
     "@babel/code-frame" "^7.0.0"
     ajv "^6.5.3"
@@ -3360,10 +3360,10 @@ micromatch@^3.1.4:
     snapdragon "^0.8.1"
     to-regex "^3.0.2"
 
-middleware-io@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/middleware-io/-/middleware-io-1.0.0.tgz#5fedd0bd75e940ef252519022e3a65db6ca99f0a"
-  integrity sha512-FeLxbJ9uuuYrwx6A+4zrfxbRC421b88UIYimPp13jFbftCW8SWLwX3Kzs2bwPMvDzXFNyiqyyLbeSBodJk4JEw==
+middleware-io@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/middleware-io/-/middleware-io-1.1.0.tgz#54d9ee0978da744070599573b47f38e243c6f5c1"
+  integrity sha512-nFwT5c5QlJ3fdXEEHRxN2M2E9wul0ZdAY+tXYPXnyMye+oN7FuASqU9vkiS7C2x39Nk1vC2cqvjtw5jNX5lc4w==
 
 mime-db@~1.37.0:
   version "1.37.0"
@@ -4253,10 +4253,10 @@ rimraf@^2.5.4, rimraf@^2.6.1, rimraf@~2.6.2:
   dependencies:
     glob "^7.1.3"
 
-rollup-plugin-babel@^4.3.0:
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/rollup-plugin-babel/-/rollup-plugin-babel-4.3.0.tgz#1900e66af70c3975fef26a54111b87ee22a50974"
-  integrity sha512-HoNMaLA56MPZ9XCeG+RD2QzTySVe168R/k6bPEm8noB9PSK8wBnY4matFluwmH2Bj3PQdqYAknV1jDqw8GAc8g==
+rollup-plugin-babel@^4.3.1:
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/rollup-plugin-babel/-/rollup-plugin-babel-4.3.1.tgz#bf1b3d2a554ddb79a6b1edb335686e8121d08d0f"
+  integrity sha512-eV/extPWVFJE54w9ZFWNAn6y+HHsaKveg+qwGbXJCxP7HitwLVJ1g6Y0Zw2qrMlDj6mDSZRsTFbnTiZRtY7vqA==
   dependencies:
     "@babel/helper-module-imports" "^7.0.0"
     rollup-pluginutils "^2.3.0"
@@ -4925,10 +4925,10 @@ type-check@~0.3.2:
   dependencies:
     prelude-ls "~1.1.2"
 
-typescript@^3.2.2:
-  version "3.2.2"
-  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.2.2.tgz#fe8101c46aa123f8353523ebdcf5730c2ae493e5"
-  integrity sha512-VCj5UiSyHBjwfYacmDuc/NOk4QQixbE+Wn7MFJuS0nRuPQbof132Pw4u53dm264O8LPc2MVsc7RJNml5szurkg==
+typescript@^3.2.4:
+  version "3.2.4"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.2.4.tgz#c585cb952912263d915b462726ce244ba510ef3d"
+  integrity sha512-0RNDbSdEokBeEAkgNbxJ+BLwSManFy9TeXz8uW+48j/xhEXv1ePME60olyzw2XzUqUBNAYFeJadIqAgNqIACwg==
 
 uglify-js@^3.1.4:
   version "3.4.9"
