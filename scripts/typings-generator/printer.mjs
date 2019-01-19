@@ -25,6 +25,8 @@ export default function createPrinter(path) {
 		start: 0
 	});
 
+	output.write('/* tslint:disable */\n');
+
 	return {
 		end() {
 			output.end();

@@ -1,3 +1,4 @@
+/* tslint:disable */
 export interface UsersGetParams {
     /**
      * Case for declension of user name and surname: 'nom' — nominative (default), 'gen' — genitive , 'dat' — dative, 'acc' — accusative , 'ins' — instrumental , 'abl' — prepositional
@@ -2099,10 +2100,6 @@ export interface WallEditAdsStealthParams {
      * ID of the location where the user was tagged.
      */
     place_id?: number;
-    /**
-     * Post ID. Used for publishing of scheduled and suggested posts.
-     */
-    post_id?: number;
     /**
      * Link button ID
      */

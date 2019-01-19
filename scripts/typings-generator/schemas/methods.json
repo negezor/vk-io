@@ -5514,12 +5514,6 @@
           "minimum": 0
         },
         {
-          "name": "post_id",
-          "description": "Post ID. Used for publishing of scheduled and suggested posts.",
-          "type": "integer",
-          "minimum": 0
-        },
-        {
           "name": "link_button",
           "description": "Link button ID",
           "type": "string"

@@ -15,6 +15,10 @@ import { Readable } from 'stream';
 import * as Methods from './methods.d';
 import * as Params from './params.d';
 
+export * from './params.d';
+export * from './responses.d';
+export * from './objects.d';
+
 type Partial = {
 	[key: string]: any;
 };
@@ -566,32 +570,32 @@ export class Upload {
 	/**
 	 * Uploads document
 	 */
-	public conductDocument(params: UploadParams, options: Partial): Promise<Partial>;
+	public conductDocument(params: UploadParams, options?: Partial): Promise<Partial>;
 
 	/**
 	 * Uploads document
 	 */
-	public document(params: UploadParams, options: Partial): Promise<DocumentAttachment>;
+	public document(params: UploadParams, options?: Partial): Promise<DocumentAttachment>;
 
 	/**
 	 * Uploads wall document
 	 */
-	public conductWallDocument(params: UploadParams, options: Partial): Promise<Partial>;
+	public conductWallDocument(params: UploadParams, options?: Partial): Promise<Partial>;
 
 	/**
 	 * Uploads wall document
 	 */
-	public wallDocument(params: UploadParams, options: Partial): Promise<DocumentAttachment>;
+	public wallDocument(params: UploadParams, options?: Partial): Promise<DocumentAttachment>;
 
 	/**
 	 * Uploads wall document
 	 */
-	public conductMessageDocument(params: UploadParams, options: Partial): Promise<Partial>;
+	public conductMessageDocument(params: UploadParams, options?: Partial): Promise<Partial>;
 
 	/**
 	 * Uploads message document
 	 */
-	public messageDocument(params: UploadParams, options: Partial): Promise<DocumentAttachment>;
+	public messageDocument(params: UploadParams, options?: Partial): Promise<DocumentAttachment>;
 
 	/**
 	 * Uploads audio message
@@ -1752,7 +1756,7 @@ export class WallAttachment extends Attachment {
 	/**
 	 * Returns the attachments
 	 */
-	public getAttachments(type?: AttachmentTypes): Attachment[];
+	public getAttachments(type?: AttachmentTypes | string): Attachment[];
 	public getAttachments(type: 'audio'): AudioAttachment[];
 	public getAttachments(type: 'audio_message'): AudioMessageAttachment[];
 	public getAttachments(type: 'graffiti'): GraffitiAttachment[];
@@ -1915,7 +1919,7 @@ export class CommentActionContext extends Context {
 	/**
 	 * Returns the attachments
 	 */
-	public getAttachments(type?: AttachmentTypes): Attachment[];
+	public getAttachments(type?: AttachmentTypes | string): Attachment[];
 	public getAttachments(type: 'audio'): AudioAttachment[];
 	public getAttachments(type: 'audio_message'): AudioMessageAttachment[];
 	public getAttachments(type: 'graffiti'): GraffitiAttachment[];
@@ -2070,7 +2074,7 @@ export class GroupUpdateContext extends Context {
 	/**
 	 * Returns the attachments
 	 */
-	public getAttachments(type?: AttachmentTypes): Attachment[];
+	public getAttachments(type?: AttachmentTypes | string): Attachment[];
 	public getAttachments(type: 'audio'): AudioAttachment[];
 	public getAttachments(type: 'audio_message'): AudioMessageAttachment[];
 	public getAttachments(type: 'graffiti'): GraffitiAttachment[];
@@ -2428,7 +2432,7 @@ export class MessageContext extends Context {
 	/**
 	 * Returns the attachments
 	 */
-	public getAttachments(type?: AttachmentTypes): Attachment[];
+	public getAttachments(type?: AttachmentTypes | string): Attachment[];
 	public getAttachments(type: 'audio'): AudioAttachment[];
 	public getAttachments(type: 'audio_message'): AudioMessageAttachment[];
 	public getAttachments(type: 'graffiti'): GraffitiAttachment[];
@@ -2479,17 +2483,17 @@ export class MessageContext extends Context {
 	/**
 	 * Sends a photo to the current dialog
 	 */
-	public sendPhoto(sources: UploadSource, params?: Params.MessagesSendParams): Promise<number>;
+	public sendPhoto(sources: UploadSource[] | UploadSource, params?: Params.MessagesSendParams): Promise<number>;
 
 	/**
 	 * Sends a document to the current dialog
 	 */
-	public sendDocument(sources: UploadSource, params?: Params.MessagesSendParams): Promise<number>;
+	public sendDocument(sources: UploadSource[] | UploadSource, params?: Params.MessagesSendParams): Promise<number>;
 
 	/**
 	 * Sends a audio message to the current dialog
 	 */
-	public sendAudioMessage(sources: UploadSource, params?: Params.MessagesSendParams): Promise<number>;
+	public sendAudioMessage(sources: UploadSource[] | UploadSource, params?: Params.MessagesSendParams): Promise<number>;
 
 	/**
 	 * Changes the status of typing in the dialog
@@ -2519,7 +2523,7 @@ export class MessageContext extends Context {
 	/**
 	 * Sets a new image for the chat
 	 */
-	public newChatPhoto(sources: UploadSource, params?: Partial): Promise<Partial>;
+	public newChatPhoto(source: UploadSource, params?: Partial): Promise<Partial>;
 
 	/**
 	 * Remove the chat photo
@@ -2576,7 +2580,7 @@ export class NewAttachmentsContext extends Context {
 	/**
 	 * Returns the attachments
 	 */
-	public getAttachments(type?: AttachmentTypes): Attachment[];
+	public getAttachments(type?: AttachmentTypes | string): Attachment[];
 	public getAttachments(type: 'audio'): AudioAttachment[];
 	public getAttachments(type: 'audio_message'): AudioMessageAttachment[];
 	public getAttachments(type: 'graffiti'): GraffitiAttachment[];
@@ -2788,7 +2792,7 @@ export class StreamingContext extends Context {
 	/**
 	 * Returns the attachments
 	 */
-	public getAttachments(type?: AttachmentTypes): Attachment[];
+	public getAttachments(type?: AttachmentTypes | string): Attachment[];
 	public getAttachments(type: 'audio'): AudioAttachment[];
 	public getAttachments(type: 'audio_message'): AudioMessageAttachment[];
 	public getAttachments(type: 'graffiti'): GraffitiAttachment[];
@@ -2997,7 +3001,7 @@ export class MessageForward {
 	/**
 	 * Returns the attachments
 	 */
-	public getAttachments(type?: AttachmentTypes): Attachment[];
+	public getAttachments(type?: AttachmentTypes | string): Attachment[];
 	public getAttachments(type: 'audio'): AudioAttachment[];
 	public getAttachments(type: 'audio_message'): AudioMessageAttachment[];
 	public getAttachments(type: 'graffiti'): GraffitiAttachment[];
@@ -3033,7 +3037,7 @@ export class MessageForwardsCollection extends Array<MessageForward> {
 	/**
 	 * Returns the attachments
 	 */
-	public getAttachments(type?: AttachmentTypes): Attachment[];
+	public getAttachments(type?: AttachmentTypes | string): Attachment[];
 	public getAttachments(type: 'audio'): AudioAttachment[];
 	public getAttachments(type: 'audio_message'): AudioMessageAttachment[];
 	public getAttachments(type: 'graffiti'): GraffitiAttachment[];
@@ -3109,7 +3113,7 @@ export class MessageReply {
 	/**
 	 * Returns the attachments
 	 */
-	public getAttachments(type?: AttachmentTypes): Attachment[];
+	public getAttachments(type?: AttachmentTypes | string): Attachment[];
 	public getAttachments(type: 'audio'): AudioAttachment[];
 	public getAttachments(type: 'audio_message'): AudioMessageAttachment[];
 	public getAttachments(type: 'graffiti'): GraffitiAttachment[];

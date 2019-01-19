@@ -1,3 +1,4 @@
+/* tslint:disable */
 import * as Objects from "./objects.d";
 
 export type OkResponse = Objects.BaseOkResponse;
