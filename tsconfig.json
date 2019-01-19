@@ -8,6 +8,10 @@
 		"forceConsistentCasingInFileNames": true
 	},
 	"files": [
-		"typings/index.d.ts"
+		"typings/index.d.ts",
+		"typings/methods.d.ts",
+		"typings/objects.d.ts",
+		"typings/params.d.ts",
+		"typings/responses.d.ts"
 	]
 }

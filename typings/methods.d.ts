@@ -35,7 +35,7 @@ export interface APIUsers {
      * Indexes current user location and returns nearby users.
      */
     getNearby(params: Params.UsersGetNearbyParams): Promise<Responses.UsersGetNearbyResponse>;
-};
+}
 
 /**
  * The API auth group
@@ -57,7 +57,7 @@ export interface APIAuth {
      * Allows to restore account access using a code received via SMS. " This method is only available for apps with [vk.com/dev/auth_direct|Direct authorization] access. "
      */
     restore(params: Params.AuthRestoreParams): Promise<Responses.AuthRestoreResponse>;
-};
+}
 
 /**
  * The API wall group
@@ -143,7 +143,7 @@ export interface APIWall {
      * Reports (submits a complaint about) a comment on a post on a user wall or community wall.
      */
     reportComment(params: Params.WallReportCommentParams): Promise<Responses.OkResponse>;
-};
+}
 
 /**
  * The API photos group
@@ -333,7 +333,7 @@ export interface APIPhotos {
      * Returns a list of photos with tags that have not been viewed.
      */
     getNewTags(params: Params.PhotosGetNewTagsParams): Promise<Responses.PhotosGetNewTagsResponse>;
-};
+}
 
 /**
  * The API friends group
@@ -415,7 +415,7 @@ export interface APIFriends {
      * Returns a list of friends matching the search criteria.
      */
     search(params: Params.FriendsSearchParams): Promise<Responses.FriendsSearchResponse>;
-};
+}
 
 /**
  * The API widgets group
@@ -429,7 +429,7 @@ export interface APIWidgets {
      * Gets a list of application/site pages where the [vk.com/dev/Comments|Comments widget] or [vk.com/dev/Like|Like widget] is installed.
      */
     getPages(params: Params.WidgetsGetPagesParams): Promise<Responses.WidgetsGetPagesResponse>;
-};
+}
 
 /**
  * The API stories group
@@ -487,7 +487,7 @@ export interface APIStories {
      * Allows to show stories from hidden sources in current user's feed.
      */
     unbanOwner(params: Params.StoriesUnbanOwnerParams): Promise<Responses.OkResponse>;
-};
+}
 
 /**
  * The API secure group
@@ -533,7 +533,7 @@ export interface APISecure {
      * Checks the user authentication in 'IFrame' and 'Flash' apps using the 'access_token' parameter.
      */
     checkToken(params: Params.SecureCheckTokenParams): Promise<Responses.SecureCheckTokenResponse>;
-};
+}
 
 /**
  * The API streaming group
@@ -543,7 +543,7 @@ export interface APIStreaming {
      * Allows to receive data for the connection to Streaming API.
      */
     getServerUrl(params: Params.StreamingGetServerUrlParams): Promise<Responses.StreamingGetServerUrlResponse>;
-};
+}
 
 /**
  * The API storage group
@@ -561,7 +561,7 @@ export interface APIStorage {
      * Returns the names of all variables.
      */
     getKeys(params: Params.StorageGetKeysParams): Promise<Responses.StorageGetKeysResponse>;
-};
+}
 
 /**
  * The API orders group
@@ -580,7 +580,7 @@ export interface APIOrders {
      */
     changeState(params: Params.OrdersChangeStateParams): Promise<Responses.OrdersChangeStateResponse>;
     getAmount(params: Params.OrdersGetAmountParams): Promise<Responses.OrdersGetAmountResponse>;
-};
+}
 
 /**
  * The API status group
@@ -594,7 +594,7 @@ export interface APIStatus {
      * Sets a new status for the current user.
      */
     set(params: Params.StatusSetParams): Promise<Responses.OkResponse>;
-};
+}
 
 /**
  * The API leads group
@@ -624,7 +624,7 @@ export interface APILeads {
      * Counts the metric event.
      */
     metricHit(params: Params.LeadsMetricHitParams): Promise<Responses.LeadsMetricHitResponse>;
-};
+}
 
 /**
  * The API pages group
@@ -662,7 +662,7 @@ export interface APIPages {
      * Allows to clear the cache of particular 'external' pages which may be attached to VK posts.
      */
     clearCache(params: Params.PagesClearCacheParams): Promise<Responses.OkResponse>;
-};
+}
 
 /**
  * The API groups group
@@ -800,7 +800,7 @@ export interface APIGroups {
      * Sets Long Poll notification settings
      */
     setLongPollSettings(params: Params.GroupsSetLongPollSettingsParams): Promise<Responses.OkResponse>;
-};
+}
 
 /**
  * The API board group
@@ -858,7 +858,7 @@ export interface APIBoard {
      * Unpins a pinned topic from the top of a community's discussion board.
      */
     unfixTopic(params: Params.BoardUnfixTopicParams): Promise<Responses.OkResponse>;
-};
+}
 
 /**
  * The API video group
@@ -983,7 +983,7 @@ export interface APIVideo {
      * Hides a video catalog section from a user.
      */
     hideCatalogSection(params: Params.VideoHideCatalogSectionParams): Promise<Responses.OkResponse>;
-};
+}
 
 /**
  * The API notes group
@@ -1029,7 +1029,7 @@ export interface APINotes {
      * Restores a deleted comment on a note.
      */
     restoreComment(params: Params.NotesRestoreCommentParams): Promise<Responses.OkResponse>;
-};
+}
 
 /**
  * The API places group
@@ -1059,7 +1059,7 @@ export interface APIPlaces {
      * Returns a list of all types of locations.
      */
     getTypes(params: Params.PlacesGetTypesParams): Promise<Responses.PlacesGetTypesResponse>;
-};
+}
 
 /**
  * The API account group
@@ -1145,7 +1145,7 @@ export interface APIAccount {
      * Edits current profile info.
      */
     saveProfileInfo(params: Params.AccountSaveProfileInfoParams): Promise<Responses.AccountSaveProfileInfoResponse>;
-};
+}
 
 /**
  * The API messages group
@@ -1275,7 +1275,7 @@ export interface APIMessages {
      * Returns information whether sending messages from the community to current user is allowed.
      */
     isMessagesFromGroupAllowed(params: Params.MessagesIsMessagesFromGroupAllowedParams): Promise<Responses.MessagesIsMessagesFromGroupAllowedResponse>;
-};
+}
 
 /**
  * The API newsfeed group
@@ -1338,7 +1338,7 @@ export interface APINewsfeed {
      * Returns communities and users that current user is suggested to follow.
      */
     getSuggestedSources(params: Params.NewsfeedGetSuggestedSourcesParams): Promise<Responses.NewsfeedGetSuggestedSourcesResponse>;
-};
+}
 
 /**
  * The API likes group
@@ -1360,7 +1360,7 @@ export interface APILikes {
      * Checks for the object in the 'Likes' list of the specified user.
      */
     isLiked(params: Params.LikesIsLikedParams): Promise<Responses.LikesIsLikedResponse>;
-};
+}
 
 /**
  * The API polls group
@@ -1390,7 +1390,7 @@ export interface APIPolls {
      * Edits created polls
      */
     edit(params: Params.PollsEditParams): Promise<Responses.OkResponse>;
-};
+}
 
 /**
  * The API docs group
@@ -1440,7 +1440,7 @@ export interface APIDocs {
      * Edits a document.
      */
     edit(params: Params.DocsEditParams): Promise<Responses.OkResponse>;
-};
+}
 
 /**
  * The API fave group
@@ -1494,7 +1494,7 @@ export interface APIFave {
      * Removes link from the user's faves.
      */
     removeLink(params: Params.FaveRemoveLinkParams): Promise<Responses.OkResponse>;
-};
+}
 
 /**
  * The API notifications group
@@ -1508,7 +1508,7 @@ export interface APINotifications {
      * Resets the counter of new notifications about other users' feedback to the current user's wall posts.
      */
     markAsViewed(params: Params.NotificationsMarkAsViewedParams): Promise<Responses.NotificationsMarkAsViewedResponse>;
-};
+}
 
 /**
  * The API stats group
@@ -1523,7 +1523,7 @@ export interface APIStats {
      * Returns stats for a wall post.
      */
     getPostReach(params: Params.StatsGetPostReachParams): Promise<Responses.StatsGetPostReachResponse>;
-};
+}
 
 /**
  * The API search group
@@ -1533,7 +1533,7 @@ export interface APISearch {
      * Allows the programmer to do a quick search for any substring.
      */
     getHints(params: Params.SearchGetHintsParams): Promise<Responses.SearchGetHintsResponse>;
-};
+}
 
 /**
  * The API apps group
@@ -1567,7 +1567,7 @@ export interface APIApps {
      * Returns user score in app
      */
     getScore(params: Params.AppsGetScoreParams): Promise<Responses.AppsGetScoreResponse>;
-};
+}
 
 /**
  * The API utils group
@@ -1601,7 +1601,7 @@ export interface APIUtils {
      * Returns the current time of the VK server.
      */
     getServerTime(params: Params.UtilsGetServerTimeParams): Promise<Responses.UtilsGetServerTimeResponse>;
-};
+}
 
 /**
  * The API database group
@@ -1651,7 +1651,7 @@ export interface APIDatabase {
      * Returns list of chairs on a specified faculty.
      */
     getChairs(params: Params.DatabaseGetChairsParams): Promise<Responses.DatabaseGetChairsResponse>;
-};
+}
 
 /**
  * The API gifts group
@@ -1661,7 +1661,7 @@ export interface APIGifts {
      * Returns a list of user gifts.
      */
     get(params: Params.GiftsGetParams): Promise<Responses.GiftsGetResponse>;
-};
+}
 
 /**
  * The API ads group
@@ -1807,7 +1807,7 @@ export interface APIAds {
      * Imports a list of advertiser's contacts to count VK registered users against the target group.
      */
     importTargetContacts(params: Params.AdsImportTargetContactsParams): Promise<Responses.AdsImportTargetContactsResponse>;
-};
+}
 
 /**
  * The API market group
@@ -1909,7 +1909,7 @@ export interface APIMarket {
      * Adds an item to one or multiple collections.
      */
     addToAlbum(params: Params.MarketAddToAlbumParams): Promise<Responses.OkResponse>;
-};
+}
 
 export class APIMethods {
     /**
@@ -2052,5 +2052,5 @@ export class APIMethods {
      * The API market group
      */
     market: APIMarket;
-};
+}
 

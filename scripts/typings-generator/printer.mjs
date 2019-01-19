@@ -4,7 +4,8 @@ import nodeFs from 'fs';
 import nodePath from 'path';
 
 // HACK!!!
-const REPLACE_MULTI_SEMICOLON_RE = /;{2,}/g;
+const REPLACE_MULTI_SEMICOLON_RE = /;{2,}/;
+const REPLACE_EXPORT_SEMICOLON_RE = /};/;
 
 export default function createPrinter(path) {
 	const filename = nodePath.basename(path);
@@ -41,7 +42,11 @@ export default function createPrinter(path) {
 				methodsFile
 			);
 
-			output.write(`${result.replace(REPLACE_MULTI_SEMICOLON_RE, ';')}\n\n`);
+			const hacked = result
+				.replace(REPLACE_MULTI_SEMICOLON_RE, ';')
+				.replace(REPLACE_EXPORT_SEMICOLON_RE, '}');
+
+			output.write(`${hacked}\n\n`);
 		}
 	};
 }
