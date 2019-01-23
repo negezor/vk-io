@@ -791,7 +791,10 @@ export default class Updates {
 			stack.push(
 				getOptionalMiddleware(
 					context => context.type === 'message' && !context.isEvent,
-					compose(this.hearStack)
+					compose([
+						...this.hearStack,
+						this.hearFallbackHandler
+					])
 				)
 			);
 		}
