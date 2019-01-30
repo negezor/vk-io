@@ -314,6 +314,8 @@ export default class Updates {
 				};
 			}
 
+			condition = String(condition);
+
 			return text => text === condition;
 		});
 
