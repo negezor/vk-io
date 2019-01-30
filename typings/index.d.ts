@@ -693,11 +693,15 @@ export class Chain {
 }
 
 export type UpdatesStartWebhookOptions = {
-	tls: Partial;
+	tls?: Partial;
 	path?: string;
 	port?: number;
 	host?: string;
 };
+
+type HearFunctionCondition = (text: string, context: MessageContext) => boolean;
+
+type HearCondition = HearFunctionCondition & RegExp & string;
 
 export class Updates {
 	/**
@@ -733,7 +737,7 @@ export class Updates {
 	/**
 	 * Listen text
 	 */
-	public hear<T>(conditions: any, handler: Middleware<MessageContext>): this;
+	public hear<T>(conditions: HearCondition[] & HearCondition, handler: Middleware<MessageContext>): this;
 
 	/**
 	 * A handler that is called when handlers are not found
@@ -758,7 +762,7 @@ export class Updates {
 	/**
 	 * Starts the webhook server
 	 */
-	public startWebhook(options: UpdatesStartWebhookOptions, next?: Function): Promise<void>;
+	public startWebhook(options?: UpdatesStartWebhookOptions, next?: Function): Promise<void>;
 
 	/**
 	 * Stopping gets updates
@@ -796,6 +800,12 @@ export class Updates {
 	public reloadMiddleware(): void;
 }
 
+type ResolvedResource = {
+	id: number;
+	owner?: number;
+	type: 'user' | 'group' | 'application' | 'albums' | 'album' | 'wall' | 'club' | 'photo' | 'video' | 'audio' | string;
+};
+
 export class Snippets {
 	public resourceResolver: ResourceResolver;
 
@@ -812,7 +822,7 @@ export class Snippets {
 	/**
 	 * Defines the type of object (user, community, application, attachment)
 	 */
-	public resolveResource(resource: any): Promise<Partial>;
+	public resolveResource(resource: any): Promise<ResolvedResource>;
 }
 
 export class ResourceResolver {
@@ -1914,7 +1924,7 @@ export class CommentActionContext extends Context {
 	/**
 	 * Checks for the presence of attachments
 	 */
-	public hasAttachments(type?: AttachmentTypes): boolean;
+	public hasAttachments(type?: AttachmentTypes | string): boolean;
 
 	/**
 	 * Returns the attachments
@@ -2069,7 +2079,7 @@ export class GroupUpdateContext extends Context {
 	/**
 	 * Checks for the presence of attachments
 	 */
-	public hasAttachments(type?: AttachmentTypes): boolean;
+	public hasAttachments(type?: AttachmentTypes | string): boolean;
 
 	/**
 	 * Returns the attachments
@@ -2427,7 +2437,7 @@ export class MessageContext extends Context {
 	/**
 	 * Checks for the presence of attachments
 	 */
-	public hasAttachments(type?: AttachmentTypes): boolean;
+	public hasAttachments(type?: AttachmentTypes | string): boolean;
 
 	/**
 	 * Returns the attachments
@@ -2575,7 +2585,7 @@ export class NewAttachmentsContext extends Context {
 	/**
 	 * Checks for the presence of attachments
 	 */
-	public hasAttachments(type?: AttachmentTypes): boolean;
+	public hasAttachments(type?: AttachmentTypes | string): boolean;
 
 	/**
 	 * Returns the attachments
@@ -2787,7 +2797,7 @@ export class StreamingContext extends Context {
 	/**
 	 *	Checks for the presence of attachments
 		*/
-	public hasAttachments(type?: AttachmentTypes): boolean;
+	public hasAttachments(type?: AttachmentTypes | string): boolean;
 
 	/**
 	 * Returns the attachments
@@ -2996,7 +3006,7 @@ export class MessageForward {
 	/**
 	 *	Checks for the presence of attachments
 		*/
-	public hasAttachments(type?: AttachmentTypes): boolean;
+	public hasAttachments(type?: AttachmentTypes | string): boolean;
 
 	/**
 	 * Returns the attachments
@@ -3032,7 +3042,7 @@ export class MessageForwardsCollection extends Array<MessageForward> {
 	/**
 	 *	Checks for the presence of attachments
 		*/
-	public hasAttachments(type?: AttachmentTypes): boolean;
+	public hasAttachments(type?: AttachmentTypes | string): boolean;
 
 	/**
 	 * Returns the attachments
@@ -3108,7 +3118,7 @@ export class MessageReply {
 	/**
 	 *	Checks for the presence of attachments
 	 */
-	public hasAttachments(type?: AttachmentTypes): boolean;
+	public hasAttachments(type?: AttachmentTypes | string): boolean;
 
 	/**
 	 * Returns the attachments
