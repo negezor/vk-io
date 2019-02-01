@@ -3250,7 +3250,7 @@ export class Keyboard {
 	/**
 	 * The keyboard will open only once
 	 */
-	public oneTime(enabled: boolean): this;
+	public oneTime(enabled?: boolean): this;
 
 	/**
 	 * Add buttons row
