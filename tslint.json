@@ -9,7 +9,8 @@
 		"max-line-length": false,
 		"indent": [true, "tabs"],
 		"ter-indent": [true, "tab"],
-		"trailing-comma": [true, "never"]
+		"trailing-comma": [true, "never"],
+		"no-parameter-reassignment": false
 	},
     "rulesDirectory": []
 }
