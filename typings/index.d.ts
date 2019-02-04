@@ -494,23 +494,27 @@ export class ImplicitFlowGroups extends ImplicitFlow {
 /**
  * Stream, buffer, url or file path
  */
-export type UploadSourceValue = Readable | Buffer | string;
+export type UploadSourceType = Readable | Buffer | string;
+
+export type UploadSourceValue = UploadSourceType | {
+	value: UploadSourceType;
+
+	contentType?: string;
+	filename?: string;
+};
 
 export type UploadSourceParams = {
 	values: UploadSourceValue[] | UploadSourceValue;
 
 	uploadUrl?: string
 	timeout?: number
-
-	contentType?: string;
-	filename?: string;
 };
 
-export type UploadSource = UploadSourceParams[] | UploadSourceParams | UploadSourceValue[] | UploadSourceValue
+export type UploadSource = UploadSourceParams | UploadSourceValue[] | UploadSourceValue;
 
-export interface UploadParams extends Partial {
+export type UploadParams = {
 	source: UploadSource;
-}
+};
 
 export class Upload {
 	/**
@@ -526,46 +530,115 @@ export class Upload {
 	/**
 	 * Uploading photos to an album
 	 */
-	public photoAlbum(params: UploadParams): Promise<PhotoAttachment[]>;
+	public photoAlbum(
+		params: UploadParams & {
+			album_id: number;
+			group_id?: number;
+
+			caption?: string;
+			latitude?: number;
+			longitude?: number;
+		}
+	): Promise<PhotoAttachment[]>;
 
 	/**
 	 * Uploading photos to the wall
 	 */
-	public wallPhoto(params: UploadParams): Promise<PhotoAttachment>;
+	public wallPhoto(
+		params: UploadParams & {
+			user_id?: number;
+			group_id?: number;
+
+			caption?: string;
+			latitude?: number;
+			longitude?: number;
+		}
+	): Promise<PhotoAttachment>;
 
 	/**
 	 * Uploading the main photo of a user or community
 	 */
-	public ownerPhoto(params: UploadParams): Promise<Partial>;
+	public ownerPhoto(
+		params: UploadParams & {
+			owner_id?: number;
+		}
+	): Promise<Partial>;
 
 	/**
-	 * Uploading a photo to a */
-	public messagePhoto(params: UploadParams): Promise<PhotoAttachment>;
+	 * Uploading a photo to a message */
+	public messagePhoto(
+		params: UploadParams & {
+			peer_id?: number;
+		}
+	): Promise<PhotoAttachment>;
 
 	/**
 	 * Uploading the main photo for a chat
 	 */
-	public chatPhoto(params: UploadParams): Promise<Partial>;
+	public chatPhoto(
+		params: UploadParams & {
+			chat_id: number;
+
+			crop_x?: number;
+			crop_y?: number;
+			crop_width?: number;
+		}
+	): Promise<Partial>;
 
 	/**
 	 * Uploading a photo for a product
 	 */
-	public marketPhoto(params: UploadParams): Promise<PhotoAttachment>;
+	public marketPhoto(
+		params: UploadParams & {
+			group_id: number;
+
+			main_photo?: number;
+
+			crop_x?: number;
+			crop_y?: number;
+			crop_width?: number;
+		}
+	): Promise<PhotoAttachment>;
 
 	/**
 	 * Uploads a photo for the selection of goods
 	 */
-	public marketAlbumPhoto(params: UploadParams): Promise<PhotoAttachment>;
+	public marketAlbumPhoto(
+		params: UploadParams & {
+			group_id: number;
+		}
+	): Promise<PhotoAttachment>;
 
 	/**
 	 * Uploads audio
 	 */
-	public audio(params: UploadParams): Promise<AudioAttachment>;
+	public audio(
+		params: UploadParams & {
+			title?: string;
+			artist?: string;
+		}
+	): Promise<AudioAttachment>;
 
 	/**
 	 * Uploads video
 	 */
-	public video(params: UploadParams): Promise<VideoAttachment>;
+	public video(
+		params: UploadParams & {
+			album_id?: number;
+			group_id?: number;
+
+			link?: string;
+			name?: string;
+			description?: string;
+			is_private?: number;
+			wallpost?: number;
+			privacy_view?: string;
+			privacy_comment?: string;
+			no_comments?: number;
+			repeat?: number;
+			compression?: number;
+		}
+	): Promise<VideoAttachment>;
 
 	/**
 	 * Uploads document
@@ -575,7 +648,16 @@ export class Upload {
 	/**
 	 * Uploads document
 	 */
-	public document(params: UploadParams, options?: Partial): Promise<DocumentAttachment>;
+	public document(
+		params: UploadParams & {
+			group_id?: number;
+			// type?: string;
+
+			title?: string;
+			tags?: string;
+		},
+		options?: Partial
+	): Promise<DocumentAttachment>;
 
 	/**
 	 * Uploads wall document
@@ -585,7 +667,16 @@ export class Upload {
 	/**
 	 * Uploads wall document
 	 */
-	public wallDocument(params: UploadParams, options?: Partial): Promise<DocumentAttachment>;
+	public wallDocument(
+		params: UploadParams & {
+			group_id?: number;
+			// type?: string;
+
+			title?: string;
+			tags?: string;
+		},
+		options?: Partial
+	): Promise<DocumentAttachment>;
 
 	/**
 	 * Uploads wall document
@@ -595,37 +686,91 @@ export class Upload {
 	/**
 	 * Uploads message document
 	 */
-	public messageDocument(params: UploadParams, options?: Partial): Promise<DocumentAttachment>;
+	public messageDocument(
+		params: UploadParams & {
+			peer_id?: number;
+			type?: string;
+
+			title?: string;
+			tags?: string;
+		},
+		options?: Partial
+	): Promise<DocumentAttachment>;
 
 	/**
 	 * Uploads audio message
 	 */
-	public audioMessage(params: UploadParams): Promise<AudioMessageAttachment>;
+	public audioMessage(
+		params: UploadParams & {
+			peer_id?: number;
+
+			title?: string;
+			tags?: string;
+		}
+	): Promise<AudioMessageAttachment>;
 
 	/**
 	 * Uploads graffiti
 	 */
-	public graffiti(params: UploadParams): Promise<GraffitiAttachment>;
+	public graffiti(
+		params: UploadParams & {
+			peer_id?: number;
+
+			title?: string;
+			tags?: string;
+		}
+	): Promise<GraffitiAttachment>;
 
 	/**
 	 * Uploads community cover
 	 */
-	public groupCover(params: UploadParams): Promise<Partial>;
+	public groupCover(
+		params: UploadParams & {
+			group_id: number;
+
+			crop_x?: number;
+			crop_y?: number;
+			crop_x2?: number;
+			crop_y2?: number;
+		}
+	): Promise<Partial>;
 
 	/**
 	 * Uploads photo stories
 	 */
-	public storiesPhoto(params: UploadParams): Promise<Partial>;
+	public storiesPhoto(
+		params: UploadParams & {
+			group_id?: number;
+			add_to_news?: number;
+			user_ids?: string[] | string;
+			reply_to_story?: string;
+			link_text: string;
+			link_url: string;
+		}
+	): Promise<Partial>;
 
 	/**
 	 * Uploads video stories
 	 */
-	public storiesVideo(params: UploadParams): Promise<Partial>;
+	public storiesVideo(
+		params: UploadParams & {
+			group_id?: number;
+			add_to_news?: number;
+			user_ids?: string[] | string;
+			reply_to_story?: string;
+			link_text: string;
+			link_url: string;
+		}
+	): Promise<Partial>;
 
 	/**
 	 * Uploads poll photo
 	 */
-	public pollPhoto(params: UploadParams): Promise<Partial>;
+	public pollPhoto(
+		params: UploadParams & {
+			owner_id?: number;
+		}
+	): Promise<Partial>;
 
 	/**
 	 * Behavior for the upload method
