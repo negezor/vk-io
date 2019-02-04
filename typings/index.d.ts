@@ -3385,7 +3385,7 @@ export class Keyboard {
 	/**
 	 * Return keyboard
 	 */
-	public static keyboard(rows: Button[] & Button[][], options?: KeyboardOptions): Keyboard;
+	public static keyboard(rows: (Button | Button[])[], options?: KeyboardOptions): Keyboard;
 
 	/**
 	 * Returns the text button
