@@ -846,7 +846,7 @@ export type UpdatesStartWebhookOptions = {
 
 type HearFunctionCondition = (text: string, context: MessageContext) => boolean;
 
-type HearCondition = HearFunctionCondition & RegExp & string;
+type HearCondition = HearFunctionCondition | RegExp | string;
 
 export class Updates {
 	/**
@@ -882,7 +882,7 @@ export class Updates {
 	/**
 	 * Listen text
 	 */
-	public hear<T>(conditions: HearCondition[] & HearCondition, handler: Middleware<MessageContext>): this;
+	public hear<T>(conditions: HearCondition[] | HearCondition, handler: Middleware<MessageContext>): this;
 
 	/**
 	 * A handler that is called when handlers are not found
