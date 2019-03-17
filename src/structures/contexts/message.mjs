@@ -102,6 +102,9 @@ export default class MessageContext extends Context {
 
 		const [message] = items;
 
+		if(this.isChat)
+			message.title = (await this.loadChat()).title;
+
 		this[kForwards] = null;
 		this[kReplyMessage] = null;
 		this[kAttachments] = null;
@@ -322,6 +325,25 @@ export default class MessageContext extends Context {
 	}
 
 	/**
+	 * Returns the title chat
+	 *
+	 * @return {?string}
+	 */
+	get chatTitle() {
+		if (!this.isChat) {
+			return null;
+		}
+
+		if (!this.$filled) {
+			throw new VKError({
+				message: 'The message payload is not fully loaded'
+			});
+		}
+
+		return this.payload.title;
+	}
+
+	/**
 	 * Returns the date when this message was created
 	 *
 	 * @return {number}
@@ -466,6 +488,19 @@ export default class MessageContext extends Context {
 		return this.attachments.filter(attachment => (
 			attachment.type === type
 		));
+	}
+
+	/**
+	 * Load chat information
+	 *
+	 * @type {Promise<Object>}
+	 */
+	async loadChat() {
+		this.assertIsChat();
+		
+		return this.vk.api.messages.getChat({
+			chat_id: this.chatId,
+		});
 	}
 
 	/**
