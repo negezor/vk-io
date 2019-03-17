@@ -522,16 +522,20 @@ export default class MessageContext extends Context {
 	 *
 	 * @return {Promise}
 	 */
-	send(text, params = {}) {
-		if (typeof text !== 'object') {
-			params.message = text;
-		} else {
-			params = text;
-		}
+	send(text, params) {
+		return this.vk.api.messages.send({
+			peer_id: this.peerId,
 
-		params.peer_id = this.peerId;
+			...(
+				typeof text !== 'object'
+					? {
+						message: text,
 
-		return this.vk.api.messages.send(params);
+						...params
+					}
+					: text
+			)
+		});
 	}
 
 	/**
@@ -542,16 +546,20 @@ export default class MessageContext extends Context {
 	 *
 	 * @return {Promise}
 	 */
-	reply(text, params = {}) {
-		if (typeof text !== 'object') {
-			params.message = text;
-		} else {
-			params = text;
-		}
+	reply(text, params) {
+		return this.send({
+			reply_to: this.id,
 
-		params.reply_to = this.id;
+			...(
+				typeof text !== 'object'
+					? {
+						message: text,
 
-		return this.send(params);
+						...params
+					}
+					: text
+			)
+		});
 	}
 
 	/**

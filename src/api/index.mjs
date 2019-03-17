@@ -363,7 +363,11 @@ export default class API {
 			return;
 		}
 
-		request.resolve(response.response || response);
+		request.resolve(
+			response.response !== undefined
+				? response.response
+				: response
+		);
 	}
 
 	/**
