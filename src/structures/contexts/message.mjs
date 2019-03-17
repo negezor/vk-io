@@ -542,7 +542,12 @@ export default class MessageContext extends Context {
 	 * @return {Promise}
 	 */
 	async editMessageText(message) {
-		const response = await this.editMessage({ message });
+		const response = await this.editMessage({
+			message,
+			keep_forward_messages: true,
+			keep_snippets: true,
+			attachment: this.attachments.join(",")
+		});
 
 		this.text = message;
 
