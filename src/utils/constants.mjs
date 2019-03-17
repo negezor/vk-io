@@ -71,6 +71,7 @@ export const MINIMUM_TIME_INTERVAL_API = 1133;
  * @property {number}  [pollingGroupId]      Group ID for polling
  * @property {number}  [pollingAttempts]     The number of retries at calling
  *
+ * @property {?string} [webhookPath]         Webhook path
  * @property {?string} [webhookSecret]       Webhook secret key
  * @property {?string} [webhookConfirmation] Webhook confirmation key
  *
@@ -108,6 +109,7 @@ export const defaultOptions = {
 	pollingAttempts: 3,
 	pollingGroupId: null,
 
+	webhookPath: null,
 	webhookSecret: null,
 	webhookConfirmation: null,
 

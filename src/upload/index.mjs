@@ -319,16 +319,15 @@ export default class Upload {
 		const save = await this.vk.api.video.save(copyParams(params, [
 			'group_id',
 			'album_id',
-			'link',
 			'name',
 			'description',
+			'link',
 			'is_private',
 			'wallpost',
 			'privacy_view',
 			'privacy_comment',
 			'no_comments',
-			'repeat',
-			'compression'
+			'repeat'
 		]));
 
 		save.id = save.video_id;
@@ -721,10 +720,7 @@ export default class Upload {
 
 		let { source } = params;
 
-		if (
-			typeof source !== 'object'
-			|| source.constructor !== Object
-			|| source.value !== undefined) {
+		if (typeof source !== 'object' || source.constructor !== Object) {
 			source = {
 				values: source
 			};
@@ -885,7 +881,7 @@ export default class Upload {
 
 		response = await response.json();
 
-		return response.response !== undefined
+		return 'response' in response
 			? response.response
 			: response;
 	}

@@ -1,6 +1,6 @@
 {
 	"name": "vk-io",
-	"version": "4.0.0-rc.15",
+	"version": "4.0.0-rc.11",
 	"description": "Modern VK API SDK for Node.js",
 	"license": "MIT",
 	"author": {
@@ -24,44 +24,37 @@
 		"es7"
 	],
 	"files": [
-		"lib",
-		"typings"
+		"lib"
 	],
 	"main": "lib/index",
 	"module": "lib/index.mjs",
-	"types": "./typings/index.d.ts",
 	"engines": {
 		"node": ">=8.0.0"
 	},
 	"devDependencies": {
-		"@babel/core": "^7.3.4",
-		"@babel/preset-env": "^7.3.4",
-		"@types/node": "^11.11.3",
+		"@babel/core": "^7.2.2",
+		"@babel/preset-env": "^7.2.3",
 		"babel-core": "^7.0.0-0",
-		"babel-eslint": "^10.0.1",
-		"babel-jest": "^24.5.0",
+		"babel-jest": "^23.6.0",
 		"cross-env": "^5.2.0",
-		"eslint": "^5.15.1",
+		"eslint": "^5.11.1",
 		"eslint-config-airbnb-base": "^13.1.0",
-		"eslint-plugin-import": "^2.16.0",
-		"jest": "^24.5.0",
-		"rollup": "^1.6.0",
-		"rollup-plugin-babel": "^4.3.2",
-		"rollup-plugin-commonjs": "^9.2.1",
+		"eslint-plugin-import": "^2.14.0",
+		"jest": "^23.6.0",
+		"rollup": "^1.0.0",
+		"rollup-plugin-babel": "^4.2.0",
+		"rollup-plugin-commonjs": "^9.2.0",
 		"rollup-plugin-json": "^3.1.0",
-		"rollup-plugin-node-resolve": "^4.0.1",
-		"tslint": "^5.14.0",
-		"tslint-config-airbnb": "^5.11.1",
-		"typescript": "^3.3.3333"
+		"rollup-plugin-node-resolve": "^4.0.0"
 	},
 	"dependencies": {
 		"cheerio": "^1.0.0-rc.2",
 		"debug": "^4.1.1",
-		"middleware-io": "^1.1.0",
+		"middleware-io": "^0.0.8",
 		"node-fetch": "^2.3.0",
 		"sandwich-stream": "^2.0.2",
-		"tough-cookie": "^3.0.1",
-		"ws": "^6.2.0"
+		"tough-cookie": "^2.5.0",
+		"ws": "^6.1.2"
 	},
 	"scripts": {
 		"prepare": "yarn run rollup:build && yarn run test",
@@ -69,7 +62,6 @@
 		"rollup:watch": "yarn run rollup:build -w",
 		"test": "yarn run test:jest && yarn run test:eslint",
 		"test:jest": "cross-env BABEL_ENV=test jest --config jest.config.json --no-cache",
-		"test:eslint": "eslint ./src --ext .mjs,.js --ignore-path .gitignore .",
-		"test:typings": "tslint typings/index.d.ts"
+		"test:eslint": "eslint ./src --ext .mjs,.js --ignore-path .gitignore ."
 	}
 }

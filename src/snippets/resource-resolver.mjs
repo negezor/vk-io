@@ -120,17 +120,11 @@ export default class ResourceResolver {
 	 * @return {Promise<Object>}
 	 */
 	resolveNumber(resource) {
-		const isGroup = resource < 0;
-
-		const type = isGroup
+		const type = resource < 0
 			? 'club'
 			: 'id';
 
-		return this.resolveScreenName(type + (
-			isGroup
-				? -resource
-				: resource
-		));
+		return this.resolveScreenName(type + resource);
 	}
 
 	/**

@@ -17,7 +17,7 @@ export default class WallAttachment extends Attachment {
 	 * @param {VK}     vk
 	 */
 	constructor(payload, vk) {
-		super(WALL, payload.to_id, payload.id, payload.access_key);
+		super(WALL, payload.owner_id, payload.id, payload.access_key);
 
 		this.vk = vk;
 		this.payload = payload;

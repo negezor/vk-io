@@ -78,7 +78,7 @@ describe('Attachments', () => {
 		it('wall', () => {
 			const attachment = new WallAttachment({
 				id: 4567,
-				to_id: 1234
+				owner_id: 1234
 			});
 
 			expect(String(attachment)).toBe('wall1234_4567');

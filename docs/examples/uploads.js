@@ -72,11 +72,9 @@ Promise.all([
 	vk.upload.wallPhoto({
 		// jpeg at dat file
 		source: {
-			values: {
-				value: './path/to/cat1.dat',
-				contentType: 'image/jpeg',
-				filename: 'cat1.jpg'
-			}
+			value: './path/to/cat1.dat',
+			contentType: 'image/jpeg',
+			filename: 'cat1.jpg'
 		}
 	}),
 
@@ -84,11 +82,9 @@ Promise.all([
 	vk.upload.wallPhoto({
 		// png at file without extensions
 		source: {
-			values: {
-				value: fs.createReadStream('./path/to/cat2'),
-				contentType: 'image/png',
-				filename: 'cat2.png'
-			}
+			value: fs.createReadStream('./path/to/cat2'),
+			contentType: 'image/png',
+			filename: 'cat2.png'
 		}
 	})
 
@@ -99,25 +95,19 @@ Promise.all([
  * Uploads multiple files (current only photoAlbum)
  */
 vk.upload.photoAlbum({
-	source: {
-		timeout: 1e3 * 60,
-		values: [
-			'./path/to/cat1.jpg',
+	source: [
+		'./path/to/cat1.jpg',
 
-			'http://lorempixel.com/400/200/cats/',
+		fs.createReadStream('./path/to/cat2.jpg'),
 
-			fs.createReadStream('./path/to/cat2.jpg'),
+		fs.readFileSync('./path/to/cat3.jpg'),
 
-			{
-				value: fs.createReadStream('./path/to/cat2.jpg'),
-				filename: 'cat2.jpg'
-			},
+		'http://lorempixel.com/400/200/cats/',
 
-			{
-				value: './path/to/cat5.dat',
-				contentType: 'image/jpeg',
-				filename: 'cat5.jpg'
-			}
-		]
-	}
+		{
+			value: './path/to/cat5.dat',
+			contentType: 'image/jpeg',
+			filename: 'cat5.jpg'
+		}
+	]
 });

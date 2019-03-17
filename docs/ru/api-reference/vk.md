@@ -103,6 +103,7 @@ vk.setOptions(options); // => this
 
 | Опция               | Тип    | Описание                              | По умолчанию |
 |---------------------|--------|---------------------------------------|--------------|
+| webhookPath         | string | Путь для обратного вызова Webhook     | null         |
 | webhookSecret       | string | Секретный ключ для проверки запросов  | null         |
 | webhookConfirmation | string | Строка подтверждения сервера          | null         |
 

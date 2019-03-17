@@ -16,7 +16,6 @@ VK-IO - This is a powerful [Node.js](https://nodejs.org) module that allows you 
 - Predictable abstraction
 - Works with large collections of data
 - Support for all types of authorization, including via login and password
-- Typings
 
 ## Migrating to 4.0.0
 You can read the [migration guide here](Upgrade-RU.md).

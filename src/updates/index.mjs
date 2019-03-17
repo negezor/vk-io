@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 import createDebug from 'debug';
-import { compose, getOptionalMiddleware, noopNext } from 'middleware-io';
+import Middleware from 'middleware-io';
 
 import nodeUrl from 'url';
 import nodeUtil from 'util';
@@ -184,7 +184,9 @@ export default class Updates {
 		this.webhookServer = null;
 
 		this.stack = [];
-		this.hearStack = [];
+		this.middleware = null;
+
+		this.hears = new Middleware();
 
 		this.hearFallbackHandler = (context, next) => next();
 
@@ -291,16 +293,10 @@ export default class Updates {
 			});
 		}
 
-		let textCondition = false;
-		let functionCondtion = false;
 		conditions = conditions.map((condition) => {
 			if (typeof condition === 'function') {
-				functionCondtion = true;
-
 				return condition;
 			}
-
-			textCondition = true;
 
 			if (condition instanceof RegExp) {
 				return (text, context) => {
@@ -314,19 +310,11 @@ export default class Updates {
 				};
 			}
 
-			condition = String(condition);
-
 			return text => text === condition;
 		});
 
-		const needText = textCondition === true && functionCondtion === false;
-
-		this.hearStack.push((context, next) => {
+		this.hears.use((context, next) => {
 			const { text } = context;
-
-			if (needText && text === null) {
-				return next();
-			}
 
 			const hasSome = conditions.some(condition => (
 				condition(text, context)
@@ -337,7 +325,9 @@ export default class Updates {
 				: next();
 		});
 
-		this.reloadMiddleware();
+		if (this.hears.length === 1) {
+			this.reloadMiddleware();
+		}
 
 		return this;
 	}
@@ -491,7 +481,9 @@ export default class Updates {
 		this.started = 'webhook';
 
 		try {
-			const webhookCallback = this.getWebhookCallback(path || '/');
+			const { webhookPath } = this.vk.options;
+
+			const webhookCallback = this.getWebhookCallback(path || webhookPath || '/');
 
 			const callback = typeof next === 'function'
 				? (req, res) => (
@@ -780,28 +772,32 @@ export default class Updates {
 	 * @return {Promise<void>}
 	 */
 	dispatchMiddleware(context) {
-		return this.stackMiddleware(context, noopNext);
+		return this.middleware.run(context);
 	}
 
 	/**
 	 * Reloads middleware
 	 */
 	reloadMiddleware() {
-		const stack = [...this.stack];
+		this.middleware = new Middleware(this.stack);
 
-		if (this.hearStack.length !== 0) {
-			stack.push(
-				getOptionalMiddleware(
-					context => context.type === 'message' && !context.isEvent,
-					compose([
-						...this.hearStack,
-						this.hearFallbackHandler
-					])
-				)
-			);
+		if (this.hears.length === 0) {
+			return;
 		}
 
-		this.stackMiddleware = compose(stack);
+		this.middleware.use(async (context, next) => {
+			if (context.type !== 'message' || !context.hasText) {
+				await next();
+
+				return;
+			}
+
+			const { finished } = await this.hears.run(context);
+
+			if (finished) {
+				await this.hearFallbackHandler(context, next);
+			}
+		});
 	}
 
 	/**
