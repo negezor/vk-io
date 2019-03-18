@@ -1947,7 +1947,7 @@ export class Context {
 	/**
 	 * Checks whether the context of some of these types
 	 */
-	public is(types: string[]): boolean;
+	public is(types: string | string[]): boolean;
 
 	/**
 	 * Returns data for JSON
