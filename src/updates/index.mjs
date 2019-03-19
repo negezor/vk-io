@@ -372,7 +372,7 @@ export default class Updates {
 		if (!Context) {
 			debug(`Unsupported polling context type ${type}`);
 
-			return null;
+			return Promise.resolve();
 		}
 
 		return this.dispatchMiddleware(new Context(this.vk, update, {
@@ -399,7 +399,7 @@ export default class Updates {
 		if (!Context) {
 			debug(`Unsupported webhook context type ${type}`);
 
-			return null;
+			return Promise.resolve();
 		}
 
 		return this.dispatchMiddleware(new Context(this.vk, payload, {
