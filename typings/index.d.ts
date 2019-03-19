@@ -651,7 +651,6 @@ export class Upload {
 	public document(
 		params: UploadParams & {
 			group_id?: number;
-			// type?: string;
 
 			title?: string;
 			tags?: string;
@@ -689,7 +688,6 @@ export class Upload {
 	public messageDocument(
 		params: UploadParams & {
 			peer_id?: number;
-			type?: string;
 
 			title?: string;
 			tags?: string;
