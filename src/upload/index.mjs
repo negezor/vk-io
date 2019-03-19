@@ -18,9 +18,9 @@ import {
 	AudioMessageAttachment
 } from '../structures/attachments';
 
-const { createReadStream } = nodeFs;
 const { randomBytes } = nodeCrypto;
-const { inspect } = nodeUtil;
+const { createReadStream } = nodeFs;
+const { inspect, deprecate } = nodeUtil;
 
 const {
 	MISSING_PARAMETERS,
@@ -39,6 +39,13 @@ export default class Upload {
 	 */
 	constructor(vk) {
 		this.vk = vk;
+
+		this.graffiti = deprecate(
+			params => (
+				this.messageGraffiti(params)
+			),
+			'graffiti(params) is deprecated, use messageGraffiti(params) instead'
+		);
 	}
 
 	/**
@@ -526,13 +533,36 @@ export default class Upload {
 	}
 
 	/**
-	 * Uploads graffiti
+	 * Uploads graffiti in documents
 	 *
 	 * @param {Object} params
 	 *
 	 * @return {Promise<GraffitiAttachment>}
 	 */
-	async graffiti(params) {
+	async documentGraffiti(params) {
+		const { graffiti } = await this.conductDocument(
+			{
+				...params,
+				type: 'graffiti'
+			},
+			{
+				attachmentType: 'graffiti'
+			}
+		);
+
+		const graffitiAttachment = new GraffitiAttachment(graffiti, this.vk);
+
+		return graffitiAttachment;
+	}
+
+	/**
+	 * Uploads graffiti in messages
+	 *
+	 * @param {Object} params
+	 *
+	 * @return {Promise<GraffitiAttachment>}
+	 */
+	async messageGraffiti(params) {
 		const { graffiti } = await this.conductMessageDocument(
 			{
 				...params,

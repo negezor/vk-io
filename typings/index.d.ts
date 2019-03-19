@@ -709,15 +709,33 @@ export class Upload {
 		}
 	): Promise<AudioMessageAttachment>;
 
+
 	/**
-	 * Uploads graffiti
+	 * Uploads graffiti in documents
+	 */
+	public documentGraffiti(
+		params: UploadParams & {
+			group_id?: number;
+		}
+	): Promise<GraffitiAttachment>;
+
+	/**
+	 * Uploads graffiti in messages
+	 */
+	public messageGraffiti(
+		params: UploadParams & {
+			peer_id?: number;
+		}
+	): Promise<GraffitiAttachment>;
+
+	/**
+	 * Uploads graffiti in messages
+	 *
+	 * @deprecated
 	 */
 	public graffiti(
 		params: UploadParams & {
 			peer_id?: number;
-
-			title?: string;
-			tags?: string;
 		}
 	): Promise<GraffitiAttachment>;
 

@@ -291,11 +291,11 @@ upload.audioMessage(params); // => Promise<AudioMessageAttachment>
 |----------|--------|-----------------------------------|
 | peer_id  | number | Идентификатор назначения          |
 
-## graffiti
+## documentGraffiti
 Загрузка граффити
 
 ```js
-upload.graffiti(params); // => Promise<DocumentAttachment>
+upload.graffiti(params); // => Promise<GraffitiAttachment>
 ```
 
 | Параметр | Тип    | Описание           |
@@ -307,8 +307,41 @@ upload.graffiti(params); // => Promise<DocumentAttachment>
 | Свойство | Тип    | Описание                               |
 |----------|--------|----------------------------------------|
 | group_id | number | Идентификатор сообщества               |
-| title    | string | Название документа                     |
-| tags     | string | Метки для поиска                       |
+
+## messageGraffiti
+Загрузка граффити
+
+```js
+upload.graffiti(params); // => Promise<GraffitiAttachment>
+```
+
+| Параметр | Тип    | Описание           |
+|----------|--------|--------------------|
+| params   | Object | Параметры загрузки |
+
+Список параметров
+
+| Свойство | Тип    | Описание                               |
+|----------|--------|----------------------------------------|
+| peer_id  | number | Идентификатор сообщества               |
+
+## graffiti
+> Устарело, используйте `messageGraffiti`
+Загрузка граффити
+
+```js
+upload.graffiti(params); // => Promise<GraffitiAttachment>
+```
+
+| Параметр | Тип    | Описание           |
+|----------|--------|--------------------|
+| params   | Object | Параметры загрузки |
+
+Список параметров
+
+| Свойство | Тип    | Описание                               |
+|----------|--------|----------------------------------------|
+| peer_id  | number | Идентификатор сообщества               |
 
 ## groupCover
 Загрузка обложки сообщества
