@@ -475,10 +475,11 @@ export default class Updates {
 	 */
 	async startWebhook(
 		{
+			path = '/',
+
 			tls,
-			path,
-			port,
-			host
+			host,
+			port
 		} = {},
 		next
 	) {
@@ -491,7 +492,7 @@ export default class Updates {
 		this.started = 'webhook';
 
 		try {
-			const webhookCallback = this.getWebhookCallback(path || '/');
+			const webhookCallback = this.getWebhookCallback(path);
 
 			const callback = typeof next === 'function'
 				? (req, res) => (
@@ -558,14 +559,18 @@ export default class Updates {
 	 *
 	 * @return {Function}
 	 */
-	getWebhookCallback(path = '/') {
+	getWebhookCallback(path = null) {
 		const headers = {
 			connection: 'keep-alive',
 			'content-type': 'text/plain'
 		};
 
+		const checkIsNotValidPath = path !== null
+			? requestPath => requestPath !== path
+			: () => false;
+
 		return async (req, res, next) => {
-			if (req.method !== 'POST' || req.url !== path) {
+			if (req.method !== 'POST' || checkIsNotValidPath(req.url)) {
 				next();
 
 				return;
