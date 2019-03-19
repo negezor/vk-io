@@ -844,7 +844,7 @@ export type UpdatesStartWebhookOptions = {
 	host?: string;
 };
 
-type HearFunctionCondition = (text: string, context: MessageContext) => boolean;
+type HearFunctionCondition = (text: string | null, context: MessageContext) => boolean;
 
 type HearCondition = HearFunctionCondition | RegExp | string;
 
