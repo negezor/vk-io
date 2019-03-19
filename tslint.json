@@ -12,5 +12,10 @@
 		"trailing-comma": [true, "never"],
 		"no-parameter-reassignment": false
 	},
-    "rulesDirectory": []
+	"rulesDirectory": [],
+	"linterOptions": {
+		"exclude": [
+			"src/**/*.mjs"
+		]
+	}
 }
