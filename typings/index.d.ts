@@ -57,7 +57,7 @@ export interface VKOptions {
 	/**
 	 * User phone number
 	 */
-	phone?: string;
+	phone?: string | number;
 
 	/**
 	 * User password
@@ -217,7 +217,7 @@ export class VK {
 	/**
 	 * Callback service
 	 */
-	public callbackService: CallbackService;
+	private callbackService: CallbackService;
 
 	/**
 	 * Sets options
@@ -246,7 +246,7 @@ export class Request {
 	/**
 	 * Adds attempt
 	 */
-	public addAttempt(): number;
+	private addAttempt(): number;
 
 	/**
 	 * Returns string to execute
@@ -296,27 +296,27 @@ export class API extends Methods.APIMethods {
 	/**
 	 * Adds method to queue
 	 */
-	public enqueue(method: string, params: Partial): Promise<any>;
+	private enqueue(method: string, params: Partial): Promise<any>;
 
 	/**
 	 * Adds an element to the beginning of the queue
 	 */
-	public requeue(request: Request): void;
+	private requeue(request: Request): void;
 
 	/**
 	 * Running queue
 	 */
-	public worker(): void;
+	private worker(): void;
 
 	/**
 	 * Calls the api method
 	 */
-	public callMethod(request: Request): Promise<void>;
+	private callMethod(request: Request): Promise<void>;
 
 	/**
 	 * Error API handler
 	 */
-	public handleError(request: Request, error: Partial): Promise<void>;
+	private handleError(request: Request, error: Partial): Promise<void>;
 }
 
 export class Auth {
@@ -409,12 +409,12 @@ export class DirectAuth {
 	/**
 	 * Executes the HTTP request
 	 */
-	public fetch(url: string, options: Partial): Promise<Response>;
+	private fetch(url: string, options: Partial): Promise<Response>;
 
 	/**
 	 * Returns permission page
 	 */
-	public getPermissionsPage(query: Partial): Promise<Response>;
+	private getPermissionsPage(query: Partial): Promise<Response>;
 
 	/**
 	 * Runs authorization
@@ -424,17 +424,17 @@ export class DirectAuth {
 	/**
 	 * Process captcha
 	 */
-	public processCaptcha(payload: Partial): Promise<Response>;
+	private processCaptcha(payload: Partial): Promise<Response>;
 
 	/**
 	 * Process two-factor
 	 */
-	public processTwoFactor(payload: Partial): Promise<Response>;
+	private processTwoFactor(payload: Partial): Promise<Response>;
 
 	/**
 	 * Process security form
 	 */
-	public processSecurityForm(response: Response, $: Cheerio): Promise<Response>;
+	private processSecurityForm(response: Response, $: Cheerio): Promise<Response>;
 }
 
 export class ImplicitFlow {
@@ -465,7 +465,7 @@ export class ImplicitFlowUser extends ImplicitFlow {
 	/**
 	 * Returns permission page
 	 */
-	public getPermissionsPage(): Promise<Response>;
+	private getPermissionsPage(): Promise<Response>;
 
 	/**
 	 * Starts authorization
@@ -483,7 +483,7 @@ export class ImplicitFlowGroups extends ImplicitFlow {
 	/**
 	 * Returns cookie
 	 */
-	public getPermissionsPage(): Promise<Response>;
+	private getPermissionsPage(): Promise<Response>;
 
 	/**
 	 * Executes the HTTP request
@@ -643,7 +643,7 @@ export class Upload {
 	/**
 	 * Uploads document
 	 */
-	public conductDocument(params: UploadParams, options?: Partial): Promise<Partial>;
+	private conductDocument(params: UploadParams, options?: Partial): Promise<Partial>;
 
 	/**
 	 * Uploads document
@@ -662,7 +662,7 @@ export class Upload {
 	/**
 	 * Uploads wall document
 	 */
-	public conductWallDocument(params: UploadParams, options?: Partial): Promise<Partial>;
+	private conductWallDocument(params: UploadParams, options?: Partial): Promise<Partial>;
 
 	/**
 	 * Uploads wall document
@@ -681,7 +681,7 @@ export class Upload {
 	/**
 	 * Uploads wall document
 	 */
-	public conductMessageDocument(params: UploadParams, options?: Partial): Promise<Partial>;
+	private conductMessageDocument(params: UploadParams, options?: Partial): Promise<Partial>;
 
 	/**
 	 * Uploads message document
@@ -775,17 +775,17 @@ export class Upload {
 	/**
 	 * Behavior for the upload method
 	 */
-	public conduct(params: Partial): Promise<Partial>;
+	private conduct(params: Partial): Promise<Partial>;
 
 	/**
 	 * Building form data
 	 */
-	public buildPayload(params: Partial): Promise<Partial>;
+	private buildPayload(params: Partial): Promise<Partial>;
 
 	/**
 	 * Upload form data
 	 */
-	public upload(url: URL | string): Promise<Partial>;
+	private upload(url: URL | string): Promise<Partial>;
 }
 
 export class Collect extends Methods.APIMethods {
@@ -892,7 +892,7 @@ export class Updates {
 	/**
 	 * Handles longpoll event
 	 */
-	public handlePollingUpdate(update: any[]): Promise<void>;
+	public handlePollingUpdate(update: Partial[]): Promise<void>;
 
 	/**
 	 * Handles webhook event
@@ -932,17 +932,17 @@ export class Updates {
 	/**
 	 * Gets updates
 	 */
-	public fetchUpdates(): Promise<void>;
+	private fetchUpdates(): Promise<void>;
 
 	/**
 	 * Calls up the middleware chain
 	 */
-	public dispatchMiddleware(context: Context): Promise<void>;
+	private dispatchMiddleware(context: Context): Promise<void>;
 
 	/**
 	 * Reloads middleware
 	 */
-	public reloadMiddleware(): void;
+	private reloadMiddleware(): void;
 }
 
 type ResolvedResource = {
@@ -952,7 +952,7 @@ type ResolvedResource = {
 };
 
 export class Snippets {
-	public resourceResolver: ResourceResolver;
+	private resourceResolver: ResourceResolver;
 
 	/**
 	 * Returns custom tag
@@ -1021,12 +1021,12 @@ export class StreamingAPI {
 	/**
 	 * Processes server messages
 	 */
-	public handleServiceMessage(options: Partial): Promise<void>;
+	private handleServiceMessage(options: Partial): Promise<void>;
 
 	/**
 	 * Handles events
 	 */
-	public handleEvent(event: Partial): Promise<any>;
+	private handleEvent(event: Partial): Promise<any>;
 
 	/**
 	 * Executes the HTTP request for rules
@@ -1734,7 +1734,7 @@ export class VideoAttachment extends Attachment {
 	/**
 	 * Checks for a boolean value in the property
 	 */
-	public checkBooleanInProperty(name: String): number | null;
+	private checkBooleanInProperty(name: String): number | null;
 }
 
 export class WallReplyAttachment extends Attachment {
@@ -2103,7 +2103,7 @@ export class CommentActionContext extends Context {
 	/**
 	 * Includes from subtype
 	 */
-	public includesFromSubType(type: string): boolean;
+	private includesFromSubType(type: string): boolean;
 
 	/**
 	 * Edits a comment
