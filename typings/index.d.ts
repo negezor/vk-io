@@ -877,7 +877,7 @@ export class Updates {
 	public on<T>(events: 'vote' | 'pull_vote', handler: Middleware<VoteContext & T>): this;
 	public on<T>(events: 'group_update' | 'group_update_photo' | 'group_update_officers' | 'group_update_settings', handler: Middleware<GroupUpdateContext & T>): this;
 	public on<T>(events: 'typing' | 'typing_user' | 'typing_group', handler: Middleware<TypingContext & T>): this;
-	public on<T>(events: string | string[], handler: Middleware<Context & T>): this;
+	public on<T>(events: ContextPossibleTypes[] | ContextPossibleTypes, handler: Middleware<Context & T>): this;
 
 	/**
 	 * Listen text
@@ -1061,8 +1061,10 @@ export class StreamingAPI {
 
 export type AttachmentTypes = 'audio' | 'audio_message' | 'graffiti' | 'doc' | 'gift' | 'link' | 'market_album' | 'market' | 'photo' | 'sticker' | 'video' | 'wall_reply' | 'wall' | 'poll';
 
+export type AttachmentPossibleTypes = AttachmentTypes | string;
+
 export class Attachment {
-	public type: string;
+	public type: AttachmentTypes;
 	public ownerId: number;
 	public id: number;
 	public accessKey: string | null;
@@ -1911,7 +1913,7 @@ export class WallAttachment extends Attachment {
 	/**
 	 * Returns the attachments
 	 */
-	public getAttachments(type?: AttachmentTypes | string): Attachment[];
+	public getAttachments(type?: AttachmentPossibleTypes): Attachment[];
 	public getAttachments(type: 'audio'): AudioAttachment[];
 	public getAttachments(type: 'audio_message'): AudioMessageAttachment[];
 	public getAttachments(type: 'graffiti'): GraffitiAttachment[];
@@ -1928,6 +1930,14 @@ export class WallAttachment extends Attachment {
 	public getAttachments(type: 'poll'): PollAttachment[];
 }
 
+/**
+ * TODO: Divide into contexts and render possible types.
+ */
+export type ContextTypes = 'message' | 'message_subscribers'  | 'new_attachment' | 'wall_post' | 'group_member' | 'group_user' | 'comment' | 'vote' | 'group_update' | 'typing';
+export type ContextSubTypes = 'new_message' | 'edit_message' | 'message_subscribe' | 'message_unsubscribe' | 'new_photo_attachment' | 'new_video_attachment' | 'new_audio_attachment' | 'new_wall_post' | 'new_wall_repost' | 'join_group_member' | 'leave_group_member' | 'block_group_user' | 'unblock_group_user' | 'photo_comment' | 'video_comment' | 'wall_comment' | 'board_comment' | 'market_comment' | 'new_photo_comment' | 'edit_photo_comment' | 'delete_photo_comment' | 'restore_photo_comment' | 'new_video_comment' | 'edit_video_comment' | 'delete_video_comment' | 'restore_video_comment' | 'new_wall_comment' | 'edit_wall_comment' | 'delete_wall_comment' | 'restore_wall_comment' | 'new_board_comment' | 'edit_board_comment' | 'delete_board_comment' | 'restore_board_comment' | 'new_market_comment' | 'edit_market_comment' | 'delete_market_comment' | 'restore_market_comment' | 'pull_vote' | 'group_update_photo' | 'group_update_officers' | 'group_update_settings' | 'typing_user' | 'typing_group';
+
+export type ContextPossibleTypes = ContextTypes | ContextSubTypes | string;
+
 export class Context {
 	/**
 	 * Constructor
@@ -1937,17 +1947,17 @@ export class Context {
 	/**
 	 * Type context
 	 */
-	public type?: string;
+	public type: ContextTypes;
 
 	/**
 	 * Sub types context
 	 */
-	public subTypes: string[];
+	public subTypes: ContextSubTypes[];
 
 	/**
 	 * Checks whether the context of some of these types
 	 */
-	public is(types: string[]): boolean;
+	public is(types: ContextPossibleTypes[] | ContextPossibleTypes): boolean;
 
 	/**
 	 * Returns data for JSON
@@ -2069,12 +2079,12 @@ export class CommentActionContext extends Context {
 	/**
 	 * Checks for the presence of attachments
 	 */
-	public hasAttachments(type?: AttachmentTypes | string): boolean;
+	public hasAttachments(type?: AttachmentPossibleTypes): boolean;
 
 	/**
 	 * Returns the attachments
 	 */
-	public getAttachments(type?: AttachmentTypes | string): Attachment[];
+	public getAttachments(type?: AttachmentPossibleTypes): Attachment[];
 	public getAttachments(type: 'audio'): AudioAttachment[];
 	public getAttachments(type: 'audio_message'): AudioMessageAttachment[];
 	public getAttachments(type: 'graffiti'): GraffitiAttachment[];
@@ -2224,12 +2234,12 @@ export class GroupUpdateContext extends Context {
 	/**
 	 * Checks for the presence of attachments
 	 */
-	public hasAttachments(type?: AttachmentTypes | string): boolean;
+	public hasAttachments(type?: AttachmentPossibleTypes): boolean;
 
 	/**
 	 * Returns the attachments
 	 */
-	public getAttachments(type?: AttachmentTypes | string): Attachment[];
+	public getAttachments(type?: AttachmentPossibleTypes): Attachment[];
 	public getAttachments(type: 'audio'): AudioAttachment[];
 	public getAttachments(type: 'audio_message'): AudioMessageAttachment[];
 	public getAttachments(type: 'graffiti'): GraffitiAttachment[];
@@ -2582,12 +2592,12 @@ export class MessageContext extends Context {
 	/**
 	 * Checks for the presence of attachments
 	 */
-	public hasAttachments(type?: AttachmentTypes | string): boolean;
+	public hasAttachments(type?: AttachmentPossibleTypes): boolean;
 
 	/**
 	 * Returns the attachments
 	 */
-	public getAttachments(type?: AttachmentTypes | string): Attachment[];
+	public getAttachments(type?: AttachmentPossibleTypes): Attachment[];
 	public getAttachments(type: 'audio'): AudioAttachment[];
 	public getAttachments(type: 'audio_message'): AudioMessageAttachment[];
 	public getAttachments(type: 'graffiti'): GraffitiAttachment[];
@@ -2730,12 +2740,12 @@ export class NewAttachmentsContext extends Context {
 	/**
 	 * Checks for the presence of attachments
 	 */
-	public hasAttachments(type?: AttachmentTypes | string): boolean;
+	public hasAttachments(type?: AttachmentPossibleTypes): boolean;
 
 	/**
 	 * Returns the attachments
 	 */
-	public getAttachments(type?: AttachmentTypes | string): Attachment[];
+	public getAttachments(type?: AttachmentPossibleTypes): Attachment[];
 	public getAttachments(type: 'audio'): AudioAttachment[];
 	public getAttachments(type: 'audio_message'): AudioMessageAttachment[];
 	public getAttachments(type: 'graffiti'): GraffitiAttachment[];
@@ -2942,12 +2952,12 @@ export class StreamingContext extends Context {
 	/**
 	 *	Checks for the presence of attachments
 		*/
-	public hasAttachments(type?: AttachmentTypes | string): boolean;
+	public hasAttachments(type?: AttachmentPossibleTypes): boolean;
 
 	/**
 	 * Returns the attachments
 	 */
-	public getAttachments(type?: AttachmentTypes | string): Attachment[];
+	public getAttachments(type?: AttachmentPossibleTypes): Attachment[];
 	public getAttachments(type: 'audio'): AudioAttachment[];
 	public getAttachments(type: 'audio_message'): AudioMessageAttachment[];
 	public getAttachments(type: 'graffiti'): GraffitiAttachment[];
@@ -3151,12 +3161,12 @@ export class MessageForward {
 	/**
 	 *	Checks for the presence of attachments
 		*/
-	public hasAttachments(type?: AttachmentTypes | string): boolean;
+	public hasAttachments(type?: AttachmentPossibleTypes): boolean;
 
 	/**
 	 * Returns the attachments
 	 */
-	public getAttachments(type?: AttachmentTypes | string): Attachment[];
+	public getAttachments(type?: AttachmentPossibleTypes): Attachment[];
 	public getAttachments(type: 'audio'): AudioAttachment[];
 	public getAttachments(type: 'audio_message'): AudioMessageAttachment[];
 	public getAttachments(type: 'graffiti'): GraffitiAttachment[];
@@ -3187,12 +3197,12 @@ export class MessageForwardsCollection extends Array<MessageForward> {
 	/**
 	 *	Checks for the presence of attachments
 		*/
-	public hasAttachments(type?: AttachmentTypes | string): boolean;
+	public hasAttachments(type?: AttachmentPossibleTypes): boolean;
 
 	/**
 	 * Returns the attachments
 	 */
-	public getAttachments(type?: AttachmentTypes | string): Attachment[];
+	public getAttachments(type?: AttachmentPossibleTypes): Attachment[];
 	public getAttachments(type: 'audio'): AudioAttachment[];
 	public getAttachments(type: 'audio_message'): AudioMessageAttachment[];
 	public getAttachments(type: 'graffiti'): GraffitiAttachment[];
@@ -3263,12 +3273,12 @@ export class MessageReply {
 	/**
 	 *	Checks for the presence of attachments
 	 */
-	public hasAttachments(type?: AttachmentTypes | string): boolean;
+	public hasAttachments(type?: AttachmentPossibleTypes): boolean;
 
 	/**
 	 * Returns the attachments
 	 */
-	public getAttachments(type?: AttachmentTypes | string): Attachment[];
+	public getAttachments(type?: AttachmentPossibleTypes): Attachment[];
 	public getAttachments(type: 'audio'): AudioAttachment[];
 	public getAttachments(type: 'audio_message'): AudioMessageAttachment[];
 	public getAttachments(type: 'graffiti'): GraffitiAttachment[];
