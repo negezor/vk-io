@@ -862,7 +862,7 @@ export class Updates {
 	/**
 	 * Added middleware
 	 */
-	public use<T>(middleware: Middleware<T>): this;
+	public use<T>(middleware: Middleware<Context & T>): this;
 
 	/**
 	 * Subscribe to events
@@ -877,12 +877,12 @@ export class Updates {
 	public on<T>(events: 'vote' | 'pull_vote', handler: Middleware<VoteContext & T>): this;
 	public on<T>(events: 'group_update' | 'group_update_photo' | 'group_update_officers' | 'group_update_settings', handler: Middleware<GroupUpdateContext & T>): this;
 	public on<T>(events: 'typing' | 'typing_user' | 'typing_group', handler: Middleware<TypingContext & T>): this;
-	public on<T>(events: string | string[], handler: Middleware<T>): this;
+	public on<T>(events: string | string[], handler: Middleware<Context & T>): this;
 
 	/**
 	 * Listen text
 	 */
-	public hear<T>(conditions: HearCondition[] | HearCondition, handler: Middleware<MessageContext>): this;
+	public hear<T>(conditions: HearCondition[] | HearCondition, handler: Middleware<MessageContext & T>): this;
 
 	/**
 	 * A handler that is called when handlers are not found
