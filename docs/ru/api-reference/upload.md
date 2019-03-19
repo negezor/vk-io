@@ -233,7 +233,6 @@ upload.document(params); // => Promise<DocumentAttachment>
 | Свойство | Тип    | Описание                               |
 |----------|--------|----------------------------------------|
 | group_id | number | Идентификатор сообщества               |
-| type     | string | Тип документа (audio_message|graffiti) |
 | title    | string | Название документа                     |
 | tags     | string | Метки для поиска                       |
 
@@ -253,7 +252,6 @@ upload.wallDoc(params); // => Promise<DocumentAttachment>
 | Свойство | Тип    | Описание                               |
 |----------|--------|----------------------------------------|
 | group_id | number | Идентификатор сообщества               |
-| type     | string | Тип документа (audio_message|graffiti) |
 | title    | string | Название документа                     |
 | tags     | string | Метки для поиска                       |
 
@@ -273,7 +271,6 @@ upload.messageDoc(params); // => Promise<DocumentAttachment>
 | Свойство | Тип    | Описание                          |
 |----------|--------|-----------------------------------|
 | peer_id  | number | Идентификатор назначения          |
-| type     | string | Тип документа (doc|audio_message) |
 | title    | string | Название документа                |
 | tags     | string | Метки для поиска                  |
 
@@ -281,7 +278,7 @@ upload.messageDoc(params); // => Promise<DocumentAttachment>
 Загрузка аудио сообщения
 
 ```js
-upload.audioMessage(params); // => Promise<DocumentAttachment>
+upload.audioMessage(params); // => Promise<AudioMessageAttachment>
 ```
 
 | Параметр | Тип    | Описание           |
