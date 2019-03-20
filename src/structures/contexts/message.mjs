@@ -473,6 +473,13 @@ export default class MessageContext extends Context {
 	 */
 	editMessage(params) {
 		return this.vk.api.messages.edit({
+			attachment: this.attachments.filter(attachment => (
+				attachment.canBeAttached
+			)),
+			message: this.text,
+			keep_forward_messages: 1,
+			keep_snippets: 1,
+
 			...params,
 
 			peer_id: this.peerId,
