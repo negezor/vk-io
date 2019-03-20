@@ -52,17 +52,6 @@ export default class MessageContext extends Context {
 
 		this.applyPayload(payload);
 
-		const { peer_id: peerId, from_id: fromId } = payload;
-
-		this.$from = {
-			id: peerId,
-			type: getPeerType(peerId)
-		};
-		this.$sender = {
-			id: fromId,
-			type: getPeerType(fromId)
-		};
-
 		const subTypes = uniqueKeys(payload.attachments.map(attachment => attachment.type));
 
 		const { eventType } = this;
@@ -278,7 +267,7 @@ export default class MessageContext extends Context {
 	 * @return {number}
 	 */
 	get peerId() {
-		return this.$from.id;
+		return this.payload.peer_id;
 	}
 
 	/**
@@ -287,7 +276,7 @@ export default class MessageContext extends Context {
 	 * @return {string}
 	 */
 	get peerType() {
-		return this.$from.type;
+		return getPeerType(this.payload.peer_id);
 	}
 
 	/**
@@ -296,7 +285,7 @@ export default class MessageContext extends Context {
 	 * @return {number}
 	 */
 	get senderId() {
-		return this.$sender.id;
+		return this.payload.from_id;
 	}
 
 	/**
@@ -305,7 +294,7 @@ export default class MessageContext extends Context {
 	 * @return {string}
 	 */
 	get senderType() {
-		return this.$sender.type;
+		return getPeerType(this.payload.from_id);
 	}
 
 	/**
