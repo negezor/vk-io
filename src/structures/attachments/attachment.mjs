@@ -64,6 +64,15 @@ export default class Attachment {
 	}
 
 	/**
+	 * Can be attached via string representation
+	 *
+	 * @returns {boolean}
+	 */
+	get canBeAttached() {
+		return true;
+	}
+
+	/**
 	 * Checks that the attachment is equivalent with object
 	 *
 	 * @param {Attachment} attachment

@@ -36,6 +36,16 @@ export default class ExternalAttachment {
 		return this.$filled;
 	}
 
+
+	/**
+	 * Can be attached via string representation
+	 *
+	 * @returns {boolean}
+	 */
+	get canBeAttached() {
+		return false;
+	}
+
 	/**
 	 * Returns data for JSON
 	 *
