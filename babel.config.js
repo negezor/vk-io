@@ -9,6 +9,7 @@ module.exports = {
 				// Strip `>=`
 				node: engines.node.substring(2)
 			},
+			loose: true,
 			useBuiltIns: false,
 			modules: isTest
 				? 'cjs'
