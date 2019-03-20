@@ -24,7 +24,7 @@ updates.isStarted(); // => boolean
 updates.startPolling(); // => Promise
 ```
 
-##
+## startWebhook
 Запускает webhook сервер
 
 ```js
