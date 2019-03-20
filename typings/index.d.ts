@@ -926,6 +926,11 @@ export class Updates {
 	public startWebhook(options?: UpdatesStartWebhookOptions, next?: Function): Promise<void>;
 
 	/**
+	 * Automatically determines the settings to run
+	 */
+	public start(options?: { webhook?: UpdatesStartWebhookOptions }): Promise<void>;
+
+	/**
 	 * Stopping gets updates
 	 */
 	public stop(): Promise<void>;
