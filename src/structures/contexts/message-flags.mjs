@@ -132,15 +132,6 @@ export default class MessageFlagsContext extends Context {
 	}
 
 	/**
-	 * Verifies that the message has been deleted (for all)
-	 *
-	 * @return {boolean}
-	 */
-	get isDeletedAll() {
-		return Boolean(this.flags & 131072);
-	}
-
-	/**
 	 * Returns the message ID
 	 *
 	 * @return {number}
