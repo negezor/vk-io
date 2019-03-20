@@ -27,7 +27,13 @@ import {
 
 import { delay } from '../utils/helpers';
 import { parseRequestJSON } from './helpers';
-import { VKError, UpdatesError, updatesErrors } from '../errors';
+import {
+	VKError,
+	UpdatesError,
+
+	updatesErrors,
+	apiErrors
+} from '../errors';
 
 import { updatesSources } from '../utils/constants';
 
@@ -459,6 +465,8 @@ export default class Updates {
 			});
 
 			this.startFetchLoop();
+
+			debug(`${isGroup ? 'Bot' : 'User'} Polling started`);
 		} catch (error) {
 			this.started = null;
 
@@ -529,6 +537,35 @@ export default class Updates {
 
 			throw error;
 		}
+	}
+
+	/**
+	 * Automatically determines the settings to run
+	 *
+	 * @return {Promise}
+	 */
+	async start({ webhook } = {}) {
+		if (webhook) {
+			await this.startWebhook(webhook);
+
+			return;
+		}
+
+		if (!this.vk.options.pollingGroupId) {
+			try {
+				const [group] = await this.vk.api.groups.getById();
+
+				this.vk.options.pollingGroupId = group.id;
+			} catch (error) {
+				if (error.code !== apiErrors.WRONG_PARAMETER) {
+					throw error;
+				}
+
+				debug('This is not a group.');
+			}
+		}
+
+		await this.startPolling();
 	}
 
 	/**

@@ -24,7 +24,7 @@ updates.isStarted(); // => boolean
 updates.startPolling(); // => Promise
 ```
 
-## startWebhook
+##
 Запускает webhook сервер
 
 ```js
@@ -59,6 +59,38 @@ updates.startWebhook({
 updates.startWebhook({...}, (req, res) => {
 	// ...
 });
+```
+
+## start
+Запускает `Polling` или `Webhook` сервер
+
+```js
+updates.start(options); // => Promise
+```
+
+| Параметр | Тип      | Описание          |
+|----------|----------|-------------------|
+| options  | Object   | Опции             |
+
+Опции
+
+| Свойство | Тип    | Описание                                                            |
+|----------|--------|---------------------------------------------------------------------|
+| webhook  | Object | Опции передаваемые в [startWebhook](#startWebhook) |
+
+Если передано свойство `webhook`, то будет запупущен сервер с `Webhook`. Иначе `Polling` с автоматическим определением `pollingGroupId`
+> Для быстрого запуска, стоит передавать опцию `pollingGroupId` заранее
+
+```js
+// Webhook
+updates.start({
+	webhook: {
+		path: '/some-secret'
+	}
+}); // => Promise
+
+// Polling
+updates.start(); // => Promise
 ```
 
 ## stop
