@@ -9,7 +9,7 @@ import MessageForwardsCollection from '../shared/message-forwards-collection';
 
 import { getPeerType } from '../shared/helpers';
 import { transformAttachments } from '../attachments/helpers';
-import { uniqueKeys, unescapeHTML, copyParams } from '../../utils/helpers';
+import { unescapeHTML, copyParams } from '../../utils/helpers';
 import {
 	updatesSources,
 	messageSources,
@@ -52,22 +52,14 @@ export default class MessageContext extends Context {
 
 		this.applyPayload(payload);
 
-		const subTypes = uniqueKeys(payload.attachments.map(attachment => attachment.type));
-
 		const { eventType } = this;
 
-		subTypes.push(
+		this.type = 'message';
+		this.subTypes = [
 			!eventType
 				? subTypesEnum[updateType]
 				: eventType
-		);
-
-		if (this.hasText) {
-			subTypes.push('text');
-		}
-
-		this.type = 'message';
-		this.subTypes = subTypes;
+		];
 	}
 
 	/**

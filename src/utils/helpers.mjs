@@ -88,15 +88,6 @@ export const delay = delayed => (
 	new Promise(resolve => setTimeout(resolve, delayed))
 );
 
-/**
- * Returns the unique keys
- *
- * @param {string[]} keys
- *
- * @return {string[]}
- */
-export const uniqueKeys = keys => [...new Set(keys)];
-
 const lt = /&lt;/g;
 const qt = /&gt;/g;
 const br = /<br>/g;

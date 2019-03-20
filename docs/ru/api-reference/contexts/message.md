@@ -7,7 +7,7 @@ import { MessageContext } from 'vk-io';
 ## Updates
 
 - Событие `message`
-- Возможные подтипы `text`, `doc`, `gift`, `link`, `wall`, `photo`, `video`, `audio`, `market`, `sticker`, `wall_reply`, `market_album`
+- Возможные подтипы `new_message`, `edit_message`
 
 > Обратите внимание
 
