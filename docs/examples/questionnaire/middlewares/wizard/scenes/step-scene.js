@@ -8,22 +8,17 @@ module.exports = class StepScene {
 		this.onLeave = options.onLeave;
 	}
 
-	async enterHandler(context) {
+	enterHandler(context) {
 		context.step = new StepContext({
-			wizard: context.wizard,
+			context,
+
 			steps: this.steps
 		});
 
-		const { current } = context.step;
-
-		if (!current) {
-			await context.wizard.leave();
-		}
-
-		await current(context);
+		return context.step.reenter();
 	}
 
-	leaveHandler(context) {
-		return this.onLeave(context);
+	leaveHandler(context, payload) {
+		return this.onLeave(context, payload);
 	}
 };

@@ -5,6 +5,8 @@ module.exports = class WizardContext {
 
 		this.sessionName = sessionName;
 
+		this.leaved = false;
+
 		this.updateSession();
 	}
 
@@ -14,7 +16,7 @@ module.exports = class WizardContext {
 		return (sceneId && this.scenes.get(sceneId)) || null;
 	}
 
-	async enter(sceneId, { silent = false, state = {} } = {}) {
+	async enter(sceneId, options = {}) {
 		const scene = this.scenes.get(sceneId);
 
 		if (!scene) {
@@ -23,18 +25,28 @@ module.exports = class WizardContext {
 
 		const { current } = this;
 
-		if (!silent && current !== null && current.id !== scene.id) {
-			await this.leave();
+		const isNotCurrent = current !== null && current.id !== scene.id;
+
+		if (!this.leaved && isNotCurrent) {
+			await this.leave({
+				silent: options.silent
+			});
+		}
+
+		if (this.leaved && isNotCurrent) {
+			this.leaved = false;
+
+			this.reset();
 		}
 
 		this.session.sceneId = sceneId;
-		Object.assign(this.state, state);
+		Object.assign(this.state, options.state || {});
 
-		if (silent) {
+		if (options.silent) {
 			return;
 		}
 
-		await this.current.enterHandler(this.context);
+		await this.current.enterHandler(this.context, {});
 	}
 
 	reenter() {
@@ -47,18 +59,26 @@ module.exports = class WizardContext {
 		return this.enter(current.id);
 	}
 
-	async leave({ silent = false } = {}) {
+	async leave(options = {}) {
 		const { current } = this;
 
 		if (!current) {
 			return;
 		}
 
-		if (!silent) {
-			await current.leaveHandler(this.context);
+		this.leaved = true;
+
+		if (!options.silent) {
+			await current.leaveHandler(this.context, {
+				canceled: options.canceled || false
+			});
 		}
 
-		this.reset();
+		if (this.leaved) {
+			this.reset();
+		}
+
+		this.leaved = false;
 	}
 
 	reset() {

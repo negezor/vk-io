@@ -6,8 +6,7 @@ const { getSessionMiddleware } = require('./middlewares/session');
 const scenes = require('./scenes');
 
 const vk = new VK({
-	token: process.env.TOKEN,
-	pollingGroupId: process.env.GROUP_ID
+	token: process.env.TOKEN
 });
 
 const wizard = new Wizard();
@@ -17,24 +16,13 @@ for (const scene of scenes) {
 	wizard.addScene(scene);
 }
 
-vk.updates.use(async (context, next) => {
-	if (
-		context.type === 'message'
-		&& (
-			// Ignore is outbox message
-			context.isOutbox
-			// Ignore is bot (group)
-			|| context.senderId < 0
-		)
-	) {
+// Skip outbox messages
+vk.updates.on('message', async (context, next) => {
+	if (context.isOutbox) {
 		return;
 	}
 
-	try {
-		await next();
-	} catch (error) {
-		console.error('Error:', error);
-	}
+	await next();
 });
 
 vk.updates.on('message', (context, next) => {
@@ -60,7 +48,9 @@ vk.updates.on('message', (context, next) => {
 
 	// Global cancel
 	if (context.state.command === 'cancel') {
-		return context.wizard.leave();
+		return context.wizard.leave({
+			canceled: true
+		});
 	}
 
 	return context.wizard.reenter();
@@ -88,25 +78,21 @@ const hearCommand = (name, conditions, handle) => {
 };
 
 // Handle start button
-vk.updates.hear(
-	(text, { state }) => (
-		state.command === 'start'
-	),
-	(context, next) => {
-		context.state.command = 'help';
+hearCommand('start', (context, next) => {
+	context.state.command = 'help';
 
-		return Promise.all([
-			context.send('Hello!'),
-			next()
-		]);
-	}
-);
+	return Promise.all([
+		context.send('Hello!'),
+
+		next()
+	]);
+});
 
 hearCommand('profile', async (context) => {
 	const { user } = context.session;
 
 	if (!user) {
-		await context.send('You are not registred, use /signup for register');
+		await context.send('You are not registered, use /signup for register');
 	}
 
 	const gender = user.gender === 'male'
@@ -133,7 +119,7 @@ hearCommand('signup', async (context) => {
 
 hearCommand('signout', async (context, next) => {
 	if (!context.session.user) {
-		await context.send('You are not logged');
+		await context.send('You are not authorized');
 	}
 
 	delete context.session.user;
@@ -195,10 +181,4 @@ hearCommand('help', async (context) => {
 	});
 });
 
-async function run() {
-	await vk.updates.startPolling();
-
-	console.log('Polling started');
-}
-
-run().catch(console.error);
+vk.updates.start().catch(console.error);

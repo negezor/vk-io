@@ -1,42 +1,20 @@
 const { VK, Keyboard } = require('vk-io');
 
-const vk = new VK();
-
-vk.setOptions({
-	token: process.env.TOKEN,
-	pollingGroupId: process.env.GROUP_ID,
-	apiMode: 'parallel_selected',
-	webhookPath: '/webhook/secret-path'
+const vk = new VK({
+	token: process.env.TOKEN
 });
 
-const { updates } = vk;
+vk.updates.on('message', (context, next) => {
+	const { messagePayload } = context;
 
-// Skip outbox message and handle errors
-updates.use(async (context, next) => {
-	if (context.type === 'message' && context.isOutbox) {
-		return;
-	}
+	context.state.command = messagePayload && messagePayload.command
+		? messagePayload.command
+		: null;
 
-	try {
-		await next();
-	} catch (error) {
-		console.error('Error:', error);
-	}
+	return next();
 });
 
-// Handle message payload
-updates.use(async (context, next) => {
-	if (context.is('message')) {
-		const { messagePayload } = context;
-
-		context.state.command = messagePayload && messagePayload.command
-			? messagePayload.command
-			: null;
-	}
-
-	await next();
-});
-
+// Simple wrapper for commands
 const hearCommand = (name, conditions, handle) => {
 	if (typeof handle !== 'function') {
 		handle = conditions;
@@ -47,7 +25,7 @@ const hearCommand = (name, conditions, handle) => {
 		conditions = [conditions];
 	}
 
-	updates.hear(
+	vk.updates.hear(
 		[
 			(text, { state }) => (
 				state.command === name
@@ -59,17 +37,15 @@ const hearCommand = (name, conditions, handle) => {
 };
 
 // Handle start button
-vk.updates.hear(
-	(text, { state }) => state.command === 'start',
-	(context, next) => {
-		context.state.command = 'help';
+hearCommand('start', (context, next) => {
+	context.state.command = 'help';
 
-		return Promise.all([
-			context.send('Hello!'),
-			next()
-		]);
-	}
-);
+	return Promise.all([
+		context.send('Hello!'),
+
+		next()
+	]);
+});
 
 hearCommand('help', async (context) => {
 	await context.send({
@@ -80,7 +56,6 @@ hearCommand('help', async (context) => {
 			/time - The current date
 			/cat - Cat photo
 			/purr - Cat purring
-			/reverse - Reverse text
 		`,
 		keyboard: Keyboard.keyboard([
 			Keyboard.textButton({
@@ -127,14 +102,6 @@ hearCommand('time', ['/time', '/date'], async (context) => {
 	await context.send(String(new Date()));
 });
 
-hearCommand('reverse', /^\/reverse (.+)/i, async (context) => {
-	const text = context.$match[1];
-
-	const reversed = text.split('').reverse().join('');
-
-	await context.send(reversed);
-});
-
 const catsPurring = [
 	'http://ronsen.org/purrfectsounds/purrs/trip.mp3',
 	'http://ronsen.org/purrfectsounds/purrs/maja.mp3',
@@ -151,16 +118,4 @@ hearCommand('purr', async (context) => {
 	]);
 });
 
-async function run() {
-	if (process.env.UPDATES === 'webhook') {
-		await vk.updates.startWebhook();
-
-		console.log('Webhook server started');
-	} else {
-		await vk.updates.startPolling();
-
-		console.log('Polling started');
-	}
-}
-
-run().catch(console.error);
+vk.updates.start().catch(console.error);

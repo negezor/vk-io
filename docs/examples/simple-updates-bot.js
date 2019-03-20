@@ -1,30 +1,10 @@
 const { VK } = require('vk-io');
 
-const vk = new VK();
-
-vk.setOptions({
-	token: process.env.TOKEN,
-	pollingGroupId: process.env.GROUP_ID,
-	apiMode: 'parallel_selected',
-	webhookPath: '/webhook/secret-path'
+const vk = new VK({
+	token: process.env.TOKEN
 });
 
-const { updates } = vk;
-
-// Skip outbox message and handle errors
-updates.use(async (context, next) => {
-	if (context.type === 'message' && context.isOutbox) {
-		return;
-	}
-
-	try {
-		await next();
-	} catch (error) {
-		console.error('Error:', error);
-	}
-});
-
-updates.hear('/start', async (context) => {
+vk.updates.hear('/start', async (context) => {
 	await context.send(`
 		My commands list
 
@@ -35,7 +15,7 @@ updates.hear('/start', async (context) => {
 	`);
 });
 
-updates.hear('/cat', async (context) => {
+vk.updates.hear('/cat', async (context) => {
 	await Promise.all([
 		context.send('Wait for the uploads awesome 😻'),
 
@@ -43,16 +23,14 @@ updates.hear('/cat', async (context) => {
 	]);
 });
 
-updates.hear(['/time', '/date'], async (context) => {
+vk.updates.hear(['/time', '/date'], async (context) => {
 	await context.send(String(new Date()));
 });
 
-updates.hear(/^\/reverse (.+)/i, async (context) => {
-	const text = context.$match[1];
-
-	const reversed = text.split('').reverse().join('');
-
-	await context.send(reversed);
+vk.updates.hear(/^\/reverse (.+)/i, async (context) => {
+	await context.send(
+		context.$match[1].split('').reverse().join('')
+	);
 });
 
 const catsPurring = [
@@ -61,7 +39,7 @@ const catsPurring = [
 	'http://ronsen.org/purrfectsounds/purrs/chicken.mp3'
 ];
 
-updates.hear('/purr', async (context) => {
+vk.updates.hear('/purr', async (context) => {
 	const link = catsPurring[Math.floor(Math.random() * catsPurring.length)];
 
 	await Promise.all([
@@ -71,16 +49,4 @@ updates.hear('/purr', async (context) => {
 	]);
 });
 
-async function run() {
-	if (process.env.UPDATES === 'webhook') {
-		await vk.updates.startWebhook();
-
-		console.log('Webhook server started');
-	} else {
-		await vk.updates.startPolling();
-
-		console.log('Polling started');
-	}
-}
-
-run().catch(console.error);
+vk.updates.start().catch(console.error);

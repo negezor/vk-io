@@ -1,39 +1,61 @@
 module.exports = class StepContext {
 	constructor({
-		wizard,
+		context,
 		steps
 	}) {
-		this.wizard = wizard;
+		this.context = context;
 		this.steps = steps;
 	}
 
-	get state() {
-		return this.wizard.state;
-	}
-
 	get stepId() {
-		const { stepId = 0 } = this.wizard.session;
-
-		if (!this.steps[stepId]) {
-			return null;
-		}
-
-		return stepId;
+		return this.context.wizard.session.stepId || 0;
 	}
 
 	set stepId(stepId) {
-		this.wizard.session.stepId = stepId;
+		Object.assign(this.context.wizard.session, {
+			stepId,
+			firstTime: true
+		});
 	}
 
 	get current() {
 		return this.steps[this.stepId] || null;
 	}
 
-	next() {
-		this.stepId = this.stepId + 1;
+	reenter() {
+		const { current } = this;
+
+		if (!current) {
+			return this.context.wizard.leave();
+		}
+
+		const { firstTime = true } = this.context.wizard.session;
+
+		this.context.wizard.session.firstTime = false;
+
+		return current(this.context, {
+			firstTime
+		});
 	}
 
-	previous() {
-		this.stepId = this.stepId - 1;
+
+	next({ silent = false } = {}) {
+		this.stepId += 1;
+
+		if (silent) {
+			return Promise.resolve();
+		}
+
+		return this.reenter();
+	}
+
+	previous({ silent = false } = {}) {
+		this.stepId -= 1;
+
+		if (silent) {
+			return Promise.resolve();
+		}
+
+		return this.reenter();
 	}
 };
