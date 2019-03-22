@@ -62,6 +62,14 @@ context.hasAttachments([type]); // => boolean
 context.hasText; // => boolean
 ```
 
+## hasReplyMessage
+
+Проверяет наличие сообщения, в ответ на которое отправлено текущее
+
+```js
+context.hasReplyMessage; // => boolean
+```
+
 ## hasForwards
 
 Проверяет наличие пересланных сообщений
@@ -220,6 +228,14 @@ context.createdAt; // => number
 
 ```js
 context.text; // => ?string
+```
+
+## replyMessage
+
+Возвращает сообщение, в ответ на которое отправлено текущее
+
+```js
+context.replyMessage; // => MessageReply[]
 ```
 
 ## forwards
