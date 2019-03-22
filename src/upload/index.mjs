@@ -153,7 +153,6 @@ export default class Upload {
 			params,
 
 			getServer: this.vk.api.photos.getMessagesUploadServer,
-			serverParams: ['peer_id'],
 
 			saveFiles: this.vk.api.photos.saveMessagesPhoto,
 
