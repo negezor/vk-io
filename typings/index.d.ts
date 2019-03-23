@@ -567,9 +567,7 @@ export class Upload {
 	/**
 	 * Uploading a photo to a message */
 	public messagePhoto(
-		params: UploadParams & {
-			peer_id?: number;
-		}
+		params: UploadParams
 	): Promise<PhotoAttachment>;
 
 	/**
