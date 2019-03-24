@@ -5,7 +5,7 @@ const vk = new VK({
 });
 
 vk.updates.hear(/hello/i, context => (
-	context.send('Hello!')
+	context.send('World!')
 ));
 
 vk.updates.start().catch(console.error);
