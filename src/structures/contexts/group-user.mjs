@@ -109,6 +109,15 @@ export default class GroupUserContext extends Context {
 	get reasonName() {
 		return reasonNames.get(this.reasonId);
 	}
+	
+	/**
+	 * Returns the unblock date or null if permanent
+	 *
+	 * @return {?Date}
+	 */
+	get unblockDate() {
+		return this.payload.unblock_date ? new Date(this.payload.unblock_date) : null;
+	}
 
 	/**
 	 * Returns the administrator comment to block
