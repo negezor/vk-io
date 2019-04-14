@@ -109,7 +109,7 @@ export default class GroupUserContext extends Context {
 	get reasonName() {
 		return reasonNames.get(this.reasonId);
 	}
-	
+
 	/**
 	 * Returns the unblock date or null if permanent
 	 *
