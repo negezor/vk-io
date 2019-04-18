@@ -70,6 +70,11 @@ export interface VKOptions {
 	authScope?: string;
 
 	/**
+	 * Wait time for one auth request
+	 */
+	authTimeout?: number;
+
+	/**
 	 * Query mode (sequential|parallel|parallel_selected)
 	 */
 	apiMode?: 'sequential' | 'parallel' | 'parallel_selected';
