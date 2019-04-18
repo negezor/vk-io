@@ -151,17 +151,10 @@ export default class Auth {
 			.update(sign)
 			.digest('hex');
 
-		let authorized = false;
-
 		const isNotExpire = params.expire > (Date.now() / 1000);
+		const authorized = params.sig === sign && isNotExpire;
 
-		if (params.sig === sign && isNotExpire) {
-			authorized = true;
-		}
-
-		return {
-			authorized
-		};
+		return { authorized };
 	}
 
 	/**
