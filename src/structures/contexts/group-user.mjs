@@ -115,8 +115,10 @@ export default class GroupUserContext extends Context {
 	 *
 	 * @return {?Date}
 	 */
-	get unblockDate() {
-		return this.payload.unblock_date ? new Date(this.payload.unblock_date) : null;
+	get unblockAt() {
+		return this.payload.unblock_date
+			? new Date(this.payload.unblock_date)
+			: null;
 	}
 
 	/**
