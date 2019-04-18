@@ -40,6 +40,7 @@
 		"babel-core": "^7.0.0-0",
 		"babel-eslint": "^10.0.1",
 		"babel-jest": "^24.7.1",
+		"cross-env": "^5.2.0",
 		"eslint": "^5.16.0",
 		"eslint-config-airbnb-base": "^13.1.0",
 		"eslint-plugin-import": "^2.17.2",
@@ -64,10 +65,10 @@
 	},
 	"scripts": {
 		"prepare": "yarn run rollup:build && yarn run test",
-		"rollup:build": "NODE_ENV=production rollup -c",
+		"rollup:build": "cross-env NODE_ENV=production rollup -c",
 		"rollup:watch": "yarn run rollup:build -w",
 		"test": "yarn run test:jest && yarn run test:eslint",
-		"test:jest": "BABEL_ENV=test jest --config jest.config.json --no-cache",
+		"test:jest": "cross-env BABEL_ENV=test jest --config jest.config.json --no-cache",
 		"test:eslint": "eslint ./src --ext .mjs,.js --ignore-path .gitignore .",
 		"test:typings": "tslint typings/index.d.ts"
 	}
