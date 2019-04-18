@@ -83,6 +83,10 @@ export default class MessageContext extends Context {
 
 		const [message] = items;
 
+		this[kForwards] = null;
+		this[kAttachments] = null;
+		this[kReplyMessage] = null;
+
 		this.applyPayload(message);
 
 		this.$filled = true;
