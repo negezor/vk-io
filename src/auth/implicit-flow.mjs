@@ -90,7 +90,8 @@ export default class ImplicitFlow {
 		password = vk.options.password,
 
 		agent = vk.options.agent,
-		scope = vk.options.authScope
+		scope = vk.options.authScope,
+		timeout = vk.options.authTimeout
 	} = {}) {
 		this.vk = vk;
 
@@ -103,6 +104,7 @@ export default class ImplicitFlow {
 
 		this.agent = agent;
 		this.scope = scope;
+		this.timeout = timeout;
 
 		this.jar = new CookieJar();
 
@@ -174,7 +176,7 @@ export default class ImplicitFlow {
 	 * @return {Promise<Response>}
 	 */
 	fetch(url, options = {}) {
-		const { agent } = this;
+		const { agent, timeout } = this;
 
 		const { headers = {} } = options;
 
@@ -182,6 +184,7 @@ export default class ImplicitFlow {
 			...options,
 
 			agent,
+			timeout,
 			compress: false,
 
 			headers: {

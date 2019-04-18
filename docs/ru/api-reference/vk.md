@@ -57,14 +57,15 @@ vk.setOptions(options); // => this
 
 ### Опции авторизации
 
-| Опция     | Тип    | Описание                  | По умолчанию |
-|-----------|--------|---------------------------|--------------|
-| appId     | number | Идентификатор приложения  | null         |
-| appSecret | string | Секретный ключ приложения | null         |
-| login     | string | Логин (email)             | null         |
-| phone     | string | Телефон                   | null         |
-| password  | string | Пароль                    | null         |
-| authScope | string | Доступ приложения         | all          |
+| Опция       | Тип    | Описание                  | По умолчанию |
+|-----------  |--------|---------------------------|--------------|
+| appId       | number | Идентификатор приложения  | null         |
+| appSecret   | string | Секретный ключ приложения | null         |
+| login       | string | Логин (email)             | null         |
+| phone       | string | Телефон                   | null         |
+| password    | string | Пароль                    | null         |
+| authScope   | string | Доступ приложения         | all          |
+| authTimeout | number | Время ожидания запроса    | 10000        |
 
 ### Опции запросов к API
 

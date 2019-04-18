@@ -54,6 +54,7 @@ export const MINIMUM_TIME_INTERVAL_API = 1133;
  * @property {?string} [password]            User password
  *
  * @property {?number} [authScope]           List of permissions
+ * @property {?number} [authTimeout]         Wait time for one auth request
  *
  * @property {string}  [apiMode]             Query mode (sequential|parallel|parallel_selected)
  * @property {number}  [apiWait]             Time to wait before re-querying
@@ -89,6 +90,7 @@ export const defaultOptions = {
 	password: null,
 
 	authScope: 'all',
+	authTimeout: 10e3,
 
 	apiMode: 'sequential',
 	apiWait: 3e3,

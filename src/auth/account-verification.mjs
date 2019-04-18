@@ -108,6 +108,7 @@ export default class AccountVerification {
 			...options,
 
 			agent,
+			timeout: this.vk.options.authTimeout,
 			compress: false,
 
 			headers: {

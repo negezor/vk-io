@@ -69,8 +69,8 @@ export default class DirectAuth {
 		password = vk.options.password,
 
 		scope = vk.options.authScope,
-		agent = vk.options.agent
-
+		agent = vk.options.agent,
+		timeout = vk.options.authTimeout
 	} = {}) {
 		this.vk = vk;
 
@@ -83,6 +83,7 @@ export default class DirectAuth {
 
 		this.agent = agent;
 		this.scope = scope;
+		this.timeout = timeout;
 
 		this.started = false;
 
@@ -111,7 +112,7 @@ export default class DirectAuth {
 	 * @return {Promise<Response>}
 	 */
 	fetch(url, options = {}) {
-		const { agent } = this;
+		const { agent, timeout } = this;
 
 		const { headers = {} } = options;
 
@@ -119,6 +120,7 @@ export default class DirectAuth {
 			...options,
 
 			agent,
+			timeout,
 			compress: false,
 
 			headers: {
