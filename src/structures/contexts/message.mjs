@@ -574,8 +574,6 @@ export default class MessageContext extends Context {
 
 		const attachment = await Promise.all(sources.map(source => (
 			this.vk.upload.messagePhoto({
-				peer_id: this.senderId,
-
 				source
 			})
 		)));
