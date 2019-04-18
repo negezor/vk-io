@@ -67,6 +67,13 @@ const CAPTCHA_ATTEMPTS = 3;
  */
 const REPLACE_PREFIX_RE = /^[+|0]+/;
 
+/**
+ * Find location.href text
+ *
+ * @type {RegExp}
+ */
+const FIND_LOCATION_HREF_RE = /location\.href\s+=\s+"([^"]+)"/i;
+
 export default class ImplicitFlow {
 	/**
 	 * Constructor
@@ -283,13 +290,13 @@ export default class ImplicitFlow {
 					method: 'POST'
 				});
 			} else {
-				const script = $('script[type="text/javascript"][language="javascript"]').text();
-				const locations = script.match(/location\.href\s+=\s+"([^"]+)"/i);
+				const locations = $.html().match(FIND_LOCATION_HREF_RE);
 
 				if (locations === null) {
 					throw new AuthError({
 						message: 'Could not log in',
-						code: AUTHORIZATION_FAILED
+						code: AUTHORIZATION_FAILED,
+						pageHtml: $.html()
 					});
 				}
 
