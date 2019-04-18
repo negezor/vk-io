@@ -111,6 +111,17 @@ export default class GroupUserContext extends Context {
 	}
 
 	/**
+	 * Returns the unblock date or null if permanent
+	 *
+	 * @return {?Date}
+	 */
+	get unblockAt() {
+		return this.payload.unblock_date
+			? new Date(this.payload.unblock_date)
+			: null;
+	}
+
+	/**
 	 * Returns the administrator comment to block
 	 *
 	 * @return {?string}
