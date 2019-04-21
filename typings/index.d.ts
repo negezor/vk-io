@@ -2,18 +2,17 @@
 //  Ilya Sinkin (https://github.com/isinkin)
 
 // declare module 'vk-io' {
-import WebSocket from 'ws';
 import Cheerio from 'cheerio';
 import { Response } from 'node-fetch';
 import { CookieJar } from 'tough-cookie';
-import { Middleware, NextMiddleware } from 'middleware-io';
+import { Middleware } from 'middleware-io';
 
 import { URL } from 'url';
 import { Agent } from 'https';
 import { Readable } from 'stream';
 
-import * as Methods from './methods.d';
 import * as Params from './params.d';
+import * as Methods from './methods.d';
 
 export * from './params.d';
 export * from './responses.d';
@@ -23,7 +22,7 @@ type Partial = {
 	[key: string]: any;
 };
 
-export interface VKOptions {
+export interface IVKOptions {
 	/**
 	 * Access token
 	 */
@@ -162,7 +161,8 @@ export class VK {
 	/**
 	* Constructor
 	*/
-	constructor(options?: VKOptions);
+	constructor(options?: IVKOptions);
+
 
 	/**
 	 * Access token
@@ -182,7 +182,7 @@ export class VK {
 	/**
 	 * Options
 	 */
-	public options: VKOptions;
+	public options: IVKOptions;
 
 	/**
 	 * API
@@ -227,15 +227,18 @@ export class VK {
 	/**
 	 * Sets options
 	 */
-	public setOptions(options: VKOptions): this;
+	public setOptions(options: IVKOptions): this;
 }
 
 export default VK;
 
 export class Request {
 	public method: string;
+
 	public params: Partial;
+
 	public attempts: number;
+
 	public promise: Promise<void>;
 
 	/**
@@ -381,7 +384,7 @@ export class Auth {
 	public userAuthorizedThroughOpenAPI(params: Partial): Promise<Partial>;
 }
 
-export interface DirectAuthOptions {
+export interface IDirectAuthOptions {
 	appId?: number;
 	appSecret?: number;
 
@@ -393,7 +396,7 @@ export interface DirectAuthOptions {
 	scope?: string;
 }
 
-export interface DirectAuthRunResult {
+export interface IDirectAuthRunResult {
 	email: string;
 	user: number;
 	token: string;
@@ -409,7 +412,7 @@ export class DirectAuth {
 	/**
 	 * Constructor
 	 */
-	public constructor(vk: VK, options: DirectAuthOptions);
+	public constructor(vk: VK, options: IDirectAuthOptions);
 
 	/**
 	 * Executes the HTTP request
@@ -424,7 +427,7 @@ export class DirectAuth {
 	/**
 	 * Runs authorization
 	 */
-	public run(): Promise<DirectAuthRunResult>;
+	public run(): Promise<IDirectAuthRunResult>;
 
 	/**
 	 * Process captcha
@@ -459,7 +462,7 @@ export class ImplicitFlow {
 	public run(): any;
 }
 
-export interface ImplicitFlowUserRunResult {
+export interface IImplicitFlowUserRunResult {
 	email: string;
 	user: number;
 	token: string;
@@ -475,10 +478,10 @@ export class ImplicitFlowUser extends ImplicitFlow {
 	/**
 	 * Starts authorization
 	 */
-	public run(): Promise<ImplicitFlowUserRunResult>;
+	public run(): Promise<IImplicitFlowUserRunResult>;
 }
 
-export interface ImplicitFlowGroupRunResult {
+export interface IImplicitFlowGroupRunResult {
 	group: number;
 	token: string;
 	expires: number;
@@ -493,7 +496,7 @@ export class ImplicitFlowGroups extends ImplicitFlow {
 	/**
 	 * Executes the HTTP request
 	 */
-	public run(): Promise<ImplicitFlowGroupRunResult[]>;
+	public run(): Promise<IImplicitFlowGroupRunResult[]>;
 }
 
 /**
@@ -888,16 +891,27 @@ export class Updates {
 	/**
 	 * Subscribe to events
 	 */
+
 	public on<T>(events: 'message' | 'new_message' | 'edit_message', handler: Middleware<MessageContext & T>): this;
+
 	public on<T>(events: 'message_subscribers' | 'message_subscribe' | 'message_unsubscribe', handler: Middleware<MessageAllowContext & T>): this;
+
 	public on<T>(events: 'new_attachment' | 'new_photo_attachment' | 'new_video_attachment' | 'new_audio_attachment', handler: Middleware<NewAttachmentsContext & T>): this;
+
 	public on<T>(events: 'wall_post' | 'new_wall_post' | 'new_wall_repost', handler: Middleware<WallPostContext & T>): this;
+
 	public on<T>(events: 'group_member' | 'join_group_member' | 'leave_group_member', handler: Middleware<GroupMemberContext & T>): this;
+
 	public on<T>(events: 'group_user' | 'block_group_user' | 'unblock_group_user', handler: Middleware<GroupUserContext & T>): this;
+
 	public on<T>(events: 'comment' | 'photo_comment' | 'video_comment' | 'wall_comment' | 'board_comment' | 'market_comment' | 'new_photo_comment' | 'edit_photo_comment' | 'delete_photo_comment' | 'restore_photo_comment' | 'new_video_comment' | 'edit_video_comment' | 'delete_video_comment' | 'restore_video_comment' | 'new_wall_comment' | 'edit_wall_comment' | 'delete_wall_comment' | 'restore_wall_comment' | 'new_board_comment' | 'edit_board_comment' | 'delete_board_comment' | 'restore_board_comment' | 'new_market_comment' | 'edit_market_comment' | 'delete_market_comment' | 'restore_market_comment', handler: Middleware<CommentActionContext & T>): this;
+
 	public on<T>(events: 'vote' | 'pull_vote', handler: Middleware<VoteContext & T>): this;
+
 	public on<T>(events: 'group_update' | 'group_update_photo' | 'group_update_officers' | 'group_update_settings', handler: Middleware<GroupUpdateContext & T>): this;
+
 	public on<T>(events: 'typing' | 'typing_user' | 'typing_group', handler: Middleware<TypingContext & T>): this;
+
 	public on<T>(events: ContextPossibleTypes[] | ContextPossibleTypes, handler: Middleware<Context & T>): this;
 
 	/**
@@ -1091,8 +1105,11 @@ export type AttachmentPossibleTypes = AttachmentTypes | string;
 
 export class Attachment {
 	public type: AttachmentTypes;
+
 	public ownerId: number;
+
 	public id: number;
+
 	public accessKey: string | null;
 
 	/**
@@ -1940,26 +1957,40 @@ export class WallAttachment extends Attachment {
 	 * Returns the attachments
 	 */
 	public getAttachments(type?: AttachmentPossibleTypes): Attachment[];
+
 	public getAttachments(type: 'audio'): AudioAttachment[];
+
 	public getAttachments(type: 'audio_message'): AudioMessageAttachment[];
+
 	public getAttachments(type: 'graffiti'): GraffitiAttachment[];
+
 	public getAttachments(type: 'doc'): DocumentAttachment[];
+
 	public getAttachments(type: 'gift'): GiftAttachment[];
+
 	public getAttachments(type: 'link'): LinkAttachment[];
+
 	public getAttachments(type: 'market_album'): MarketAlbumAttachment[];
+
 	public getAttachments(type: 'market'): MarketAttachment[];
+
 	public getAttachments(type: 'photo'): PhotoAttachment[];
+
 	public getAttachments(type: 'sticker'): StickerAttachment[];
+
 	public getAttachments(type: 'video'): VideoAttachment[];
+
 	public getAttachments(type: 'wall_reply'): WallReplyAttachment[];
+
 	public getAttachments(type: 'wall'): WallAttachment[];
+
 	public getAttachments(type: 'poll'): PollAttachment[];
 }
 
 /**
  * TODO: Divide into contexts and render possible types.
  */
-export type ContextTypes = 'message' | 'message_subscribers'  | 'new_attachment' | 'wall_post' | 'group_member' | 'group_user' | 'comment' | 'vote' | 'group_update' | 'typing';
+export type ContextTypes = 'message' | 'message_subscribers' | 'new_attachment' | 'wall_post' | 'group_member' | 'group_user' | 'comment' | 'vote' | 'group_update' | 'typing';
 export type ContextSubTypes = 'new_message' | 'edit_message' | 'message_subscribe' | 'message_unsubscribe' | 'new_photo_attachment' | 'new_video_attachment' | 'new_audio_attachment' | 'new_wall_post' | 'new_wall_repost' | 'join_group_member' | 'leave_group_member' | 'block_group_user' | 'unblock_group_user' | 'photo_comment' | 'video_comment' | 'wall_comment' | 'board_comment' | 'market_comment' | 'new_photo_comment' | 'edit_photo_comment' | 'delete_photo_comment' | 'restore_photo_comment' | 'new_video_comment' | 'edit_video_comment' | 'delete_video_comment' | 'restore_video_comment' | 'new_wall_comment' | 'edit_wall_comment' | 'delete_wall_comment' | 'restore_wall_comment' | 'new_board_comment' | 'edit_board_comment' | 'delete_board_comment' | 'restore_board_comment' | 'new_market_comment' | 'edit_market_comment' | 'delete_market_comment' | 'restore_market_comment' | 'pull_vote' | 'group_update_photo' | 'group_update_officers' | 'group_update_settings' | 'typing_user' | 'typing_group';
 
 export type ContextPossibleTypes = ContextTypes | ContextSubTypes | string;
@@ -2111,19 +2142,33 @@ export class CommentActionContext extends Context {
 	 * Returns the attachments
 	 */
 	public getAttachments(type?: AttachmentPossibleTypes): Attachment[];
+
 	public getAttachments(type: 'audio'): AudioAttachment[];
+
 	public getAttachments(type: 'audio_message'): AudioMessageAttachment[];
+
 	public getAttachments(type: 'graffiti'): GraffitiAttachment[];
+
 	public getAttachments(type: 'doc'): DocumentAttachment[];
+
 	public getAttachments(type: 'gift'): GiftAttachment[];
+
 	public getAttachments(type: 'link'): LinkAttachment[];
+
 	public getAttachments(type: 'market_album'): MarketAlbumAttachment[];
+
 	public getAttachments(type: 'market'): MarketAttachment[];
+
 	public getAttachments(type: 'photo'): PhotoAttachment[];
+
 	public getAttachments(type: 'sticker'): StickerAttachment[];
+
 	public getAttachments(type: 'video'): VideoAttachment[];
+
 	public getAttachments(type: 'wall_reply'): WallReplyAttachment[];
+
 	public getAttachments(type: 'wall'): WallAttachment[];
+
 	public getAttachments(type: 'poll'): PollAttachment[];
 
 	/**
@@ -2266,19 +2311,33 @@ export class GroupUpdateContext extends Context {
 	 * Returns the attachments
 	 */
 	public getAttachments(type?: AttachmentPossibleTypes): Attachment[];
+
 	public getAttachments(type: 'audio'): AudioAttachment[];
+
 	public getAttachments(type: 'audio_message'): AudioMessageAttachment[];
+
 	public getAttachments(type: 'graffiti'): GraffitiAttachment[];
+
 	public getAttachments(type: 'doc'): DocumentAttachment[];
+
 	public getAttachments(type: 'gift'): GiftAttachment[];
+
 	public getAttachments(type: 'link'): LinkAttachment[];
+
 	public getAttachments(type: 'market_album'): MarketAlbumAttachment[];
+
 	public getAttachments(type: 'market'): MarketAttachment[];
+
 	public getAttachments(type: 'photo'): PhotoAttachment[];
+
 	public getAttachments(type: 'sticker'): StickerAttachment[];
+
 	public getAttachments(type: 'video'): VideoAttachment[];
+
 	public getAttachments(type: 'wall_reply'): WallReplyAttachment[];
+
 	public getAttachments(type: 'wall'): WallAttachment[];
+
 	public getAttachments(type: 'poll'): PollAttachment[];
 }
 
@@ -2624,19 +2683,33 @@ export class MessageContext extends Context {
 	 * Returns the attachments
 	 */
 	public getAttachments(type?: AttachmentPossibleTypes): Attachment[];
+
 	public getAttachments(type: 'audio'): AudioAttachment[];
+
 	public getAttachments(type: 'audio_message'): AudioMessageAttachment[];
+
 	public getAttachments(type: 'graffiti'): GraffitiAttachment[];
+
 	public getAttachments(type: 'doc'): DocumentAttachment[];
+
 	public getAttachments(type: 'gift'): GiftAttachment[];
+
 	public getAttachments(type: 'link'): LinkAttachment[];
+
 	public getAttachments(type: 'market_album'): MarketAlbumAttachment[];
+
 	public getAttachments(type: 'market'): MarketAttachment[];
+
 	public getAttachments(type: 'photo'): PhotoAttachment[];
+
 	public getAttachments(type: 'sticker'): StickerAttachment[];
+
 	public getAttachments(type: 'video'): VideoAttachment[];
+
 	public getAttachments(type: 'wall_reply'): WallReplyAttachment[];
+
 	public getAttachments(type: 'wall'): WallAttachment[];
+
 	public getAttachments(type: 'poll'): PollAttachment[];
 
 	/**
@@ -2658,12 +2731,14 @@ export class MessageContext extends Context {
 	 * Sends a message to the current dialog
 	 */
 	public send(text: string, params?: Params.MessagesSendParams): Promise<number>;
+
 	public send(text: Params.MessagesSendParams): Promise<number>;
 
 	/**
 	 * Responds to the current message
 	 */
 	public reply(text: string, params?: Params.MessagesSendParams): Promise<number>;
+
 	public reply(text: Params.MessagesSendParams): Promise<number>;
 
 	/**
@@ -2674,16 +2749,19 @@ export class MessageContext extends Context {
 	/**
 	 * Sends a photo to the current dialog
 	 */
+
 	public sendPhoto(sources: UploadSource[] | UploadSource, params?: Params.MessagesSendParams): Promise<number>;
 
 	/**
 	 * Sends a document to the current dialog
 	 */
+
 	public sendDocument(sources: UploadSource[] | UploadSource, params?: Params.MessagesSendParams): Promise<number>;
 
 	/**
 	 * Sends a audio message to the current dialog
 	 */
+
 	public sendAudioMessage(sources: UploadSource[] | UploadSource, params?: Params.MessagesSendParams): Promise<number>;
 
 	/**
@@ -2772,19 +2850,33 @@ export class NewAttachmentsContext extends Context {
 	 * Returns the attachments
 	 */
 	public getAttachments(type?: AttachmentPossibleTypes): Attachment[];
+
 	public getAttachments(type: 'audio'): AudioAttachment[];
+
 	public getAttachments(type: 'audio_message'): AudioMessageAttachment[];
+
 	public getAttachments(type: 'graffiti'): GraffitiAttachment[];
+
 	public getAttachments(type: 'doc'): DocumentAttachment[];
+
 	public getAttachments(type: 'gift'): GiftAttachment[];
+
 	public getAttachments(type: 'link'): LinkAttachment[];
+
 	public getAttachments(type: 'market_album'): MarketAlbumAttachment[];
+
 	public getAttachments(type: 'market'): MarketAttachment[];
+
 	public getAttachments(type: 'photo'): PhotoAttachment[];
+
 	public getAttachments(type: 'sticker'): StickerAttachment[];
+
 	public getAttachments(type: 'video'): VideoAttachment[];
+
 	public getAttachments(type: 'wall_reply'): WallReplyAttachment[];
+
 	public getAttachments(type: 'wall'): WallAttachment[];
+
 	public getAttachments(type: 'poll'): PollAttachment[];
 
 	/**
@@ -2984,19 +3076,33 @@ export class StreamingContext extends Context {
 	 * Returns the attachments
 	 */
 	public getAttachments(type?: AttachmentPossibleTypes): Attachment[];
+
 	public getAttachments(type: 'audio'): AudioAttachment[];
+
 	public getAttachments(type: 'audio_message'): AudioMessageAttachment[];
+
 	public getAttachments(type: 'graffiti'): GraffitiAttachment[];
+
 	public getAttachments(type: 'doc'): DocumentAttachment[];
+
 	public getAttachments(type: 'gift'): GiftAttachment[];
+
 	public getAttachments(type: 'link'): LinkAttachment[];
+
 	public getAttachments(type: 'market_album'): MarketAlbumAttachment[];
+
 	public getAttachments(type: 'market'): MarketAttachment[];
+
 	public getAttachments(type: 'photo'): PhotoAttachment[];
+
 	public getAttachments(type: 'sticker'): StickerAttachment[];
+
 	public getAttachments(type: 'video'): VideoAttachment[];
+
 	public getAttachments(type: 'wall_reply'): WallReplyAttachment[];
+
 	public getAttachments(type: 'wall'): WallAttachment[];
+
 	public getAttachments(type: 'poll'): PollAttachment[];
 }
 
@@ -3193,19 +3299,34 @@ export class MessageForward {
 	 * Returns the attachments
 	 */
 	public getAttachments(type?: AttachmentPossibleTypes): Attachment[];
+
 	public getAttachments(type: 'audio'): AudioAttachment[];
+
 	public getAttachments(type: 'audio_message'): AudioMessageAttachment[];
+
 	public getAttachments(type: 'graffiti'): GraffitiAttachment[];
+
 	public getAttachments(type: 'doc'): DocumentAttachment[];
+
+
 	public getAttachments(type: 'gift'): GiftAttachment[];
+
 	public getAttachments(type: 'link'): LinkAttachment[];
+
 	public getAttachments(type: 'market_album'): MarketAlbumAttachment[];
+
 	public getAttachments(type: 'market'): MarketAttachment[];
+
 	public getAttachments(type: 'photo'): PhotoAttachment[];
+
 	public getAttachments(type: 'sticker'): StickerAttachment[];
+
 	public getAttachments(type: 'video'): VideoAttachment[];
+
 	public getAttachments(type: 'wall_reply'): WallReplyAttachment[];
+
 	public getAttachments(type: 'wall'): WallAttachment[];
+
 	public getAttachments(type: 'poll'): PollAttachment[];
 
 	/**
@@ -3229,19 +3350,33 @@ export class MessageForwardsCollection extends Array<MessageForward> {
 	 * Returns the attachments
 	 */
 	public getAttachments(type?: AttachmentPossibleTypes): Attachment[];
+
 	public getAttachments(type: 'audio'): AudioAttachment[];
+
 	public getAttachments(type: 'audio_message'): AudioMessageAttachment[];
+
 	public getAttachments(type: 'graffiti'): GraffitiAttachment[];
+
 	public getAttachments(type: 'doc'): DocumentAttachment[];
+
 	public getAttachments(type: 'gift'): GiftAttachment[];
+
 	public getAttachments(type: 'link'): LinkAttachment[];
+
 	public getAttachments(type: 'market_album'): MarketAlbumAttachment[];
+
 	public getAttachments(type: 'market'): MarketAttachment[];
+
 	public getAttachments(type: 'photo'): PhotoAttachment[];
+
 	public getAttachments(type: 'sticker'): StickerAttachment[];
+
 	public getAttachments(type: 'video'): VideoAttachment[];
+
 	public getAttachments(type: 'wall_reply'): WallReplyAttachment[];
+
 	public getAttachments(type: 'wall'): WallAttachment[];
+
 	public getAttachments(type: 'poll'): PollAttachment[];
 }
 
@@ -3305,19 +3440,33 @@ export class MessageReply {
 	 * Returns the attachments
 	 */
 	public getAttachments(type?: AttachmentPossibleTypes): Attachment[];
+
 	public getAttachments(type: 'audio'): AudioAttachment[];
+
 	public getAttachments(type: 'audio_message'): AudioMessageAttachment[];
+
 	public getAttachments(type: 'graffiti'): GraffitiAttachment[];
+
 	public getAttachments(type: 'doc'): DocumentAttachment[];
+
 	public getAttachments(type: 'gift'): GiftAttachment[];
+
 	public getAttachments(type: 'link'): LinkAttachment[];
+
 	public getAttachments(type: 'market_album'): MarketAlbumAttachment[];
+
 	public getAttachments(type: 'market'): MarketAttachment[];
+
 	public getAttachments(type: 'photo'): PhotoAttachment[];
+
 	public getAttachments(type: 'sticker'): StickerAttachment[];
+
 	public getAttachments(type: 'video'): VideoAttachment[];
+
 	public getAttachments(type: 'wall_reply'): WallReplyAttachment[];
+
 	public getAttachments(type: 'wall'): WallAttachment[];
+
 	public getAttachments(type: 'poll'): PollAttachment[];
 
 	/**
@@ -3326,18 +3475,19 @@ export class MessageReply {
 	public toJSON(): Partial;
 }
 
-export interface ButtonOptions {
+export interface IButtonOptions {
 	color: string;
 	action: Partial;
 }
 
-export interface ButtonToJSONResult {
+export interface IButtonToJSONResult {
 	color: string;
 	action: Partial;
 }
 
 export class Button {
 	public color: string;
+
 	public action: Partial;
 
 	/**
@@ -3368,15 +3518,15 @@ export class Button {
 	/**
 	 * Constructor
 	 */
-	constructor(options?: ButtonOptions);
+	constructor(options?: IButtonOptions);
 
 	/**
 	 * Returns to JSON
 	 */
-	toJSON(): ButtonToJSONResult;
+	toJSON(): IButtonToJSONResult;
 }
 
-export interface KeyboardOptions {
+export interface IKeyboardOptions {
 	oneTime?: boolean;
 }
 
@@ -3416,17 +3566,17 @@ export class Keyboard {
 	/**
 	 * Constructor
 	 */
-	constructor(options: KeyboardOptions);
+	constructor(options: IKeyboardOptions);
 
 	/**
 	 * Return keyboard
 	 */
-	public static keyboard(rows: (Button | Button[])[], options?: KeyboardOptions): Keyboard;
+	public static keyboard(rows: (Button | Button[])[], options?: IKeyboardOptions): Keyboard;
 
 	/**
 	 * Returns the text button
 	 */
-	public static textButton(options: TextButtonOptions): TextButton;
+	public static textButton(options: ITextButtonOptions): TextButton;
 
 	/**
 	 * The keyboard will open only once
@@ -3444,7 +3594,7 @@ export class Keyboard {
 	public toString(): string;
 }
 
-export interface TextButtonOptions {
+export interface ITextButtonOptions {
 	label: string;
 	color?: string;
 	payload?: Partial;
@@ -3454,7 +3604,7 @@ export class TextButton extends Button {
 	/**
 	 * Constructor
 	 */
-	constructor(options: TextButtonOptions);
+	constructor(options: ITextButtonOptions);
 }
 
 /**
@@ -3462,6 +3612,7 @@ export class TextButton extends Button {
  */
 export class VKError extends Error {
 	public code: number;
+
 	public message: string;
 
 	/**
@@ -3482,9 +3633,13 @@ export class VKError extends Error {
 
 export class APIError extends VKError {
 	public params: Partial[];
+
 	public captchaSid: number;
+
 	public captchaImg: string;
+
 	public redirectUri: string;
+
 	public confirmationText: string;
 
 	/**
@@ -3493,7 +3648,7 @@ export class APIError extends VKError {
 	public constructor(options: Partial);
 }
 
-export interface AuthErrorOptions {
+export interface IAuthErrorOptions {
 	code: number;
 	message: string;
 	pageHtml: string | null;
@@ -3502,7 +3657,7 @@ export interface AuthErrorOptions {
 export class AuthError extends VKError {
 	public pageHtml: string | null;
 
-	public constructor(options: AuthErrorOptions);
+	public constructor(options: IAuthErrorOptions);
 }
 
 export class CollectError extends VKError {
