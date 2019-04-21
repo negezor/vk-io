@@ -886,43 +886,43 @@ export class Updates {
 	/**
 	 * Added middleware
 	 */
-	public use<T>(middleware: Middleware<Context & T>): this;
+	public use<T = {}>(middleware: Middleware<Context & T>): this;
 
 	/**
 	 * Subscribe to events
 	 */
 
-	public on<T>(events: 'message' | 'new_message' | 'edit_message', handler: Middleware<MessageContext & T>): this;
+	public on<T = {}>(events: 'message' | 'new_message' | 'edit_message', handler: Middleware<MessageContext & T>): this;
 
-	public on<T>(events: 'message_subscribers' | 'message_subscribe' | 'message_unsubscribe', handler: Middleware<MessageAllowContext & T>): this;
+	public on<T = {}>(events: 'message_subscribers' | 'message_subscribe' | 'message_unsubscribe', handler: Middleware<MessageAllowContext & T>): this;
 
-	public on<T>(events: 'new_attachment' | 'new_photo_attachment' | 'new_video_attachment' | 'new_audio_attachment', handler: Middleware<NewAttachmentsContext & T>): this;
+	public on<T = {}>(events: 'new_attachment' | 'new_photo_attachment' | 'new_video_attachment' | 'new_audio_attachment', handler: Middleware<NewAttachmentsContext & T>): this;
 
-	public on<T>(events: 'wall_post' | 'new_wall_post' | 'new_wall_repost', handler: Middleware<WallPostContext & T>): this;
+	public on<T = {}>(events: 'wall_post' | 'new_wall_post' | 'new_wall_repost', handler: Middleware<WallPostContext & T>): this;
 
-	public on<T>(events: 'group_member' | 'join_group_member' | 'leave_group_member', handler: Middleware<GroupMemberContext & T>): this;
+	public on<T = {}>(events: 'group_member' | 'join_group_member' | 'leave_group_member', handler: Middleware<GroupMemberContext & T>): this;
 
-	public on<T>(events: 'group_user' | 'block_group_user' | 'unblock_group_user', handler: Middleware<GroupUserContext & T>): this;
+	public on<T = {}>(events: 'group_user' | 'block_group_user' | 'unblock_group_user', handler: Middleware<GroupUserContext & T>): this;
 
-	public on<T>(events: 'comment' | 'photo_comment' | 'video_comment' | 'wall_comment' | 'board_comment' | 'market_comment' | 'new_photo_comment' | 'edit_photo_comment' | 'delete_photo_comment' | 'restore_photo_comment' | 'new_video_comment' | 'edit_video_comment' | 'delete_video_comment' | 'restore_video_comment' | 'new_wall_comment' | 'edit_wall_comment' | 'delete_wall_comment' | 'restore_wall_comment' | 'new_board_comment' | 'edit_board_comment' | 'delete_board_comment' | 'restore_board_comment' | 'new_market_comment' | 'edit_market_comment' | 'delete_market_comment' | 'restore_market_comment', handler: Middleware<CommentActionContext & T>): this;
+	public on<T = {}>(events: 'comment' | 'photo_comment' | 'video_comment' | 'wall_comment' | 'board_comment' | 'market_comment' | 'new_photo_comment' | 'edit_photo_comment' | 'delete_photo_comment' | 'restore_photo_comment' | 'new_video_comment' | 'edit_video_comment' | 'delete_video_comment' | 'restore_video_comment' | 'new_wall_comment' | 'edit_wall_comment' | 'delete_wall_comment' | 'restore_wall_comment' | 'new_board_comment' | 'edit_board_comment' | 'delete_board_comment' | 'restore_board_comment' | 'new_market_comment' | 'edit_market_comment' | 'delete_market_comment' | 'restore_market_comment', handler: Middleware<CommentActionContext & T>): this;
 
-	public on<T>(events: 'vote' | 'pull_vote', handler: Middleware<VoteContext & T>): this;
+	public on<T = {}>(events: 'vote' | 'pull_vote', handler: Middleware<VoteContext & T>): this;
 
-	public on<T>(events: 'group_update' | 'group_update_photo' | 'group_update_officers' | 'group_update_settings', handler: Middleware<GroupUpdateContext & T>): this;
+	public on<T = {}>(events: 'group_update' | 'group_update_photo' | 'group_update_officers' | 'group_update_settings', handler: Middleware<GroupUpdateContext & T>): this;
 
-	public on<T>(events: 'typing' | 'typing_user' | 'typing_group', handler: Middleware<TypingContext & T>): this;
+	public on<T = {}>(events: 'typing' | 'typing_user' | 'typing_group', handler: Middleware<TypingContext & T>): this;
 
-	public on<T>(events: ContextPossibleTypes[] | ContextPossibleTypes, handler: Middleware<Context & T>): this;
+	public on<T = {}>(events: ContextPossibleTypes[] | ContextPossibleTypes, handler: Middleware<Context & T>): this;
 
 	/**
 	 * Listen text
 	 */
-	public hear<T>(conditions: HearCondition[] | HearCondition, handler: Middleware<MessageContext & T>): this;
+	public hear<T = {}>(conditions: HearCondition[] | HearCondition, handler: Middleware<MessageContext & T>): this;
 
 	/**
 	 * A handler that is called when handlers are not found
 	 */
-	public setHearFallbackHandler<T>(handler: Middleware<MessageContext & T>): this;
+	public setHearFallbackHandler<T = {}>(handler: Middleware<MessageContext & T>): this;
 
 	/**
 	 * Handles longpoll event
