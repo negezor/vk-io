@@ -1,0 +1,37 @@
+{
+	"name": "@vk-io/session",
+	"version": "0.0.0-alpha.01",
+	"description": "Session for the library vk-io",
+	"license": "MIT",
+	"author": {
+		"name": "Vladlen (Negezor)",
+		"email": "negezor@gmail.com"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/negezor/vk-io.git"
+	},
+	"homepage": "https://github.com/negezor/vk-io#readme",
+	"bugs": "https://github.com/negezor/vk-io/issues",
+	"keywords": [
+		"vk",
+		"api",
+		"sdk",
+		"bot",
+		"node",
+		"js",
+		"es6",
+		"es7"
+	],
+	"files": [
+		"lib",
+		"typings"
+	],
+	"main": "lib/index",
+	"module": "lib/index.mjs",
+	"types": "./typings/index.d.ts",
+	"engines": {
+		"node": ">=10.0.0"
+	},
+	"dependencies": {}
+}

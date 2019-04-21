@@ -8,7 +8,7 @@
 		"plugin:import/warnings"
 	],
 	"parserOptions": {
-		"ecmaVersion": 2019,
+		"ecmaVersion": 2018,
 		"sourceType": "module"
 	},
 	"rules": {
@@ -55,6 +55,56 @@
 			"parser": "babel-eslint",
 			"rules": {
 				"import/no-extraneous-dependencies": 0
+			}
+		},
+		{
+			"files": [
+				"typings/*.ts",
+				"packages/**/*.ts"
+			],
+			"parser": "@typescript-eslint/parser",
+			"parserOptions": {
+				"project": "./tsconfig.json"
+			},
+			"plugins": [
+				"@typescript-eslint"
+			],
+			"settings": {
+				"import/resolver": {
+					"typescript": {}
+				},
+				"import/parsers": {
+					"@typescript-eslint/parser": [".ts", ".tsx"]
+				},
+				"typescript": {
+					"directory": "./tsconfig.json"
+				}
+			},
+			"rules": {
+				"no-dupe-class-members": "off",
+				"no-useless-constructor": "off",
+				"@typescript-eslint/no-useless-constructor": "error",
+				"@typescript-eslint/explicit-function-return-type": 0,
+				"@typescript-eslint/explicit-member-accessibility": 0,
+				"@typescript-eslint/no-unused-vars": "error",
+				"@typescript-eslint/interface-name-prefix": [
+					"error",
+					"always"
+				],
+				"@typescript-eslint/indent": [
+					"error",
+					"tab"
+				]
+			}
+		},
+		{
+			"files": "typings/*.ts",
+			"rules": {
+				"camelcase": "off",
+				"max-len": "off",
+				"quotes": "off",
+				"lines-between-class-members": "off",
+				"@typescript-eslint/interface-name-prefix": "off"
 			}
 		}
 	]
