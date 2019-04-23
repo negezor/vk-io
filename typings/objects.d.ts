@@ -2695,6 +2695,8 @@ export interface MarketMarketItemFull1 {
 	can_comment?: BaseBoolInt;
 	can_repost?: BaseBoolInt;
 	likes?: BaseLikes;
+	url?: string;
+	button_title: string;
 }
 
 export type MarketMarketItemFull = MarketMarketItem & MarketMarketItemFull1;

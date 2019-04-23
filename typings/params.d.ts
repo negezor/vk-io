@@ -7549,7 +7549,14 @@ export interface MarketAddParams {
 	 * Cover photo ID.
 	 */
 	main_photo_id: number;
+
 	photo_ids?: number[] | number;
+
+	/**
+	 * Link to the product website
+	 */
+	url?: string;
+
 	[key: string]: any;
 }
 
@@ -7586,7 +7593,14 @@ export interface MarketEditParams {
 	 * Cover photo ID.
 	 */
 	main_photo_id: number;
+
 	photo_ids?: number[] | number;
+
+	/**
+	 * Link to the product website
+	 */
+	url?: string;
+
 	[key: string]: any;
 }
 
