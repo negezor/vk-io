@@ -5,8 +5,6 @@ import commonjs from 'rollup-plugin-commonjs';
 
 import pkg from './package.json';
 
-const babelConfig = require('./babel.config');
-
 export default [
 	{
 		input: 'src/index.mjs',
@@ -25,11 +23,7 @@ export default [
 			resolve({
 				preferBuiltins: true,
 			}),
-			babel({
-				...babelConfig,
-
-				babelrc: false
-			}),
+			babel(),
 			commonjs()
 		],
 		output: [
