@@ -15,13 +15,8 @@
 	"bugs": "https://github.com/negezor/vk-io/issues",
 	"keywords": [
 		"vk",
-		"api",
-		"sdk",
-		"bot",
-		"node",
-		"js",
-		"es6",
-		"es7"
+		"io",
+		"session"
 	],
 	"files": [
 		"lib",
@@ -33,5 +28,10 @@
 	"engines": {
 		"node": ">=10.0.0"
 	},
-	"dependencies": {}
+	"devDependencies": {
+		"vk-io": "^4.0.0-rc.17"
+	},
+	"peerDependencies": {
+		"vk-io": "^4.0.0-rc.17"
+	}
 }
