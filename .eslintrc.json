@@ -58,10 +58,7 @@
 			}
 		},
 		{
-			"files": [
-				"typings/*.ts",
-				"packages/**/*.ts"
-			],
+			"files": "**/*.ts",
 			"parser": "@typescript-eslint/parser",
 			"parserOptions": {
 				"project": "./tsconfig.json"
@@ -74,13 +71,14 @@
 					"typescript": {}
 				},
 				"import/parsers": {
-					"@typescript-eslint/parser": [".ts", ".tsx"]
+					"@typescript-eslint/parser": [".ts"]
 				},
 				"typescript": {
 					"directory": "./tsconfig.json"
 				}
 			},
 			"rules": {
+				"semi": "off",
 				"no-dupe-class-members": "off",
 				"no-useless-constructor": "off",
 				"@typescript-eslint/no-useless-constructor": "error",
@@ -101,10 +99,7 @@
 			"files": "typings/*.ts",
 			"rules": {
 				"camelcase": "off",
-				"max-len": "off",
-				"quotes": "off",
-				"lines-between-class-members": "off",
-				"@typescript-eslint/interface-name-prefix": "off"
+				"max-len": "off"
 			}
 		}
 	]

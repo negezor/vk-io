@@ -1,3 +1,4 @@
+/* eslint-disable */
 export interface UsersGetParams {
 	/**
 	 * Case for declension of user name and surname: 'nom' — nominative (default), 'gen' — genitive , 'dat' — dative, 'acc' — accusative , 'ins' — instrumental , 'abl' — prepositional

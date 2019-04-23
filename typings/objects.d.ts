@@ -1,3 +1,4 @@
+/* eslint-disable */
 export interface AccountAccountCounters {
 	/**
 	 * New friends requests number
