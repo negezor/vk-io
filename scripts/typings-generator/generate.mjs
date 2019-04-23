@@ -53,6 +53,19 @@ async function generate() {
 	const objectsIdentifier = ts.createIdentifier('Objects');
 	const responsesIdentifier = ts.createIdentifier('Responses');
 
+	writeParamsNode(
+		ts.createImportDeclaration(
+			undefined,
+			undefined,
+			ts.createImportClause(
+				ts.createNamespaceImport(
+					objectsIdentifier
+				)
+			),
+			ts.createStringLiteral(`./${OBJECTS_FILE.replace('.ts', '')}`)
+		)
+	);
+
 	writeResponsesNode(
 		ts.createImportDeclaration(
 			undefined,
@@ -113,7 +126,9 @@ async function generate() {
 			name: `${camelizedCategory}Params`
 		});
 
-		for (const parsedParameter of parseParameters(method.parameters)) {
+		for (const parsedParameter of parseParameters(method.parameters, {
+			namespace: objectsIdentifier
+		})) {
 			params.addProperty(parsedParameter);
 		}
 

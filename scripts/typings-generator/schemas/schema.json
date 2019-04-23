@@ -1,8 +1,8 @@
 {
-  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$schema": "http://json-schema.org/draft-06/schema#",
   "title": "API",
   "description": "API declaration",
-	"type": "object",
+  "type": "object",
   "definitions": {
     "jsonReference": {
       "type": "object",
@@ -43,7 +43,7 @@
       ]
     },
     "parameter": {
-			"type": "object",
+      "type": "object",
       "properties": {
         "name": {
           "type": "string",
@@ -56,6 +56,10 @@
         "items": {
           "type": "object",
           "properties": {
+            "$ref": {
+              "type": "string",
+              "format": "uri-reference"
+            },
             "type": {
               "$ref": "#/definitions/itemTypes"
             },
@@ -64,10 +68,32 @@
             },
             "minimum": {
               "type": "number"
+            },
+            "enum": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true
+            },
+            "enumNames": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "minItems": 1,
+              "uniqueItems": true
             }
           },
-          "required": [
-            "type"
+          "oneOf": [
+            {
+              "required": [
+                "type"
+              ]
+            },
+            {
+              "required": [
+                "$ref"
+              ]
+            }
           ],
           "additionalProperties": false
         },
@@ -86,8 +112,20 @@
         "minimum": {
           "type": "number"
         },
+        "$ref": {
+          "type": "string",
+          "format": "uri-reference"
+        },
         "enum": {
           "type": "array",
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "enumNames": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
           "minItems": 1,
           "uniqueItems": true
         },
@@ -109,6 +147,14 @@
         "description": {
           "type": "string",
           "description": "Parameter description"
+        },
+        "deprecated_from_version": {
+          "type": "string",
+          "description": "Property deprecated from version"
+        },
+        "from_version": {
+          "type": "string",
+          "description": "Property implemented from version"
         }
       },
       "required": [
@@ -132,6 +178,12 @@
         "description": {
           "type": "string",
           "description": "Error description"
+        },
+        "deprecated_from_version": {
+          "type": "string"
+        },
+        "from_version": {
+          "type": "string"
         }
       },
       "required": [
@@ -158,6 +210,12 @@
         "description": {
           "type": "string",
           "description": "Method description"
+        },
+        "deprecated_from_version": {
+          "type": "string"
+        },
+        "from_version": {
+          "type": "string"
         },
         "access_token_type": {
           "type": "array",
