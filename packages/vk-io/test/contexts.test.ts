@@ -9,6 +9,7 @@ describe('Contexts', () => {
 				const context = new Context(vk);
 
 				context.type = 'message';
+				// @ts-ignore
 				context.subTypes = ['edit_message', 'text'];
 
 				return context;

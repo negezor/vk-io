@@ -21,6 +21,7 @@ describe('Uploads', () => {
 
 	it('should throw an error if there are no parameters', async () => {
 		try {
+			// @ts-ignore
 			await upload.messagePhoto();
 		} catch (error) {
 			expect(error).toBeInstanceOf(UploadError);
@@ -28,6 +29,7 @@ describe('Uploads', () => {
 		}
 
 		try {
+			// @ts-ignore
 			await upload.messagePhoto({});
 		} catch (error) {
 			expect(error).toBeInstanceOf(UploadError);
@@ -75,7 +77,7 @@ describe('Uploads', () => {
 
 		expect(photo).toBeInstanceOf(PhotoAttachment);
 		expect(photo.id).toBeGreaterThan(0);
-		expect(photo.owner_id).not.toEqual(0);
+		expect(photo.ownerId).not.toEqual(0);
 	});
 
 	it('should upload image to wall from buffer', async () => {
@@ -88,7 +90,7 @@ describe('Uploads', () => {
 
 		expect(photo).toBeInstanceOf(PhotoAttachment);
 		expect(photo.id).toBeGreaterThan(0);
-		expect(photo.owner_id).not.toEqual(0);
+		expect(photo.ownerId).not.toEqual(0);
 	});
 
 	it('should upload image to wall from stream', async () => {
@@ -100,6 +102,6 @@ describe('Uploads', () => {
 
 		expect(photo).toBeInstanceOf(PhotoAttachment);
 		expect(photo.id).toBeGreaterThan(0);
-		expect(photo.owner_id).not.toEqual(0);
+		expect(photo.ownerId).not.toEqual(0);
 	});
 });

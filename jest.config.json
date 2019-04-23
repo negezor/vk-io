@@ -2,9 +2,8 @@
 	"name": "vk-io",
 	"verbose": true,
 	"testEnvironment": "node",
-	"moduleFileExtensions": ["js", "json"],
-	"testRegex": "./test/.+\\.test\\.js$",
+	"testMatch": ["<rootDir>/packages/*/test/*.test.ts"],
 	"transform": {
-		"^.+\\.js$": "babel-jest"
+		"^.+\\.ts?$": "ts-jest"
 	}
 }

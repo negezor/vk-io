@@ -1,0 +1,48 @@
+{
+	"name": "vk-io",
+	"version": "4.0.0-rc.17",
+	"description": "Modern VK API SDK for Node.js",
+	"license": "MIT",
+	"author": {
+		"name": "Vladlen (Negezor)",
+		"email": "negezor@gmail.com"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/negezor/vk-io.git"
+	},
+	"homepage": "https://github.com/negezor/vk-io#readme",
+	"bugs": "https://github.com/negezor/vk-io/issues",
+	"keywords": [
+		"vk",
+		"api",
+		"sdk",
+		"bot",
+		"node",
+		"js",
+		"es6",
+		"es7"
+	],
+	"files": [
+		"lib",
+		"typings"
+	],
+	"main": "lib/index",
+	"module": "lib/index.mjs",
+	"types": "./typings/index.d.ts",
+	"engines": {
+		"node": ">=8.0.0"
+	},
+	"devDependencies": {
+		"@types/node": "^11.13.7"
+	},
+	"dependencies": {
+		"cheerio": "^1.0.0-rc.3",
+		"debug": "^4.1.1",
+		"middleware-io": "^1.1.0",
+		"node-fetch": "^2.3.0",
+		"sandwich-stream": "^2.0.2",
+		"tough-cookie": "^3.0.1",
+		"ws": "^6.2.1"
+	}
+}

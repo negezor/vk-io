@@ -1,47 +1,20 @@
 {
-	"name": "vk-io",
-	"version": "4.0.0-rc.17",
-	"description": "Modern VK API SDK for Node.js",
-	"license": "MIT",
-	"author": {
-		"name": "Vladlen (Negezor)",
-		"email": "negezor@gmail.com"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/negezor/vk-io.git"
-	},
-	"homepage": "https://github.com/negezor/vk-io#readme",
-	"bugs": "https://github.com/negezor/vk-io/issues",
-	"keywords": [
-		"vk",
-		"api",
-		"sdk",
-		"bot",
-		"node",
-		"js",
-		"es6",
-		"es7"
+	"name": "vk-io-monorepo",
+	"private": true,
+	"workspaces": [
+		"packages/*"
 	],
-	"files": [
-		"lib",
-		"typings"
-	],
-	"main": "lib/index",
-	"module": "lib/index.mjs",
-	"types": "./typings/index.d.ts",
 	"engines": {
 		"node": ">=8.0.0"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.4.3",
 		"@babel/preset-env": "^7.4.3",
+		"@types/jest": "^24.0.11",
 		"@types/node": "^11.13.7",
 		"@typescript-eslint/eslint-plugin": "^1.7.0",
 		"@typescript-eslint/parser": "^1.7.0",
-		"babel-core": "^7.0.0-0",
 		"babel-eslint": "^10.0.1",
-		"babel-jest": "^24.7.1",
 		"cross-env": "^5.2.0",
 		"eslint": "^5.16.0",
 		"eslint-config-airbnb-base": "^13.1.0",
@@ -53,16 +26,8 @@
 		"rollup-plugin-commonjs": "^9.3.4",
 		"rollup-plugin-json": "^4.0.0",
 		"rollup-plugin-node-resolve": "^4.2.3",
+		"ts-jest": "^24.0.2",
 		"typescript": "^3.4.4"
-	},
-	"dependencies": {
-		"cheerio": "^1.0.0-rc.3",
-		"debug": "^4.1.1",
-		"middleware-io": "^1.1.0",
-		"node-fetch": "^2.3.0",
-		"sandwich-stream": "^2.0.2",
-		"tough-cookie": "^3.0.1",
-		"ws": "^6.2.1"
 	},
 	"scripts": {
 		"prepare": "yarn run rollup:build && yarn run test",
@@ -70,7 +35,6 @@
 		"rollup:watch": "yarn run rollup:build -w",
 		"test": "yarn run test:jest && yarn run test:eslint",
 		"test:jest": "cross-env BABEL_ENV=test jest --config jest.config.json --no-cache",
-		"test:eslint": "eslint ./src --ext .mjs,.js --ignore-path .gitignore .",
-		"test:typings": "eslint ./typings --ext .ts --ignore-path .gitignore ."
+		"test:eslint": "eslint --ext .ts,.mjs --ignore-path .gitignore packages/*/src/**/*.{ts,mjs}"
 	}
 }

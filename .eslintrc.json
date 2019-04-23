@@ -31,7 +31,7 @@
 	},
 	"overrides": [
 		{
-			"files": ["test/**/*.js"],
+			"files": ["packages/*/test/**/*.test.ts"],
 			"env": {
 				"jest": true
 			}
@@ -97,7 +97,7 @@
 			}
 		},
 		{
-			"files": "typings/*.ts",
+			"files": "packages/vk-io/typings/index.d.ts",
 			"rules": {
 				"camelcase": "off",
 				"max-len": "off"

@@ -1201,7 +1201,7 @@ export class AudioMessageAttachment extends Attachment {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: Partial, vk: VK);
+	public constructor(payload: Partial, vk?: VK);
 
 	/**
 	 * Load attachment payload
@@ -1258,7 +1258,7 @@ export class AudioAttachment extends Attachment {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: Partial, vk: VK);
+	public constructor(payload: Partial, vk?: VK);
 
 	/**
 	 * Load attachment payload
@@ -1355,7 +1355,7 @@ export class DocumentAttachment extends Attachment {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: Partial, vk: VK);
+	public constructor(payload: Partial, vk?: VK);
 
 	/**
 	 * Load attachment payload
@@ -1377,7 +1377,7 @@ export class GiftAttachment extends ExternalAttachment {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: Partial, vk: VK);
+	public constructor(payload: Partial, vk?: VK);
 }
 
 export class GraffitiAttachment extends Attachment {
@@ -1399,7 +1399,7 @@ export class GraffitiAttachment extends Attachment {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: Partial, vk: VK);
+	public constructor(payload: Partial, vk?: VK);
 
 	/**
 	 * Load attachment payload
@@ -1451,14 +1451,14 @@ export class LinkAttachment extends ExternalAttachment {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: Partial, vk: VK);
+	public constructor(payload: Partial, vk?: VK);
 }
 
 export class MarketAlbumAttachment extends Attachment {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: Partial, vk: VK);
+	public constructor(payload: Partial, vk?: VK);
 
 	/**
 	 * Load attachment payload
@@ -1475,7 +1475,7 @@ export class MarketAttachment extends Attachment {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: Partial, vk: VK);
+	public constructor(payload: Partial, vk?: VK);
 
 	/**
 	 * Load attachment payload
@@ -1537,7 +1537,7 @@ export class PhotoAttachment extends Attachment {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: Partial, vk: VK);
+	public constructor(payload: Partial, vk?: VK);
 
 	/**
 	 * Load attachment payload
@@ -1644,7 +1644,7 @@ export class PollAttachment extends Attachment {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: Partial, vk: VK);
+	public constructor(payload: Partial, vk?: VK);
 
 	/**
 	 * Load attachment payload
@@ -1676,7 +1676,7 @@ export class StickerAttachment extends ExternalAttachment {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: Partial, vk: VK);
+	public constructor(payload: Partial, vk?: VK);
 
 	/**
 	 * Load attachment payload
@@ -1767,7 +1767,7 @@ export class VideoAttachment extends Attachment {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: Partial, vk: VK);
+	public constructor(payload: Partial, vk?: VK);
 
 	/**
 	 * Load attachment payload
@@ -1784,7 +1784,7 @@ export class WallReplyAttachment extends Attachment {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: Partial, vk: VK);
+	public constructor(payload: Partial, vk?: VK);
 }
 
 export class WallAttachment extends Attachment {
@@ -1946,7 +1946,7 @@ export class WallAttachment extends Attachment {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: Partial, vk: VK);
+	public constructor(payload: Partial, vk?: VK);
 
 	/**
 	 * Load attachment payload
@@ -3288,7 +3288,7 @@ export class MessageForward {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: Partial, vk: VK);
+	public constructor(payload: Partial, vk?: VK);
 
 	/**
 	 *	Checks for the presence of attachments
@@ -3429,7 +3429,7 @@ export class MessageReply {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: Partial, vk: VK);
+	public constructor(payload: Partial, vk?: VK);
 
 	/**
 	 *	Checks for the presence of attachments
