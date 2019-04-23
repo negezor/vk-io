@@ -1,0 +1,39 @@
+{
+	"name": "@vk-io/scenes",
+	"version": "0.0.0-alpha.01",
+	"description": "Scenes for the library vk-io",
+	"license": "MIT",
+	"author": {
+		"name": "Vladlen (Negezor)",
+		"email": "negezor@gmail.com"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/negezor/vk-io.git"
+	},
+	"homepage": "https://github.com/negezor/vk-io#readme",
+	"bugs": "https://github.com/negezor/vk-io/issues",
+	"keywords": [
+		"vk",
+		"io",
+		"scenes",
+		"stage",
+		"step"
+	],
+	"files": [
+		"lib",
+		"typings"
+	],
+	"main": "lib/index",
+	"module": "lib/index.mjs",
+	"types": "./typings/index.d.ts",
+	"engines": {
+		"node": ">=10.0.0"
+	},
+	"devDependencies": {
+		"vk-io": "^4.0.0-rc.17"
+	},
+	"peerDependencies": {
+		"vk-io": "^4.0.0-rc.17"
+	}
+}
