@@ -8,5 +8,6 @@ node_modules
 
 # Build
 packages/*/lib
+app.ts
 app.js
 app.mjs
