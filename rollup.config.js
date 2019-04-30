@@ -26,8 +26,6 @@ const getModulePath = path => (
 );
 
 export default async function () {
-	const modules = MODULES.map(getModulePath);
-
 	const vkIoPath = getModulePath('vk-io');
 	const vkIoPkg = await import(
 		pathJoin(vkIoPath, 'package.json')
