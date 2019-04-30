@@ -34,13 +34,13 @@
 		"node": ">=8.0.0"
 	},
 	"devDependencies": {
-		"@types/node": "^11.13.7"
+		"@types/node": "^11.13.8"
 	},
 	"dependencies": {
 		"cheerio": "^1.0.0-rc.3",
 		"debug": "^4.1.1",
 		"middleware-io": "^1.1.0",
-		"node-fetch": "^2.3.0",
+		"node-fetch": "^2.4.1",
 		"sandwich-stream": "^2.0.2",
 		"tough-cookie": "^3.0.1",
 		"ws": "^6.2.1"
