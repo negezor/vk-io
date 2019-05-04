@@ -1,5 +1,5 @@
 {
-	"name": "vk-io",
+	"name": "vk-io-monorepo",
 	"verbose": true,
 	"testEnvironment": "node",
 	"testMatch": ["<rootDir>/packages/*/test/*.test.ts"],
