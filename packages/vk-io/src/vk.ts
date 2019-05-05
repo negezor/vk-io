@@ -1,5 +1,5 @@
-import nodeUtil from 'util';
-import nodeHttps from 'https';
+import { Agent } from 'https';
+import { inspect } from 'util';
 
 import API from './api';
 import Auth from './auth';
@@ -12,41 +12,43 @@ import CallbackService from './utils/callback-service';
 
 import { defaultOptions } from './utils/constants';
 
-const { Agent } = nodeHttps;
-const { inspect } = nodeUtil;
-
 /**
  * Main class
  *
  * @public
  */
 export default class VK {
+	options = {
+		...defaultOptions,
+
+		agent: new Agent({
+			keepAlive: true,
+
+			keepAliveMsecs: 10000
+		})
+	};
+
+	api = new API(this);
+
+	auth = new Auth(this);
+
+	upload = new Upload(this);
+
+	collect = new Collect(this);
+
+	updates = new Updates(this);
+
+	snippets = new Snippets(this);
+
+	streaming = new StreamingAPI(this);
+
+	callbackService = new CallbackService(this);
+
 	/**
 	 * Constructor
-	 *
-	 * @param {Object} options
 	 */
 	constructor(options = {}) {
-		this.options = {
-			...defaultOptions,
-
-			agent: new Agent({
-				keepAlive: true,
-				keepAliveMsecs: 10000
-			})
-		};
-
 		this.setOptions(options);
-
-		this.api = new API(this);
-		this.auth = new Auth(this);
-		this.upload = new Upload(this);
-		this.collect = new Collect(this);
-		this.updates = new Updates(this);
-		this.snippets = new Snippets(this);
-		this.streaming = new StreamingAPI(this);
-
-		this.callbackService = new CallbackService(this);
 	}
 
 	/**
@@ -60,10 +62,6 @@ export default class VK {
 
 	/**
 	 * Sets options
-	 *
-	 * @param {Object} options
-	 *
-	 * @return {this}
 	 */
 	setOptions(options) {
 		Object.assign(this.options, options);
@@ -73,8 +71,6 @@ export default class VK {
 
 	/**
 	 * Sets token
-	 *
-	 * @param {string} token
 	 */
 	set token(token) {
 		this.options.token = token;
@@ -82,8 +78,6 @@ export default class VK {
 
 	/**
 	 * Returns token
-	 *
-	 * @return {?string}
 	 */
 	get token() {
 		return this.options.token;
@@ -91,10 +85,6 @@ export default class VK {
 
 	/**
 	 * Sets captcha handler
-	 *
-	 * @param {?Function} handler
-	 *
-	 * @return {this}
 	 *
 	 * @example
 	 * 	vk.captchaHandler = (payload, retry) => {...};
@@ -105,10 +95,6 @@ export default class VK {
 
 	/**
 	 * Sets two-factor handler
-	 *
-	 * @param {?Function} handler
-	 *
-	 * @return {this}
 	 *
 	 * @example
 	 * 	vk.twoFactorHandler = (payload, retry) => {...};
