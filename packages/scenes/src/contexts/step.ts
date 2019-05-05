@@ -6,6 +6,8 @@ export default class StepSceneContext {
 
 	private steps: IStepContextOptions['steps'];
 
+	private stepChanged = false;
+
 	constructor(options: IStepContextOptions) {
 		this.context = options.context;
 
@@ -36,6 +38,8 @@ export default class StepSceneContext {
 
 		session.stepId = stepId;
 		session.firstTime = true;
+
+		this.stepChanged = true;
 	}
 
 	/**
@@ -60,9 +64,13 @@ export default class StepSceneContext {
 			return;
 		}
 
-		this.context.scene.session.firstTime = false;
+		this.stepChanged = false;
 
 		await current(this.context);
+
+		if (!this.stepChanged) {
+			this.context.scene.session.firstTime = false;
+		}
 	}
 
 	/**
