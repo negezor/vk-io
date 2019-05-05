@@ -40,14 +40,7 @@
 			"files": ["docs/examples/**/*.js"],
 			"rules": {
 				"no-console": 0,
-				"import/no-unresolved": [
-					"error",
-					{
-						"ignore": [
-							"vk-io"
-						]
-					}
-				]
+				"import/no-extraneous-dependencies": "off"
 			}
 		},
 		{
