@@ -147,8 +147,8 @@ export const defaultExtensions = {
 	photo: 'jpg',
 	video: 'mp4',
 	audio: 'mp3',
-	voice: 'ogg',
-	graffiti: 'png'
+	graffiti: 'png',
+	audioMessage: 'ogg'
 };
 
 /**
