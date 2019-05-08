@@ -18,11 +18,6 @@ VK-IO - This is a powerful [Node.js](https://nodejs.org) module that allows you 
 - Support for all types of authorization, including via login and password
 - Typings
 
-## Migrating to 4.0.0
-You can read the [migration guide here](Upgrade-RU.md) [RU].
-
-Old version of the library is located [here](https://github.com/negezor/vk-io/tree/v3.2.0).
-
 ## Installation
 > **[Node.js](https://nodejs.org/) 8.0.0 or newer is required**  
 
@@ -55,6 +50,7 @@ async function run() {
 
 run().catch(console.log);
 ```
+
 
 ## Community
 ### Useful modules that may be useful to you
