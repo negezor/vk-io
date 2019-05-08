@@ -121,3 +121,27 @@ vk.upload.photoAlbum({
 		]
 	}
 });
+
+/**
+ * Alternative write
+ */
+vk.upload.photoAlbum({
+	source: [
+		'./path/to/cat1.jpg',
+
+		'http://lorempixel.com/400/200/cats/',
+
+		fs.createReadStream('./path/to/cat2.jpg'),
+
+		{
+			value: fs.createReadStream('./path/to/cat2.jpg'),
+			filename: 'cat2.jpg'
+		},
+
+		{
+			value: './path/to/cat5.dat',
+			contentType: 'image/jpeg',
+			filename: 'cat5.jpg'
+		}
+	]
+});
