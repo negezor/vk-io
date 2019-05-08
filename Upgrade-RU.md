@@ -1,7 +1,7 @@
 # Upgrading to vk-io 4
 
 ## tl;dr
-4 версия `vkio` нацелена на более удобный опыт работы с ВКонтакте API. По этому переработана полностью работа с прикреплениями, транспорт получение новых событий (используя `Updates` совмещающий `Long Poll` и `Callback API`), снипеты и многое другое. При этом простые задачи остались обратно совместимыми   ❤️
+4 версия `vk-io` нацелена на более удобный опыт работы с ВКонтакте API. По этому переработана полностью работа с прикреплениями, транспорт получение новых событий (используя `Updates` совмещающий `Bots/User Long Poll` и `Callback API`), сниппеты и многое другое. При этом простые задачи остались обратно совместимыми ❤️
 
 ## Longpoll to Updates
 Новый цикл получения события и транспорт в виде `middleware`
@@ -16,7 +16,7 @@ vk.longpoll.start();
 После
 
 ```js
-vk.updates.startPolling();
+vk.updates.start();
 ```
 
 ### Event subscription
@@ -98,14 +98,14 @@ vk.upload.message({
 vk.upload.messagePhoto({
 	source: './my-awesome-neko.jpg'
 })
-.then((attachment) => {
-	return vk.api.messages.send({
+.then(attachment => (
+	vk.api.messages.send({
 		// ...
 
-		message: `Large photo ${attachment.getLargePhoto()}`,
+		message: `Large photo ${attachment.largePhoto}`,
 		attachment
-	});
-});
+	})
+));
 ```
 
 ## Upgrade сollect
@@ -117,7 +117,7 @@ vk.upload.messagePhoto({
 vk.collect.wall.get({
 	user_id: 1
 })
-.on('data',(items) => {...});
+.on('data', (items) => {...});
 ```
 
 После
@@ -126,7 +126,7 @@ vk.collect.wall.get({
 vk.collect.wall.get({
 	user_id: 1
 })
-.on('data',({ total, percent, received, items }) => {...});
+.on('data', ({ total, percent, received, items }) => {...});
 ```
 
 ## Upgrade errors
@@ -136,7 +136,7 @@ vk.collect.wall.get({
 ```js
 const { ApiError } = require('vk-io/errors');
 
-vk.api.messages.send();
+vk.api.messages.send()
 .catch(ApiError, (error) => { // Bluebird sugar
 	if (error.code === 100) { // Magic const :/
 		return console.error(`Wrong parameter:`, error.params);
