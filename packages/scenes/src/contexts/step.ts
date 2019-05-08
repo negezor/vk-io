@@ -1,5 +1,6 @@
 import { IStepContextOptions } from './step.types';
 import { StepSceneHandler } from '../scenes/step.types';
+import { LastAction } from './scene.types';
 
 export default class StepSceneContext {
 	private context: IStepContextOptions['context'];
@@ -68,7 +69,7 @@ export default class StepSceneContext {
 
 		await current(this.context);
 
-		if (!this.stepChanged) {
+		if (this.context.scene.lastAction !== LastAction.LEAVE && !this.stepChanged) {
 			this.context.scene.session.firstTime = false;
 		}
 	}

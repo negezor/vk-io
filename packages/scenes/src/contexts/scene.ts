@@ -1,5 +1,11 @@
 import { Partial, ISessionContext } from '../types';
-import { ISceneContextOptions, ISceneContextEnterOptions, ISceneContextLeaveOptions } from './scene.types';
+import {
+	ISceneContextOptions,
+	ISceneContextEnterOptions,
+	ISceneContextLeaveOptions,
+
+	LastAction
+} from './scene.types';
 
 export default class SceneContext {
 	/**
@@ -26,6 +32,8 @@ export default class SceneContext {
 	 * });
 	 */
 	canceled = false;
+
+	lastAction: LastAction = LastAction.NONE;
 
 	private context: ISceneContextOptions['context'];
 
@@ -82,6 +90,8 @@ export default class SceneContext {
 			this.reset();
 		}
 
+		this.lastAction = LastAction.ENTER;
+
 		this.session.current = scene.slug;
 		Object.assign(this.state, options.state || {});
 
@@ -126,6 +136,7 @@ export default class SceneContext {
 		}
 
 		this.leaved = true;
+		this.lastAction = LastAction.LEAVE;
 
 		if (!options.silent) {
 			this.canceled = options.canceled !== undefined

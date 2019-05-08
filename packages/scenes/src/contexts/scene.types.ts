@@ -30,3 +30,9 @@ export interface ISceneContextLeaveOptions {
 	 */
 	canceled?: boolean;
 }
+
+export enum LastAction {
+	NONE = 'none',
+	ENTER = 'enter',
+	LEAVE = 'leave'
+}
