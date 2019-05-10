@@ -8,7 +8,7 @@
 
 VK-IO - This is a powerful [Node.js](https://nodejs.org) module that allows you to easily interact with the VK API 🚀
 
-| 📖 [Documentation](docs/) | 🤖 [Examples](docs/examples/) |
+| 📖 [Documentation](../../docs/) | 🤖 [Examples](../../docs/examples/) |
 |---------------------------|---------------------------|
 
 ## Features
@@ -55,7 +55,7 @@ run().catch(console.log);
 ## Community
 ### Useful modules that may be useful to you
 
-* [@vk-io/session](packages/session): Simple implementation of the sessions
-* [@vk-io/scenes](packages/scenes): Simple implementation of middleware-based scene management
+* [@vk-io/session](../session): Simple implementation of the sessions
+* [@vk-io/scenes](../scenes): Simple implementation of middleware-based scene management
 
 > If you want to add your module in the list, create a [new issue](https://github.com/negezor/vk-io/issues/new) in the repository.
