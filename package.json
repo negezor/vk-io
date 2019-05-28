@@ -31,6 +31,6 @@
 		"rollup:watch": "yarn run rollup:build -w",
 		"test": "yarn run test:jest && yarn run test:eslint",
 		"test:jest": "jest --config jest.config.json --no-cache",
-		"test:eslint": "eslint --ext .ts,.mjs --ignore-path .gitignore packages/*/src/**/*.{ts,mjs}"
+		"test:eslint": "eslint --ext .ts,.js --ignore-path .gitignore packages/*/src/**/*.{ts,js}"
 	}
 }
