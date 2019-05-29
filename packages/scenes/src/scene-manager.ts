@@ -40,6 +40,8 @@ export default class SceneManager {
 				context,
 				repository: this.repository
 			});
+
+			return next();
 		};
 	}
 
