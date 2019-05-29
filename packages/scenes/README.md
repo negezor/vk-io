@@ -66,6 +66,26 @@ sceneManager.addScene(new StepScene('signup', [
 vk.updates.on('message', sessionManager.middleware);
 vk.updates.on('message', sceneManager.middleware);
 
+// Custom handler scene and global exit from the scene using the button
+vk.updates.on('message', (context, next) => {
+	if (!context.scene.current) {
+		return next();
+	}
+
+	const cancel =  context.messagePayload && context.messagePayload.command === 'cancel';
+
+	if (cancel) {
+		return context.scene.leave({
+			canceled: true
+		});
+	}
+
+	return context.scene.reenter();
+});
+
+// Or default handler
+// vk.updates.on('message', sceneManager.middlewareIntercept);
+
 vk.updates.hear('/signup', (context) => {
 	return context.scene.enter('signup');
 });

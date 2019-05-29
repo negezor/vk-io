@@ -40,7 +40,14 @@ export default class SceneManager {
 				context,
 				repository: this.repository
 			});
+		};
+	}
 
+	/**
+	 * Returns the middleware for intercept
+	 */
+	get middlewareIntercept() {
+		return (context: IContext, next: Function) => {
 			if (!context.scene.current) {
 				return next();
 			}
