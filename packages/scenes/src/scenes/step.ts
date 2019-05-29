@@ -48,7 +48,7 @@ export default class StepScene<T = MessageContext> implements IScene {
 		await this.onEnterHandler(context);
 
 		if (context.scene.lastAction !== LastAction.LEAVE) {
-			return context.scene.step.reenter();
+			await context.scene.step.reenter();
 		}
 	}
 
