@@ -3,6 +3,7 @@ import { MessageContext } from 'vk-io';
 import IScene from './scene';
 
 import { StepSceneContext } from '../contexts';
+import { LastAction } from '../contexts/scene.types';
 import { StepSceneHandler, IStepContext } from './step.types';
 
 interface IStepSceneOptions<T> {
@@ -46,7 +47,9 @@ export default class StepScene<T = MessageContext> implements IScene {
 		// @ts-ignore
 		await this.onEnterHandler(context);
 
-		return context.scene.step.reenter();
+		if (context.scene.lastAction !== LastAction.LEAVE) {
+			return context.scene.step.reenter();
+		}
 	}
 
 	leaveHandler(context: IStepContext) {
