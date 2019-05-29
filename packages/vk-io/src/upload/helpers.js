@@ -32,3 +32,26 @@ export const copyParams = (params, properties) => {
 
 	return copies;
 };
+
+/**
+ * Returns buffer from stream in Promise
+ *
+ * @param {Stream} stream
+ *
+ * @returns {Promise<Buffer>}
+ */
+export const streamToBuffer = stream => (
+	new Promise((resolve, reject) => {
+		const accum = [];
+
+		stream.on('error', reject);
+
+		stream.on('end', () => {
+			resolve(Buffer.concat(accum));
+		});
+
+		stream.on('data', (chunk) => {
+			accum.push(chunk);
+		});
+	})
+);

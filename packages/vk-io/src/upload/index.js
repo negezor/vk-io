@@ -5,8 +5,8 @@ import nodeUtil from 'util';
 import nodeCrypto from 'crypto';
 
 import MultipartStream from './multipart-stream';
-import { isStream, copyParams } from './helpers';
 import { UploadError, uploadErrors } from '../errors';
+import { isStream, copyParams, streamToBuffer } from './helpers';
 import { defaultExtensions, defaultContentTypes } from '../utils/constants';
 
 import {
@@ -322,7 +322,6 @@ export default class Upload {
 	 * @return {Promise<VideoAttachment>}
 	 */
 	async video(params) {
-		/* FIXME: 400 Bad Request */
 		const save = await this.vk.api.video.save(copyParams(params, [
 			'group_id',
 			'album_id',
@@ -371,6 +370,7 @@ export default class Upload {
 
 		const video = await this.upload(save.upload_url, {
 			formData,
+			forceBuffer: true,
 			timeout: source.timeout
 		});
 
@@ -685,7 +685,9 @@ export default class Upload {
 			saveFiles: save => save,
 
 			maxFiles: 1,
-			attachmentType: 'video'
+			attachmentType: 'video',
+
+			forceBuffer: true
 		});
 	}
 
@@ -740,7 +742,9 @@ export default class Upload {
 		saveParams = [],
 
 		maxFiles = 1,
-		attachmentType
+		attachmentType,
+
+		forceBuffer = false
 	}) {
 		if (!params || !params.source) {
 			throw new UploadError({
@@ -798,6 +802,7 @@ export default class Upload {
 
 		const uploaded = await this.upload(url, {
 			formData,
+			forceBuffer,
 			timeout: source.timeout
 		});
 
@@ -894,8 +899,12 @@ export default class Upload {
 	 *
 	 * @return {Promise<Object>}
 	 */
-	async upload(url, { formData, timeout }) {
+	async upload(url, { formData, timeout, forceBuffer }) {
 		const { agent, uploadTimeout } = this.vk.options;
+
+		const body = forceBuffer
+			? await streamToBuffer(formData)
+			: formData;
 
 		let response = await fetch(url, {
 			agent,
@@ -906,7 +915,7 @@ export default class Upload {
 				Connection: 'keep-alive',
 				'Content-Type': `multipart/form-data; boundary=${formData.boundary}`
 			},
-			body: formData
+			body
 		});
 
 		if (!response.ok) {
