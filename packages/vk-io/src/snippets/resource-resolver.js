@@ -87,7 +87,7 @@ export default class ResourceResolver {
 		if (!resource) {
 			throw new SnippetsError({
 				code: INVALID_RESOURCE,
-				message: 'Resource should must be'
+				message: 'Resource is required'
 			});
 		}
 
