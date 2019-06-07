@@ -8,7 +8,7 @@
 
 VK-IO - This is a powerful [Node.js](https://nodejs.org) module that allows you to easily interact with the VK API 🚀
 
-| 📖 [Documentation](../../docs/) | 🤖 [Examples](../../docs/examples/) |
+| 📖 [Documentation](https://github.com/negezor/vk-io/tree/master/docs) | 🤖 [Examples](https://github.com/negezor/vk-io/tree/master/docs/examples) |
 |---------------------------|---------------------------|
 
 ## Features
