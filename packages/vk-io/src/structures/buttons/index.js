@@ -1,8 +1,8 @@
-import Button from './button';
-import Keyboard from './keyboard';
+export { default as Keyboard } from './keyboard';
 
-import TextButton from './text-button';
+export { default as Button } from './button';
+export { default as TextButton } from './text-button';
+export { default as LocationRequestButton } from './location-request';
 
-export { Button, Keyboard, TextButton };
-
-export default Keyboard;
+export { default as VKPayButton } from './vk-pay';
+export { default as VKApplicationButton } from './vk-application';

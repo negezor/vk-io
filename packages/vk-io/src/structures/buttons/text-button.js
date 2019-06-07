@@ -8,7 +8,7 @@ export default class TextButton extends Button {
 	 *
 	 * @param {Object} options
 	 */
-	constructor({ color, label, payload }) {
+	constructor({ color = Button.DEFAULT_COLOR, label, payload }) {
 		if (label.length > 40) {
 			throw new VKError({
 				message: 'Maximum length of label 40 characters'
@@ -16,12 +16,25 @@ export default class TextButton extends Button {
 		}
 
 		super({
-			color,
 			action: {
 				type: 'text',
 				label,
 				payload
 			}
 		});
+
+		this.color = color;
+	}
+
+	/**
+	 * Returns to JSON
+	 *
+	 * @return {Object}
+	 */
+	toJSON() {
+		return {
+			color: this.color,
+			action: this.action
+		};
 	}
 }

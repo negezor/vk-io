@@ -6,9 +6,7 @@ export default class Button {
 	 *
 	 * @param {Object} options
 	 */
-	constructor({ color = Button.DEFAULT_COLOR, action }) {
-		this.color = color;
-
+	constructor({ action }) {
 		const payload = JSON.stringify(action.payload || {});
 
 		if (payload.length > 255) {
@@ -76,7 +74,6 @@ export default class Button {
 	 */
 	toJSON() {
 		return {
-			color: this.color,
 			action: this.action
 		};
 	}

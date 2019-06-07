@@ -3578,6 +3578,22 @@ export class Keyboard {
 	 */
 	public static textButton(options: ITextButtonOptions): TextButton;
 
+		/**
+	 * Returns the location request button
+	 */
+	static locationRequestButton(options: ILocationRequestButtonOptions): LocationRequestButton;
+
+	/**
+	 * Returns the location request button
+	 */
+	static payButton(options: IVKPayButtonOptions): VKPayButton;
+
+	/**
+	 * Returns the pay button
+	 */
+	static applicationButton(options: IVKApplicationButtonOptions): VKApplicationButton;
+
+
 	/**
 	 * The keyboard will open only once
 	 */
@@ -3605,6 +3621,50 @@ export class TextButton extends Button {
 	 * Constructor
 	 */
 	constructor(options: ITextButtonOptions);
+}
+
+export interface ILocationRequestButtonOptions {
+	payload?: Partial;
+}
+
+export class LocationRequestButton extends Button {
+	/**
+	 * Constructor
+	 */
+	constructor(options: ILocationRequestButtonOptions);
+}
+
+export interface IVKPayButtonOptions {
+	/**
+	 * @example
+	 *
+	 * line containing VK Pay payment parameters and application ID in the aid parameter, separated by &.
+	 *
+	 * action=transfer-to-group&group_id=1&aid=10
+	 */
+	hash: string;
+	payload?: Partial;
+}
+
+export class VKPayButton extends Button {
+	/**
+	 * Constructor
+	 */
+	constructor(options: IVKPayButtonOptions);
+}
+
+export interface IVKApplicationButtonOptions {
+	label: string;
+	appId: number;
+	ownerId: number;
+	payload?: Partial;
+}
+
+export class VKApplicationButton extends Button {
+	/**
+	 * Constructor
+	 */
+	constructor(options: IVKApplicationButtonOptions);
 }
 
 /**

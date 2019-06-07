@@ -2,6 +2,10 @@ import { VKError } from '../../errors';
 
 import Button from './button';
 import TextButton from './text-button';
+import LocationRequestButton from './location-request';
+
+import VKPayButton from './vk-pay';
+import VKApplicationButton from './vk-application';
 
 const {
 	DEFAULT_COLOR,
@@ -102,6 +106,39 @@ export default class Keyboard {
 	 */
 	static textButton(options) {
 		return new TextButton(options);
+	}
+
+	/**
+	 * Returns the location request button
+	 *
+	 * @param {Object} options
+	 *
+	 * @return {LocationRequestButton}
+	 */
+	static locationRequestButton(options) {
+		return new LocationRequestButton(options);
+	}
+
+	/**
+	 * Returns the location request button
+	 *
+	 * @param {Object} options
+	 *
+	 * @return {VKPayButton}
+	 */
+	static payButton(options) {
+		return new VKPayButton(options);
+	}
+
+	/**
+	 * Returns the pay button
+	 *
+	 * @param {Object} options
+	 *
+	 * @return {VKApplicationButton}
+	 */
+	static applicationButton(options) {
+		return new VKApplicationButton(options);
 	}
 
 	/**
