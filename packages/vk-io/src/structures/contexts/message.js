@@ -21,7 +21,8 @@ const subTypesEnum = {
 	4: 'new_message',
 	5: 'edit_message',
 	message_new: 'new_message',
-	message_edit: 'edit_message'
+	message_edit: 'edit_message',
+	message_reply: 'reply_message'
 };
 
 const kForwards = Symbol('forwards');
