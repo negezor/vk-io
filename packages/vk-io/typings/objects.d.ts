@@ -1010,6 +1010,7 @@ export interface AppsApp {
      */
     title: string;
     [key: string]: any;
+    friends?: number[];
     screenshots?: PhotosPhoto[];
 }
 
@@ -1157,12 +1158,7 @@ export interface BaseGeo {
      */
     type?: string;
     [key: string]: any;
-}
-
-export interface BaseGeoCoordinates {
-    [key: string]: any;
-    latitude: number;
-    longitude: number;
+    coordinates?: string;
 }
 
 export interface BaseImage {
@@ -1530,6 +1526,163 @@ export interface BoardTopicPoll {
     answers: PollsAnswer[];
 }
 
+export interface CallbackBoardPostDelete {
+    [key: string]: any;
+    topic_owner_id: number;
+    topic_id: number;
+    id: number;
+}
+
+export interface CallbackConfirmationMessage {
+    [key: string]: any;
+    group_id: number;
+    secret: string;
+}
+
+export interface CallbackGroupChangePhoto {
+    [key: string]: any;
+    user_id: number;
+}
+
+export interface CallbackGroupChangeSettings {
+    [key: string]: any;
+    user_id: number;
+}
+
+export interface CallbackGroupJoin {
+    [key: string]: any;
+    user_id: number;
+}
+
+export type CallbackGroupJoinType = "join" | "unsure" | "accepted" | "approved" | "request";
+
+export interface CallbackGroupLeave {
+    [key: string]: any;
+    user_id?: number;
+}
+
+export type CallbackGroupMarket = 0 | 1;
+
+export type CallbackGroupOfficerRole = 0 | 1 | 2 | 3;
+
+export interface CallbackGroupOfficersEdit {
+    [key: string]: any;
+    admin_id: number;
+    user_id: number;
+}
+
+export interface CallbackGroupSettingsChanges {
+    [key: string]: any;
+    title?: string;
+    description?: string;
+    screen_name?: string;
+    public_category?: number;
+    public_subcategory?: number;
+    website?: string;
+}
+
+export interface CallbackMarketComment {
+    [key: string]: any;
+    id: number;
+    from_id: number;
+    date: number;
+    text?: string;
+    market_owner_od?: number;
+    photo_id?: number;
+}
+
+export interface CallbackMarketCommentDelete {
+    [key: string]: any;
+    owner_id: number;
+    id: number;
+    user_id: number;
+    item_id: number;
+}
+
+export interface CallbackMessageAllow {
+    [key: string]: any;
+    user_id: number;
+    key: string;
+}
+
+export interface CallbackMessageBase {
+    [key: string]: any;
+    group_id: number;
+}
+
+export interface CallbackMessageDeny {
+    [key: string]: any;
+    user_id: number;
+}
+
+export type CallbackMessageType = "confirmation" | "group_change_photo" | "group_change_settings" | "group_officers_edit" | "lead_forms_new" | "market_comment_delete" | "market_comment_edit" | "market_comment_restore" | "message_allow" | "message_deny" | "message_read" | "message_reply" | "message_typing_state" | "messages_edit" | "photo_comment_delete" | "photo_comment_edit" | "photo_comment_restore" | "poll_vote_new" | "user_block" | "user_unblock" | "video_comment_delete" | "video_comment_edit" | "video_comment_restore" | "wall_reply_delete" | "wall_reply_restore" | "wall_repost";
+
+export interface CallbackPhotoComment {
+    [key: string]: any;
+    id: number;
+    from_id: number;
+    date: number;
+    text: string;
+    photo_owner_od: number;
+}
+
+export interface CallbackPhotoCommentDelete {
+    [key: string]: any;
+    id: number;
+    owner_id: number;
+    user_id: number;
+    photo_id: number;
+}
+
+export interface CallbackPollVoteNew {
+    [key: string]: any;
+    owner_id: number;
+    poll_id: number;
+    option_id: number;
+    user_id: number;
+}
+
+export interface CallbackUserBlock {
+    [key: string]: any;
+    admin_id: number;
+    user_id: number;
+    unblock_date: number;
+    reason: number;
+    comment?: string;
+}
+
+export interface CallbackUserUnblock {
+    [key: string]: any;
+    admin_id: number;
+    user_id: number;
+    by_end_date: number;
+}
+
+export interface CallbackVideoComment {
+    [key: string]: any;
+    id: number;
+    from_id: number;
+    date: number;
+    text: string;
+    video_owner_od: number;
+}
+
+export interface CallbackVideoCommentDelete {
+    [key: string]: any;
+    id: number;
+    owner_id: number;
+    user_id: number;
+    video_id: number;
+}
+
+export interface CallbackWallCommentDelete {
+    [key: string]: any;
+    owner_id: number;
+    id: number;
+    user_id: number;
+    post_id: number;
+}
+
 export interface DatabaseCity1 {
     /**
      * Area title
@@ -1744,7 +1897,7 @@ export interface FaveFavesLink {
     /**
      * Link ID
      */
-    id?: number;
+    id?: string;
     /**
      * URL of the preview image with 100 px in width
      */
@@ -2020,6 +2173,10 @@ export interface GroupsBanInfo {
      */
     comment?: string;
     /**
+     * Show comment for user
+     */
+    comment_visible?: boolean;
+    /**
      * Date when user has been added to blacklist in Unixtime
      */
     date?: number;
@@ -2028,9 +2185,20 @@ export interface GroupsBanInfo {
      */
     end_date?: number;
     [key: string]: any;
+    is_closed?: boolean;
 }
 
 export type GroupsBanInfoReason = 0 | 1 | 2 | 3 | 4;
+
+export interface GroupsCallbackServer {
+    [key: string]: any;
+    id: number;
+    title: string;
+    creator_id: number;
+    url: string;
+    secret_key: string;
+    status: "unconfigured" | "failed" | "wait" | "ok";
+}
 
 export interface GroupsCallbackSettings {
     /**
@@ -2101,7 +2269,7 @@ export interface GroupsCover {
     images?: BaseImage[];
 }
 
-export type GroupsFields = "market" | "member_status" | "is_favorite" | "is_subscribed" | "city" | "country" | "verified" | "description" | "wiki_page" | "members_count" | "counters" | "cover" | "can_post" | "can_see_all_posts" | "activity" | "fixed_post" | "can_create_topic" | "can_upload_video" | "has_photo" | "status" | "main_album_id" | "links" | "contacts" | "site" | "main_section" | "trending" | "can_message" | "is_messages_blocked" | "can_send_notify" | "online_status" | "start_date" | "finish_date" | "age_limits" | "ban_info" | "action_button" | "author_id" | "phone" | "has_market_app" | "addresses" | "live_covers" | "is_adult" | "can_subscribe_posts";
+export type GroupsFields = "market" | "member_status" | "is_favorite" | "is_subscribed" | "city" | "country" | "verified" | "description" | "wiki_page" | "members_count" | "counters" | "cover" | "can_post" | "can_see_all_posts" | "activity" | "fixed_post" | "can_create_topic" | "can_upload_video" | "has_photo" | "status" | "main_album_id" | "links" | "contacts" | "site" | "main_section" | "trending" | "can_message" | "is_messages_blocked" | "can_send_notify" | "online_status" | "start_date" | "finish_date" | "age_limits" | "ban_info" | "action_button" | "author_id" | "phone" | "has_market_app" | "addresses" | "live_covers" | "is_adult" | "can_subscribe_posts" | "menu";
 
 export type GroupsFilter = "admin" | "editor" | "moder" | "groups" | "publics" | "events" | "has_addresses";
 
@@ -2287,6 +2455,10 @@ export type GroupsGroupFullMemberStatus = 0 | 1 | 2 | 3 | 4 | 5;
 export type GroupsGroupIsClosed = 0 | 1 | 2;
 
 export interface GroupsGroupLink {
+    /**
+     * Link label
+     */
+    name?: string;
     /**
      * Link description
      */
@@ -2493,7 +2665,7 @@ export interface GroupsLongPollServer {
     /**
      * Number of the last event
      */
-    ts: number;
+    ts: string;
     [key: string]: any;
 }
 
@@ -2588,6 +2760,12 @@ export interface GroupsSubjectItem {
      */
     name?: string;
     [key: string]: any;
+}
+
+export interface GroupsTokenPermissionSetting {
+    [key: string]: any;
+    name: string;
+    setting: number;
 }
 
 export interface GroupsUserXtrRole1 {
@@ -2816,6 +2994,7 @@ export interface MarketMarketItemFull1 {
      * Views number
      */
     views_count?: number;
+    albums_ids?: number[];
     photos?: PhotosPhoto[];
     can_comment?: BaseBoolInt;
     can_repost?: BaseBoolInt;
@@ -2834,6 +3013,8 @@ export interface MarketPrice {
      */
     text?: string;
     [key: string]: any;
+    discount_rate?: number;
+    old_amount?: string;
 }
 
 export interface MarketSection {
@@ -3256,6 +3437,8 @@ export interface MessagesMessage {
     fwd_messages?: MessagesForeignMessage[];
     is_hidden?: boolean;
     payload?: string;
+    ref?: string;
+    ref_source?: string;
 }
 
 export interface MessagesMessageAction {
@@ -3469,6 +3652,15 @@ export interface NewsfeedItemPhotoTagPhotoTags {
     items?: NewsfeedNewsfeedPhoto[];
 }
 
+export interface NewsfeedItemStoriesBlock {
+    [key: string]: any;
+    block_type?: "local" | "remote";
+    stories?: StoriesStory[];
+    title?: string;
+    track_code?: string;
+    type?: "stories";
+}
+
 export interface NewsfeedItemTopic {
     /**
      * Topic post ID
@@ -3611,6 +3803,7 @@ export interface NotesNote {
      */
     view_url: string;
     [key: string]: any;
+    read_comments?: number;
 }
 
 export interface NotesNoteComment {
@@ -3943,27 +4136,27 @@ export interface PagesWikipageFull {
     [key: string]: any;
 }
 
-export interface PagesWikipageVersion {
-    /**
-     * Date when the page has been edited in Unixtime
-     */
-    edited?: number;
-    /**
-     * Last editor ID
-     */
-    editor_id?: number;
-    /**
-     * Last editor name
-     */
-    editor_name?: string;
+export interface PagesWikipageHistory {
     /**
      * Version ID
      */
-    id?: number;
+    id: number;
     /**
      * Page size in bytes
      */
-    length?: number;
+    length: number;
+    /**
+     * Date when the page has been edited in Unixtime
+     */
+    date: number;
+    /**
+     * Last editor ID
+     */
+    editor_id: number;
+    /**
+     * Last editor name
+     */
+    editor_name: string;
     [key: string]: any;
 }
 
@@ -4200,14 +4393,6 @@ export interface PhotosPhotoAlbumFull {
      * Album owner's ID
      */
     owner_id: number;
-    /**
-     * Privacy comment
-     */
-    privacy_comment?: string[];
-    /**
-     * Privacy view
-     */
-    privacy_view?: string[];
     /**
      * Photos number
      */
@@ -5015,6 +5200,12 @@ export interface StatusStatus {
      */
     text?: string;
     [key: string]: any;
+}
+
+export interface StorageValue {
+    [key: string]: any;
+    key: string;
+    value: string;
 }
 
 export interface StoriesReplies {
@@ -6149,14 +6340,6 @@ export interface VideoVideoFull {
      */
     player?: string;
     /**
-     * Privacy comment
-     */
-    privacy_comment?: string[];
-    /**
-     * Privacy view
-     */
-    privacy_view?: string[];
-    /**
      * Video title
      */
     title?: string;
@@ -6232,6 +6415,10 @@ export interface WallCommentAttachment {
 export type WallCommentAttachmentType = "photo" | "audio" | "video" | "doc" | "link" | "note" | "page" | "market_market_album" | "market" | "sticker";
 
 export interface WallCommentThread {
+    /**
+     * Information whether current user can comment the post
+     */
+    can_post?: boolean;
     /**
      * Comments number
      */
@@ -6343,6 +6530,10 @@ export interface WallWallComment {
     text: string;
     [key: string]: any;
     attachments?: WallCommentAttachment[];
+    post_id?: number;
+    owner_id?: number;
+    parents_stack?: number[];
+    deleted?: boolean;
 }
 
 export interface WallWallpost {

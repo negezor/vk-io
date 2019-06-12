@@ -1959,6 +1959,14 @@ export interface GroupsAddAddressParams {
     [key: string]: any;
 }
 
+export interface GroupsAddCallbackServerParams {
+    group_id: number;
+    url: string;
+    title: string;
+    secret_key?: string;
+    [key: string]: any;
+}
+
 export interface GroupsAddLinkParams {
     /**
      * Community ID.
@@ -2335,6 +2343,12 @@ export interface GroupsGetCallbackConfirmationCodeParams {
     [key: string]: any;
 }
 
+export interface GroupsGetCallbackServersParams {
+    group_id: number;
+    server_ids?: number[] | number;
+    [key: string]: any;
+}
+
 export interface GroupsGetCallbackSettingsParams {
     /**
      * Community ID.
@@ -2471,6 +2485,10 @@ export interface GroupsGetSettingsParams {
      * Community ID.
      */
     group_id: number;
+    [key: string]: any;
+}
+
+export interface GroupsGetTokenPermissionsParams {
     [key: string]: any;
 }
 
@@ -3759,7 +3777,8 @@ export interface MessagesGetChatPreviewParams {
     /**
      * Invitation link.
      */
-    link: string;
+    link?: string;
+    peer_id?: number;
     fields?: Objects.UsersFields[];
     [key: string]: any;
 }
@@ -3880,6 +3899,8 @@ export interface MessagesGetHistoryAttachmentsParams {
      */
     group_id?: number;
     fields?: Objects.UsersFields[];
+    preserve_order?: boolean;
+    max_forwards_level?: number;
     [key: string]: any;
 }
 
@@ -3943,6 +3964,7 @@ export interface MessagesGetLongPollHistoryParams {
     fields?: Objects.UsersFields[];
     lp_version?: number;
     last_n?: number;
+    credentials?: boolean;
     [key: string]: any;
 }
 
@@ -5991,6 +6013,12 @@ export interface SecureGetUserLevelParams {
     [key: string]: any;
 }
 
+export interface SecureGiveEventStickerParams {
+    user_ids?: number[] | number;
+    achievement_id: number;
+    [key: string]: any;
+}
+
 export interface SecureSendNotificationParams {
     /**
      * notification text which should be sent in 'UTF-8' encoding ('254' characters maximum).
@@ -6532,6 +6560,10 @@ export interface UtilsGetLinkStatsParams {
      * Link key (characters after vk.cc/).
      */
     key: string;
+    /**
+     * Source of scope
+     */
+    source?: "vk_cc" | "vk_link";
     /**
      * Access key for private link stats.
      */
@@ -7365,6 +7397,7 @@ export interface WallPostParams {
     guid?: string;
     mark_as_ads?: boolean;
     close_comments?: boolean;
+    mute_notifications?: boolean;
     [key: string]: any;
 }
 
@@ -7463,6 +7496,7 @@ export interface WallRepostParams {
      */
     group_id?: number;
     mark_as_ads?: boolean;
+    mute_notifications?: boolean;
     [key: string]: any;
 }
 

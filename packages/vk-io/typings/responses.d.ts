@@ -30,7 +30,9 @@ export interface AccountGetBannedResponse {
      */
     count: number;
     [key: string]: any;
-    items: Objects.UsersUserMin[];
+    items: number[];
+    profiles?: Objects.UsersUserMin[];
+    groups?: Objects.GroupsGroup[];
 }
 
 export type AccountGetCountersResponse = Objects.AccountAccountCounters;
@@ -573,6 +575,11 @@ export interface GiftsGetResponse {
     items?: Objects.GiftsGift[];
 }
 
+export interface GroupsAddCallbackServerResponse {
+    [key: string]: any;
+    server_id?: number;
+}
+
 export type GroupsAddLinkResponse = Objects.GroupsGroupLink;
 
 export type GroupsAddAddressResponse = Objects.GroupsAddress;
@@ -607,6 +614,12 @@ export interface GroupsGetCallbackConfirmationCodeResponse {
      */
     code?: string;
     [key: string]: any;
+}
+
+export interface GroupsGetCallbackServersResponse {
+    [key: string]: any;
+    count: number;
+    items: Objects.GroupsCallbackServer[];
 }
 
 export type GroupsGetCallbackSettingsResponse = Objects.GroupsCallbackSettings;
@@ -722,6 +735,12 @@ export interface GroupsGetRequestsResponse {
 }
 
 export type GroupsGetSettingsResponse = Objects.GroupsGroupSettings;
+
+export interface GroupsGetTokenPermissionsResponse {
+    [key: string]: any;
+    mask: number;
+    permissions: Objects.GroupsTokenPermissionSetting[];
+}
 
 export interface GroupsGetExtendedResponse {
     /**
@@ -1165,9 +1184,9 @@ export interface NewsfeedGetCommentsResponse {
      */
     next_from?: string;
     [key: string]: any;
-    items?: Objects.NewsfeedNewsfeedItem[];
-    profiles?: Objects.UsersUserFull[];
-    groups?: Objects.GroupsGroupFull[];
+    items: Objects.NewsfeedNewsfeedItem[];
+    profiles: Objects.UsersUserFull[];
+    groups: Objects.GroupsGroupFull[];
 }
 
 export interface NewsfeedGetListsExtendedResponse {
@@ -1277,9 +1296,14 @@ export interface NotificationsGetResponse {
      */
     last_viewed?: number;
     [key: string]: any;
-    items?: Objects.NotificationsNotification[];
+    items?: any[];
     profiles?: Objects.UsersUser[];
     groups?: Objects.GroupsGroup[];
+    photos?: Objects.PhotosPhoto[];
+    videos?: Objects.VideoVideo[];
+    apps?: Objects.AppsApp[];
+    next_from?: string;
+    ttl?: number;
 }
 
 export type NotificationsMarkAsViewedResponse = Objects.BaseBoolInt;
@@ -1309,7 +1333,7 @@ export type OrdersGetResponse = Objects.OrdersOrder[];
 
 export type OrdersUpdateSubscriptionResponse = Objects.BaseBoolInt;
 
-export type PagesGetHistoryResponse = Objects.PagesWikipageVersion[];
+export type PagesGetHistoryResponse = Objects.PagesWikipageHistory[];
 
 export type PagesGetTitlesResponse = Objects.PagesWikipage[];
 
@@ -1572,6 +1596,8 @@ export type SecureGetTransactionsHistoryResponse = Objects.SecureTransaction[];
 
 export type SecureGetUserLevelResponse = Objects.SecureLevel[];
 
+export type SecureGiveEventStickerResponse = any[];
+
 export type SecureSendNotificationResponse = number[];
 
 export type StatsGetPostReachResponse = Objects.StatsWallpostStat[];
@@ -1580,7 +1606,7 @@ export type StatsGetResponse = Objects.StatsPeriod[];
 
 export type StatusGetResponse = Objects.StatusStatus;
 
-export type StorageGetKeysResponse = string[];
+export type StorageGetKeysResponse = Objects.StorageValue[];
 
 export type StorageGetResponse = string;
 
@@ -1925,6 +1951,7 @@ export interface WallGetCommentsExtendedResponse {
     current_level_count?: number;
     [key: string]: any;
     items: Objects.WallWallComment[];
+    show_reply_button?: boolean;
     profiles: Objects.UsersUser[];
     groups: Objects.GroupsGroup[];
 }

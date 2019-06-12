@@ -586,6 +586,7 @@ export interface APIGifts {
  */
 export interface APIGroups {
     addAddress(params: Params.GroupsAddAddressParams): Promise<Responses.GroupsAddAddressResponse>;
+    addCallbackServer(params: Params.GroupsAddCallbackServerParams): Promise<Responses.GroupsAddCallbackServerResponse>;
     /**
      * Allows to add a link to the community.
      */
@@ -640,6 +641,7 @@ export interface APIGroups {
      * Returns Callback API confirmation code for the community.
      */
     getCallbackConfirmationCode(params: Params.GroupsGetCallbackConfirmationCodeParams): Promise<Responses.GroupsGetCallbackConfirmationCodeResponse>;
+    getCallbackServers(params: Params.GroupsGetCallbackServersParams): Promise<Responses.GroupsGetCallbackServersResponse>;
     /**
      * Returns [vk.com/dev/callback_api|Callback API] notifications settings.
      */
@@ -680,6 +682,7 @@ export interface APIGroups {
      * Returns community settings.
      */
     getSettings(params: Params.GroupsGetSettingsParams): Promise<Responses.GroupsGetSettingsResponse>;
+    getTokenPermissions(params: Params.GroupsGetTokenPermissionsParams): Promise<Responses.GroupsGetTokenPermissionsResponse>;
     /**
      * Allows to invite friends to the community.
      */
@@ -1465,6 +1468,10 @@ export interface APISecure {
      * Returns one of the previously set game levels of one or more users in the application.
      */
     getUserLevel(params: Params.SecureGetUserLevelParams): Promise<Responses.SecureGetUserLevelResponse>;
+    /**
+     * Opens the game achievement and gives the user a sticker
+     */
+    giveEventSticker(params: Params.SecureGiveEventStickerParams): Promise<Responses.SecureGiveEventStickerResponse>;
     /**
      * Sends notification to the user.
      */
