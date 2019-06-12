@@ -1,8 +1,9 @@
-import ts from 'typescript';
+// eslint-disable-next-line import/no-extraneous-dependencies
+const ts = require('typescript');
 
-import { TypesGenerator, InterfaceGenerator } from '../generators';
+const { TypesGenerator, InterfaceGenerator } = require('../generators');
 
-import { formatTSComments, toPascalCase } from '../utils/helpers';
+const { formatTSComments, toPascalCase } = require('../utils/helpers');
 
 const MATCH_REF_RE = /^([^#]+)?#\/definitions\/(.+)/;
 
@@ -121,7 +122,7 @@ const jsonSchemaTypes = {
 	})
 };
 
-export function parseJSONObject(name, type, payload = {}) {
+function parseJSONObject(name, type, payload = {}) {
 	if (type.$ref) {
 		const [, group, refName] = type.$ref.match(MATCH_REF_RE);
 
@@ -316,9 +317,14 @@ export function parseJSONObject(name, type, payload = {}) {
 	};
 }
 
-export default function parseJSONSchema(schema, payload) {
+function parseJSONSchema(schema, payload) {
 	return Object.entries(schema)
 		.map(([key, value]) => (
 			parseJSONObject(key, value, payload)
 		));
 }
+
+module.exports = {
+	parseJSONSchema,
+	parseJSONObject
+};

@@ -1575,6 +1575,13 @@
           "format": "uri",
           "description": "URL of the app banner with 560 px in width"
         },
+        "friends": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
         "catalog_position": {
           "type": "integer",
           "description": "Catalog position"
@@ -1907,7 +1914,7 @@
       "type": "object",
       "properties": {
         "coordinates": {
-          "$ref": "#/definitions/base_geo_coordinates"
+          "type": "string"
         },
         "place": {
           "$ref": "#/definitions/base_place"
@@ -1921,22 +1928,6 @@
           "description": "Place type"
         }
       }
-    },
-    "base_geo_coordinates": {
-      "type": "object",
-      "properties": {
-        "latitude": {
-          "type": "number"
-        },
-        "longitude": {
-          "type": "number"
-        }
-      },
-      "required": [
-        "latitude",
-        "longitude"
-      ],
-      "additionalProperties": false
     },
     "base_image": {
       "type": "object",
@@ -2625,6 +2616,586 @@
       ],
       "additionalProperties": false
     },
+    "callback_board_post_delete": {
+      "type": "object",
+      "properties": {
+        "topic_owner_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "topic_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "id": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "topic_owner_id",
+        "topic_id",
+        "id"
+      ],
+      "withoutRefs": true
+    },
+    "callback_confirmation_message": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "objects.json#/definitions/callback_message_type"
+        },
+        "group_id": {
+          "type": "integer"
+        },
+        "secret": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "group_id",
+        "secret"
+      ],
+      "withoutRefs": true
+    },
+    "callback_group_change_photo": {
+      "type": "object",
+      "properties": {
+        "user_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "photo": {
+          "$ref": "#/definitions/photos_photo"
+        }
+      },
+      "required": [
+        "user_id",
+        "photo"
+      ],
+      "withoutRefs": true
+    },
+    "callback_group_change_settings": {
+      "type": "object",
+      "properties": {
+        "user_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "self": {
+          "$ref": "#/definitions/base_bool_int"
+        }
+      },
+      "required": [
+        "user_id",
+        "self"
+      ],
+      "withoutRefs": true
+    },
+    "callback_group_join": {
+      "type": "object",
+      "properties": {
+        "user_id": {
+          "type": "integer"
+        },
+        "join_type": {
+          "$ref": "objects.json#/definitions/callback_group_join_type"
+        }
+      },
+      "required": [
+        "user_id",
+        "join_type"
+      ],
+      "withoutRefs": true
+    },
+    "callback_group_join_type": {
+      "type": "string",
+      "enum": [
+        "join",
+        "unsure",
+        "accepted",
+        "approved",
+        "request"
+      ],
+      "withoutRefs": true
+    },
+    "callback_group_leave": {
+      "type": "object",
+      "properties": {
+        "user_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "self": {
+          "$ref": "#/definitions/base_bool_int"
+        }
+      },
+      "withoutRefs": true
+    },
+    "callback_group_market": {
+      "type": "integer",
+      "enum": [
+        0,
+        1
+      ],
+      "enumNames": [
+        "disabled",
+        "open"
+      ],
+      "withoutRefs": true
+    },
+    "callback_group_officer_role": {
+      "type": "integer",
+      "enum": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "enumNames": [
+        "none",
+        "moderator",
+        "editor",
+        "administrator"
+      ],
+      "withoutRefs": true
+    },
+    "callback_group_officers_edit": {
+      "type": "object",
+      "properties": {
+        "admin_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "user_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "level_old": {
+          "$ref": "objects.json#/definitions/callback_group_officer_role"
+        },
+        "level_new": {
+          "$ref": "objects.json#/definitions/callback_group_officer_role"
+        }
+      },
+      "required": [
+        "admin_id",
+        "user_id",
+        "level_old",
+        "level_new"
+      ],
+      "withoutRefs": true
+    },
+    "callback_group_settings_changes": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "access": {
+          "$ref": "#/definitions/groups_group_is_closed"
+        },
+        "screen_name": {
+          "type": "string"
+        },
+        "public_category": {
+          "type": "integer"
+        },
+        "public_subcategory": {
+          "type": "integer"
+        },
+        "age_limits": {
+          "$ref": "#/definitions/groups_group_full_age_limits"
+        },
+        "website": {
+          "type": "string"
+        },
+        "enable_status_default": {
+          "$ref": "objects.json#/definitions/groups_group_wall"
+        },
+        "enable_audio": {
+          "$ref": "objects.json#/definitions/groups_group_audio"
+        },
+        "enable_video": {
+          "$ref": "objects.json#/definitions/groups_group_video"
+        },
+        "enable_photo": {
+          "$ref": "objects.json#/definitions/groups_group_photos"
+        },
+        "enable_market": {
+          "$ref": "objects.json#/definitions/callback_group_market"
+        }
+      },
+      "withoutRefs": true
+    },
+    "callback_market_comment": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "from_id": {
+          "type": "integer"
+        },
+        "date": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "text": {
+          "type": "string"
+        },
+        "market_owner_od": {
+          "type": "integer"
+        },
+        "photo_id": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "from_id",
+        "date"
+      ],
+      "withoutRefs": true
+    },
+    "callback_market_comment_delete": {
+      "type": "object",
+      "properties": {
+        "owner_id": {
+          "type": "integer"
+        },
+        "id": {
+          "type": "integer"
+        },
+        "user_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "item_id": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "owner_id",
+        "id",
+        "user_id",
+        "item_id"
+      ],
+      "withoutRefs": true
+    },
+    "callback_message_allow": {
+      "type": "object",
+      "properties": {
+        "user_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "key": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "user_id",
+        "key"
+      ],
+      "withoutRefs": true
+    },
+    "callback_message_base": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "objects.json#/definitions/callback_message_type"
+        },
+        "object": {
+          "type": "object"
+        },
+        "group_id": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "type",
+        "object",
+        "group_id"
+      ],
+      "withoutRefs": true
+    },
+    "callback_message_deny": {
+      "type": "object",
+      "properties": {
+        "user_id": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "user_id"
+      ],
+      "withoutRefs": true
+    },
+    "callback_message_type": {
+      "type": "string",
+      "enum": [
+        "confirmation",
+        "group_change_photo",
+        "group_change_settings",
+        "group_officers_edit",
+        "lead_forms_new",
+        "market_comment_delete",
+        "market_comment_edit",
+        "market_comment_restore",
+        "message_allow",
+        "message_deny",
+        "message_read",
+        "message_reply",
+        "message_typing_state",
+        "messages_edit",
+        "photo_comment_delete",
+        "photo_comment_edit",
+        "photo_comment_restore",
+        "poll_vote_new",
+        "user_block",
+        "user_unblock",
+        "video_comment_delete",
+        "video_comment_edit",
+        "video_comment_restore",
+        "wall_reply_delete",
+        "wall_reply_restore",
+        "wall_repost"
+      ],
+      "withoutRefs": true
+    },
+    "callback_photo_comment": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "from_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "date": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "text": {
+          "type": "string"
+        },
+        "photo_owner_od": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "from_id",
+        "date",
+        "text",
+        "photo_owner_od"
+      ],
+      "withoutRefs": true
+    },
+    "callback_photo_comment_delete": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "owner_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "user_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "photo_id": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "id",
+        "owner_id",
+        "user_id",
+        "photo_id"
+      ],
+      "withoutRefs": true
+    },
+    "callback_poll_vote_new": {
+      "type": "object",
+      "properties": {
+        "owner_id": {
+          "type": "integer"
+        },
+        "poll_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "option_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "user_id": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "owner_id",
+        "poll_id",
+        "option_id",
+        "user_id"
+      ],
+      "withoutRefs": true
+    },
+    "callback_user_block": {
+      "type": "object",
+      "properties": {
+        "admin_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "user_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unblock_date": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "reason": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "comment": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "admin_id",
+        "user_id",
+        "unblock_date",
+        "reason"
+      ],
+      "withoutRefs": true
+    },
+    "callback_user_unblock": {
+      "type": "object",
+      "properties": {
+        "admin_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "user_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "by_end_date": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "admin_id",
+        "user_id",
+        "by_end_date"
+      ],
+      "withoutRefs": true
+    },
+    "callback_video_comment": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "from_id": {
+          "type": "integer"
+        },
+        "date": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "text": {
+          "type": "string"
+        },
+        "video_owner_od": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "from_id",
+        "date",
+        "text",
+        "video_owner_od"
+      ],
+      "withoutRefs": true
+    },
+    "callback_video_comment_delete": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "owner_id": {
+          "type": "integer"
+        },
+        "user_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "video_id": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "id",
+        "owner_id",
+        "user_id",
+        "video_id"
+      ],
+      "withoutRefs": true
+    },
+    "callback_wall_comment_delete": {
+      "type": "object",
+      "properties": {
+        "owner_id": {
+          "type": "integer"
+        },
+        "id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "user_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "post_id": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "owner_id",
+        "id",
+        "user_id",
+        "post_id"
+      ],
+      "withoutRefs": true
+    },
     "database_city": {
       "type": "object",
       "allOf": [
@@ -2923,7 +3494,6 @@
       },
       "required": [
         "id",
-        "is_member",
         "is_favorite",
         "text",
         "friends",
@@ -2939,7 +3509,7 @@
           "description": "Link description"
         },
         "id": {
-          "type": "integer",
+          "type": "string",
           "description": "Link ID"
         },
         "photo_100": {
@@ -3385,6 +3955,13 @@
           "type": "string",
           "description": "Comment for a ban"
         },
+        "comment_visible": {
+          "type": "boolean",
+          "description": "Show comment for user"
+        },
+        "is_closed": {
+          "type": "boolean"
+        },
         "date": {
           "type": "integer",
           "description": "Date when user has been added to blacklist in Unixtime",
@@ -3417,6 +3994,45 @@
         "verbal abuse",
         "strong language",
         "flood"
+      ]
+    },
+    "groups_callback_server": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "title": {
+          "type": "string"
+        },
+        "creator_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "url": {
+          "type": "string"
+        },
+        "secret_key": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "unconfigured",
+            "failed",
+            "wait",
+            "ok"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "title",
+        "creator_id",
+        "url",
+        "secret_key",
+        "status"
       ]
     },
     "groups_callback_settings": {
@@ -3553,7 +4169,8 @@
         "addresses",
         "live_covers",
         "is_adult",
-        "can_subscribe_posts"
+        "can_subscribe_posts",
+        "menu"
       ]
     },
     "groups_filter": {
@@ -4014,6 +4631,10 @@
     "groups_group_link": {
       "type": "object",
       "properties": {
+        "name": {
+          "type": "string",
+          "description": "Link label"
+        },
         "desc": {
           "type": "string",
           "description": "Link description"
@@ -4612,6 +5233,7 @@
         }
       },
       "required": [
+        "app_payload",
         "message_new",
         "message_reply",
         "photo_new",
@@ -4666,7 +5288,7 @@
           "description": "Long Poll server address"
         },
         "ts": {
-          "type": "integer",
+          "type": "string",
           "description": "Number of the last event"
         }
       },
@@ -4872,6 +5494,23 @@
           "description": "Subject title"
         }
       }
+    },
+    "groups_token_permission_setting": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "setting": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "setting",
+        "name"
+      ],
+      "additionalProperties": false
     },
     "groups_user_xtr_role": {
       "type": "object",
@@ -5232,6 +5871,12 @@
         },
         {
           "properties": {
+            "albums_ids": {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              }
+            },
             "photos": {
               "type": "array",
               "items": {
@@ -5266,6 +5911,12 @@
         },
         "currency": {
           "$ref": "#/definitions/market_currency"
+        },
+        "discount_rate": {
+          "type": "integer"
+        },
+        "old_amount": {
+          "type": "string"
         },
         "text": {
           "type": "string",
@@ -5824,7 +6475,6 @@
       ]
     },
     "messages_keyboard": {
-      "use_builder": true,
       "type": "object",
       "properties": {
         "author_id": {
@@ -6041,6 +6691,12 @@
         "random_id": {
           "type": "integer",
           "description": "ID used for sending messages. It returned only for outgoing messages"
+        },
+        "ref": {
+          "type": "string"
+        },
+        "ref_source": {
+          "type": "string"
         },
         "reply_message": {
           "$ref": "#/definitions/messages_foreign_message"
@@ -6532,6 +7188,36 @@
         }
       }
     },
+    "newsfeed_item_stories_block": {
+      "type": "object",
+      "properties": {
+        "block_type": {
+          "type": "string",
+          "enum": [
+            "local",
+            "remote"
+          ]
+        },
+        "stories": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/stories_story"
+          }
+        },
+        "title": {
+          "type": "string"
+        },
+        "track_code": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "stories"
+          ]
+        }
+      }
+    },
     "newsfeed_item_topic": {
       "type": "object",
       "properties": {
@@ -6707,6 +7393,9 @@
             },
             {
               "$ref": "#/definitions/newsfeed_item_digest"
+            },
+            {
+              "$ref": "#/definitions/newsfeed_item_stories_block"
             }
           ]
         },
@@ -6792,6 +7481,10 @@
     "notes_note": {
       "type": "object",
       "properties": {
+        "read_comments": {
+          "type": "integer",
+          "minimum": 0
+        },
         "can_comment": {
           "description": "Information whether current user can comment the note",
           "$ref": "#/definitions/base_bool_int"
@@ -7329,11 +8022,22 @@
       ],
       "additionalProperties": false
     },
-    "pages_wikipage_version": {
+    "pages_wikipage_history": {
       "type": "object",
       "properties": {
-        "edited": {
+        "id": {
           "type": "integer",
+          "description": "Version ID",
+          "minimum": 0
+        },
+        "length": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Page size in bytes"
+        },
+        "date": {
+          "type": "integer",
+          "minimum": 0,
           "description": "Date when the page has been edited in Unixtime"
         },
         "editor_id": {
@@ -7343,16 +8047,15 @@
         "editor_name": {
           "type": "string",
           "description": "Last editor name"
-        },
-        "id": {
-          "type": "integer",
-          "description": "Version ID"
-        },
-        "length": {
-          "type": "integer",
-          "description": "Page size in bytes"
         }
-      }
+      },
+      "required": [
+        "id",
+        "length",
+        "date",
+        "editor_id",
+        "editor_name"
+      ]
     },
     "photos_comment_xtr_pid": {
       "type": "object",
@@ -7679,20 +8382,6 @@
         "owner_id": {
           "type": "integer",
           "description": "Album owner's ID"
-        },
-        "privacy_comment": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "description": "Privacy comment"
-          }
-        },
-        "privacy_view": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "description": "Privacy view"
-          }
         },
         "size": {
           "type": "integer",
@@ -8910,6 +9599,21 @@
           "description": "Status text"
         }
       }
+    },
+    "storage_value": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "key",
+        "value"
+      ]
     },
     "stories_replies": {
       "type": "object",
@@ -10492,9 +11196,6 @@
           "format": "uri",
           "description": "URL of the preview image with 320px in width"
         },
-        "privacy": {
-          "type": "object"
-        },
         "title": {
           "type": "string",
           "description": "Album title"
@@ -10650,20 +11351,6 @@
           "type": "string",
           "format": "uri",
           "description": "URL of the page with a player that can be used to play the video in the browser."
-        },
-        "privacy_comment": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "description": "Privacy comment"
-          }
-        },
-        "privacy_view": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "description": "Privacy view"
-          }
         },
         "processing": {
           "description": "Returns if the video is processing",
@@ -10832,7 +11519,7 @@
       "type": "object",
       "properties": {
         "can_post": {
-          "$ref": "#/definitions/base_bool_int",
+          "type": "boolean",
           "description": "Information whether current user can comment the post"
         },
         "count": {
@@ -10999,6 +11686,21 @@
         },
         "thread": {
           "$ref": "#/definitions/wall_comment_thread"
+        },
+        "post_id": {
+          "type": "integer"
+        },
+        "owner_id": {
+          "type": "integer"
+        },
+        "parents_stack": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "deleted": {
+          "type": "boolean"
         }
       },
       "required": [

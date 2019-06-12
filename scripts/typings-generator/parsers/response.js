@@ -1,8 +1,8 @@
-import { parseJSONObject } from './json-schema';
+const { parseJSONObject } = require('./json-schema');
 
-import { toPascalCase } from '../utils/helpers';
+const { toPascalCase } = require('../utils/helpers');
 
-export default function parseResponses(rawResponses, payload) {
+module.exports = function parseResponses(rawResponses, payload) {
 	if (!rawResponses) {
 		return [];
 	}
@@ -11,4 +11,4 @@ export default function parseResponses(rawResponses, payload) {
 		.map(([key, value]) => (
 			parseJSONObject(toPascalCase(key), value.properties.response, payload)
 		));
-}
+};

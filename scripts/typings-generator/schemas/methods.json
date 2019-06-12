@@ -5276,6 +5276,50 @@
       ]
     },
     {
+      "name": "groups.addCallbackServer",
+      "access_token_type": [
+        "user",
+        "group"
+      ],
+      "parameters": [
+        {
+          "name": "group_id",
+          "type": "integer",
+          "minimum": 0,
+          "required": true
+        },
+        {
+          "name": "url",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "required": true,
+          "maxLength": 14
+        },
+        {
+          "name": "secret_key",
+          "type": "string",
+          "maxLength": 50
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/groups_addCallbackServer_response"
+        }
+      },
+      "errors": [
+        {
+          "code": 2000,
+          "name": "API_ERROR_CALLBACK_API_SERVERS_LIMIT",
+          "description": "Servers number limit is reached"
+        }
+      ],
+      "emptyResponse": true
+    },
+    {
       "name": "groups.addLink",
       "description": "Allows to add a link to the community.",
       "access_token_type": [
@@ -6385,6 +6429,34 @@
       }
     },
     {
+      "name": "groups.getCallbackServers",
+      "access_token_type": [
+        "user",
+        "group"
+      ],
+      "parameters": [
+        {
+          "name": "group_id",
+          "type": "integer",
+          "minimum": 0,
+          "required": true
+        },
+        {
+          "name": "server_ids",
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/groups_getCallbackServers_response"
+        }
+      }
+    },
+    {
       "name": "groups.getCallbackSettings",
       "description": "Returns [vk.com/dev/callback_api|Callback API] notifications settings.",
       "access_token_type": [
@@ -6769,6 +6841,17 @@
       "responses": {
         "response": {
           "$ref": "responses.json#/definitions/groups_getSettings_response"
+        }
+      }
+    },
+    {
+      "name": "groups.getTokenPermissions",
+      "access_token_type": [
+        "group"
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/groups_getTokenPermissions_response"
         }
       }
     },
@@ -9775,10 +9858,14 @@
       ],
       "parameters": [
         {
+          "name": "peer_id",
+          "type": "integer",
+          "minimum": 0
+        },
+        {
           "name": "link",
           "description": "Invitation link.",
-          "type": "string",
-          "required": true
+          "type": "string"
         },
         {
           "name": "fields",
@@ -10133,6 +10220,17 @@
           "description": "Group ID (for group messages with group access token)",
           "type": "integer",
           "minimum": 0
+        },
+        {
+          "name": "preserve_order",
+          "type": "boolean"
+        },
+        {
+          "name": "max_forwards_level",
+          "type": "integer",
+          "default": 45,
+          "minimum": 0,
+          "maximum": 45
         }
       ],
       "responses": {
@@ -10283,6 +10381,10 @@
           "default": 0,
           "minimum": 0,
           "maximum": 2000
+        },
+        {
+          "name": "credentials",
+          "type": "boolean"
         }
       ],
       "responses": {
@@ -10843,12 +10945,12 @@
           "name": "dont_parse_links",
           "type": "boolean",
           "default": false
-				},
-				{
-					"name": "disable_mentions",
-					"type": "boolean",
-					"default": false
-				}
+        },
+        {
+          "name": "disable_mentions",
+          "type": "boolean",
+          "default": false
+        }
       ],
       "responses": {
         "response": {
@@ -15679,6 +15781,35 @@
       }
     },
     {
+      "name": "secure.giveEventSticker",
+      "description": "Opens the game achievement and gives the user a sticker",
+      "access_token_type": [
+        "service"
+      ],
+      "parameters": [
+        {
+          "name": "user_ids",
+          "type": "array",
+          "required": true,
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        {
+          "name": "achievement_id",
+          "type": "integer",
+          "minimum": 0,
+          "required": true
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/secure_giveEventSticker_response"
+        }
+      }
+    },
+    {
       "name": "secure.sendNotification",
       "description": "Sends notification to the user.",
       "access_token_type": [
@@ -15997,8 +16128,11 @@
         }
       ],
       "responses": {
-        "response": {
+        "keyResponse": {
           "$ref": "responses.json#/definitions/storage_get_response"
+        },
+        "keysResponse": {
+          "$ref": "responses.json#/definitions/storage_get_keys_response"
         }
       }
     },
@@ -17197,6 +17331,16 @@
           "required": true
         },
         {
+          "name": "source",
+          "description": "Source of scope",
+          "type": "string",
+          "default": "vk_cc",
+          "enum": [
+            "vk_cc",
+            "vk_link"
+          ]
+        },
+        {
           "name": "access_key",
           "description": "Access key for private link stats.",
           "type": "string"
@@ -17236,7 +17380,14 @@
         "extendedResponse": {
           "$ref": "responses.json#/definitions/utils_getLinkStats_extended_response"
         }
-      }
+      },
+      "errors": [
+        {
+          "code": 104,
+          "name": "API_ERROR_NOT_FOUND",
+          "description": "Not found"
+        }
+      ]
     },
     {
       "name": "utils.getServerTime",
@@ -18654,6 +18805,11 @@
           "code": 222,
           "name": "API_ERROR_WALL_LINKS_FORBIDDEN",
           "description": "Hyperlinks are forbidden"
+        },
+        {
+          "code": 212,
+          "name": "API_ERROR_WALL_ACCESS_REPLIES",
+          "description": "Access to post comments denied"
         }
       ]
     },
@@ -19337,6 +19493,10 @@
         {
           "name": "close_comments",
           "type": "boolean"
+        },
+        {
+          "name": "mute_notifications",
+          "type": "boolean"
         }
       ],
       "responses": {
@@ -19603,6 +19763,10 @@
           "name": "mark_as_ads",
           "type": "boolean",
           "default": false
+        },
+        {
+          "name": "mute_notifications",
+          "type": "boolean"
         }
       ],
       "responses": {

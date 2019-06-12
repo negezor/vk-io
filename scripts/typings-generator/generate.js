@@ -3,35 +3,35 @@
 // I wanted to finish as soon as possible
 // So what quality do not want to answer
 // I hope in the future I will rewrite it
+// eslint-disable-next-line import/no-extraneous-dependencies
+const ts = require('typescript');
 
-import ts from 'typescript';
-
-import createPrinter from './printer';
-import {
+const createPrinter = require('./printer');
+const {
 	TypesGenerator,
 	ClassGenerator,
 	InterfaceGenerator
-} from './generators';
+} = require('./generators');
 
-import {
+const {
 	parseParameters,
 	parseResponses,
 	parseJSONSchema
-} from './parsers';
+} = require('./parsers');
 
-import {
+const {
 	readJSONFile,
 	toPascalCase,
 	upperFirstLetter,
 	formatTSComments
-} from './utils/helpers';
+} = require('./utils/helpers');
 
 const METHODS_FILE = 'methods.d.ts';
 const PARAMS_FILE = 'params.d.ts';
 const OBJECTS_FILE = 'objects.d.ts';
 const RESPONSES_FILE = 'responses.d.ts';
 
-const typeingsDir = '../../typings';
+const typeingsDir = '../../packages/vk-io/typings';
 
 async function generate() {
 	const [
@@ -174,7 +174,7 @@ async function generate() {
 					responsesIdentifier,
 					ts.createIdentifier(
 						toPascalCase(
-							method.responses.response.$ref
+							(method.responses.response || method.responses.keyResponse).$ref
 								.replace(
 									'responses.json#/definitions/',
 									''

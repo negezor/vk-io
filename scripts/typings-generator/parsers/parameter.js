@@ -1,13 +1,13 @@
-import { parseJSONObject } from './json-schema';
+const { parseJSONObject } = require('./json-schema');
 
-export function parseParameter(rawParameter, payload) {
+function parseParameter(rawParameter, payload) {
 	return parseJSONObject(rawParameter.name, rawParameter, {
 		arrayUnion: true,
 		...payload
 	});
 }
 
-export default function parseParameters(rawParameters, payload) {
+function parseParameters(rawParameters, payload) {
 	if (!Array.isArray(rawParameters)) {
 		return [];
 	}
@@ -16,3 +16,8 @@ export default function parseParameters(rawParameters, payload) {
 		parseParameter(rawParameter, payload)
 	));
 }
+
+module.exports = {
+	parseParameter,
+	parseParameters
+};

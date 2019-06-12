@@ -1,23 +1,23 @@
-import nodeFs from 'fs';
-import nodePath from 'path';
-import nodeUtil from 'util';
+const nodeFs = require('fs');
+const nodePath = require('path');
+const nodeUtil = require('util');
 
-export const readFile = nodeUtil.promisify(nodeFs.readFile).bind(nodeUtil);
+const readFile = nodeUtil.promisify(nodeFs.readFile).bind(nodeUtil);
 
-export const writeFile = nodeUtil.promisify(nodeFs.writeFile).bind(nodeUtil);
+const writeFile = nodeUtil.promisify(nodeFs.writeFile).bind(nodeUtil);
 
-export const getDirname = url => (
+const getDirname = url => (
 	nodePath.dirname(
 		(new URL(url)).pathname
 	)
 		.replace(/^\//, '')
 );
 
-export const upperFirstLetter = str => (
+const upperFirstLetter = str => (
 	str[0].toUpperCase() + str.substring(1)
 );
 
-export const toPascalCase = (str) => {
+const toPascalCase = (str) => {
 	const s = str
 		.match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g)
 		.map(x => x.slice(0, 1).toUpperCase() + x.slice(1).toLowerCase())
@@ -26,7 +26,7 @@ export const toPascalCase = (str) => {
 	return upperFirstLetter(s);
 };
 
-export const readJSONFile = async (path) => {
+const readJSONFile = async (path) => {
 	const content = await readFile(path, 'utf-8');
 
 	return JSON.parse(content);
@@ -34,7 +34,7 @@ export const readJSONFile = async (path) => {
 
 const NEW_LINE_RE = /\n/;
 
-export const formatTSComments = (text) => {
+const formatTSComments = (text) => {
 	let template = '*\n';
 
 	const lines = text
@@ -49,4 +49,14 @@ export const formatTSComments = (text) => {
 	template += ' ';
 
 	return template;
+};
+
+module.exports = {
+	readFile,
+	writeFile,
+	getDirname,
+	upperFirstLetter,
+	toPascalCase,
+	readJSONFile,
+	formatTSComments
 };

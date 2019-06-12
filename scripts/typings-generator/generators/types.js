@@ -1,6 +1,7 @@
-import ts from 'typescript';
+// eslint-disable-next-line import/no-extraneous-dependencies
+const ts = require('typescript');
 
-export default class TypesGenerator {
+module.exports = class TypesGenerator {
 	static get any() {
 		return ts.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword);
 	}
@@ -71,4 +72,4 @@ export default class TypesGenerator {
 			exportClause
 		);
 	}
-}
+};

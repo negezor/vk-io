@@ -1,13 +1,14 @@
-import ts from 'typescript';
+// eslint-disable-next-line import/no-extraneous-dependencies
+const ts = require('typescript');
 
-import nodeFs from 'fs';
-import nodePath from 'path';
+const nodeFs = require('fs');
+const nodePath = require('path');
 
 // HACK!!!
 const REPLACE_MULTI_SEMICOLON_RE = /;{2,}/;
 const REPLACE_EXPORT_SEMICOLON_RE = /};/;
 
-export default function createPrinter(path) {
+module.exports = function createPrinter(path) {
 	const filename = nodePath.basename(path);
 
 	const methodsFile = ts.createSourceFile(
@@ -49,4 +50,4 @@ export default function createPrinter(path) {
 			output.write(`${hacked}\n\n`);
 		}
 	};
-}
+};

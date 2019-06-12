@@ -1,8 +1,9 @@
-import ts from 'typescript';
+// eslint-disable-next-line import/no-extraneous-dependencies
+const ts = require('typescript');
 
-import TypesGenerator from './types';
+const TypesGenerator = require('./types');
 
-export default class ClassGenerator {
+module.exports = class ClassGenerator {
 	/**
 	 * Constructor
 	 */
@@ -118,4 +119,4 @@ export default class ClassGenerator {
 
 		return classDeclaration;
 	}
-}
+};
