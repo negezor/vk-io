@@ -35,7 +35,7 @@ vk.setOptions({
 	appSecret: process.env.APP_SECRET,
 
 	login: process.env.LOGIN,
-	password: process.env.PASSORD
+	password: process.env.PASSWORD
 });
 
 const direct = auth.direct();
@@ -109,7 +109,7 @@ const implicitFlow = auth.implicitFlowUser(); // => ImplicitFlowUser
 vk.setOptions({
 	appId: process.env.APP,
 	login: process.env.LOGIN,
-	password: process.env.PASSORD
+	password: process.env.PASSWORD
 });
 
 const implicitFlow = auth.implicitFlowUser();
@@ -141,7 +141,7 @@ const implicitFlow = auth.implicitFlowGroups(groups); // => ImplicitFlowGroups
 vk.setOptions({
 	appId: process.env.APP,
 	login: process.env.LOGIN,
-	password: process.env.PASSORD
+	password: process.env.PASSWORD
 });
 
 const implicitFlow = auth.implicitFlowGroups([groupIdOne [, ...]]);
