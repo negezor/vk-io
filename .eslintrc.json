@@ -5,7 +5,8 @@
 	"extends": [
 		"airbnb-base",
 		"plugin:import/errors",
-		"plugin:import/warnings"
+		"plugin:import/warnings",
+		"plugin:import/typescript"
 	],
 	"parserOptions": {
 		"ecmaVersion": 2018,
@@ -57,19 +58,9 @@
 				"project": "./tsconfig.json"
 			},
 			"plugins": [
+				"import",
 				"@typescript-eslint"
 			],
-			"settings": {
-				"import/resolver": {
-					"typescript": {}
-				},
-				"import/parsers": {
-					"@typescript-eslint/parser": [".ts"]
-				},
-				"typescript": {
-					"directory": "./tsconfig.json"
-				}
-			},
 			"rules": {
 				"semi": "off",
 				"no-unused-vars": "off",
