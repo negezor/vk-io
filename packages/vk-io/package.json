@@ -39,10 +39,10 @@
 	"dependencies": {
 		"cheerio": "^1.0.0-rc.3",
 		"debug": "^4.1.1",
-		"middleware-io": "^1.1.0",
+		"middleware-io": "^2.0.0",
 		"node-fetch": "^2.6.0",
 		"sandwich-stream": "^2.0.2",
 		"tough-cookie": "^3.0.1",
-		"ws": "^7.0.0"
+		"ws": "^7.0.1"
 	}
 }

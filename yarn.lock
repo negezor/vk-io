@@ -2751,10 +2751,10 @@ micromatch@^3.1.10, micromatch@^3.1.4:
     snapdragon "^0.8.1"
     to-regex "^3.0.2"
 
-middleware-io@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/middleware-io/-/middleware-io-1.1.0.tgz#54d9ee0978da744070599573b47f38e243c6f5c1"
-  integrity sha512-nFwT5c5QlJ3fdXEEHRxN2M2E9wul0ZdAY+tXYPXnyMye+oN7FuASqU9vkiS7C2x39Nk1vC2cqvjtw5jNX5lc4w==
+middleware-io@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/middleware-io/-/middleware-io-2.0.0.tgz#659a23aac85851ab28bc4092470b56b09e559d58"
+  integrity sha512-ad95yHgZM+2rhUG8ICo0cKYnEH5ycYe1Yge5XONv4BN+YpqIYoz2PSAtVMV/cTdtjLz16YtLyyHh1aNfyZb57w==
 
 mime-db@1.40.0:
   version "1.40.0"
@@ -4446,10 +4446,10 @@ ws@^5.2.0:
   dependencies:
     async-limiter "~1.0.0"
 
-ws@^7.0.0:
-  version "7.0.0"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-7.0.0.tgz#79351cbc3f784b3c20d0821baf4b4ff809ffbf51"
-  integrity sha512-cknCal4k0EAOrh1SHHPPWWh4qm93g1IuGGGwBjWkXmCG7LsDtL8w9w+YVfaF+KSVwiHQKDIMsSLBVftKf9d1pg==
+ws@^7.0.1:
+  version "7.0.1"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-7.0.1.tgz#1a04e86cc3a57c03783f4910fdb090cf31b8e165"
+  integrity sha512-ILHfMbuqLJvnSgYXLgy4kMntroJpe8hT41dOVWM8bxRuw6TK4mgMp9VJUNsZTEc5Bh+Mbs0DJT4M0N+wBG9l9A==
   dependencies:
     async-limiter "^1.0.0"
 
