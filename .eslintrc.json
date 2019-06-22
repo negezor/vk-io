@@ -6,29 +6,39 @@
 		"airbnb-base",
 		"plugin:import/errors",
 		"plugin:import/warnings",
-		"plugin:import/typescript"
+		"plugin:import/typescript",
+		"plugin:@typescript-eslint/recommended"
 	],
+	"parser": "@typescript-eslint/parser",
 	"parserOptions": {
-		"ecmaVersion": 2018,
-		"sourceType": "module"
+		"project": "./tsconfig.json"
 	},
+	"plugins": [
+		"import",
+		"@typescript-eslint"
+	],
 	"rules": {
+		"@typescript-eslint/interface-name-prefix": ["error", "always"],
+		"@typescript-eslint/explicit-member-accessibility": ["error", {
+			"accessibility": "no-public"
+		}],
+		"@typescript-eslint/indent": ["error", "tab"],
+		"@typescript-eslint/camelcase": ["error", {
+			"properties": "never"
+		}],
+		"@typescript-eslint/semi": ["error"],
 		"no-restricted-syntax": ["error", "WithStatement"],
-		"class-methods-use-this": 0,
-		"no-param-reassign": 0,
-		"no-await-in-loop": 0,
-		"comma-dangle": 0,
-		"no-continue": 0,
-		"no-bitwise": 0,
-		"no-tabs": 0,
-		"indent": [
-			"error",
-			"tab"
-		],
-		"linebreak-style": [
-			"error",
-			"unix"
-		]
+		"comma-dangle": ["error", "never"],
+		"class-methods-use-this": "off",
+		"no-param-reassign": "off",
+		"no-await-in-loop": "off",
+		"arrow-parens": "off",
+		"no-continue": "off",
+		"no-bitwise": "off",
+		"no-tabs": ["error", {
+			"allowIndentationTabs": true
+		}],
+		"semi": "off"
 	},
 	"overrides": [
 		{
@@ -38,53 +48,32 @@
 			}
 		},
 		{
+			"files": [
+				"docs/examples/**/*.js",
+				"scripts/**/*.js"
+			],
+			"rules": {
+				"@typescript-eslint/no-var-requires": "off"
+			}
+		},
+		{
 			"files": ["docs/examples/**/*.js"],
 			"rules": {
-				"no-console": 0,
+				"no-console": "off",
+				"arrow-body-style": "off",
+				"no-param-reassign": "off",
 				"import/no-extraneous-dependencies": "off"
 			}
 		},
 		{
-			"files": "scripts/typings-generator/**/*.mjs",
-			"parser": "babel-eslint",
+			"files": ["packages/vk-io/typings/index.d.ts"],
 			"rules": {
-				"import/no-extraneous-dependencies": 0
-			}
-		},
-		{
-			"files": "**/*.ts",
-			"parser": "@typescript-eslint/parser",
-			"parserOptions": {
-				"project": "./tsconfig.json"
-			},
-			"plugins": [
-				"import",
-				"@typescript-eslint"
-			],
-			"rules": {
-				"semi": "off",
-				"no-unused-vars": "off",
 				"no-dupe-class-members": "off",
 				"no-useless-constructor": "off",
 				"@typescript-eslint/no-useless-constructor": "error",
-				"@typescript-eslint/explicit-function-return-type": 0,
-				"@typescript-eslint/explicit-member-accessibility": 0,
-				"@typescript-eslint/no-unused-vars": "error",
-				"@typescript-eslint/interface-name-prefix": [
-					"error",
-					"always"
-				],
-				"@typescript-eslint/indent": [
-					"error",
-					"tab"
-				]
-			}
-		},
-		{
-			"files": "packages/vk-io/typings/index.d.ts",
-			"rules": {
-				"camelcase": "off",
-				"max-len": "off"
+				"@typescript-eslint/explicit-member-accessibility": ["error", {
+					"accessibility": "explicit"
+				}]
 			}
 		}
 	]
