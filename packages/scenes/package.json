@@ -31,6 +31,6 @@
 		"node": ">=8.0.0"
 	},
 	"peerDependencies": {
-		"vk-io": "^4.0.0-rc.17"
+		"vk-io": "^4.0.0-rc.19"
 	}
 }

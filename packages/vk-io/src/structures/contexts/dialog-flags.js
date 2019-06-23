@@ -68,14 +68,14 @@ export default class DialogFlagsContext extends Context {
 	}
 
 	/**
-	 * Marks the dialog as answered or unchecked.
+	 * Marks the conversation as answered or unchecked.
 	 *
 	 * @param {Object} params
 	 *
 	 * @return {Promise}
 	 */
-	markAsAnsweredDialog(params) {
-		return this.vk.api.messages.markAsAnsweredDialog({
+	markAsAnsweredConversation(params) {
+		return this.vk.api.messages.markAsAnsweredConversation({
 			...params,
 
 			peer_id: this.peerId
@@ -83,14 +83,14 @@ export default class DialogFlagsContext extends Context {
 	}
 
 	/**
-	 * Marks the dialog as important or removes the mark
+	 * Marks the conversation as important or removes the mark
 	 *
 	 * @param {Object} params
 	 *
 	 * @return {Promise}
 	 */
-	markAsImportantDialog(params) {
-		return this.vk.api.messages.markAsImportantDialog({
+	markAsImportantConversation(params) {
+		return this.vk.api.messages.markAsImportantConversation({
 			...params,
 
 			peer_id: this.peerId

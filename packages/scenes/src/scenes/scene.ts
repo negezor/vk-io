@@ -9,10 +9,12 @@ export default interface IScene {
 	/**
 	 * Enter handler for the scene
 	 */
-	enterHandler(context: IContext): Promise<any> | any;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	enterHandler(context: IContext): any;
 
 	/**
 	 * Leave handler for the scene
 	 */
-	leaveHandler(context: IContext): Promise<any> | any;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	leaveHandler(context: IContext): any;
 }

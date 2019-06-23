@@ -9,7 +9,9 @@ import { transformAttachments } from '../attachments/helpers';
 /**
  * Find types
  *
- * @example wall_reply_new
+ * ```
+ * wall_reply_new
+ * ```
  *
  * @type {RegExp}
  */
@@ -36,7 +38,7 @@ export default class CommentActionContext extends Context {
 		this.type = 'comment';
 		this.subTypes = [
 			`${initiator}_comment`,
-			`${action}_${initiator}_comment`,
+			`${action}_${initiator}_comment`
 		];
 	}
 

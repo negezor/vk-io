@@ -83,20 +83,21 @@ export default class StreamingAPI {
 
 			try {
 				switch (code) {
-				case 100: {
-					await this.handleEvent(message.event);
+					case 100: {
+						await this.handleEvent(message.event);
 
-					break;
-				}
+						break;
+					}
 
-				case 300: {
-					await this.handleServiceMessage(message.service_message);
+					case 300: {
+						await this.handleServiceMessage(message.service_message);
 
-					break;
-				}
+						break;
+					}
 
-				default:
-					debug(`Unsupported message code: ${code}`);
+					default: {
+						debug(`Unsupported message code: ${code}`);
+					}
 				}
 			} catch (error) {
 				// eslint-disable-next-line no-console

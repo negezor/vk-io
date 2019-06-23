@@ -1,4 +1,4 @@
-import { IContext, Partial } from '../types';
+import { IContext } from '../types';
 import { SceneRepository } from '../scene-manager.types';
 
 export interface ISceneContextOptions {
@@ -16,7 +16,8 @@ export interface ISceneContextEnterOptions {
 	/**
 	 * The standard state for the scene
 	 */
-	state?: Partial;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	state?: Record<string, any>;
 }
 
 export interface ISceneContextLeaveOptions {

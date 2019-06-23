@@ -2,10 +2,10 @@ import { VK, Context } from '..';
 
 const vk = new VK();
 
-describe('Contexts', () => {
-	describe('Context', () => {
-		describe('#context.is()', () => {
-			const getContext = () => {
+describe('Contexts', (): void => {
+	describe('Context', (): void => {
+		describe('#context.is()', (): void => {
+			const getContext = (): Context => {
 				const context = new Context(vk);
 
 				context.type = 'message';
@@ -15,7 +15,7 @@ describe('Contexts', () => {
 				return context;
 			};
 
-			it('should return true when the required types are present', () => {
+			it('should return true when the required types are present', (): void => {
 				const context = getContext();
 
 				expect(context.is('message')).toBe(true);
@@ -25,7 +25,7 @@ describe('Contexts', () => {
 				expect(context.is(['message', 'edit_message'])).toBe(true);
 			});
 
-			it('should return false if the required types are not present', () => {
+			it('should return false if the required types are not present', (): void => {
 				const context = getContext();
 
 				expect(context.is('test')).toBe(false);

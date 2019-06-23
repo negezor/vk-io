@@ -1,6 +1,6 @@
 import IScene from './scenes/scene';
 
-import { IContext } from './types';
+import { IContext, Middleware } from './types';
 import { SceneContext } from './contexts';
 import CacheRepository from './cache-repository';
 import { SceneRepository, ISceneManagerOptions } from './scene-manager.types';
@@ -25,7 +25,7 @@ export default class SceneManager {
 	/**
 	 * Adds a scene to the shared list
 	 */
-	addScene(scene: IScene) {
+	addScene(scene: IScene): this {
 		this.repository.set(scene.slug, scene);
 
 		return this;
@@ -34,8 +34,8 @@ export default class SceneManager {
 	/**
 	 * Returns the middleware for embedding
 	 */
-	get middleware() {
-		return (context: IContext, next: Function) => {
+	get middleware(): Middleware<IContext> {
+		return (context: IContext, next: Function): Promise<void> => {
 			context.scene = new SceneContext({
 				context,
 				repository: this.repository
@@ -48,8 +48,8 @@ export default class SceneManager {
 	/**
 	 * Returns the middleware for intercept
 	 */
-	get middlewareIntercept() {
-		return (context: IContext, next: Function) => {
+	get middlewareIntercept(): Middleware<IContext> {
+		return (context: IContext, next: Function): Promise<void> => {
 			if (!context.scene.current) {
 				return next();
 			}

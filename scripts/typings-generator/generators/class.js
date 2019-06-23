@@ -60,7 +60,7 @@ module.exports = class ClassGenerator {
 		parameters,
 		result,
 
-		modifiers = undefined,
+		modifiers = undefined
 	}) {
 		const method = ts.createMethod(
 			undefined,

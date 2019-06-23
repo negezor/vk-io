@@ -1,11 +1,16 @@
 import { Context } from 'vk-io';
 
-export type Partial = {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type Middleware<T> = (context: T, next: Function) => any;
+
+export interface IContext extends Context {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	[key: string]: any;
-};
+}
 
-export interface IContext extends Context {}
-
-export interface ISessionContext extends Partial {
+export interface ISessionContext {
 	$forceUpdate(): Promise<boolean>;
+
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	[key: string]: any;
 }

@@ -32,7 +32,7 @@ export default class GraffitiAttachment extends Attachment {
 		}
 
 		const [document] = await this.vk.api.docs.getById({
-			docs: `${this.ownerId}_${this.id}`,
+			docs: `${this.ownerId}_${this.id}`
 		});
 
 		this.payload = document;

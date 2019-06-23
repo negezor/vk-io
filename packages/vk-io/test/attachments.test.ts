@@ -10,28 +10,28 @@ import {
 	MarketAlbumAttachment
 } from '..';
 
-describe('Attachments', () => {
-	it('the main class must be equivalent to a string', () => {
+describe('Attachments', (): void => {
+	it('the main class must be equivalent to a string', (): void => {
 		const attachment = new Attachment('photo', 1234, 5678);
 
 		expect(String(attachment)).toBe('photo1234_5678');
 	});
 
-	it('the main class must be equivalent to a string with access_key', () => {
+	it('the main class must be equivalent to a string with access_key', (): void => {
 		const attachment = new Attachment('photo', 1234, 5678, 'ACCESS_KEY');
 
 		expect(String(attachment)).toBe('photo1234_5678_ACCESS_KEY');
 	});
 
-	describe('the #fromString() should be correct working', () => {
-		it('should be throw an exception if wrong', () => {
-			expect(() => Attachment.fromString('ascbas_baasd')).toThrow();
-			expect(() => Attachment.fromString('12345/@%$%')).toThrow();
-			expect(() => Attachment.fromString('Incorrect')).toThrow();
-			expect(() => Attachment.fromString('1234_')).toThrow();
+	describe('the #fromString() should be correct working', (): void => {
+		it('should be throw an exception if wrong', (): void => {
+			expect((): Attachment => Attachment.fromString('ascbas_baasd')).toThrow();
+			expect((): Attachment => Attachment.fromString('12345/@%$%')).toThrow();
+			expect((): Attachment => Attachment.fromString('Incorrect')).toThrow();
+			expect((): Attachment => Attachment.fromString('1234_')).toThrow();
 		});
 
-		it('should be correct parse', () => {
+		it('should be correct parse', (): void => {
 			expect(Attachment.fromString('photo1234_5678')).toMatchObject({
 				type: 'photo',
 				ownerId: 1234,
@@ -48,19 +48,19 @@ describe('Attachments', () => {
 		});
 	});
 
-	describe('the #equals() should be correct working', () => {
-		it('should be throw an exception if wrong', () => {
+	describe('the #equals() should be correct working', (): void => {
+		it('should be throw an exception if wrong', (): void => {
 			const attachment = new Attachment('photo', 1234, 5678);
 
 			// @ts-ignore
-			expect(() => attachment.equals('ascbas_baasd')).toThrow();
+			expect((): boolean => attachment.equals('ascbas_baasd')).toThrow();
 			// @ts-ignore
-			expect(() => attachment.equals('inccorect')).toThrow();
+			expect((): boolean => attachment.equals('inccorect')).toThrow();
 			// @ts-ignore
-			expect(() => attachment.equals('1234_')).toThrow();
+			expect((): boolean => attachment.equals('1234_')).toThrow();
 		});
 
-		it('should be return false', () => {
+		it('should be return false', (): void => {
 			const attachment = new Attachment('photo', 1234, 5678);
 
 			// @ts-ignore
@@ -69,7 +69,7 @@ describe('Attachments', () => {
 			expect(attachment.equals(new Attachment('photo', 1234, 1234, 'ACCESS_KEY'))).toBe(false);
 		});
 
-		it('should be return true', () => {
+		it('should be return true', (): void => {
 			const attachment = new Attachment('photo', 1234, 5678);
 
 			// @ts-ignore
@@ -79,8 +79,8 @@ describe('Attachments', () => {
 		});
 	});
 
-	describe('should equivalent to attaching to a string', () => {
-		it('wall', () => {
+	describe('should equivalent to attaching to a string', (): void => {
+		it('wall', (): void => {
 			const attachment = new WallAttachment({
 				id: 4567,
 				to_id: 1234
@@ -89,7 +89,7 @@ describe('Attachments', () => {
 			expect(String(attachment)).toBe('wall1234_4567');
 		});
 
-		it('photo', () => {
+		it('photo', (): void => {
 			const attachment = new PhotoAttachment({
 				id: 4567,
 				owner_id: 1234
@@ -98,7 +98,7 @@ describe('Attachments', () => {
 			expect(String(attachment)).toBe('photo1234_4567');
 		});
 
-		it('audio', () => {
+		it('audio', (): void => {
 			const attachment = new AudioAttachment({
 				id: 4567,
 				owner_id: 1234
@@ -107,7 +107,7 @@ describe('Attachments', () => {
 			expect(String(attachment)).toBe('audio1234_4567');
 		});
 
-		it('video', () => {
+		it('video', (): void => {
 			const attachment = new VideoAttachment({
 				id: 4567,
 				owner_id: 1234
@@ -116,7 +116,7 @@ describe('Attachments', () => {
 			expect(String(attachment)).toBe('video1234_4567');
 		});
 
-		it('market', () => {
+		it('market', (): void => {
 			const attachment = new MarketAttachment({
 				id: 4567,
 				owner_id: 1234
@@ -125,7 +125,7 @@ describe('Attachments', () => {
 			expect(String(attachment)).toBe('market1234_4567');
 		});
 
-		it('document', () => {
+		it('document', (): void => {
 			const attachment = new DocumentAttachment({
 				id: 4567,
 				owner_id: 1234
@@ -134,7 +134,7 @@ describe('Attachments', () => {
 			expect(String(attachment)).toBe('doc1234_4567');
 		});
 
-		it('market album', () => {
+		it('market album', (): void => {
 			const attachment = new MarketAlbumAttachment({
 				id: 4567,
 				owner_id: 1234

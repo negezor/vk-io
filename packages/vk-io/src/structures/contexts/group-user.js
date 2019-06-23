@@ -137,14 +137,14 @@ export default class GroupUserContext extends Context {
 	 *
 	 * @return {Promise}
 	 */
-	banUser(params) {
+	ban(params) {
 		if (this.isBlocked) {
 			return Promise.reject(new VKError({
 				message: 'User is blocked'
 			}));
 		}
 
-		return this.vk.api.groups.banUser({
+		return this.vk.api.groups.ban({
 			...params,
 
 			group_id: this.$groupId,
@@ -157,14 +157,14 @@ export default class GroupUserContext extends Context {
 	 *
 	 * @return {Promise}
 	 */
-	unbanUser() {
+	unban() {
 		if (this.isUnblocked) {
 			return Promise.reject(new VKError({
 				message: 'User is not blocked'
 			}));
 		}
 
-		return this.vk.api.groups.unbanUser({
+		return this.vk.api.groups.unban({
 			group_id: this.$groupId,
 			user_id: this.userId
 		});

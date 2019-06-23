@@ -6,8 +6,9 @@ export interface IStepContext extends IContext {
 		/**
 		 * Stepping scene control context
 		 */
-		step: StepSceneContext
+		step: StepSceneContext;
 	};
 }
 
-export type StepSceneHandler<T = {}> = (context: IStepContext & T) => Promise<any> | any;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type StepSceneHandler<T = {}> = (context: IStepContext & T) => any;

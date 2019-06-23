@@ -217,7 +217,7 @@ export default class DirectAuth {
 						email = null,
 						user_id: user = null,
 						expires_in: expires = null,
-						access_token: token,
+						access_token: token
 					} = text;
 
 					return {

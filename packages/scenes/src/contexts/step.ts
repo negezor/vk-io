@@ -53,10 +53,11 @@ export default class StepSceneContext {
 	/**
 	 * Reenter current step handler
 	 *
-	 * @example
+	 * ```ts
 	 * ctx.scene.step.reenter();
+	 * ```
 	 */
-	async reenter() {
+	async reenter(): Promise<void> {
 		const { current } = this;
 
 		if (!current) {
@@ -77,13 +78,14 @@ export default class StepSceneContext {
 	/**
 	 * Move to the next handler
 	 *
-	 * @example
+	 * ```ts
 	 * ctx.scene.step.next();
 	 * ctx.scene.step.next({
 	 *   silent: true
 	 * });
+	 * ```
 	 */
-	async next({ silent = false } = {}) {
+	async next({ silent = false } = {}): Promise<void> {
 		this.stepId += 1;
 
 		if (silent) {
@@ -96,13 +98,14 @@ export default class StepSceneContext {
 	/**
 	 * Move to the previous handler
 	 *
-	 * @example
+	 * ```ts
 	 * ctx.scene.step.previous();
 	 * ctx.scene.step.previous({
 	 *   silent: true
 	 * });
+	 * ```
 	 */
-	async previous({ silent = false } = {}) {
+	async previous({ silent = false } = {}): Promise<void> {
 		this.stepId -= 1;
 
 		if (silent) {

@@ -66,6 +66,7 @@ export default class Context {
 	 * @type {Object}
 	 */
 	[inspectCustomData]() {
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		const { vk, ...payload } = this;
 
 		return payload;

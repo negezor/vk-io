@@ -23,7 +23,7 @@ export default class CacheRepository<Key, Value> {
 	/**
 	 * Sets value by key
 	 */
-	set(key: Key, value: Value) {
+	set(key: Key, value: Value): void {
 		this.collection.set(key, value);
 
 		this.keys = [...this.collection.keys()];
@@ -44,7 +44,7 @@ export default class CacheRepository<Key, Value> {
 	/**
 	 * Sets value by key else error if exits
 	 */
-	strictSet(key: Key, value: Value) {
+	strictSet(key: Key, value: Value): void {
 		if (this.collection.has(key)) {
 			throw new Error(`Value by ${key} already exists`);
 		}
@@ -68,7 +68,7 @@ export default class CacheRepository<Key, Value> {
 	/**
 	 * Returns iterator
 	 */
-	[Symbol.iterator]() {
+	[Symbol.iterator](): IterableIterator<[Key, Value]> {
 		return this.collection[Symbol.iterator]();
 	}
 }

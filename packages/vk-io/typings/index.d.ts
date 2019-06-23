@@ -18,10 +18,6 @@ export * from './params.d';
 export * from './responses.d';
 export * from './objects.d';
 
-type Partial = {
-	[key: string]: any;
-};
-
 export interface IVKOptions {
 	/**
 	 * Access token
@@ -114,7 +110,7 @@ export interface IVKOptions {
 	apiExecuteCount?: number;
 
 	/**
-	 * 	Methods for call execute (apiMode=parallel_selected)
+	 * Methods for call execute (apiMode=parallel_selected)
 	 */
 	apiExecuteMethods?: string[];
 
@@ -161,8 +157,7 @@ export class VK {
 	/**
 	* Constructor
 	*/
-	constructor(options?: IVKOptions);
-
+	public constructor(options?: IVKOptions);
 
 	/**
 	 * Access token
@@ -235,7 +230,7 @@ export default VK;
 export class Request {
 	public method: string;
 
-	public params: Partial;
+	public params: object;
 
 	public attempts: number;
 
@@ -249,7 +244,7 @@ export class Request {
 	/**
 	 * Constructor
 	 */
-	public constructor(method: string, params: Partial);
+	public constructor(method: string, params: object);
 
 	/**
 	 * Adds attempt
@@ -284,27 +279,29 @@ export class API extends Methods.APIMethods {
 	/**
 	 * Call execute method
 	 */
-	public execute(params: Partial): Promise<any>;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	public execute(params: object): Promise<any>;
 
 	/**
 	 * Call execute procedure
 	 */
-	public procedure(name: string, params: Partial): Promise<any>;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	public procedure(name: string, params: object): Promise<any>;
 
 	/**
 	 * Call raw method
 	 */
-	public call(method: string, params: Partial): Promise<any>;
+	public call(method: string, params: object): Promise<object>;
 
 	/**
 	 * Adds request for queue
 	 */
-	public callWithRequest(request: Request): Promise<any>;
+	public callWithRequest(request: Request): Promise<object>;
 
 	/**
 	 * Adds method to queue
 	 */
-	private enqueue(method: string, params: Partial): Promise<any>;
+	private enqueue(method: string, params: object): Promise<object>;
 
 	/**
 	 * Adds an element to the beginning of the queue
@@ -324,7 +321,7 @@ export class API extends Methods.APIMethods {
 	/**
 	 * Error API handler
 	 */
-	private handleError(request: Request, error: Partial): Promise<void>;
+	private handleError(request: Request, error: Error): Promise<void>;
 }
 
 export class Auth {
@@ -341,12 +338,12 @@ export class Auth {
 	/**
 	 * Standalone authorization with login & password
 	 */
-	public implicitFlowUser(options: Partial): ImplicitFlowUser;
+	public implicitFlowUser(options: object): ImplicitFlowUser;
 
 	/**
 	 * Standalone authorization with login & password for group
 	 */
-	public implicitFlowGroups(groups: number[], options: Partial): ImplicitFlowGroups;
+	public implicitFlowGroups(groups: number[], options: object): ImplicitFlowGroups;
 
 	/**
 	 * Direct authorization with login & login in user application
@@ -381,7 +378,9 @@ export class Auth {
 	/**
 	 * Verifies that the user is authorized through the Open API
 	 */
-	public userAuthorizedThroughOpenAPI(params: Partial): Promise<Partial>;
+	public userAuthorizedThroughOpenAPI(params: object): Promise<{
+		authorized: boolean;
+	}>;
 }
 
 export interface IDirectAuthOptions {
@@ -417,12 +416,12 @@ export class DirectAuth {
 	/**
 	 * Executes the HTTP request
 	 */
-	private fetch(url: string, options: Partial): Promise<Response>;
+	private fetch(url: string, options: object): Promise<Response>;
 
 	/**
 	 * Returns permission page
 	 */
-	private getPermissionsPage(query: Partial): Promise<Response>;
+	private getPermissionsPage(query: object): Promise<Response>;
 
 	/**
 	 * Runs authorization
@@ -432,12 +431,12 @@ export class DirectAuth {
 	/**
 	 * Process captcha
 	 */
-	private processCaptcha(payload: Partial): Promise<Response>;
+	private processCaptcha(payload: object): Promise<Response>;
 
 	/**
 	 * Process two-factor
 	 */
-	private processTwoFactor(payload: Partial): Promise<Response>;
+	private processTwoFactor(payload: object): Promise<Response>;
 
 	/**
 	 * Process security form
@@ -454,12 +453,15 @@ export class ImplicitFlow {
 	/**
 	 * Returns cookie
 	 */
-	public getCookies(): Promise<Partial>;
+	public getCookies(): Promise<{
+		'login.vk.com': string;
+		'vk.com': string;
+	}>;
 
 	/**
 	 * Runs authorization
 	 */
-	public run(): any;
+	public run(): Promise<object>;
 }
 
 export interface IImplicitFlowUserRunResult {
@@ -511,18 +513,41 @@ export type UploadSourceValue = UploadSourceType | {
 	filename?: string;
 };
 
-export type UploadSourceParams = {
+export interface IUploadSourceParams {
 	values: UploadSourceValue[] | UploadSourceValue;
 
-	uploadUrl?: string
-	timeout?: number
-};
+	uploadUrl?: string;
+	timeout?: number;
+}
 
-export type UploadSource = UploadSourceParams | UploadSourceValue[] | UploadSourceValue;
+export type UploadSource = IUploadSourceParams | UploadSourceValue[] | UploadSourceValue;
 
-export type UploadParams = {
+export interface IUploadParams {
 	source: UploadSource;
-};
+}
+
+export interface IStoryObject {
+	id: number;
+	owner_id: number;
+	date: number;
+	is_expired: boolean;
+	is_deleted: boolean;
+	can_see: number;
+	seen: number;
+	type: number;
+	photo: object;
+	video: object;
+	link: object;
+	parent_story_owner_id: number;
+	parent_story_id: number;
+	parent_story: IStoryObject;
+	replies: object;
+	can_reply: number;
+	can_share: number;
+	can_comment: number;
+	views: number;
+	access_key: string;
+}
 
 export class Upload {
 	/**
@@ -539,7 +564,7 @@ export class Upload {
 	 * Uploading photos to an album
 	 */
 	public photoAlbum(
-		params: UploadParams & {
+		params: IUploadParams & {
 			album_id: number;
 			group_id?: number;
 
@@ -553,7 +578,7 @@ export class Upload {
 	 * Uploading photos to the wall
 	 */
 	public wallPhoto(
-		params: UploadParams & {
+		params: IUploadParams & {
 			user_id?: number;
 			group_id?: number;
 
@@ -567,15 +592,22 @@ export class Upload {
 	 * Uploading the main photo of a user or community
 	 */
 	public ownerPhoto(
-		params: UploadParams & {
+		params: IUploadParams & {
 			owner_id?: number;
 		}
-	): Promise<Partial>;
+	): Promise<{
+		photo_hash: string;
+		photo_src: string;
+		photo_src_big: string;
+		photo_src_small: string;
+		saved: number;
+		post_id: number;
+	}>;
 
 	/**
 	 * Uploading a photo to a message */
 	public messagePhoto(
-		params: UploadParams & {
+		params: IUploadParams & {
 			peer_id?: number;
 		}
 	): Promise<PhotoAttachment>;
@@ -584,20 +616,23 @@ export class Upload {
 	 * Uploading the main photo for a chat
 	 */
 	public chatPhoto(
-		params: UploadParams & {
+		params: IUploadParams & {
 			chat_id: number;
 
 			crop_x?: number;
 			crop_y?: number;
 			crop_width?: number;
 		}
-	): Promise<Partial>;
+	): Promise<{
+		message_id: number;
+		chat: object;
+	}>;
 
 	/**
 	 * Uploading a photo for a product
 	 */
 	public marketPhoto(
-		params: UploadParams & {
+		params: IUploadParams & {
 			group_id: number;
 
 			main_photo?: number;
@@ -612,7 +647,7 @@ export class Upload {
 	 * Uploads a photo for the selection of goods
 	 */
 	public marketAlbumPhoto(
-		params: UploadParams & {
+		params: IUploadParams & {
 			group_id: number;
 		}
 	): Promise<PhotoAttachment>;
@@ -621,7 +656,7 @@ export class Upload {
 	 * Uploads audio
 	 */
 	public audio(
-		params: UploadParams & {
+		params: IUploadParams & {
 			title?: string;
 			artist?: string;
 		}
@@ -631,7 +666,7 @@ export class Upload {
 	 * Uploads video
 	 */
 	public video(
-		params: UploadParams & {
+		params: IUploadParams & {
 			album_id?: number;
 			group_id?: number;
 
@@ -651,63 +686,63 @@ export class Upload {
 	/**
 	 * Uploads document
 	 */
-	private conductDocument(params: UploadParams, options?: Partial): Promise<Partial>;
+	private conductDocument(params: IUploadParams, options?: object): Promise<object>;
 
 	/**
 	 * Uploads document
 	 */
 	public document(
-		params: UploadParams & {
+		params: IUploadParams & {
 			group_id?: number;
 
 			title?: string;
 			tags?: string;
 		},
-		options?: Partial
+		options?: object
 	): Promise<DocumentAttachment>;
 
 	/**
 	 * Uploads wall document
 	 */
-	private conductWallDocument(params: UploadParams, options?: Partial): Promise<Partial>;
+	private conductWallDocument(params: IUploadParams, options?: object): Promise<object>;
 
 	/**
 	 * Uploads wall document
 	 */
 	public wallDocument(
-		params: UploadParams & {
+		params: IUploadParams & {
 			group_id?: number;
 			// type?: string;
 
 			title?: string;
 			tags?: string;
 		},
-		options?: Partial
+		options?: object
 	): Promise<DocumentAttachment>;
 
 	/**
 	 * Uploads wall document
 	 */
-	private conductMessageDocument(params: UploadParams, options?: Partial): Promise<Partial>;
+	private conductMessageDocument(params: IUploadParams, options?: object): Promise<object>;
 
 	/**
 	 * Uploads message document
 	 */
 	public messageDocument(
-		params: UploadParams & {
+		params: IUploadParams & {
 			peer_id?: number;
 
 			title?: string;
 			tags?: string;
 		},
-		options?: Partial
+		options?: object
 	): Promise<DocumentAttachment>;
 
 	/**
 	 * Uploads audio message
 	 */
 	public audioMessage(
-		params: UploadParams & {
+		params: IUploadParams & {
 			peer_id?: number;
 
 			title?: string;
@@ -720,7 +755,7 @@ export class Upload {
 	 * Uploads graffiti in documents
 	 */
 	public documentGraffiti(
-		params: UploadParams & {
+		params: IUploadParams & {
 			group_id?: number;
 		}
 	): Promise<GraffitiAttachment>;
@@ -729,7 +764,7 @@ export class Upload {
 	 * Uploads graffiti in messages
 	 */
 	public messageGraffiti(
-		params: UploadParams & {
+		params: IUploadParams & {
 			peer_id?: number;
 		}
 	): Promise<GraffitiAttachment>;
@@ -740,7 +775,7 @@ export class Upload {
 	 * @deprecated
 	 */
 	public graffiti(
-		params: UploadParams & {
+		params: IUploadParams & {
 			peer_id?: number;
 		}
 	): Promise<GraffitiAttachment>;
@@ -749,7 +784,7 @@ export class Upload {
 	 * Uploads community cover
 	 */
 	public groupCover(
-		params: UploadParams & {
+		params: IUploadParams & {
 			group_id: number;
 
 			crop_x?: number;
@@ -757,13 +792,19 @@ export class Upload {
 			crop_x2?: number;
 			crop_y2?: number;
 		}
-	): Promise<Partial>;
+	): Promise<{
+		images: {
+			url: string;
+			width: number;
+			height: number;
+		}[];
+	}>;
 
 	/**
 	 * Uploads photo stories
 	 */
 	public storiesPhoto(
-		params: UploadParams & {
+		params: IUploadParams & {
 			group_id?: number;
 			add_to_news?: number;
 			user_ids?: string[] | string;
@@ -771,13 +812,13 @@ export class Upload {
 			link_text: string;
 			link_url: string;
 		}
-	): Promise<Partial>;
+	): Promise<IStoryObject>;
 
 	/**
 	 * Uploads video stories
 	 */
 	public storiesVideo(
-		params: UploadParams & {
+		params: IUploadParams & {
 			group_id?: number;
 			add_to_news?: number;
 			user_ids?: string[] | string;
@@ -785,31 +826,31 @@ export class Upload {
 			link_text: string;
 			link_url: string;
 		}
-	): Promise<Partial>;
+	): Promise<IStoryObject>;
 
 	/**
 	 * Uploads poll photo
 	 */
 	public pollPhoto(
-		params: UploadParams & {
+		params: IUploadParams & {
 			owner_id?: number;
 		}
-	): Promise<Partial>;
+	): Promise<number>;
 
 	/**
 	 * Behavior for the upload method
 	 */
-	private conduct(params: Partial): Promise<Partial>;
+	private conduct(params: object): Promise<object>;
 
 	/**
 	 * Building form data
 	 */
-	private buildPayload(params: Partial): Promise<Partial>;
+	private buildPayload(params: object): Promise<object>;
 
 	/**
 	 * Upload form data
 	 */
-	private upload(url: URL | string): Promise<Partial>;
+	private upload(url: URL | string): Promise<object>;
 }
 
 export class Collect extends Methods.APIMethods {
@@ -831,7 +872,8 @@ export class Collect extends Methods.APIMethods {
 	/**
 	 * Call multiple executors
 	 */
-	public executes(method: string, queue: Request[]): Promise<Partial>;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	public executes(method: string, queue: Request[]): Promise<any[]>;
 }
 
 export class Chain {
@@ -848,25 +890,28 @@ export class Chain {
 	/**
 	 * Adds method to queue
 	 */
-	public append(method: string, params: Partial): Promise<Partial>;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	public append(method: string, params: object): Promise<any>;
 
 	/**
 	 * Promise based
 	 */
-	public then(thenFn: Function, catchFn: Function): Promise<Partial[]>;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	public then(thenFn: Function, catchFn: Function): Promise<any[]>;
 
 	/**
 	 * Starts the chain
 	 */
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public run(): Promise<any[]>;
 }
 
-export type UpdatesStartWebhookOptions = {
-	tls?: Partial;
+export interface IUpdatesStartWebhookOptions {
+	tls?: object;
 	path?: string;
 	port?: number;
 	host?: string;
-};
+}
 
 type HearFunctionCondition = (text: string | null, context: MessageContext) => boolean;
 
@@ -876,7 +921,7 @@ export class Updates {
 	/**
 	 * Constructor
 	 */
-	constructor(vk: VK);
+	public constructor(vk: VK);
 
 	/**
 	 * Checks is started
@@ -912,12 +957,18 @@ export class Updates {
 
 	public on<T = {}>(events: 'typing' | 'typing_user' | 'typing_group', handler: Middleware<TypingContext & T>): this;
 
-	public on<T = {}>(events: ContextPossibleTypes[] | ContextPossibleTypes, handler: Middleware<Context & T>): this;
+	public on<T = {}>(
+		events: ContextPossibleTypes[] | ContextPossibleTypes,
+		handler: Middleware<Context & T>
+	): this;
 
 	/**
 	 * Listen text
 	 */
-	public hear<T = {}>(conditions: HearCondition[] | HearCondition, handler: Middleware<MessageContext & T>): this;
+	public hear<T = {}>(
+		conditions: HearCondition[] | HearCondition,
+		handler: Middleware<MessageContext & T>
+	): this;
 
 	/**
 	 * A handler that is called when handlers are not found
@@ -927,12 +978,13 @@ export class Updates {
 	/**
 	 * Handles longpoll event
 	 */
-	public handlePollingUpdate(update: Partial[]): Promise<void>;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	public handlePollingUpdate(update: any[]): Promise<void>;
 
 	/**
 	 * Handles webhook event
 	 */
-	public handleWebhookUpdate(update: Partial): Promise<void>;
+	public handleWebhookUpdate(update: object): Promise<void>;
 
 	/**
 	 * Starts to poll server
@@ -942,12 +994,12 @@ export class Updates {
 	/**
 	 * Starts the webhook server
 	 */
-	public startWebhook(options?: UpdatesStartWebhookOptions, next?: Function): Promise<void>;
+	public startWebhook(options?: IUpdatesStartWebhookOptions, next?: Function): Promise<void>;
 
 	/**
 	 * Automatically determines the settings to run
 	 */
-	public start(options?: { webhook?: UpdatesStartWebhookOptions }): Promise<void>;
+	public start(options?: { webhook?: IUpdatesStartWebhookOptions }): Promise<void>;
 
 	/**
 	 * Stopping gets updates
@@ -965,7 +1017,7 @@ export class Updates {
 	public getKoaWebhookMiddleware(): Promise<void>;
 
 	/**
-	 * Starts forever fetch updates	loop
+	 * Starts forever fetch updates loop
 	 */
 	public startFetchLoop(): Promise<void>;
 
@@ -985,11 +1037,11 @@ export class Updates {
 	private reloadMiddleware(): void;
 }
 
-type ResolvedResource = {
+interface IResolvedResource {
 	id: number;
 	owner?: number;
 	type: 'user' | 'group' | 'application' | 'albums' | 'album' | 'wall' | 'club' | 'photo' | 'video' | 'audio' | string;
-};
+}
 
 export class Snippets {
 	private resourceResolver: ResourceResolver;
@@ -1007,7 +1059,7 @@ export class Snippets {
 	/**
 	 * Defines the type of object (user, community, application, attachment)
 	 */
-	public resolveResource(resource: any): Promise<ResolvedResource>;
+	public resolveResource(resource: string | number): Promise<IResolvedResource>;
 }
 
 export class ResourceResolver {
@@ -1019,27 +1071,40 @@ export class ResourceResolver {
 	/**
 	 * Resolve resource
 	 */
-	public resolve(resource: any): Promise<Partial>;
+	public resolve(resource: string | number): Promise<IResolvedResource>;
 
 	/**
 	 * Resolve number
 	 */
-	public resolveNumber(resource: string): Promise<Partial>;
+	public resolveNumber(resource: string): Promise<IResolvedResource>;
 
 	/**
 	 * Resolve resource mention
 	 */
-	public resolveMention(resource: string): Promise<Partial>;
+	public resolveMention(resource: string): Promise<IResolvedResource>;
 
 	/**
 	 * Resolve resource url
 	 */
-	public resolveUrl(resourceUrl: string): Promise<Partial>;
+	public resolveUrl(resourceUrl: string): Promise<IResolvedResource>;
 
 	/**
 	 * Resolve screen name
 	 */
-	public resolveScreenName(resource: string): Promise<Partial>;
+	public resolveScreenName(resource: string): Promise<IResolvedResource>;
+}
+
+interface IStreamingRule {
+	value: string;
+	tag: string;
+}
+
+interface IStreamingResponse {
+	code: number;
+	error?: {
+		message: string;
+		error_code: number;
+	};
 }
 
 export class StreamingAPI {
@@ -1061,42 +1126,42 @@ export class StreamingAPI {
 	/**
 	 * Processes server messages
 	 */
-	private handleServiceMessage(options: Partial): Promise<void>;
+	private handleServiceMessage(options: object): Promise<void>;
 
 	/**
 	 * Handles events
 	 */
-	private handleEvent(event: Partial): Promise<any>;
+	private handleEvent(event: object): Promise<void>;
 
 	/**
 	 * Executes the HTTP request for rules
 	 */
-	public fetchRules(method: string, options: Partial): Promise<Partial>;
+	public fetchRules(method: string, options: object): Promise<object>;
 
 	/**
 	 * Returns a list of rules
 	 */
-	public getRules(): Promise<Partial[]>;
+	public getRules(): Promise<IStreamingRule[]>;
 
 	/**
 	 * Adds a rule
 	 */
-	public addRule(rule: Partial): Promise<Partial>;
+	public addRule(rule: IStreamingRule): Promise<IStreamingResponse>;
 
 	/**
 	 * Removes the rule
 	 */
-	public deleteRule(tag: string): Promise<Partial>;
+	public deleteRule(tag: string): Promise<IStreamingResponse>;
 
 	/**
 	 * Adds a list of rules
 	 */
-	public addRules(rules: Partial[]): Promise<Partial[]>;
+	public addRules(rules: IStreamingRule[]): Promise<IStreamingResponse[]>;
 
 	/**
 	 * Removes all rules
 	 */
-	public deleteRules(): Promise<Partial>;
+	public deleteRules(): Promise<IStreamingResponse>;
 }
 
 export type AttachmentTypes = 'audio' | 'audio_message' | 'graffiti' | 'doc' | 'gift' | 'link' | 'market_album' | 'market' | 'photo' | 'sticker' | 'video' | 'wall_reply' | 'wall' | 'poll';
@@ -1145,7 +1210,7 @@ export class Attachment {
 	/**
 	 * Returns data for JSON
 	 */
-	public toJSON(): Partial;
+	public toJSON(): object;
 }
 
 export class ExternalAttachment {
@@ -1164,12 +1229,12 @@ export class ExternalAttachment {
 	/**
 	 * Constructor
 	 */
-	public constructor(type: string, payload: Partial);
+	public constructor(type: string, payload: object);
 
 	/**
 	 * Returns data for JSON
 	 */
-	public toJSON(): Partial;
+	public toJSON(): object;
 }
 
 export class AudioMessageAttachment extends Attachment {
@@ -1201,7 +1266,7 @@ export class AudioMessageAttachment extends Attachment {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: Partial, vk?: VK);
+	public constructor(payload: object, vk?: VK);
 
 	/**
 	 * Load attachment payload
@@ -1258,7 +1323,7 @@ export class AudioAttachment extends Attachment {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: Partial, vk?: VK);
+	public constructor(payload: object, vk?: VK);
 
 	/**
 	 * Load attachment payload
@@ -1350,12 +1415,29 @@ export class DocumentAttachment extends Attachment {
 	/**
 	 * Returns the info to preview
 	 */
-	public readonly preview?: Partial;
+	public readonly preview?: {
+		photo: {
+			sizes: IPhotoSize[];
+		};
+
+		graffiti: {
+			src: string;
+			width: number;
+			height: number;
+		};
+
+		audio_message: {
+			duration: number;
+			waveform: number[];
+			link_ogg: string;
+			link_mp3: string;
+		};
+	};
 
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: Partial, vk?: VK);
+	public constructor(payload: object, vk?: VK);
 
 	/**
 	 * Load attachment payload
@@ -1377,7 +1459,7 @@ export class GiftAttachment extends ExternalAttachment {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: Partial, vk?: VK);
+	public constructor(payload: object, vk?: VK);
 }
 
 export class GraffitiAttachment extends Attachment {
@@ -1399,7 +1481,7 @@ export class GraffitiAttachment extends Attachment {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: Partial, vk?: VK);
+	public constructor(payload: object, vk?: VK);
 
 	/**
 	 * Load attachment payload
@@ -1436,12 +1518,20 @@ export class LinkAttachment extends ExternalAttachment {
 	/**
 	 * Returns the product
 	 */
-	public readonly product?: Partial;
+	public readonly product?: {
+		price: object;
+	};
 
 	/**
 	 * Returns the button
 	 */
-	public readonly button?: Partial;
+	public readonly button?: {
+		title: string;
+		action: {
+			type: string;
+			url: string;
+		};
+	};
 
 	/**
 	 * Returns the photo
@@ -1451,14 +1541,14 @@ export class LinkAttachment extends ExternalAttachment {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: Partial, vk?: VK);
+	public constructor(payload: object, vk?: VK);
 }
 
 export class MarketAlbumAttachment extends Attachment {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: Partial, vk?: VK);
+	public constructor(payload: object, vk?: VK);
 
 	/**
 	 * Load attachment payload
@@ -1475,12 +1565,19 @@ export class MarketAttachment extends Attachment {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: Partial, vk?: VK);
+	public constructor(payload: object, vk?: VK);
 
 	/**
 	 * Load attachment payload
 	 */
 	public loadAttachmentPayload(): Promise<void>;
+}
+
+interface IPhotoSize {
+	type: string;
+	url: string;
+	width: number;
+	height: number;
 }
 
 export class PhotoAttachment extends Attachment {
@@ -1532,12 +1629,12 @@ export class PhotoAttachment extends Attachment {
 	/**
 	 * Returns the sizes
 	 */
-	public readonly sizes?: Partial[];
+	public readonly sizes?: IPhotoSize[];
 
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: Partial, vk?: VK);
+	public constructor(payload: object, vk?: VK);
 
 	/**
 	 * Load attachment payload
@@ -1547,7 +1644,7 @@ export class PhotoAttachment extends Attachment {
 	/**
 	 * Returns the sizes of the required types
 	 */
-	public getSizes(sizeTypes: string[]): Partial[];
+	public getSizes(sizeTypes: string[]): IPhotoSize[];
 }
 
 export class PollAttachment extends Attachment {
@@ -1624,32 +1721,43 @@ export class PollAttachment extends Attachment {
 	/**
 	 * Returns the identifiers of 3 friends who voted in the poll
 	 */
-	public readonly friends: Partial[] | null;
+	public readonly friends: number[] | null;
 
 	/**
 	 * Returns the information about the options for the answer
 	 */
-	public readonly answers: Partial[] | null;
+	public readonly answers: {
+		id: number;
+		text: string;
+		votes: number;
+		rate: number;
+	}[] | null;
 
 	/**
 	 * Returns the poll snippet background
 	 */
-	public readonly background: Partial | null;
+	public readonly background: object | null;
 
 	/**
 	 * Returns a photo - the poll snippet background
 	 */
-	public readonly photo: Partial | null;
+	public readonly photo: object | null;
 
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: Partial, vk?: VK);
+	public constructor(payload: object, vk?: VK);
 
 	/**
 	 * Load attachment payload
 	 */
 	public loadAttachmentPayload(): Promise<void>;
+}
+
+interface IStickerImage {
+	url: string;
+	width: number;
+	height: number;
 }
 
 export class StickerAttachment extends ExternalAttachment {
@@ -1666,17 +1774,17 @@ export class StickerAttachment extends ExternalAttachment {
 	/**
 	 * Returns the images sizes
 	 */
-	public readonly images: Partial[];
+	public readonly images: IStickerImage[];
 
 	/**
 	 * Returns the images sizes with backgrounds
 	 */
-	public readonly imagesWithBackground: Partial[];
+	public readonly imagesWithBackground: IStickerImage[];
 
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: Partial, vk?: VK);
+	public constructor(payload: object, vk?: VK);
 
 	/**
 	 * Load attachment payload
@@ -1691,7 +1799,7 @@ export class VideoAttachment extends Attachment {
 	public readonly isRepeat?: boolean;
 
 	/**
-	 * Checks that the user can add a video to himself	 */
+	 * Checks that the user can add a video to himself */
 	public readonly isCanAdd?: boolean;
 
 	/**
@@ -1767,7 +1875,7 @@ export class VideoAttachment extends Attachment {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: Partial, vk?: VK);
+	public constructor(payload: object, vk?: VK);
 
 	/**
 	 * Load attachment payload
@@ -1777,14 +1885,14 @@ export class VideoAttachment extends Attachment {
 	/**
 	 * Checks for a boolean value in the property
 	 */
-	private checkBooleanInProperty(name: String): number | null;
+	private checkBooleanInProperty(name: string): number | null;
 }
 
 export class WallReplyAttachment extends Attachment {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: Partial, vk?: VK);
+	public constructor(payload: object, vk?: VK);
 }
 
 export class WallAttachment extends Attachment {
@@ -1921,17 +2029,30 @@ export class WallAttachment extends Attachment {
 	/**
 	 * Returns the likes info
 	 */
-	public readonly likes?: Partial;
+	public readonly likes?: {
+		count: number;
+		user_likes: number;
+		can_publish: number;
+	};
 
 	/**
 	 * Returns the post source
 	 */
-	public readonly postSource?: Partial;
+	public readonly postSource?: {
+		type: string;
+		platform: string;
+		data: string;
+		url: string;
+	};
 
 	/**
 	 * Returns the geo location
 	 */
-	public readonly geo?: Partial;
+	public readonly geo?: {
+		type: string;
+		coordinates: string;
+		place: object;
+	};
 
 	/**
 	 * Returns the history of reposts for post
@@ -1941,12 +2062,12 @@ export class WallAttachment extends Attachment {
 	/**
 	 * Returns the attachments
 	 */
-	public readonly attachments: Partial[];
+	public readonly attachments: Attachment[];
 
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: Partial, vk?: VK);
+	public constructor(payload: object, vk?: VK);
 
 	/**
 	 * Load attachment payload
@@ -1999,7 +2120,7 @@ export class Context {
 	/**
 	 * Constructor
 	 */
-	constructor(vk: VK);
+	public constructor(vk: VK);
 
 	/**
 	 * Type context
@@ -2019,11 +2140,12 @@ export class Context {
 	/**
 	 * Returns data for JSON
 	 */
-	public toJSON(): Partial;
+	public toJSON(): object;
 
 	/**
-	 * Partial content
+	 * IPartial content
 	 */
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	[key: string]: any;
 }
 
@@ -2031,7 +2153,7 @@ export class CommentActionContext extends Context {
 	/**
 	 * Constructor
 	 */
-	constructor(vk: VK, payload: Partial, options: Partial);
+	public constructor(vk: VK, payload: object, options: object);
 
 	/**
 	 * Checks is new comment
@@ -2131,7 +2253,11 @@ export class CommentActionContext extends Context {
 	/**
 	 * Returns the likes
 	 */
-	public readonly likes?: Partial;
+	public readonly likes?: {
+		count: number;
+		user_likes: number;
+		can_publish: number;
+	};
 
 	/**
 	 * Checks for the presence of attachments
@@ -2179,19 +2305,19 @@ export class CommentActionContext extends Context {
 	/**
 	 * Edits a comment
 	 */
-	public editComment(options: Partial): Promise<Partial>;
+	public editComment(options: object): Promise<number>;
 
 	/**
 	 * Removes comment
 	 */
-	public deleteComment(): Promise<Partial>;
+	public deleteComment(): Promise<number>;
 }
 
 export class DialogFlagsContext extends Context {
 	/**
 	 * Constructor
 	 */
-	constructor(vk: VK, payload: any[]);
+	public constructor(vk: VK, payload: number[]);
 
 	/**
 	 * Checks that an important dialogue
@@ -2214,21 +2340,21 @@ export class DialogFlagsContext extends Context {
 	public readonly flags: number;
 
 	/**
-	 * Marks the dialog as answered or unchecked.
+	 * Marks the conversation as answered or unchecked.
 	 */
-	public markAsAnsweredDialog(params: Partial): Promise<Partial>;
+	public markAsAnsweredConversation(params: object): Promise<number>;
 
 	/**
-	 * Marks the dialog as important or removes the mark
+	 * Marks the conversation as important or removes the mark
 	 */
-	public markAsImportantDialog(params: Partial): Promise<Partial>;
+	public markAsImportantConversation(params: object): Promise<number>;
 }
 
 export class GroupMemberContext extends Context {
 	/**
 	 * Constructor
 	 */
-	constructor(vk: VK, payload: Partial, options: Partial);
+	public constructor(vk: VK, payload: object, options: object);
 
 	/**
 	 * Checks is join user
@@ -2260,7 +2386,7 @@ export class GroupUpdateContext extends Context {
 	/**
 	 * Constructor
 	 */
-	constructor(vk: VK, payload: Partial, options: Partial);
+	public constructor(vk: VK, payload: object, options: object);
 
 	/**
 	 * Checks is change photo
@@ -2300,7 +2426,9 @@ export class GroupUpdateContext extends Context {
 	/**
 	 * Returns the changes settings
 	 */
-	public readonly changes?: Partial;
+	public readonly changes?: {
+		[key: string]: string;
+	};
 
 	/**
 	 * Checks for the presence of attachments
@@ -2385,24 +2513,24 @@ export class GroupUserContext extends Context {
 	/**
 	 * Constructror
 	 */
-	public constructor(vk: VK, payload: Partial, options: Partial);
+	public constructor(vk: VK, payload: object, options: object);
 
 	/**
-	 * Adds a user to the community blacklist
+	 * Adds a user or group to the community blacklist
 	 */
-	public banUser(params: Partial): Promise<Partial>;
+	public ban(params: object): Promise<number>;
 
 	/**
-	 * Adds a user to the community blacklist
+	 * Adds a user or group to the community blacklist
 	 */
-	public unbanUser(): Promise<Partial>;
+	public unban(): Promise<number>;
 }
 
 export class MessageAllowContext extends Context {
 	/**
 	 * Constructor
 	 */
-	constructor(vk: VK, payload: Partial, options: Partial);
+	public constructor(vk: VK, payload: object, options: object);
 
 	/**
 	 * Checks that the user has subscribed to messages
@@ -2429,7 +2557,7 @@ export class MessageFlagsContext extends Context {
 	/**
 	 * Constructor
 	 */
-	constructor(vk: VK, payload: Partial, options: Partial);
+	public constructor(vk: VK, payload: object, options: object);
 
 	/**
 	 * Verifies that the message is not read
@@ -2622,7 +2750,11 @@ export class MessageContext extends Context {
 	/**
 	 * Returns geo
 	 */
-	public readonly geo?: Partial;
+	public readonly geo?: {
+		type: string;
+		coordinates: string;
+		place: object;
+	};
 
 	/**
 	 * Returns the event name
@@ -2647,7 +2779,8 @@ export class MessageContext extends Context {
 	/**
 	 * Returns the message payload
 	 */
-	public readonly messagePayload?: Partial;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	public readonly messagePayload?: any;
 
 	/**
 	 * Returns the forwards
@@ -2667,7 +2800,7 @@ export class MessageContext extends Context {
 	/**
 	 * Constructor
 	 */
-	public constructor(vk: VK, payload: any[], options: Partial);
+	public constructor(vk: VK, payload: object | (number | object)[], options: object);
 
 	/**
 	 * Load message payload
@@ -2715,17 +2848,19 @@ export class MessageContext extends Context {
 	/**
 	 * Gets a link to invite the user to a conversation
 	 */
-	public getInviteLink(params: Partial): Promise<Partial>;
+	public getInviteLink(params: object): Promise<{
+		link: string;
+	}>;
 
 	/**
 	 * Edits a message
 	 */
-	public editMessage(params: Params.MessagesSendParams): Promise<Partial>;
+	public editMessage(params: Params.MessagesSendParams): Promise<number>;
 
 	/**
 	 * Edits a message text
 	 */
-	public editMessageText(message: string): Promise<Partial>;
+	public editMessageText(message: string): Promise<number>;
 
 	/**
 	 * Sends a message to the current dialog
@@ -2750,19 +2885,28 @@ export class MessageContext extends Context {
 	 * Sends a photo to the current dialog
 	 */
 
-	public sendPhoto(sources: UploadSource[] | UploadSource, params?: Params.MessagesSendParams): Promise<number>;
+	public sendPhoto(
+		sources: UploadSource[] | UploadSource,
+		params?: Params.MessagesSendParams
+	): Promise<number>;
 
 	/**
 	 * Sends a document to the current dialog
 	 */
 
-	public sendDocument(sources: UploadSource[] | UploadSource, params?: Params.MessagesSendParams): Promise<number>;
+	public sendDocument(
+		sources: UploadSource[] | UploadSource,
+		params?: Params.MessagesSendParams
+	): Promise<number>;
 
 	/**
 	 * Sends a audio message to the current dialog
 	 */
 
-	public sendAudioMessage(sources: UploadSource[] | UploadSource, params?: Params.MessagesSendParams): Promise<number>;
+	public sendAudioMessage(
+		sources: UploadSource[] | UploadSource,
+		params?: Params.MessagesSendParams
+	): Promise<number>;
 
 	/**
 	 * Changes the status of typing in the dialog
@@ -2772,12 +2916,12 @@ export class MessageContext extends Context {
 	/**
 	 * Marks messages as important or removes a mark.
 	 */
-	public markAsImportant(ids?: number[], options?: Partial): Promise<number[]>;
+	public markAsImportant(ids?: number[], options?: object): Promise<number[]>;
 
 	/**
 	 * Deletes the message
 	 */
-	public deleteMessage(ids?: number[], options?: Partial): Promise<number[]>;
+	public deleteMessage(ids?: number[], options?: object): Promise<number[]>;
 
 	/**
 	 * Restores the message
@@ -2792,7 +2936,10 @@ export class MessageContext extends Context {
 	/**
 	 * Sets a new image for the chat
 	 */
-	public newChatPhoto(source: UploadSource, params?: Partial): Promise<Partial>;
+	public newChatPhoto(source: UploadSource, params?: object): Promise<{
+		message_id: number;
+		chat_id: object;
+	}>;
 
 	/**
 	 * Remove the chat photo
@@ -2824,7 +2971,7 @@ export class NewAttachmentsContext extends Context {
 	/**
 	 * Constructor
 	 */
-	constructor(vk: VK, payload: Partial, options: Partial);
+	public constructor(vk: VK, payload: object, options: object);
 
 	/**
 	 * Checks is attachment photo
@@ -2882,14 +3029,14 @@ export class NewAttachmentsContext extends Context {
 	/**
 	 * Removes the attachment
 	 */
-	public deleteAttachment(): Promise<Partial>;
+	public deleteAttachment(): Promise<number>;
 }
 
 export class ReadMessagesContext extends Context {
 	/**
 	 * Constructor
 	 */
-	constructor(vk: VK, payload: Partial, options: Partial);
+	public constructor(vk: VK, payload: object, options: object);
 
 	/**
 	 * Checks that inbox messages are read
@@ -2916,7 +3063,7 @@ export class RemovedMessagesContext extends Context {
 	/**
 	 * Constructor
 	 */
-	constructor(vk: VK, payload: Partial, options: Partial);
+	public constructor(vk: VK, payload: object, options: object);
 
 	/**
 	 * Checks that messages have been deleted
@@ -3020,7 +3167,11 @@ export class StreamingContext extends Context {
 	/**
 	 * Returns the geo location
 	 */
-	public readonly geo?: Partial;
+	public readonly geo?: {
+		type: string;
+		coordinates: string;
+		place: object;
+	};
 
 	/**
 	 * Returns the rule tags
@@ -3035,7 +3186,7 @@ export class StreamingContext extends Context {
 	/**
 	 * Returns the information of author
 	 */
-	public readonly author: Partial;
+	public readonly author: object;
 
 	/**
 	 * Returns the identifier author
@@ -3065,11 +3216,11 @@ export class StreamingContext extends Context {
 	/**
 	 * Constructor
 	 */
-	public constructor(vk: VK, payload: Partial, options: Partial);
+	public constructor(vk: VK, payload: object, options: object);
 
 	/**
-	 *	Checks for the presence of attachments
-		*/
+	 * Checks for the presence of attachments
+	*/
 	public hasAttachments(type?: AttachmentPossibleTypes): boolean;
 
 	/**
@@ -3160,14 +3311,14 @@ export class TypingContext extends Context {
 	/**
 	 * Constructor
 	 */
-	public constructor(vk: VK, payload: any[], options: Partial);
+	public constructor(vk: VK, payload: number[], options: object);
 }
 
 export class UserOnlineContext extends Context {
 	/**
 	 * Constructor
 	 */
-	constructor(vk: VK, payload: any[]);
+	public constructor(vk: VK, payload: number[]);
 
 	/**
 	 * Checks that the user is online
@@ -3231,7 +3382,7 @@ export class WallPostContext extends Context {
 	/**
 	 * constructor
 	 */
-	constructor(vk: VK, payload?: Partial, options?: Partial);
+	public constructor(vk: VK, payload?: object, options?: object);
 
 	/**
 	 * Wall attachment
@@ -3246,7 +3397,7 @@ export class WallPostContext extends Context {
 	/**
 	 * Removes a record from the wall
 	 */
-	public deletePost(): Promise<Partial>;
+	public deletePost(): Promise<number>;
 }
 
 export class MessageForward {
@@ -3283,16 +3434,16 @@ export class MessageForward {
 	/**
 	 * Returns the attachments
 	 */
-	public readonly attachments: Partial[];
+	public readonly attachments: Attachment[];
 
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: Partial, vk?: VK);
+	public constructor(payload: object, vk?: VK);
 
 	/**
-	 *	Checks for the presence of attachments
-		*/
+	 * Checks for the presence of attachments
+	*/
 	public hasAttachments(type?: AttachmentPossibleTypes): boolean;
 
 	/**
@@ -3332,7 +3483,7 @@ export class MessageForward {
 	/**
 	 * Returns data for JSON
 	 */
-	public toJSON(): Partial;
+	public toJSON(): object;
 }
 
 export class MessageForwardsCollection extends Array<MessageForward> {
@@ -3342,8 +3493,8 @@ export class MessageForwardsCollection extends Array<MessageForward> {
 	public readonly flatten: MessageForward[];
 
 	/**
-	 *	Checks for the presence of attachments
-		*/
+	 * Checks for the presence of attachments
+	*/
 	public hasAttachments(type?: AttachmentPossibleTypes): boolean;
 
 	/**
@@ -3424,15 +3575,15 @@ export class MessageReply {
 	/**
 	 * Returns the attachments
 	 */
-	public readonly attachments: Partial[];
+	public readonly attachments: Attachment[];
 
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: Partial, vk?: VK);
+	public constructor(payload: object, vk?: VK);
 
 	/**
-	 *	Checks for the presence of attachments
+	 * Checks for the presence of attachments
 	 */
 	public hasAttachments(type?: AttachmentPossibleTypes): boolean;
 
@@ -3472,23 +3623,23 @@ export class MessageReply {
 	/**
 	 * Returns data for JSON
 	 */
-	public toJSON(): Partial;
+	public toJSON(): object;
 }
 
 export interface IButtonOptions {
 	color: string;
-	action: Partial;
+	action: object;
 }
 
 export interface IButtonToJSONResult {
 	color: string;
-	action: Partial;
+	action: object;
 }
 
 export class Button {
 	public color: string;
 
-	public action: Partial;
+	public action: object;
 
 	/**
 	 * Returns custom tag
@@ -3518,12 +3669,12 @@ export class Button {
 	/**
 	 * Constructor
 	 */
-	constructor(options?: IButtonOptions);
+	public constructor(options?: IButtonOptions);
 
 	/**
 	 * Returns to JSON
 	 */
-	toJSON(): IButtonToJSONResult;
+	public toJSON(): IButtonToJSONResult;
 }
 
 export interface IKeyboardOptions {
@@ -3566,7 +3717,7 @@ export class Keyboard {
 	/**
 	 * Constructor
 	 */
-	constructor(options: IKeyboardOptions);
+	public constructor(options: IKeyboardOptions);
 
 	/**
 	 * Return keyboard
@@ -3578,20 +3729,22 @@ export class Keyboard {
 	 */
 	public static textButton(options: ITextButtonOptions): TextButton;
 
-		/**
+	/**
 	 * Returns the location request button
 	 */
-	static locationRequestButton(options: ILocationRequestButtonOptions): LocationRequestButton;
+	public static locationRequestButton(
+		options: ILocationRequestButtonOptions
+	): LocationRequestButton;
 
 	/**
 	 * Returns the location request button
 	 */
-	static payButton(options: IVKPayButtonOptions): VKPayButton;
+	public static payButton(options: IVKPayButtonOptions): VKPayButton;
 
 	/**
 	 * Returns the pay button
 	 */
-	static applicationButton(options: IVKApplicationButtonOptions): VKApplicationButton;
+	public static applicationButton(options: IVKApplicationButtonOptions): VKApplicationButton;
 
 
 	/**
@@ -3613,58 +3766,58 @@ export class Keyboard {
 export interface ITextButtonOptions {
 	label: string;
 	color?: string;
-	payload?: Partial;
+	payload?: object;
 }
 
 export class TextButton extends Button {
 	/**
 	 * Constructor
 	 */
-	constructor(options: ITextButtonOptions);
+	public constructor(options: ITextButtonOptions);
 }
 
 export interface ILocationRequestButtonOptions {
-	payload?: Partial;
+	payload?: object;
 }
 
 export class LocationRequestButton extends Button {
 	/**
 	 * Constructor
 	 */
-	constructor(options: ILocationRequestButtonOptions);
+	public constructor(options: ILocationRequestButtonOptions);
 }
 
 export interface IVKPayButtonOptions {
 	/**
-	 * @example
-	 *
-	 * line containing VK Pay payment parameters and application ID in the aid parameter, separated by &.
-	 *
+	 * line containing VK Pay payment parameters
+	 * and application ID in the aid parameter, separated by &.
+	 * ```
 	 * action=transfer-to-group&group_id=1&aid=10
+	 * ```
 	 */
 	hash: string;
-	payload?: Partial;
+	payload?: object;
 }
 
 export class VKPayButton extends Button {
 	/**
 	 * Constructor
 	 */
-	constructor(options: IVKPayButtonOptions);
+	public constructor(options: IVKPayButtonOptions);
 }
 
 export interface IVKApplicationButtonOptions {
 	label: string;
 	appId: number;
 	ownerId: number;
-	payload?: Partial;
+	payload?: object;
 }
 
 export class VKApplicationButton extends Button {
 	/**
 	 * Constructor
 	 */
-	constructor(options: IVKApplicationButtonOptions);
+	public constructor(options: IVKApplicationButtonOptions);
 }
 
 /**
@@ -3683,16 +3836,19 @@ export class VKError extends Error {
 	/**
 	 * Constructor
 	 */
-	public constructor(options: Partial);
+	public constructor(options: object);
 
 	/**
 	 * Returns property for json
 	 */
-	public toJSON(): this;
+	public toJSON(): object;
 }
 
 export class APIError extends VKError {
-	public params: Partial[];
+	public params: {
+		key: string;
+		value: string;
+	}[];
 
 	public captchaSid: number;
 
@@ -3705,7 +3861,7 @@ export class APIError extends VKError {
 	/**
 	 * Constructor
 	 */
-	public constructor(options: Partial);
+	public constructor(options: object);
 }
 
 export interface IAuthErrorOptions {
@@ -3721,12 +3877,12 @@ export class AuthError extends VKError {
 }
 
 export class CollectError extends VKError {
-	public errors: Partial[];
+	public errors: object[];
 
 	/**
 	 * Constructor
 	 */
-	public constructor(options: Partial);
+	public constructor(options: object);
 }
 
 export class ExecuteError extends VKError {
@@ -3735,7 +3891,7 @@ export class ExecuteError extends VKError {
 	/**
 	 * Constructor
 	 */
-	public constructor(options: Partial);
+	public constructor(options: object);
 }
 
 export class SnippetsError extends VKError {}
@@ -3744,7 +3900,7 @@ export class StreamingRuleError extends VKError {
 	/**
 	 * Constructor
 	 */
-	constructor(options: Partial);
+	public constructor(options: object);
 }
 
 export class UpdatesError extends VKError {}
@@ -3760,12 +3916,12 @@ export class CallbackService {
 	/**
 	 * Processing captcha
 	 */
-	public processingCaptcha(payload: Partial): Promise<void>;
+	public processingCaptcha(payload: object): Promise<void>;
 
 	/**
 	 * Processing two-factor
 	 */
-	public processingTwoFactor(payload: Partial): Promise<void>;
+	public processingTwoFactor(payload: object): Promise<void>;
 }
 
 /**
@@ -3849,7 +4005,7 @@ export const apiErrors: {
 	ALBUM_OVERFLOW: number;
 	PAYMENTS_DISABLED: number;
 	COMMERCIAL_ACCESS_DENIED: number;
-	COMMERCIAL_ERROR: number
+	COMMERCIAL_ERROR: number;
 };
 
 /**

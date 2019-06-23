@@ -131,12 +131,12 @@ export default class Upload {
 		});
 
 		// {
-		// 	photo_hash: 'c8d43da5e1281b7aed6bb8f0c4f3ad69',
-		// 	photo_src: 'https://pp.userapi.com/c836429/v836429114/673f6/5VJB8GXtK88.jpg',
-		// 	photo_src_big: 'https://pp.userapi.com/c836429/v836429114/673f7/7fGvrJ1wOx0.jpg',
-		// 	photo_src_small: 'https://pp.userapi.com/c836429/v836429114/673f5/l5d1ASgyuxk.jpg',
-		// 	saved: 1,
-		// 	post_id: 3331
+		//   photo_hash: 'c8d43da5e1281b7aed6bb8f0c4f3ad69',
+		//   photo_src: 'https://pp.userapi.com/c836429/v836429114/673f6/5VJB8GXtK88.jpg',
+		//   photo_src_big: 'https://pp.userapi.com/c836429/v836429114/673f7/7fGvrJ1wOx0.jpg',
+		//   photo_src_small: 'https://pp.userapi.com/c836429/v836429114/673f5/l5d1ASgyuxk.jpg',
+		//   saved: 1,
+		//   post_id: 3331
 		// }
 	}
 
@@ -188,55 +188,55 @@ export default class Upload {
 		});
 
 		// {
-		// 	message_id: 3745390,
-		// 	chat: {
-		// 		id: 152,
-		// 		type: 'chat',
-		// 		title: '<Titile name>',
-		// 		admin_id: 335447860,
-		// 		users: [335447860,
-		// 			140192020,
-		// 			153711615,
-		// 			314650825,
-		// 			218747758,
-		// 			155944103,
-		// 			159737827,
-		// 			64299368,
-		// 			157534541,
-		// 			153608064,
-		// 			335540121,
-		// 			349609849,
-		// 			344184938,
-		// 			341178526,
-		// 			198210835,
-		// 			135446999,
-		// 			163850606,
-		// 			123640861,
-		// 			316216798,
-		// 			359118107,
-		// 			241235369,
-		// 			160213445,
-		// 			126624591,
-		// 			390221395,
-		// 			195624402,
-		// 			94955334,
-		// 			167302501,
-		// 			17516523,
-		// 			294583792,
-		// 			294869767,
-		// 			114281676,
-		// 			137762280,
-		// 			406076540,
-		// 			410605840,
-		// 			395646590,
-		// 			421554042,
-		// 			331599090,
-		// 			342269712
-		// 		],
-		// 		photo_50: 'https://pp.userapi.com/c837624/v837624114/5d495/gLgv-JrVmkk.jpg',
-		// 		photo_100: 'https://pp.userapi.com/c837624/v837624114/5d494/VNp61I1yuCk.jpg',
-		// 		photo_200: 'https://pp.userapi.com/c837624/v837624114/5d492/lAoc_fAai2Q.jpg'
-		// 	}
+		//   message_id: 3745390,
+		//   chat: {
+		//    id: 152,
+		//    type: 'chat',
+		//    title: '<Titile name>',
+		//    admin_id: 335447860,
+		//    users: [335447860,
+		//      140192020,
+		//      153711615,
+		//      314650825,
+		//      218747758,
+		//      155944103,
+		//      159737827,
+		//      64299368,
+		//      157534541,
+		//      153608064,
+		//      335540121,
+		//      349609849,
+		//      344184938,
+		//      341178526,
+		//      198210835,
+		//      135446999,
+		//      163850606,
+		//      123640861,
+		//      316216798,
+		//      359118107,
+		//      241235369,
+		//      160213445,
+		//      126624591,
+		//      390221395,
+		//      195624402,
+		//      94955334,
+		//      167302501,
+		//      17516523,
+		//      294583792,
+		//      294869767,
+		//      114281676,
+		//      137762280,
+		//      406076540,
+		//      410605840,
+		//      395646590,
+		//      421554042,
+		//      331599090,
+		//      342269712
+		//    ],
+		//    photo_50: 'https://pp.userapi.com/c837624/v837624114/5d495/gLgv-JrVmkk.jpg',
+		//    photo_100: 'https://pp.userapi.com/c837624/v837624114/5d494/VNp61I1yuCk.jpg',
+		//    photo_200: 'https://pp.userapi.com/c837624/v837624114/5d492/lAoc_fAai2Q.jpg'
+		//   }
 		// }
 	}
 
@@ -521,15 +521,15 @@ export default class Upload {
 
 		// { type: 'audio_message',
 		// audio_message: {
-		// id: 484017542,
-		// 	owner_id: 195624402,
-		// 	duration: 48,
-		// 	waveform: [...],
-		// 	link_ogg:
-		// 	'https://psv4.userapi.com/c805324//u195624402/audiomsg/15734aa6bb.ogg',
-		// 	link_mp3:
-		// 	'https://psv4.userapi.com/c805324//u195624402/audiomsg/15734aa6bb.mp3',
-		// 	access_key: '295cc90411e6222db0' } }
+		//   id: 484017542,
+		//   owner_id: 195624402,
+		//   duration: 48,
+		//   waveform: [...],
+		//   link_ogg:
+		//   'https://psv4.userapi.com/c805324//u195624402/audiomsg/15734aa6bb.ogg',
+		//   link_mp3:
+		//   'https://psv4.userapi.com/c805324//u195624402/audiomsg/15734aa6bb.mp3',
+		//   access_key: '295cc90411e6222db0' } }
 	}
 
 	/**
@@ -600,33 +600,33 @@ export default class Upload {
 		});
 
 		// {
-		// 	images: [
-		// 		{
-		// 			url: 'https://cs7056.userapi.com/c639526/v639526192/46404/r-1Nhr-Dktc.jpg',
-		// 			width: 200,
-		// 			height: 50
-		// 		},
-		// 		{
-		// 			url: 'https://cs7056.userapi.com/c639526/v639526192/46403/oDB9tAgtUrQ.jpg',
-		// 			width: 400,
-		// 			height: 101
-		// 		},
-		// 		{
-		// 			url: 'https://cs7056.userapi.com/c639526/v639526192/46400/gLwCTmDEPXY.jpg',
-		// 			width: 795,
-		// 			height: 200
-		// 		},
-		// 		{
-		// 			url: 'https://cs7056.userapi.com/c639526/v639526192/46402/w2ucyq8zwF8.jpg',
-		// 			width: 1080,
-		// 			height: 272
-		// 		},
-		// 		{
-		// 			url: 'https://cs7056.userapi.com/c639526/v639526192/46401/YTmN89yMaU0.jpg',
-		// 			width: 1590,
-		// 			height: 400
-		// 		}
-		// 	]
+		//  images: [
+		//    {
+		//      url: 'https://cs7056.userapi.com/c639526/v639526192/46404/r-1Nhr-Dktc.jpg',
+		//      width: 200,
+		//      height: 50
+		//    },
+		//    {
+		//      url: 'https://cs7056.userapi.com/c639526/v639526192/46403/oDB9tAgtUrQ.jpg',
+		//      width: 400,
+		//      height: 101
+		//    },
+		//    {
+		//      url: 'https://cs7056.userapi.com/c639526/v639526192/46400/gLwCTmDEPXY.jpg',
+		//      width: 795,
+		//      height: 200
+		//    },
+		//    {
+		//      url: 'https://cs7056.userapi.com/c639526/v639526192/46402/w2ucyq8zwF8.jpg',
+		//      width: 1080,
+		//      height: 272
+		//    },
+		//    {
+		//      url: 'https://cs7056.userapi.com/c639526/v639526192/46401/YTmN89yMaU0.jpg',
+		//      width: 1590,
+		//      height: 400
+		//    }
+		//  ]
 		// }
 	}
 

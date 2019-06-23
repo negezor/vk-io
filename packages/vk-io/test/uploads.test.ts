@@ -6,8 +6,7 @@ import {
 	UploadError,
 	uploadErrors,
 
-	PhotoAttachment,
-	// VideoAttachment
+	PhotoAttachment
 } from '..';
 
 const { TOKEN = null } = process.env;
@@ -16,10 +15,10 @@ const vk = new VK({ token: TOKEN });
 
 const IMAGE_URL = 'https://picsum.photos/200/300/?image=1';
 
-describe('Uploads', () => {
+describe('Uploads', (): void => {
 	const { upload } = vk;
 
-	it('should throw an error if there are no parameters', async () => {
+	it('should throw an error if there are no parameters', async (): Promise<void> => {
 		try {
 			// @ts-ignore
 			await upload.messagePhoto();
@@ -37,7 +36,7 @@ describe('Uploads', () => {
 		}
 	});
 
-	it('should throw in the absence of source', async () => {
+	it('should throw in the absence of source', async (): Promise<void> => {
 		try {
 			await upload.messagePhoto({
 				source: []
@@ -48,7 +47,7 @@ describe('Uploads', () => {
 		}
 	});
 
-	it('should cause an error with more uploads', async () => {
+	it('should cause an error with more uploads', async (): Promise<void> => {
 		try {
 			await upload.messagePhoto({
 				source: {
@@ -65,12 +64,12 @@ describe('Uploads', () => {
 	});
 
 	if (TOKEN === null) {
-		it('the test is skipped because there is no token', () => {});
+		it('the test is skipped because there is no token', (): void => {});
 
 		return;
 	}
 
-	it('should upload image to wall from url', async () => {
+	it('should upload image to wall from url', async (): Promise<void> => {
 		const photo = await upload.messagePhoto({
 			source: IMAGE_URL
 		});
@@ -80,7 +79,7 @@ describe('Uploads', () => {
 		expect(photo.ownerId).not.toEqual(0);
 	});
 
-	it('should upload image to wall from buffer', async () => {
+	it('should upload image to wall from buffer', async (): Promise<void> => {
 		const response = await fetch(IMAGE_URL);
 		const buffer = await response.buffer();
 
@@ -93,7 +92,7 @@ describe('Uploads', () => {
 		expect(photo.ownerId).not.toEqual(0);
 	});
 
-	it('should upload image to wall from stream', async () => {
+	it('should upload image to wall from stream', async (): Promise<void> => {
 		const response = await fetch(IMAGE_URL);
 
 		const photo = await upload.messagePhoto({

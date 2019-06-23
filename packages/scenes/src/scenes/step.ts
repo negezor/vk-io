@@ -32,12 +32,12 @@ export default class StepScene<T = MessageContext> implements IScene {
 
 		this.steps = options.steps;
 
-		this.onEnterHandler = options.enterHandler || (() => {});
+		this.onEnterHandler = options.enterHandler || ((): void => {});
 
-		this.onLeaveHandler = options.leaveHandler || (() => {});
+		this.onLeaveHandler = options.leaveHandler || ((): void => {});
 	}
 
-	async enterHandler(context: IStepContext) {
+	async enterHandler(context: IStepContext): Promise<void> {
 		context.scene.step = new StepSceneContext({
 			context,
 
@@ -52,7 +52,7 @@ export default class StepScene<T = MessageContext> implements IScene {
 		}
 	}
 
-	leaveHandler(context: IStepContext) {
+	leaveHandler(context: IStepContext): Promise<void> {
 		// @ts-ignore
 		return this.onLeaveHandler(context);
 	}

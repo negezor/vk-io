@@ -56,14 +56,14 @@ export default class VK {
 	 *
 	 * @return {string}
 	 */
-	get [Symbol.toStringTag]() {
+	get [Symbol.toStringTag](): string {
 		return 'VK';
 	}
 
 	/**
 	 * Sets options
 	 */
-	setOptions(options) {
+	setOptions(options): this {
 		Object.assign(this.options, options);
 
 		return this;
@@ -79,15 +79,16 @@ export default class VK {
 	/**
 	 * Returns token
 	 */
-	get token() {
+	get token(): string | null {
 		return this.options.token;
 	}
 
 	/**
 	 * Sets captcha handler
 	 *
-	 * @example
-	 * 	vk.captchaHandler = (payload, retry) => {...};
+	 * ```ts
+	 * vk.captchaHandler = (payload, retry) => {...};
+	 * ```
 	 */
 	set captchaHandler(handler) {
 		this.callbackService.captchaHandler = handler;
@@ -96,8 +97,9 @@ export default class VK {
 	/**
 	 * Sets two-factor handler
 	 *
-	 * @example
-	 * 	vk.twoFactorHandler = (payload, retry) => {...};
+	 * ```ts
+	 * vk.twoFactorHandler = (payload, retry) => {...};
+	 * ```
 	 */
 	set twoFactorHandler(handler) {
 		this.callbackService.twoFactorHandler = handler;
@@ -111,7 +113,7 @@ export default class VK {
 	 *
 	 * @return {string}
 	 */
-	[inspect.custom](depth, options) {
+	[inspect.custom](depth, options): string {
 		const { name } = this.constructor;
 
 		const {

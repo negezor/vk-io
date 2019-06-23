@@ -32,7 +32,7 @@ export default class AudioMessageAttachment extends Attachment {
 		}
 
 		const [document] = await this.vk.api.docs.getById({
-			docs: `${this.ownerId}_${this.id}`,
+			docs: `${this.ownerId}_${this.id}`
 		});
 
 		this.payload = document;
@@ -104,7 +104,7 @@ export default class AudioMessageAttachment extends Attachment {
 			'waveform',
 			'oggUrl',
 			'mp3Url',
-			'url',
+			'url'
 		]);
 
 		payload.waveform = `[...${this.waveform.length} elements]`;

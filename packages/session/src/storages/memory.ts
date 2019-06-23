@@ -1,25 +1,23 @@
 import ISessionStorage from './storage';
 
-import { Partial } from '../types';
-
 export default class MemoryStorage implements ISessionStorage {
-	private store: Map<string, Partial> = new Map();
+	private store: Map<string, object> = new Map();
 
-	async has(key: string) {
+	async has(key: string): Promise<boolean> {
 		return this.store.has(key);
 	}
 
-	async get(key: string) {
+	async get(key: string): Promise<object> {
 		return this.store.get(key) || null;
 	}
 
-	async set(key: string, value: Partial) {
+	async set(key: string, value: object): Promise<boolean> {
 		this.store.set(key, value);
 
 		return true;
 	}
 
-	async delete(key: string) {
+	async delete(key: string): Promise<boolean> {
 		return this.store.delete(key);
 	}
 }

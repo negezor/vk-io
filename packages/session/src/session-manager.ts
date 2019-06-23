@@ -1,6 +1,6 @@
 import { ISessionStorage, MemoryStorage } from './storages';
 
-import { IContext, Partial, ISessionContext } from './types';
+import { IContext, ISessionContext, Middleware } from './types';
 
 export interface ISessionManagerOptions {
 	/**
@@ -33,7 +33,7 @@ export default class SessionManager {
 
 		this.contextKey = options.contextKey || 'session';
 
-		this.getStorageKey = options.getStorageKey || (context => (
+		this.getStorageKey = options.getStorageKey || ((context): string => (
 			String(context.senderId)
 		));
 	}
@@ -41,24 +41,24 @@ export default class SessionManager {
 	/**
 	 * Returns the middleware for embedding
 	 */
-	get middleware() {
+	get middleware(): Middleware<IContext> {
 		const { storage, contextKey, getStorageKey } = this;
 
-		return async (context: IContext, next: Function) => {
+		return async (context: IContext, next: Function): Promise<void> => {
 			const storageKey = getStorageKey(context);
 
 			let changed = false;
-			const wrapSession = (targetRaw: Partial) => (
-				// eslint-disable-next-line no-use-before-define
-				new Proxy({ ...targetRaw, $forceUpdate } as ISessionContext, {
-					set: (target, prop: string, value) => {
+			const wrapSession = (targetRaw: object): ISessionContext => (
+				// eslint-disable-next-line @typescript-eslint/no-use-before-define
+				new Proxy({ ...targetRaw, $forceUpdate }, {
+					set: (target, prop: string, value): boolean => {
 						changed = true;
 
 						target[prop] = value;
 
 						return true;
 					},
-					deleteProperty(target, prop: string) {
+					deleteProperty(target, prop: string): boolean {
 						changed = true;
 
 						delete target[prop];
@@ -69,11 +69,11 @@ export default class SessionManager {
 			);
 
 			const $forceUpdate = (): Promise<boolean> => {
-				// eslint-disable-next-line no-use-before-define
+				// eslint-disable-next-line @typescript-eslint/no-use-before-define
 				if (Object.keys(session).length > 1) {
 					changed = false;
 
-					// eslint-disable-next-line no-use-before-define
+					// eslint-disable-next-line @typescript-eslint/no-use-before-define
 					return storage.set(storageKey, session);
 				}
 
@@ -85,8 +85,8 @@ export default class SessionManager {
 			let session = wrapSession(initialSession);
 
 			Object.defineProperty(context, contextKey, {
-				get: () => session,
-				set: (newSession) => {
+				get: (): ISessionContext => session,
+				set: (newSession): void => {
 					session = wrapSession(newSession);
 					changed = true;
 				}

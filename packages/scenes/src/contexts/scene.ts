@@ -1,4 +1,4 @@
-import { Partial, ISessionContext } from '../types';
+import { ISessionContext } from '../types';
 import {
 	ISceneContextOptions,
 	ISceneContextEnterOptions,
@@ -6,30 +6,35 @@ import {
 
 	LastAction
 } from './scene.types';
+import { IScene } from '../scenes';
 
 export default class SceneContext {
 	/**
 	 * Lazy session for submodules
-	 * @example
+	 * ```ts
 	 * ctx.scene.session.moduleFlag = true;
+	 * ```
 	 */
 	session: ISessionContext;
 
 	/**
 	 * Base namespace for user input
 	 *
-	 * @example
+	 * ```ts
 	 * ctx.scene.username = myInputText;
+	 * ```
 	 */
-	state: Partial;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	state: Record<string, any>;
 
 	/**
 	 * Is the scene canceled, used in leaveHandler()
 	 *
-	 * @example
+	 * ```ts
 	 * ctx.scene.leave({
 	 *   canceled: true
 	 * });
+	 * ```
 	 */
 	canceled = false;
 
@@ -55,14 +60,14 @@ export default class SceneContext {
 	/**
 	 * Returns current scene
 	 */
-	get current() {
+	get current(): IScene {
 		return this.repository.get(this.session.current);
 	}
 
 	/**
 	 * Enter to scene
 	 *
-	 * @example
+	 * ```ts
 	 * ctx.scene.enter('signup');
 	 * ctx.scene.enter('signup', {
 	 *   silent: true,
@@ -70,8 +75,9 @@ export default class SceneContext {
 	 *     username: 'Super_Developer'
 	 *   }
 	 * });
+	 * ```
 	 */
-	async enter(slug: string, options: ISceneContextEnterOptions = {}) {
+	async enter(slug: string, options: ISceneContextEnterOptions = {}): Promise<void> {
 		const scene = this.repository.strictGet(slug);
 
 		const { current } = this;
@@ -105,10 +111,11 @@ export default class SceneContext {
 	/**
 	 * Reenter to current scene
 	 *
-	 * @example
+	 * ```ts
 	 * ctx.scene.reenter();
+	 * ```
 	 */
-	async reenter() {
+	async reenter(): Promise<void> {
 		const { current } = this;
 
 		if (!current) {
@@ -121,14 +128,15 @@ export default class SceneContext {
 	/**
 	 * Leave from current scene
 	 *
-	 * @example
+	 * ```ts
 	 * ctx.scene.leave();
 	 * ctx.scene.leave({
 	 *   silent: true,
 	 *   canceled: true
 	 * });
+	 * ```
 	 */
-	async leave(options: ISceneContextLeaveOptions = {}) {
+	async leave(options: ISceneContextLeaveOptions = {}): Promise<void> {
 		const { current } = this;
 
 		if (!current) {
@@ -158,7 +166,7 @@ export default class SceneContext {
 	/**
 	 * Reset state/session
 	 */
-	reset() {
+	reset(): void {
 		// eslint-disable-next-line no-underscore-dangle
 		delete this.context.session.__scene;
 
@@ -168,10 +176,10 @@ export default class SceneContext {
 	/**
 	 * Updates session and state is lazy
 	 */
-	private updateSession() {
+	private updateSession(): void {
 		// eslint-disable-next-line no-underscore-dangle
 		this.session = new Proxy(this.context.session.__scene || {}, {
-			set: (target, prop, value) => {
+			set: (target, prop, value): boolean => {
 				target[prop] = value;
 
 				// eslint-disable-next-line no-underscore-dangle
@@ -182,7 +190,7 @@ export default class SceneContext {
 		});
 
 		this.state = new Proxy(this.session.state || {}, {
-			set: (target, prop, value) => {
+			set: (target, prop, value): boolean => {
 				target[prop] = value;
 
 				this.session.state = target;

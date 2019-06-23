@@ -4,17 +4,17 @@ const { TOKEN = null } = process.env;
 
 const vk = new VK({ token: TOKEN });
 
-describe('Snippets', () => {
+describe('Snippets', (): void => {
 	const { snippets } = vk;
 
-	describe('resolveResource', () => {
+	describe('resolveResource', (): void => {
 		if (TOKEN === null) {
-			it('the test is skipped because there is no token', () => {});
+			it('the test is skipped because there is no token', (): void => {});
 
 			return;
 		}
 
-		it('should parse equivalent user', async () => {
+		it('should parse equivalent user', async (): Promise<void> => {
 			jest.setTimeout(60e3);
 
 			const resources = [
@@ -37,7 +37,7 @@ describe('Snippets', () => {
 				'https://m.vk.com/durov'
 			];
 
-			const payloads = await Promise.all(resources.map(resource => (
+			const payloads = await Promise.all(resources.map((resource): object => (
 				snippets.resolveResource(resource)
 			)));
 
@@ -47,7 +47,7 @@ describe('Snippets', () => {
 			}));
 		});
 
-		it('should parse equivalent attachment', async () => {
+		it('should parse equivalent attachment', async (): Promise<void> => {
 			jest.setTimeout(5e3);
 
 			const resources = [
@@ -59,7 +59,7 @@ describe('Snippets', () => {
 				'https://m.vk.com/photo1_456264771?list=album1_0&z=photo1_456264771%2Falbum1_0'
 			];
 
-			const payloads = await Promise.all(resources.map(resource => (
+			const payloads = await Promise.all(resources.map((resource): object => (
 				snippets.resolveResource(resource)
 			)));
 
@@ -70,7 +70,7 @@ describe('Snippets', () => {
 			}));
 		});
 
-		it('should parse equivalent owner resource', async () => {
+		it('should parse equivalent owner resource', async (): Promise<void> => {
 			jest.setTimeout(60e3);
 
 			const resources = [
@@ -87,7 +87,7 @@ describe('Snippets', () => {
 				'https://vk.com/club1?w=wall-1_49296'
 			];
 
-			const payloads = await Promise.all(resources.map(resource => (
+			const payloads = await Promise.all(resources.map((resource): object => (
 				snippets.resolveResource(resource)
 			)));
 
