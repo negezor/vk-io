@@ -3626,168 +3626,150 @@ export class MessageReply {
 	public toJSON(): object;
 }
 
-export interface IButtonOptions {
-	color: string;
-	action: object;
+/**
+ * Basic button interface
+ */
+export interface IButton {
+	action: {
+		type: string;
+	};
+}
+/**
+ * Button payload, no more than 255 characters in JSON stringified
+ */
+export declare type ButtonPayload = object | string;
+
+/**
+ * Primary colors used in the text button
+ */
+export declare enum ButtonColor {
+	/**
+	 * The white button, indicates secondary action
+	 *
+	 * Hex color #FFFFFF
+	 */
+	SECONDARY = 'secondary',
+	/**
+	 * The blue button, indicates the main action
+	 *
+	 * Hex color #5181B8
+	 */
+	PRIMARY = 'primary',
+	/**
+	 * The red button, indicates a dangerous or a negative action (reject, delete, etc...)
+	 *
+	 * Hex color #E64646
+	 */
+	NEGATIVE = 'negative',
+	/**
+	 * The green button, indicates a agree, confirm, ...etc
+	 *
+	 * Hex color #4BB34B
+	 */
+	POSITIVE = 'positive'
+}
+export declare type ButtonColorUnion = 'secondary' | 'primary' | 'negative' | 'positive';
+
+export interface ITextButton extends IButton {
+	/**
+	 * Button color, default is secondary
+	 */
+	color: ButtonColor | ButtonColorUnion;
+	action: {
+		type: 'text';
+		/**
+		 * Button label, no more than 40 characters
+		 */
+		label: string;
+		/**
+		 * Payload, preferably use object
+		 */
+		payload: ButtonPayload;
+	};
 }
 
-export interface IButtonToJSONResult {
-	color: string;
-	action: object;
+export interface ILocationButton extends IButton {
+	action: {
+		type: 'location';
+		/**
+		 * Payload, preferably use object
+		 */
+		payload: ButtonPayload;
+	};
 }
 
-export class Button {
-	public color: string;
-
-	public action: object;
-
-	/**
-	 * Returns custom tag
-	 */
-	public [Symbol.toStringTag]: string;
-
-	/**
-	 * Returns the default color (#FFFFFF)
-	 */
-	public static readonly DEFAULT_COLOR: string;
-
-	/**
-	 * Returns the primary color (#5181B8)
-	 */
-	public static readonly PRIMARY_COLOR: string;
-
-	/**
-	 * Returns the negative color (#E64646)
-	 */
-	public static readonly NEGATIVE_COLOR: string;
-
-	/**
-	 * Returns the positive color (#4BB34B)
-	 */
-	public static readonly POSITIVE_COLOR: string;
-
-	/**
-	 * Constructor
-	 */
-	public constructor(options?: IButtonOptions);
-
-	/**
-	 * Returns to JSON
-	 */
-	public toJSON(): IButtonToJSONResult;
+export interface IVKPayButton extends IButton {
+	action: {
+		type: 'vkpay';
+		/**
+		 * line containing VK Pay payment parameters
+		 * and application ID in the aid parameter, separated by &.
+		 * ```
+		 * action=transfer-to-group&group_id=1&aid=10
+		 * ```
+		 */
+		hash: string;
+	};
 }
 
-export interface IKeyboardOptions {
-	oneTime?: boolean;
+export interface IVKApplicationButton extends IButton {
+	action: {
+		type: 'open_app';
+		/**
+		 * Application label, no more than 40 characters
+		 */
+		label: string;
+		/**
+		 * The identifier of the called application with type VK Apps
+		 */
+		app_id: number;
+		/**
+		 * ID of the community in which the application is installed,
+		 * if you want to open it in the context of the community
+		 */
+		owner_id?: number;
+		/**
+		 * The hash for navigation in the application
+		 * will be transmitted in the start parameters line after the # character
+		 */
+		hash?: string;
+	};
 }
+export declare type KeyboardButton =
+	ITextButton
+	| ILocationButton
+	| IVKPayButton
+	| IVKApplicationButton;
 
-export class Keyboard {
-	public buttons: Button[];
+export interface IKeyboardTextButtonOptions {
+	/**
+	 * Button color, default is secondary
+	 */
+	color?: ButtonColor | ButtonColorUnion;
 
 	/**
-	 * Returns custom tag
+	 * Button label, no more than 40 characters
 	 */
-	public [Symbol.toStringTag]: string;
-
-	/**
-	 * Checks is a one time
-	 */
-	public readonly isOneTime: boolean;
-
-	/**
-	 * Returns the default color
-	 */
-	public static readonly DEFAULT_COLOR: string;
-
-	/**
-	 * Returns the primary color
-	 */
-	public static readonly PRIMARY_COLOR: string;
-
-	/**
-	 * Returns the negative color
-	 */
-	public static readonly NEGATIVE_COLOR: string;
-
-	/**
-	 * Returns the positive color
-	 */
-	public static readonly POSITIVE_COLOR: string;
-
-	/**
-	 * Constructor
-	 */
-	public constructor(options: IKeyboardOptions);
-
-	/**
-	 * Return keyboard
-	 */
-	public static keyboard(rows: (Button | Button[])[], options?: IKeyboardOptions): Keyboard;
-
-	/**
-	 * Returns the text button
-	 */
-	public static textButton(options: ITextButtonOptions): TextButton;
-
-	/**
-	 * Returns the location request button
-	 */
-	public static locationRequestButton(
-		options: ILocationRequestButtonOptions
-	): LocationRequestButton;
-
-	/**
-	 * Returns the location request button
-	 */
-	public static payButton(options: IVKPayButtonOptions): VKPayButton;
-
-	/**
-	 * Returns the pay button
-	 */
-	public static applicationButton(options: IVKApplicationButtonOptions): VKApplicationButton;
-
-
-	/**
-	 * The keyboard will open only once
-	 */
-	public oneTime(enabled?: boolean): this;
-
-	/**
-	 * Add buttons row
-	 */
-	public addButtonsRow(buttons: Button[]): this;
-
-	/**
-	 * Returns a string to keyboard a VK
-	 */
-	public toString(): string;
-}
-
-export interface ITextButtonOptions {
 	label: string;
-	color?: string;
-	payload?: object;
-}
 
-export class TextButton extends Button {
 	/**
-	 * Constructor
+	 * Payload, preferably use object
+	 *
+	 * No more than 255 characters in JSON stringified
 	 */
-	public constructor(options: ITextButtonOptions);
+	payload?: ButtonPayload;
 }
 
-export interface ILocationRequestButtonOptions {
-	payload?: object;
-}
-
-export class LocationRequestButton extends Button {
+export interface IKeyboardLocationRequestButtonOptions {
 	/**
-	 * Constructor
+	 * Payload, preferably use object
+	 *
+	 * No more than 255 characters in JSON stringified
 	 */
-	public constructor(options: ILocationRequestButtonOptions);
+	payload?: ButtonPayload;
 }
 
-export interface IVKPayButtonOptions {
+export interface IKeyboardVKPayButtonOptions {
 	/**
 	 * line containing VK Pay payment parameters
 	 * and application ID in the aid parameter, separated by &.
@@ -3796,28 +3778,185 @@ export interface IVKPayButtonOptions {
 	 * ```
 	 */
 	hash: string;
-	payload?: object;
 }
 
-export class VKPayButton extends Button {
+export interface IKeyboardApplicationButtonOptions {
 	/**
-	 * Constructor
+	 * Application label, no more than 40 characters
 	 */
-	public constructor(options: IVKPayButtonOptions);
-}
-
-export interface IVKApplicationButtonOptions {
 	label: string;
+
+	/**
+	 * The identifier of the called application with type VK Apps
+	 */
 	appId: number;
-	ownerId: number;
-	payload?: object;
+
+	/**
+	 * ID of the community in which the application is installed,
+	 * if you want to open it in the context of the community
+	 */
+	ownerId?: number;
+
+	/**
+	 * The hash for navigation in the application
+	 * will be transmitted in the start parameters line after the # character
+	 */
+	hash?: string;
+}
+export interface IKeyboardProxyButton {
+	options: (
+		IKeyboardTextButtonOptions
+		| IKeyboardLocationRequestButtonOptions
+		| IKeyboardVKPayButtonOptions
+		| IKeyboardApplicationButtonOptions
+	);
+
+	kind: 'text' | 'location_request' | 'vk_pay' | 'vk_application';
 }
 
-export class VKApplicationButton extends Button {
+export class KeyboardBuilder {
 	/**
-	 * Constructor
+	 * Does the keyboard close after pressing the button
 	 */
-	public constructor(options: IVKApplicationButtonOptions);
+	protected isOneTime: boolean;
+
+	/**
+	 * Rows with all buttons
+	 */
+	protected rows: KeyboardButton[][];
+
+	/**
+	 * Current row of buttons
+	 */
+	protected currentRow: KeyboardButton[];
+
+	/**
+	 * Returns custom tag
+	 */
+	public readonly [Symbol.toStringTag]: string;
+
+	/**
+	 * Text button, can be colored
+	 */
+	public textButton(options: IKeyboardTextButtonOptions): this;
+
+	/**
+	 * User location request button, occupies the entire keyboard width
+	 */
+	public locationRequestButton(options: IKeyboardLocationRequestButtonOptions): this;
+
+	/**
+	 * VK Pay button, occupies the entire keyboard width
+	 */
+	public payButton(options: IKeyboardVKPayButtonOptions): this;
+
+	/**
+	 * VK Apps button, occupies the entire keyboard width
+	 */
+	public applicationButton(options: IKeyboardApplicationButtonOptions): this;
+
+	/**
+	 * Saves the current row of buttons in the general rows
+	 */
+	public row(): this;
+
+	/**
+	 * Sets the keyboard to close after pressing
+	 *
+	 * ```ts
+	 *  builder.oneTime();
+	 *
+	 *  builder.oneTime(false);
+	 * ```
+	 */
+	public oneTime(enabled?: boolean): this;
+
+	/**
+	 * Returns a string to keyboard a VK
+	 */
+	public toString(): string;
+
+	/**
+	 * Adds a button to the current row
+	 */
+	protected addButton(button: KeyboardButton): this;
+
+	/**
+	 * Adds a wide button to the new row
+	 */
+	protected addWideButton(button: KeyboardButton): this;
+}
+
+export class Keyboard {
+	/**
+	 * Returns custom tag
+	 */
+	public readonly [Symbol.toStringTag]: string;
+
+	/**
+	 * @deprecated Use Keyboard.SECONDARY_COLOR instead
+	 */
+	public static readonly DEFAULT_COLOR: ButtonColor.SECONDARY;
+
+	/**
+	 * The white button, indicates secondary action
+	 *
+	 * Hex color #FFFFFF
+	 */
+	public static readonly SECONDARY_COLOR: ButtonColor.SECONDARY;
+
+	/**
+	 * The blue button, indicates the main action
+	 *
+	 * Hex color #5181B8
+	 */
+	public static readonly PRIMARY_COLOR: ButtonColor.PRIMARY;
+
+	/**
+	 * The red button, indicates a dangerous or a negative action (reject, delete, etc...)
+	 *
+	 * Hex color #E64646
+	 */
+	public static readonly NEGATIVE_COLOR: ButtonColor.NEGATIVE;
+
+	/**
+	 * The green button, indicates a agree, confirm, ...etc
+	 *
+	 * Hex color #4BB34B
+	 */
+	public static readonly POSITIVE_COLOR: ButtonColor.POSITIVE;
+
+	/**
+	 * Returns keyboard builder
+	 */
+	public static builder(): KeyboardBuilder;
+
+	/**
+	 * Assembles a builder of buttons
+	 */
+	public static keyboard(rows: (IKeyboardProxyButton | IKeyboardProxyButton[])[]): KeyboardBuilder;
+
+	/**
+	 * Text button, can be colored
+	 */
+	public static textButton(options: IKeyboardTextButtonOptions): IKeyboardProxyButton;
+
+	/**
+	 * User location request button, occupies the entire keyboard width
+	 */
+	public static locationRequestButton(
+		options: IKeyboardLocationRequestButtonOptions
+	): IKeyboardProxyButton;
+
+	/**
+	 * VK Pay button, occupies the entire keyboard width
+	 */
+	public static payButton(options: IKeyboardVKPayButtonOptions): IKeyboardProxyButton;
+
+	/**
+	 * VK Apps button, occupies the entire keyboard width
+	 */
+	public static applicationButton(options: IKeyboardApplicationButtonOptions): IKeyboardProxyButton;
 }
 
 /**

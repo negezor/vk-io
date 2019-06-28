@@ -4,6 +4,55 @@
 import { Keyboard } from 'vk-io';
 ```
 
+## builder (static)
+
+Возвращает сборщик клавиатуры
+
+```js
+Keyboard.builder(); // => KeyboardBuilder
+```
+
+Пример использования
+
+```js
+const builder = Keyboard.builder();
+
+builder
+	.textButton({
+		label: 'Go back',
+		payload: {
+			command: 'back'
+		}
+	})
+	.row()
+	.textButton({
+		label: 'Buy a tea',
+		payload: {
+			command: 'buy',
+			item: 'tea'
+		},
+		color: Keyboard.POSITIVE_COLOR
+	})
+	.textButton({
+		label: 'Buy a coffee',
+		payload: {
+			command: 'buy',
+			item: 'coffee'
+		},
+		color: Keyboard.POSITIVE_COLOR
+	})
+	.row()
+	.textButton({
+		label: 'Cancel',
+		payload: {
+			command: 'cancel'
+		},
+		color: Keyboard.NEGATIVE_COLOR
+	})
+	.row(); // => KeyboardBuilder
+```
+
+
 ## keyboard (static)
 
 Генерирует клавиатуру из массива предоставленных данных
@@ -11,7 +60,7 @@ import { Keyboard } from 'vk-io';
 Ограничения на количество кнопок составляет 10x4
 
 ```js
-Keyboard.keyboard(rows, options); // => Keyboard
+Keyboard.keyboard(rows, options); // => KeyboardBuilder
 ```
 
 | Параметр | Тип     | Описание      |
@@ -20,7 +69,7 @@ Keyboard.keyboard(rows, options); // => Keyboard
 | options  | Object  | Опции        |
 
 ```js
-Keyboard.keyboard([...rows], options); // => Keyboard
+Keyboard.keyboard([...rows], options); // => KeyboardBuilder
 ```
 
 | Параметр | Тип      | Описание |
@@ -68,7 +117,7 @@ Keyboard.keyboard([
 		},
 		color: Keyboard.NEGATIVE_COLOR
 	})
-]); // => Keyboard
+]); // => KeyboardBuilder
 ```
 
 ## textButton (static)
@@ -195,17 +244,17 @@ Keyboard.applicationButton({
 });
 ```
 
-## DEFAULT_COLOR (static)
+## SECONDARY_COLOR (static)
 
-Возвращает цвет по умолчанию (#FFFFFF)
+Белая кнопка, указывает на вторичное действие
 
 ```js
-Keyboard.DEFAULT_COLOR; // => string
+Keyboard.SECONDARY_COLOR; // => string
 ```
 
 ## PRIMARY_COLOR (static)
 
-Возвращает синий цвет, обозначает основное действие (#5181B8)
+Синяя кнопка, обозначает основное действие
 
 ```js
 Keyboard.PRIMARY_COLOR; // => string
@@ -213,7 +262,7 @@ Keyboard.PRIMARY_COLOR; // => string
 
 ## NEGATIVE_COLOR (static)
 
-Возвращает красный цвет, опасное действие, или отрицательное действие (отклонить, удалить и тд). (#E64646)
+Красная кнопка, указывает на опасное или отрицательное действие (отклонить, удалить и т.д.)
 
 ```js
 Keyboard.NEGATIVE_COLOR; // => string
@@ -221,7 +270,7 @@ Keyboard.NEGATIVE_COLOR; // => string
 
 ## POSITIVE_COLOR (static)
 
-Возвращает зелёный цвет, согласиться, подтвердить. (#4BB34B)
+Зеленая кнопка, указывает на согласие, подтверждение и т.д.
 
 ```js
 Keyboard.POSITIVE_COLOR; // => string
