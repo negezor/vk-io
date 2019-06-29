@@ -1,19 +1,29 @@
-import nodeStream from 'stream';
+import { Readable, PassThrough } from 'stream';
 import { SandwichStream } from 'sandwich-stream';
 
 import { isStream } from './helpers';
 
-const { PassThrough } = nodeStream;
-
 const CRNL = '\r\n';
+
+export type MultipartStreamBody = Readable | Buffer | string;
+
+export interface IMultipartStreamAddPartOptions {
+	headers?: {
+		[key: string]: string;
+	};
+	body: MultipartStreamBody;
+}
 
 export default class MultipartStream extends SandwichStream {
 	/**
-	 * Constructor
-	 *
-	 * @param {string} boundary
+	 * Multipart boundary
 	 */
-	constructor(boundary) {
+	boundary: string;
+
+	/**
+	 * Constructor
+	 */
+	constructor(boundary: string) {
 		super({
 			head: `--${boundary}${CRNL}`,
 			tail: `${CRNL}--${boundary}--`,
@@ -25,19 +35,15 @@ export default class MultipartStream extends SandwichStream {
 
 	/**
 	 * Returns custom tag
-	 *
-	 * @return {string}
 	 */
-	get [Symbol.toStringTag]() {
+	get [Symbol.toStringTag](): string {
 		return 'MultipartStream';
 	}
 
 	/**
 	 * Adds part
-	 *
-	 * @param {Object} part
 	 */
-	addPart(part = {}) {
+	addPart(part: IMultipartStreamAddPartOptions): void {
 		const partStream = new PassThrough();
 
 		if ('headers' in part) {
@@ -49,7 +55,7 @@ export default class MultipartStream extends SandwichStream {
 		partStream.write(CRNL);
 
 		if (isStream(part.body)) {
-			part.body.pipe(partStream);
+			(part.body as Readable).pipe(partStream);
 		} else {
 			partStream.end(part.body);
 		}
@@ -59,19 +65,22 @@ export default class MultipartStream extends SandwichStream {
 
 	/**
 	 * Adds form data
-	 *
-	 * @param {string} field
-	 * @param {*}  body
-	 * @param {Object} options
 	 */
-	append(field, body, { filename = null, headers = {} }) {
+	append(
+		field: string,
+		body: MultipartStreamBody,
+		{ filename = null, headers = {} }: {
+			filename?: string;
+			headers: IMultipartStreamAddPartOptions['headers'];
+		}
+	): void {
 		let header = `form-data; name="${field}"`;
 
 		if (filename !== null) {
 			header += `; filename="${filename}"`;
 		}
 
-		return this.addPart({
+		this.addPart({
 			headers: {
 				...headers,
 
