@@ -66,7 +66,6 @@ Keyboard.keyboard(rows, options); // => KeyboardBuilder
 | Параметр | Тип     | Описание      |
 |----------|---------|---------------|
 | rows     | Array[] | Список кнопок |
-| options  | Object  | Опции        |
 
 ```js
 Keyboard.keyboard([...rows], options); // => KeyboardBuilder
@@ -75,7 +74,6 @@ Keyboard.keyboard([...rows], options); // => KeyboardBuilder
 | Параметр | Тип      | Описание |
 |----------|----------|----------|
 | rows     | Button[] | Кнопки   |
-| options  | Object   | Опции    |
 
 Пример использования
 
@@ -194,18 +192,24 @@ Keyboard.payButton(options); // => VKPayButton
 
 Список свойств
 
-| Свойство | Тип    | Описание                                                               |
-|----------|--------|------------------------------------------------------------------------|
-| hash     | string | Параметры платежа VK Pay и идентификатор приложения в параметре  `aid` |
-| payload  | *      | Полезная нагрузка в JSON (максимум 255 символов)                       |
+| Свойство | Тип            | Описание                                                               |
+|----------|----------------|------------------------------------------------------------------------|
+| hash     | Object, string | Параметры платежа VK Pay и идентификатор приложения в параметре  `aid` |
 
 Пример использования
 
 ```js
 Keyboard.payButton({
-	hash: 'action=transfer-to-group&group_id=181108510&aid=10',
-	payload: {
-		test: 1
+	hash: 'action=transfer-to-group&group_id=181108510&aid=10'
+});
+
+// Or
+
+Keyboard.payButton({
+	hash: {
+		action: 'transfer-to-group',
+		group_id: 181108510,
+		aid: 10
 	}
 });
 ```
@@ -229,7 +233,7 @@ Keyboard.applicationButton(options); // => VKApplicationButton
 | label    | string | Текст кнопки                                                                                              |
 | appId    | number | Идентификатор вызываемого приложения с типом VK Apps                                                      |
 | ownerId  | number | Идентификатор сообщества, в котором установлено приложение, если требуется открыть в контексте сообщества |
-| payload  | *      | Полезная нагрузка в JSON (максимум 255 символов)                                                          |
+| hash     | string | Хэш для навигации в приложении, будет передан в строке параметров запуска после символа                   |
 
 Пример использования
 
@@ -237,10 +241,7 @@ Keyboard.applicationButton(options); // => VKApplicationButton
 Keyboard.applicationButton({
 	label: 'LiveWidget',
 	appId: 6232540,
-	ownerId: -157525928,
-	payload: {
-		test: 1
-	}
+	ownerId: -157525928
 });
 ```
 

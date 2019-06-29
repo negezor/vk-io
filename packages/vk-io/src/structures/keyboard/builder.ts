@@ -1,3 +1,5 @@
+import { URLSearchParams } from 'url';
+
 import {
 	ButtonColor,
 	KeyboardButton,
@@ -31,9 +33,19 @@ export default class KeyboardBuilder {
 		return 'KeyboardBuilder';
 	}
 
-
 	/**
 	 * Text button, can be colored
+	 *
+	 * ```ts
+	 * builder.textButton({
+	 *  label: 'Buy a coffee',
+	 *  payload: {
+	 *   command: 'buy',
+	 *   item: 'coffee'
+	 *  },
+	 *  color: Keyboard.POSITIVE_COLOR
+	 * });
+	 * ```
 	 */
 	textButton({
 		label,
@@ -63,6 +75,14 @@ export default class KeyboardBuilder {
 
 	/**
 	 * User location request button, occupies the entire keyboard width
+	 *
+	 * ```ts
+	 * builder.locationRequestButton({
+	 *  payload: {
+	 *   command: 'order_delivery'
+	 *  }
+	 * })
+	 * ```
 	 */
 	locationRequestButton({ payload: rawPayload = {} }: IKeyboardLocationRequestButtonOptions): this {
 		const payload = JSON.stringify(rawPayload);
@@ -82,8 +102,22 @@ export default class KeyboardBuilder {
 
 	/**
 	 * VK Pay button, occupies the entire keyboard width
+	 *
+	 * ```ts
+	 * builder.payButton({
+	 *  hash: {
+	 *   action: 'transfer-to-group',
+	 *   group_id: 1,
+	 *   aid: 10
+	 *  }
+	 * })
+	 * ```
 	 */
-	payButton({ hash }: IKeyboardVKPayButtonOptions): this {
+	payButton({ hash: rawHash }: IKeyboardVKPayButtonOptions): this {
+		const hash = typeof rawHash === 'object'
+			? String(new URLSearchParams(Object.entries(rawHash)))
+			: rawHash;
+
 		return this.addWideButton({
 			action: {
 				hash,
@@ -95,6 +129,14 @@ export default class KeyboardBuilder {
 
 	/**
 	 * VK Apps button, occupies the entire keyboard width
+	 *
+	 * ```ts
+	 * builder.applicationButton({
+	 *  label: 'LiveWidget',
+	 *  appId: 6232540,
+	 *  ownerId: -157525928
+	 * })
+	 * ```
 	 */
 	applicationButton({
 		label,

@@ -3634,6 +3634,7 @@ export interface IButton {
 		type: string;
 	};
 }
+
 /**
  * Button payload, no more than 255 characters in JSON stringified
  */
@@ -3649,18 +3650,21 @@ export declare enum ButtonColor {
 	 * Hex color #FFFFFF
 	 */
 	SECONDARY = 'secondary',
+
 	/**
 	 * The blue button, indicates the main action
 	 *
 	 * Hex color #5181B8
 	 */
 	PRIMARY = 'primary',
+
 	/**
 	 * The red button, indicates a dangerous or a negative action (reject, delete, etc...)
 	 *
 	 * Hex color #E64646
 	 */
 	NEGATIVE = 'negative',
+
 	/**
 	 * The green button, indicates a agree, confirm, ...etc
 	 *
@@ -3668,6 +3672,7 @@ export declare enum ButtonColor {
 	 */
 	POSITIVE = 'positive'
 }
+
 export declare type ButtonColorUnion = 'secondary' | 'primary' | 'negative' | 'positive';
 
 export interface ITextButton extends IButton {
@@ -3675,6 +3680,7 @@ export interface ITextButton extends IButton {
 	 * Button color, default is secondary
 	 */
 	color: ButtonColor | ButtonColorUnion;
+
 	action: {
 		type: 'text';
 		/**
@@ -3687,47 +3693,50 @@ export interface ITextButton extends IButton {
 		payload: ButtonPayload;
 	};
 }
-
 export interface ILocationButton extends IButton {
 	action: {
 		type: 'location';
+
 		/**
 		 * Payload, preferably use object
 		 */
 		payload: ButtonPayload;
 	};
 }
-
 export interface IVKPayButton extends IButton {
 	action: {
 		type: 'vkpay';
+
 		/**
 		 * line containing VK Pay payment parameters
 		 * and application ID in the aid parameter, separated by &.
 		 * ```
-		 * action=transfer-to-group&group_id=1&aid=10
+		 * action=transfer-to-group&group_id=1
 		 * ```
 		 */
 		hash: string;
 	};
 }
-
 export interface IVKApplicationButton extends IButton {
 	action: {
 		type: 'open_app';
+
 		/**
 		 * Application label, no more than 40 characters
 		 */
 		label: string;
+
 		/**
 		 * The identifier of the called application with type VK Apps
 		 */
 		app_id: number;
+
 		/**
 		 * ID of the community in which the application is installed,
 		 * if you want to open it in the context of the community
 		 */
 		owner_id?: number;
+
 		/**
 		 * The hash for navigation in the application
 		 * will be transmitted in the start parameters line after the # character
@@ -3735,6 +3744,7 @@ export interface IVKApplicationButton extends IButton {
 		hash?: string;
 	};
 }
+
 export declare type KeyboardButton =
 	ITextButton
 	| ILocationButton
@@ -3769,15 +3779,110 @@ export interface IKeyboardLocationRequestButtonOptions {
 	payload?: ButtonPayload;
 }
 
+/**
+ * Payment in favor of the group with a given amount
+ */
+export interface IVKPayPayToGroup {
+	action: 'pay-to-group';
+
+	/**
+	 * Group ID to which the payment will be transferred
+	 */
+	group_id: number;
+
+	/**
+	 * Payment amount in rubles. The minimum value is 1
+	 */
+	amount: number;
+
+	/**
+	 * Payment description
+	 */
+	description?: string;
+
+	/**
+	 * Arbitrary payload
+	 */
+	data?: string;
+}
+
+/**
+ * Payment in favor of the user with a given amount
+ */
+export interface IVKPayPayToUser {
+	action: 'pay-to-user';
+
+	/**
+	 * User ID to which the payment will be transferred
+	 */
+	user_id: number;
+
+	/**
+	 * Payment amount in rubles. The minimum value is 1
+	 */
+	amount: number;
+
+	/**
+	 * Payment description
+	 */
+	description?: string;
+}
+
+/**
+ * Transfer to a group of arbitrary amount
+ */
+export interface IVKPayTransferToGroup {
+	action: 'transfer-to-group';
+
+	/**
+	 * Group ID to which the payment will be transferred
+	 */
+	group_id: number;
+}
+
+/**
+ * Transfer to a user of arbitrary amount
+ */
+export interface IVKPayTransferToUser {
+	action: 'transfer-to-user';
+
+	/**
+	 * User ID to which the payment will be transferred
+	 */
+	user_id: number;
+}
+
+export declare type KeyboardVKPayHash =
+	(IVKPayPayToGroup
+	| IVKPayPayToUser
+	| IVKPayTransferToGroup
+	| IVKPayTransferToUser) & {
+		/**
+		 * Application id
+		 */
+		aid: string | number;
+	};
+
 export interface IKeyboardVKPayButtonOptions {
 	/**
 	 * line containing VK Pay payment parameters
 	 * and application ID in the aid parameter, separated by &.
+	 *
+	 * ```ts
+	 * {
+	 *  action: 'transfer-to-group',
+	 *  group_id: 1,
+	 *  aid: 10
+	 * }
+	 * ```
+	 *
+	 * Or write the string
+	 *
 	 * ```
 	 * action=transfer-to-group&group_id=1&aid=10
 	 * ```
 	 */
-	hash: string;
+	hash: KeyboardVKPayHash | string;
 }
 
 export interface IKeyboardApplicationButtonOptions {
@@ -3803,6 +3908,7 @@ export interface IKeyboardApplicationButtonOptions {
 	 */
 	hash?: string;
 }
+
 export interface IKeyboardProxyButton {
 	options: (
 		IKeyboardTextButtonOptions
@@ -3837,23 +3943,69 @@ export class KeyboardBuilder {
 
 	/**
 	 * Text button, can be colored
+	 *
+	 * ```ts
+	 * builder.textButton({
+	 *  label: 'Buy a coffee',
+	 *  payload: {
+	 *   command: 'buy',
+	 *   item: 'coffee'
+	 *  },
+	 *  color: Keyboard.POSITIVE_COLOR
+	 * });
+	 * ```
 	 */
-	public textButton(options: IKeyboardTextButtonOptions): this;
+	public textButton(
+		{ label, payload: rawPayload, color }: IKeyboardTextButtonOptions
+	): this;
 
 	/**
 	 * User location request button, occupies the entire keyboard width
+	 *
+	 * ```ts
+	 * builder.locationRequestButton({
+	 *  payload: {
+	 *   command: 'order_delivery'
+	 *  }
+	 * })
+	 * ```
 	 */
-	public locationRequestButton(options: IKeyboardLocationRequestButtonOptions): this;
+	public locationRequestButton(
+		{ payload: rawPayload }: IKeyboardLocationRequestButtonOptions
+	): this;
 
 	/**
 	 * VK Pay button, occupies the entire keyboard width
+	 *
+	 * ```ts
+	 * builder.payButton({
+	 *  hash: {
+	 *   action: 'transfer-to-group',
+	 *   group_id: 1,
+	 *   aid: 10
+	 *  }
+	 * })
+	 * ```
 	 */
-	public payButton(options: IKeyboardVKPayButtonOptions): this;
+	public payButton({ hash: rawHash }: IKeyboardVKPayButtonOptions): this;
 
 	/**
 	 * VK Apps button, occupies the entire keyboard width
+	 *
+	 * ```ts
+	 * builder.applicationButton({
+	 *  label: 'LiveWidget',
+	 *  appId: 6232540,
+	 *  ownerId: -157525928
+	 * })
+	 * ```
 	 */
-	public applicationButton(options: IKeyboardApplicationButtonOptions): this;
+	public applicationButton({
+		label,
+		appId,
+		ownerId,
+		hash
+	}: IKeyboardApplicationButtonOptions): this;
 
 	/**
 	 * Saves the current row of buttons in the general rows

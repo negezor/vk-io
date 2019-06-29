@@ -91,7 +91,7 @@ export interface IVKPayButton extends IButton {
 		 * line containing VK Pay payment parameters
 		 * and application ID in the aid parameter, separated by &.
 		 * ```
-		 * action=transfer-to-group&group_id=1&aid=10
+		 * action=transfer-to-group&group_id=1
 		 * ```
 		 */
 		hash: string;
@@ -161,15 +161,110 @@ export interface IKeyboardLocationRequestButtonOptions {
 	payload?: ButtonPayload;
 }
 
+/**
+ * Payment in favor of the group with a given amount
+ */
+export interface IVKPayPayToGroup {
+	action: 'pay-to-group';
+
+	/**
+	 * Group ID to which the payment will be transferred
+	 */
+	group_id: number;
+
+	/**
+	 * Payment amount in rubles. The minimum value is 1
+	 */
+	amount: number;
+
+	/**
+	 * Payment description
+	 */
+	description?: string;
+
+	/**
+	 * Arbitrary payload
+	 */
+	data?: string;
+}
+
+/**
+ * Payment in favor of the user with a given amount
+ */
+export interface IVKPayPayToUser {
+	action: 'pay-to-user';
+
+	/**
+	 * User ID to which the payment will be transferred
+	 */
+	user_id: number;
+
+	/**
+	 * Payment amount in rubles. The minimum value is 1
+	 */
+	amount: number;
+
+	/**
+	 * Payment description
+	 */
+	description?: string;
+}
+
+/**
+ * Transfer to a group of arbitrary amount
+ */
+export interface IVKPayTransferToGroup {
+	action: 'transfer-to-group';
+
+	/**
+	 * Group ID to which the payment will be transferred
+	 */
+	group_id: number;
+}
+
+/**
+ * Transfer to a user of arbitrary amount
+ */
+export interface IVKPayTransferToUser {
+	action: 'transfer-to-user';
+
+	/**
+	 * User ID to which the payment will be transferred
+	 */
+	user_id: number;
+}
+
+export type KeyboardVKPayHash =
+	(IVKPayPayToGroup
+	| IVKPayPayToUser
+	| IVKPayTransferToGroup
+	| IVKPayTransferToUser) & {
+		/**
+		 * Application id
+		 */
+		aid: string | number;
+	};
+
 export interface IKeyboardVKPayButtonOptions {
 	/**
 	 * line containing VK Pay payment parameters
 	 * and application ID in the aid parameter, separated by &.
+	 *
+	 * ```ts
+	 * {
+	 *  action: 'transfer-to-group',
+	 *  group_id: 1,
+	 *  aid: 10
+	 * }
+	 * ```
+	 *
+	 * Or write the string
+	 *
 	 * ```
 	 * action=transfer-to-group&group_id=1&aid=10
 	 * ```
 	 */
-	hash: string;
+	hash: KeyboardVKPayHash | string;
 }
 
 export interface IKeyboardApplicationButtonOptions {
