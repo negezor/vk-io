@@ -91,7 +91,7 @@ export interface IVKPayButton extends IButton {
 		 * line containing VK Pay payment parameters
 		 * and application ID in the aid parameter, separated by &.
 		 * ```
-		 * action=transfer-to-group&group_id=1
+		 * action=transfer-to-group&group_id=1&aid=10
 		 * ```
 		 */
 		hash: string;
