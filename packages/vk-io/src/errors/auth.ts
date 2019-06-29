@@ -4,13 +4,23 @@ const { DEBUG = '' } = process.env;
 
 const isDebug = DEBUG.includes('vk-io:auth');
 
+export interface IAuthErrorOptions {
+	message: string;
+	code: string;
+
+	pageHtml?: string;
+}
+
 export default class AuthError extends VKError {
 	/**
-	 * Constructor
-	 *
-	 * @param {Object} payload
+	 * HTML error page
 	 */
-	constructor({ message, code, pageHtml = null }) {
+	pageHtml: string | null;
+
+	/**
+	 * Constructor
+	 */
+	constructor({ message, code, pageHtml = null }: IAuthErrorOptions) {
 		super({ message, code });
 
 		this.pageHtml = isDebug

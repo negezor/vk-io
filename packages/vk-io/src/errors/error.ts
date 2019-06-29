@@ -1,15 +1,24 @@
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type CopiedError = Record<string, any>;
+
+export interface IVKErrorOptions {
+	code: string | number;
+	message: string;
+}
+
 /**
  * General error class
- *
- * @public
  */
 export default class VKError extends Error {
 	/**
-	 * Constructor
-	 *
-	 * @param {Object} payload
+	 * Error code
 	 */
-	constructor({ code, message }) {
+	code: string | number;
+
+	/**
+	 * Constructor
+	 */
+	constructor({ code, message }: IVKErrorOptions) {
 		super(message);
 
 		this.code = code;
@@ -21,20 +30,16 @@ export default class VKError extends Error {
 
 	/**
 	 * Returns custom tag
-	 *
-	 * @return {string}
 	 */
-	get [Symbol.toStringTag]() {
+	get [Symbol.toStringTag](): string {
 		return this.constructor.name;
 	}
 
 	/**
 	 * Returns property for json
-	 *
-	 * @return {Object}
 	 */
-	toJSON() {
-		const json = {};
+	toJSON(): CopiedError {
+		const json: CopiedError = {};
 
 		for (const key of Object.getOwnPropertyNames(this)) {
 			json[key] = this[key];
