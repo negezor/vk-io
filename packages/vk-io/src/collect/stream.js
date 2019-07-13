@@ -127,6 +127,7 @@ export default class CollectStream extends Readable {
 	 *
 	 * @return {Promise}
 	 */
+	// eslint-disable-next-line no-underscore-dangle
 	async _read() {
 		const isNotFirst = this.total !== null && this.received !== 0;
 
