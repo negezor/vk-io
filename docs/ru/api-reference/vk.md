@@ -74,6 +74,7 @@ vk.setOptions(options); // => this
 | apiMode           | string   | Режим работы API                                                          | sequential                                                              |
 | apiWait           | number   | Время ожидания следующей попытки запроса после ошибки                     | 3000                                                                    |
 | apiLimit          | number   | Количество запрос к API в секунду                                         | 3                                                                       |
+| apiVersion        | string   | Версия VK API                                                             | 5.101                                                                   |
 | apiBaseUrl        | string   | Базовый URL для API                                                       | https://api.vk.com/method                                               |
 | apiAttempts       | number   | Количество попыток повтора запроса после ошибки                           | 3                                                                       |
 | apiTimeout        | number   | Время ожидания запроса                                                    | 10000                                                                   |
