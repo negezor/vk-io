@@ -4024,6 +4024,11 @@ export class KeyboardBuilder {
 	public oneTime(enabled?: boolean): this;
 
 	/**
+	 * Clones the builder with all the settings
+	 */
+	public clone(): KeyboardBuilder;
+
+	/**
 	 * Returns a string to keyboard a VK
 	 */
 	public toString(): string;

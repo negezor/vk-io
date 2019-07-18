@@ -196,6 +196,20 @@ export default class KeyboardBuilder {
 	}
 
 	/**
+	 * Clones the builder with all the settings
+	 */
+	clone(): KeyboardBuilder {
+		const builder = new KeyboardBuilder();
+
+		builder.oneTime(this.isOneTime);
+
+		builder.rows = [...this.rows];
+		builder.currentRow = [...this.currentRow];
+
+		return builder;
+	}
+
+	/**
 	 * Returns a string to keyboard a VK
 	 */
 	toString(): string {
