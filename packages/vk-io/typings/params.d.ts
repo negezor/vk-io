@@ -2458,7 +2458,7 @@ export interface GroupsGetMembersParams {
     /**
      * *'friends' – only friends in this community will be returned,, *'unsure' – only those who pressed 'I may attend' will be returned (if it's an event).
      */
-    filter?: "friends" | "unsure";
+    filter?: "friends" | "unsure" | "managers";
     fields?: Objects.UsersFields[];
     [key: string]: any;
 }

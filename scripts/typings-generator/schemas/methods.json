@@ -6754,7 +6754,8 @@
           "type": "string",
           "enum": [
             "friends",
-            "unsure"
+						"unsure",
+						"managers"
           ]
         }
       ],
