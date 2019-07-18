@@ -219,7 +219,9 @@ export default class KeyboardBuilder {
 
 		return JSON.stringify({
 			one_time: this.isOneTime,
-			buttons: this.rows
+			buttons: this.currentRow.length !== 0
+				? [...this.rows, this.currentRow]
+				: this.rows
 		});
 	}
 
