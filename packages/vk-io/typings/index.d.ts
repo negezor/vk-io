@@ -918,9 +918,14 @@ export interface IUpdatesStartWebhookOptions {
 	host?: string;
 }
 
-type HearFunctionCondition = (text: string | null, context: MessageContext) => boolean;
+type HearFunctionCondition<T, U> = (value: T, context: U) => boolean;
 
-type HearCondition = HearFunctionCondition | RegExp | string;
+type HearCondition<T, U> = HearFunctionCondition<T, U> | RegExp | string;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type HearObjectCondition<T extends Record<string, any>> = {
+	[P in keyof T]: HearCondition<T[P], T> | HearCondition<T[P], T>[];
+};
 
 export class Updates {
 	/**
@@ -971,7 +976,14 @@ export class Updates {
 	 * Listen text
 	 */
 	public hear<T = {}>(
-		conditions: HearCondition[] | HearCondition,
+		conditions: (
+			HearCondition<string | null, T & MessageContext>[]
+			| HearCondition<string | null, T & MessageContext>
+		)
+		| (
+			HearObjectCondition<T & MessageContext>
+			| HearObjectCondition<T & MessageContext>[]
+		),
 		handler: Middleware<MessageContext & T>
 	): this;
 

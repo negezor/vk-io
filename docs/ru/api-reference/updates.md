@@ -256,6 +256,36 @@ updates.hear(
 );
 ```
 
+Пример использования с объектом условий применяющихся к контексту
+
+```js
+updates.hear(obj, handler);
+```
+
+| Параметр | Тип      | Описание          |
+|----------|----------|-------------------|
+| obj      | Object   | Объект условий    |
+| handler  | Function | Middleware        |
+
+```js
+updates.hear(
+	{
+		isChat: true,
+		// Some for value
+		text: [
+			'one',
+			/two/,
+			text => text === 'three'
+		],
+		// Every for array value
+		'user.permissions': ['visible.that', 'change.that'],
+		// Get value from array
+		'path.to.array[0]': value => isNeedValue(value),
+	},
+	async (context, next) => {...}
+);
+```
+
 ## setHearFallbackHandler
 
 Устанавливает обработчик который вызывается если не одна команда из `hear` не подошла

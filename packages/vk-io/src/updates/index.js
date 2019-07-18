@@ -26,7 +26,12 @@ import {
 } from '../structures/contexts';
 
 import { delay } from '../utils/helpers';
-import { parseRequestJSON } from './helpers';
+import {
+	parseRequestJSON,
+	unifyCondition,
+	getObjectValue,
+	splitPath
+} from './helpers';
 import {
 	VKError,
 	UpdatesError,
@@ -273,33 +278,45 @@ export default class Updates {
 	/**
 	 * Listen text
 	 *
-	 * @param {*[]}      condition
+	 * @param {*[]}      rawConditions
 	 * @param {Function} handler
 	 *
 	 * @return {this}
 	 */
-	hear(conditions, handler) {
-		if (!Array.isArray(conditions)) {
-			conditions = [conditions];
+	hear(rawConditions, handler) {
+		if (!Array.isArray(rawConditions)) {
+			rawConditions = [rawConditions];
 		}
 
-		const hasConditions = conditions.every(Boolean);
+		const hasConditions = rawConditions.every(Boolean);
 
 		if (!hasConditions) {
-			throw new VKError({
-				message: 'Condition should be not empty'
-			});
+			throw new Error('Condition should be not empty');
 		}
 
 		if (typeof handler !== 'function') {
-			throw new VKError({
-				message: 'Handler must be a function'
-			});
+			throw new TypeError('Handler must be a function');
 		}
 
 		let textCondition = false;
 		let functionCondtion = false;
-		conditions = conditions.map((condition) => {
+		const conditions = rawConditions.map((condition) => {
+			if (typeof condition === 'object' && !(condition instanceof RegExp)) {
+				functionCondtion = true;
+
+				const entries = Object.entries(condition).map(([path, value]) => (
+					[splitPath(path), unifyCondition(value)]
+				));
+
+				return (text, context) => (
+					entries.every(([selectors, callback]) => {
+						const value = getObjectValue(context, selectors);
+
+						return callback(value, context);
+					})
+				);
+			}
+
 			if (typeof condition === 'function') {
 				functionCondtion = true;
 
