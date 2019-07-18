@@ -4,7 +4,7 @@ import nodeUrl from 'url';
 
 import ImplicitFlow from './implicit-flow';
 import { VKError, AuthError, authErrors } from '../errors';
-import { API_VERSION, CALLBACK_BLANK } from '../utils/constants';
+import { CALLBACK_BLANK } from '../utils/constants';
 import {
 	getAllGroupsPermissions,
 	getGroupsPermissionsByName
@@ -75,7 +75,7 @@ export default class ImplicitFlowGroups extends ImplicitFlow {
 			redirect_uri: CALLBACK_BLANK,
 			response_type: 'token',
 			display: 'page',
-			v: API_VERSION,
+			v: this.apiVersion,
 			client_id: appId,
 			scope
 		});

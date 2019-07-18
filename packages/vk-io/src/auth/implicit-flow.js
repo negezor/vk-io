@@ -91,7 +91,9 @@ export default class ImplicitFlow {
 
 		agent = vk.options.agent,
 		scope = vk.options.authScope,
-		timeout = vk.options.authTimeout
+		timeout = vk.options.authTimeout,
+
+		apiVersion = vk.options.apiVersion
 	} = {}) {
 		this.vk = vk;
 
@@ -105,6 +107,8 @@ export default class ImplicitFlow {
 		this.agent = agent;
 		this.scope = scope;
 		this.timeout = timeout;
+
+		this.apiVersion = apiVersion;
 
 		this.jar = new CookieJar();
 

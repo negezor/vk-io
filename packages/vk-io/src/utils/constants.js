@@ -3,13 +3,6 @@ import { version } from '../../package.json';
 import { keyMirror } from './helpers';
 
 /**
- * VK API version
- *
- * @type {string}
- */
-export const API_VERSION = '5.101';
-
-/**
  * Chat peer ID
  *
  * @type {number}
@@ -59,6 +52,7 @@ export const MINIMUM_TIME_INTERVAL_API = 1133;
  * @property {string}  [apiMode]             Query mode (sequential|parallel|parallel_selected)
  * @property {number}  [apiWait]             Time to wait before re-querying
  * @property {number}  [apiLimit]            Requests per second
+ * @property {number}  [apiVersion]          VK API version
  * @property {string}  [apiBaseUrl]          Base API URL
  * @property {number}  [apiTimeout]          Wait time for one request
  * @property {number}  [apiHeaders]          Headers sent to the API
@@ -95,6 +89,7 @@ export const defaultOptions = {
 	apiMode: 'sequential',
 	apiWait: 3e3,
 	apiLimit: 3,
+	apiVersion: '5.101',
 	apiBaseUrl: 'https://api.vk.com/method',
 	apiAttempts: 3,
 	apiTimeout: 10e3,

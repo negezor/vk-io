@@ -11,7 +11,6 @@ import AccountVerification from '../auth/account-verification';
 import { sequential, parallel, parallelSelected } from './workers';
 import {
 	MINIMUM_TIME_INTERVAL_API,
-	API_VERSION,
 
 	apiErrors,
 	captchaTypes
@@ -170,7 +169,7 @@ export default class API {
 	 * @return {string}
 	 */
 	get API_VERSION() {
-		return API_VERSION;
+		return this.vk.options.apiVersion;
 	}
 
 	/**
@@ -289,7 +288,7 @@ export default class API {
 
 		const params = {
 			access_token: options.token,
-			v: API_VERSION,
+			v: options.apiVersion,
 
 			...request.params
 		};

@@ -7,7 +7,6 @@ import { AuthError, authErrors } from '../errors';
 
 import { fetchCookieFollowRedirectsDecorator } from '../utils/fetch-cookie';
 import {
-	API_VERSION,
 	DESKTOP_USER_AGENT,
 
 	captchaTypes
@@ -70,7 +69,9 @@ export default class DirectAuth {
 
 		scope = vk.options.authScope,
 		agent = vk.options.agent,
-		timeout = vk.options.authTimeout
+		timeout = vk.options.authTimeout,
+
+		apiVersion = vk.options.apiVersion
 	} = {}) {
 		this.vk = vk;
 
@@ -84,6 +85,8 @@ export default class DirectAuth {
 		this.agent = agent;
 		this.scope = scope;
 		this.timeout = timeout;
+
+		this.apiVersion = apiVersion;
 
 		this.started = false;
 
@@ -165,7 +168,7 @@ export default class DirectAuth {
 			'2fa_supported': this.vk.callbackService.hasTwoFactorHandler
 				? 1
 				: 0,
-			v: API_VERSION,
+			v: this.apiVersion,
 			client_id: appId,
 			password,
 			scope

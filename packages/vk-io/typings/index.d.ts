@@ -85,6 +85,11 @@ export interface IVKOptions {
 	apiLimit?: number;
 
 	/**
+	 * VK API version
+	 */
+	apiVersion?: string;
+
+	/**
 	 * Base API URL
 	 */
 	apiBaseUrl?: string;
@@ -264,7 +269,7 @@ export class API extends Methods.APIMethods {
 	/**
 	 * Returns the current used API version
 	 */
-	public API_VERSION: number;
+	public API_VERSION: string;
 
 	/**
 	 * Returns custom tag
