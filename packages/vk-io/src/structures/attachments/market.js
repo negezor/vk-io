@@ -49,7 +49,7 @@ export default class MarketAttachment extends Attachment {
 	 *
 	 * @return {?boolean}
 	 */
-	isFavorited() {
+	get isFavorited() {
 		if (!this.$filled) {
 			return null;
 		}

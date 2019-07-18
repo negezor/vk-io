@@ -165,7 +165,7 @@ export default class WallAttachment extends Attachment {
 	 *
 	 * @return {?boolean}
 	 */
-	isCanCloseComments() {
+	get isCanCloseComments() {
 		if (!this.$filled) {
 			return null;
 		}
@@ -178,7 +178,7 @@ export default class WallAttachment extends Attachment {
 	 *
 	 * @return {?boolean}
 	 */
-	isCanOpenComments() {
+	get isCanOpenComments() {
 		if (!this.$filled) {
 			return null;
 		}
@@ -282,7 +282,7 @@ export default class WallAttachment extends Attachment {
 	 *
 	 * @return {?boolean}
 	 */
-	isFavorited() {
+	get isFavorited() {
 		if (!this.$filled) {
 			return null;
 		}
