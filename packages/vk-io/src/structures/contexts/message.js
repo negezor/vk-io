@@ -53,13 +53,9 @@ export default class MessageContext extends Context {
 
 		this.applyPayload(payload);
 
-		const { eventType } = this;
-
 		this.type = 'message';
 		this.subTypes = [
-			!eventType
-				? subTypesEnum[updateType]
-				: eventType
+			this.eventType || subTypesEnum[updateType]
 		];
 	}
 
