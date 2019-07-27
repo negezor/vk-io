@@ -52,7 +52,7 @@ export default class AudioAttachment extends Attachment {
 	get isHq() {
 		const { is_hq: isHq } = this.payload;
 
-		if (!isHq) {
+		if (isHq === undefined) {
 			return null;
 		}
 
