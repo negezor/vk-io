@@ -31,7 +31,7 @@ export default class Context {
 	/**
 	 * Checks whether the context of some of these types
 	 *
-	 * @param {string[]} types
+	 * @param {string|string[]} types
 	 *
 	 * @return {boolean}
 	 */

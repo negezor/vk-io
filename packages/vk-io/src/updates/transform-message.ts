@@ -1,17 +1,15 @@
 /**
  * Special attachments in one message
- *
- * @type {Object}
  */
 const specialAttachments = {
-	sticker: raw => ({
+	sticker: (raw): object => ({
 		type: 'sticker',
 		sticker: {
 			sticker_id: Number(raw.attach1),
 			product_id: Number(raw.attach1_product_id)
 		}
 	}),
-	money_transfer: raw => ({
+	money_transfer: (raw): object => ({
 		type: 'money_transfer',
 		money_transfer: {
 			data: raw.attach1,
@@ -19,7 +17,7 @@ const specialAttachments = {
 			currency: Number(raw.attach1_currency)
 		}
 	}),
-	gift: raw => ({
+	gift: (raw): object => ({
 		type: 'gift',
 		gift: {
 			id: Number(raw.attach1)
@@ -29,10 +27,6 @@ const specialAttachments = {
 
 /**
  * Transform message to Object
- *
- * @param {Array} update
- *
- * @return {Object}
  */
 export default function transformMessage({
 	1: id,
@@ -42,8 +36,10 @@ export default function transformMessage({
 	5: text,
 	6: extra,
 	7: attachments
-}) {
-	const message = {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+}): Record<string, any> {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const message: Record<string, any> = {
 		id,
 		date,
 		text,
@@ -92,7 +88,8 @@ export default function transformMessage({
 			const type = attachments[`${key}_type`];
 
 			if (type === 'link') {
-				const attachment = {
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
+				const attachment: Record<string, any> = {
 					type: 'link',
 					link: {
 						url: attachments[`${key}_url`],
@@ -119,7 +116,8 @@ export default function transformMessage({
 
 			const [owner, attachmentId] = attachments[key].split('_');
 
-			const attachment = {
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			const attachment: Record<string, any> = {
 				type,
 				[type]: {
 					id: Number(attachmentId),
@@ -150,7 +148,7 @@ export default function transformMessage({
 
 		message.fwd_messages = fwd
 			.split(',')
-			.map((attachment) => {
+			.map((attachment): object => {
 				const [owner] = attachment.split('_');
 
 				return {

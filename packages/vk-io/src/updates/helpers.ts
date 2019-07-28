@@ -1,11 +1,12 @@
-export const splitPath = (path) => (
+export const splitPath = (path: string): string[] => (
 	path
 		.replace(/\[([^[\]]*)\]/g, '.$1.')
 		.split('.')
 		.filter(Boolean)
 );
 
-export const getObjectValue = (source, selectors) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const getObjectValue = (source: Record<string, any>, selectors: string[]): any => {
 	let link = source;
 
 	for (const selector of selectors) {
@@ -19,13 +20,14 @@ export const getObjectValue = (source, selectors) => {
 	return link;
 };
 
-export const unifyCondition = (condition) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const unifyCondition = (condition: any): Function => {
 	if (typeof condition === 'function') {
 		return condition;
 	}
 
 	if (condition instanceof RegExp) {
-		return text => (
+		return (text): boolean => (
 			condition.test(text)
 		);
 	}
@@ -33,26 +35,26 @@ export const unifyCondition = (condition) => {
 	if (Array.isArray(condition)) {
 		const arrayConditions = condition.map(unifyCondition);
 
-		return value => (
+		return (value): boolean => (
 			Array.isArray(value)
-				? arrayConditions.every(cond => (
-					value.some(val => cond(val))
+				? arrayConditions.every((cond): boolean => (
+					value.some((val): boolean => cond(val))
 				))
-				: arrayConditions.some(cond => (
+				: arrayConditions.some((cond): boolean => (
 					cond(value)
 				))
 		);
 	}
 
-	return value => value === condition;
+	return (value): boolean => value === condition;
 };
 
-export const parseRequestJSON = (req, res) => (
-	new Promise((resolve, reject) => {
+export const parseRequestJSON = (req, res): Promise<object> => (
+	new Promise((resolve, reject): void => {
 		let body = '';
 
 		req.on('error', reject);
-		req.on('data', (chunk) => {
+		req.on('data', (chunk): void => {
 			if (body.length > 1e6) {
 				body = null;
 
@@ -69,7 +71,7 @@ export const parseRequestJSON = (req, res) => (
 			body += String(chunk);
 		});
 
-		req.on('end', () => {
+		req.on('end', (): void => {
 			try {
 				const json = JSON.parse(body);
 
