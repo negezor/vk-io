@@ -10,6 +10,8 @@ import Snippets from './snippets';
 import StreamingAPI from './streaming';
 import CallbackService from './utils/callback-service';
 
+import { IVKOptions } from './types';
+
 import { defaultOptions } from './utils/constants';
 
 /**
@@ -18,7 +20,7 @@ import { defaultOptions } from './utils/constants';
  * @public
  */
 export default class VK {
-	options = {
+	options: IVKOptions = {
 		...defaultOptions,
 
 		agent: new Agent({
@@ -47,14 +49,12 @@ export default class VK {
 	/**
 	 * Constructor
 	 */
-	constructor(options = {}) {
+	constructor(options: Partial<IVKOptions> = {}) {
 		this.setOptions(options);
 	}
 
 	/**
 	 * Returns custom tag
-	 *
-	 * @return {string}
 	 */
 	get [Symbol.toStringTag](): string {
 		return 'VK';
@@ -63,7 +63,7 @@ export default class VK {
 	/**
 	 * Sets options
 	 */
-	setOptions(options): this {
+	setOptions(options: Partial<IVKOptions>): this {
 		Object.assign(this.options, options);
 
 		return this;
