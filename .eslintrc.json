@@ -19,22 +19,21 @@
 	],
 	"rules": {
 		"@typescript-eslint/interface-name-prefix": ["error", "always"],
-		"@typescript-eslint/explicit-member-accessibility": ["error", {
-			"accessibility": "no-public"
-		}],
 		"@typescript-eslint/indent": ["error", "tab"],
 		"@typescript-eslint/camelcase": ["error", {
 			"properties": "never"
 		}],
 		"@typescript-eslint/semi": ["error"],
+		"import/no-cycle": "off",
 		"no-restricted-syntax": ["error", "WithStatement"],
 		"comma-dangle": ["error", "never"],
-		"class-methods-use-this": "off",
-		"no-param-reassign": "off",
+		"no-param-reassign": ["error", {
+			"props": false
+		}],
+		"no-dupe-class-members": "off",
 		"no-await-in-loop": "off",
 		"arrow-parens": "off",
 		"no-continue": "off",
-		"no-bitwise": "off",
 		"no-tabs": ["error", {
 			"allowIndentationTabs": true
 		}],
@@ -60,7 +59,6 @@
 			"files": ["docs/examples/**/*.js"],
 			"rules": {
 				"no-console": "off",
-				"arrow-body-style": "off",
 				"no-param-reassign": "off",
 				"import/no-extraneous-dependencies": "off"
 			}
@@ -68,12 +66,7 @@
 		{
 			"files": ["packages/vk-io/typings/index.d.ts"],
 			"rules": {
-				"no-dupe-class-members": "off",
-				"no-useless-constructor": "off",
-				"@typescript-eslint/no-useless-constructor": "error",
-				"@typescript-eslint/explicit-member-accessibility": ["error", {
-					"accessibility": "explicit"
-				}]
+				"no-useless-constructor": "off"
 			}
 		}
 	]
