@@ -9,7 +9,7 @@ export default class StepSceneContext {
 
 	private stepChanged = false;
 
-	constructor(options: IStepContextOptions) {
+	public constructor(options: IStepContextOptions) {
 		this.context = options.context;
 
 		this.steps = options.steps;
@@ -18,7 +18,7 @@ export default class StepSceneContext {
 	/**
 	 * The first enter to the handler
 	 */
-	get firstTime(): boolean {
+	public get firstTime(): boolean {
 		const { firstTime = true } = this.context.scene.session;
 
 		return firstTime;
@@ -27,14 +27,14 @@ export default class StepSceneContext {
 	/**
 	 * Returns current stepId
 	 */
-	get stepId(): number {
+	public get stepId(): number {
 		return this.context.scene.session.stepId || 0;
 	}
 
 	/**
 	 * Sets current stepId
 	 */
-	set stepId(stepId: number) {
+	public set stepId(stepId: number) {
 		const { session } = this.context.scene;
 
 		session.stepId = stepId;
@@ -46,7 +46,7 @@ export default class StepSceneContext {
 	/**
 	 * Returns current handler
 	 */
-	get current(): StepSceneHandler<{}> | null {
+	public get current(): StepSceneHandler<{}> | null {
 		return this.steps[this.stepId] || null;
 	}
 
@@ -57,7 +57,7 @@ export default class StepSceneContext {
 	 * ctx.scene.step.reenter();
 	 * ```
 	 */
-	async reenter(): Promise<void> {
+	public async reenter(): Promise<void> {
 		const { current } = this;
 
 		if (!current) {
@@ -85,7 +85,7 @@ export default class StepSceneContext {
 	 * });
 	 * ```
 	 */
-	async next({ silent = false } = {}): Promise<void> {
+	public async next({ silent = false } = {}): Promise<void> {
 		this.stepId += 1;
 
 		if (silent) {
@@ -105,7 +105,7 @@ export default class StepSceneContext {
 	 * });
 	 * ```
 	 */
-	async previous({ silent = false } = {}): Promise<void> {
+	public async previous({ silent = false } = {}): Promise<void> {
 		this.stepId -= 1;
 
 		if (silent) {

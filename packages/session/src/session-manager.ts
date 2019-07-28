@@ -20,13 +20,13 @@ export interface ISessionManagerOptions {
 }
 
 export default class SessionManager {
-	storage: ISessionManagerOptions['storage'];
+	protected storage: ISessionManagerOptions['storage'];
 
-	contextKey: ISessionManagerOptions['contextKey'];
+	protected contextKey: ISessionManagerOptions['contextKey'];
 
-	getStorageKey: ISessionManagerOptions['getStorageKey'];
+	protected getStorageKey: ISessionManagerOptions['getStorageKey'];
 
-	constructor(options: ISessionManagerOptions = {}) {
+	public constructor(options: ISessionManagerOptions = {}) {
 		this.storage = options.storage || (
 			new MemoryStorage()
 		);
@@ -41,7 +41,7 @@ export default class SessionManager {
 	/**
 	 * Returns the middleware for embedding
 	 */
-	get middleware(): Middleware<IContext> {
+	public get middleware(): Middleware<IContext> {
 		const { storage, contextKey, getStorageKey } = this;
 
 		return async (context: IContext, next: Function): Promise<void> => {

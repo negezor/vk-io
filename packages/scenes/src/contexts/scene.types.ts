@@ -32,6 +32,7 @@ export interface ISceneContextLeaveOptions {
 	canceled?: boolean;
 }
 
+// eslint-disable-next-line import/prefer-default-export
 export enum LastAction {
 	NONE = 'none',
 	ENTER = 'enter',

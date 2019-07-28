@@ -42,6 +42,7 @@ export default class ExternalAttachment {
 	 *
 	 * @returns {boolean}
 	 */
+	// eslint-disable-next-line class-methods-use-this
 	get canBeAttached() {
 		return false;
 	}

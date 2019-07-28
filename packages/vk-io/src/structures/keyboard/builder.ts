@@ -29,7 +29,8 @@ export default class KeyboardBuilder {
 	/**
 	 * Returns custom tag
 	 */
-	get [Symbol.toStringTag](): string {
+	// eslint-disable-next-line class-methods-use-this
+	public get [Symbol.toStringTag](): string {
 		return 'KeyboardBuilder';
 	}
 
@@ -47,7 +48,7 @@ export default class KeyboardBuilder {
 	 * });
 	 * ```
 	 */
-	textButton({
+	public textButton({
 		label,
 		payload: rawPayload = {},
 		color = ButtonColor.SECONDARY
@@ -84,7 +85,9 @@ export default class KeyboardBuilder {
 	 * })
 	 * ```
 	 */
-	locationRequestButton({ payload: rawPayload = {} }: IKeyboardLocationRequestButtonOptions): this {
+	public locationRequestButton({
+		payload: rawPayload = {}
+	}: IKeyboardLocationRequestButtonOptions): this {
 		const payload = JSON.stringify(rawPayload);
 
 		if (payload.length > 255) {
@@ -113,7 +116,7 @@ export default class KeyboardBuilder {
 	 * })
 	 * ```
 	 */
-	payButton({ hash: rawHash }: IKeyboardVKPayButtonOptions): this {
+	public payButton({ hash: rawHash }: IKeyboardVKPayButtonOptions): this {
 		const hash = typeof rawHash === 'object'
 			? String(new URLSearchParams(Object.entries(rawHash)))
 			: rawHash;
@@ -138,7 +141,7 @@ export default class KeyboardBuilder {
 	 * })
 	 * ```
 	 */
-	applicationButton({
+	public applicationButton({
 		label,
 		appId,
 		ownerId,
@@ -164,7 +167,7 @@ export default class KeyboardBuilder {
 	/**
 	 * Saves the current row of buttons in the general rows
 	 */
-	row(): this {
+	public row(): this {
 		if (this.currentRow.length === 0) {
 			return this;
 		}
@@ -189,7 +192,7 @@ export default class KeyboardBuilder {
 	 *  builder.oneTime(false);
 	 * ```
 	 */
-	oneTime(enabled: boolean = true): this {
+	public oneTime(enabled: boolean = true): this {
 		this.isOneTime = enabled;
 
 		return this;
@@ -198,7 +201,7 @@ export default class KeyboardBuilder {
 	/**
 	 * Clones the builder with all the settings
 	 */
-	clone(): KeyboardBuilder {
+	public clone(): KeyboardBuilder {
 		const builder = new KeyboardBuilder();
 
 		builder.oneTime(this.isOneTime);
@@ -212,7 +215,7 @@ export default class KeyboardBuilder {
 	/**
 	 * Returns a string to keyboard a VK
 	 */
-	toString(): string {
+	public toString(): string {
 		if (this.rows.length > 10) {
 			throw new RangeError('Max count of keyboard rows 10');
 		}

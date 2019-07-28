@@ -17,16 +17,17 @@ const debug = createDebug('vk-io:updates');
 const POLLING_VERSION = '3';
 
 export default class PollingTransport {
-	started: boolean = false;
+	public started: boolean = false;
 
 	/**
 	 * 2 -  Attachments
 	 * 8 -  Extended events
 	 * 64 - Online user platform ID
 	 */
-	mode: number = 2 | 8 | 64;
+	// eslint-disable-next-line no-bitwise
+	public mode: number = 2 | 8 | 64;
 
-	pollingHandler: Function;
+	public pollingHandler: Function;
 
 	protected vk: VK;
 
@@ -38,11 +39,11 @@ export default class PollingTransport {
 
 	protected url?: URL;
 
-	constructor(vk: VK) {
+	public constructor(vk: VK) {
 		this.vk = vk;
 	}
 
-	async start(): Promise<void> {
+	public async start(): Promise<void> {
 		if (this.started) {
 			throw new Error('Polling updates already started');
 		}
@@ -98,7 +99,7 @@ export default class PollingTransport {
 	/**
 	 * Stopping gets updates
 	 */
-	async stop(): Promise<void> {
+	public async stop(): Promise<void> {
 		this.started = false;
 
 		this.restarted = 0;
@@ -107,7 +108,7 @@ export default class PollingTransport {
 	/**
 	 * Starts forever fetch updates  loop
 	 */
-	async startFetchLoop(): Promise<void> {
+	protected async startFetchLoop(): Promise<void> {
 		try {
 			while (this.started) {
 				await this.fetchUpdates();
@@ -149,7 +150,7 @@ export default class PollingTransport {
 	/**
 	 * Gets updates
 	 */
-	async fetchUpdates(): Promise<void> {
+	public async fetchUpdates(): Promise<void> {
 		this.url.searchParams.set('ts', String(this.ts));
 
 		debug('http -->');
@@ -208,7 +209,7 @@ export default class PollingTransport {
 		});
 	}
 
-	subscribe(handler: Function): void {
+	public subscribe(handler: Function): void {
 		this.pollingHandler = handler;
 	}
 }

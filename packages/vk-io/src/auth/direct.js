@@ -102,6 +102,7 @@ export default class DirectAuth {
 	 *
 	 * @return {string}
 	 */
+	// eslint-disable-next-line class-methods-use-this
 	get [Symbol.toStringTag]() {
 		return 'DirectAuth';
 	}
@@ -406,18 +407,18 @@ export default class DirectAuth {
 
 		const url = getFullURL(action, response);
 
-		response = await this.fetch(url, {
+		const rewResponse = await this.fetch(url, {
 			method: 'POST',
 			body: new URLSearchParams(fields)
 		});
 
-		if (response.url.includes(ACTION_SECURITY_CODE)) {
+		if (rewResponse.url.includes(ACTION_SECURITY_CODE)) {
 			throw new AuthError({
 				message: 'Invalid phone number',
 				code: INVALID_PHONE_NUMBER
 			});
 		}
 
-		return response;
+		return rewResponse;
 	}
 }

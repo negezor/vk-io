@@ -12,14 +12,16 @@ export default class Keyboard {
 	/**
 	 * Returns custom tag
 	 */
-	get [Symbol.toStringTag](): string {
+	// eslint-disable-next-line class-methods-use-this
+	public get [Symbol.toStringTag](): string {
 		return 'Keyboard';
 	}
 
 	/**
 	 * @deprecated Use Keyboard.SECONDARY_COLOR instead
 	 */
-	static get DEFAULT_COLOR(): ButtonColor.SECONDARY {
+	// eslint-disable-next-line class-methods-use-this
+	public static get DEFAULT_COLOR(): ButtonColor.SECONDARY {
 		// eslint-disable-next-line no-console
 		console.log('Keyboard.DEFAULT_COLOR deprecated, use Keyboard.SECONDARY_COLOR instead');
 
@@ -31,7 +33,8 @@ export default class Keyboard {
 	 *
 	 * Hex color #FFFFFF
 	 */
-	static get SECONDARY_COLOR(): ButtonColor.SECONDARY {
+	// eslint-disable-next-line class-methods-use-this
+	public static get SECONDARY_COLOR(): ButtonColor.SECONDARY {
 		return ButtonColor.SECONDARY;
 	}
 
@@ -40,7 +43,8 @@ export default class Keyboard {
 	 *
 	 * Hex color #5181B8
 	 */
-	static get PRIMARY_COLOR(): ButtonColor.PRIMARY {
+	// eslint-disable-next-line class-methods-use-this
+	public static get PRIMARY_COLOR(): ButtonColor.PRIMARY {
 		return ButtonColor.PRIMARY;
 	}
 
@@ -49,7 +53,8 @@ export default class Keyboard {
 	 *
 	 * Hex color #E64646
 	 */
-	static get NEGATIVE_COLOR(): ButtonColor.NEGATIVE {
+	// eslint-disable-next-line class-methods-use-this
+	public static get NEGATIVE_COLOR(): ButtonColor.NEGATIVE {
 		return ButtonColor.NEGATIVE;
 	}
 
@@ -58,21 +63,22 @@ export default class Keyboard {
 	 *
 	 * Hex color #4BB34B
 	 */
-	static get POSITIVE_COLOR(): ButtonColor.POSITIVE {
+	// eslint-disable-next-line class-methods-use-this
+	public static get POSITIVE_COLOR(): ButtonColor.POSITIVE {
 		return ButtonColor.POSITIVE;
 	}
 
 	/**
 	 * Returns keyboard builder
 	 */
-	static builder(): KeyboardBuilder {
+	public static builder(): KeyboardBuilder {
 		return new KeyboardBuilder();
 	}
 
 	/**
 	 * Assembles a builder of buttons
 	 */
-	static keyboard(rows: (IKeyboardProxyButton | IKeyboardProxyButton[])[]): KeyboardBuilder {
+	public static keyboard(rows: (IKeyboardProxyButton | IKeyboardProxyButton[])[]): KeyboardBuilder {
 		const builder = new KeyboardBuilder();
 
 		for (const row of rows) {
@@ -117,7 +123,7 @@ export default class Keyboard {
 	/**
 	 * Text button, can be colored
 	 */
-	static textButton(
+	public static textButton(
 		options: IKeyboardTextButtonOptions
 	): IKeyboardProxyButton {
 		return { options, kind: 'text' };
@@ -126,7 +132,7 @@ export default class Keyboard {
 	/**
 	 * User location request button, occupies the entire keyboard width
 	 */
-	static locationRequestButton(
+	public static locationRequestButton(
 		options: IKeyboardLocationRequestButtonOptions
 	): IKeyboardProxyButton {
 		return { options, kind: 'location_request' };
@@ -135,7 +141,7 @@ export default class Keyboard {
 	/**
 	 * VK Pay button, occupies the entire keyboard width
 	 */
-	static payButton(
+	public static payButton(
 		options: IKeyboardVKPayButtonOptions
 	): IKeyboardProxyButton {
 		return { options, kind: 'vk_pay' };
@@ -144,7 +150,7 @@ export default class Keyboard {
 	/**
 	 * VK Apps button, occupies the entire keyboard width
 	 */
-	static applicationButton(
+	public static applicationButton(
 		options: IKeyboardApplicationButtonOptions
 	): IKeyboardProxyButton {
 		return { options, kind: 'vk_application' };

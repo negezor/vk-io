@@ -9,7 +9,7 @@ export default class StreamingRuleError extends VKError {
 	/**
 	 * Constructor
 	 */
-	constructor({ message, error_code: code }: IStreamingRuleErrorOptions) {
+	public constructor({ message, error_code: code }: IStreamingRuleErrorOptions) {
 		super({ message, code });
 	}
 }

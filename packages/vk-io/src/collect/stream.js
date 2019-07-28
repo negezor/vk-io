@@ -85,6 +85,7 @@ export default class CollectStream extends Readable {
 	 *
 	 * @return {string}
 	 */
+	// eslint-disable-next-line class-methods-use-this
 	get [Symbol.toStringTag]() {
 		return 'CollectStream';
 	}

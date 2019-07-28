@@ -18,12 +18,12 @@ export default class MultipartStream extends SandwichStream {
 	/**
 	 * Multipart boundary
 	 */
-	boundary: string;
+	public boundary: string;
 
 	/**
 	 * Constructor
 	 */
-	constructor(boundary: string) {
+	public constructor(boundary: string) {
 		super({
 			head: `--${boundary}${CRNL}`,
 			tail: `${CRNL}--${boundary}--`,
@@ -36,14 +36,15 @@ export default class MultipartStream extends SandwichStream {
 	/**
 	 * Returns custom tag
 	 */
-	get [Symbol.toStringTag](): string {
+	// eslint-disable-next-line class-methods-use-this
+	public get [Symbol.toStringTag](): string {
 		return 'MultipartStream';
 	}
 
 	/**
 	 * Adds part
 	 */
-	addPart(part: IMultipartStreamAddPartOptions): void {
+	public addPart(part: IMultipartStreamAddPartOptions): void {
 		const partStream = new PassThrough();
 
 		if ('headers' in part) {
@@ -66,7 +67,7 @@ export default class MultipartStream extends SandwichStream {
 	/**
 	 * Adds form data
 	 */
-	append(
+	public append(
 		field: string,
 		body: MultipartStreamBody,
 		{ filename = null, headers = {} }: {

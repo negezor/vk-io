@@ -38,6 +38,7 @@ export default class MessageFlagsContext extends Context {
 	 * @return {boolean}
 	 */
 	get isUnread() {
+		// eslint-disable-next-line no-bitwise
 		return Boolean(this.flags & 1);
 	}
 
@@ -47,6 +48,7 @@ export default class MessageFlagsContext extends Context {
 	 * @return {boolean}
 	 */
 	get isOutbox() {
+		// eslint-disable-next-line no-bitwise
 		return Boolean(this.flags & 2);
 	}
 
@@ -56,6 +58,7 @@ export default class MessageFlagsContext extends Context {
 	 * @return {boolean}
 	 */
 	get isReplied() {
+		// eslint-disable-next-line no-bitwise
 		return Boolean(this.flags & 4);
 	}
 
@@ -65,6 +68,7 @@ export default class MessageFlagsContext extends Context {
 	 * @return {boolean}
 	 */
 	get isImportant() {
+		// eslint-disable-next-line no-bitwise
 		return Boolean(this.flags & 8);
 	}
 
@@ -74,6 +78,7 @@ export default class MessageFlagsContext extends Context {
 	 * @return {boolean}
 	 */
 	get isChat() {
+		// eslint-disable-next-line no-bitwise
 		return Boolean(this.flags & 16);
 	}
 
@@ -83,6 +88,7 @@ export default class MessageFlagsContext extends Context {
 	 * @return {boolean}
 	 */
 	get isFriends() {
+		// eslint-disable-next-line no-bitwise
 		return Boolean(this.flags & 32);
 	}
 
@@ -92,6 +98,7 @@ export default class MessageFlagsContext extends Context {
 	 * @return {boolean}
 	 */
 	get isSpam() {
+		// eslint-disable-next-line no-bitwise
 		return Boolean(this.flags & 64);
 	}
 
@@ -101,6 +108,7 @@ export default class MessageFlagsContext extends Context {
 	 * @return {boolean}
 	 */
 	get isDeleted() {
+		// eslint-disable-next-line no-bitwise
 		return Boolean(this.flags & 128);
 	}
 
@@ -110,6 +118,7 @@ export default class MessageFlagsContext extends Context {
 	 * @return {boolean}
 	 */
 	get isFixed() {
+		// eslint-disable-next-line no-bitwise
 		return Boolean(this.flags & 256);
 	}
 
@@ -119,6 +128,7 @@ export default class MessageFlagsContext extends Context {
 	 * @return {boolean}
 	 */
 	get isMedia() {
+		// eslint-disable-next-line no-bitwise
 		return Boolean(this.flags & 512);
 	}
 
@@ -128,6 +138,7 @@ export default class MessageFlagsContext extends Context {
 	 * @return {boolean}
 	 */
 	get isHidden() {
+		// eslint-disable-next-line no-bitwise
 		return Boolean(this.flags & 65536);
 	}
 
@@ -137,6 +148,7 @@ export default class MessageFlagsContext extends Context {
 	 * @return {boolean}
 	 */
 	get isDeletedForAll() {
+		// eslint-disable-next-line no-bitwise
 		return Boolean(this.flags & 131072);
 	}
 

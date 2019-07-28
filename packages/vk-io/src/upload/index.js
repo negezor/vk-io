@@ -53,6 +53,7 @@ export default class Upload {
 	 *
 	 * @return {string}
 	 */
+	// eslint-disable-next-line class-methods-use-this
 	get [Symbol.toStringTag]() {
 		return 'Upload';
 	}
@@ -769,6 +770,7 @@ export default class Upload {
 		}
 
 		if ('uploadUrl' in source) {
+			// eslint-disable-next-line no-param-reassign
 			getServer = () => ({
 				upload_url: source.uploadUrl
 			});
@@ -827,6 +829,7 @@ export default class Upload {
 	 *
 	 * @return {Promise}
 	 */
+	// eslint-disable-next-line class-methods-use-this
 	async buildPayload({
 		field,
 		values,
@@ -856,13 +859,16 @@ export default class Upload {
 					if (isURL.test(value)) {
 						const response = await fetch(value);
 
+						// eslint-disable-next-line no-param-reassign
 						value = response.body;
 					} else {
+						// eslint-disable-next-line no-param-reassign
 						value = createReadStream(value);
 					}
 				}
 
 				if (!filename) {
+					// eslint-disable-next-line no-param-reassign
 					filename = `file${i}.${defaultExtensions[attachmentType] || 'dat'}`;
 				}
 

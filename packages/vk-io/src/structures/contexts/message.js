@@ -42,6 +42,7 @@ export default class MessageContext extends Context {
 		super(vk);
 
 		if (source === updatesSources.POLLING) {
+			// eslint-disable-next-line no-param-reassign
 			payload = transformMessage(payload);
 
 			this.$filled = false;
@@ -568,10 +569,10 @@ export default class MessageContext extends Context {
 	 *
 	 * @return {Promise}
 	 */
-	async sendPhoto(sources, params = {}) {
-		if (!Array.isArray(sources)) {
-			sources = [sources];
-		}
+	async sendPhoto(rawSources, params = {}) {
+		const sources = !Array.isArray(rawSources)
+			? [rawSources]
+			: rawSources;
 
 		const attachment = await Promise.all(sources.map(source => (
 			this.vk.upload.messagePhoto({
@@ -596,10 +597,10 @@ export default class MessageContext extends Context {
 	 *
 	 * @return {Promise}
 	 */
-	async sendDocument(sources, params = {}) {
-		if (!Array.isArray(sources)) {
-			sources = [sources];
-		}
+	async sendDocument(rawSources, params = {}) {
+		const sources = !Array.isArray(rawSources)
+			? [rawSources]
+			: rawSources;
 
 		const attachment = await Promise.all(sources.map(source => (
 			this.vk.upload.messageDocument({

@@ -25,6 +25,7 @@ export default class MessageReply {
 	 *
 	 * @return {string}
 	 */
+	// eslint-disable-next-line class-methods-use-this
 	get [Symbol.toStringTag]() {
 		return 'MessageForward';
 	}

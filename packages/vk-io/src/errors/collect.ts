@@ -12,12 +12,12 @@ export default class CollectError extends VKError {
 	/**
 	 * Errors collect
 	 */
-	errors: ExecuteError[];
+	public errors: ExecuteError[];
 
 	/**
 	 * Constructor
 	 */
-	constructor({ message, code, errors }: ICollectErrorOptions) {
+	public constructor({ message, code, errors }: ICollectErrorOptions) {
 		super({ message, code });
 
 		this.errors = errors;

@@ -189,18 +189,21 @@ export default class Updates {
 
 	protected webhookTransport: WebhookTransport;
 
-	stack: Middleware<Context>[] = [];
+	protected stack: Middleware<Context>[] = [];
 
-	hearStack: Middleware<Context>[] = [];
+	protected hearStack: Middleware<Context>[] = [];
 
-	stackMiddleware: Middleware<Context>;
+	protected stackMiddleware: Middleware<Context>;
 
-	hearFallbackHandler: Middleware<MessageContext> = (context, next): Promise<void> => next();
+	protected hearFallbackHandler: Middleware<MessageContext> = (
+		context,
+		next
+	): Promise<void> => next();
 
 	/**
 	 * Constructor
 	 */
-	constructor(vk: VK) {
+	public constructor(vk: VK) {
 		this.vk = vk;
 
 		this.reloadMiddleware();
@@ -214,21 +217,22 @@ export default class Updates {
 	/**
 	 * Returns custom tag
 	 */
-	get [Symbol.toStringTag](): string {
+	// eslint-disable-next-line class-methods-use-this
+	public get [Symbol.toStringTag](): string {
 		return 'Updates';
 	}
 
 	/**
 	 * Checks is started
 	 */
-	get isStarted(): boolean {
+	public get isStarted(): boolean {
 		return this.pollingTransport.started || this.webhookTransport.started;
 	}
 
 	/**
 	 * Added middleware
 	 */
-	use<T = {}>(middleware: Middleware<Context & T>): this {
+	public use<T = {}>(middleware: Middleware<Context & T>): this {
 		if (typeof middleware !== 'function') {
 			throw new TypeError('Middleware must be a function');
 		}
@@ -244,42 +248,42 @@ export default class Updates {
 	 * Subscribe to events
 	 */
 
-	 on<T = {}>(events: 'message' | 'new_message' | 'edit_message', handler: Middleware<MessageContext & T>): this
+	public on<T = {}>(events: 'message' | 'new_message' | 'edit_message', handler: Middleware<MessageContext & T>): this
 
 
-	on<T = {}>(events: 'message_subscribers' | 'message_subscribe' | 'message_unsubscribe', handler: Middleware<MessageAllowContext & T>): this
+	public on<T = {}>(events: 'message_subscribers' | 'message_subscribe' | 'message_unsubscribe', handler: Middleware<MessageAllowContext & T>): this
 
 
-	on<T = {}>(events: 'new_attachment' | 'new_photo_attachment' | 'new_video_attachment' | 'new_audio_attachment', handler: Middleware<NewAttachmentsContext & T>): this
+	public on<T = {}>(events: 'new_attachment' | 'new_photo_attachment' | 'new_video_attachment' | 'new_audio_attachment', handler: Middleware<NewAttachmentsContext & T>): this
 
 
-	on<T = {}>(events: 'wall_post' | 'new_wall_post' | 'new_wall_repost', handler: Middleware<WallPostContext & T>): this
+	public on<T = {}>(events: 'wall_post' | 'new_wall_post' | 'new_wall_repost', handler: Middleware<WallPostContext & T>): this
 
 
-	on<T = {}>(events: 'group_member' | 'join_group_member' | 'leave_group_member', handler: Middleware<GroupMemberContext & T>): this
+	public on<T = {}>(events: 'group_member' | 'join_group_member' | 'leave_group_member', handler: Middleware<GroupMemberContext & T>): this
 
 
-	on<T = {}>(events: 'group_user' | 'block_group_user' | 'unblock_group_user', handler: Middleware<GroupUserContext & T>): this
+	public on<T = {}>(events: 'group_user' | 'block_group_user' | 'unblock_group_user', handler: Middleware<GroupUserContext & T>): this
 
 
-	on<T = {}>(events: 'comment' | 'photo_comment' | 'video_comment' | 'wall_comment' | 'board_comment' | 'market_comment' | 'new_photo_comment' | 'edit_photo_comment' | 'delete_photo_comment' | 'restore_photo_comment' | 'new_video_comment' | 'edit_video_comment' | 'delete_video_comment' | 'restore_video_comment' | 'new_wall_comment' | 'edit_wall_comment' | 'delete_wall_comment' | 'restore_wall_comment' | 'new_board_comment' | 'edit_board_comment' | 'delete_board_comment' | 'restore_board_comment' | 'new_market_comment' | 'edit_market_comment' | 'delete_market_comment' | 'restore_market_comment', handler: Middleware<CommentActionContext & T>): this
+	public on<T = {}>(events: 'comment' | 'photo_comment' | 'video_comment' | 'wall_comment' | 'board_comment' | 'market_comment' | 'new_photo_comment' | 'edit_photo_comment' | 'delete_photo_comment' | 'restore_photo_comment' | 'new_video_comment' | 'edit_video_comment' | 'delete_video_comment' | 'restore_video_comment' | 'new_wall_comment' | 'edit_wall_comment' | 'delete_wall_comment' | 'restore_wall_comment' | 'new_board_comment' | 'edit_board_comment' | 'delete_board_comment' | 'restore_board_comment' | 'new_market_comment' | 'edit_market_comment' | 'delete_market_comment' | 'restore_market_comment', handler: Middleware<CommentActionContext & T>): this
 
 
-	on<T = {}>(events: 'vote' | 'pull_vote', handler: Middleware<VoteContext & T>): this
+	public on<T = {}>(events: 'vote' | 'pull_vote', handler: Middleware<VoteContext & T>): this
 
 
-	on<T = {}>(events: 'group_update' | 'group_update_photo' | 'group_update_officers' | 'group_update_settings', handler: Middleware<GroupUpdateContext & T>): this
+	public on<T = {}>(events: 'group_update' | 'group_update_photo' | 'group_update_officers' | 'group_update_settings', handler: Middleware<GroupUpdateContext & T>): this
 
 
-	on<T = {}>(events: 'typing' | 'typing_user' | 'typing_group', handler: Middleware<TypingContext & T>): this;
+	public on<T = {}>(events: 'typing' | 'typing_user' | 'typing_group', handler: Middleware<TypingContext & T>): this;
 
-	on<T = {}>(
-		events: ContextPossibleTypes[] | ContextPossibleTypes,
+	public on<T = {}>(
+		rawEvents: ContextPossibleTypes[] | ContextPossibleTypes,
 		handler: Middleware<Context & T>
 	): this {
-		if (!Array.isArray(events)) {
-			events = [events];
-		}
+		const events = !Array.isArray(rawEvents)
+			? [rawEvents]
+			: rawEvents;
 
 		const hasEvents = events.every(Boolean);
 
@@ -302,8 +306,8 @@ export default class Updates {
 	/**
 	 * Listen by context condition
 	 */
-	hear<T = {}>(
-		rawConditions: (
+	public hear<T = {}>(
+		hearConditions: (
 			HearCondition<string | null, T & MessageContext>[]
 			| HearCondition<string | null, T & MessageContext>
 		)
@@ -313,12 +317,10 @@ export default class Updates {
 		),
 		handler: Middleware<MessageContext & T>
 	): this {
-		if (!Array.isArray(rawConditions)) {
-			// @ts-ignore
-			rawConditions = [rawConditions];
-		}
+		const rawConditions = !Array.isArray(hearConditions)
+			? [hearConditions]
+			: hearConditions;
 
-		// @ts-ignore
 		const hasConditions = rawConditions.every(Boolean);
 
 		if (!hasConditions) {
@@ -369,9 +371,9 @@ export default class Updates {
 				};
 			}
 
-			condition = String(condition);
+			const stringCondition = String(condition);
 
-			return (text): boolean => text === condition;
+			return (text): boolean => text === stringCondition;
 		});
 
 		const needText = textCondition && functionCondtion === false;
@@ -401,7 +403,7 @@ export default class Updates {
 	/**
 	 * A handler that is called when handlers are not found
 	 */
-	setHearFallbackHandler<T = {}>(handler: Middleware<MessageContext & T>): this {
+	public setHearFallbackHandler<T = {}>(handler: Middleware<MessageContext & T>): this {
 		this.hearFallbackHandler = handler;
 
 		return this;
@@ -410,7 +412,7 @@ export default class Updates {
 	/**
 	 * Handles longpoll event
 	 */
-	handlePollingUpdate(update): Promise<void> {
+	public handlePollingUpdate(update): Promise<void> {
 		debug('longpoll update', update);
 
 		const { 0: type } = update;
@@ -434,7 +436,7 @@ export default class Updates {
 	/**
 	 * Handles webhook event
 	 */
-	handleWebhookUpdate(update): Promise<void> {
+	public handleWebhookUpdate(update): Promise<void> {
 		debug('webhook update', update);
 
 		const { type, object: payload, group_id: groupId } = update;
@@ -459,7 +461,7 @@ export default class Updates {
 	/**
 	 * Starts to poll server
 	 */
-	startPolling(): Promise<void> {
+	public startPolling(): Promise<void> {
 		const { pollingGroupId } = this.vk.options;
 
 		const isGroup = pollingGroupId !== null;
@@ -476,7 +478,7 @@ export default class Updates {
 	/**
 	 * Starts the webhook server
 	 */
-	async startWebhook(
+	public async startWebhook(
 		options: IUpdatesStartWebhookOptions = {},
 		next?: Function
 	): Promise<void> {
@@ -486,7 +488,7 @@ export default class Updates {
 	/**
 	 * Automatically determines the settings to run
 	 */
-	async start({ webhook }: { webhook?: IUpdatesStartWebhookOptions } = {}): Promise<void> {
+	public async start({ webhook }: { webhook?: IUpdatesStartWebhookOptions } = {}): Promise<void> {
 		if (webhook) {
 			await this.startWebhook(webhook);
 
@@ -514,7 +516,7 @@ export default class Updates {
 	/**
 	 * Stopping gets updates
 	 */
-	async stop(): Promise<void> {
+	public async stop(): Promise<void> {
 		await Promise.all([
 			this.pollingTransport.stop(),
 			this.webhookTransport.stop()
@@ -524,28 +526,28 @@ export default class Updates {
 	/**
 	 * Returns webhook callback like http[s] or express
 	 */
-	getWebhookCallback(path: string = null): Function {
+	public getWebhookCallback(path: string = null): Function {
 		return this.webhookTransport.getWebhookCallback(path);
 	}
 
 	/**
 	 * Returns the middleware for the webhook under koa
 	 */
-	getKoaWebhookMiddleware(): Function {
+	public getKoaWebhookMiddleware(): Function {
 		return this.webhookTransport.getKoaWebhookMiddleware();
 	}
 
 	/**
 	 * Calls up the middleware chain
 	 */
-	dispatchMiddleware(context: Context): Promise<void> {
+	public dispatchMiddleware(context: Context): Promise<void> {
 		return this.stackMiddleware(context, noopNext);
 	}
 
 	/**
 	 * Reloads middleware
 	 */
-	reloadMiddleware(): void {
+	protected reloadMiddleware(): void {
 		const stack = [...this.stack];
 
 		if (this.hearStack.length !== 0) {
@@ -567,7 +569,7 @@ export default class Updates {
 	 * Custom inspect object
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	[inspect.custom](depth: number, options: Record<string, any>): string {
+	public [inspect.custom](depth: number, options: Record<string, any>): string {
 		const { name } = this.constructor;
 
 		const { isStarted, stack } = this;

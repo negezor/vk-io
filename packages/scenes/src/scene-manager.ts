@@ -8,7 +8,7 @@ import { SceneRepository, ISceneManagerOptions } from './scene-manager.types';
 export default class SceneManager {
 	private repository: SceneRepository = new CacheRepository();
 
-	constructor(rawOptions: ISceneManagerOptions | IScene[] = {}) {
+	public constructor(rawOptions: ISceneManagerOptions | IScene[] = {}) {
 		const options = Array.isArray(rawOptions)
 			? {
 				scenes: rawOptions
@@ -25,7 +25,7 @@ export default class SceneManager {
 	/**
 	 * Adds a scene to the shared list
 	 */
-	addScene(scene: IScene): this {
+	public addScene(scene: IScene): this {
 		this.repository.set(scene.slug, scene);
 
 		return this;
@@ -34,7 +34,7 @@ export default class SceneManager {
 	/**
 	 * Returns the middleware for embedding
 	 */
-	get middleware(): Middleware<IContext> {
+	public get middleware(): Middleware<IContext> {
 		return (context: IContext, next: Function): Promise<void> => {
 			context.scene = new SceneContext({
 				context,
@@ -48,7 +48,8 @@ export default class SceneManager {
 	/**
 	 * Returns the middleware for intercept
 	 */
-	get middlewareIntercept(): Middleware<IContext> {
+	// eslint-disable-next-line class-methods-use-this
+	public get middlewareIntercept(): Middleware<IContext> {
 		return (context: IContext, next: Function): Promise<void> => {
 			if (!context.scene.current) {
 				return next();

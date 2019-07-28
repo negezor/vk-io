@@ -1,4 +1,4 @@
-import { IVKOptions } from '../types.js';
+import { IVKOptions } from '../types';
 
 // @ts-ignore
 import { version } from '../../package.json';
@@ -84,7 +84,7 @@ export enum attachmentTypes {
 	WALL_REPLY = 'wall_reply',
 	WALL = 'wall',
 	POLL = 'poll'
-};
+}
 
 /**
  * Default extensions for attachments
@@ -95,7 +95,7 @@ export enum defaultExtensions {
 	audio = 'mp3',
 	graffiti = 'png',
 	audioMessage = 'ogg'
-};
+}
 
 /**
  * Default content type for attachments
@@ -106,7 +106,7 @@ export enum defaultContentTypes {
 	audio = 'audio/mp3',
 	graffiti = 'image/png',
 	audioMessage = 'audio/ogg'
-};
+}
 
 /**
  * Sources of captcha
@@ -116,7 +116,7 @@ export enum captchaTypes {
 	'DIRECT_AUTH',
 	'IMPLICIT_FLOW_AUTH',
 	'ACCOUNT_VERIFICATION'
-};
+}
 
 
 /**
@@ -127,7 +127,7 @@ export enum messageSources {
 	CHAT = 'chat',
 	GROUP = 'group',
 	EMAIL = 'email'
-};
+}
 
 /**
  * Resource types
@@ -136,7 +136,7 @@ export enum resourceTypes {
 	USER = 'user',
 	GROUP = 'group',
 	APPLICATION = 'application'
-};
+}
 
 /**
  * API error codes
@@ -193,7 +193,7 @@ export enum apiErrors {
 	NOT_ADMIN_CHAT = 925,
 	COMMUNITY_CANNOT_INTERACT_WITH_THIS_PEER = 932,
 	CONTACT_NOT_FOUND = 936
-};
+}
 
 /**
  * Auth error codes
@@ -204,7 +204,7 @@ export enum authErrors {
 	AUTHORIZATION_FAILED = 'AUTHORIZATION_FAILED',
 	FAILED_PASSED_CAPTCHA = 'FAILED_PASSED_CAPTCHA',
 	FAILED_PASSED_TWO_FACTOR = 'FAILED_PASSED_TWO_FACTOR'
-};
+}
 
 /**
  * Upload error codes
@@ -214,7 +214,7 @@ export enum uploadErrors {
 	NO_FILES_TO_UPLOAD = 'NO_FILES_TO_UPLOAD',
 	EXCEEDED_MAX_FILES = 'EXCEEDED_MAX_FILES',
 	UNSUPPORTED_SOURCE_TYPE = 'UNSUPPORTED_SOURCE_TYPE'
-};
+}
 
 /**
  * Updates error codes
@@ -222,14 +222,14 @@ export enum uploadErrors {
 export enum updatesErrors {
 	NEED_RESTART = 'NEED_RESTART',
 	POLLING_REQUEST_FAILED = 'POLLING_REQUEST_FAILED'
-};
+}
 
 /**
  * Collect error codes
  */
 export enum collectErrors {
 	EXECUTE_ERROR = 'EXECUTE_ERROR'
-};
+}
 
 /**
  * Snippets error codes
@@ -238,7 +238,7 @@ export enum snippetsErrors {
 	INVALID_URL = 'INVALID_URL',
 	INVALID_RESOURCE = 'INVALID_RESOURCE',
 	RESOURCE_NOT_FOUND = 'RESOURCE_NOT_FOUND'
-};
+}
 
 /**
  * Snippets error codes
@@ -246,7 +246,7 @@ export enum snippetsErrors {
 export enum sharedErrors {
 	MISSING_CAPTCHA_HANDLER = 'MISSING_CAPTCHA_HANDLER',
 	MISSING_TWO_FACTOR_HANDLER = 'MISSING_TWO_FACTOR_HANDLER'
-};
+}
 
 /**
  * Updates sources
@@ -254,7 +254,7 @@ export enum sharedErrors {
 export enum updatesSources {
 	POLLING = 'POLLING',
 	WEBHOOK = 'WEBHOOK'
-};
+}
 
 /**
  * List of user permissions and their bit mask

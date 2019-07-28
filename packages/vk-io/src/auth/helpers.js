@@ -33,10 +33,10 @@ export const getAllGroupsPermissions = () => (
  *
  * @return {number}
  */
-export const getUsersPermissionsByName = (scope) => {
-	if (!Array.isArray(scope)) {
-		scope = scope.split(/,\s{0,}/);
-	}
+export const getUsersPermissionsByName = (rawScope) => {
+	const scope = !Array.isArray(rawScope)
+		? rawScope.split(/,\s{0,}/)
+		: rawScope;
 
 	let bitMask = 0;
 
@@ -56,10 +56,10 @@ export const getUsersPermissionsByName = (scope) => {
  *
  * @return {number}
  */
-export const getGroupsPermissionsByName = (scope) => {
-	if (!Array.isArray(scope)) {
-		scope = scope.split(/,\s{0,}/);
-	}
+export const getGroupsPermissionsByName = (rawScope) => {
+	const scope = !Array.isArray(rawScope)
+		? rawScope.split(/,\s{0,}/)
+		: rawScope;
 
 	let bitMask = 0;
 

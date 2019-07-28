@@ -38,16 +38,12 @@ export default class ImplicitFlowGroups extends ImplicitFlow {
 			groups = [groups];
 		}
 
-		this.groups = groups.map((group) => {
-			if (typeof group !== 'number') {
-				group = Number(group);
-			}
+		this.groups = groups.map((rawGroup) => {
+			const group = Number(rawGroup);
 
-			if (group < 0) {
-				group = -group;
-			}
-
-			return group;
+			return group < 0
+				? -group
+				: group;
 		});
 	}
 

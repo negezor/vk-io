@@ -40,6 +40,7 @@ export default class Collect {
 	 *
 	 * @return {string}
 	 */
+	// eslint-disable-next-line class-methods-use-this
 	get [Symbol.toStringTag]() {
 		return 'Collect';
 	}
@@ -62,14 +63,14 @@ export default class Collect {
 	 * @return {Promise<Array>}
 	 */
 	async executes(method, queue) {
-		queue = queue.map(params => (
+		const queueMethods = queue.map(params => (
 			getExecuteMethod(method, params)
 		));
 
 		const promises = [];
 
-		while (queue.length !== 0) {
-			const code = getChainReturn(queue.splice(0, 25));
+		while (queueMethods.length !== 0) {
+			const code = getChainReturn(queueMethods.splice(0, 25));
 
 			promises.push(this.vk.api.execute({ code }));
 		}

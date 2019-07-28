@@ -37,6 +37,7 @@ export default class DialogFlagsContext extends Context {
 	 * @return {boolean}
 	 */
 	get isImportant() {
+		// eslint-disable-next-line no-bitwise
 		return Boolean(this.flags & 1);
 	}
 
@@ -46,6 +47,7 @@ export default class DialogFlagsContext extends Context {
 	 * @return {boolean}
 	 */
 	get isUnanswered() {
+		// eslint-disable-next-line no-bitwise
 		return Boolean(this.flags & 2);
 	}
 

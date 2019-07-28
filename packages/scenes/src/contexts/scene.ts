@@ -15,7 +15,7 @@ export default class SceneContext {
 	 * ctx.scene.session.moduleFlag = true;
 	 * ```
 	 */
-	session: ISessionContext;
+	public session: ISessionContext;
 
 	/**
 	 * Base namespace for user input
@@ -25,7 +25,7 @@ export default class SceneContext {
 	 * ```
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	state: Record<string, any>;
+	public state: Record<string, any>;
 
 	/**
 	 * Is the scene canceled, used in leaveHandler()
@@ -36,9 +36,9 @@ export default class SceneContext {
 	 * });
 	 * ```
 	 */
-	canceled = false;
+	public canceled = false;
 
-	lastAction: LastAction = LastAction.NONE;
+	public lastAction: LastAction = LastAction.NONE;
 
 	private context: ISceneContextOptions['context'];
 
@@ -49,7 +49,7 @@ export default class SceneContext {
 	 */
 	private leaved = false;
 
-	constructor(options: ISceneContextOptions) {
+	public constructor(options: ISceneContextOptions) {
 		this.context = options.context;
 
 		this.repository = options.repository;
@@ -60,7 +60,7 @@ export default class SceneContext {
 	/**
 	 * Returns current scene
 	 */
-	get current(): IScene {
+	public get current(): IScene {
 		return this.repository.get(this.session.current);
 	}
 
@@ -77,7 +77,7 @@ export default class SceneContext {
 	 * });
 	 * ```
 	 */
-	async enter(slug: string, options: ISceneContextEnterOptions = {}): Promise<void> {
+	public async enter(slug: string, options: ISceneContextEnterOptions = {}): Promise<void> {
 		const scene = this.repository.strictGet(slug);
 
 		const { current } = this;
@@ -115,7 +115,7 @@ export default class SceneContext {
 	 * ctx.scene.reenter();
 	 * ```
 	 */
-	async reenter(): Promise<void> {
+	public async reenter(): Promise<void> {
 		const { current } = this;
 
 		if (!current) {
@@ -136,7 +136,7 @@ export default class SceneContext {
 	 * });
 	 * ```
 	 */
-	async leave(options: ISceneContextLeaveOptions = {}): Promise<void> {
+	public async leave(options: ISceneContextLeaveOptions = {}): Promise<void> {
 		const { current } = this;
 
 		if (!current) {
@@ -166,7 +166,7 @@ export default class SceneContext {
 	/**
 	 * Reset state/session
 	 */
-	reset(): void {
+	public reset(): void {
 		// eslint-disable-next-line no-underscore-dangle
 		delete this.context.session.__scene;
 

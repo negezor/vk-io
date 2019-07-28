@@ -35,10 +35,10 @@ export default class Context {
 	 *
 	 * @return {boolean}
 	 */
-	is(types) {
-		if (!Array.isArray(types)) {
-			types = [types];
-		}
+	is(rawTypes) {
+		const types = !Array.isArray(rawTypes)
+			? [rawTypes]
+			: rawTypes;
 
 		return [this.type, ...this.subTypes].some(type => (
 			types.includes(type)

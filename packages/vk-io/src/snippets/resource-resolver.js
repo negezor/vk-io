@@ -83,15 +83,15 @@ export default class ResourceResolver {
 	 *
 	 * @return {Promise<Object>}
 	 */
-	async resolve(resource) {
-		if (!resource) {
+	async resolve(rawResource) {
+		if (!rawResource) {
 			throw new SnippetsError({
 				code: INVALID_RESOURCE,
 				message: 'Resource is required'
 			});
 		}
 
-		resource = String(resource).trim();
+		const resource = String(rawResource).trim();
 
 		if (numberRe.test(resource)) {
 			return this.resolveNumber(resource);
@@ -157,10 +157,10 @@ export default class ResourceResolver {
 	 *
 	 * @return {Promise<Object>}
 	 */
-	async resolveUrl(resourceUrl) {
-		if (!hasProtocolRe.test(resourceUrl)) {
-			resourceUrl = `https://${resourceUrl}`;
-		}
+	async resolveUrl(rawResourceUrl) {
+		const resourceUrl = !hasProtocolRe.test(rawResourceUrl)
+			? `https://${rawResourceUrl}`
+			: rawResourceUrl;
 
 		const { pathname, search } = new URL(resourceUrl);
 

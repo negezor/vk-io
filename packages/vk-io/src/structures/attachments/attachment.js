@@ -68,6 +68,7 @@ export default class Attachment {
 	 *
 	 * @returns {boolean}
 	 */
+	// eslint-disable-next-line class-methods-use-this
 	get canBeAttached() {
 		return true;
 	}

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/camelcase */
+
 /**
  * Special attachments in one message
  */
@@ -62,10 +64,14 @@ export default function transformMessage({
 	}
 
 	if (peer < 0 && message.peer_id !== message.from_id) {
+		// eslint-disable-next-line no-bitwise
 		message.out = Number((flags & 2) === 0);
+		// eslint-disable-next-line no-bitwise
 		message.important = (flags & 1) !== 0;
 	} else {
+		// eslint-disable-next-line no-bitwise
 		message.out = Number((flags & 2) !== 0);
+		// eslint-disable-next-line no-bitwise
 		message.important = (flags & 8) !== 0;
 	}
 

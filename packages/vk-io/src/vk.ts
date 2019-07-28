@@ -18,7 +18,7 @@ import { defaultOptions } from './utils/constants';
  * Main class
  */
 export default class VK {
-	options: IVKOptions = {
+	public options: IVKOptions = {
 		...defaultOptions,
 
 		agent: new Agent({
@@ -28,40 +28,41 @@ export default class VK {
 		})
 	};
 
-	api = new API(this);
+	public api = new API(this);
 
-	auth = new Auth(this);
+	public auth = new Auth(this);
 
-	upload = new Upload(this);
+	public upload = new Upload(this);
 
-	collect = new Collect(this);
+	public collect = new Collect(this);
 
-	updates = new Updates(this);
+	public updates = new Updates(this);
 
-	snippets = new Snippets(this);
+	public snippets = new Snippets(this);
 
-	streaming = new StreamingAPI(this);
+	public streaming = new StreamingAPI(this);
 
 	protected callbackService = new CallbackService(this);
 
 	/**
 	 * Constructor
 	 */
-	constructor(options: Partial<IVKOptions> = {}) {
+	public constructor(options: Partial<IVKOptions> = {}) {
 		this.setOptions(options);
 	}
 
 	/**
 	 * Returns custom tag
 	 */
-	get [Symbol.toStringTag](): string {
+	// eslint-disable-next-line class-methods-use-this
+	public get [Symbol.toStringTag](): string {
 		return 'VK';
 	}
 
 	/**
 	 * Sets options
 	 */
-	setOptions(options: Partial<IVKOptions>): this {
+	public setOptions(options: Partial<IVKOptions>): this {
 		Object.assign(this.options, options);
 
 		return this;
@@ -70,14 +71,14 @@ export default class VK {
 	/**
 	 * Sets token
 	 */
-	set token(token) {
+	public set token(token: string) {
 		this.options.token = token;
 	}
 
 	/**
 	 * Returns token
 	 */
-	get token(): string | null {
+	public get token(): string | null {
 		return this.options.token;
 	}
 
@@ -88,7 +89,7 @@ export default class VK {
 	 * vk.captchaHandler = (payload, retry) => {...};
 	 * ```
 	 */
-	set captchaHandler(handler: Function) {
+	public set captchaHandler(handler: Function) {
 		this.callbackService.captchaHandler = handler;
 	}
 
@@ -99,7 +100,7 @@ export default class VK {
 	 * vk.twoFactorHandler = (payload, retry) => {...};
 	 * ```
 	 */
-	set twoFactorHandler(handler: Function) {
+	public set twoFactorHandler(handler: Function) {
 		this.callbackService.twoFactorHandler = handler;
 	}
 
@@ -107,7 +108,7 @@ export default class VK {
 	 * Custom inspect object
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	[inspect.custom](depth: number, options: Record<string, any>): string {
+	public [inspect.custom](depth: number, options: Record<string, any>): string {
 		const { name } = this.constructor;
 
 		const {

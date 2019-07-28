@@ -87,6 +87,7 @@ export default class AccountVerification {
 	 *
 	 * @return {string}
 	 */
+	// eslint-disable-next-line class-methods-use-this
 	get [Symbol.toStringTag]() {
 		return 'AccountVerification';
 	}
@@ -232,12 +233,12 @@ export default class AccountVerification {
 		try {
 			const url = getFullURL(action, response);
 
-			response = await this.fetch(url, {
+			const newResponse = await this.fetch(url, {
 				method: 'POST',
 				body: new URLSearchParams(fields)
 			});
 
-			return response;
+			return newResponse;
 		} catch (error) {
 			validate.reject(error);
 
@@ -287,19 +288,19 @@ export default class AccountVerification {
 
 		const url = getFullURL(action, response);
 
-		response = await this.fetch(url, {
+		const rewResponse = await this.fetch(url, {
 			method: 'POST',
 			body: new URLSearchParams(fields)
 		});
 
-		if (response.url.includes(ACTION_SECURITY_CODE)) {
+		if (rewResponse.url.includes(ACTION_SECURITY_CODE)) {
 			throw new AuthError({
 				message: 'Invalid phone number',
 				code: INVALID_PHONE_NUMBER
 			});
 		}
 
-		return response;
+		return rewResponse;
 	}
 
 	/**

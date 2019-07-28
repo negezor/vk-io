@@ -13,12 +13,12 @@ export default class VKError extends Error {
 	/**
 	 * Error code
 	 */
-	code: string | number;
+	public code: string | number;
 
 	/**
 	 * Constructor
 	 */
-	constructor({ code, message }: IVKErrorOptions) {
+	public constructor({ code, message }: IVKErrorOptions) {
 		super(message);
 
 		this.code = code;
@@ -31,14 +31,14 @@ export default class VKError extends Error {
 	/**
 	 * Returns custom tag
 	 */
-	get [Symbol.toStringTag](): string {
+	public get [Symbol.toStringTag](): string {
 		return this.constructor.name;
 	}
 
 	/**
 	 * Returns property for json
 	 */
-	toJSON(): CopiedError {
+	public toJSON(): CopiedError {
 		const json: CopiedError = {};
 
 		for (const key of Object.getOwnPropertyNames(this)) {

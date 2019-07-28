@@ -15,6 +15,7 @@ export type ButtonPayload = object | string;
 /**
  * Primary colors used in the text button
  */
+// eslint-disable-next-line import/prefer-default-export
 export enum ButtonColor {
 	/**
 	 * The white button, indicates secondary action

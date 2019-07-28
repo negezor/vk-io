@@ -10,12 +10,12 @@ export default class ExecuteError extends VKError {
 	/**
 	 * The method in which the error occurred
 	 */
-	method: string;
+	public method: string;
 
 	/**
 	 * Constructor
 	 */
-	constructor(options: IExecuteErrorOptions) {
+	public constructor(options: IExecuteErrorOptions) {
 		const code = Number(options.error_code);
 		const message = `Code №${code} - ${options.error_msg}`;
 

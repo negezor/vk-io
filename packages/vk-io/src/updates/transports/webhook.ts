@@ -10,29 +10,23 @@ import { parseRequestJSON } from '../helpers';
 const debug = createDebug('vk-io:updates');
 
 export default class WebhookTransport {
-	started: boolean = false;
+	public started: boolean = false;
 
-	/**
-	 * 2 -  Attachments
-	 * 8 -  Extended events
-	 * 64 - Online user platform ID
-	 */
-	mode: number = 2 | 8 | 64;
 
-	webhookHandler: Function;
+	public webhookHandler: Function;
 
 	protected webhookServer: HTTPServer | HTTPSServer | null = null;
 
 	protected vk: VK;
 
-	constructor(vk: VK) {
+	public constructor(vk: VK) {
 		this.vk = vk;
 	}
 
 	/**
 	 * Starts the webhook server
 	 */
-	async start(
+	public async start(
 		{
 			path = '/',
 
@@ -77,19 +71,19 @@ export default class WebhookTransport {
 				? httpsCreateServer(tls, callback)
 				: httpCreateServer(callback);
 
-			if (!port) {
-				port = tls
-					? 443
-					: 80;
-			}
-
 			const { webhookServer } = this;
 
 			const listen = promisify(webhookServer.listen).bind(webhookServer);
 
-			await listen(port, host);
+			const serverPort = port || (
+				tls
+					? 443
+					: 80
+			);
 
-			debug(`Webhook listening on port: ${port}`);
+			await listen(serverPort, host);
+
+			debug(`Webhook listening on port: ${serverPort}`);
 		} catch (error) {
 			this.started = false;
 
@@ -100,7 +94,7 @@ export default class WebhookTransport {
 	/**
 	 * Stopping gets updates
 	 */
-	async stop(): Promise<void> {
+	public async stop(): Promise<void> {
 		this.started = false;
 
 		if (this.webhookServer !== null) {
@@ -117,7 +111,7 @@ export default class WebhookTransport {
 	/**
 	 * Returns webhook callback like http[s] or express
 	 */
-	getWebhookCallback(path = null): Function {
+	public getWebhookCallback(path: string = null): Function {
 		const headers = {
 			connection: 'keep-alive',
 			'content-type': 'text/plain'
@@ -185,14 +179,14 @@ export default class WebhookTransport {
 		};
 	}
 
-	subscribe(handler: Function): void {
+	public subscribe(handler: Function): void {
 		this.webhookHandler = handler;
 	}
 
 	/**
 	 * Returns the middleware for the webhook under koa
 	 */
-	getKoaWebhookMiddleware(): Function {
+	public getKoaWebhookMiddleware(): Function {
 		return async (context): Promise<void> => {
 			const update = context.request.body;
 

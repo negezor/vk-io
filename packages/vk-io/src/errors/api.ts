@@ -24,32 +24,32 @@ export default class APIError extends VKError {
 	/**
 	 * Request parameters
 	 */
-	params: IAPIErrorParam[];
+	public params: IAPIErrorParam[];
 
 	/**
 	 * Session identifier captcha
 	 */
-	captchaSid?: number;
+	public captchaSid?: number;
 
 	/**
 	 * Image of captcha
 	 */
-	captchaImg?: string;
+	public captchaImg?: string;
 
 	/**
 	 * Redirect URL, eg validation
 	 */
-	redirectUri?: string;
+	public redirectUri?: string;
 
 	/**
 	 * Required confirmation text
 	 */
-	confirmationText?: string;
+	public confirmationText?: string;
 
 	/**
 	 * Constructor
 	 */
-	constructor(payload: IAPIErrorOptions) {
+	public constructor(payload: IAPIErrorOptions) {
 		const code = Number(payload.error_code);
 		const message = `Code №${code} - ${payload.error_msg}`;
 

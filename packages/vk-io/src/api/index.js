@@ -127,15 +127,11 @@ export default class API {
 				isMessagesGroup
 					? {
 						send: (params = {}) => {
-							if (!('random_id' in params)) {
-								params = {
-									...params,
+							const messageParams = params.random_id === undefined
+								? { ...params, random_id: getRandomId() }
+								: params;
 
-									random_id: getRandomId()
-								};
-							}
-
-							return this.enqueue('messages.send', params);
+							return this.enqueue('messages.send', messageParams);
 						}
 					}
 					: {},
@@ -159,6 +155,7 @@ export default class API {
 	 *
 	 * @return {string}
 	 */
+	// eslint-disable-next-line class-methods-use-this
 	get [Symbol.toStringTag]() {
 		return 'API';
 	}

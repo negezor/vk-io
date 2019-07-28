@@ -15,12 +15,12 @@ export default class AuthError extends VKError {
 	/**
 	 * HTML error page
 	 */
-	pageHtml: string | null;
+	public pageHtml: string | null;
 
 	/**
 	 * Constructor
 	 */
-	constructor({ message, code, pageHtml = null }: IAuthErrorOptions) {
+	public constructor({ message, code, pageHtml = null }: IAuthErrorOptions) {
 		super({ message, code });
 
 		this.pageHtml = isDebug
