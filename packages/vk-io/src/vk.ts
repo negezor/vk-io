@@ -16,8 +16,6 @@ import { defaultOptions } from './utils/constants';
 
 /**
  * Main class
- *
- * @public
  */
 export default class VK {
 	options: IVKOptions = {
@@ -44,7 +42,7 @@ export default class VK {
 
 	streaming = new StreamingAPI(this);
 
-	callbackService = new CallbackService(this);
+	protected callbackService = new CallbackService(this);
 
 	/**
 	 * Constructor
@@ -90,7 +88,7 @@ export default class VK {
 	 * vk.captchaHandler = (payload, retry) => {...};
 	 * ```
 	 */
-	set captchaHandler(handler) {
+	set captchaHandler(handler: Function) {
 		this.callbackService.captchaHandler = handler;
 	}
 
@@ -101,19 +99,15 @@ export default class VK {
 	 * vk.twoFactorHandler = (payload, retry) => {...};
 	 * ```
 	 */
-	set twoFactorHandler(handler) {
+	set twoFactorHandler(handler: Function) {
 		this.callbackService.twoFactorHandler = handler;
 	}
 
 	/**
 	 * Custom inspect object
-	 *
-	 * @param {?number} depth
-	 * @param {Object}  options
-	 *
-	 * @return {string}
 	 */
-	[inspect.custom](depth, options): string {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	[inspect.custom](depth: number, options: Record<string, any>): string {
 		const { name } = this.constructor;
 
 		const {
