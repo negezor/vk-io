@@ -26,6 +26,8 @@ const findUserAgent = (headers: Record<string, string> | null): string | null =>
 	return headers[key];
 };
 
+export { CookieJar };
+
 export const fetchCookieDecorator = (jar = new CookieJar()): Function => {
 	const setCookie = promisify(jar.setCookie).bind(jar);
 	const getCookieString = promisify(jar.getCookieString).bind(jar);

@@ -3,7 +3,7 @@ import { Stream, Readable } from 'stream';
 /**
  * Check object is stream
  */
-export const isStream = (source: object): boolean => (
+export const isStream = (source: Readable | Buffer | string): boolean => (
 	typeof source === 'object' && source instanceof Stream
 );
 

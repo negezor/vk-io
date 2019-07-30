@@ -7,11 +7,11 @@ const {
 } = sharedErrors;
 
 export default class CallbackService {
+	public captchaHandler: Function | null = null;
+
+	public twoFactorHandler: Function | null = null;
+
 	protected vk: VK;
-
-	protected captchaHandler: Function | null = null;
-
-	protected twoFactorHandler: Function | null = null;
 
 	/**
 	 * Constructor
