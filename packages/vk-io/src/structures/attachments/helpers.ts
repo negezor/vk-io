@@ -39,11 +39,6 @@ const attachmentsTypes = {
 
 /**
  * Transform raw attachments to wrapper
- *
- * @param {Object[]} attachments
- * @param {VK}       vk
- *
- * @return {Object[]}
  */
 // @ts-ignore
 // eslint-disable-next-line import/prefer-default-export, @typescript-eslint/no-explicit-any

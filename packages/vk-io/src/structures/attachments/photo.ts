@@ -51,8 +51,6 @@ export default class PhotoAttachment extends Attachment {
 
 	/**
 	 * Load attachment payload
-	 *
-	 * @return {Promise}
 	 */
 	public async loadAttachmentPayload(): Promise<void> {
 		if (this.$filled) {
@@ -76,8 +74,6 @@ export default class PhotoAttachment extends Attachment {
 
 	/**
 	 * Returns the ID of the user who uploaded the image
-	 *
-	 * @return {?number}
 	 */
 	public get userId(): number | null {
 		return this.payload.user_id || null;
@@ -85,8 +81,6 @@ export default class PhotoAttachment extends Attachment {
 
 	/**
 	 * Returns the ID of the album
-	 *
-	 * @return {?number}
 	 */
 	public get albumId(): number | null {
 		return this.payload.album_id || null;
@@ -94,8 +88,6 @@ export default class PhotoAttachment extends Attachment {
 
 	/**
 	 * Returns the photo text
-	 *
-	 * @return {?string}
 	 */
 	public get text(): string | null {
 		return this.payload.text || null;
@@ -103,8 +95,6 @@ export default class PhotoAttachment extends Attachment {
 
 	/**
 	 * Returns the date when this photo was created
-	 *
-	 * @return {?number}
 	 */
 	public get createdAt(): number | null {
 		return this.payload.date || null;
@@ -112,8 +102,6 @@ export default class PhotoAttachment extends Attachment {
 
 	/**
 	 * Returns the photo height
-	 *
-	 * @return {?number}
 	 */
 	public get height(): number | null {
 		return this.payload.height || null;
@@ -121,8 +109,6 @@ export default class PhotoAttachment extends Attachment {
 
 	/**
 	 * Returns the photo width
-	 *
-	 * @return {?number}
 	 */
 	public get width(): number | null {
 		return this.payload.width || null;
@@ -131,8 +117,6 @@ export default class PhotoAttachment extends Attachment {
 	/**
 	 * Returns the URL of a small photo
 	 * (130 or 75)
-	 *
-	 * @return {?string}
 	 */
 	public get smallPhoto(): string | null {
 		if (!this.$filled) {
@@ -147,8 +131,6 @@ export default class PhotoAttachment extends Attachment {
 	/**
 	 * Returns the URL of a medium photo
 	 * (807 or 604 or less)
-	 *
-	 * @return {?string}
 	 */
 	public get mediumPhoto(): string | null {
 		if (!this.$filled) {
@@ -163,8 +145,6 @@ export default class PhotoAttachment extends Attachment {
 	/**
 	 * Returns the URL of a large photo
 	 * (2560 or 1280 or less)
-	 *
-	 * @return {?string}
 	 */
 	public get largePhoto(): string | null {
 		if (!this.$filled) {

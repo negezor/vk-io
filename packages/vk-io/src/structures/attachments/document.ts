@@ -184,8 +184,6 @@ export default class DocumentAttachment extends Attachment {
 
 	/**
 	 * Returns the date when this document was created
-	 *
-	 * @return {?number}
 	 */
 	public get createdAt(): number | null {
 		return this.payload.date || null;
@@ -193,8 +191,6 @@ export default class DocumentAttachment extends Attachment {
 
 	/**
 	 * Returns the type identifier (1~8)
-	 *
-	 * @return {?number}
 	 */
 	public get typeId(): number | null {
 		return this.payload.type || null;
@@ -202,8 +198,6 @@ export default class DocumentAttachment extends Attachment {
 
 	/**
 	 * Returns the type name
-	 *
-	 * @return {?string}
 	 */
 	public get typeName(): string | null {
 		if (!this.$filled) {
@@ -215,8 +209,6 @@ export default class DocumentAttachment extends Attachment {
 
 	/**
 	 * Returns the size in bytes
-	 *
-	 * @return {?number}
 	 */
 	public get size(): number | null {
 		if (!this.$filled) {
@@ -228,8 +220,6 @@ export default class DocumentAttachment extends Attachment {
 
 	/**
 	 * Returns the extension
-	 *
-	 * @return {?string}
 	 */
 	public get extension(): string | null {
 		return this.payload.ext || null;
@@ -237,8 +227,6 @@ export default class DocumentAttachment extends Attachment {
 
 	/**
 	 * Returns the URL of the document
-	 *
-	 * @return {?string}
 	 */
 	public get url(): string | null {
 		return this.payload.url || null;
@@ -246,8 +234,6 @@ export default class DocumentAttachment extends Attachment {
 
 	/**
 	 * Returns the info to preview
-	 *
-	 * @return {?Object}
 	 */
 	public get preview(): object | null {
 		return this.payload.preview || null;

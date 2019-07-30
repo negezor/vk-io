@@ -97,8 +97,6 @@ export default class Attachment {
 
 	/**
 	 * Returns data for JSON
-	 *
-	 * @return {Object}
 	 */
 	public toJSON(): object {
 		return this[inspectCustomData]();

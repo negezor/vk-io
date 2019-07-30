@@ -25,9 +25,6 @@ export default class AudioMessageAttachment extends Attachment {
 
 	/**
 	 * Constructor
-	 *
-	 * @param {Object} payload
-	 * @param {VK}     vk
 	 */
 	public constructor(payload, vk: VK) {
 		super(AUDIO_MESSAGE, payload.owner_id, payload.id, payload.access_key);
