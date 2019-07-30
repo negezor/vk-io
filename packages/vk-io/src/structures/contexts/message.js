@@ -113,7 +113,7 @@ export default class MessageContext extends Context {
 	 * @return {boolean}
 	 */
 	get hasText() {
-		return this.text !== null;
+		return Boolean(this.text);
 	}
 
 	/**
