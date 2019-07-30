@@ -1,3 +1,5 @@
+import VK from '../../vk';
+
 import Attachment from './attachment';
 
 import { copyParams } from '../../utils/helpers';
@@ -5,14 +7,45 @@ import { attachmentTypes, inspectCustomData } from '../../utils/constants';
 
 const { POLL } = attachmentTypes;
 
+export interface IPollAttachmentPayload {
+	id: number;
+	owner_id: number;
+	access_key: string;
+
+	anonymous?: number;
+	multiple?: number;
+	closed?: number;
+	is_board?: number;
+	can_edit?: number;
+	can_vote?: number;
+	can_report?: number;
+	can_share?: number;
+	author_id?: number;
+	question?: string;
+	created?: number;
+	end_date?: number;
+	votes?: number;
+	answer_ids?: number[];
+	friends?: number[];
+	answers?: {
+		id: number;
+		text: string;
+		votes: number;
+		rate: number;
+	}[];
+	background?: object[];
+	photo?: object;
+}
+
 export default class PollAttachment extends Attachment {
+	protected vk: VK;
+
+	protected payload: IPollAttachmentPayload;
+
 	/**
 	 * Constructor
-	 *
-	 * @param {Object} payload
-	 * @param {VK}     vk
 	 */
-	constructor(payload, vk) {
+	public constructor(payload: IPollAttachmentPayload, vk: VK) {
 		super(POLL, payload.owner_id, payload.id, payload.access_key);
 
 		this.vk = vk;
@@ -23,14 +56,13 @@ export default class PollAttachment extends Attachment {
 
 	/**
 	 * Load attachment payload
-	 *
-	 * @return {Promise}
 	 */
-	async loadAttachmentPayload() {
+	public async loadAttachmentPayload(): Promise<void> {
 		if (this.$filled) {
 			return;
 		}
 
+		// @ts-ignore
 		const [poll] = await this.vk.api.polls.getById({
 			poll_id: this.id,
 			owner_id: this.ownerId
@@ -47,141 +79,117 @@ export default class PollAttachment extends Attachment {
 
 	/**
 	 * Checks whether the poll is anonymous
-	 *
-	 * @return {?boolean}
 	 */
-	get isAnonymous() {
+	public get isAnonymous(): boolean | null {
 		if (!this.$filled) {
 			return null;
 		}
 
-		return this.payload.anonymous;
+		return Boolean(this.payload.anonymous);
 	}
 
 	/**
 	 * Checks whether the poll allows multiple choice of answers
-	 *
-	 * @return {?boolean}
 	 */
-	get isMultiple() {
+	public get isMultiple(): boolean | null {
 		if (!this.$filled) {
 			return null;
 		}
 
-		return this.payload.multiple;
+		return Boolean(this.payload.multiple);
 	}
 
 	/**
 	 * Checks whether the poll is complete
-	 *
-	 * @return {?boolean}
 	 */
-	get isClosed() {
+	public get isClosed(): boolean | null {
 		if (!this.$filled) {
 			return null;
 		}
 
-		return this.payload.closed;
+		return Boolean(this.payload.closed);
 	}
 
 	/**
 	 * Check whether questions are attached to the discussion
-	 *
-	 * @return {?boolean}
 	 */
-	get isBoard() {
+	public get isBoard(): boolean | null {
 		if (!this.$filled) {
 			return null;
 		}
 
-		return this.payload.is_board;
+		return Boolean(this.payload.is_board);
 	}
 
 	/**
 	 * Check if can edit the poll
-	 *
-	 * @return {?boolean}
 	 */
-	get isCanEdit() {
+	public get isCanEdit(): boolean | null {
 		if (!this.$filled) {
 			return null;
 		}
 
-		return this.payload.can_edit;
+		return Boolean(this.payload.can_edit);
 	}
 
 	/**
 	 * Check if can vote in the survey
-	 *
-	 * @return {?boolean}
 	 */
-	get isCanVote() {
+	public get isCanVote(): boolean | null {
 		if (!this.$filled) {
 			return null;
 		}
 
-		return this.payload.can_vote;
+		return Boolean(this.payload.can_vote);
 	}
 
 	/**
 	 * Check if can complain about the poll
-	 *
-	 * @return {?boolean}
 	 */
-	get isCanReport() {
+	public get isCanReport(): boolean | null {
 		if (!this.$filled) {
 			return null;
 		}
 
-		return this.payload.can_report;
+		return Boolean(this.payload.can_report);
 	}
 
 	/**
 	 * Check if can share a survey
-	 *
-	 * @return {?boolean}
 	 */
-	get isCanShare() {
+	public get isCanShare(): boolean | null {
 		if (!this.$filled) {
 			return null;
 		}
 
-		return this.payload.can_share;
+		return Boolean(this.payload.can_share);
 	}
 
 	/**
 	 * Returns the ID of the poll author
-	 *
-	 * @return {?number}
 	 */
-	get authorId() {
+	public get authorId(): number | null {
 		return this.payload.author_id || null;
 	}
 
 	/**
 	 * Returns the question text
-	 *
-	 * @return {?string}
 	 */
-	get question() {
+	public get question(): string | null {
 		return this.payload.question || null;
 	}
 
 	/**
 	 * Returns the date when this poll was created
-	 *
-	 * @return {?number}
 	 */
-	get createdAt() {
+	public get createdAt(): number | null {
 		return this.payload.created || null;
 	}
 
 	/**
 	 * Returns the end date of the poll in Unixtime. 0, if the poll is unlimited
-	 *
-	 * @return {?number}
 	 */
-	get endedAt() {
+	public get endedAt(): number | null {
 		if (!this.$filled) {
 			return null;
 		}
@@ -191,28 +199,22 @@ export default class PollAttachment extends Attachment {
 
 	/**
 	 * Returns the number of votes
-	 *
-	 * @return {?number}
 	 */
-	get votes() {
+	public get votes(): number | null {
 		return this.payload.votes || null;
 	}
 
 	/**
 	 * Returns the identifiers of the response options selected by the current user
-	 *
-	 * @return {?number[]}
 	 */
-	get answerIds() {
+	public get answerIds(): number[] | null {
 		return this.payload.answer_ids || null;
 	}
 
 	/**
 	 * Returns the identifiers of 3 friends who voted in the poll
-	 *
-	 * @return {?Object[]}
 	 */
-	get friends() {
+	public get friends(): number[] | null {
 		if (!this.$filled) {
 			return null;
 		}
@@ -222,28 +224,22 @@ export default class PollAttachment extends Attachment {
 
 	/**
 	 * Returns the information about the options for the answer
-	 *
-	 * @return {?Object[]}
 	 */
-	get answers() {
+	public get answers(): object[] | null {
 		return this.payload.answers || null;
 	}
 
 	/**
 	 * Returns the poll snippet background
-	 *
-	 * @return {?Object}
 	 */
-	get background() {
+	public get background(): object[] | null {
 		return this.payload.background || null;
 	}
 
 	/**
 	 * Returns a photo - the poll snippet background
-	 *
-	 * @return {?Object}
 	 */
-	get photo() {
+	public get photo(): object | null {
 		return this.payload.photo || null;
 	}
 
@@ -252,7 +248,7 @@ export default class PollAttachment extends Attachment {
 	 *
 	 * @type {Object}
 	 */
-	[inspectCustomData]() {
+	public [inspectCustomData](): object {
 		return copyParams(this, [
 			'authorId',
 			'question',

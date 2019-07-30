@@ -1,6 +1,8 @@
+import VK from '../../vk';
+
 import ExternalAttachment from './external';
 
-import PhotoAttachment from './photo';
+import PhotoAttachment, { IPhotoAttachmentPayload } from './photo';
 import { copyParams } from '../../utils/helpers';
 import { attachmentTypes, inspectCustomData } from '../../utils/constants';
 
@@ -8,14 +10,33 @@ const { LINK } = attachmentTypes;
 
 const kPhoto = Symbol('kPhoto');
 
+export interface ILinkAttachmentPayload {
+	title: string;
+	caption: string | null;
+	description: string | null;
+	url: string;
+	product: {
+		price: object;
+	} | null;
+	button: {
+		title: string;
+		action: {
+			type: string;
+			url: string;
+		};
+	} | null;
+	photo: IPhotoAttachmentPayload | null;
+}
+
 export default class LinkAttachment extends ExternalAttachment {
+	protected vk: VK;
+
+	protected payload: ILinkAttachmentPayload;
+
 	/**
 	 * Constructor
-	 *
-	 * @param {Object} payload
-	 * @param {VK}     vk
 	 */
-	constructor(payload, vk) {
+	public constructor(payload, vk) {
 		super(LINK, payload);
 
 		this.vk = vk;
@@ -23,73 +44,65 @@ export default class LinkAttachment extends ExternalAttachment {
 
 	/**
 	 * Checks for the presence of a photo in a link
-	 *
-	 * @return {boolean}
 	 */
-	get hasPhoto() {
-		return this.attachments.length > 0;
+	public get hasPhoto(): boolean {
+		return Boolean(this[kPhoto]);
 	}
 
 	/**
 	 * Returns the title
-	 *
-	 * @return {string}
 	 */
-	get title() {
+	public get title(): string {
 		return this.payload.title;
 	}
 
 	/**
 	 * Returns the title
-	 *
-	 * @return {?string}
 	 */
-	get caption() {
+	public get caption(): string | null {
 		return this.payload.caption || null;
 	}
 
 	/**
 	 * Returns the description
-	 *
-	 * @return {?string}
 	 */
-	get description() {
+	public get description(): string | null {
 		return this.payload.description || null;
 	}
 
 	/**
 	 * Returns the URL of the link
-	 *
-	 * @return {string}
 	 */
-	get url() {
+	public get url(): string {
 		return this.payload.url;
 	}
 
 	/**
 	 * Returns the product
-	 *
-	 * @return {?Object}
 	 */
-	get product() {
+	public get product(): {
+		price: object;
+	} | null {
 		return this.payload.product;
 	}
 
 	/**
 	 * Returns the button
-	 *
-	 * @return {?Object}
 	 */
-	get button() {
+	public get button(): {
+		title: string;
+		action: {
+			type: string;
+			url: string;
+		};
+	} | null {
 		return this.payload.button || null;
 	}
 
 	/**
 	 * Returns the photo
-	 *
-	 * @return {?PhotoAttachment}
 	 */
-	get photo() {
+	public get photo(): PhotoAttachment | null {
 		if (!this[kPhoto]) {
 			this[kPhoto] = this.payload.photo
 				? new PhotoAttachment(this.payload.photo, this.vk)
@@ -101,10 +114,8 @@ export default class LinkAttachment extends ExternalAttachment {
 
 	/**
 	 * Returns the custom data
-	 *
-	 * @type {Object}
 	 */
-	[inspectCustomData]() {
+	public [inspectCustomData](): object {
 		return copyParams(this, [
 			'title',
 			'caption',

@@ -1,3 +1,5 @@
+import VK from '../../vk';
+
 import Attachment from './attachment';
 
 import { copyParams } from '../../utils/helpers';
@@ -5,14 +7,25 @@ import { attachmentTypes, inspectCustomData } from '../../utils/constants';
 
 const { GRAFFITI } = attachmentTypes;
 
+export interface IGraffitiAttachmentPayload {
+	id: number;
+	owner_id: number;
+	access_key: string;
+
+	height?: number;
+	width?: number;
+	url?: string;
+}
+
 export default class GraffitiAttachment extends Attachment {
+	protected vk: VK;
+
+	protected payload: IGraffitiAttachmentPayload;
+
 	/**
 	 * Constructor
-	 *
-	 * @param {Object} payload
-	 * @param {VK}     vk
 	 */
-	constructor(payload, vk) {
+	public constructor(payload: IGraffitiAttachmentPayload, vk: VK) {
 		super(GRAFFITI, payload.owner_id, payload.id, payload.access_key);
 
 		this.vk = vk;
@@ -23,14 +36,13 @@ export default class GraffitiAttachment extends Attachment {
 
 	/**
 	 * Load attachment payload
-	 *
-	 * @return {Promise}
 	 */
-	async loadAttachmentPayload() {
+	public async loadAttachmentPayload(): Promise<void> {
 		if (this.$filled) {
 			return;
 		}
 
+		// @ts-ignore
 		const [document] = await this.vk.api.docs.getById({
 			docs: `${this.ownerId}_${this.id}`
 		});
@@ -46,28 +58,22 @@ export default class GraffitiAttachment extends Attachment {
 
 	/**
 	 * Returns the graffiti height
-	 *
-	 * @return {?number}
 	 */
-	get height() {
+	public get height(): number | null {
 		return this.payload.height || null;
 	}
 
 	/**
 	 * Returns the graffiti width
-	 *
-	 * @return {?number}
 	 */
-	get width() {
+	public get width(): number | null {
 		return this.payload.width || null;
 	}
 
 	/**
 	 * Returns the URL of the document
-	 *
-	 * @return {?string}
 	 */
-	get url() {
+	public get url(): string | null {
 		return this.payload.url || null;
 	}
 
@@ -76,7 +82,7 @@ export default class GraffitiAttachment extends Attachment {
 	 *
 	 * @type {Object}
 	 */
-	[inspectCustomData]() {
+	public [inspectCustomData](): object {
 		return copyParams(this, [
 			'height',
 			'width',

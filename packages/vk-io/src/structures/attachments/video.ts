@@ -1,3 +1,5 @@
+import VK from '../../vk';
+
 import Attachment from './attachment';
 
 import { copyParams } from '../../utils/helpers';
@@ -5,14 +7,38 @@ import { attachmentTypes, inspectCustomData } from '../../utils/constants';
 
 const { VIDEO } = attachmentTypes;
 
+export interface IVideoAttachmentPayload {
+	id: number;
+	owner_id: number;
+	access_key: string;
+
+	repeat?: number;
+	can_add?: number;
+	can_edit?: number;
+	processing?: number;
+	live?: number;
+	upcoming?: number;
+	is_favorite?: number;
+	title?: string;
+	description?: string;
+	duration?: number;
+	date?: number;
+	adding_date?: number;
+	views?: number;
+	comments?: number;
+	player?: string;
+	platform?: string;
+}
+
 export default class VideoAttachment extends Attachment {
+	protected vk: VK;
+
+	protected payload: IVideoAttachmentPayload;
+
 	/**
 	 * Constructor
-	 *
-	 * @param {Object} payload
-	 * @param {VK}     vk
 	 */
-	constructor(payload, vk) {
+	public constructor(payload: IVideoAttachmentPayload, vk: VK) {
 		super(VIDEO, payload.owner_id, payload.id, payload.access_key);
 
 		this.vk = vk;
@@ -23,14 +49,13 @@ export default class VideoAttachment extends Attachment {
 
 	/**
 	 * Load attachment payload
-	 *
-	 * @return {Promise}
 	 */
-	async loadAttachmentPayload() {
+	public async loadAttachmentPayload(): Promise<void> {
 		if (this.$filled) {
 			return;
 		}
 
+		// @ts-ignore
 		const { items } = await this.vk.api.video.get({
 			videos: `${this.ownerId}_${this.id}`,
 			extended: 0
@@ -49,64 +74,50 @@ export default class VideoAttachment extends Attachment {
 
 	/**
 	 * Checks whether the video is repeatable
-	 *
-	 * @return {?boolean}
 	 */
-	get isRepeat() {
+	public get isRepeat(): boolean | null {
 		return this.checkBooleanInProperty('repeat');
 	}
 
 	/**
 	 * Checks that the user can add a video to himself
-	 *
-	 * @return {?boolean}
 	 */
-	get isCanAdd() {
+	public get isCanAdd(): boolean | null {
 		return this.checkBooleanInProperty('can_add');
 	}
 
 	/**
 	 * Checks if the user can edit the video
-	 *
-	 * @return {?boolean}
 	 */
-	get isCanEdit() {
+	public get isCanEdit(): boolean | null {
 		return this.checkBooleanInProperty('can_edit');
 	}
 
 	/**
 	 * Checks whether the video is being processed
-	 *
-	 * @return {?boolean}
 	 */
-	get isProcessing() {
+	public get isProcessing(): boolean | null {
 		return this.checkBooleanInProperty('processing');
 	}
 
 	/**
 	 * Checks whether the video is a broadcast
-	 *
-	 * @return {?boolean}
 	 */
-	get isBroadcast() {
+	public get isBroadcast(): boolean | null {
 		return this.checkBooleanInProperty('live');
 	}
 
 	/**
 	 * Checks whether the video is a broadcast
-	 *
-	 * @return {?boolean}
 	 */
-	get isUpcoming() {
+	public get isUpcoming(): boolean | null {
 		return this.checkBooleanInProperty('upcoming');
 	}
 
 	/**
 	 * Checks is bookmarked current user
-	 *
-	 * @return {?boolean}
 	 */
-	get isFavorited() {
+	public get isFavorited(): boolean | null {
 		if (!this.$filled) {
 			return null;
 		}
@@ -117,28 +128,22 @@ export default class VideoAttachment extends Attachment {
 
 	/**
 	 * Returns the title
-	 *
-	 * @return {?string}
 	 */
-	get title() {
+	public get title(): string | null {
 		return this.payload.title || null;
 	}
 
 	/**
 	 * Returns the description
-	 *
-	 * @return {?string}
 	 */
-	get description() {
+	public get description(): string | null {
 		return this.payload.description || null;
 	}
 
 	/**
 	 * Returns the duration
-	 *
-	 * @return {?number}
 	 */
-	get duration() {
+	public get duration(): number | null {
 		if (!this.$filled) {
 			return null;
 		}
@@ -148,67 +153,51 @@ export default class VideoAttachment extends Attachment {
 
 	/**
 	 * Returns the date when this video was created
-	 *
-	 * @return {?number}
 	 */
-	get createdAt() {
+	public get createdAt(): number | null {
 		return this.payload.date || null;
 	}
 
 	/**
 	 * Returns the date when this video was added
-	 *
-	 * @return {?Date}
 	 */
-	get addedAt() {
+	public get addedAt(): number | null {
 		return this.payload.adding_date || null;
 	}
 
 	/**
 	 * Returns the count views
-	 *
-	 * @return {?number}
 	 */
-	get viewsCount() {
+	public get viewsCount(): number | null {
 		return this.payload.views || null;
 	}
 
 	/**
 	 * Returns the count comments
-	 *
-	 * @return {?number}
 	 */
-	get commentsCount() {
+	public get commentsCount(): number | null {
 		return this.payload.comments || null;
 	}
 
 	/**
 	 * Returns the URL of the page with the player
-	 *
-	 * @return {?string}
 	 */
-	get player() {
+	public get player(): string | null {
 		return this.payload.player || null;
 	}
 
 
 	/**
 	 * Returns the name of the platform (for video recordings added from external sites)
-	 *
-	 * @return {?string}
 	 */
-	get platformName() {
+	public get platformName(): string | null {
 		return this.payload.platform || null;
 	}
 
 	/**
 	 * Checks for a boolean value in the property
-	 *
-	 * @param {string} name
-	 *
-	 * @return {?boolean}
 	 */
-	checkBooleanInProperty(name) {
+	protected checkBooleanInProperty(name: string): boolean | null {
 		const property = this.payload[name];
 
 		if (typeof property !== 'number') {
@@ -220,10 +209,8 @@ export default class VideoAttachment extends Attachment {
 
 	/**
 	 * Returns the custom data
-	 *
-	 * @type {Object}
 	 */
-	[inspectCustomData]() {
+	public [inspectCustomData](): object {
 		return copyParams(this, [
 			'title',
 			'description',

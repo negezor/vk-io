@@ -1,3 +1,5 @@
+import VK from '../../vk';
+
 import Attachment from './attachment';
 
 import { copyParams } from '../../utils/helpers';
@@ -5,14 +7,31 @@ import { attachmentTypes, inspectCustomData } from '../../utils/constants';
 
 const { AUDIO } = attachmentTypes;
 
+export interface IAudioAttachmentPayload {
+	id: number;
+	owner_id: number;
+	access_key: string;
+
+	is_hq?: number;
+	lyrics_id?: number;
+	album_id?: number;
+	genre_id?: number;
+	title?: string;
+	artist?: string;
+	duration?: number;
+	date?: number;
+	url?: string;
+}
+
 export default class AudioAttachment extends Attachment {
+	protected vk: VK;
+
+	protected payload: IAudioAttachmentPayload;
+
 	/**
 	 * Constructor
-	 *
-	 * @param {Object} payload
-	 * @param {VK}     vk
 	 */
-	constructor(payload, vk) {
+	public constructor(payload: IAudioAttachmentPayload, vk: VK) {
 		super(AUDIO, payload.owner_id, payload.id, payload.access_key);
 
 		this.vk = vk;
@@ -23,14 +42,13 @@ export default class AudioAttachment extends Attachment {
 
 	/**
 	 * Load attachment payload
-	 *
-	 * @return {Promise}
 	 */
-	async loadAttachmentPayload() {
+	public async loadAttachmentPayload(): Promise<void> {
 		if (this.$filled) {
 			return;
 		}
 
+		// @ts-ignore
 		const [audio] = await this.vk.api.audio.getById({
 			audios: `${this.ownerId}_${this.id}`
 		});
@@ -46,10 +64,8 @@ export default class AudioAttachment extends Attachment {
 
 	/**
 	 * Checks whether audio is in high quality
-	 *
-	 * @return {?boolean}
 	 */
-	get isHq() {
+	public get isHq(): boolean | null {
 		const { is_hq: isHq } = this.payload;
 
 		if (isHq === undefined) {
@@ -61,55 +77,43 @@ export default class AudioAttachment extends Attachment {
 
 	/**
 	 * Returns the ID of the lyric
-	 *
-	 * @return {?number}
 	 */
-	get lyricsId() {
+	public get lyricsId(): number | null {
 		return this.payload.lyrics_id || null;
 	}
 
 	/**
 	 * Returns the ID of the album
-	 *
-	 * @return {?number}
 	 */
-	get albumId() {
+	public get albumId(): number | null {
 		return this.payload.album_id || null;
 	}
 
 	/**
 	 * Returns the ID of the genre
-	 *
-	 * @return {?number}
 	 */
-	get genreId() {
-		return this.payload.album_id || null;
+	public get genreId(): number | null {
+		return this.payload.genre_id || null;
 	}
 
 	/**
 	 * Returns the title
-	 *
-	 * @return {?string}
 	 */
-	get title() {
+	public get title(): string | null {
 		return this.payload.title || null;
 	}
 
 	/**
 	 * Returns the artist
-	 *
-	 * @return {?string}
 	 */
-	get artist() {
+	public get artist(): string | null {
 		return this.payload.artist || null;
 	}
 
 	/**
 	 * Returns the duration
-	 *
-	 * @return {?number}
 	 */
-	get duration() {
+	public get duration(): number | null {
 		if (!this.$filled) {
 			return null;
 		}
@@ -119,28 +123,22 @@ export default class AudioAttachment extends Attachment {
 
 	/**
 	 * Returns the date object when this audio was created
-	 *
-	 * @return {?number}
 	 */
-	get createdAt() {
+	public get createdAt(): number | null {
 		return this.payload.date || null;
 	}
 
 	/**
 	 * Returns the URL of the audio
-	 *
-	 * @return {?string}
 	 */
-	get url() {
+	public get url(): string | null {
 		return this.payload.url || null;
 	}
 
 	/**
 	 * Returns the custom data
-	 *
-	 * @type {Object}
 	 */
-	[inspectCustomData]() {
+	public [inspectCustomData](): object {
 		return copyParams(this, [
 			'lyricsId',
 			'albumId',

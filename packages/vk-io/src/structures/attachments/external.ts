@@ -1,17 +1,18 @@
-import nodeUtil from 'util';
+import { inspect } from 'util';
 
 import { inspectCustomData } from '../../utils/constants';
 
-const { inspect } = nodeUtil;
-
 export default class ExternalAttachment {
+	public type: string;
+
+	protected $filled: boolean;
+
+	protected payload: object;
+
 	/**
 	 * Constructor
-	 *
-	 * @param {string} type
-	 * @param {Object} payload
 	 */
-	constructor(type, payload) {
+	public constructor(type: string, payload: object) {
 		this.type = type;
 		this.payload = payload;
 
@@ -20,60 +21,46 @@ export default class ExternalAttachment {
 
 	/**
 	 * Returns custom tag
-	 *
-	 * @return {string}
 	 */
-	get [Symbol.toStringTag]() {
+	public get [Symbol.toStringTag](): string {
 		return this.constructor.name;
 	}
 
 	/**
 	 * Returns whether the attachment is filled
-	 *
-	 * @return {boolean}
 	 */
-	get isFilled() {
+	public get isFilled(): boolean {
 		return this.$filled;
 	}
 
 
 	/**
 	 * Can be attached via string representation
-	 *
-	 * @returns {boolean}
 	 */
 	// eslint-disable-next-line class-methods-use-this
-	get canBeAttached() {
+	public get canBeAttached(): boolean {
 		return false;
 	}
 
 	/**
 	 * Returns data for JSON
-	 *
-	 * @return {Object}
 	 */
-	toJSON() {
+	public toJSON(): object {
 		return this[inspectCustomData]();
 	}
 
 	/**
 	 * Returns the custom data
-	 *
-	 * @type {Object}
 	 */
-	[inspectCustomData]() {
+	public [inspectCustomData](): object {
 		return this.payload;
 	}
 
 	/**
 	 * Custom inspect object
-	 *
-	 * @param {?number} depth
-	 * @param {Object}  options
-	 *
-	 * @return {string}
 	 */
-	[inspect.custom](depth, options) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	public [inspect.custom](depth: number, options: Record<string, any>): string {
 		const { name } = this.constructor;
 
 		const customData = this[inspectCustomData]();

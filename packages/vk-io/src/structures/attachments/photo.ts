@@ -1,3 +1,5 @@
+import VK from '../../vk';
+
 import Attachment from './attachment';
 
 import { copyParams } from '../../utils/helpers';
@@ -9,14 +11,36 @@ const SMALL_SIZES = ['m', 's'];
 const MEDIUM_SIZES = ['y', 'r', 'q', 'p', ...SMALL_SIZES];
 const LARGE_SIZES = ['w', 'z', ...MEDIUM_SIZES];
 
+export interface IPhotoSize {
+	type: string;
+	url: string;
+	width: number;
+	height: number;
+}
+
+export interface IPhotoAttachmentPayload {
+	id: number;
+	owner_id: number;
+	access_key: string;
+
+	album_id?: number;
+	user_id?: number;
+	text?: string;
+	date?: number;
+	sizes?: IPhotoSize[];
+	width?: number;
+	height?: number;
+}
+
 export default class PhotoAttachment extends Attachment {
+	protected vk: VK;
+
+	protected payload: IPhotoAttachmentPayload;
+
 	/**
 	 * Constructor
-	 *
-	 * @param {Object} payload
-	 * @param {VK}     vk
 	 */
-	constructor(payload, vk) {
+	public constructor(payload: IPhotoAttachmentPayload, vk: VK) {
 		super(PHOTO, payload.owner_id, payload.id, payload.access_key);
 
 		this.vk = vk;
@@ -30,11 +54,12 @@ export default class PhotoAttachment extends Attachment {
 	 *
 	 * @return {Promise}
 	 */
-	async loadAttachmentPayload() {
+	public async loadAttachmentPayload(): Promise<void> {
 		if (this.$filled) {
 			return;
 		}
 
+		// @ts-ignore
 		const [photo] = await this.vk.api.photos.getById({
 			photos: `${this.ownerId}_${this.id}`,
 			extended: 0
@@ -54,7 +79,7 @@ export default class PhotoAttachment extends Attachment {
 	 *
 	 * @return {?number}
 	 */
-	get userId() {
+	public get userId(): number | null {
 		return this.payload.user_id || null;
 	}
 
@@ -63,7 +88,7 @@ export default class PhotoAttachment extends Attachment {
 	 *
 	 * @return {?number}
 	 */
-	get albumId() {
+	public get albumId(): number | null {
 		return this.payload.album_id || null;
 	}
 
@@ -72,7 +97,7 @@ export default class PhotoAttachment extends Attachment {
 	 *
 	 * @return {?string}
 	 */
-	get text() {
+	public get text(): string | null {
 		return this.payload.text || null;
 	}
 
@@ -81,7 +106,7 @@ export default class PhotoAttachment extends Attachment {
 	 *
 	 * @return {?number}
 	 */
-	get createdAt() {
+	public get createdAt(): number | null {
 		return this.payload.date || null;
 	}
 
@@ -90,7 +115,7 @@ export default class PhotoAttachment extends Attachment {
 	 *
 	 * @return {?number}
 	 */
-	get height() {
+	public get height(): number | null {
 		return this.payload.height || null;
 	}
 
@@ -99,7 +124,7 @@ export default class PhotoAttachment extends Attachment {
 	 *
 	 * @return {?number}
 	 */
-	get width() {
+	public get width(): number | null {
 		return this.payload.width || null;
 	}
 
@@ -109,7 +134,7 @@ export default class PhotoAttachment extends Attachment {
 	 *
 	 * @return {?string}
 	 */
-	get smallPhoto() {
+	public get smallPhoto(): string | null {
 		if (!this.$filled) {
 			return null;
 		}
@@ -125,7 +150,7 @@ export default class PhotoAttachment extends Attachment {
 	 *
 	 * @return {?string}
 	 */
-	get mediumPhoto() {
+	public get mediumPhoto(): string | null {
 		if (!this.$filled) {
 			return null;
 		}
@@ -141,7 +166,7 @@ export default class PhotoAttachment extends Attachment {
 	 *
 	 * @return {?string}
 	 */
-	get largePhoto() {
+	public get largePhoto(): string | null {
 		if (!this.$filled) {
 			return null;
 		}
@@ -153,26 +178,20 @@ export default class PhotoAttachment extends Attachment {
 
 	/**
 	 * Returns the sizes
-	 *
-	 * @return {?Object[]}
 	 */
-	get sizes() {
+	public get sizes(): IPhotoSize[] | null {
 		return this.payload.sizes || null;
 	}
 
 	/**
 	 * Returns the sizes of the required types
-	 *
-	 * @param {string[]} sizeTypes
-	 *
-	 * @return {Object[]}
 	 */
-	getSizes(sizeTypes) {
+	public getSizes(sizeTypes: string[]): IPhotoSize[] {
 		const { sizes } = this;
 
 		return sizeTypes
-			.map(sizeType => (
-				sizes.find(size => size.type === sizeType) || null
+			.map((sizeType): IPhotoSize | null => (
+				sizes.find((size): boolean => size.type === sizeType) || null
 			))
 			.filter(Boolean);
 	}
@@ -182,7 +201,7 @@ export default class PhotoAttachment extends Attachment {
 	 *
 	 * @type {Object}
 	 */
-	[inspectCustomData]() {
+	public [inspectCustomData](): object | null {
 		return copyParams(this, [
 			'userId',
 			'albumId',

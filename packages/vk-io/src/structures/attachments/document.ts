@@ -1,3 +1,5 @@
+import VK from '../../vk';
+
 import Attachment from './attachment';
 
 import { copyParams } from '../../utils/helpers';
@@ -21,14 +23,29 @@ const documentTypes = new Map([
 	[8, 'unknown']
 ]);
 
+export interface IDocumentAttachmentPayload {
+	id: number;
+	owner_id: number;
+	access_key: string;
+
+	title?: string;
+	size?: number;
+	ext?: string;
+	url?: string;
+	date?: number;
+	type?: number;
+	preview?: object;
+}
+
 export default class DocumentAttachment extends Attachment {
+	protected vk: VK;
+
+	protected payload: IDocumentAttachmentPayload;
+
 	/**
 	 * Constructor
-	 *
-	 * @param {Object} payload
-	 * @param {VK}     vk
 	 */
-	constructor(payload, vk) {
+	public constructor(payload: IDocumentAttachmentPayload, vk: VK) {
 		super(DOCUMENT, payload.owner_id, payload.id, payload.access_key);
 
 		this.vk = vk;
@@ -39,14 +56,13 @@ export default class DocumentAttachment extends Attachment {
 
 	/**
 	 * Load attachment payload
-	 *
-	 * @return {Promise}
 	 */
-	async loadAttachmentPayload() {
+	public async loadAttachmentPayload(): Promise<void> {
 		if (this.$filled) {
 			return;
 		}
 
+		// @ts-ignore
 		const [document] = await this.vk.api.docs.getById({
 			docs: `${this.ownerId}_${this.id}`
 		});
@@ -62,10 +78,8 @@ export default class DocumentAttachment extends Attachment {
 
 	/**
 	 * Checks if the document is a text
-	 *
-	 * @return {?boolean}
 	 */
-	get isText() {
+	public get isText(): boolean | null {
 		if (!this.$filled) {
 			return null;
 		}
@@ -75,10 +89,8 @@ export default class DocumentAttachment extends Attachment {
 
 	/**
 	 * Checks if the document is a archive
-	 *
-	 * @return {?boolean}
 	 */
-	get isArchive() {
+	public get isArchive(): boolean | null {
 		if (!this.$filled) {
 			return null;
 		}
@@ -88,10 +100,8 @@ export default class DocumentAttachment extends Attachment {
 
 	/**
 	 * Checks if the document is a gif file
-	 *
-	 * @return {?boolean}
 	 */
-	get isGif() {
+	public get isGif(): boolean | null {
 		if (!this.$filled) {
 			return null;
 		}
@@ -101,10 +111,8 @@ export default class DocumentAttachment extends Attachment {
 
 	/**
 	 * Checks if the document is a image
-	 *
-	 * @return {?boolean}
 	 */
-	get isImage() {
+	public get isImage(): boolean | null {
 		if (!this.$filled) {
 			return null;
 		}
@@ -114,10 +122,8 @@ export default class DocumentAttachment extends Attachment {
 
 	/**
 	 * Checks if the document is a graffiti
-	 *
-	 * @return {?boolean}
 	 */
-	get isGraffiti() {
+	public get isGraffiti(): boolean | null {
 		if (!this.$filled) {
 			return null;
 		}
@@ -127,10 +133,8 @@ export default class DocumentAttachment extends Attachment {
 
 	/**
 	 * Checks if the document is a audio
-	 *
-	 * @return {?boolean}
 	 */
-	get isAudio() {
+	public get isAudio(): boolean | null {
 		if (!this.$filled) {
 			return null;
 		}
@@ -140,10 +144,8 @@ export default class DocumentAttachment extends Attachment {
 
 	/**
 	 * Checks if the document is a voice
-	 *
-	 * @return {?boolean}
 	 */
-	get isVoice() {
+	public get isVoice(): boolean | null {
 		if (!this.$filled) {
 			return null;
 		}
@@ -153,10 +155,8 @@ export default class DocumentAttachment extends Attachment {
 
 	/**
 	 * Checks if the document is a video
-	 *
-	 * @return {?boolean}
 	 */
-	get isVideo() {
+	public get isVideo(): boolean | null {
 		if (!this.$filled) {
 			return null;
 		}
@@ -166,10 +166,8 @@ export default class DocumentAttachment extends Attachment {
 
 	/**
 	 * Checks if the document is a book
-	 *
-	 * @return {?boolean}
 	 */
-	get isBook() {
+	public get isBook(): boolean | null {
 		if (!this.$filled) {
 			return null;
 		}
@@ -179,10 +177,8 @@ export default class DocumentAttachment extends Attachment {
 
 	/**
 	 * Returns the document title
-	 *
-	 * @return {?string}
 	 */
-	get title() {
+	public get title(): string | null {
 		return this.payload.title || null;
 	}
 
@@ -191,7 +187,7 @@ export default class DocumentAttachment extends Attachment {
 	 *
 	 * @return {?number}
 	 */
-	get createdAt() {
+	public get createdAt(): number | null {
 		return this.payload.date || null;
 	}
 
@@ -200,7 +196,7 @@ export default class DocumentAttachment extends Attachment {
 	 *
 	 * @return {?number}
 	 */
-	get typeId() {
+	public get typeId(): number | null {
 		return this.payload.type || null;
 	}
 
@@ -209,7 +205,7 @@ export default class DocumentAttachment extends Attachment {
 	 *
 	 * @return {?string}
 	 */
-	get typeName() {
+	public get typeName(): string | null {
 		if (!this.$filled) {
 			return null;
 		}
@@ -222,7 +218,7 @@ export default class DocumentAttachment extends Attachment {
 	 *
 	 * @return {?number}
 	 */
-	get size() {
+	public get size(): number | null {
 		if (!this.$filled) {
 			return null;
 		}
@@ -235,7 +231,7 @@ export default class DocumentAttachment extends Attachment {
 	 *
 	 * @return {?string}
 	 */
-	get extension() {
+	public get extension(): string | null {
 		return this.payload.ext || null;
 	}
 
@@ -244,7 +240,7 @@ export default class DocumentAttachment extends Attachment {
 	 *
 	 * @return {?string}
 	 */
-	get url() {
+	public get url(): string | null {
 		return this.payload.url || null;
 	}
 
@@ -253,18 +249,14 @@ export default class DocumentAttachment extends Attachment {
 	 *
 	 * @return {?Object}
 	 */
-	get preview() {
+	public get preview(): object | null {
 		return this.payload.preview || null;
 	}
 
 	/**
 	 * Checks for a property in preview
-	 *
-	 * @param {string} name
-	 *
-	 * @return {boolean}
 	 */
-	hasPreviewProperty(name) {
+	public hasPreviewProperty(name: string): boolean {
 		const { preview } = this;
 
 		if (preview === null) {
@@ -279,7 +271,7 @@ export default class DocumentAttachment extends Attachment {
 	 *
 	 * @type {Object}
 	 */
-	[inspectCustomData]() {
+	public [inspectCustomData](): object | null {
 		return copyParams(this, [
 			'title',
 			'typeId',

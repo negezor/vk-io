@@ -1,3 +1,5 @@
+import VK from '../../vk';
+
 import ExternalAttachment from './external';
 
 import { copyParams } from '../../utils/helpers';
@@ -5,14 +7,28 @@ import { attachmentTypes, inspectCustomData } from '../../utils/constants';
 
 const { STICKER } = attachmentTypes;
 
+export interface IStickerImage {
+	url: string;
+	width: number;
+	height: number;
+}
+
+export interface IStickerAttachmentPayload {
+	sticker_id: number;
+	product_id: number;
+	images: IStickerImage[];
+	images_with_background: IStickerImage[];
+}
+
 export default class StickerAttachment extends ExternalAttachment {
+	protected vk: VK;
+
+	protected payload: IStickerAttachmentPayload;
+
 	/**
 	 * Constructor
-	 *
-	 * @param {Object} payload
-	 * @param {VK}     vk
 	 */
-	constructor(payload, vk) {
+	public constructor(payload: IStickerAttachmentPayload, vk: VK) {
 		super(STICKER, payload);
 
 		this.vk = vk;
@@ -20,46 +36,36 @@ export default class StickerAttachment extends ExternalAttachment {
 
 	/**
 	 * Returns the identifier sticker
-	 *
-	 * @return {number}
 	 */
-	get id() {
+	public get id(): number {
 		return this.payload.sticker_id;
 	}
 
 	/**
 	 * Returns the identifier product
-	 *
-	 * @return {number}
 	 */
-	get productId() {
+	public get productId(): number {
 		return this.payload.product_id;
 	}
 
 	/**
 	 * Returns the images sizes
-	 *
-	 * @return {Object[]}
 	 */
-	get images() {
+	public get images(): IStickerImage[] {
 		return this.payload.images || [];
 	}
 
 	/**
 	 * Returns the images sizes with backgrounds
-	 *
-	 * @return {Object[]}
 	 */
-	get imagesWithBackground() {
+	public get imagesWithBackground(): IStickerImage[] {
 		return this.payload.images_with_background || [];
 	}
 
 	/**
 	 * Returns the custom data
-	 *
-	 * @type {Object}
 	 */
-	[inspectCustomData]() {
+	public [inspectCustomData](): object {
 		return copyParams(this, [
 			'id',
 			'productId',

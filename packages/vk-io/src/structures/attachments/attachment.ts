@@ -1,21 +1,29 @@
-import nodeUtil from 'util';
-
-import { VKError } from '../../errors';
+import { inspect } from 'util';
 
 import { parseAttachment, inspectCustomData } from '../../utils/constants';
 
-const { inspect } = nodeUtil;
-
 export default class Attachment {
+	public type: string;
+
+	public ownerId: number;
+
+	public id: number;
+
+	public accessKey: string;
+
+	protected $filled: boolean;
+
+	protected payload: object;
+
 	/**
 	 * Constructor
-	 *
-	 * @param {string} type
-	 * @param {number} ownerId
-	 * @param {number} id
-	 * @param {string} accessKey
 	 */
-	constructor(type, ownerId, id, accessKey = null) {
+	public constructor(
+		type: string,
+		ownerId: number,
+		id: number,
+		accessKey: string | null = null
+	) {
 		this.type = type;
 
 		this.ownerId = Number(ownerId);
@@ -28,25 +36,17 @@ export default class Attachment {
 
 	/**
 	 * Returns custom tag
-	 *
-	 * @return {string}
 	 */
-	get [Symbol.toStringTag]() {
+	public get [Symbol.toStringTag](): string {
 		return this.constructor.name;
 	}
 
 	/**
 	 * Parse attachment with string
-	 *
-	 * @param {string} attachment
-	 *
-	 * @return {Attachment}
 	 */
-	static fromString(attachment) {
+	public static fromString(attachment): Attachment {
 		if (!parseAttachment.test(attachment)) {
-			throw new VKError({
-				message: 'Incorrect attachment'
-			});
+			throw new TypeError('Incorrect attachment');
 		}
 
 		const [, type, ownerId, id, accessKey] = attachment.match(parseAttachment);
@@ -56,32 +56,24 @@ export default class Attachment {
 
 	/**
 	 * Returns whether the attachment is filled
-	 *
-	 * @return {boolean}
 	 */
-	get isFilled() {
+	public get isFilled(): boolean {
 		return this.$filled;
 	}
 
 	/**
 	 * Can be attached via string representation
-	 *
-	 * @returns {boolean}
 	 */
 	// eslint-disable-next-line class-methods-use-this
-	get canBeAttached() {
+	public get canBeAttached(): boolean {
 		return true;
 	}
 
 	/**
 	 * Checks that the attachment is equivalent with object
-	 *
-	 * @param {Attachment} attachment
-	 *
-	 * @return {boolean}
 	 */
-	equals(attachment) {
-		const target = !(attachment instanceof Attachment)
+	public equals(attachment: Attachment | string): boolean {
+		const target = typeof attachment === 'string'
 			? Attachment.fromString(attachment)
 			: attachment;
 
@@ -94,10 +86,8 @@ export default class Attachment {
 
 	/**
 	 * Returns a string to attach a VK
-	 *
-	 * @return {string}
 	 */
-	toString() {
+	public toString(): string {
 		const accessKey = this.accessKey !== null
 			? `_${this.accessKey}`
 			: '';
@@ -110,16 +100,14 @@ export default class Attachment {
 	 *
 	 * @return {Object}
 	 */
-	toJSON() {
+	public toJSON(): object {
 		return this[inspectCustomData]();
 	}
 
 	/**
 	 * Returns the custom data
-	 *
-	 * @type {Object}
 	 */
-	[inspectCustomData]() {
+	public [inspectCustomData](): object {
 		return {
 			payload: this.payload
 		};
@@ -127,13 +115,9 @@ export default class Attachment {
 
 	/**
 	 * Custom inspect object
-	 *
-	 * @param {?number} depth
-	 * @param {Object}  options
-	 *
-	 * @return {string}
 	 */
-	[inspect.custom](depth, options) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	public [inspect.custom](depth: number, options: Record<string, any>): string {
 		const { name } = this.constructor;
 
 		const customData = {

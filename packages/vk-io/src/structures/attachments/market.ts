@@ -1,17 +1,57 @@
+import VK from '../../vk';
+
 import Attachment from './attachment';
 
 import { attachmentTypes } from '../../utils/constants';
 
 const { MARKET } = attachmentTypes;
 
+export interface IMarketAttachmentPayload {
+	id: number;
+	owner_id: number;
+	access_key: string;
+
+	title: string;
+	description: string;
+	price: {
+		amount: number;
+		currency: {
+			id: number;
+			name: string;
+		};
+	};
+	category: {
+		id: number;
+		name: string;
+		section: {
+			id: number;
+			name: string;
+		};
+	};
+	thumb_photo: string;
+	date: number;
+	availability: 0 | 1 | 2;
+	is_favorite: number;
+	photos?: object[];
+	can_comment?: number;
+	can_repost?: number;
+	likes: {
+		user_likes: number;
+		count: number;
+	};
+	url: string;
+	button_title: string;
+}
+
 export default class MarketAttachment extends Attachment {
+	protected vk: VK;
+
+	protected payload: IMarketAttachmentPayload;
+
 	/**
 	 * Constructor
-	 *
-	 * @param {Object} payload
-	 * @param {VK}     vk
 	 */
-	constructor(payload, vk) {
+	public constructor(payload: IMarketAttachmentPayload, vk: VK) {
 		super(MARKET, payload.owner_id, payload.id, payload.access_key);
 
 		this.vk = vk;
@@ -22,14 +62,13 @@ export default class MarketAttachment extends Attachment {
 
 	/**
 	 * Load attachment payload
-	 *
-	 * @return {Promise}
 	 */
-	async loadAttachmentPayload() {
+	public async loadAttachmentPayload(): Promise<void> {
 		if (this.$filled) {
 			return;
 		}
 
+		// @ts-ignore
 		const [market] = await this.vk.api.market.getById({
 			item_ids: `${this.ownerId}_${this.id}`,
 			extended: 0
@@ -46,10 +85,8 @@ export default class MarketAttachment extends Attachment {
 
 	/**
 	 * Checks is bookmarked current user
-	 *
-	 * @return {?boolean}
 	 */
-	get isFavorited() {
+	public get isFavorited(): boolean | null {
 		if (!this.$filled) {
 			return null;
 		}
