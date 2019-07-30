@@ -1,26 +1,23 @@
 import fetch from 'node-fetch';
 import createDebug from 'debug';
-import toughCookie from 'tough-cookie';
+import { CookieJar } from 'tough-cookie';
 
-import nodeUtil from 'util';
-
-const { promisify } = nodeUtil;
+import { URL } from 'url';
+import { promisify } from 'util';
 
 const debug = createDebug('vk-io:util:fetch-cookie');
 
 const REDIRECT_CODES = [303, 301, 302];
 
-export const { CookieJar } = toughCookie;
-
 const USER_AGENT_RE = /^User-Agent$/i;
 
-const findUserAgent = (headers) => {
+const findUserAgent = (headers: Record<string, string> | null): string | null => {
 	if (!headers) {
 		return null;
 	}
 
 	const key = Object.keys(headers)
-		.find(header => USER_AGENT_RE.test(header));
+		.find((header): boolean => USER_AGENT_RE.test(header));
 
 	if (!key) {
 		return null;
@@ -29,11 +26,11 @@ const findUserAgent = (headers) => {
 	return headers[key];
 };
 
-export const fetchCookieDecorator = (jar = new CookieJar()) => {
+export const fetchCookieDecorator = (jar = new CookieJar()): Function => {
 	const setCookie = promisify(jar.setCookie).bind(jar);
 	const getCookieString = promisify(jar.getCookieString).bind(jar);
 
-	return async function fetchCookie(url, options = {}) {
+	return async function fetchCookie(url: URL | string, options = {}): Promise<object> {
 		const previousCookie = await getCookieString(url);
 
 		const { headers = {} } = options;
@@ -56,7 +53,7 @@ export const fetchCookieDecorator = (jar = new CookieJar()) => {
 			return response;
 		}
 
-		await Promise.all(cookies.map(cookie => (
+		await Promise.all(cookies.map((cookie: string): Promise<void> => (
 			setCookie(cookie, response.url)
 		)));
 
@@ -64,10 +61,13 @@ export const fetchCookieDecorator = (jar = new CookieJar()) => {
 	};
 };
 
-export const fetchCookieFollowRedirectsDecorator = (jar) => {
+export const fetchCookieFollowRedirectsDecorator = (jar: CookieJar): Function => {
 	const fetchCookie = fetchCookieDecorator(jar);
 
-	return async function fetchCookieFollowRedirects(url, options = {}) {
+	return async function fetchCookieFollowRedirects(
+		url: URL | string,
+		options = {}
+	): Promise<object> {
 		const response = await fetchCookie(url, {
 			...options,
 

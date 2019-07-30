@@ -1,13 +1,11 @@
 /**
  * Returns method for execute
- *
- * @param {string} method
- * @param {Object} params
- *
- * @return {string}
  */
-export const getExecuteMethod = (method, params = {}) => {
-	const options = {};
+export const getExecuteMethod = (
+	method: string,
+	params: Record<string, object | string> = {}
+): string => {
+	const options: Record<string, string> = {};
 
 	for (const [key, value] of Object.entries(params)) {
 		options[key] = typeof value === 'object'
@@ -20,25 +18,27 @@ export const getExecuteMethod = (method, params = {}) => {
 
 /**
  * Returns chain for execute
- *
- * @param {Array} methods
- *
- * @return {string}
  */
-export const getChainReturn = methods => (
+export const getChainReturn = (methods: string[]): string => (
 	`return [${methods.join(',')}];`
 );
 
 /**
  * Resolve task
- *
- * @param {Array} tasks
- * @param {Array} results
  */
-export const resolveExecuteTask = (tasks, result) => {
+export const resolveExecuteTask = (
+	tasks: {
+		resolve: Function;
+		reject: Function;
+	}[],
+	result: {
+		errors?: object[];
+		response: (object | false)[];
+	}
+): void => {
 	let errors = 0;
 
-	result.response.forEach((response, i) => {
+	result.response.forEach((response, i): void => {
 		if (response !== false) {
 			tasks[i].resolve(response);
 
@@ -53,22 +53,18 @@ export const resolveExecuteTask = (tasks, result) => {
 
 /**
  * Returns random ID
- *
- * @return {number}
  */
-export const getRandomId = () => (
+export const getRandomId = (): string => (
 	`${Math.floor(Math.random() * 1e4)}${Date.now()}`
 );
 
 /**
  * Delay N-ms
- *
- * @param {number} delayed
- *
- * @return {Promise}
  */
-export const delay = delayed => (
-	new Promise(resolve => setTimeout(resolve, delayed))
+export const delay = (delayed: number): Promise<void> => (
+	new Promise((resolve): void => {
+		setTimeout(resolve, delayed);
+	})
 );
 
 const lt = /&lt;/g;
@@ -79,12 +75,8 @@ const quot = /&quot;/g;
 
 /**
  * Decodes HTML entities
- *
- * @param {string} text
- *
- * @return {string}
  */
-export const unescapeHTML = text => (
+export const unescapeHTML = (text: string): string => (
 	text
 		.replace(lt, '<')
 		.replace(qt, '>')
@@ -95,14 +87,13 @@ export const unescapeHTML = text => (
 
 /**
  * Copies object params to new object
- *
- * @param {Object} params
- * @param {Array}  properties
- *
- * @return {Object}
  */
-export const copyParams = (params, properties) => {
-	const copies = {};
+export const copyParams = <
+	T,
+	K extends keyof T
+>(params: T, properties: K[]): Pick<T, K> => {
+	// @ts-ignore
+	const copies: Pick<T, K> = {};
 
 	for (const property of properties) {
 		copies[property] = params[property];
@@ -113,10 +104,8 @@ export const copyParams = (params, properties) => {
 
 /**
  * Displays deprecated message
- *
- * @param {string} message
  */
-export const showDeprecatedMessage = (message) => {
+export const showDeprecatedMessage = (message: string): void => {
 	// eslint-disable-next-line no-console
 	console.log(' \u001b[31mDeprecated:\u001b[39m', message);
 };
