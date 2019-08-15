@@ -7,9 +7,8 @@ import MessageForward from '../shared/message-forward';
 import transformMessage from '../../updates/transform-message';
 import MessageForwardsCollection from '../shared/message-forwards-collection';
 
-import { getPeerType } from '../shared/helpers';
 import { transformAttachments } from '../attachments/helpers';
-import { unescapeHTML, copyParams } from '../../utils/helpers';
+import { unescapeHTML, copyParams, getPeerType } from '../../utils/helpers';
 import {
 	updatesSources,
 	messageSources,

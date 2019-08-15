@@ -1,3 +1,5 @@
+import { messageSources, CHAT_PEER } from './constants';
+
 /**
  * Returns method for execute
  */
@@ -101,6 +103,22 @@ export const copyParams = <
 
 	return copies;
 };
+
+/**
+ * Returns peer id type
+ */
+export const getPeerType = (id: number): string => {
+	if (CHAT_PEER < id) {
+		return messageSources.CHAT;
+	}
+
+	if (id < 0) {
+		return messageSources.GROUP;
+	}
+
+	return messageSources.USER;
+};
+
 
 /**
  * Displays deprecated message

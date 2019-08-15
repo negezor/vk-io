@@ -1,7 +1,6 @@
 import Context from './context';
 
-import { getPeerType } from '../shared/helpers';
-import { copyParams, showDeprecatedMessage } from '../../utils/helpers';
+import { copyParams, getPeerType, showDeprecatedMessage } from '../../utils/helpers';
 import {
 	CHAT_PEER,
 
