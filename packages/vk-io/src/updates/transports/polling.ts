@@ -17,7 +17,7 @@ const debug = createDebug('vk-io:updates');
 const POLLING_VERSION = '3';
 
 export default class PollingTransport {
-	public started: boolean = false;
+	public started = false;
 
 	/**
 	 * 2 -  Attachments
@@ -25,17 +25,17 @@ export default class PollingTransport {
 	 * 64 - Online user platform ID
 	 */
 	// eslint-disable-next-line no-bitwise
-	public mode: number = 2 | 8 | 64;
+	public mode = 2 | 8 | 64;
 
 	public pollingHandler: Function;
 
 	protected vk: VK;
 
-	protected ts: number = 0;
+	protected ts = 0;
 
-	protected pts: number = 0;
+	protected pts = 0;
 
-	protected restarted: number = 0;
+	protected restarted = 0;
 
 	protected url?: URL;
 

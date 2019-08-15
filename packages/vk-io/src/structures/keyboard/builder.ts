@@ -14,7 +14,7 @@ export default class KeyboardBuilder {
 	/**
 	 * Does the keyboard close after pressing the button
 	 */
-	protected isOneTime: boolean = false;
+	protected isOneTime = false;
 
 	/**
 	 * Rows with all buttons
@@ -192,7 +192,7 @@ export default class KeyboardBuilder {
 	 *  builder.oneTime(false);
 	 * ```
 	 */
-	public oneTime(enabled: boolean = true): this {
+	public oneTime(enabled = true): this {
 		this.isOneTime = enabled;
 
 		return this;
