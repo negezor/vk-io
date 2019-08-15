@@ -1,41 +1,19 @@
-import Context from './context';
+export { default as Context } from './context';
 
-import VoteContext from './vote';
-import TypingContext from './typing';
-import MessageContext from './message';
-import WallPostContext from './wall-post';
-import StreamingContext from './streaming';
-import GroupUserContext from './group-user';
-import UserOnlineContext from './user-online';
-import DialogFlagsContext from './dialog-flags';
-import GroupUpdateContext from './group-update';
-import GroupMemberContext from './group-member';
-import MessageAllowContext from './message-allow';
-import ReadMessagesContext from './read-messages';
-import MessageFlagsContext from './message-flags';
-import CommentActionContext from './comment-action';
-import NewAttachmentsContext from './new-attachments';
-import RemovedMessagesContext from './removed-messages';
-
-export {
-	Context,
-
-	VoteContext,
-	TypingContext,
-	MessageContext,
-	WallPostContext,
-	StreamingContext,
-	GroupUserContext,
-	UserOnlineContext,
-	GroupUpdateContext,
-	DialogFlagsContext,
-	MessageAllowContext,
-	GroupMemberContext,
-	ReadMessagesContext,
-	MessageFlagsContext,
-	CommentActionContext,
-	NewAttachmentsContext,
-	RemovedMessagesContext
-};
-
-export default Context;
+export { default as VoteContext } from './vote';
+export { default as TypingContext } from './typing';
+export { default as MessageContext } from './message';
+export { default as WallPostContext } from './wall-post';
+export { default as StreamingContext } from './streaming';
+export { default as GroupUserContext } from './group-user';
+export { default as UserOnlineContext } from './user-online';
+export { default as DialogFlagsContext } from './dialog-flags';
+export { default as GroupUpdateContext } from './group-update';
+export { default as GroupMemberContext } from './group-member';
+export { default as MessageAllowContext } from './message-allow';
+export { default as ReadMessagesContext } from './read-messages';
+export { default as MessageFlagsContext } from './message-flags';
+export { default as VKAppPayloadContext } from './vk-app-payload';
+export { default as CommentActionContext } from './comment-action';
+export { default as NewAttachmentsContext } from './new-attachments';
+export { default as RemovedMessagesContext } from './removed-messages';

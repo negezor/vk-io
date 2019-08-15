@@ -1,40 +1,18 @@
-import Attachment from './attachment';
-import ExternalAttachment from './external';
+export { default as Attachment } from './attachment';
+export { default as ExternalAttachment } from './external';
 
-import PollAttachment from './poll';
-import GiftAttachment from './gift';
+export { default as PollAttachment } from './poll';
+export { default as GiftAttachment } from './gift';
 // eslint-disable-next-line import/no-cycle
-import WallAttachment from './wall';
-import LinkAttachment from './link';
-import PhotoAttachment from './photo';
-import AudioAttachment from './audio';
-import VideoAttachment from './video';
-import MarketAttachment from './market';
-import StickerAttachment from './sticker';
-import GraffitiAttachment from './graffiti';
-import DocumentAttachment from './document';
-import WallReplyAttachment from './wall-reply';
-import MarketAlbumAttachment from './market-album';
-import AudioMessageAttachment from './audio-message';
-
-export {
-	Attachment,
-	ExternalAttachment,
-
-	PollAttachment,
-	GiftAttachment,
-	WallAttachment,
-	LinkAttachment,
-	PhotoAttachment,
-	AudioAttachment,
-	VideoAttachment,
-	MarketAttachment,
-	StickerAttachment,
-	GraffitiAttachment,
-	DocumentAttachment,
-	WallReplyAttachment,
-	MarketAlbumAttachment,
-	AudioMessageAttachment
-};
-
-export default Attachment;
+export { default as WallAttachment } from './wall';
+export { default as LinkAttachment } from './link';
+export { default as PhotoAttachment } from './photo';
+export { default as AudioAttachment } from './audio';
+export { default as VideoAttachment } from './video';
+export { default as MarketAttachment } from './market';
+export { default as StickerAttachment } from './sticker';
+export { default as GraffitiAttachment } from './graffiti';
+export { default as DocumentAttachment } from './document';
+export { default as WallReplyAttachment } from './wall-reply';
+export { default as MarketAlbumAttachment } from './market-album';
+export { default as AudioMessageAttachment } from './audio-message';
