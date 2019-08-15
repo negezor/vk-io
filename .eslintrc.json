@@ -23,6 +23,7 @@
 		"@typescript-eslint/camelcase": ["error", {
 			"properties": "never"
 		}],
+		"@typescript-eslint/ban-ts-ignore": "off",
 		"@typescript-eslint/semi": ["error"],
 		"import/no-cycle": "off",
 		"no-restricted-syntax": ["error", "WithStatement"],
@@ -37,6 +38,7 @@
 		"no-tabs": ["error", {
 			"allowIndentationTabs": true
 		}],
+		"indent": "off",
 		"semi": "off"
 	},
 	"overrides": [
@@ -67,6 +69,12 @@
 			"files": ["packages/vk-io/typings/index.d.ts"],
 			"rules": {
 				"no-useless-constructor": "off"
+			}
+		},
+		{
+			"files": ["packages/vk-io/src/**/*.js"],
+			"rules": {
+				"@typescript-eslint/explicit-function-return-type": "off"
 			}
 		}
 	]
