@@ -20,11 +20,12 @@ import {
 	UserOnlineContext,
 	GroupUpdateContext,
 	DialogFlagsContext,
+	GroupMemberContext,
 	MessageAllowContext,
 	ReadMessagesContext,
 	MessageFlagsContext,
+	VKAppPayloadContext,
 	CommentActionContext,
-	GroupMemberContext,
 	NewAttachmentsContext,
 	RemovedMessagesContext
 } from '../structures/contexts';
@@ -104,6 +105,10 @@ const webhookContextsEvents = [
 	[
 		['message_typing_state'],
 		TypingContext
+	],
+	[
+		['app_payload'],
+		VKAppPayloadContext
 	]
 ];
 
