@@ -21,25 +21,22 @@ export default class CommentActionContext extends Context {
 	/**
 	 * Constructor
 	 *
-	 * @param {VK}     vk
-	 * @param {Object} payload
 	 * @param {Object} options
 	 */
-	constructor(vk, payload, { updateType, groupId }) {
-		super(vk);
+	constructor(options) {
+		const { 1: initiator, 3: action } = options.updateType.match(findTypes);
 
-		this.payload = payload;
-		this.$groupId = groupId;
+		super({
+			...options,
 
-		this.attachments = transformAttachments(payload.attachments, vk);
+			type: 'comment',
+			subTypes: [
+				`${initiator}_comment`,
+				`${action}_${initiator}_comment`
+			]
+		});
 
-		const { 1: initiator, 3: action } = updateType.match(findTypes);
-
-		this.type = 'comment';
-		this.subTypes = [
-			`${initiator}_comment`,
-			`${action}_${initiator}_comment`
-		];
+		this.attachments = transformAttachments(this.payload.attachments, this.vk);
 	}
 
 	/**

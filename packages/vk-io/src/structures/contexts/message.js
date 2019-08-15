@@ -34,14 +34,13 @@ export default class MessageContext extends Context {
 	/**
 	 * Constructor
 	 *
-	 * @param {VK}     vk
-	 * @param {Object} payload
 	 * @param {Object} options
 	 */
-	constructor(vk, payload, { source, updateType, groupId = null }) {
-		super(vk);
+	constructor(options) {
+		super(options);
 
-		if (source === updatesSources.POLLING) {
+		let { payload } = options;
+		if (options.source === updatesSources.POLLING) {
 			// eslint-disable-next-line no-param-reassign
 			payload = transformMessage(payload);
 
@@ -50,13 +49,11 @@ export default class MessageContext extends Context {
 			this.$filled = true;
 		}
 
-		this.$groupId = groupId;
-
 		this.applyPayload(payload);
 
 		this.type = 'message';
 		this.subTypes = [
-			this.eventType || subTypesEnum[updateType]
+			this.eventType || subTypesEnum[options.updateType]
 		];
 	}
 

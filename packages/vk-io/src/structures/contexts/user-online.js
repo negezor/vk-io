@@ -12,23 +12,25 @@ export default class UserOnlineContext extends Context {
 	/**
 	 * Constructor
 	 *
-	 * @param {VK}     vk
-	 * @param {Array}  payload
 	 * @param {Object} options
 	 */
-	constructor(vk, [eventId, userId, extra, date]) {
-		super(vk);
+	constructor(options) {
+		const [eventId, userId, extra, date] = options.payload;
 
-		this.payload = {
-			user_id: -userId,
-			extra,
-			date
-		};
+		super({
+			...options,
 
-		this.type = 'user_active';
-		this.subTypes = [
-			subTypes[eventId]
-		];
+			type: 'user_active',
+			subTypes: [
+				subTypes[eventId]
+			],
+
+			payload: {
+				user_id: -userId,
+				extra,
+				date
+			}
+		});
 	}
 
 	/**

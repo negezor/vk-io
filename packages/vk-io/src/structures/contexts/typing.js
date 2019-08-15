@@ -22,23 +22,21 @@ export default class TypingContext extends Context {
 	/**
 	 * Constructor
 	 *
-	 * @param {VK}     vk
-	 * @param {Array}  payload
 	 * @param {Object} options
 	 */
-	constructor(vk, payload, { source, updateType, groupId = null }) {
-		super(vk);
+	constructor(options) {
+		super({
+			...options,
 
-		this.payload = source === updatesSources.POLLING
-			? transformPolling(payload, updateType)
-			: payload;
+			type: 'typing',
+			subTypes: [
+				`typing_${getPeerType(options.payload.from_id)}`
+			],
 
-		this.type = 'typing';
-		this.subTypes = [
-			`typing_${getPeerType(this.fromId)}`
-		];
-
-		this.$groupId = groupId;
+			payload: options.source === updatesSources.POLLING
+				? transformPolling(options.payload, options.updateType)
+				: options.payload
+		});
 	}
 
 	/**

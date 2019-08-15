@@ -426,10 +426,11 @@ export default class Updates {
 		}
 
 		// @ts-ignore
-		return this.dispatchMiddleware(new UpdateContext(this.vk, update, {
-			source: updatesSources.POLLING,
-
-			updateType: type
+		return this.dispatchMiddleware(new UpdateContext({
+			vk: this.vk,
+			paylaod: update,
+			updateType: type,
+			source: updatesSources.POLLING
 		}));
 	}
 
@@ -450,11 +451,12 @@ export default class Updates {
 		}
 
 		// @ts-ignore
-		return this.dispatchMiddleware(new UpdateContext(this.vk, payload, {
-			source: updatesSources.WEBHOOK,
-
+		return this.dispatchMiddleware(new UpdateContext({
+			vk: this.vk,
+			payload,
+			groupId,
 			updateType: type,
-			groupId
+			source: updatesSources.WEBHOOK
 		}));
 	}
 

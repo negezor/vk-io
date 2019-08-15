@@ -13,22 +13,24 @@ export default class DialogFlagsContext extends Context {
 	/**
 	 * Constructor
 	 *
-	 * @param {VK}     vk
-	 * @param {Array}  payload
 	 * @param {Object} options
 	 */
-	constructor(vk, [eventId, peerId, flags]) {
-		super(vk);
+	constructor(options) {
+		const [eventId, peerId, flags] = options.payload;
 
-		this.payload = {
-			peer_id: peerId,
-			flags
-		};
+		super({
+			...options,
 
-		this.type = 'dialog_flags';
-		this.subTypes = [
-			subTypes[eventId]
-		];
+			type: 'dialog_flags',
+			subTypes: [
+				subTypes[eventId]
+			],
+
+			payload: {
+				peer_id: peerId,
+				flags
+			}
+		});
 	}
 
 	/**

@@ -12,20 +12,17 @@ export default class MessageAllowContext extends Context {
 	/**
 	 * Constructor
 	 *
-	 * @param {VK}     vk
-	 * @param {Object} payload
 	 * @param {Object} options
 	 */
-	constructor(vk, payload, { updateType, groupId }) {
-		super(vk);
+	constructor(options) {
+		super({
+			...options,
 
-		this.payload = payload;
-		this.$groupId = groupId;
-
-		this.type = 'message_subscribers';
-		this.subTypes = [
-			subTypes[updateType]
-		];
+			type: 'message_subscribers',
+			subTypes: [
+				subTypes[options.updateType]
+			]
+		});
 	}
 
 	/**

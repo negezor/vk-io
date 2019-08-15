@@ -7,18 +7,17 @@ export default class VoteContext extends Context {
 	/**
 	 * Constructor
 	 *
-	 * @param {VK}     vk
-	 * @param {Object} payload
 	 * @param {Object} options
 	 */
-	constructor(vk, payload, { groupId }) {
-		super(vk);
+	constructor(options) {
+		super({
+			...options,
 
-		this.payload = payload;
-		this.$groupId = groupId;
-
-		this.type = 'vote';
-		this.subTypes = ['pull_vote'];
+			type: 'vote',
+			subTypes: [
+				'pull_vote'
+			]
+		});
 	}
 
 	/**

@@ -8,25 +8,23 @@ export default class StreamingContext extends Context {
 	/**
 	 * Constructor
 	 *
-	 * @param {VK}     vk
-	 * @param {Object} payload
 	 * @param {Object} options
 	 */
-	constructor(vk, payload) {
-		super(vk);
+	constructor(options) {
+		const { action, event_type: type } = options.payload;
 
-		this.payload = payload;
+		super({
+			...options,
 
-		const { action, event_type: type } = payload;
+			type: 'publication',
+			subTypes: [
+				`publication_${type}`,
+				`${action}_publication`,
+				`${action}_publication_${type}`
+			]
+		});
 
-		this.attachments = transformAttachments(payload.attachments, vk);
-
-		this.type = 'publication';
-		this.subTypes = [
-			`publication_${type}`,
-			`${action}_publication`,
-			`${action}_publication_${type}`
-		];
+		this.attachments = transformAttachments(this.payload.attachments, this.vk);
 	}
 
 	/**

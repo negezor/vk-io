@@ -13,23 +13,25 @@ export default class MessageFlagsContext extends Context {
 	/**
 	 * Constructor
 	 *
-	 * @param {VK}     vk
-	 * @param {Array}  payload
 	 * @param {Object} options
 	 */
-	constructor(vk, [eventId, id, flags, peerId]) {
-		super(vk);
+	constructor(options) {
+		const [eventId, id, flags, peerId] = options.payload;
 
-		this.payload = {
-			peer_id: peerId,
-			flags,
-			id
-		};
+		super({
+			...options,
 
-		this.type = 'message_flags';
-		this.subTypes = [
-			subTypes[eventId]
-		];
+			type: 'message_flags',
+			subTypes: [
+				subTypes[eventId]
+			],
+
+			payload: {
+				peer_id: peerId,
+				flags,
+				id
+			}
+		});
 	}
 
 	/**

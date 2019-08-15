@@ -14,22 +14,19 @@ export default class WallPostContext extends Context {
 	/**
 	 * constructor
 	 *
-	 * @param {VK}     vk
-	 * @param {Object} payload
 	 * @param {Object} options
 	 */
-	constructor(vk, payload, { updateType, groupId }) {
-		super(vk);
+	constructor(options) {
+		super({
+			...options,
 
-		this.payload = payload;
-		this.$groupId = groupId;
+			type: 'wall_post',
+			subTypes: [
+				subTypes[options.updateType]
+			]
+		});
 
-		this.wall = new WallAttachment(payload, vk);
-
-		this.type = 'wall_post';
-		this.subTypes = [
-			subTypes[updateType]
-		];
+		this.wall = new WallAttachment(this.payload, this.vk);
 	}
 
 	/**

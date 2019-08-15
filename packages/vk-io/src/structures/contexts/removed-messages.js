@@ -12,22 +12,24 @@ export default class RemovedMessagesContext extends Context {
 	/**
 	 * Constructor
 	 *
-	 * @param {VK}     vk
-	 * @param {Arrray} payload
 	 * @param {Object} options
 	 */
-	constructor(vk, [eventId, peerId, id]) {
-		super(vk);
+	constructor(options) {
+		const [eventId, peerId, id] = options.payload;
 
-		this.payload = {
-			peer_id: peerId,
-			id
-		};
+		super({
+			...options,
 
-		this.type = 'removed_messages';
-		this.subTypes = [
-			subTypes[eventId]
-		];
+			type: 'removed_messages',
+			subTypes: [
+				subTypes[eventId]
+			],
+
+			payload: {
+				peer_id: peerId,
+				id
+			}
+		});
 	}
 
 	/**

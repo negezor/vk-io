@@ -21,22 +21,21 @@ export default class NewAttachmentsContext extends Context {
 	/**
 	 * Constructor
 	 *
-	 * @param {VK}     vk
-	 * @param {Object} payload
 	 * @param {Object} options
 	 */
-	constructor(vk, payload, { updateType, groupId }) {
-		super(vk);
+	constructor(options) {
+		const [subType, Attachment] = subTypes[options.updateType];
 
-		this.payload = payload;
-		this.$groupId = groupId;
+		super({
+			...options,
 
-		const [subType, Attachment] = subTypes[updateType];
+			type: 'new_attachment',
+			subTypes: [
+				subType
+			]
+		});
 
-		this.attachments = [new Attachment(payload, vk)];
-
-		this.type = 'new_attachment';
-		this.subTypes = [subType];
+		this.attachments = [new Attachment(this.payload, this.vk)];
 	}
 
 	/**

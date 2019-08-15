@@ -27,20 +27,17 @@ export default class GroupUserContext extends Context {
 	/**
 	 * Constructror
 	 *
-	 * @param {VK}     vk
-	 * @param {Object} payload
 	 * @param {Object} options
 	 */
-	constructor(vk, payload, { updateType, groupId }) {
-		super(vk);
+	constructor(options) {
+		super({
+			...options,
 
-		this.payload = payload;
-		this.$groupId = groupId;
-
-		this.type = 'group_user';
-		this.subTypes = [
-			subTypes[updateType]
-		];
+			type: 'group_user',
+			subTypes: [
+				subTypes[options.updateType]
+			]
+		});
 	}
 
 	/**

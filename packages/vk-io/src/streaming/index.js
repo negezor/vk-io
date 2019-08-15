@@ -152,7 +152,10 @@ export default class StreamingAPI {
 	 * @return {Promise}
 	 */
 	handleEvent(event) {
-		const context = new StreamingContext(this.vk, event);
+		const context = new StreamingContext({
+			vk: this.vk,
+			payload: event
+		});
 
 		return this.vk.updates.dispatchMiddleware(context);
 	}

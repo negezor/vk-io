@@ -15,24 +15,21 @@ export default class GroupUpdateContext extends Context {
 	/**
 	 * Constructor
 	 *
-	 * @param {VK}     vk
-	 * @param {Object} payload
 	 * @param {Object} options
 	 */
-	constructor(vk, payload, { updateType, groupId }) {
-		super(vk);
+	constructor(options) {
+		super({
+			...options,
 
-		this.payload = payload;
-		this.$groupId = groupId;
+			type: 'group_update',
+			subTypes: [
+				subTypes[options.updateType]
+			]
+		});
 
-		this.attachments = updateType === 'group_change_photo'
-			? [new PhotoAttachment(payload.photo, vk)]
+		this.attachments = options.updateType === 'group_change_photo'
+			? [new PhotoAttachment(this.payload.photo, this.vk)]
 			: [];
-
-		this.type = 'group_update';
-		this.subTypes = [
-			subTypes[updateType]
-		];
 	}
 
 	/**
