@@ -17,3 +17,4 @@ export { default as VKAppPayloadContext } from './vk-app-payload';
 export { default as CommentActionContext } from './comment-action';
 export { default as NewAttachmentsContext } from './new-attachments';
 export { default as RemovedMessagesContext } from './removed-messages';
+export { default as VKPayTransactionContext } from './vk-pay-transaction';

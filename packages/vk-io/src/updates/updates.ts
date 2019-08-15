@@ -27,7 +27,8 @@ import {
 	VKAppPayloadContext,
 	CommentActionContext,
 	NewAttachmentsContext,
-	RemovedMessagesContext
+	RemovedMessagesContext,
+	VKPayTransactionContext
 } from '../structures/contexts';
 
 import { PollingTransport, WebhookTransport } from './transports';
@@ -109,6 +110,10 @@ const webhookContextsEvents = [
 	[
 		['app_payload'],
 		VKAppPayloadContext
+	],
+	[
+		['vkpay_transaction'],
+		VKPayTransactionContext
 	]
 ];
 
