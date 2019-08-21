@@ -34,7 +34,7 @@ npm i vk-io
 
 ## Example usage
 ```js
-import VK from 'vk-io';
+import { VK } from 'vk-io';
 
 const vk = new VK({
 	token: process.env.TOKEN
