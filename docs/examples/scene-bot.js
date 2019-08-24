@@ -40,6 +40,7 @@ sceneManager.addScene(new StepScene('signup', [
 
 vk.updates.on('message', sessionManager.middleware);
 vk.updates.on('message', sceneManager.middleware);
+vk.updates.on('message', sceneManager.middlewareIntercept);
 
 vk.updates.hear('/signup', async (context) => {
 	await context.scene.enter('signup');
