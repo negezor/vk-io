@@ -42,7 +42,7 @@ export default class VK {
 
 	public streaming = new StreamingAPI(this);
 
-	protected callbackService = new CallbackService(this);
+	public callbackService = new CallbackService(this);
 
 	/**
 	 * Constructor
