@@ -2,7 +2,13 @@ import { getExecuteMethod } from '../utils/helpers';
 
 const unespaceOffset = /"offset":"(\w+)"/g;
 
-export default ({ method, params, parallelCount }) => {
+export interface IExecuteCodeOptions {
+	method: string;
+	params: Record<string, any>;
+	parallelCount: number;
+}
+
+export default ({ method, params, parallelCount }: IExecuteCodeOptions): string => {
 	const methodCode = getExecuteMethod(method, {
 		...params,
 

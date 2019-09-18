@@ -1,20 +1,19 @@
-import nodeUtil from 'util';
+import { inspect } from 'util';
 
 import CollectStream from './stream';
 import LIMITS_METHODS from './limits';
 
+import VK from '../vk';
 import Chain from './chain';
 import { getChainReturn, getExecuteMethod } from '../utils/helpers';
 
-const { inspect } = nodeUtil;
-
 export default class Collect {
+	protected vk: VK;
+
 	/**
 	 * constructor
-	 *
-	 * @param {VK} vk
 	 */
-	constructor(vk) {
+	constructor(vk: VK) {
 		this.vk = vk;
 
 		for (const [method, limit, max] of LIMITS_METHODS) {
@@ -37,20 +36,16 @@ export default class Collect {
 
 	/**
 	 * Returns custom tag
-	 *
-	 * @return {string}
 	 */
 	// eslint-disable-next-line class-methods-use-this
-	get [Symbol.toStringTag]() {
+	get [Symbol.toStringTag](): string {
 		return 'Collect';
 	}
 
 	/**
 	 * Returns new Chain instance
-	 *
-	 * @return {Chain}
 	 */
-	chain() {
+	chain(): Chain {
 		return new Chain(this.vk);
 	}
 
@@ -62,7 +57,10 @@ export default class Collect {
 	 *
 	 * @return {Promise<Array>}
 	 */
-	async executes(method, queue) {
+	async executes(method: string, queue: Record<string, any>[]): Promise<{
+		response: any[];
+		errors: any[];
+	}> {
 		const queueMethods = queue.map(params => (
 			getExecuteMethod(method, params)
 		));
@@ -92,13 +90,9 @@ export default class Collect {
 
 	/**
 	 * Custom inspect object
-	 *
-	 * @param {?number} depth
-	 * @param {Object}  options
-	 *
-	 * @return {string}
 	 */
-	[inspect.custom](depth, options) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	public [inspect.custom](depth: number, options: Record<string, any>): string {
 		const { name } = this.constructor;
 
 		return `${options.stylize(name, 'special')} {}`;

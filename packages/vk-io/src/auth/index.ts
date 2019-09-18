@@ -1,12 +1,10 @@
-import nodeUtil from 'util';
-import nodeCrypto from 'crypto';
+import { inspect } from 'util';
+import { createHash } from 'crypto';
 
+import VK from '../vk';
 import DirectAuth from './direct';
 import ImplicitFlowUser from './implicit-flow-user';
 import ImplicitFlowGroups from './implicit-flow-groups';
-
-const { inspect } = nodeUtil;
-const { createHash } = nodeCrypto;
 
 const openAPIParams = [
 	'expire',
@@ -17,12 +15,12 @@ const openAPIParams = [
 ];
 
 export default class Auth {
+	protected vk: VK;
+
 	/**
 	 * Constructor
-	 *
-	 * @param {VK} vk
 	 */
-	constructor(vk) {
+	constructor(vk: VK) {
 		this.vk = vk;
 	}
 

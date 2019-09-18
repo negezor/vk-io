@@ -6,6 +6,11 @@ const {
 	MISSING_TWO_FACTOR_HANDLER
 } = sharedErrors;
 
+export interface ICallbackServiceValidate {
+	resolve: (value: string) => Promise<void>;
+	reject: (error: Error) => Promise<void>;
+}
+
 export default class CallbackService {
 	public captchaHandler: Function | null = null;
 
@@ -37,7 +42,10 @@ export default class CallbackService {
 	/**
 	 * Processing captcha
 	 */
-	public processingCaptcha(payload: object): Promise<object> {
+	public processingCaptcha(payload: object): Promise<{
+		key: string;
+		validate: ICallbackServiceValidate;
+	}> {
 		return new Promise((resolveProcessing, rejectProcessing): void => {
 			if (!this.hasCaptchaHandler) {
 				rejectProcessing(new VKError({
@@ -57,6 +65,7 @@ export default class CallbackService {
 						return;
 					}
 
+					// @ts-ignore
 					resolveProcessing({
 						key,
 						validate: {
@@ -72,7 +81,10 @@ export default class CallbackService {
 	/**
 	 * Processing two-factor
 	 */
-	public processingTwoFactor(payload: object): Promise<object> {
+	public processingTwoFactor(payload: object): Promise<{
+		code: string;
+		validate: ICallbackServiceValidate;
+	}> {
 		return new Promise((resolveProcessing, rejectProcessing): void => {
 			if (!this.hasTwoFactorHandler) {
 				rejectProcessing(new VKError({
@@ -83,7 +95,7 @@ export default class CallbackService {
 				return;
 			}
 
-			this.twoFactorHandler(payload, (code: Error | string): Promise<object> => (
+			this.twoFactorHandler(payload, (code: Error | string): Promise<void> => (
 				new Promise((resolve, reject): void => {
 					if (code instanceof Error) {
 						reject(code);
@@ -92,6 +104,7 @@ export default class CallbackService {
 						return;
 					}
 
+					// @ts-ignore
 					resolveProcessing({
 						code,
 						validate: {

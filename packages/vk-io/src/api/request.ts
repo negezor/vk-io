@@ -1,21 +1,26 @@
-import nodeUtil from 'util';
+import { inspect } from 'util';
 
 import { getExecuteMethod } from '../utils/helpers';
 
-const { inspect } = nodeUtil;
-
 export default class Request {
+	public method: string;
+
+	public params: Record<string, any>;
+
+	public attempts = 0;
+
+	public promise: Promise<any>;
+
+	public resolve: Function;
+
+	public reject: Function;
+
 	/**
 	 * Constructor
-	 *
-	 * @param {string} method
-	 * @param {Object} params
 	 */
-	constructor(method, params = {}) {
+	constructor(method: string, params: Record<string, any> = {}) {
 		this.method = method;
 		this.params = { ...params };
-
-		this.attempts = 0;
 
 		this.promise = new Promise((resolve, reject) => {
 			this.resolve = resolve;
@@ -25,20 +30,16 @@ export default class Request {
 
 	/**
 	 * Returns custom tag
-	 *
-	 * @return {string}
 	 */
 	// eslint-disable-next-line class-methods-use-this
-	get [Symbol.toStringTag]() {
+	get [Symbol.toStringTag](): string {
 		return 'Request';
 	}
 
 	/**
 	 * Adds attempt
-	 *
-	 * @return {number}
 	 */
-	addAttempt() {
+	addAttempt(): number {
 		this.attempts += 1;
 
 		return this.attempts;
@@ -46,22 +47,16 @@ export default class Request {
 
 	/**
 	 * Returns string to execute
-	 *
-	 * @return {string}
 	 */
-	toString() {
+	toString(): string {
 		return getExecuteMethod(this.method, this.params);
 	}
 
 	/**
 	 * Custom inspect object
-	 *
-	 * @param {?number} depth
-	 * @param {Object}  options
-	 *
-	 * @return {string}
 	 */
-	[inspect.custom](depth, options) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	public [inspect.custom](depth: number, options: Record<string, any>): string {
 		const { name } = this.constructor;
 		const { method, params, promise } = this;
 

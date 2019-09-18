@@ -394,7 +394,10 @@ export default class MessageContext extends Context {
 		if (!this[kForwards]) {
 			this[kForwards] = this.payload.fwd_messages
 				? new MessageForwardsCollection(...this.payload.fwd_messages.map(forward => (
-					new MessageForward(forward, this.vk)
+					new MessageForward({
+						vk: this.vk,
+						payload: forward
+					})
 				)))
 				: new MessageForwardsCollection();
 		}

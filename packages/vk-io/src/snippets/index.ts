@@ -1,12 +1,15 @@
-import ResourceResolver from './resource-resolver';
+import VK from '../vk';
+import ResourceResolver, { IResolvedResource } from './resource-resolver';
 
 export default class Snippets {
+	protected vk: VK;
+
+	protected resourceResolver: ResourceResolver;
+
 	/**
 	 * Constructor
-	 *
-	 * @param {VK} vk
 	 */
-	constructor(vk) {
+	public constructor(vk: VK) {
 		this.vk = vk;
 
 		this.resourceResolver = new ResourceResolver(this.vk);
@@ -14,22 +17,16 @@ export default class Snippets {
 
 	/**
 	 * Returns custom tag
-	 *
-	 * @return {string}
 	 */
 	// eslint-disable-next-line class-methods-use-this
-	get [Symbol.toStringTag]() {
+	public get [Symbol.toStringTag](): string {
 		return 'Snippets';
 	}
 
 	/**
 	 * Defines the type of object (user, community, application, attachment)
-	 *
-	 * @param {*} resource
-	 *
-	 * @return {Promise<Object>}
 	 */
-	resolveResource(resource) {
+	public resolveResource(resource: string): Promise<IResolvedResource> {
 		return this.resourceResolver.resolve(resource);
 	}
 }

@@ -1,21 +1,20 @@
-import nodeUtil from 'util';
+import { inspect } from 'util';
 
+import VK from '../../vk';
 import { copyParams } from '../../utils/helpers';
 import { transformAttachments } from '../attachments/helpers';
 
-const { inspect } = nodeUtil;
-
-const kForwards = Symbol('forwards');
 const kAttachments = Symbol('attachments');
 
-export default class MessageForward {
+export default class MessageReply {
+	protected vk: VK;
+
+	protected payload: Record<string, any>;
+
 	/**
 	 * Constructor
-	 *
-	 * @param {Object} payload
-	 * @param {Object} vk
 	 */
-	constructor(payload, vk) {
+	public constructor(payload: object, vk: VK) {
 		this.vk = vk;
 
 		this.payload = payload;
@@ -23,11 +22,9 @@ export default class MessageForward {
 
 	/**
 	 * Returns custom tag
-	 *
-	 * @return {string}
 	 */
 	// eslint-disable-next-line class-methods-use-this
-	get [Symbol.toStringTag]() {
+	public get [Symbol.toStringTag]() {
 		return 'MessageForward';
 	}
 
@@ -36,7 +33,7 @@ export default class MessageForward {
 	 *
 	 * @return {boolean}
 	 */
-	get hasText() {
+	public get hasText() {
 		return this.text !== null;
 	}
 
@@ -47,7 +44,7 @@ export default class MessageForward {
 	 *
 	 * @return {boolean}
 	 */
-	hasAttachments(type = null) {
+	public hasAttachments(type = null) {
 		if (type === null) {
 			return this.attachments.length > 0;
 		}
@@ -58,11 +55,38 @@ export default class MessageForward {
 	}
 
 	/**
+	 * Returns the identifier message
+	 *
+	 * @return {number}
+	 */
+	public get id() {
+		return this.payload.id;
+	}
+
+	/**
+	 * Returns the conversation message id
+	 *
+	 * @return {?number}
+	 */
+	public get conversationMessageId() {
+		return this.payload.conversation_message_id || null;
+	}
+
+	/**
+	 * Returns the destination identifier
+	 *
+	 * @return {number}
+	 */
+	public get peerId() {
+		return this.payload.peer_id;
+	}
+
+	/**
 	 * Returns the date when this message was created
 	 *
 	 * @return {number}
 	 */
-	get createdAt() {
+	public get createdAt() {
 		return this.payload.date;
 	}
 
@@ -71,7 +95,7 @@ export default class MessageForward {
 	 *
 	 * @return {number}
 	 */
-	get updatedAt() {
+	public get updatedAt() {
 		return this.payload.update_time;
 	}
 
@@ -80,7 +104,7 @@ export default class MessageForward {
 	 *
 	 * @return {number}
 	 */
-	get senderId() {
+	public get senderId() {
 		return this.payload.from_id;
 	}
 
@@ -89,25 +113,8 @@ export default class MessageForward {
 	 *
 	 * @return {string}
 	 */
-	get text() {
+	public get text() {
 		return this.payload.text || null;
-	}
-
-	/**
-	 * Returns the forwards
-	 *
-	 * @return {MessageForward[]}
-	 */
-	get forwards() {
-		if (!this[kForwards]) {
-			this[kForwards] = this.payload.fwd_messages
-				? this.payload.fwd_messages.map(forward => (
-					new MessageForward(forward, this.vk)
-				))
-				: [];
-		}
-
-		return this[kForwards];
 	}
 
 	/**
@@ -115,7 +122,7 @@ export default class MessageForward {
 	 *
 	 * @return {Attachment[]}
 	 */
-	get attachments() {
+	public get attachments() {
 		if (!this[kAttachments]) {
 			this[kAttachments] = transformAttachments(this.payload.attachments, this.vk);
 		}
@@ -130,7 +137,7 @@ export default class MessageForward {
 	 *
 	 * @return {Array}
 	 */
-	getAttachments(type = null) {
+	public getAttachments(type = null) {
 		if (type === null) {
 			return this.attachments;
 		}
@@ -145,35 +152,35 @@ export default class MessageForward {
 	 *
 	 * @return {Object}
 	 */
-	toJSON() {
+	public toJSON() {
 		return copyParams(this, [
+			'id',
+			'conversationMessageId',
+			'peerId',
 			'senderId',
 			'createdAt',
 			'updatedAt',
 			'text',
-			'attachments',
-			'forwards'
+			'attachments'
 		]);
 	}
 
 	/**
 	 * Custom inspect object
-	 *
-	 * @param {?number} depth
-	 * @param {Object}  options
-	 *
-	 * @return {string}
 	 */
-	[inspect.custom](depth, options) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	public [inspect.custom](depth: number, options: Record<string, any>): string {
 		const { name } = this.constructor;
 
 		const payload = copyParams(this, [
+			'id',
+			'conversationMessageId',
+			'peerId',
 			'senderId',
 			'createdAt',
 			'updatedAt',
 			'text',
-			'attachments',
-			'forwards'
+			'attachments'
 		]);
 
 		return `${options.stylize(name, 'special')} ${inspect(payload, { ...options, compact: false })}`;

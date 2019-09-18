@@ -63,7 +63,7 @@ export const fetchCookieDecorator = (jar = new CookieJar()): Function => {
 	};
 };
 
-export const fetchCookieFollowRedirectsDecorator = (jar: CookieJar): Function => {
+export const fetchCookieFollowRedirectsDecorator = (jar?: CookieJar): Function => {
 	const fetchCookie = fetchCookieDecorator(jar);
 
 	return async function fetchCookieFollowRedirects(

@@ -1,8 +1,6 @@
 /**
  * List limits VK
  * Last updated 09.10.2017
- *
- * @type {Array}
  */
 export default [
 	/**
@@ -192,4 +190,4 @@ export default [
 	 */
 	['widgets.getComments', 200],
 	['widgets.getPages', 200]
-];
+] as [string, number, number?][];

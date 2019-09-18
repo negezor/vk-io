@@ -1,5 +1,6 @@
-import nodeUrl from 'url';
+import { URL } from 'url';
 
+import VK from '../vk';
 import { SnippetsError } from '../errors';
 import {
 	resourceTypes,
@@ -10,8 +11,6 @@ import {
 	parseResource,
 	parseOwnerResource
 } from '../utils/constants';
-
-const { URL } = nodeUrl;
 
 const {
 	INVALID_URL,
@@ -68,22 +67,26 @@ const resolveOwnerResource = (resource, pattern) => {
 	};
 };
 
+export interface IResolvedResource {
+	id: number;
+	owner?: number;
+	type: 'user' | 'group' | 'application' | 'albums' | 'album' | 'wall' | 'club' | 'photo' | 'video' | 'audio' | string;
+}
+
 export default class ResourceResolver {
+	protected vk: VK;
+
 	/**
 	 * Constructor
-	 *
-	 * @param {VK} vk
 	 */
-	constructor(vk) {
+	public constructor(vk: VK) {
 		this.vk = vk;
 	}
 
 	/**
 	 * Resolve resource
-	 *
-	 * @return {Promise<Object>}
 	 */
-	async resolve(rawResource) {
+	public async resolve(rawResource: string | number): Promise<IResolvedResource> {
 		if (!rawResource) {
 			throw new SnippetsError({
 				code: INVALID_RESOURCE,
@@ -94,7 +97,7 @@ export default class ResourceResolver {
 		const resource = String(rawResource).trim();
 
 		if (numberRe.test(resource)) {
-			return this.resolveNumber(resource);
+			return this.resolveNumber(Number(resource));
 		}
 
 		const isMention = (
@@ -114,12 +117,8 @@ export default class ResourceResolver {
 
 	/**
 	 * Resolve number
-	 *
-	 * @param {string} resource
-	 *
-	 * @return {Promise<Object>}
 	 */
-	resolveNumber(resource) {
+	protected resolveNumber(resource: number): Promise<IResolvedResource> {
 		const isGroup = resource < 0;
 
 		const type = isGroup
@@ -135,12 +134,8 @@ export default class ResourceResolver {
 
 	/**
 	 * Resolve resource mention
-	 *
-	 * @param {string} resource
-	 *
-	 * @return {Promise<Object>}
 	 */
-	resolveMention(resource) {
+	protected resolveMention(resource: string): Promise<IResolvedResource> {
 		if (isUserMentionRe.test(resource)) {
 			return this.resolveScreenName(resource.substring(1));
 		}
@@ -152,12 +147,8 @@ export default class ResourceResolver {
 
 	/**
 	 * Resolve resource url
-	 *
-	 * @param {string} resource
-	 *
-	 * @return {Promise<Object>}
 	 */
-	async resolveUrl(rawResourceUrl) {
+	protected async resolveUrl(rawResourceUrl: string): Promise<IResolvedResource> {
 		const resourceUrl = !hasProtocolRe.test(rawResourceUrl)
 			? `https://${rawResourceUrl}`
 			: rawResourceUrl;
@@ -184,12 +175,8 @@ export default class ResourceResolver {
 
 	/**
 	 * Resolve screen name
-	 *
-	 * @param {string} resource
-	 *
-	 * @return {Promise<Object>}
 	 */
-	async resolveScreenName(resource) {
+	protected async resolveScreenName(resource: string): Promise<IResolvedResource> {
 		if (parseAttachment.test(resource)) {
 			return resolveOwnerResource(resource, parseAttachment);
 		}
@@ -213,6 +200,7 @@ export default class ResourceResolver {
 			};
 		}
 
+		// @ts-ignore
 		const response = await this.vk.api.utils.resolveScreenName({
 			screen_name: resource
 		});

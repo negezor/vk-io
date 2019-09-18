@@ -1,23 +1,38 @@
-import nodeUtil from 'util';
+import { inspect } from 'util';
 
+import VK from '../../vk';
 import { copyParams } from '../../utils/helpers';
 import { transformAttachments } from '../attachments/helpers';
 
-const { inspect } = nodeUtil;
-
+const kForwards = Symbol('forwards');
 const kAttachments = Symbol('attachments');
 
-export default class MessageReply {
+export interface IMessageForwardPayload {
+	text?: string;
+	attachments: any[];
+	fwd_messages: any[];
+	from_id: number;
+	date: number;
+	update_time: number;
+}
+
+export interface IMessageForwardOptions {
+	vk: VK;
+	payload: IMessageForwardPayload;
+}
+
+export default class MessageForward {
+	protected vk: VK;
+
+	protected payload: IMessageForwardPayload;
+
 	/**
 	 * Constructor
-	 *
-	 * @param {Object} payload
-	 * @param {Object} vk
 	 */
-	constructor(payload, vk) {
-		this.vk = vk;
+	public constructor(options: IMessageForwardOptions) {
+		this.vk = options.vk;
 
-		this.payload = payload;
+		this.payload = options.payload;
 	}
 
 	/**
@@ -26,7 +41,7 @@ export default class MessageReply {
 	 * @return {string}
 	 */
 	// eslint-disable-next-line class-methods-use-this
-	get [Symbol.toStringTag]() {
+	public get [Symbol.toStringTag](): string {
 		return 'MessageForward';
 	}
 
@@ -35,7 +50,7 @@ export default class MessageReply {
 	 *
 	 * @return {boolean}
 	 */
-	get hasText() {
+	public get hasText(): boolean {
 		return this.text !== null;
 	}
 
@@ -46,7 +61,7 @@ export default class MessageReply {
 	 *
 	 * @return {boolean}
 	 */
-	hasAttachments(type = null) {
+	public hasAttachments(type = null) {
 		if (type === null) {
 			return this.attachments.length > 0;
 		}
@@ -57,38 +72,11 @@ export default class MessageReply {
 	}
 
 	/**
-	 * Returns the identifier message
-	 *
-	 * @return {number}
-	 */
-	get id() {
-		return this.payload.id;
-	}
-
-	/**
-	 * Returns the conversation message id
-	 *
-	 * @return {?number}
-	 */
-	get conversationMessageId() {
-		return this.payload.conversation_message_id || null;
-	}
-
-	/**
-	 * Returns the destination identifier
-	 *
-	 * @return {number}
-	 */
-	get peerId() {
-		return this.payload.peer_id;
-	}
-
-	/**
 	 * Returns the date when this message was created
 	 *
 	 * @return {number}
 	 */
-	get createdAt() {
+	public get createdAt(): number {
 		return this.payload.date;
 	}
 
@@ -97,7 +85,7 @@ export default class MessageReply {
 	 *
 	 * @return {number}
 	 */
-	get updatedAt() {
+	public get updatedAt(): number {
 		return this.payload.update_time;
 	}
 
@@ -106,7 +94,7 @@ export default class MessageReply {
 	 *
 	 * @return {number}
 	 */
-	get senderId() {
+	public get senderId(): number {
 		return this.payload.from_id;
 	}
 
@@ -115,8 +103,28 @@ export default class MessageReply {
 	 *
 	 * @return {string}
 	 */
-	get text() {
+	public get text() {
 		return this.payload.text || null;
+	}
+
+	/**
+	 * Returns the forwards
+	 *
+	 * @return {MessageForward[]}
+	 */
+	public get forwards() {
+		if (!this[kForwards]) {
+			this[kForwards] = this.payload.fwd_messages
+				? this.payload.fwd_messages.map(forward => (
+					new MessageForward({
+						vk: this.vk,
+						payload: forward
+					})
+				))
+				: [];
+		}
+
+		return this[kForwards];
 	}
 
 	/**
@@ -124,7 +132,7 @@ export default class MessageReply {
 	 *
 	 * @return {Attachment[]}
 	 */
-	get attachments() {
+	public get attachments() {
 		if (!this[kAttachments]) {
 			this[kAttachments] = transformAttachments(this.payload.attachments, this.vk);
 		}
@@ -139,7 +147,7 @@ export default class MessageReply {
 	 *
 	 * @return {Array}
 	 */
-	getAttachments(type = null) {
+	public getAttachments(type = null) {
 		if (type === null) {
 			return this.attachments;
 		}
@@ -154,39 +162,31 @@ export default class MessageReply {
 	 *
 	 * @return {Object}
 	 */
-	toJSON() {
+	public toJSON() {
 		return copyParams(this, [
-			'id',
-			'conversationMessageId',
-			'peerId',
 			'senderId',
 			'createdAt',
 			'updatedAt',
 			'text',
-			'attachments'
+			'attachments',
+			'forwards'
 		]);
 	}
 
 	/**
 	 * Custom inspect object
-	 *
-	 * @param {?number} depth
-	 * @param {Object}  options
-	 *
-	 * @return {string}
 	 */
-	[inspect.custom](depth, options) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	public [inspect.custom](depth: number, options: Record<string, any>): string {
 		const { name } = this.constructor;
 
 		const payload = copyParams(this, [
-			'id',
-			'conversationMessageId',
-			'peerId',
 			'senderId',
 			'createdAt',
 			'updatedAt',
 			'text',
-			'attachments'
+			'attachments',
+			'forwards'
 		]);
 
 		return `${options.stylize(name, 'special')} ${inspect(payload, { ...options, compact: false })}`;

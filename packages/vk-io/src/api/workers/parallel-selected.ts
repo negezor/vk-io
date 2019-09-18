@@ -8,8 +8,10 @@ import {
 } from '../../utils/helpers';
 
 export default async function parallelSelected(next) {
+	// @ts-ignore
 	const { apiExecuteMethods, apiExecuteCount } = this.vk.options;
 
+	// @ts-ignore
 	const { queue } = this;
 
 	if (!apiExecuteMethods.includes(queue[0].method)) {
@@ -52,6 +54,7 @@ export default async function parallelSelected(next) {
 			code: getChainReturn(chain)
 		});
 
+		// @ts-ignore
 		this.callMethod(request);
 
 		next();

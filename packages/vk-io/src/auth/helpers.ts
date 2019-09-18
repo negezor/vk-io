@@ -1,8 +1,6 @@
-import nodeUrl from 'url';
+import { URL } from 'url';
 
 import { userScopes, groupScopes } from '../utils/constants';
-
-const { URL } = nodeUrl;
 
 /**
  * Returns the entire permission bit mask
@@ -82,7 +80,7 @@ export const getGroupsPermissionsByName = (rawScope) => {
 export const parseFormField = ($) => {
 	const $form = $('form[action][method]');
 
-	const fields = {};
+	const fields: Record<string, any> = {};
 
 	for (const { name, value } of $form.serializeArray()) {
 		fields[name] = value;

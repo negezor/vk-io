@@ -1,12 +1,12 @@
 import fetch from 'node-fetch';
 import createDebug from 'debug';
 
-import nodeUtil from 'util';
-import nodeUrl from 'url';
+import { inspect } from 'util';
+import { URLSearchParams } from 'url';
 
 import Request from './request';
-import { VKError, APIError, ExecuteError } from '../errors';
 import { getRandomId, delay } from '../utils/helpers';
+import { VKError, APIError, ExecuteError } from '../errors';
 import AccountVerification from '../auth/account-verification';
 import { sequential, parallel, parallelSelected } from './workers';
 import {
@@ -15,9 +15,6 @@ import {
 	apiErrors,
 	captchaTypes
 } from '../utils/constants';
-
-const { inspect } = nodeUtil;
-const { URLSearchParams } = nodeUrl;
 
 const {
 	CAPTCHA_REQUIRED,

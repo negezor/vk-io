@@ -1,15 +1,13 @@
 import createDebug from 'debug';
 
-import nodeUtil from 'util';
-import nodeStream from 'stream';
+import { inspect } from 'util';
+import { Readable } from 'stream';
 
+import VK from '../vk';
 import { CollectError, apiErrors, collectErrors } from '../errors';
 
 import Request from '../api/request';
 import getExecuteCode from './execute-code';
-
-const { inspect } = nodeUtil;
-const { Readable } = nodeStream;
 
 const debug = createDebug('vk-io:collect:stream');
 
@@ -18,12 +16,34 @@ const { APP_TOKEN_NOT_VALID, RESPONSE_SIZE_TOO_BIG } = apiErrors;
 const { EXECUTE_ERROR } = collectErrors;
 
 export default class CollectStream extends Readable {
+	protected vk: VK;
+
+	protected method: string;
+
+	protected code: string;
+
+	protected parallelCount: number;
+
+	protected total: number;
+
+	protected offset: number;
+
+	protected skipOffset: number;
+
+	protected received: number;
+
+	protected attempts: number;
+
+	protected supportExecute: boolean;
+
+	protected promise: Promise<any> | null;
+
+	protected params: Record<string, any>;
+
 	/**
 	 * Constructor
-	 *
-	 * @param {VK} vk
 	 */
-	constructor(vk, {
+	constructor(vk: VK, {
 		options,
 		method,
 		limit,
@@ -93,12 +113,9 @@ export default class CollectStream extends Readable {
 	/**
 	 * Promise based
 	 *
-	 * @param {Function} thenFn
-	 * @param {Function} catchFn
-	 *
 	 * @return {Promise<Object[]>}
 	 */
-	then(thenFn, catchFn) {
+	then(thenFn, catchFn?) {
 		if (this.promise === null) {
 			let collectItems = [];
 			let collectProfiles = [];

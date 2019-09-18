@@ -1,19 +1,16 @@
-import cheerio from 'cheerio';
+import { load as cheerioLoad } from 'cheerio';
 import createDebug from 'debug';
 
-import nodeUrl from 'url';
-import nodeUtil from 'util';
+import { Agent } from 'https';
+import { promisify } from 'util';
+import { URL, URLSearchParams } from 'url';
 
+import VK from '../vk';
 import { AuthError, authErrors } from '../errors';
 
 import { parseFormField, getFullURL } from './helpers';
 import { CookieJar, fetchCookieFollowRedirectsDecorator } from '../utils/fetch-cookie';
 import { DESKTOP_USER_AGENT, CALLBACK_BLANK, captchaTypes } from '../utils/constants';
-
-const { load: cheerioLoad } = cheerio;
-
-const { URL, URLSearchParams } = nodeUrl;
-const { promisify } = nodeUtil;
 
 const debug = createDebug('vk-io:auth:implicit-flow');
 
@@ -74,41 +71,75 @@ const REPLACE_PREFIX_RE = /^[+|0]+/;
  */
 const FIND_LOCATION_HREF_RE = /location\.href\s+=\s+"([^"]+)"/i;
 
+interface IImplicitFlowOptions {
+	appId: number;
+	appSecret: string;
+
+	login?: string;
+	phone?: string | number;
+	password: string;
+
+	agent: Agent;
+	scope: string | number;
+	timeout: number;
+
+	apiVersion: string;
+}
+
 export default class ImplicitFlow {
+	protected vk: VK;
+
+	protected options: IImplicitFlowOptions;
+
+	public started: boolean;
+
+	public jar: CookieJar;
+
+	protected fetchCookie: Function;
+
+	protected captchaValidate = null;
+
+	protected captchaAttempts = 0;
+
+	protected twoFactorValidate = null;
+
+	protected twoFactorAttempts = 0;
+
 	/**
 	 * Constructor
-	 *
-	 * @param {VK}     vk
-	 * @param {Object} options
 	 */
-	constructor(vk, {
-		appId = vk.options.appId,
-		appSecret = vk.options.appSecret,
-
-		login = vk.options.login,
-		phone = vk.options.phone,
-		password = vk.options.password,
-
-		agent = vk.options.agent,
-		scope = vk.options.authScope,
-		timeout = vk.options.authTimeout,
-
-		apiVersion = vk.options.apiVersion
-	} = {}) {
+	constructor(vk: VK, options: Partial<IImplicitFlowOptions> = {}) {
 		this.vk = vk;
 
-		this.appId = appId;
-		this.appSecret = appSecret;
+		const {
+			appId = vk.options.appId,
+			appSecret = vk.options.appSecret,
 
-		this.login = login;
-		this.phone = phone;
-		this.password = password;
+			login = vk.options.login,
+			phone = vk.options.phone,
+			password = vk.options.password,
 
-		this.agent = agent;
-		this.scope = scope;
-		this.timeout = timeout;
+			scope = vk.options.authScope,
+			agent = vk.options.agent,
+			timeout = vk.options.authTimeout,
 
-		this.apiVersion = apiVersion;
+			apiVersion = vk.options.apiVersion
+		} = options;
+
+		this.options = {
+			appId,
+			appSecret,
+
+			login,
+			phone,
+			password,
+
+			agent,
+			scope,
+			timeout,
+
+			apiVersion
+		};
 
 		this.jar = new CookieJar();
 
@@ -123,10 +154,8 @@ export default class ImplicitFlow {
 
 	/**
 	 * Returns custom tag
-	 *
-	 * @return {string}
 	 */
-	get [Symbol.toStringTag]() {
+	get [Symbol.toStringTag](): string {
 		return this.constructor.name;
 	}
 
@@ -179,8 +208,8 @@ export default class ImplicitFlow {
 	 *
 	 * @return {Promise<Response>}
 	 */
-	fetch(url, options = {}) {
-		const { agent, timeout } = this;
+	fetch(url: string | URL, options: Record<string, any> = {}) {
+		const { agent, timeout } = this.options;
 
 		const { headers = {} } = options;
 
@@ -219,6 +248,7 @@ export default class ImplicitFlow {
 
 		debug('get permissions page');
 
+		// @ts-ignore
 		let response = await this.getPermissionsPage();
 
 		const isProcessed = true;
@@ -348,7 +378,7 @@ export default class ImplicitFlow {
 			});
 		}
 
-		const { login, password, phone } = this;
+		const { login, password, phone } = this.options;
 
 		const { action, fields } = parseFormField($);
 
@@ -373,7 +403,7 @@ export default class ImplicitFlow {
 
 		const url = new URL(action);
 
-		url.searchParams.set('utf8', 1);
+		url.searchParams.set('utf8', '1');
 
 		const pageResponse = await this.fetch(url, {
 			method: 'POST',
@@ -444,7 +474,7 @@ export default class ImplicitFlow {
 	async processSecurityForm(response, $) {
 		debug('process security form');
 
-		const { login, phone } = this;
+		const { login, phone } = this.options;
 
 		let number;
 		if (phone !== null) {

@@ -1,16 +1,14 @@
-import cheerio from 'cheerio';
+import { load as cheerioLoad } from 'cheerio';
 import createDebug from 'debug';
 
-import nodeUrl from 'url';
+import { Agent } from 'https';
+import { URL, URLSearchParams } from 'url';
 
+import VK from '../vk';
 import { AuthError, authErrors } from '../errors';
 import { parseFormField, getFullURL } from './helpers';
 import { DESKTOP_USER_AGENT, CALLBACK_BLANK, captchaTypes } from '../utils/constants';
 import { CookieJar, fetchCookieFollowRedirectsDecorator } from '../utils/fetch-cookie';
-
-const { load: cheerioLoad } = cheerio;
-
-const { URL, URLSearchParams } = nodeUrl;
 
 const debug = createDebug('vk-io:auth:account-verification');
 
@@ -56,21 +54,43 @@ const ACTION_CAPTCHA = 'act=captcha';
  */
 const TWO_FACTOR_ATTEMPTS = 3;
 
+interface IAccountVerificationOptions {
+	agent: Agent;
+
+	login?: string;
+	phone?: string | number;
+}
+
 export default class AccountVerification {
+	protected vk: VK;
+
+	protected options: IAccountVerificationOptions;
+
+	public jar: CookieJar;
+
+	protected fetchCookie: Function;
+
+	protected captchaValidate = null;
+
+	protected captchaAttempts = 0;
+
+	protected twoFactorValidate = null;
+
+	protected twoFactorAttempts = 0;
+
 	/**
 	 * Constructor
-	 *
-	 * @param {VK} vk
 	 */
-	constructor(vk) {
+	constructor(vk: VK) {
 		this.vk = vk;
 
 		const { agent, login, phone } = vk.options;
 
-		this.login = login;
-		this.phone = phone;
-
-		this.agent = agent;
+		this.options = {
+			login,
+			phone,
+			agent
+		};
 
 		this.jar = new CookieJar();
 		this.fetchCookie = fetchCookieFollowRedirectsDecorator(this.jar);
@@ -84,24 +104,17 @@ export default class AccountVerification {
 
 	/**
 	 * Returns custom tag
-	 *
-	 * @return {string}
 	 */
 	// eslint-disable-next-line class-methods-use-this
-	get [Symbol.toStringTag]() {
+	get [Symbol.toStringTag](): string {
 		return 'AccountVerification';
 	}
 
 	/**
 	 * Executes the HTTP request
-	 *
-	 * @param {string} url
-	 * @param {Object} options
-	 *
-	 * @return {Promise<Response>}
 	 */
-	fetch(url, options = {}) {
-		const { agent } = this;
+	fetch(url: URL | string, options: Record<string, any> = {}) {
+		const { agent } = this.options;
 
 		const { headers = {} } = options;
 
@@ -126,7 +139,7 @@ export default class AccountVerification {
 	 * @return {Promise<Object>}
 	 */
 	// eslint-disable-next-line consistent-return
-	async run(redirectUri) {
+	async run(redirectUri: string) {
 		let response = await this.fetch(redirectUri, {
 			method: 'GET'
 		});
@@ -257,7 +270,7 @@ export default class AccountVerification {
 	async processSecurityForm(response, $) {
 		debug('process security form');
 
-		const { login, phone } = this;
+		const { login, phone } = this.options;
 
 		let number;
 		if (phone !== null) {
@@ -356,7 +369,7 @@ export default class AccountVerification {
 
 		const url = getFullURL(action, response);
 
-		url.searchParams.set('utf8', 1);
+		url.searchParams.set('utf8', '1');
 
 		const pageResponse = await this.fetch(url, {
 			method: 'POST',

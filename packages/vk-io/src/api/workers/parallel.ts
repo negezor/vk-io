@@ -7,7 +7,8 @@ import {
 	resolveExecuteTask
 } from '../../utils/helpers';
 
-export default async function parallel(next) {
+export default async function parallel(next: Function) {
+	// @ts-ignore
 	const { queue } = this;
 
 	if (queue[0].method.startsWith('execute')) {
@@ -19,6 +20,7 @@ export default async function parallel(next) {
 	// Wait next event loop, saves one request or more
 	await delay(0);
 
+	// @ts-ignore
 	const { apiExecuteCount } = this.vk.options;
 
 	const tasks = [];
@@ -46,6 +48,7 @@ export default async function parallel(next) {
 			code: getChainReturn(chain)
 		});
 
+		// @ts-ignore
 		this.callMethod(request);
 
 		next();

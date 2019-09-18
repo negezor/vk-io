@@ -1,6 +1,6 @@
 import createDebug from 'debug';
 
-import nodeUrl from 'url';
+import { URL, URLSearchParams } from 'url';
 
 import ImplicitFlow from './implicit-flow';
 import { AuthError, authErrors } from '../errors';
@@ -9,8 +9,6 @@ import {
 	getAllUsersPermissions,
 	getUsersPermissionsByName
 } from './helpers';
-
-const { URL, URLSearchParams } = nodeUrl;
 
 const debug = createDebug('vk-io:auth:implicit-flow-user');
 
@@ -23,8 +21,8 @@ export default class ImplicitFlowUser extends ImplicitFlow {
 	 * @return {Promise<Response>}
 	 */
 	getPermissionsPage() {
-		const { appId } = this;
-		let { scope } = this;
+		const { appId } = this.options;
+		let { scope } = this.options;
 
 		if (scope === 'all' || scope === null) {
 			scope = getAllUsersPermissions();
@@ -34,11 +32,12 @@ export default class ImplicitFlowUser extends ImplicitFlow {
 
 		debug('auth scope %s', scope);
 
+		// @ts-ignore
 		const params = new URLSearchParams({
 			redirect_uri: CALLBACK_BLANK,
 			response_type: 'token',
 			display: 'page',
-			v: this.apiVersion,
+			v: this.options.apiVersion,
 			client_id: appId,
 			scope
 		});
@@ -52,9 +51,8 @@ export default class ImplicitFlowUser extends ImplicitFlow {
 
 	/**
 	 * Starts authorization
-	 *
-	 * @return {Promise<Object>}
 	 */
+	// @ts-ignore
 	async run() {
 		const { response } = await super.run();
 

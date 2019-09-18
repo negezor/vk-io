@@ -1,6 +1,6 @@
 import createDebug from 'debug';
 
-import nodeUrl from 'url';
+import { URL, URLSearchParams } from 'url';
 
 import ImplicitFlow from './implicit-flow';
 import { VKError, AuthError, authErrors } from '../errors';
@@ -10,18 +10,15 @@ import {
 	getGroupsPermissionsByName
 } from './helpers';
 
-const { URL, URLSearchParams } = nodeUrl;
-
 const debug = createDebug('vk-io:auth:implicit-flow-user');
 
 const { AUTHORIZATION_FAILED } = authErrors;
 
 export default class ImplicitFlowGroups extends ImplicitFlow {
+	groups: number[];
+
 	/**
 	 * Constructor
-	 *
-	 * @param {VK}     vk
-	 * @param {Object} options
 	 */
 	constructor(vk, options) {
 		super(vk, options);
@@ -30,7 +27,8 @@ export default class ImplicitFlowGroups extends ImplicitFlow {
 
 		if (groups === null) {
 			throw new VKError({
-				message: 'Groups list must have'
+				message: 'Groups list must have',
+				code: 'GROUPS_NOT_SET'
 			});
 		}
 
@@ -55,8 +53,8 @@ export default class ImplicitFlowGroups extends ImplicitFlow {
 	 * @return {Promise<Response>}
 	 */
 	getPermissionsPage() {
-		const { appId } = this;
-		let { scope } = this;
+		const { appId } = this.options;
+		let { scope } = this.options;
 
 		if (scope === 'all' || scope === null) {
 			scope = getAllGroupsPermissions();
@@ -66,12 +64,13 @@ export default class ImplicitFlowGroups extends ImplicitFlow {
 
 		debug('auth scope %s', scope);
 
+		// @ts-ignore
 		const params = new URLSearchParams({
 			group_ids: this.groups.join(','),
 			redirect_uri: CALLBACK_BLANK,
 			response_type: 'token',
 			display: 'page',
-			v: this.apiVersion,
+			v: this.options.apiVersion,
 			client_id: appId,
 			scope
 		});
@@ -88,6 +87,7 @@ export default class ImplicitFlowGroups extends ImplicitFlow {
 	 *
 	 * @return {Promise<Array>}
 	 */
+	// @ts-ignore
 	async run() {
 		const { response } = await super.run();
 
@@ -106,7 +106,7 @@ export default class ImplicitFlowGroups extends ImplicitFlow {
 			});
 		}
 
-		let expires = params.get('expires_in');
+		let expires: string | number | null = params.get('expires_in');
 
 		if (expires !== null) {
 			expires = Number(expires);

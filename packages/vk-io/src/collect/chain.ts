@@ -1,23 +1,23 @@
-import nodeUtil from 'util';
+import { inspect } from 'util';
 
 import { VKError } from '../errors';
 
+import VK from '../vk';
 import Request from '../api/request';
 import { getChainReturn, resolveExecuteTask } from '../utils/helpers';
 
-const { inspect } = nodeUtil;
-
 export default class Chain {
+	public started = false;
+
+	protected vk: VK;
+
+	protected queue = [];
+
 	/**
 	 * Constructor
-	 *
-	 * @param {VK} vk
 	 */
-	constructor(vk) {
+	constructor(vk: VK) {
 		this.vk = vk;
-
-		this.queue = [];
-		this.started = false;
 	}
 
 	/**
@@ -41,7 +41,8 @@ export default class Chain {
 	append(method, params) {
 		if (this.started) {
 			return Promise.reject(new VKError({
-				message: 'Chain already started'
+				message: 'Chain already started',
+				code: 'ALREADY_STARTED'
 			}));
 		}
 
@@ -72,7 +73,8 @@ export default class Chain {
 	async run() {
 		if (this.started) {
 			throw new VKError({
-				message: 'Chain already started'
+				message: 'Chain already started',
+				code: 'ALREADY_STARTED'
 			});
 		}
 
@@ -116,13 +118,9 @@ export default class Chain {
 
 	/**
 	 * Custom inspect object
-	 *
-	 * @param {?number} depth
-	 * @param {Object}  options
-	 *
-	 * @return {string}
 	 */
-	[inspect.custom](depth, options) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	public [inspect.custom](depth: number, options: Record<string, any>): string {
 		const { name } = this.constructor;
 		const { started, queue } = this;
 
