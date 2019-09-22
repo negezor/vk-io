@@ -1,4 +1,4 @@
-import Context from './context';
+import Context, { IContextOptions } from './context';
 
 import { copyParams } from '../../utils/helpers';
 import { inspectCustomData } from '../../utils/constants';
@@ -7,14 +7,18 @@ const subTypes = {
 	13: 'delete_messages',
 	14: 'restore_messages'
 };
+export interface IRemovedMessagesContextPayload {
+	id: number;
+	peer_id: number;
+}
 
-export default class RemovedMessagesContext extends Context {
-	/**
-	 * Constructor
-	 *
-	 * @param {Object} options
-	 */
-	constructor(options) {
+export type RemovedMessagesContextOptions<S> =
+	Omit<IContextOptions<number[], S>, 'type' | 'subTypes'>;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default class RemovedMessagesContext<S = Record<string, any>>
+	extends Context<IRemovedMessagesContextPayload, S> {
+	public constructor(options: RemovedMessagesContextOptions<S>) {
 		const [eventId, peerId, id] = options.payload;
 
 		super({
@@ -34,46 +38,36 @@ export default class RemovedMessagesContext extends Context {
 
 	/**
 	 * Checks that messages have been deleted
-	 *
-	 * @return {boolean}
 	 */
-	get isRemoved() {
+	public get isRemoved(): boolean {
 		return this.subTypes.includes('delete_messages');
 	}
 
 	/**
 	 * Checks that messages have been restored
-	 *
-	 * @return {boolean}
 	 */
-	get isRecovery() {
+	public get isRecovery(): boolean {
 		return this.subTypes.includes('restore_messages');
 	}
 
 	/**
 	 * Returns the identifier of the message
-	 *
-	 * @return {string}
 	 */
-	get id() {
+	public get id(): number {
 		return this.payload.id;
 	}
 
 	/**
 	 * Returns the peer ID
-	 *
-	 * @return {number}
 	 */
-	get peerId() {
+	public get peerId(): number {
 		return this.payload.peer_id;
 	}
 
 	/**
 	 * Returns the custom data
-	 *
-	 * @type {Object}
 	 */
-	[inspectCustomData]() {
+	public [inspectCustomData](): object {
 		return copyParams(this, [
 			'id',
 			'peerId',

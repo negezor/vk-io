@@ -1,4 +1,4 @@
-import Context from './context';
+import Context, { IContextOptions } from './context';
 
 import { copyParams, getPeerType, showDeprecatedMessage } from '../../utils/helpers';
 import {
@@ -8,7 +8,10 @@ import {
 	inspectCustomData
 } from '../../utils/constants';
 
-const transformPolling = ({ 1: fromId, 2: toId }, updateType) => ({
+const transformPolling = (
+	{ 1: fromId, 2: toId }: number[],
+	updateType: number
+): ITypingContextPayload => ({
 	from_id: fromId,
 	to_id: updateType === 62
 		? toId + CHAT_PEER
@@ -17,97 +20,89 @@ const transformPolling = ({ 1: fromId, 2: toId }, updateType) => ({
 	state: 'typing'
 });
 
-export default class TypingContext extends Context {
-	/**
-	 * Constructor
-	 *
-	 * @param {Object} options
-	 */
-	constructor(options) {
+export interface ITypingContextPayload {
+	from_id: number;
+	to_id: number;
+	state: string;
+}
+
+export type TypingContextOptions<S> =
+	Omit<IContextOptions<ITypingContextPayload, S>, 'type' | 'subTypes'>;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default class TypingContext<S = Record<string, any>>
+	extends Context<ITypingContextPayload, S> {
+	public constructor(options: TypingContextOptions<S>) {
 		super({
 			...options,
 
 			type: 'typing',
 			subTypes: [
+				// @ts-ignore
 				`typing_${getPeerType(options.payload.from_id)}`
 			],
 
 			payload: options.source === updatesSources.POLLING
-				? transformPolling(options.payload, options.updateType)
+				// @ts-ignore
+				? transformPolling(options.payload as [number, number, number], options.updateType)
 				: options.payload
 		});
 	}
 
 	/**
 	 * Checks is typing
-	 *
-	 * @return {boolean}
 	 */
-	get isTyping() {
+	public get isTyping(): boolean {
 		return this.payload.state === 'typing';
 	}
 
 	/**
 	 * Checks is record audio message
-	 *
-	 * @return {boolean}
 	 */
-	get isAudioMessage() {
+	public get isAudioMessage(): boolean {
 		return this.payload.state === 'audiomessage';
 	}
 
 	/**
 	 * Checks that the message is typed in the dm
-	 *
-	 * @return {boolean}
 	 */
-	get isUser() {
+	public get isUser(): boolean {
 		return this.subTypes.includes('typing_user');
 	}
 
 	/**
 	 * Checks that the message is typed in the chat
-	 *
-	 * @return {boolean}
 	 */
-	get isGroup() {
+	public get isGroup(): boolean {
 		return this.subTypes.includes('typing_group');
 	}
 
 	/**
 	 * Checks that the message is typed in the chat
-	 *
-	 * @return {boolean}
 	 */
-	get isChat() {
+	public get isChat(): boolean {
 		return this.chatId !== null;
 	}
 
 	/**
 	 * Returns the identifier sender
-	 *
-	 * @return {number}
 	 */
-	get fromId() {
+	public get fromId(): number {
 		return this.payload.from_id;
 	}
 
 	/**
 	 * Returns the identifier destination
-	 *
-	 * @return {number}
 	 */
-	get toId() {
+	public get toId(): number {
 		return this.payload.to_id;
 	}
 
 	/**
 	 * Returns the identifier peer
-	 *
-	 * @return {number}
 	 */
 	// DEPRECATED: Remove in release version
-	get peerId() {
+	public get peerId(): number {
 		showDeprecatedMessage('TypingContext, use toId instead of peerId');
 
 		return this.toId;
@@ -115,11 +110,9 @@ export default class TypingContext extends Context {
 
 	/**
 	 * Returns the identifier user
-	 *
-	 * @return {number}
 	 */
 	// DEPRECATED: Remove in release version
-	get userId() {
+	public get userId(): number {
 		showDeprecatedMessage('TypingContext, use fromId instead of userId');
 
 		return this.fromId;
@@ -127,10 +120,8 @@ export default class TypingContext extends Context {
 
 	/**
 	 * Returns the identifier chat
-	 *
-	 * @return {?number}
 	 */
-	get chatId() {
+	public get chatId(): number | null {
 		const chatId = this.toId - CHAT_PEER;
 
 		return chatId > 0
@@ -140,10 +131,8 @@ export default class TypingContext extends Context {
 
 	/**
 	 * Returns the custom data
-	 *
-	 * @type {Object}
 	 */
-	[inspectCustomData]() {
+	public [inspectCustomData](): object {
 		return copyParams(this, [
 			'fromId',
 			'toId',

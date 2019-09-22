@@ -1,4 +1,4 @@
-import Context from './context';
+import Context, { IContextOptions } from './context';
 
 import { VKError } from '../../errors';
 
@@ -15,6 +15,7 @@ import {
 	CHAT_PEER,
 	inspectCustomData
 } from '../../utils/constants';
+import { Attachment } from '../attachments';
 
 const subTypesEnum = {
 	4: 'new_message',
@@ -29,18 +30,60 @@ const kReplyMessage = Symbol('replyMessage');
 
 const kAttachments = Symbol('attachments');
 
-export default class MessageContext extends Context {
-	/**
-	 * Constructor
-	 *
-	 * @param {Object} options
-	 */
-	constructor(options) {
-		super(options);
+export interface IMessageContextPayload {
+	id: number;
+	conversation_message_id: number;
+	out: number;
+	peer_id: number;
+	from_id: number;
+	text?: string;
+	date: number;
+	random_id: number;
+	ref?: string;
+	ref_source?: string;
+	attachments: object[];
+	important: boolean;
+	geo: object;
+	payload?: string;
+	fwd_messages?: object[];
+	reply_message?: object;
+	action?: {
+		type: string;
+		member_id: number;
+		text?: string;
+		email?: string;
+		photo?: {
+			photo_50: string;
+			photo_100: string;
+			photo_200: string;
+		};
+	};
+}
+
+export type MessageContextOptions<S> =
+	Omit<IContextOptions<IMessageContextPayload, S>, 'type' | 'subTypes'>;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default class MessageContext<S = Record<string, any>>
+	extends Context<IMessageContextPayload, S> {
+	public $match: RegExpMatchArray;
+
+	public text: string | null;
+
+	protected $filled: boolean;
+
+	public constructor(options: MessageContextOptions<S>) {
+		super({
+			...options,
+
+			type: 'message',
+			subTypes: []
+		});
 
 		let { payload } = options;
 		if (options.source === updatesSources.POLLING) {
 			// eslint-disable-next-line no-param-reassign
+			// @ts-ignore
 			payload = transformMessage(payload);
 
 			this.$filled = false;
@@ -50,7 +93,6 @@ export default class MessageContext extends Context {
 
 		this.applyPayload(payload);
 
-		this.type = 'message';
 		this.subTypes = [
 			this.eventType || subTypesEnum[options.updateType]
 		];
@@ -58,18 +100,18 @@ export default class MessageContext extends Context {
 
 	/**
 	 * Load message payload
-	 *
-	 * @return {Promise}
 	 */
-	async loadMessagePayload() {
+	async loadMessagePayload(): Promise<void> {
 		if (this.$filled) {
 			return;
 		}
 
 		const { items } = this.id !== 0
+			// @ts-ignore
 			? await this.vk.api.messages.getById({
 				message_ids: this.id
 			})
+			// @ts-ignore
 			: await this.vk.api.messages.getByConversationMessageId({
 				peer_id: this.peerId,
 				conversation_message_ids: this.conversationMessageId
@@ -88,12 +130,8 @@ export default class MessageContext extends Context {
 
 	/**
 	 * Checks for the presence of attachments
-	 *
-	 * @param {?string} type
-	 *
-	 * @return {boolean}
 	 */
-	hasAttachments(type = null) {
+	hasAttachments(type: string = null): boolean {
 		if (type === null) {
 			return this.attachments.length > 0;
 		}
@@ -105,190 +143,148 @@ export default class MessageContext extends Context {
 
 	/**
 	 * Checks if there is text
-	 *
-	 * @return {boolean}
 	 */
-	get hasText() {
+	public get hasText(): boolean {
 		return Boolean(this.text);
 	}
 
 	/**
 	 * Checks for reply message
-	 *
-	 * @return {boolean}
 	 */
-	get hasReplyMessage() {
+	public get hasReplyMessage(): boolean {
 		return this.replyMessage !== null;
 	}
 
 	/**
 	 * Checks for forwarded messages
-	 *
-	 * @return {boolean}
 	 */
-	get hasForwards() {
+	public get hasForwards(): boolean {
 		return this.forwards.length > 0;
 	}
 
 	/**
 	 * Checks for hast message payload
-	 *
-	 * @return {boolean}
 	 */
-	get hasMessagePayload() {
+	public get hasMessagePayload(): boolean {
 		return Boolean(this.payload.payload);
 	}
 
 	/**
 	 * Checks if there is text
-	 *
-	 * @return {boolean}
 	 */
-	get hasGeo() {
+	public get hasGeo(): boolean {
 		return Boolean(this.payload.geo);
 	}
 
 	/**
 	 * Checks is a chat
-	 *
-	 * @return {boolean}
 	 */
-	get isChat() {
+	public get isChat(): boolean {
 		return this.peerType === messageSources.CHAT;
 	}
 
 	/**
 	 * Check is a user
-	 *
-	 * @return {boolean}
 	 */
-	get isUser() {
+	public get isUser(): boolean {
 		return this.senderType === messageSources.USER;
 	}
 
 	/**
 	 * Checks is a group
-	 *
-	 * @return {boolean}
 	 */
-	get isGroup() {
+	public get isGroup(): boolean {
 		return this.senderType === messageSources.GROUP;
 	}
 
 	/**
 	 * Checks is from the user
-	 *
-	 * @return {boolean}
 	 */
-	get isFromUser() {
+	public get isFromUser(): boolean {
 		return this.peerType === messageSources.USER;
 	}
 
 	/**
 	 * Checks is from the group
-	 *
-	 * @return {boolean}
 	 */
-	get isFromGroup() {
+	public get isFromGroup(): boolean {
 		return this.peerType === messageSources.GROUP;
 	}
 
 	/**
 	 * Check is special event
-	 *
-	 * @return {boolean}
 	 */
-	get isEvent() {
+	public get isEvent(): boolean {
 		return this.eventType !== null;
 	}
 
 	/**
 	 * Checks whether the message is outbox
-	 *
-	 * @return {boolean}
 	 */
-	get isOutbox() {
+	public get isOutbox(): boolean {
 		return Boolean(this.payload.out);
 	}
 
 	/**
 	 * Checks whether the message is inbox
-	 *
-	 * @return {boolean}
 	 */
-	get isInbox() {
+	public get isInbox(): boolean {
 		return !this.isOutbox;
 	}
 
 	/**
 	 * Checks that the message is important
-	 *
-	 * @return {boolean}
 	 */
-	get isImportant() {
+	public get isImportant(): boolean {
 		return this.payload.important;
 	}
 
 	/**
 	 * Returns the identifier message
-	 *
-	 * @return {number}
 	 */
-	get id() {
+	public get id(): number {
 		return this.payload.id;
 	}
 
 	/**
 	 * Returns the conversation message id
-	 *
-	 * @return {?number}
 	 */
-	get conversationMessageId() {
+	public get conversationMessageId(): number | null {
 		return this.payload.conversation_message_id || null;
 	}
 
 	/**
 	 * Returns the destination identifier
-	 *
-	 * @return {number}
 	 */
-	get peerId() {
+	public get peerId(): number {
 		return this.payload.peer_id;
 	}
 
 	/**
 	 * Returns the peer type
-	 *
-	 * @return {string}
 	 */
-	get peerType() {
+	public get peerType(): string {
 		return getPeerType(this.payload.peer_id);
 	}
 
 	/**
 	 * Returns the sender identifier
-	 *
-	 * @return {number}
 	 */
-	get senderId() {
+	public get senderId(): number {
 		return this.payload.from_id;
 	}
 
 	/**
 	 * Returns the sender type
-	 *
-	 * @return {string}
 	 */
-	get senderType() {
+	public get senderType(): string {
 		return getPeerType(this.payload.from_id);
 	}
 
 	/**
 	 * Returns the identifier chat
-	 *
-	 * @return {?number}
 	 */
-	get chatId() {
+	public get chatId(): number | null {
 		if (!this.isChat) {
 			return null;
 		}
@@ -298,10 +294,8 @@ export default class MessageContext extends Context {
 
 	/**
 	 * Returns the date when this message was created
-	 *
-	 * @return {number}
 	 */
-	get createdAt() {
+	public get createdAt(): number {
 		return this.payload.date;
 	}
 
@@ -310,14 +304,15 @@ export default class MessageContext extends Context {
 	 *
 	 * @return {?Object}
 	 */
-	get geo() {
+	public get geo(): object | null {
 		if (!this.hasGeo) {
 			return null;
 		}
 
 		if (!this.$filled) {
 			throw new VKError({
-				message: 'The message payload is not fully loaded'
+				message: 'The message payload is not fully loaded',
+				code: 'PAYLOAD_IS_NOT_FULL'
 			});
 		}
 
@@ -326,10 +321,8 @@ export default class MessageContext extends Context {
 
 	/**
 	 * Returns the event name
-	 *
-	 * @return {?string}
 	 */
-	get eventType() {
+	public get eventType(): string | null {
 		return (
 			this.payload.action
 			&& this.payload.action.type
@@ -338,10 +331,8 @@ export default class MessageContext extends Context {
 
 	/**
 	 * Returns the event member id
-	 *
-	 * @return {?number}
 	 */
-	get eventMemberId() {
+	public get eventMemberId(): number | null {
 		return (
 			this.payload.action
 			&& this.payload.action.member_id
@@ -350,10 +341,8 @@ export default class MessageContext extends Context {
 
 	/**
 	 * Returns the event name
-	 *
-	 * @return {?string}
 	 */
-	get eventText() {
+	public get eventText(): string | null {
 		return (
 			this.payload.action
 			&& this.payload.action.text
@@ -362,10 +351,8 @@ export default class MessageContext extends Context {
 
 	/**
 	 * Returns the event email
-	 *
-	 * @return {?string}
 	 */
-	get eventEmail() {
+	public get eventEmail(): string | null {
 		return (
 			this.payload.action
 			&& this.payload.action.email
@@ -374,10 +361,9 @@ export default class MessageContext extends Context {
 
 	/**
 	 * Returns the message payload
-	 *
-	 * @return {?*}
 	 */
-	get messagePayload() {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	public get messagePayload(): any | null {
 		const { payload = null } = this.payload;
 
 		if (payload === null) {
@@ -390,12 +376,13 @@ export default class MessageContext extends Context {
 	/**
 	 * Returns the forwards
 	 */
-	get forwards() {
+	public get forwards(): MessageForwardsCollection {
 		if (!this[kForwards]) {
 			this[kForwards] = this.payload.fwd_messages
 				? new MessageForwardsCollection(...this.payload.fwd_messages.map(forward => (
 					new MessageForward({
 						vk: this.vk,
+						// @ts-ignore
 						payload: forward
 					})
 				)))
@@ -408,7 +395,7 @@ export default class MessageContext extends Context {
 	/**
 	 * Returns the reply message
 	 */
-	get replyMessage() {
+	public get replyMessage(): MessageReply | null {
 		if (!this[kReplyMessage]) {
 			this[kReplyMessage] = this.payload.reply_message
 				? new MessageReply(this.payload.reply_message, this.vk)
@@ -421,7 +408,7 @@ export default class MessageContext extends Context {
 	/**
 	 * Returns the attachments
 	 */
-	get attachments() {
+	public get attachments(): Attachment[] {
 		if (!this[kAttachments]) {
 			this[kAttachments] = transformAttachments(this.payload.attachments, this.vk);
 		}
@@ -431,12 +418,8 @@ export default class MessageContext extends Context {
 
 	/**
 	 * Returns the attachments
-	 *
-	 * @param {?string} type
-	 *
-	 * @return {Array}
 	 */
-	getAttachments(type = null) {
+	public getAttachments(type: string = null): Attachment[] {
 		if (type === null) {
 			return this.attachments;
 		}
@@ -448,12 +431,9 @@ export default class MessageContext extends Context {
 
 	/**
 	 * Gets a link to invite the user to a conversation
-	 *
-	 * @param {Object} params
-	 *
-	 * @type {Promise<Object>}
 	 */
-	getInviteLink(params = {}) {
+	public getInviteLink(params: object = {}): Promise<object> {
+		// @ts-ignore
 		return this.vk.api.messages.getInviteLink({
 			...params,
 
@@ -463,12 +443,9 @@ export default class MessageContext extends Context {
 
 	/**
 	 * Edits a message
-	 *
-	 * @param {Object} params
-	 *
-	 * @return {Promise}
 	 */
-	editMessage(params) {
+	editMessage(params: object): Promise<number> {
+		// @ts-ignore
 		return this.vk.api.messages.edit({
 			attachment: this.attachments.filter(attachment => (
 				attachment.canBeAttached
@@ -486,12 +463,8 @@ export default class MessageContext extends Context {
 
 	/**
 	 * Edits a message text
-	 *
-	 * @param {string} message
-	 *
-	 * @return {Promise}
 	 */
-	async editMessageText(message) {
+	async editMessageText(message: string): Promise<number> {
 		const response = await this.editMessage({ message });
 
 		this.text = message;
@@ -501,13 +474,9 @@ export default class MessageContext extends Context {
 
 	/**
 	 * Sends a message to the current dialog
-	 *
-	 * @param {string|Object} text
-	 * @param {Object}        params
-	 *
-	 * @return {Promise}
 	 */
-	send(text, params) {
+	send(text: string | object, params?: object): Promise<number> {
+		// @ts-ignore
 		return this.vk.api.messages.send({
 			peer_id: this.peerId,
 
@@ -525,13 +494,8 @@ export default class MessageContext extends Context {
 
 	/**
 	 * Responds to the current message
-	 *
-	 * @param {string|Object} text
-	 * @param {Object}        params
-	 *
-	 * @return {Promise}
 	 */
-	reply(text, params) {
+	reply(text: string | object, params?: object): Promise<number> {
 		return this.send({
 			reply_to: this.id,
 
@@ -549,12 +513,8 @@ export default class MessageContext extends Context {
 
 	/**
 	 * Sends a sticker to the current dialog
-	 *
-	 * @param {number} id
-	 *
-	 * @return {Promise}
 	 */
-	sendSticker(id) {
+	sendSticker(id: number): Promise<number> {
 		return this.send({
 			sticker_id: id
 		});
@@ -564,11 +524,8 @@ export default class MessageContext extends Context {
 	 * Sends a photo to the current dialog
 	 *
 	 * @param {*[]} sources
-	 * @param {Object}  params
-	 *
-	 * @return {Promise}
 	 */
-	async sendPhoto(rawSources, params = {}) {
+	async sendPhoto(rawSources, params: object = {}): Promise<number> {
 		const sources = !Array.isArray(rawSources)
 			? [rawSources]
 			: rawSources;
@@ -592,11 +549,8 @@ export default class MessageContext extends Context {
 	 * Sends a document to the current dialog
 	 *
 	 * @param {*[]} sources
-	 * @param {Object}  params
-	 *
-	 * @return {Promise}
 	 */
-	async sendDocument(rawSources, params = {}) {
+	async sendDocument(rawSources, params: object = {}): Promise<number> {
 		const sources = !Array.isArray(rawSources)
 			? [rawSources]
 			: rawSources;
@@ -622,11 +576,8 @@ export default class MessageContext extends Context {
 	 * Sends a audio message to the current dialog
 	 *
 	 * @param {*}  sourxe
-	 * @param {Object} params
-	 *
-	 * @return {Promise}
 	 */
-	async sendAudioMessage(source, params = {}) {
+	async sendAudioMessage(source, params: object = {}): Promise<number> {
 		const attachment = await this.vk.upload.audioMessage({
 			peer_id: this.senderId,
 
@@ -644,10 +595,9 @@ export default class MessageContext extends Context {
 
 	/**
 	 * Changes the status of typing in the dialog
-	 *
-	 * @return {Promise<boolean>}
 	 */
-	async setActivity() {
+	async setActivity(): Promise<boolean> {
+		// @ts-ignore
 		const isActivited = await this.vk.api.messages.setActivity({
 			peer_id: this.peerId,
 			type: 'typing'
@@ -657,17 +607,13 @@ export default class MessageContext extends Context {
 	}
 
 	/**
-	 * Marks messages as important or removes a mark.
-	 *
-	 * @param {Array}  ids
-	 * @param {Object} options
-	 *
-	 * @return {Promise<Array>}
+	 * Marks messages as important or removes a mark
 	 */
 	async markAsImportant(
 		ids = [this.id],
 		options = { important: Number(!this.isImportant) }
-	) {
+	): Promise<number[]> {
+		// @ts-ignore
 		const messageIds = await this.vk.api.messages.markAsImportant({
 			...options,
 
@@ -683,13 +629,9 @@ export default class MessageContext extends Context {
 
 	/**
 	 * Deletes the message
-	 *
-	 * @param {Array}  ids
-	 * @param {Object} options
-	 *
-	 * @return {Promise<number[]>}
 	 */
-	async deleteMessage(ids = [this.id], options = { spam: 0 }) {
+	async deleteMessage(ids: number[] = [this.id], options = { spam: 0 }): Promise<number> {
+		// @ts-ignore
 		const messageIds = await this.vk.api.messages.delete({
 			...options,
 
@@ -701,10 +643,9 @@ export default class MessageContext extends Context {
 
 	/**
 	 * Restores the message
-	 *
-	 * @return {Promise<boolean>}
 	 */
-	async restoreMessage() {
+	async restoreMessage(): Promise<boolean> {
+		// @ts-ignore
 		const isRestored = await this.vk.api.messages.restore({
 			message_id: this.id
 		});
@@ -713,26 +654,12 @@ export default class MessageContext extends Context {
 	}
 
 	/**
-	 * Checks that in a chat
-	 */
-	assertIsChat() {
-		if (!this.isChat) {
-			throw new VKError({
-				message: 'This method is only available in chat'
-			});
-		}
-	}
-
-	/**
 	 * Rename the chat
-	 *
-	 * @param {string} title
-	 *
-	 * @return {Promise<boolean>}
 	 */
-	async renameChat(title) {
+	public async renameChat(title: string): Promise<boolean> {
 		this.assertIsChat();
 
+		// @ts-ignore
 		const isRenamed = await this.vk.api.messages.editChat({
 			chat_id: this.chatId,
 			title
@@ -745,11 +672,8 @@ export default class MessageContext extends Context {
 	 * Sets a new image for the chat
 	 *
 	 * @param {*}  source
-	 * @param {Object} params
-	 *
-	 * @return {Promise<Object>}
 	 */
-	async newChatPhoto(source, params = {}) {
+	public async newChatPhoto(source, params: object = {}): Promise<object> {
 		this.assertIsChat();
 
 		const response = await this.vk.upload.chatPhoto({
@@ -764,12 +688,11 @@ export default class MessageContext extends Context {
 
 	/**
 	 * Remove the chat photo
-	 *
-	 * @return {Promise<boolean>}
 	 */
-	async deleteChatPhoto() {
+	public async deleteChatPhoto(): Promise<boolean> {
 		this.assertIsChat();
 
+		// @ts-ignore
 		return this.vk.api.messages.deleteChatPhoto({
 			chat_id: this.chatId
 		});
@@ -777,14 +700,11 @@ export default class MessageContext extends Context {
 
 	/**
 	 * Invites a new user
-	 *
-	 * @param {number} id
-	 *
-	 * @return {Promise<boolean>}
 	 */
-	async inviteUser(id = this.eventMemberId) {
+	public async inviteUser(id: number = this.eventMemberId): Promise<boolean> {
 		this.assertIsChat();
 
+		// @ts-ignore
 		const isInvited = await this.vk.api.messages.addChatUser({
 			chat_id: this.chatId,
 			user_id: id
@@ -795,14 +715,11 @@ export default class MessageContext extends Context {
 
 	/**
 	 * Excludes user
-	 *
-	 * @param {number} id
-	 *
-	 * @return {Promise<boolean>}
 	 */
-	async kickUser(id = this.eventMemberId) {
+	public async kickUser(id: number = this.eventMemberId): Promise<boolean> {
 		this.assertIsChat();
 
+		// @ts-ignore
 		const isKicked = await this.vk.api.messages.removeChatUser({
 			chat_id: this.chatId,
 			member_id: id
@@ -813,12 +730,11 @@ export default class MessageContext extends Context {
 
 	/**
 	 * Pins a message
-	 *
-	 * @return {Promise<boolean>}
 	 */
-	async pinMessage() {
+	public async pinMessage(): Promise<boolean> {
 		this.assertIsChat();
 
+		// @ts-ignore
 		const isPinned = await this.vk.api.messages.pin({
 			peer_id: this.peerId,
 			message_id: this.id
@@ -829,12 +745,11 @@ export default class MessageContext extends Context {
 
 	/**
 	 * Unpins a message
-	 *
-	 * @return {Promise<boolean>}
 	 */
-	async unpinMessage() {
+	public async unpinMessage(): Promise<boolean> {
 		this.assertIsChat();
 
+		// @ts-ignore
 		const isUnpinned = await this.vk.api.messages.unpin({
 			peer_id: this.peerId,
 			message_id: this.id
@@ -845,10 +760,8 @@ export default class MessageContext extends Context {
 
 	/**
 	 * Applies the payload
-	 *
-	 * @param {Object} payload
 	 */
-	applyPayload(payload) {
+	private applyPayload(payload: IMessageContextPayload): void {
 		this.payload = payload;
 
 		this.text = payload.text
@@ -857,11 +770,21 @@ export default class MessageContext extends Context {
 	}
 
 	/**
-	 * Returns the custom data
-	 *
-	 * @type {Object}
+	 * Checks that in a chat
 	 */
-	[inspectCustomData]() {
+	private assertIsChat(): void {
+		if (!this.isChat) {
+			throw new VKError({
+				message: 'This method is only available in chat',
+				code: 'IS_NOT_CHAT'
+			});
+		}
+	}
+
+	/**
+	 * Returns the custom data
+	 */
+	public [inspectCustomData](): object {
 		const beforeAttachments = [];
 
 		if (this.isEvent) {

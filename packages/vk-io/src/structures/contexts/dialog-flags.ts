@@ -1,4 +1,4 @@
-import Context from './context';
+import Context, { IContextOptions } from './context';
 
 import { copyParams } from '../../utils/helpers';
 import { inspectCustomData } from '../../utils/constants';
@@ -9,13 +9,18 @@ const subTypes = {
 	12: 'set_dialog_flags'
 };
 
-export default class DialogFlagsContext extends Context {
-	/**
-	 * Constructor
-	 *
-	 * @param {Object} options
-	 */
-	constructor(options) {
+export interface IDialogFlagsContextPayload {
+	peer_id: number;
+	flags: number;
+}
+
+export type DialogFlagsContextOptions<S> =
+	Omit<IContextOptions<number[], S>, 'type' | 'subTypes'>;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default class DialogFlagsContext<S = Record<string, any>>
+	extends Context<IDialogFlagsContextPayload, S> {
+	public constructor(options: DialogFlagsContextOptions<S>) {
 		const [eventId, peerId, flags] = options.payload;
 
 		super({
@@ -35,50 +40,39 @@ export default class DialogFlagsContext extends Context {
 
 	/**
 	 * Checks that an important dialogue
-	 *
-	 * @return {boolean}
 	 */
-	get isImportant() {
+	public get isImportant(): boolean {
 		// eslint-disable-next-line no-bitwise
 		return Boolean(this.flags & 1);
 	}
 
 	/**
 	 * Checks that the unanswered dialog
-	 *
-	 * @return {boolean}
 	 */
-	get isUnanswered() {
+	public get isUnanswered(): boolean {
 		// eslint-disable-next-line no-bitwise
 		return Boolean(this.flags & 2);
 	}
 
 	/**
 	 * Returns the destination identifier
-	 *
-	 * @return {number}
 	 */
-	get peerId() {
+	public get peerId(): number {
 		return this.payload.peer_id;
 	}
 
 	/**
 	 * Returns the values of the flags
-	 *
-	 * @return {number}
 	 */
-	get flags() {
+	public get flags(): number {
 		return this.payload.flags;
 	}
 
 	/**
-	 * Marks the conversation as answered or unchecked.
-	 *
-	 * @param {Object} params
-	 *
-	 * @return {Promise}
+	 * Marks the conversation as answered or unchecked
 	 */
-	markAsAnsweredConversation(params) {
+	public markAsAnsweredConversation(params: object): Promise<number> {
+		// @ts-ignore
 		return this.vk.api.messages.markAsAnsweredConversation({
 			...params,
 
@@ -88,12 +82,9 @@ export default class DialogFlagsContext extends Context {
 
 	/**
 	 * Marks the conversation as important or removes the mark
-	 *
-	 * @param {Object} params
-	 *
-	 * @return {Promise}
 	 */
-	markAsImportantConversation(params) {
+	public markAsImportantConversation(params: object): Promise<number> {
+		// @ts-ignore
 		return this.vk.api.messages.markAsImportantConversation({
 			...params,
 
@@ -103,10 +94,8 @@ export default class DialogFlagsContext extends Context {
 
 	/**
 	 * Returns the custom data
-	 *
-	 * @type {Object}
 	 */
-	[inspectCustomData]() {
+	public [inspectCustomData](): object {
 		return copyParams(this, [
 			'peerId',
 			'flags',

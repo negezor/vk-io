@@ -1,9 +1,10 @@
-import Context from './context';
+import Context, { IContextOptions } from './context';
 
 import { VKError } from '../../errors';
 
 import { copyParams } from '../../utils/helpers';
 import { inspectCustomData } from '../../utils/constants';
+import { Attachment } from '../attachments';
 import { transformAttachments } from '../attachments/helpers';
 
 /**
@@ -12,18 +13,42 @@ import { transformAttachments } from '../attachments/helpers';
  * ```
  * wall_reply_new
  * ```
- *
- * @type {RegExp}
  */
 const findTypes = /([^_]+)_([^_]+)_([^_]+)/;
 
-export default class CommentActionContext extends Context {
-	/**
-	 * Constructor
-	 *
-	 * @param {Object} options
-	 */
-	constructor(options) {
+export interface ICommentActionContextPayload {
+	id: number;
+	owner_id: number;
+	from_id?: number;
+	user_id?: number;
+	reply_to_user?: number;
+	reply_to_comment?: number;
+	deleter_id?: number;
+	photo_id?: number;
+	video_id?: number;
+	post_id?: number;
+	item_id?: number;
+	topic_id?: number;
+	photo_owner_id?: number;
+	video_owner_id?: number;
+	post_owner_id?: number;
+	topic_owner_id?: number;
+	market_owner_id?: number;
+	date?: number;
+	text?: string;
+	attachments?: object[];
+	likes?: {};
+}
+
+export type CommentActionContextOptions<S> =
+	Omit<IContextOptions<ICommentActionContextPayload, S>, 'type' | 'subTypes'>;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default class CommentActionContext<S = Record<string, any>>
+	extends Context<ICommentActionContextPayload, S> {
+	attachments: Attachment[];
+
+	public constructor(options: CommentActionContextOptions<S>) {
 		const { 1: initiator, 3: action } = options.updateType.match(findTypes);
 
 		super({
@@ -41,12 +66,8 @@ export default class CommentActionContext extends Context {
 
 	/**
 	 * Checks for the presence of attachments
-	 *
-	 * @param {?string} type
-	 *
-	 * @return {boolean}
 	 */
-	hasAttachments(type = null) {
+	public hasAttachments(type: string = null): boolean {
 		if (type === null) {
 			return this.attachments.length > 0;
 		}
@@ -58,118 +79,92 @@ export default class CommentActionContext extends Context {
 
 	/**
 	 * Checks is new comment
-	 *
-	 * @return {boolean}
 	 */
-	get isNew() {
+	public get isNew(): boolean {
 		return this.includesFromSubType('new');
 	}
 
 	/**
 	 * Checks is edit comment
-	 *
-	 * @return {boolean}
 	 */
-	get isEdit() {
+	public get isEdit(): boolean {
 		return this.includesFromSubType('edit');
 	}
 
 	/**
 	 * Checks is delete comment
-	 *
-	 * @return {boolean}
 	 */
-	get isDelete() {
+	public get isDelete(): boolean {
 		return this.includesFromSubType('delete');
 	}
 
 	/**
 	 * Checks is restore comment
-	 *
-	 * @return {boolean}
 	 */
-	get isRestore() {
+	public get isRestore(): boolean {
 		return this.includesFromSubType('restore');
 	}
 
 	/**
 	 * Checks is photo comment
-	 *
-	 * @return {boolean}
 	 */
-	get isPhotoComment() {
+	public get isPhotoComment(): boolean {
 		return this.includesFromSubType('photo');
 	}
 
 	/**
 	 * Checks is wall comment
-	 *
-	 * @return {boolean}
 	 */
-	get isWallComment() {
+	public get isWallComment(): boolean {
 		return this.includesFromSubType('wall');
 	}
 
 	/**
 	 * Checks is video comment
-	 *
-	 * @return {boolean}
 	 */
-	get isVideoComment() {
+	public get isVideoComment(): boolean {
 		return this.includesFromSubType('video');
 	}
 
 	/**
 	 * Checks is board comment
-	 *
-	 * @return {boolean}
 	 */
-	get isBoardComment() {
+	public get isBoardComment(): boolean {
 		return this.includesFromSubType('board');
 	}
 
 	/**
 	 * Checks is board comment
-	 *
-	 * @return {boolean}
 	 */
-	get isMarketComment() {
+	public get isMarketComment(): boolean {
 		return this.includesFromSubType('market');
 	}
 
 	/**
 	 * Checks is reply comment
-	 *
-	 * @return {boolean}
 	 */
-	get isReply() {
+	public get isReply(): boolean {
 		return 'reply_to_comment' in this.payload;
 	}
 
 	/**
 	 * Returns the identifier comment
-	 *
-	 * @return {number}
 	 */
-	get id() {
+	public get id(): number {
 		return this.payload.id;
 	}
 
 	/**
 	 * Returns the identifier reply comment
-	 *
-	 * @return {?number}
 	 */
-	get replyId() {
+	public get replyId(): number | null {
 		return this.payload.reply_to_comment || null;
 	}
 
 	/**
 	 * Returns the identifier user
-	 *
-	 * @return {?number}
 	 */
-	get userId() {
+	public get userId(): number | null {
 		return (
 			this.payload.from_id
 			|| this.payload.user_id
@@ -179,28 +174,22 @@ export default class CommentActionContext extends Context {
 
 	/**
 	 * Returns the identifier reply user
-	 *
-	 * @return {?number}
 	 */
-	get replyUserId() {
+	public get replyUserId(): number | null {
 		return this.payload.reply_to_user || null;
 	}
 
 	/**
 	 * Returns the identifier of the user who deleted the comment
-	 *
-	 * @return {?number}
 	 */
-	get removerUserId() {
+	public get removerUserId(): number | null {
 		return this.payload.deleter_id || null;
 	}
 
 	/**
 	 * Returns the identifier of object
-	 *
-	 * @return {?number}
 	 */
-	get objectId() {
+	public get objectId(): number | null {
 		const { payload } = this;
 
 		return (
@@ -215,10 +204,8 @@ export default class CommentActionContext extends Context {
 
 	/**
 	 * Returns the identifier of owner
-	 *
-	 * @return {?number}
 	 */
-	get ownerId() {
+	public get ownerId(): number | null {
 		const { payload } = this;
 
 		return (
@@ -234,39 +221,30 @@ export default class CommentActionContext extends Context {
 
 	/**
 	 * Returns the date creation action comment
-	 *
-	 * @return {?number}
 	 */
-	get createdAt() {
+	public get createdAt(): number | null {
 		return this.payload.date || null;
 	}
 
 	/**
 	 * Returns the text comment
-	 *
-	 * @return {?string}
 	 */
-	get text() {
+	public get text(): string | null {
 		return this.payload.text || null;
 	}
 
 	/**
 	 * Returns the likes
-	 *
-	 * @return {?Object}
 	 */
-	get likes() {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	public get likes(): Record<string, any> | null {
 		return this.payload.likes || null;
 	}
 
 	/**
 	 * Returns the attachments
-	 *
-	 * @param {?string} type
-	 *
-	 * @return {Array}
 	 */
-	getAttachments(type = null) {
+	getAttachments(type: string = null): Attachment[] {
 		if (type === null) {
 			return this.attachments;
 		}
@@ -278,30 +256,24 @@ export default class CommentActionContext extends Context {
 
 	/**
 	 * Includes from subtype
-	 *
-	 * @param {string} type
-	 *
-	 * @return {string}
 	 */
-	includesFromSubType(type) {
+	public includesFromSubType(type: string): boolean {
 		return this.subTypes[1].includes(type);
 	}
 
 	/**
 	 * Edits a comment
-	 *
-	 * @param {Object} options
-	 *
-	 * @return {Promise}
 	 */
-	editComment(options) {
+	editComment(options: object): Promise<number> {
 		if (this.isDelete) {
 			return Promise.reject(new VKError({
-				message: 'Comment is deleted'
+				message: 'Comment is deleted',
+				code: 'ALREADY_DELETED'
 			}));
 		}
 
 		if (this.isBoardComment) {
+			// @ts-ignore
 			return this.vk.api.board.editComment({
 				...options,
 
@@ -319,39 +291,44 @@ export default class CommentActionContext extends Context {
 		};
 
 		if (this.isPhotoComment) {
+			// @ts-ignore
 			return this.vk.api.photos.editComment(params);
 		}
 
 		if (this.isVideoComment) {
+			// @ts-ignore
 			return this.vk.api.video.editComment(params);
 		}
 
 		if (this.isWallComment) {
+			// @ts-ignore
 			return this.vk.api.wall.editComment(params);
 		}
 
 		if (this.isMarketComment) {
+			// @ts-ignore
 			return this.vk.api.market.editComment(params);
 		}
 
 		return Promise.reject(new VKError({
-			message: 'Unsupported event for editing comment'
+			message: 'Unsupported event for editing comment',
+			code: 'UNSUPPORTED_EVENT'
 		}));
 	}
 
 	/**
 	 * Removes comment
-	 *
-	 * @return {Promise}
 	 */
-	deleteComment() {
+	deleteComment(): Promise<number> {
 		if (this.isDelete) {
 			return Promise.reject(new VKError({
-				message: 'Comment is deleted'
+				message: 'Comment is deleted',
+				code: 'ALREADY_DELETED'
 			}));
 		}
 
 		if (this.isBoardComment) {
+			// @ts-ignore
 			return this.vk.api.board.deleteComment({
 				comment_id: this.id,
 				topic_id: this.objectId,
@@ -365,32 +342,35 @@ export default class CommentActionContext extends Context {
 		};
 
 		if (this.isPhotoComment) {
+			// @ts-ignore
 			return this.vk.api.photos.deleteComment(params);
 		}
 
 		if (this.isVideoComment) {
+			// @ts-ignore
 			return this.vk.api.video.deleteComment(params);
 		}
 
 		if (this.isWallComment) {
+			// @ts-ignore
 			return this.vk.api.wall.deleteComment(params);
 		}
 
 		if (this.isMarketComment) {
+			// @ts-ignore
 			return this.vk.api.market.deleteComment(params);
 		}
 
 		return Promise.reject(new VKError({
-			message: 'Unsupported event for deleting comment'
+			message: 'Unsupported event for deleting comment',
+			code: 'UNSUPPORTED_EVENT'
 		}));
 	}
 
 	/**
 	 * Returns the custom data
-	 *
-	 * @type {Object}
 	 */
-	[inspectCustomData]() {
+	public [inspectCustomData](): object {
 		const properties = [
 			'id',
 			'replyId',
@@ -410,6 +390,7 @@ export default class CommentActionContext extends Context {
 			this[property] !== null
 		));
 
+		// @ts-ignore
 		return copyParams(this, filtredEmptyProperties);
 	}
 }

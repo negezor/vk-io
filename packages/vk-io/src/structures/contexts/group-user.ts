@@ -1,4 +1,4 @@
-import Context from './context';
+import Context, { IContextOptions } from './context';
 
 import { VKError } from '../../errors';
 
@@ -7,8 +7,6 @@ import { inspectCustomData } from '../../utils/constants';
 
 /**
  * Causes of blocking
- *
- * @type {Map}
  */
 const reasonNames = new Map([
 	[0, 'other'],
@@ -23,13 +21,22 @@ const subTypes = {
 	user_unblock: 'unblock_group_user'
 };
 
-export default class GroupUserContext extends Context {
-	/**
-	 * Constructror
-	 *
-	 * @param {Object} options
-	 */
-	constructor(options) {
+export interface IGroupUserContextPayload {
+	admin_id: number;
+	user_id: number;
+	comment: string;
+	reason: number;
+	unblock_date?: number;
+	by_end_date?: number;
+}
+
+export type GroupUserContextOptions<S> =
+	Omit<IContextOptions<IGroupUserContextPayload, S>, 'type' | 'subTypes'>;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default class GroupUserContext<S = Record<string, any>>
+	extends Context<IGroupUserContextPayload, S> {
+	public constructor(options: GroupUserContextOptions<S>) {
 		super({
 			...options,
 
@@ -42,19 +49,15 @@ export default class GroupUserContext extends Context {
 
 	/**
 	 * Checks is join user
-	 *
-	 * @return {boolean}
 	 */
-	get isBlocked() {
+	public get isBlocked(): boolean {
 		return this.subTypes.includes('block_group_user');
 	}
 
 	/**
 	 * Checks is leave user
-	 *
-	 * @return {boolean}
 	 */
-	get isUnblocked() {
+	public get isUnblocked(): boolean {
 		return this.subTypes.includes('unblock_group_user');
 	}
 
@@ -63,7 +66,7 @@ export default class GroupUserContext extends Context {
 	 *
 	 * @return {?boolean}
 	 */
-	get isExpired() {
+	public get isExpired(): boolean | null {
 		if (this.isBlocked) {
 			return null;
 		}
@@ -73,74 +76,58 @@ export default class GroupUserContext extends Context {
 
 	/**
 	 * Returns the identifier admin
-	 *
-	 * @return {?number}
 	 */
-	get adminId() {
+	public get adminId(): number {
 		return this.payload.admin_id;
 	}
 
 	/**
 	 * Returns the identifier user
-	 *
-	 * @return {number}
 	 */
-	get userId() {
+	public get userId(): number {
 		return this.payload.user_id;
 	}
 
 	/**
 	 * Returns the reason for the ban
-	 *
-	 * @return {?number}
 	 */
-	get reasonId() {
+	public get reasonId(): number {
 		return this.payload.reason || null;
 	}
 
 	/**
 	 * Returns the reason name for the ban
-	 *
-	 * @return {?string}
 	 */
-	get reasonName() {
+	public get reasonName(): string | null {
 		return reasonNames.get(this.reasonId);
 	}
 
 	/**
 	 * Returns the unblock date or null if permanent
-	 *
-	 * @return {?Date}
 	 */
-	get unblockAt() {
-		return this.payload.unblock_date
-			? new Date(this.payload.unblock_date)
-			: null;
+	public get unblockAt(): number | null {
+		return this.payload.unblock_date || null;
 	}
 
 	/**
 	 * Returns the administrator comment to block
-	 *
-	 * @return {?string}
 	 */
-	get comment() {
+	public get comment(): string | null {
 		return this.payload.comment || null;
 	}
 
 	/**
 	 * Adds a user to the community blacklist
-	 *
-	 * @param {Object} params
-	 *
-	 * @return {Promise}
 	 */
-	ban(params) {
+	ban(params: object): Promise<number> {
 		if (this.isBlocked) {
 			return Promise.reject(new VKError({
-				message: 'User is blocked'
+				message: 'User is blocked',
+				code: 'ALREADY_BANNED'
 			}));
 		}
 
+		// @ts-ignore
 		return this.vk.api.groups.ban({
 			...params,
 
@@ -154,13 +141,15 @@ export default class GroupUserContext extends Context {
 	 *
 	 * @return {Promise}
 	 */
-	unban() {
+	unban(): Promise<number> {
 		if (this.isUnblocked) {
 			return Promise.reject(new VKError({
-				message: 'User is not blocked'
+				message: 'User is not blocked',
+				code: 'ALREADY_UNBANNED'
 			}));
 		}
 
+		// @ts-ignore
 		return this.vk.api.groups.unban({
 			group_id: this.$groupId,
 			user_id: this.userId
@@ -169,10 +158,8 @@ export default class GroupUserContext extends Context {
 
 	/**
 	 * Returns the custom data
-	 *
-	 * @type {Object}
 	 */
-	[inspectCustomData]() {
+	public [inspectCustomData](): object {
 		return copyParams(this, [
 			'adminId',
 			'userId',

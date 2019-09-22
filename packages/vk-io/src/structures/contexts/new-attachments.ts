@@ -1,8 +1,9 @@
-import Context from './context';
+import Context, { IContextOptions } from './context';
 
 import { VKError } from '../../errors';
 
 import {
+	Attachment,
 	PhotoAttachment,
 	VideoAttachment,
 	AudioAttachment
@@ -17,14 +18,20 @@ const subTypes = {
 	audio_new: ['new_audio_attachment', AudioAttachment]
 };
 
-export default class NewAttachmentsContext extends Context {
-	/**
-	 * Constructor
-	 *
-	 * @param {Object} options
-	 */
-	constructor(options) {
-		const [subType, Attachment] = subTypes[options.updateType];
+export interface INewAttachmentsContextPayload {
+	id: number;
+}
+
+export type NewAttachmentsContextOptions<S> =
+	Omit<IContextOptions<INewAttachmentsContextPayload, S>, 'type' | 'subTypes'>;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default class NewAttachmentsContext<S = Record<string, any>>
+	extends Context<INewAttachmentsContextPayload, S> {
+	public attachments: Attachment[];
+
+	public constructor(options: NewAttachmentsContextOptions<S>) {
+		const [subType, PayloadAttachment] = subTypes[options.updateType];
 
 		super({
 			...options,
@@ -35,44 +42,34 @@ export default class NewAttachmentsContext extends Context {
 			]
 		});
 
-		this.attachments = [new Attachment(this.payload, this.vk)];
+		this.attachments = [new PayloadAttachment(this.payload, this.vk)];
 	}
 
 	/**
 	 * Checks is attachment photo
-	 *
-	 * @return {boolean}
 	 */
-	get isPhoto() {
+	public get isPhoto(): boolean {
 		return this.subTypes.includes('new_photo_attachment');
 	}
 
 	/**
 	 * Checks is attachment video
-	 *
-	 * @return {boolean}
 	 */
-	get isVideo() {
+	public get isVideo(): boolean {
 		return this.subTypes.includes('new_video_attachment');
 	}
 
 	/**
 	 * Checks is attachment audio
-	 *
-	 * @return {boolean}
 	 */
-	get isAudio() {
+	public get isAudio(): boolean {
 		return this.subTypes.includes('new_audio_attachment');
 	}
 
 	/**
 	 * Checks for the presence of attachments
-	 *
-	 * @param {?string} type
-	 *
-	 * @return {boolean}
 	 */
-	hasAttachments(type = null) {
+	public hasAttachments(type: string = null): boolean {
 		if (type === null) {
 			return this.attachments.length > 0;
 		}
@@ -84,12 +81,8 @@ export default class NewAttachmentsContext extends Context {
 
 	/**
 	 * Returns the attachments
-	 *
-	 * @param {?string} type
-	 *
-	 * @return {Array}
 	 */
-	getAttachments(type = null) {
+	public getAttachments(type: string = null): Attachment[] {
 		if (type === null) {
 			return this.attachments;
 		}
@@ -101,13 +94,12 @@ export default class NewAttachmentsContext extends Context {
 
 	/**
 	 * Removes the attachment
-	 *
-	 * @return {Promise}
 	 */
-	deleteAttachment() {
+	public deleteAttachment(): Promise<number> {
 		if (this.isPhoto) {
 			const [photo] = this.getAttachments('photo');
 
+			// @ts-ignore
 			return this.vk.api.photos.delete({
 				owner_id: photo.ownerId,
 				photo_id: photo.id
@@ -117,6 +109,7 @@ export default class NewAttachmentsContext extends Context {
 		if (this.isVideo) {
 			const [video] = this.getAttachments('video');
 
+			// @ts-ignore
 			return this.vk.api.video.delete({
 				owner_id: video.ownerId,
 				video_id: video.id
@@ -126,6 +119,7 @@ export default class NewAttachmentsContext extends Context {
 		if (this.isAudio) {
 			const [audio] = this.getAttachments('audio');
 
+			// @ts-ignore
 			return this.vk.api.audio.delete({
 				owner_id: audio.ownerId,
 				audio_id: audio.id
@@ -133,16 +127,15 @@ export default class NewAttachmentsContext extends Context {
 		}
 
 		return Promise.reject(new VKError({
-			message: 'Unsupported event for deleting attachment'
+			message: 'Unsupported event for deleting attachment',
+			code: 'UNSUPPORTED_EVENT'
 		}));
 	}
 
 	/**
 	 * Returns the custom data
-	 *
-	 * @type {Object}
 	 */
-	[inspectCustomData]() {
+	public [inspectCustomData](): object {
 		return copyParams(this, [
 			'attachments',
 			'isPhoto',

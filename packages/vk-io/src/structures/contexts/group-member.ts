@@ -1,4 +1,4 @@
-import Context from './context';
+import Context, { IContextOptions } from './context';
 
 import { copyParams } from '../../utils/helpers';
 import { inspectCustomData } from '../../utils/constants';
@@ -8,13 +8,19 @@ const subTypes = {
 	group_join: 'join_group_member'
 };
 
-export default class GroupMemberContext extends Context {
-	/**
-	 * Constructro
-	 *
-	 * @param {Object} options
-	 */
-	constructor(options) {
+export interface IGroupMemberContextPayload {
+	user_id: number;
+	self?: number;
+	join_type?: string;
+}
+
+export type GroupMemberContextOptions<S> =
+	Omit<IContextOptions<IGroupMemberContextPayload, S>, 'type' | 'subTypes'>;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default class GroupMemberContext<S = Record<string, any>>
+	extends Context<IGroupMemberContextPayload, S> {
+	public constructor(options: GroupMemberContextOptions<S>) {
 		super({
 			...options,
 
@@ -27,28 +33,22 @@ export default class GroupMemberContext extends Context {
 
 	/**
 	 * Checks is join user
-	 *
-	 * @return {boolean}
 	 */
-	get isJoin() {
+	public get isJoin(): boolean {
 		return this.subTypes.includes('join_group_member');
 	}
 
 	/**
 	 * Checks is leave user
-	 *
-	 * @return {boolean}
 	 */
-	get isLeave() {
+	public get isLeave(): boolean {
 		return this.subTypes.includes('leave_group_member');
 	}
 
 	/**
 	 * Checks is self leave user
-	 *
-	 * @return {?boolean}
 	 */
-	get isSelfLeave() {
+	public get isSelfLeave(): boolean | null {
 		if (this.isJoin) {
 			return null;
 		}
@@ -58,19 +58,15 @@ export default class GroupMemberContext extends Context {
 
 	/**
 	 * Returns the identifier user
-	 *
-	 * @return {number}
 	 */
-	get userId() {
+	public get userId(): number {
 		return this.payload.user_id;
 	}
 
 	/**
 	 * Returns the join type
-	 *
-	 * @return {?string}
 	 */
-	get joinType() {
+	public get joinType(): string | null {
 		if (this.isLeave) {
 			return null;
 		}
@@ -80,10 +76,8 @@ export default class GroupMemberContext extends Context {
 
 	/**
 	 * Returns the custom data
-	 *
-	 * @type {Object}
 	 */
-	[inspectCustomData]() {
+	public [inspectCustomData](): object {
 		return copyParams(this, [
 			'userId',
 			'joinType',

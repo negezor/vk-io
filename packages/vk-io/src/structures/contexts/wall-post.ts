@@ -1,4 +1,4 @@
-import Context from './context';
+import Context, { IContextOptions } from './context';
 
 import { WallAttachment } from '../attachments';
 
@@ -10,13 +10,19 @@ const subTypes = {
 	wall_repost: 'new_wall_repost'
 };
 
-export default class WallPostContext extends Context {
-	/**
-	 * constructor
-	 *
-	 * @param {Object} options
-	 */
-	constructor(options) {
+export interface IWallPostContextPayload {
+	id: number;
+}
+
+export type WallPostContextOptions<S> =
+	Omit<IContextOptions<IWallPostContextPayload, S>, 'type' | 'subTypes'>;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default class WallPostContext<S = Record<string, any>>
+	extends Context<IWallPostContextPayload, S> {
+	public wall: WallAttachment;
+
+	public constructor(options: WallPostContextOptions<S>) {
 		super({
 			...options,
 
@@ -26,26 +32,24 @@ export default class WallPostContext extends Context {
 			]
 		});
 
+		// @ts-ignore
 		this.wall = new WallAttachment(this.payload, this.vk);
 	}
 
 	/**
 	 * Checks is repost
-	 *
-	 * @return {boolean}
 	 */
-	get isRepost() {
+	public get isRepost(): boolean {
 		return this.subTypes.includes('new_wall_repost');
 	}
 
 	/**
 	 * Removes a record from the wall
-	 *
-	 * @return {Promise}
 	 */
-	deletePost() {
+	public deletePost(): Promise<number> {
 		const { wall } = this;
 
+		// @ts-ignore
 		return this.vk.api.wall.delete({
 			post_id: wall.id,
 			owner_id: wall.ownerId
@@ -54,10 +58,8 @@ export default class WallPostContext extends Context {
 
 	/**
 	 * Returns the custom data
-	 *
-	 * @type {Object}
 	 */
-	[inspectCustomData]() {
+	public [inspectCustomData](): object {
 		return copyParams(this, [
 			'wall',
 			'isRepost'

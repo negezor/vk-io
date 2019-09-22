@@ -1,4 +1,4 @@
-import Context from './context';
+import Context, { IContextOptions } from './context';
 
 import { copyParams } from '../../utils/helpers';
 import { inspectCustomData } from '../../utils/constants';
@@ -8,13 +8,18 @@ const subTypes = {
 	message_deny: 'message_unsubscribe'
 };
 
-export default class MessageAllowContext extends Context {
-	/**
-	 * Constructor
-	 *
-	 * @param {Object} options
-	 */
-	constructor(options) {
+export interface IMessageAllowContextPayload {
+	user_id: number;
+	key: string;
+}
+
+export type MessageAllowContextOptions<S> =
+	Omit<IContextOptions<IMessageAllowContextPayload, S>, 'type' | 'subTypes'>;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default class MessageAllowContext<S = Record<string, any>>
+	extends Context<IMessageAllowContextPayload, S> {
+	public constructor(options: MessageAllowContextOptions<S>) {
 		super({
 			...options,
 
@@ -27,46 +32,36 @@ export default class MessageAllowContext extends Context {
 
 	/**
 	 * Checks that the user has subscribed to messages
-	 *
-	 * @return {boolean}
 	 */
-	get isSubscribed() {
+	public get isSubscribed(): boolean {
 		return this.subTypes.includes('message_subscribe');
 	}
 
 	/**
 	 * Checks that the user has unsubscribed from the messages
-	 *
-	 * @return {boolean}
 	 */
-	get isUbsubscribed() {
+	public get isUbsubscribed(): boolean {
 		return this.subTypes.includes('message_unsubscribe');
 	}
 
 	/**
 	 * Returns the identifier user
-	 *
-	 * @return {number}
 	 */
-	get userId() {
+	public get userId(): number {
 		return this.payload.user_id;
 	}
 
 	/**
 	 * Returns the key
-	 *
-	 * @return {?string}
 	 */
-	get key() {
+	public get key(): string | null {
 		return this.payload.key || null;
 	}
 
 	/**
 	 * Returns the custom data
-	 *
-	 * @type {Object}
 	 */
-	[inspectCustomData]() {
+	public [inspectCustomData](): object {
 		return copyParams(this, [
 			'userId',
 			'key',

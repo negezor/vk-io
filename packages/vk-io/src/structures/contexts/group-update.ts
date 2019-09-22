@@ -1,6 +1,6 @@
-import Context from './context';
+import Context, { IContextOptions } from './context';
 
-import { PhotoAttachment } from '../attachments';
+import { PhotoAttachment, Attachment } from '../attachments';
 
 import { copyParams } from '../../utils/helpers';
 import { inspectCustomData } from '../../utils/constants';
@@ -11,13 +11,24 @@ const subTypes = {
 	group_change_settings: 'group_update_settings'
 };
 
-export default class GroupUpdateContext extends Context {
-	/**
-	 * Constructor
-	 *
-	 * @param {Object} options
-	 */
-	constructor(options) {
+export interface IGroupUpdateContextPayload {
+	user_id: number;
+	admin_id: number;
+	level_old?: number;
+	level_new?: number;
+	changes?: Record<string, { old_value: string; new_value: string }>;
+	photo?: object;
+}
+
+export type GroupUpdateContextOptions<S> =
+	Omit<IContextOptions<IGroupUpdateContextPayload, S>, 'type' | 'subTypes'>;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default class GroupUpdateContext<S = Record<string, any>>
+	extends Context<IGroupUpdateContextPayload, S> {
+	public attachments: Attachment[];
+
+	public constructor(options: GroupUpdateContextOptions<S>) {
 		super({
 			...options,
 
@@ -28,45 +39,36 @@ export default class GroupUpdateContext extends Context {
 		});
 
 		this.attachments = options.updateType === 'group_change_photo'
+			// @ts-ignore
 			? [new PhotoAttachment(this.payload.photo, this.vk)]
 			: [];
 	}
 
 	/**
 	 * Checks is change photo
-	 *
-	 * @return {boolean}
 	 */
-	get isChangePhoto() {
+	public get isChangePhoto(): boolean {
 		return this.subTypes.includes('group_update_photo');
 	}
 
 	/**
 	 * Checks is change officers
-	 *
-	 * @return {boolean}
 	 */
-	get isChangeOfficers() {
+	public get isChangeOfficers(): boolean {
 		return this.subTypes.includes('group_update_officers');
 	}
 
 	/**
 	 * Checks is change settings
-	 *
-	 * @return {boolean}
 	 */
-	get isChangeSettings() {
+	public get isChangeSettings(): boolean {
 		return this.subTypes.includes('group_update_settings');
 	}
 
 	/**
 	 * Checks for the presence of attachments
-	 *
-	 * @param {?string} type
-	 *
-	 * @return {boolean}
 	 */
-	hasAttachments(type = null) {
+	hasAttachments(type: string = null): boolean {
 		if (type === null) {
 			return this.attachments.length > 0;
 		}
@@ -78,57 +80,43 @@ export default class GroupUpdateContext extends Context {
 
 	/**
 	 * Returns the identifier admin
-	 *
-	 * @return {?number}
 	 */
-	get adminId() {
+	public get adminId(): number | null {
 		return this.payload.admin_id || null;
 	}
 
 	/**
 	 * Returns the identifier user
-	 *
-	 * @return {number}
 	 */
-	get userId() {
+	public get userId(): number {
 		return this.payload.user_id;
 	}
 
 	/**
 	 * Returns the old level permission
-	 *
-	 * @return {?number}
 	 */
-	get oldLevel() {
+	public get oldLevel(): number | null {
 		return this.payload.level_old || null;
 	}
 
 	/**
 	 * Returns the new level permission
-	 *
-	 * @return {?number}
 	 */
-	get newLevel() {
+	public get newLevel(): number | null {
 		return this.payload.level_new || null;
 	}
 
 	/**
 	 * Returns the changes settings
-	 *
-	 * @return {?Object}
 	 */
-	get changes() {
+	public get changes(): Record<string, { old_value: string; new_value: string }> | null {
 		return this.payload.changes || null;
 	}
 
 	/**
 	 * Returns the attachments
-	 *
-	 * @param {?string} type
-	 *
-	 * @return {Array}
 	 */
-	getAttachments(type = null) {
+	public getAttachments(type: string = null): Attachment[] {
 		if (type === null) {
 			return this.attachments;
 		}
@@ -140,10 +128,8 @@ export default class GroupUpdateContext extends Context {
 
 	/**
 	 * Returns the custom data
-	 *
-	 * @type {Object}
 	 */
-	[inspectCustomData]() {
+	public [inspectCustomData](): object {
 		return copyParams(this, [
 			'adminId',
 			'userId',

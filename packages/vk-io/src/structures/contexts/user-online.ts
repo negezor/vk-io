@@ -1,4 +1,4 @@
-import Context from './context';
+import Context, { IContextOptions } from './context';
 
 import { copyParams } from '../../utils/helpers';
 import { platforms, inspectCustomData } from '../../utils/constants';
@@ -8,13 +8,19 @@ const subTypes = {
 	9: 'user_offline'
 };
 
-export default class UserOnlineContext extends Context {
-	/**
-	 * Constructor
-	 *
-	 * @param {Object} options
-	 */
-	constructor(options) {
+export interface IUserOnlineContextPayload {
+	user_id: number;
+	date: number;
+	extra: number;
+}
+
+export type UserOnlineContextOptions<S> =
+	Omit<IContextOptions<[number, number, number, number], S>, 'type' | 'subTypes'>;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default class VoteContext<S = Record<string, any>>
+	extends Context<IUserOnlineContextPayload, S> {
+	public constructor(options: UserOnlineContextOptions<S>) {
 		const [eventId, userId, extra, date] = options.payload;
 
 		super({
@@ -35,73 +41,57 @@ export default class UserOnlineContext extends Context {
 
 	/**
 	 * Checks that the user is online
-	 *
-	 * @return {boolean}
 	 */
-	get isUserOnline() {
+	public get isUserOnline(): boolean {
 		return this.subTypes.includes('user_online');
 	}
 
 	/**
 	 * Checks that the user is online
-	 *
-	 * @return {boolean}
 	 */
-	get isUserOffline() {
+	public get isUserOffline(): boolean {
 		return this.subTypes.includes('user_offline');
 	}
 
 	/**
 	 * Checks that the user has logged out of the network himself
-	 *
-	 * @return {boolean}
 	 */
-	get isSelfExit() {
+	public get isSelfExit(): boolean {
 		return this.isUserOffline && !this.payload.extra;
 	}
 
 	/**
 	 * Checks that the user logged out a timeout
-	 *
-	 * @return {boolean}
 	 */
-	get isTimeoutExit() {
+	public get isTimeoutExit(): boolean {
 		return this.isUserOffline && Boolean(this.payload.extra);
 	}
 
 	/**
 	 * Returns the user id
-	 *
-	 * @return {?number}
 	 */
-	get userId() {
+	public get userId(): number | null {
 		return this.payload.user_id || null;
 	}
 
 	/**
 	 * Returns the date when this event was created
-	 *
-	 * @return {number}
 	 */
-	get createdAt() {
+	public get createdAt(): number {
 		return this.payload.date;
 	}
 
 	/**
 	 * Returns the name of the platform from which the user entered
-	 *
-	 * @return {?string}
 	 */
-	get platformName() {
+	public get platformName(): string {
 		return platforms.get(this.payload.extra);
 	}
 
 	/**
 	 * Returns the custom data
-	 *
-	 * @type {Object}
 	 */
-	[inspectCustomData]() {
+	public [inspectCustomData](): object {
 		return copyParams(this, [
 			'userId',
 			'createdAt',

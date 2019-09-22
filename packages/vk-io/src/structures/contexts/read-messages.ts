@@ -1,4 +1,4 @@
-import Context from './context';
+import Context, { IContextOptions } from './context';
 
 import { copyParams } from '../../utils/helpers';
 import { inspectCustomData } from '../../utils/constants';
@@ -8,13 +8,18 @@ const subTypes = {
 	7: 'read_outbox_messages'
 };
 
-export default class ReadMessagesContext extends Context {
-	/**
-	 * Constructor
-	 *
-	 * @param {Object} options
-	 */
-	constructor(options) {
+export interface IReadMessagesContextPayload {
+	id: number;
+	peer_id: number;
+}
+
+export type ReadMessagesContextContextOptions<S> =
+	Omit<IContextOptions<number[], S>, 'type' | 'subTypes'>;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default class ReadMessagesContext<S = Record<string, any>>
+	extends Context<IReadMessagesContextPayload, S> {
+	public constructor(options: ReadMessagesContextContextOptions<S>) {
 		const [eventId, peerId, id] = options.payload;
 
 		super({
@@ -34,46 +39,36 @@ export default class ReadMessagesContext extends Context {
 
 	/**
 	 * Checks that inbox messages are read
-	 *
-	 * @return {boolean}
 	 */
-	get isInbox() {
+	public get isInbox(): boolean {
 		return this.subTypes.includes('read_inbox_messages');
 	}
 
 	/**
 	 * Checks that outbox messages are read
-	 *
-	 * @return {boolean}
 	 */
-	get isOutbox() {
+	public get isOutbox(): boolean {
 		return this.subTypes.includes('read_outbox_messages');
 	}
 
 	/**
 	 * Returns the ID before the message read
-	 *
-	 * @return {number}
 	 */
-	get id() {
+	public get id(): number {
 		return this.payload.id;
 	}
 
 	/**
 	 * Returns the peer ID
-	 *
-	 * @return {number}
 	 */
-	get peerId() {
+	public get peerId(): number {
 		return this.payload.peer_id;
 	}
 
 	/**
 	 * Returns the custom data
-	 *
-	 * @type {Object}
 	 */
-	[inspectCustomData]() {
+	public [inspectCustomData](): object {
 		return copyParams(this, [
 			'id',
 			'peerId',
