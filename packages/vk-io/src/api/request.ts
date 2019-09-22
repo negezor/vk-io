@@ -1,6 +1,7 @@
 import { inspect } from 'util';
 
 import { getExecuteMethod } from '../utils/helpers';
+import { ICallbackServiceValidate } from '../utils/callback-service';
 
 export default class Request {
 	public method: string;
@@ -15,14 +16,16 @@ export default class Request {
 
 	public reject: Function;
 
+	public captchaValidate?: ICallbackServiceValidate;
+
 	/**
 	 * Constructor
 	 */
-	constructor(method: string, params: Record<string, any> = {}) {
+	public constructor(method: string, params: Record<string, any> = {}) {
 		this.method = method;
 		this.params = { ...params };
 
-		this.promise = new Promise((resolve, reject) => {
+		this.promise = new Promise((resolve, reject): void => {
 			this.resolve = resolve;
 			this.reject = reject;
 		});
@@ -32,14 +35,14 @@ export default class Request {
 	 * Returns custom tag
 	 */
 	// eslint-disable-next-line class-methods-use-this
-	get [Symbol.toStringTag](): string {
+	public get [Symbol.toStringTag](): string {
 		return 'Request';
 	}
 
 	/**
 	 * Adds attempt
 	 */
-	addAttempt(): number {
+	public addAttempt(): number {
 		this.attempts += 1;
 
 		return this.attempts;
@@ -48,7 +51,7 @@ export default class Request {
 	/**
 	 * Returns string to execute
 	 */
-	toString(): string {
+	public toString(): string {
 		return getExecuteMethod(this.method, this.params);
 	}
 

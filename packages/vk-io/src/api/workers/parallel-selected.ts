@@ -7,7 +7,7 @@ import {
 	resolveExecuteTask
 } from '../../utils/helpers';
 
-export default async function parallelSelected(next) {
+export default async function parallelSelected(next: Function): Promise<void> {
 	// @ts-ignore
 	const { apiExecuteMethods, apiExecuteCount } = this.vk.options;
 

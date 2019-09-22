@@ -4,6 +4,7 @@ import createDebug from 'debug';
 import { inspect } from 'util';
 import { URLSearchParams } from 'url';
 
+import VK from '../vk';
 import Request from './request';
 import { getRandomId, delay } from '../utils/helpers';
 import { VKError, APIError, ExecuteError } from '../errors';
@@ -32,17 +33,14 @@ const requestHandlers = {
 
 /**
  * Returns request handler
- *
- * @param {string} mode
- *
- * @return {Function}
  */
-const getRequestHandler = (mode = 'sequential') => {
+const getRequestHandler = (mode: string = 'sequential'): Function => {
 	const handler = requestHandlers[mode];
 
 	if (!handler) {
 		throw new VKError({
-			message: 'Unsuported api mode'
+			message: 'Unsuported api mode',
+			code: 'UNSUPPORTED_MODE'
 		});
 	}
 
@@ -94,21 +92,21 @@ const groupMethods = [
 
 /**
  * Working with API methods
- *
- * @public
  */
 export default class API {
+	private queue: Request[] = [];
+
+	private started = false;
+
+	private suspended = false;
+
+	private vk: VK;
+
 	/**
 	 * Constructor
-	 *
-	 * @param {VK} vk
 	 */
-	constructor(vk) {
+	public constructor(vk: VK) {
 		this.vk = vk;
-
-		this.queue = [];
-		this.started = false;
-		this.suspended = false;
 
 		for (const group of groupMethods) {
 			const isMessagesGroup = group === 'messages';
@@ -123,7 +121,7 @@ export default class API {
 			this[group] = new Proxy(
 				isMessagesGroup
 					? {
-						send: (params = {}) => {
+						send: (params: Record<string, any> = {}) => {
 							const messageParams = params.random_id === undefined
 								? { ...params, random_id: getRandomId() }
 								: params;
@@ -134,12 +132,12 @@ export default class API {
 					: {},
 				{
 					get: isMessagesGroup
-						? (obj, prop) => obj[prop] || (
+						? (obj, prop: string) => obj[prop] || (
 							params => (
 								this.enqueue(`${group}.${prop}`, params)
 							)
 						)
-						: (obj, prop) => params => (
+						: (obj, prop: string) => params => (
 							this.enqueue(`${group}.${prop}`, params)
 						)
 				}
@@ -149,66 +147,44 @@ export default class API {
 
 	/**
 	 * Returns custom tag
-	 *
-	 * @return {string}
 	 */
 	// eslint-disable-next-line class-methods-use-this
-	get [Symbol.toStringTag]() {
+	public get [Symbol.toStringTag](): string {
 		return 'API';
 	}
 
 	/**
 	 * Returns the current used API version
-	 *
-	 * @return {string}
 	 */
-	get API_VERSION() {
+	public get API_VERSION(): string {
 		return this.vk.options.apiVersion;
 	}
 
 	/**
 	 * Call execute method
-	 *
-	 * @param {Object} params
-	 *
-	 * @return {Promise<Object>}
 	 */
-	execute(params) {
+	public execute(params: object): Promise<any> {
 		return this.enqueue('execute', params);
 	}
 
 	/**
 	 * Call execute procedure
-	 *
-	 * @param {string} name
-	 * @param {Object} params
-	 *
-	 * @return {Promise<Object>}
 	 */
-	procedure(name, params) {
+	public procedure(name: string, params: object): Promise<any> {
 		return this.enqueue(`execute.${name}`, params);
 	}
 
 	/**
 	 * Call raw method
-	 *
-	 * @param {string} method
-	 * @param {Object} params
-	 *
-	 * @return {Promise<Object>}
 	 */
-	call(method, params) {
+	public call(method: string, params: object): Promise<any> {
 		return this.enqueue(method, params);
 	}
 
 	/**
 	 * Adds request for queue
-	 *
-	 * @param {Request} request
-	 *
-	 * @return {Promise<Object>}
 	 */
-	callWithRequest(request) {
+	public callWithRequest(request: Request): Promise<any> {
 		this.queue.push(request);
 
 		this.worker();
@@ -218,13 +194,8 @@ export default class API {
 
 	/**
 	 * Adds method to queue
-	 *
-	 * @param {string} method
-	 * @param {Object} params
-	 *
-	 * @return {Promise<Object>}
 	 */
-	enqueue(method, params) {
+	public enqueue(method: string, params: object): Promise<any> {
 		const request = new Request(method, params);
 
 		return this.callWithRequest(request);
@@ -232,10 +203,8 @@ export default class API {
 
 	/**
 	 * Adds an element to the beginning of the queue
-	 *
-	 * @param {Request} request
 	 */
-	requeue(request) {
+	protected requeue(request: Request): void {
 		this.queue.unshift(request);
 
 		this.worker();
@@ -244,7 +213,7 @@ export default class API {
 	/**
 	 * Running queue
 	 */
-	worker() {
+	private worker(): void {
 		if (this.started) {
 			return;
 		}
@@ -256,7 +225,7 @@ export default class API {
 		const handler = getRequestHandler(apiMode);
 		const interval = Math.round(MINIMUM_TIME_INTERVAL_API / apiLimit);
 
-		const work = () => {
+		const work = (): void => {
 			if (this.queue.length === 0 || this.suspended) {
 				this.started = false;
 
@@ -273,14 +242,12 @@ export default class API {
 
 	/**
 	 * Calls the api method
-	 *
-	 * @param {Request} request
 	 */
-	async callMethod(request) {
+	protected async callMethod(request: Request): Promise<void> {
 		const { options } = this.vk;
 		const { method } = request;
 
-		const params = {
+		const params: Record<string, any> = {
 			access_token: options.token,
 			v: options.apiVersion,
 
@@ -322,7 +289,7 @@ export default class API {
 				return;
 			}
 
-			if ('captchaValidate' in request) {
+			if (request.captchaValidate) {
 				request.captchaValidate.reject(error);
 			}
 
@@ -341,8 +308,8 @@ export default class API {
 			return;
 		}
 
-		if ('captchaValidate' in request) {
-			request.captchaValidate.resolve();
+		if (request.captchaValidate) {
+			request.captchaValidate.resolve(undefined);
 		}
 
 		if (method.startsWith('execute')) {
@@ -365,11 +332,8 @@ export default class API {
 
 	/**
 	 * Error API handler
-	 *
-	 * @param {Request} request
-	 * @param {Object}  error
 	 */
-	async handleError(request, error) {
+	public async handleError(request: Request, error: APIError): Promise<void> {
 		const { code } = error;
 
 		if (code === TOO_MANY_REQUESTS) {
@@ -390,7 +354,7 @@ export default class API {
 			return;
 		}
 
-		if ('captchaValidate' in request) {
+		if (request.captchaValidate) {
 			request.captchaValidate.reject(error);
 		}
 
@@ -457,13 +421,9 @@ export default class API {
 
 	/**
 	 * Custom inspect object
-	 *
-	 * @param {?number} depth
-	 * @param {Object}  options
-	 *
-	 * @return {string}
 	 */
-	[inspect.custom](depth, options) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	public [inspect.custom](depth: number, options: Record<string, any>): string {
 		const { name } = this.constructor;
 		const { started, queue } = this;
 

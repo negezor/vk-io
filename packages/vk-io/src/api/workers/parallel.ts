@@ -7,7 +7,7 @@ import {
 	resolveExecuteTask
 } from '../../utils/helpers';
 
-export default async function parallel(next: Function) {
+export default async function parallel(next: Function): Promise<void> {
 	// @ts-ignore
 	const { queue } = this;
 
