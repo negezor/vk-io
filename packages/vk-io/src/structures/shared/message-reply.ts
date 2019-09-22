@@ -3,6 +3,7 @@ import { inspect } from 'util';
 import VK from '../../vk';
 import { copyParams } from '../../utils/helpers';
 import { transformAttachments } from '../attachments/helpers';
+import { Attachment } from '../attachments';
 
 const kAttachments = Symbol('attachments');
 
@@ -24,27 +25,21 @@ export default class MessageReply {
 	 * Returns custom tag
 	 */
 	// eslint-disable-next-line class-methods-use-this
-	public get [Symbol.toStringTag]() {
+	public get [Symbol.toStringTag](): string {
 		return 'MessageForward';
 	}
 
 	/**
 	 * Checks if there is text
-	 *
-	 * @return {boolean}
 	 */
-	public get hasText() {
+	public get hasText(): boolean {
 		return this.text !== null;
 	}
 
 	/**
 	 * Checks for the presence of attachments
-	 *
-	 * @param {?string} type
-	 *
-	 * @return {boolean}
 	 */
-	public hasAttachments(type = null) {
+	public hasAttachments(type: string = null): boolean {
 		if (type === null) {
 			return this.attachments.length > 0;
 		}
@@ -56,73 +51,57 @@ export default class MessageReply {
 
 	/**
 	 * Returns the identifier message
-	 *
-	 * @return {number}
 	 */
-	public get id() {
+	public get id(): number {
 		return this.payload.id;
 	}
 
 	/**
 	 * Returns the conversation message id
-	 *
-	 * @return {?number}
 	 */
-	public get conversationMessageId() {
+	public get conversationMessageId(): number | null {
 		return this.payload.conversation_message_id || null;
 	}
 
 	/**
 	 * Returns the destination identifier
-	 *
-	 * @return {number}
 	 */
-	public get peerId() {
+	public get peerId(): number {
 		return this.payload.peer_id;
 	}
 
 	/**
 	 * Returns the date when this message was created
-	 *
-	 * @return {number}
 	 */
-	public get createdAt() {
+	public get createdAt(): number {
 		return this.payload.date;
 	}
 
 	/**
 	 * Returns the date when this message was updated
-	 *
-	 * @return {number}
 	 */
-	public get updatedAt() {
+	public get updatedAt(): number {
 		return this.payload.update_time;
 	}
 
 	/**
 	 * Returns the message text
-	 *
-	 * @return {number}
 	 */
-	public get senderId() {
+	public get senderId(): number {
 		return this.payload.from_id;
 	}
 
 	/**
 	 * Returns the message text
-	 *
-	 * @return {string}
 	 */
-	public get text() {
+	public get text(): string | null {
 		return this.payload.text || null;
 	}
 
 	/**
 	 * Returns the attachments
-	 *
-	 * @return {Attachment[]}
 	 */
-	public get attachments() {
+	public get attachments(): Attachment[] {
 		if (!this[kAttachments]) {
 			this[kAttachments] = transformAttachments(this.payload.attachments, this.vk);
 		}
@@ -132,12 +111,8 @@ export default class MessageReply {
 
 	/**
 	 * Returns the attachments
-	 *
-	 * @param {?string} type
-	 *
-	 * @return {Array}
 	 */
-	public getAttachments(type = null) {
+	public getAttachments(type: string = null): Attachment[] {
 		if (type === null) {
 			return this.attachments;
 		}
@@ -149,10 +124,8 @@ export default class MessageReply {
 
 	/**
 	 * Returns data for JSON
-	 *
-	 * @return {Object}
 	 */
-	public toJSON() {
+	public toJSON(): object {
 		return copyParams(this, [
 			'id',
 			'conversationMessageId',

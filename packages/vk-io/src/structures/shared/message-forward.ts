@@ -3,14 +3,16 @@ import { inspect } from 'util';
 import VK from '../../vk';
 import { copyParams } from '../../utils/helpers';
 import { transformAttachments } from '../attachments/helpers';
+import { Attachment } from '../attachments';
 
 const kForwards = Symbol('forwards');
 const kAttachments = Symbol('attachments');
 
 export interface IMessageForwardPayload {
 	text?: string;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	attachments: any[];
-	fwd_messages: any[];
+	fwd_messages: IMessageForwardPayload[];
 	from_id: number;
 	date: number;
 	update_time: number;
@@ -37,8 +39,6 @@ export default class MessageForward {
 
 	/**
 	 * Returns custom tag
-	 *
-	 * @return {string}
 	 */
 	// eslint-disable-next-line class-methods-use-this
 	public get [Symbol.toStringTag](): string {
@@ -47,8 +47,6 @@ export default class MessageForward {
 
 	/**
 	 * Checks if there is text
-	 *
-	 * @return {boolean}
 	 */
 	public get hasText(): boolean {
 		return this.text !== null;
@@ -56,12 +54,8 @@ export default class MessageForward {
 
 	/**
 	 * Checks for the presence of attachments
-	 *
-	 * @param {?string} type
-	 *
-	 * @return {boolean}
 	 */
-	public hasAttachments(type = null) {
+	public hasAttachments(type: string = null): boolean {
 		if (type === null) {
 			return this.attachments.length > 0;
 		}
@@ -73,8 +67,6 @@ export default class MessageForward {
 
 	/**
 	 * Returns the date when this message was created
-	 *
-	 * @return {number}
 	 */
 	public get createdAt(): number {
 		return this.payload.date;
@@ -82,8 +74,6 @@ export default class MessageForward {
 
 	/**
 	 * Returns the date when this message was updated
-	 *
-	 * @return {number}
 	 */
 	public get updatedAt(): number {
 		return this.payload.update_time;
@@ -91,8 +81,6 @@ export default class MessageForward {
 
 	/**
 	 * Returns the message text
-	 *
-	 * @return {number}
 	 */
 	public get senderId(): number {
 		return this.payload.from_id;
@@ -100,19 +88,15 @@ export default class MessageForward {
 
 	/**
 	 * Returns the message text
-	 *
-	 * @return {string}
 	 */
-	public get text() {
+	public get text(): string | null {
 		return this.payload.text || null;
 	}
 
 	/**
 	 * Returns the forwards
-	 *
-	 * @return {MessageForward[]}
 	 */
-	public get forwards() {
+	public get forwards(): MessageForward[] {
 		if (!this[kForwards]) {
 			this[kForwards] = this.payload.fwd_messages
 				? this.payload.fwd_messages.map(forward => (
@@ -129,10 +113,8 @@ export default class MessageForward {
 
 	/**
 	 * Returns the attachments
-	 *
-	 * @return {Attachment[]}
 	 */
-	public get attachments() {
+	public get attachments(): Attachment[] {
 		if (!this[kAttachments]) {
 			this[kAttachments] = transformAttachments(this.payload.attachments, this.vk);
 		}
@@ -142,12 +124,8 @@ export default class MessageForward {
 
 	/**
 	 * Returns the attachments
-	 *
-	 * @param {?string} type
-	 *
-	 * @return {Array}
 	 */
-	public getAttachments(type = null) {
+	public getAttachments(type: string = null): Attachment[] {
 		if (type === null) {
 			return this.attachments;
 		}
@@ -159,10 +137,8 @@ export default class MessageForward {
 
 	/**
 	 * Returns data for JSON
-	 *
-	 * @return {Object}
 	 */
-	public toJSON() {
+	public toJSON(): object {
 		return copyParams(this, [
 			'senderId',
 			'createdAt',
