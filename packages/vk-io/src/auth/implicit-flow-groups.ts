@@ -47,12 +47,9 @@ export default class ImplicitFlowGroups extends ImplicitFlow {
 
 	/**
 	 * Returns permission page
-	 *
-	 * @param {Array} groups
-	 *
-	 * @return {Promise<Response>}
 	 */
-	getPermissionsPage() {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	protected getPermissionsPage(): Promise<any> {
 		const { appId } = this.options;
 		let { scope } = this.options;
 
@@ -84,11 +81,13 @@ export default class ImplicitFlowGroups extends ImplicitFlow {
 
 	/**
 	 * Starts authorization
-	 *
-	 * @return {Promise<Array>}
 	 */
 	// @ts-ignore
-	async run() {
+	public async run(): Promise<{
+		group: number;
+		token: string;
+		expires: number;
+	}[]> {
 		const { response } = await super.run();
 
 		let { hash } = new URL(response.url);

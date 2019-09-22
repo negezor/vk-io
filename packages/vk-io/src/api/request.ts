@@ -6,10 +6,12 @@ import { ICallbackServiceValidate } from '../utils/callback-service';
 export default class Request {
 	public method: string;
 
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public params: Record<string, any>;
 
 	public attempts = 0;
 
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public promise: Promise<any>;
 
 	public resolve: Function;
@@ -21,6 +23,7 @@ export default class Request {
 	/**
 	 * Constructor
 	 */
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public constructor(method: string, params: Record<string, any> = {}) {
 		this.method = method;
 		this.params = { ...params };

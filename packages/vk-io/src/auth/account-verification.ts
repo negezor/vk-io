@@ -81,7 +81,7 @@ export default class AccountVerification {
 	/**
 	 * Constructor
 	 */
-	constructor(vk: VK) {
+	public constructor(vk: VK) {
 		this.vk = vk;
 
 		const { agent, login, phone } = vk.options;
@@ -106,14 +106,15 @@ export default class AccountVerification {
 	 * Returns custom tag
 	 */
 	// eslint-disable-next-line class-methods-use-this
-	get [Symbol.toStringTag](): string {
+	public get [Symbol.toStringTag](): string {
 		return 'AccountVerification';
 	}
 
 	/**
 	 * Executes the HTTP request
 	 */
-	fetch(url: URL | string, options: Record<string, any> = {}) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	protected fetch(url: URL | string, options: Record<string, any> = {}): Promise<any> {
 		const { agent } = this.options;
 
 		const { headers = {} } = options;
@@ -135,11 +136,9 @@ export default class AccountVerification {
 
 	/**
 	 * Runs authorization
-	 *
-	 * @return {Promise<Object>}
 	 */
-	// eslint-disable-next-line consistent-return
-	async run(redirectUri: string) {
+	// eslint-disable-next-line consistent-return, @typescript-eslint/no-explicit-any
+	public async run(redirectUri: string): Promise<Record<string, any>> {
 		let response = await this.fetch(redirectUri, {
 			method: 'GET'
 		});
@@ -211,13 +210,9 @@ export default class AccountVerification {
 
 	/**
 	 * Process two-factor form
-	 *
-	 * @param {Response} response
-	 * @param {Cheerio}  $
-	 *
-	 * @return {Promise<Response>}
 	 */
-	async processTwoFactorForm(response, $) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	protected async processTwoFactorForm(response, $): Promise<any> {
 		debug('process two-factor handle');
 
 		if (this.twoFactorValidate !== null) {
@@ -261,13 +256,9 @@ export default class AccountVerification {
 
 	/**
 	 * Process security form
-	 *
-	 * @param {Response} response
-	 * @param {Cheerio}  $
-	 *
-	 * @return {Promise<Response>}
 	 */
-	async processSecurityForm(response, $) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	protected async processSecurityForm(response, $): Promise<any> {
 		debug('process security form');
 
 		const { login, phone } = this.options;
@@ -318,13 +309,9 @@ export default class AccountVerification {
 
 	/**
 	 * Process validation form
-	 *
-	 * @param {Response} response
-	 * @param {Cheerio}  $
-	 *
-	 * @return {Promise<Response>}
 	 */
-	processValidateForm(response, $) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	protected processValidateForm(response, $): Promise<any> {
 		const href = $('#activation_wrap a').attr('href');
 		const url = getFullURL(href, response);
 
@@ -335,13 +322,9 @@ export default class AccountVerification {
 
 	/**
 	 * Process captcha form
-	 *
-	 * @param {Response} response
-	 * @param {Cheerio}  $
-	 *
-	 * @return {Promise<Response>}
 	 */
-	async processCaptchaForm(response, $) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	protected async processCaptchaForm(response, $): Promise<any> {
 		if (this.captchaValidate !== null) {
 			this.captchaValidate.reject(new AuthError({
 				message: 'Incorrect captcha code',

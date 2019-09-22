@@ -36,8 +36,10 @@ export default class CollectStream extends Readable {
 
 	protected supportExecute: boolean;
 
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	protected promise: Promise<any> | null;
 
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	protected params: Record<string, any>;
 
 	/**
@@ -102,11 +104,9 @@ export default class CollectStream extends Readable {
 
 	/**
 	 * Returns custom tag
-	 *
-	 * @return {string}
 	 */
 	// eslint-disable-next-line class-methods-use-this
-	get [Symbol.toStringTag]() {
+	get [Symbol.toStringTag](): string {
 		return 'CollectStream';
 	}
 
@@ -115,13 +115,17 @@ export default class CollectStream extends Readable {
 	 *
 	 * @return {Promise<Object[]>}
 	 */
-	then(thenFn, catchFn?) {
+	then(thenFn, catchFn?): Promise<{
+		items: object[];
+		profiles: object[];
+		groups: object[];
+	}> {
 		if (this.promise === null) {
 			let collectItems = [];
 			let collectProfiles = [];
 			let collectGroups = [];
 
-			this.promise = new Promise((resolve, reject) => {
+			this.promise = new Promise((resolve, reject): void => {
 				this
 					.on('error', reject)
 					.on('end', () => resolve({
@@ -142,11 +146,9 @@ export default class CollectStream extends Readable {
 
 	/**
 	 * Fetch data
-	 *
-	 * @return {Promise}
 	 */
 	// eslint-disable-next-line no-underscore-dangle
-	async _read() {
+	async _read(): Promise<void> {
 		const isNotFirst = this.total !== null && this.received !== 0;
 
 		if (isNotFirst && (this.total - this.skipOffset) <= this.received) {
@@ -305,13 +307,9 @@ export default class CollectStream extends Readable {
 
 	/**
 	 * Custom inspect object
-	 *
-	 * @param {?number} depth
-	 * @param {Object}  options
-	 *
-	 * @return {string}
 	 */
-	[inspect.custom](depth, options) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	public [inspect.custom](depth: number, options: Record<string, any>): string {
 		const { name } = this.constructor;
 		const { total, offset, received } = this;
 

@@ -87,7 +87,7 @@ export default class DirectAuth {
 	/**
 	 * Constructor
 	 */
-	constructor(vk: VK, options: Partial<IDirectAuthOptions> = {}) {
+	public constructor(vk: VK, options: Partial<IDirectAuthOptions> = {}) {
 		this.vk = vk;
 
 		const {
@@ -135,19 +135,15 @@ export default class DirectAuth {
 	 * @return {string}
 	 */
 	// eslint-disable-next-line class-methods-use-this
-	get [Symbol.toStringTag](): string {
+	public get [Symbol.toStringTag](): string {
 		return 'DirectAuth';
 	}
 
 	/**
 	 * Executes the HTTP request
-	 *
-	 * @param {string} url
-	 * @param {Object} options
-	 *
-	 * @return {Promise<Response>}
 	 */
-	fetch(url, options: Record<string, any> = {}) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	protected fetch(url, options: Record<string, any> = {}): Promise<Record<string, any>> {
 		const { agent, timeout } = this.options;
 
 		const { headers = {} } = options;
@@ -169,12 +165,9 @@ export default class DirectAuth {
 
 	/**
 	 * Returns permission page
-	 *
-	 * @param {Object} query
-	 *
-	 * @return {Response}
 	 */
-	getPermissionsPage(query = {}) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	protected getPermissionsPage(query = {}): Promise<any> {
 		let { scope } = this.options;
 
 		if (scope === 'all' || scope === null) {
@@ -218,11 +211,16 @@ export default class DirectAuth {
 
 	/**
 	 * Runs authorization
-	 *
-	 * @return {Promise<Object>}
 	 */
-	// eslint-disable-next-line consistent-return
-	async run() {
+	// eslint-disable-next-line consistent-return, @typescript-eslint/no-explicit-any
+	public async run(): Promise<{
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		email: any;
+		user: number;
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		token: any;
+		expires: number;
+	}> {
 		if (this.started) {
 			throw new AuthError({
 				message: 'Authorization already started!',
@@ -315,12 +313,9 @@ export default class DirectAuth {
 
 	/**
 	 * Process captcha
-	 *
-	 * @param {Object} payload
-	 *
-	 * @return {Response}
 	 */
-	async processCaptcha({ captcha_sid: sid, captcha_img: src }) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	protected async processCaptcha({ captcha_sid: sid, captcha_img: src }): Promise<any> {
 		debug('captcha process');
 
 		if (this.captchaValidate !== null) {
@@ -359,12 +354,12 @@ export default class DirectAuth {
 
 	/**
 	 * Process two-factor
-	 *
-	 * @param {Object} response
-	 *
-	 * @return {Promise<Response>}
 	 */
-	async processTwoFactor({ validation_type: validationType, phone_mask: phoneMask }) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	protected async processTwoFactor(
+		{ validation_type: validationType, phone_mask: phoneMask }
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	): Promise<any> {
 		debug('process two-factor handle');
 
 		if (this.twoFactorValidate !== null) {
@@ -401,13 +396,9 @@ export default class DirectAuth {
 
 	/**
 	 * Process security form
-	 *
-	 * @param {Response} response
-	 * @param {Cheerio}  $
-	 *
-	 * @return {Promise<Response>}
 	 */
-	async processSecurityForm(response, $) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	protected async processSecurityForm(response, $): Promise<any> {
 		debug('process security form');
 
 		const { login, phone } = this.options;

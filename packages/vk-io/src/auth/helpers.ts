@@ -4,10 +4,8 @@ import { userScopes, groupScopes } from '../utils/constants';
 
 /**
  * Returns the entire permission bit mask
- *
- * @return {number}
  */
-export const getAllUsersPermissions = () => (
+export const getAllUsersPermissions = (): number => (
 	Array.from(userScopes.values()).reduce((previous, current) => (
 		previous + current
 	), 0)
@@ -15,10 +13,8 @@ export const getAllUsersPermissions = () => (
 
 /**
  * Returns the entire permission bit mask
- *
- * @return {number}
  */
-export const getAllGroupsPermissions = () => (
+export const getAllGroupsPermissions = (): number => (
 	Array.from(groupScopes.values()).reduce((previous, current) => (
 		previous + current
 	), 0)
@@ -26,12 +22,8 @@ export const getAllGroupsPermissions = () => (
 
 /**
  * Returns the bit mask of the user permission by name
- *
- * @param {Array|string} scope
- *
- * @return {number}
  */
-export const getUsersPermissionsByName = (rawScope) => {
+export const getUsersPermissionsByName = (rawScope: string | string[]): number => {
 	const scope = !Array.isArray(rawScope)
 		? rawScope.split(/,\s{0,}/)
 		: rawScope;
@@ -49,12 +41,8 @@ export const getUsersPermissionsByName = (rawScope) => {
 
 /**
  * Returns the bit mask of the group permission by name
- *
- * @param {Array|string} scope
- *
- * @return {number}
  */
-export const getGroupsPermissionsByName = (rawScope) => {
+export const getGroupsPermissionsByName = (rawScope: string | string[]): number => {
 	const scope = !Array.isArray(rawScope)
 		? rawScope.split(/,\s{0,}/)
 		: rawScope;
@@ -72,14 +60,12 @@ export const getGroupsPermissionsByName = (rawScope) => {
 
 /**
  * Parse form
- *
- * @param {Cheerio} $
- *
- * @return {Object}
  */
-export const parseFormField = ($) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const parseFormField = ($: any): { action: string; fields: Record<string, any> } => {
 	const $form = $('form[action][method]');
 
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const fields: Record<string, any> = {};
 
 	for (const { name, value } of $form.serializeArray()) {
@@ -94,13 +80,9 @@ export const parseFormField = ($) => {
 
 /**
  * Returns full URL use Response
- *
- * @param {string}   action
- * @param {Response} response
- *
- * @type {URL}
  */
-export const getFullURL = (action, { url }) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const getFullURL = (action: string, { url }: { url: string }): URL => {
 	if (action.startsWith('https://')) {
 		return new URL(action);
 	}

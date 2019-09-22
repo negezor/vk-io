@@ -17,10 +17,9 @@ const { AUTHORIZATION_FAILED } = authErrors;
 export default class ImplicitFlowUser extends ImplicitFlow {
 	/**
 	 * Returns permission page
-	 *
-	 * @return {Promise<Response>}
 	 */
-	getPermissionsPage() {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	protected getPermissionsPage(): Promise<any> {
 		const { appId } = this.options;
 		let { scope } = this.options;
 
@@ -53,7 +52,12 @@ export default class ImplicitFlowUser extends ImplicitFlow {
 	 * Starts authorization
 	 */
 	// @ts-ignore
-	async run() {
+	public async run(): Promise<{
+		email: string;
+		user: number | null;
+		token: string;
+		expires: number | null;
+	}> {
 		const { response } = await super.run();
 
 		let { hash } = new URL(response.url);

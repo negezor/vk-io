@@ -20,26 +20,22 @@ export default class Auth {
 	/**
 	 * Constructor
 	 */
-	constructor(vk: VK) {
+	public constructor(vk: VK) {
 		this.vk = vk;
 	}
 
 	/**
 	 * Returns custom tag
-	 *
-	 * @return {string}
 	 */
 	// eslint-disable-next-line class-methods-use-this
-	get [Symbol.toStringTag]() {
+	public get [Symbol.toStringTag](): string {
 		return 'Auth';
 	}
 
 	/**
 	 * Standalone authorization with login & password
-	 *
-	 * @return {ImplicitFlowUser}
 	 */
-	implicitFlowUser(options = {}) {
+	public implicitFlowUser(options = {}): ImplicitFlowUser {
 		return new ImplicitFlowUser(this.vk, options);
 	}
 
@@ -48,19 +44,15 @@ export default class Auth {
 	 *
 	 * @param {*}  groups
 	 * @param {Object} options
-	 *
-	 * @return {ImplicitFlowGroup}
 	 */
-	implicitFlowGroups(groups, options = {}) {
+	public implicitFlowGroups(groups, options = {}): ImplicitFlowGroups {
 		return new ImplicitFlowGroups(this.vk, { ...options, groups });
 	}
 
 	/**
 	 * Direct authorization with login & login in user application
-	 *
-	 * @return {DirectAuth}
 	 */
-	direct() {
+	public direct(): DirectAuth {
 		const { appId, appSecret } = this.vk.options;
 
 		return new DirectAuth(this.vk, { appId, appSecret });
@@ -68,10 +60,8 @@ export default class Auth {
 
 	/**
 	 * Direct authorization with login & login in android application
-	 *
-	 * @return {DirectAuth}
 	 */
-	androidApp() {
+	public androidApp(): DirectAuth {
 		return new DirectAuth(this.vk, {
 			appId: 2274003,
 			appSecret: 'hHbZxrka2uZ6jB1inYsH'
@@ -80,10 +70,8 @@ export default class Auth {
 
 	/**
 	 * Direct authorization with login & login in windows application
-	 *
-	 * @return {DirectAuth}
 	 */
-	windowsApp() {
+	public windowsApp(): DirectAuth {
 		return new DirectAuth(this.vk, {
 			appId: 3697615,
 			appSecret: 'AlVXZFMUqyrnABp8ncuU'
@@ -92,10 +80,8 @@ export default class Auth {
 
 	/**
 	 * Direct authorization with login & login in windows phone application
-	 *
-	 * @return {DirectAuth}
 	 */
-	windowsPhoneApp() {
+	public windowsPhoneApp(): DirectAuth {
 		return new DirectAuth(this.vk, {
 			appId: 3502557,
 			appSecret: 'PEObAuQi6KloPM4T30DV'
@@ -104,10 +90,8 @@ export default class Auth {
 
 	/**
 	 * Direct authorization with login & login in iphone application
-	 *
-	 * @return {DirectAuth}
 	 */
-	iphoneApp() {
+	public iphoneApp(): DirectAuth {
 		return new DirectAuth(this.vk, {
 			appId: 3140623,
 			appSecret: 'VeWdmVclDCtn6ihuP1nt'
@@ -116,10 +100,8 @@ export default class Auth {
 
 	/**
 	 * Direct authorization with login & login in ipad application
-	 *
-	 * @return {DirectAuth}
 	 */
-	ipadApp() {
+	public ipadApp(): DirectAuth {
 		return new DirectAuth(this.vk, {
 			appId: 3682744,
 			appSecret: 'mY6CDUswIVdJLCD3j15n'
@@ -128,12 +110,11 @@ export default class Auth {
 
 	/**
 	 * Verifies that the user is authorized through the Open API
-	 *
-	 * @param {Object} params
-	 *
-	 * @return {Promise<Object>}
 	 */
-	async userAuthorizedThroughOpenAPI(params) {
+	public async userAuthorizedThroughOpenAPI(
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		params: Record<string, any>
+	): Promise<{ authorized: boolean }> {
 		const paramsKeys = Object.keys(params)
 			.filter(key => openAPIParams.includes(key))
 			.sort();
@@ -158,13 +139,9 @@ export default class Auth {
 
 	/**
 	 * Custom inspect object
-	 *
-	 * @param {?number} depth
-	 * @param {Object}  options
-	 *
-	 * @return {string}
 	 */
-	[inspect.custom](depth, options) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	public [inspect.custom](depth: number, options: Record<string, any>): string {
 		const { name } = this.constructor;
 
 		return `${options.stylize(name, 'special')} {}`;

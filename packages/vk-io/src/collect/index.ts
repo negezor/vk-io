@@ -23,7 +23,7 @@ export default class Collect {
 				this[group] = {};
 			}
 
-			this[group][name] = (options = {}) => (
+			this[group][name] = (options = {}): CollectStream => (
 				new CollectStream(this.vk, {
 					options,
 					method,
@@ -57,8 +57,11 @@ export default class Collect {
 	 *
 	 * @return {Promise<Array>}
 	 */
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	async executes(method: string, queue: Record<string, any>[]): Promise<{
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		response: any[];
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		errors: any[];
 	}> {
 		const queueMethods = queue.map(params => (

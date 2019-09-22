@@ -108,7 +108,7 @@ export default class ImplicitFlow {
 	/**
 	 * Constructor
 	 */
-	constructor(vk: VK, options: Partial<IImplicitFlowOptions> = {}) {
+	public constructor(vk: VK, options: Partial<IImplicitFlowOptions> = {}) {
 		this.vk = vk;
 
 		const {
@@ -155,36 +155,28 @@ export default class ImplicitFlow {
 	/**
 	 * Returns custom tag
 	 */
-	get [Symbol.toStringTag](): string {
+	public get [Symbol.toStringTag](): string {
 		return this.constructor.name;
 	}
 
 	/**
 	 * Returns CookieJar
-	 *
-	 * @return {CookieJar}
 	 */
-	get cookieJar() {
+	public get cookieJar(): CookieJar {
 		return this.jar;
 	}
 
 	/**
 	 * Sets the CookieJar
-	 *
-	 * @param {CookieJar} jar
-	 *
-	 * @return {this}
 	 */
-	set cookieJar(jar) {
+	public set cookieJar(jar: CookieJar) {
 		this.jar = jar;
 	}
 
 	/**
 	 * Returns cookie
-	 *
-	 * @return {Promise<Object>}
 	 */
-	async getCookies() {
+	public async getCookies(): Promise<{ 'login.vk.com': string; 'vk.com': string }> {
 		const { jar } = this;
 
 		const getCookieString = promisify(jar.getCookieString).bind(jar);
@@ -202,13 +194,14 @@ export default class ImplicitFlow {
 
 	/**
 	 * Executes the HTTP request
-	 *
-	 * @param {string} url
-	 * @param {Object} options
-	 *
-	 * @return {Promise<Response>}
 	 */
-	fetch(url: string | URL, options: Record<string, any> = {}) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	protected fetch(
+		url: string | URL,
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		options: Record<string, any> = {}
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	): Promise<any> {
 		const { agent, timeout } = this.options;
 
 		const { headers = {} } = options;
@@ -230,11 +223,9 @@ export default class ImplicitFlow {
 
 	/**
 	 * Runs authorization
-	 *
-	 * @return {Promise<Object>}
 	 */
-	// eslint-disable-next-line consistent-return
-	async run() {
+	// eslint-disable-next-line consistent-return, @typescript-eslint/no-explicit-any
+	public async run(): Promise<any> {
 		if (this.started) {
 			throw new AuthError({
 				message: 'Authorization already started!',
@@ -350,13 +341,9 @@ export default class ImplicitFlow {
 
 	/**
 	 * Process form auth
-	 *
-	 * @param {Response} response
-	 * @param {Cheerio}  $
-	 *
-	 * @return {Promise<Response>}
 	 */
-	async processAuthForm(response, $) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	protected async processAuthForm(response, $): Promise<any> {
 		debug('process login handle');
 
 		if (this.captchaValidate !== null) {
@@ -415,13 +402,9 @@ export default class ImplicitFlow {
 
 	/**
 	 * Process two-factor form
-	 *
-	 * @param {Response} response
-	 * @param {Cheerio}  $
-	 *
-	 * @return {Promise<Response>}
 	 */
-	async processTwoFactorForm(response, $) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	protected async processTwoFactorForm(response, $): Promise<any> {
 		debug('process two-factor handle');
 
 		if (this.twoFactorValidate !== null) {
@@ -465,13 +448,9 @@ export default class ImplicitFlow {
 
 	/**
 	 * Process security form
-	 *
-	 * @param {Response} response
-	 * @param {Cheerio}  $
-	 *
-	 * @return {Promise<Response>}
 	 */
-	async processSecurityForm(response, $) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	protected async processSecurityForm(response, $): Promise<any> {
 		debug('process security form');
 
 		const { login, phone } = this.options;

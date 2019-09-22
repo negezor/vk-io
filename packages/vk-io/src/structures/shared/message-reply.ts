@@ -10,6 +10,7 @@ const kAttachments = Symbol('attachments');
 export default class MessageReply {
 	protected vk: VK;
 
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	protected payload: Record<string, any>;
 
 	/**

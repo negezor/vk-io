@@ -34,7 +34,7 @@ const requestHandlers = {
 /**
  * Returns request handler
  */
-const getRequestHandler = (mode: string = 'sequential'): Function => {
+const getRequestHandler = (mode = 'sequential'): Function => {
 	const handler = requestHandlers[mode];
 
 	if (!handler) {
@@ -121,7 +121,8 @@ export default class API {
 			this[group] = new Proxy(
 				isMessagesGroup
 					? {
-						send: (params: Record<string, any> = {}) => {
+						// eslint-disable-next-line @typescript-eslint/no-explicit-any
+						send: (params: Record<string, any> = {}): Promise<number> => {
 							const messageParams = params.random_id === undefined
 								? { ...params, random_id: getRandomId() }
 								: params;
@@ -132,12 +133,14 @@ export default class API {
 					: {},
 				{
 					get: isMessagesGroup
-						? (obj, prop: string) => obj[prop] || (
-							params => (
+						? (obj, prop: string): Function => obj[prop] || (
+							// eslint-disable-next-line @typescript-eslint/no-explicit-any
+							(params): Promise<any> => (
 								this.enqueue(`${group}.${prop}`, params)
 							)
 						)
-						: (obj, prop: string) => params => (
+						// eslint-disable-next-line @typescript-eslint/no-explicit-any
+						: (obj, prop: string) => (params): Promise<any> => (
 							this.enqueue(`${group}.${prop}`, params)
 						)
 				}
@@ -163,6 +166,7 @@ export default class API {
 	/**
 	 * Call execute method
 	 */
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public execute(params: object): Promise<any> {
 		return this.enqueue('execute', params);
 	}
@@ -170,6 +174,7 @@ export default class API {
 	/**
 	 * Call execute procedure
 	 */
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public procedure(name: string, params: object): Promise<any> {
 		return this.enqueue(`execute.${name}`, params);
 	}
@@ -177,6 +182,7 @@ export default class API {
 	/**
 	 * Call raw method
 	 */
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public call(method: string, params: object): Promise<any> {
 		return this.enqueue(method, params);
 	}
@@ -184,6 +190,7 @@ export default class API {
 	/**
 	 * Adds request for queue
 	 */
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public callWithRequest(request: Request): Promise<any> {
 		this.queue.push(request);
 
@@ -195,6 +202,7 @@ export default class API {
 	/**
 	 * Adds method to queue
 	 */
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public enqueue(method: string, params: object): Promise<any> {
 		const request = new Request(method, params);
 
@@ -247,6 +255,7 @@ export default class API {
 		const { options } = this.vk;
 		const { method } = request;
 
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const params: Record<string, any> = {
 			access_token: options.token,
 			v: options.apiVersion,

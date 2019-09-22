@@ -53,7 +53,11 @@ const removeSearchParam = /(\?|&)[^=]+=/;
  *
  * @return {Object}
  */
-const resolveOwnerResource = (resource, pattern) => {
+const resolveOwnerResource = (resource: string, pattern: RegExp): {
+	id: number;
+	owner: number;
+	type: string;
+} => {
 	const {
 		1: type,
 		2: owner,

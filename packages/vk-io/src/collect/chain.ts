@@ -22,23 +22,17 @@ export default class Chain {
 
 	/**
 	 * Returns custom tag
-	 *
-	 * @return {string}
 	 */
 	// eslint-disable-next-line class-methods-use-this
-	get [Symbol.toStringTag]() {
+	get [Symbol.toStringTag](): string {
 		return 'Chain';
 	}
 
 	/**
 	 * Adds method to queue
-	 *
-	 * @param {string} method
-	 * @param {Object} params
-	 *
-	 * @return {Promise<*>}
 	 */
-	append(method, params) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	append(method: string, params: object): Promise<any> {
 		if (this.started) {
 			return Promise.reject(new VKError({
 				message: 'Chain already started',
@@ -55,22 +49,17 @@ export default class Chain {
 
 	/**
 	 * Promise based
-	 *
-	 * @param {Function} thenFn
-	 * @param {Function} catchFn
-	 *
-	 * @return {Promise<Object[]>}
 	 */
-	then(thenFn, catchFn) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	then(thenFn, catchFn): Promise<any[]> {
 		return Promise.resolve(this.run()).then(thenFn, catchFn);
 	}
 
 	/**
 	 * Starts the chain
-	 *
-	 * @return {Promise}
 	 */
-	async run() {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	async run(): Promise<{ response: any[]; errors: any[] }> {
 		if (this.started) {
 			throw new VKError({
 				message: 'Chain already started',
@@ -82,14 +71,14 @@ export default class Chain {
 
 		const { queue } = this;
 
-		if (queue.length === 0) {
-			return [];
-		}
-
 		let out = {
 			response: [],
 			errors: []
 		};
+
+		if (queue.length === 0) {
+			return out;
+		}
 
 		while (queue.length > 0) {
 			const tasks = queue.splice(0, 25);

@@ -4,6 +4,7 @@ const unespaceOffset = /"offset":"(\w+)"/g;
 
 export interface IExecuteCodeOptions {
 	method: string;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	params: Record<string, any>;
 	parallelCount: number;
 }
