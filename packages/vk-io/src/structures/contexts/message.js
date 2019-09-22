@@ -785,7 +785,7 @@ export default class MessageContext extends Context {
 	async inviteUser(id = this.eventMemberId) {
 		this.assertIsChat();
 
-		const isInvited = await this.vk.api.messages.removeChatUser({
+		const isInvited = await this.vk.api.messages.addChatUser({
 			chat_id: this.chatId,
 			user_id: id
 		});
