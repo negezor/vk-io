@@ -2,57 +2,60 @@ import WebSocket from 'ws';
 import fetch from 'node-fetch';
 import createDebug from 'debug';
 
-import nodeUrl from 'url';
-import nodeUtil from 'util';
+import { URL, URLSearchParams } from 'url';
+import { inspect, promisify } from 'util';
 
+import VK from '../vk';
 import { StreamingRuleError } from '../errors';
 import { StreamingContext } from '../structures/contexts';
 
-const { URL, URLSearchParams } = nodeUrl;
-const { inspect, promisify } = nodeUtil;
-
 const debug = createDebug('vk-io:streaming');
 
+export interface IStreamingRule {
+	value: string;
+	tag: string;
+}
+
 export default class StreamingAPI {
+	protected socket: WebSocket = null;
+
+	protected key: string = null;
+
+	protected endpoint: URL = null;
+
+	protected started = false;
+
+	private vk: VK;
+
+	private close: () => Promise<void> = null;
+
 	/**
 	 * Constructor
-	 *
-	 * @param {VK} vk
 	 */
-	constructor(vk) {
+	public constructor(vk: VK) {
 		this.vk = vk;
-
-		this.key = null;
-		this.socket = null;
-		this.endpoint = null;
-
-		this.started = null;
-		this.handlers = [];
 	}
 
 	/**
 	 * Returns custom tag
-	 *
-	 * @return {string}
 	 */
 	// eslint-disable-next-line class-methods-use-this
-	get [Symbol.toStringTag]() {
+	public get [Symbol.toStringTag](): string {
 		return 'StreamingAPI';
 	}
 
 	/**
 	 * Starts websocket
-	 *
-	 * @return {Promise}
 	 */
-	async startWebSocket() {
-		this.started = 'websocket';
+	public async startWebSocket(): Promise<void> {
+		this.started = true;
 
 		try {
+			// @ts-ignore
 			const { key, endpoint } = await this.vk.api.streaming.getServerUrl();
 
 			this.key = key;
-			this.endPoint = new URL(`https://${endpoint}`);
+			this.endpoint = new URL(`https://${endpoint}`);
 
 			const search = new URLSearchParams({ key });
 
@@ -60,7 +63,7 @@ export default class StreamingAPI {
 
 			this.socket = new WebSocket(`wss://${endpoint}/stream?${search}`, { agent });
 		} catch (error) {
-			this.started = null;
+			this.started = false;
 
 			throw error;
 		}
@@ -113,11 +116,9 @@ export default class StreamingAPI {
 
 	/**
 	 * Stop all connection
-	 *
-	 * @return {Promise}
 	 */
-	async stop() {
-		if (this.started === null) {
+	public async stop(): Promise<void> {
+		if (!this.started) {
 			return;
 		}
 
@@ -132,28 +133,21 @@ export default class StreamingAPI {
 
 	/**
 	 * Processes server messages
-	 *
-	 * @param {Object} serviceMessage
-	 *
-	 * @return {Promise}
 	 */
-	async handleServiceMessage({ service_code: code }) {
+	public async handleServiceMessage({ service_code: code }): Promise<void> {
 		if ([3000, 3001].includes(code)) {
 			await this.stop();
-			await this.start();
+			await this.startWebSocket();
 		}
 	}
 
 	/**
 	 * Handles events
-	 *
-	 * @param {Object} event
-	 *
-	 * @return {Promise}
 	 */
-	handleEvent(event) {
+	private handleEvent(event: object): Promise<void> {
 		const context = new StreamingContext({
 			vk: this.vk,
+			// @ts-ignore
 			payload: event
 		});
 
@@ -162,16 +156,12 @@ export default class StreamingAPI {
 
 	/**
 	 * Executes the HTTP request for rules
-	 *
-	 * @param {string} method
-	 * @param {Object} options
-	 *
-	 * @return {Promise<Object>}
 	 */
-	async fetchRules(method, payload = {}) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	private async fetchRules(method: string, payload: object = {}): Promise<Record<string, any>> {
 		const { agent } = this.vk.options;
 
-		const url = new URL('/rules', this.endPoint);
+		const url = new URL('/rules', this.endpoint);
 		url.searchParams.set('key', this.key);
 
 		let body;
@@ -201,7 +191,7 @@ export default class StreamingAPI {
 	 *
 	 * @return {Promise<Array>}
 	 */
-	async getRules() {
+	public async getRules(): Promise<IStreamingRule[]> {
 		const { rules = [] } = await this.fetchRules('GET');
 
 		return rules;
@@ -209,68 +199,48 @@ export default class StreamingAPI {
 
 	/**
 	 * Adds a rule
-	 *
-	 * @param {Object} rule
-	 *
-	 * @return {Promise}
 	 */
-	addRule(rule) {
-		return this.fetchRules('POST', { rule });
+	public async addRule(rule: IStreamingRule): Promise<void> {
+		await this.fetchRules('POST', { rule });
 	}
 
 	/**
 	 * Removes the rule
-	 *
-	 * @param {string} tag
-	 *
-	 * @return {Promise}
 	 */
-	deleteRule(tag) {
-		return this.fetchRules('DELETE', { tag });
+	public async deleteRule(tag: string): Promise<void> {
+		await this.fetchRules('DELETE', { tag });
 	}
 
 	/**
 	 * Adds a list of rules
-	 *
-	 * @param {Array} rules
-	 *
-	 * @return {Promise}
 	 */
-	addRules(rules) {
-		return Promise.all(rules.map(rule => (
+	public async addRules(rules: IStreamingRule[]): Promise<void> {
+		await Promise.all(rules.map(rule => (
 			this.addRule(rule)
 		)));
 	}
 
 	/**
 	 * Removes all rules
-	 *
-	 * @return {Promise}
 	 */
-	async deleteRules() {
+	public async deleteRules(): Promise<void> {
 		const rules = await this.getRules();
 
-		const response = await Promise.all(rules.map(({ tag }) => (
+		await Promise.all(rules.map(({ tag }) => (
 			this.deleteRule(tag)
 		)));
-
-		return response;
 	}
 
 	/**
 	 * Custom inspect object
-	 *
-	 * @param {?number} depth
-	 * @param {Object}  options
-	 *
-	 * @return {string}
 	 */
-	[inspect.custom](depth, options) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	public [inspect.custom](depth: number, options: Record<string, any>): string {
 		const { name } = this.constructor;
 
-		const { started, handlers } = this;
+		const { started } = this;
 
-		const payload = { started, handlers };
+		const payload = { started };
 
 		return `${options.stylize(name, 'special')} ${inspect(payload, options)}`;
 	}
