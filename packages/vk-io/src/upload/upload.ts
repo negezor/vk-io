@@ -1,9 +1,12 @@
 import fetch from 'node-fetch';
 
-import nodeFs from 'fs';
-import nodeUtil from 'util';
-import nodeCrypto from 'crypto';
+import { URL } from 'url';
+import { Readable } from 'stream';
+import { randomBytes } from 'crypto';
+import { createReadStream } from 'fs';
+import { inspect, deprecate } from 'util';
 
+import VK from '../vk';
 import MultipartStream from './multipart-stream';
 import { UploadError, uploadErrors } from '../errors';
 import { isStream, copyParams, streamToBuffer } from './helpers';
@@ -18,10 +21,6 @@ import {
 	AudioMessageAttachment
 } from '../structures/attachments';
 
-const { randomBytes } = nodeCrypto;
-const { createReadStream } = nodeFs;
-const { inspect, deprecate } = nodeUtil;
-
 const {
 	MISSING_PARAMETERS,
 	NO_FILES_TO_UPLOAD,
@@ -31,17 +30,115 @@ const {
 
 const isURL = /^https?:\/\//i;
 
+/**
+ * Stream, buffer, url or file path
+ */
+export type UploadSourceType = Readable | Buffer | string;
+
+export type UploadSourceValue = UploadSourceType | {
+	value: UploadSourceType;
+
+	contentType?: string;
+	filename?: string;
+};
+
+export interface IUploadSourceParams {
+	values: UploadSourceValue[] | UploadSourceValue;
+
+	uploadUrl?: string;
+	timeout?: number;
+}
+
+export type UploadSource = IUploadSourceParams | UploadSourceValue[] | UploadSourceValue;
+
+export interface IUploadParams {
+	source: UploadSource;
+}
+
+export interface IUploadConduct {
+	/**
+	 * Field name
+	 */
+	field: string;
+	/**
+	 * Upload params
+	 */
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	params: IUploadParams & Record<string, any>;
+
+	/**
+	 * Get server functions
+	 */
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	getServer: (params: Record<string, any>) => { upload_url: string };
+	/**
+	 * Copies server params
+	 */
+	serverParams?: string[];
+
+	/**
+	 * Save files functions
+	 */
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	saveFiles: (params: Record<string, any>) => Record<string, any>;
+	/**
+	 * Copies save params
+	 */
+	saveParams?: string[];
+
+	/**
+	 * Max uploaded files for one request
+	 */
+	maxFiles: number;
+	/**
+	 * Attachment type
+	 */
+	attachmentType?: string;
+
+	/**
+	 * Download exclusively in Buffer
+	 */
+	forceBuffer?: boolean;
+}
+
+export interface IStoryObject {
+	id: number;
+	owner_id: number;
+	date: number;
+	is_expired: boolean;
+	is_deleted: boolean;
+	can_see: number;
+	seen: number;
+	type: number;
+	photo: object;
+	video: object;
+	link: object;
+	parent_story_owner_id: number;
+	parent_story_id: number;
+	parent_story: IStoryObject;
+	replies: object;
+	can_reply: number;
+	can_share: number;
+	can_comment: number;
+	views: number;
+	access_key: string;
+}
+
 export default class Upload {
+	private vk: VK;
+
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	public graffiti: (params: object) => Promise<any>;
+
 	/**
 	 * Constructor
-	 *
-	 * @param {VK} vk
 	 */
-	constructor(vk) {
+	constructor(vk: VK) {
 		this.vk = vk;
 
 		this.graffiti = deprecate(
 			params => (
+				// @ts-ignore
 				this.messageGraffiti(params)
 			),
 			'graffiti(params) is deprecated, use messageGraffiti(params) instead'
@@ -50,29 +147,34 @@ export default class Upload {
 
 	/**
 	 * Returns custom tag
-	 *
-	 * @return {string}
 	 */
 	// eslint-disable-next-line class-methods-use-this
-	get [Symbol.toStringTag]() {
+	get [Symbol.toStringTag](): string {
 		return 'Upload';
 	}
 
 	/**
 	 * Uploading photos to an album
-	 *
-	 * @param {Object} params
-	 *
-	 * @return {Promise<PhotoAttachment[]>}
 	 */
-	async photoAlbum(params) {
+	async photoAlbum(
+		params: IUploadParams & {
+			album_id: number;
+			group_id?: number;
+
+			caption?: string;
+			latitude?: number;
+			longitude?: number;
+		}
+	): Promise<PhotoAttachment[]> {
 		const photos = await this.conduct({
 			field: 'file',
 			params,
 
+			// @ts-ignore
 			getServer: this.vk.api.photos.getUploadServer,
 			serverParams: ['album_id', 'group_id'],
 
+			// @ts-ignore
 			saveFiles: this.vk.api.photos.save,
 			saveParams: ['album_id', 'group_id', 'latitude', 'longitude', 'caption'],
 
@@ -87,19 +189,26 @@ export default class Upload {
 
 	/**
 	 * Uploading photos to the wall
-	 *
-	 * @param {Object} params
-	 *
-	 * @return {Promise<PhotoAttachment>}
 	 */
-	async wallPhoto(params) {
+	async wallPhoto(
+		params: IUploadParams & {
+			user_id?: number;
+			group_id?: number;
+
+			caption?: string;
+			latitude?: number;
+			longitude?: number;
+		}
+	): Promise<PhotoAttachment> {
 		const [photo] = await this.conduct({
 			field: 'photo',
 			params,
 
+			// @ts-ignore
 			getServer: this.vk.api.photos.getWallUploadServer,
 			serverParams: ['group_id'],
 
+			// @ts-ignore
 			saveFiles: this.vk.api.photos.saveWallPhoto,
 			saveParams: ['user_id', 'group_id', 'latitude', 'longitude', 'caption'],
 
@@ -112,19 +221,28 @@ export default class Upload {
 
 	/**
 	 * Uploading the main photo of a user or community
-	 *
-	 * @param {Object} params
-	 *
-	 * @return {Promise<Object>}
 	 */
-	ownerPhoto(params) {
+	ownerPhoto(
+		params: IUploadParams & {
+			owner_id?: number;
+		}
+	): Promise<{
+			photo_hash: string;
+			photo_src: string;
+			photo_src_big: string;
+			photo_src_small: string;
+			saved: number;
+			post_id: number;
+		}> {
 		return this.conduct({
 			field: 'photo',
 			params,
 
+			// @ts-ignore
 			getServer: this.vk.api.photos.getOwnerPhotoUploadServer,
 			serverParams: ['owner_id'],
 
+			// @ts-ignore
 			saveFiles: this.vk.api.photos.saveOwnerPhoto,
 
 			maxFiles: 1,
@@ -143,19 +261,21 @@ export default class Upload {
 
 	/**
 	 * Uploading a photo to a private message
-	 *
-	 * @param {Object} params
-	 *
-	 * @return {Promise<PhotoAttachment>}
 	 */
-	async messagePhoto(params) {
+	async messagePhoto(
+		params: IUploadParams & {
+			peer_id?: number;
+		}
+	): Promise<PhotoAttachment> {
 		const [photo] = await this.conduct({
 			field: 'photo',
 			params,
 
+			// @ts-ignore
 			getServer: this.vk.api.photos.getMessagesUploadServer,
 			serverParams: ['peer_id'],
 
+			// @ts-ignore
 			saveFiles: this.vk.api.photos.saveMessagesPhoto,
 
 			maxFiles: 1,
@@ -167,20 +287,29 @@ export default class Upload {
 
 	/**
 	 * Uploading the main photo for a chat
-	 *
-	 * @param {Object} params
-	 *
-	 * @return {Promise<Object>}
 	 */
-	chatPhoto(params) {
+	chatPhoto(
+		params: IUploadParams & {
+			chat_id: number;
+
+			crop_x?: number;
+			crop_y?: number;
+			crop_width?: number;
+		}
+	): Promise<{
+			message_id: number;
+			chat: object;
+		}> {
 		return this.conduct({
 			field: 'file',
 			params,
 
+			// @ts-ignore
 			getServer: this.vk.api.photos.getChatUploadServer,
 			serverParams: ['chat_id', 'crop_x', 'crop_y', 'crop_width'],
 
 			saveFiles: file => (
+				// @ts-ignore
 				this.vk.api.messages.setChatPhoto({ file })
 			),
 
@@ -243,19 +372,27 @@ export default class Upload {
 
 	/**
 	 * Uploading a photo for a product
-	 *
-	 * @param {Object} params
-	 *
-	 * @return {Promise<PhotoAttachment>}
 	 */
-	async marketPhoto(params) {
+	async marketPhoto(
+		params: IUploadParams & {
+			group_id: number;
+
+			main_photo?: number;
+
+			crop_x?: number;
+			crop_y?: number;
+			crop_width?: number;
+		}
+	): Promise<PhotoAttachment> {
 		const [photo] = await this.conduct({
 			field: 'file',
 			params,
 
+			// @ts-ignore
 			getServer: this.vk.api.photos.getMarketUploadServer,
 			serverParams: ['group_id', 'main_photo', 'crop_x', 'crop_y', 'crop_width'],
 
+			// @ts-ignore
 			saveFiles: this.vk.api.photos.saveMarketPhoto,
 			saveParams: ['group_id'],
 
@@ -268,19 +405,21 @@ export default class Upload {
 
 	/**
 	 * Uploads a photo for the selection of goods
-	 *
-	 * @param {Object} params
-	 *
-	 * @return {Promise<PhotoAttachment>}
 	 */
-	async marketAlbumPhoto(params) {
+	async marketAlbumPhoto(
+		params: IUploadParams & {
+			group_id: number;
+		}
+	): Promise<PhotoAttachment> {
 		const [photo] = await this.conduct({
 			field: 'file',
 			params,
 
+			// @ts-ignore
 			getServer: this.vk.api.photos.getMarketAlbumUploadServer,
 			serverParams: ['group_id'],
 
+			// @ts-ignore
 			saveFiles: this.vk.api.photos.saveMarketAlbumPhoto,
 			saveParams: ['group_id'],
 
@@ -293,18 +432,21 @@ export default class Upload {
 
 	/**
 	 * Uploads audio
-	 *
-	 * @param {Object} params
-	 *
-	 * @return {Promise<AudioAttachment>}
 	 */
-	async audio(params) {
+	async audio(
+		params: IUploadParams & {
+			title?: string;
+			artist?: string;
+		}
+	): Promise<AudioAttachment> {
 		const audio = await this.conduct({
 			field: 'file',
 			params,
 
+			// @ts-ignore
 			getServer: this.vk.api.audio.getUploadServer,
 
+			// @ts-ignore
 			saveFiles: this.vk.api.audio.save,
 			saveParams: ['title', 'artist'],
 
@@ -317,12 +459,25 @@ export default class Upload {
 
 	/**
 	 * Uploads video
-	 *
-	 * @param {Object} params
-	 *
-	 * @return {Promise<VideoAttachment>}
 	 */
-	async video(params) {
+	async video(
+		params: IUploadParams & {
+			album_id?: number;
+			group_id?: number;
+
+			link?: string;
+			name?: string;
+			description?: string;
+			is_private?: number;
+			wallpost?: number;
+			privacy_view?: string;
+			privacy_comment?: string;
+			no_comments?: number;
+			repeat?: number;
+			compression?: number;
+		}
+	): Promise<VideoAttachment> {
+		// @ts-ignore
 		const save = await this.vk.api.video.save(copyParams(params, [
 			'group_id',
 			'album_id',
@@ -353,12 +508,15 @@ export default class Upload {
 		let { source } = params;
 
 		if (typeof source !== 'object' || source.constructor !== Object) {
+			// @ts-ignore
 			source = {
 				values: source
 			};
 		}
 
+		// @ts-ignore
 		if (!Array.isArray(source.values)) {
+			// @ts-ignore
 			source.values = [source.values];
 		}
 
@@ -366,12 +524,14 @@ export default class Upload {
 			maxFiles: 1,
 			field: 'video_file',
 			attachmentType: 'video',
+			// @ts-ignore
 			values: source.values
 		});
 
 		const video = await this.upload(save.upload_url, {
 			formData,
 			forceBuffer: true,
+			// @ts-ignore
 			timeout: source.timeout
 		});
 
@@ -380,20 +540,18 @@ export default class Upload {
 
 	/**
 	 * Uploads document
-	 *
-	 * @param {Object} params
-	 * @param {Object} options
-	 *
-	 * @return {Promise<Object>}
 	 */
-	async conductDocument(params, { attachmentType = 'doc' }) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	async conductDocument(params: IUploadParams & { type?: string }, { attachmentType = 'doc' } = {}): Promise<any> {
 		return this.conduct({
 			field: 'file',
 			params,
 
+			// @ts-ignore
 			getServer: this.vk.api.docs.getUploadServer,
 			serverParams: ['type', 'group_id'],
 
+			// @ts-ignore
 			saveFiles: this.vk.api.docs.save,
 			saveParams: ['title', 'tags'],
 
@@ -404,13 +562,15 @@ export default class Upload {
 
 	/**
 	 * Uploads document
-	 *
-	 * @param {Object} params
-	 * @param {Object} options
-	 *
-	 * @return {Promise<DocumentAttachment>}
 	 */
-	async document(params) {
+	async document(
+		params: IUploadParams & {
+			group_id?: number;
+
+			title?: string;
+			tags?: string;
+		}
+	): Promise<DocumentAttachment> {
 		const { doc: document } = await this.conductDocument(params, {
 			attachmentType: 'doc'
 		});
@@ -420,20 +580,18 @@ export default class Upload {
 
 	/**
 	 * Uploads wall document
-	 *
-	 * @param {Object} params
-	 * @param {Object} options
-	 *
-	 * @return {Promise<Object>}
 	 */
-	async conductWallDocument(params, { attachmentType = 'doc' } = {}) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	async conductWallDocument(params: IUploadParams & { type?: string }, { attachmentType = 'doc' } = {}): Promise<any> {
 		return this.conduct({
 			field: 'file',
 			params,
 
+			// @ts-ignore
 			getServer: this.vk.api.docs.getWallUploadServer,
 			serverParams: ['type', 'group_id'],
 
+			// @ts-ignore
 			saveFiles: this.vk.api.docs.save,
 			saveParams: ['title', 'tags'],
 
@@ -444,13 +602,16 @@ export default class Upload {
 
 	/**
 	 * Uploads wall document
-	 *
-	 * @param {Object} params
-	 * @param {Object} options
-	 *
-	 * @return {Promise<DocumentAttachment>}
 	 */
-	async wallDocument(params) {
+	async wallDocument(
+		params: IUploadParams & {
+			group_id?: number;
+			// type?: string;
+
+			title?: string;
+			tags?: string;
+		}
+	): Promise<DocumentAttachment> {
 		const { doc: document } = await this.conductWallDocument(params, {
 			attachmentType: 'doc'
 		});
@@ -460,20 +621,18 @@ export default class Upload {
 
 	/**
 	 * Uploads wall document
-	 *
-	 * @param {Object} params
-	 * @param {Object} options
-	 *
-	 * @return {Promise<Object>}
 	 */
-	async conductMessageDocument(params, { attachmentType = 'doc' } = {}) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	async conductMessageDocument(params: IUploadParams & { type?: string }, { attachmentType = 'doc' } = {}): Promise<any> {
 		return this.conduct({
 			field: 'file',
 			params,
 
+			// @ts-ignore
 			getServer: this.vk.api.docs.getMessagesUploadServer,
 			serverParams: ['type', 'peer_id'],
 
+			// @ts-ignore
 			saveFiles: this.vk.api.docs.save,
 			saveParams: ['title', 'tags'],
 
@@ -484,13 +643,15 @@ export default class Upload {
 
 	/**
 	 * Uploads message document
-	 *
-	 * @param {Object} params
-	 * @param {Object} options
-	 *
-	 * @return {Promise<DocumentAttachment>}
 	 */
-	async messageDocument(params) {
+	async messageDocument(
+		params: IUploadParams & {
+			peer_id?: number;
+
+			title?: string;
+			tags?: string;
+		}
+	): Promise<DocumentAttachment> {
 		const { doc: document } = await this.conductMessageDocument(params, {
 			attachmentType: 'doc'
 		});
@@ -500,12 +661,15 @@ export default class Upload {
 
 	/**
 	 * Uploads audio message
-	 *
-	 * @param {Object} params
-	 *
-	 * @return {Promise<AudioMessageAttachment>}
 	 */
-	async audioMessage(params) {
+	async audioMessage(
+		params: IUploadParams & {
+			peer_id?: number;
+
+			title?: string;
+			tags?: string;
+		}
+	): Promise<AudioMessageAttachment> {
 		const { audio_message: audioMessage } = await this.conductMessageDocument(
 			{
 				...params,
@@ -535,12 +699,12 @@ export default class Upload {
 
 	/**
 	 * Uploads graffiti in documents
-	 *
-	 * @param {Object} params
-	 *
-	 * @return {Promise<GraffitiAttachment>}
 	 */
-	async documentGraffiti(params) {
+	async documentGraffiti(
+		params: IUploadParams & {
+			group_id?: number;
+		}
+	): Promise<GraffitiAttachment> {
 		const { graffiti } = await this.conductDocument(
 			{
 				...params,
@@ -558,12 +722,12 @@ export default class Upload {
 
 	/**
 	 * Uploads graffiti in messages
-	 *
-	 * @param {Object} params
-	 *
-	 * @return {Promise<GraffitiAttachment>}
 	 */
-	async messageGraffiti(params) {
+	async messageGraffiti(
+		params: IUploadParams & {
+			peer_id?: number;
+		}
+	): Promise<GraffitiAttachment> {
 		const { graffiti } = await this.conductMessageDocument(
 			{
 				...params,
@@ -581,19 +745,32 @@ export default class Upload {
 
 	/**
 	 * Uploads community cover
-	 *
-	 * @param {Object} params
-	 *
-	 * @return {Promise<Object>}
 	 */
-	groupCover(params) {
+	groupCover(
+		params: IUploadParams & {
+			group_id: number;
+
+			crop_x?: number;
+			crop_y?: number;
+			crop_x2?: number;
+			crop_y2?: number;
+		}
+	): Promise<{
+			images: {
+				url: string;
+				width: number;
+				height: number;
+			}[];
+		}> {
 		return this.conduct({
 			field: 'photo',
 			params,
 
+			// @ts-ignore
 			getServer: this.vk.api.photos.getOwnerCoverPhotoUploadServer,
 			serverParams: ['group_id', 'crop_x', 'crop_y', 'crop_x2', 'crop_y2'],
 
+			// @ts-ignore
 			saveFiles: this.vk.api.photos.saveOwnerCoverPhoto,
 
 			maxFiles: 1,
@@ -633,16 +810,22 @@ export default class Upload {
 
 	/**
 	 * Uploads photo stories
-	 *
-	 * @param {Object} params
-	 *
-	 * @return {Promise<Object>}
 	 */
-	storiesPhoto(params) {
+	storiesPhoto(
+		params: IUploadParams & {
+			group_id?: number;
+			add_to_news?: number;
+			user_ids?: string[] | string;
+			reply_to_story?: string;
+			link_text: string;
+			link_url: string;
+		}
+	): Promise<IStoryObject> {
 		return this.conduct({
 			field: 'file',
 			params,
 
+			// @ts-ignore
 			getServer: this.vk.api.stories.getPhotoUploadServer,
 			serverParams: [
 				'add_to_news',
@@ -663,16 +846,22 @@ export default class Upload {
 
 	/**
 	 * Uploads video stories
-	 *
-	 * @param {Object} params
-	 *
-	 * @return {Promise<Object>}
 	 */
-	storiesVideo(params) {
+	storiesVideo(
+		params: IUploadParams & {
+			group_id?: number;
+			add_to_news?: number;
+			user_ids?: string[] | string;
+			reply_to_story?: string;
+			link_text: string;
+			link_url: string;
+		}
+	): Promise<IStoryObject> {
 		return this.conduct({
 			field: 'video_file',
 			params,
 
+			// @ts-ignore
 			getServer: this.vk.api.stories.getVideoUploadServer,
 			serverParams: [
 				'add_to_news',
@@ -694,19 +883,22 @@ export default class Upload {
 
 	/**
 	 * Uploads poll photo
-	 *
-	 * @param {Object}
-	 *
-	 * @return {Promise<Object>}
 	 */
-	pollPhoto(params) {
+	pollPhoto(
+		params: IUploadParams & {
+			owner_id?: number;
+		}
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	): Promise<Record<string, any>> {
 		return this.conduct({
 			field: 'file',
 			params,
 
+			// @ts-ignore
 			getServer: this.vk.api.polls.getPhotoUploadServer,
 			serverParams: ['owner_id'],
 
+			// @ts-ignore
 			saveFiles: this.vk.api.polls.savePhoto,
 
 			maxFiles: 1,
@@ -716,21 +908,6 @@ export default class Upload {
 
 	/**
 	 * Behavior for the upload method
-	 *
-	 * @param {Object} conduct
-	 * @property [field]          Field name
-	 * @property [params]         Upload params
-	 *
-	 * @property [getServer]      Get server functions
-	 * @property [serverParams]   Copies server params
-	 *
-	 * @property [saveFiles]      Save files functions
-	 * @property [saveParams]     Copies save params
-	 *
-	 * @property [maxFiles]       Max uploaded files for one request
-	 * @property [attachmentType] Attachment type
-	 *
-	 * @return {Promise<Object>}
 	 */
 	async conduct({
 		field,
@@ -746,7 +923,8 @@ export default class Upload {
 		attachmentType,
 
 		forceBuffer = false
-	}) {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	}: IUploadConduct): Promise<any> {
 		if (!params || !params.source) {
 			throw new UploadError({
 				message: 'Missing upload params',
@@ -759,23 +937,30 @@ export default class Upload {
 		if (
 			typeof source !== 'object'
 			|| source.constructor !== Object
+			// @ts-ignore
 			|| source.value !== undefined) {
+			// @ts-ignore
 			source = {
 				values: source
 			};
 		}
 
+		// @ts-ignore
 		if (!Array.isArray(source.values)) {
+			// @ts-ignore
 			source.values = [source.values];
 		}
 
+		// @ts-ignore
 		if ('uploadUrl' in source) {
 			// eslint-disable-next-line no-param-reassign
-			getServer = () => ({
+			getServer = (): ReturnType<IUploadConduct['getServer']> => ({
+				// @ts-ignore
 				upload_url: source.uploadUrl
 			});
 		}
 
+		// @ts-ignore
 		const { length: valuesLength } = source.values;
 
 		if (valuesLength === 0) {
@@ -796,6 +981,7 @@ export default class Upload {
 			getServer(copyParams(params, serverParams)),
 			this.buildPayload({
 				field,
+				// @ts-ignore
 				values: source.values,
 				maxFiles,
 				attachmentType
@@ -805,6 +991,7 @@ export default class Upload {
 		const uploaded = await this.upload(url, {
 			formData,
 			forceBuffer,
+			// @ts-ignore
 			timeout: source.timeout
 		});
 
@@ -835,7 +1022,7 @@ export default class Upload {
 		values,
 		maxFiles,
 		attachmentType
-	}) {
+	}): Promise<MultipartStream> {
 		const boundary = randomBytes(32).toString('hex');
 		const formData = new MultipartStream(boundary);
 
@@ -905,7 +1092,8 @@ export default class Upload {
 	 *
 	 * @return {Promise<Object>}
 	 */
-	async upload(url, { formData, timeout, forceBuffer }) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	async upload(url: URL | string, { formData, timeout, forceBuffer }): Promise<any> {
 		const { agent, uploadTimeout } = this.vk.options;
 
 		const body = forceBuffer
@@ -937,13 +1125,9 @@ export default class Upload {
 
 	/**
 	 * Custom inspect object
-	 *
-	 * @param {?number} depth
-	 * @param {Object}  options
-	 *
-	 * @return {string}
 	 */
-	[inspect.custom](depth, options) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	public [inspect.custom](depth: number, options: Record<string, any>): string {
 		const { name } = this.constructor;
 
 		return `${options.stylize(name, 'special')} {}`;
