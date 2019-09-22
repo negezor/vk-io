@@ -6,7 +6,6 @@
 		"moduleResolution": "node",
 		"noEmit": true,
 		"declaration": true,
-		"allowJs": true,
 		"forceConsistentCasingInFileNames": true
 	}
 }
