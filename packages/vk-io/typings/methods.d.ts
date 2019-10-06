@@ -226,6 +226,16 @@ export interface APIAds {
 }
 
 /**
+ * The API appWidgets group
+ */
+export interface APIAppWidgets {
+    /**
+     * Allows to update community app widget
+     */
+    update(params: Params.AppWidgetsUpdateParams): Promise<Responses.OkResponse>;
+}
+
+/**
  * The API apps group
  */
 export interface APIApps {
@@ -443,54 +453,34 @@ export interface APIDocs {
  * The API fave group
  */
 export interface APIFave {
-    /**
-     * Adds a community to user faves.
-     */
-    addGroup(params: Params.FaveAddGroupParams): Promise<Responses.OkResponse>;
+    addArticle(params: Params.FaveAddArticleParams): Promise<Responses.BaseBoolResponse>;
     /**
      * Adds a link to user faves.
      */
     addLink(params: Params.FaveAddLinkParams): Promise<Responses.OkResponse>;
-    /**
-     * Adds a profile to user faves.
-     */
-    addUser(params: Params.FaveAddUserParams): Promise<Responses.OkResponse>;
-    /**
-     * Returns a list of links that the current user has bookmarked.
-     */
-    getLinks(params: Params.FaveGetLinksParams): Promise<Responses.FaveGetLinksResponse>;
-    /**
-     * Returns market items bookmarked by current user.
-     */
-    getMarketItems(params: Params.FaveGetMarketItemsParams): Promise<Responses.FaveGetMarketItemsResponse>;
-    /**
-     * Returns a list of photos that the current user has liked.
-     */
-    getPhotos(params: Params.FaveGetPhotosParams): Promise<Responses.FaveGetPhotosResponse>;
-    /**
-     * Returns a list of wall posts that the current user has liked.
-     */
-    getPosts(params: Params.FaveGetPostsParams): Promise<Responses.FaveGetPostsResponse>;
-    /**
-     * Returns a list of users whom the current user has bookmarked.
-     */
-    getUsers(params: Params.FaveGetUsersParams): Promise<Responses.FaveGetUsersResponse>;
-    /**
-     * Returns a list of videos that the current user has liked.
-     */
-    getVideos(params: Params.FaveGetVideosParams): Promise<Responses.FaveGetVideosResponse>;
-    /**
-     * Removes a community from user faves.
-     */
-    removeGroup(params: Params.FaveRemoveGroupParams): Promise<Responses.OkResponse>;
+    addPage(params: Params.FaveAddPageParams): Promise<Responses.OkResponse>;
+    addPost(params: Params.FaveAddPostParams): Promise<Responses.OkResponse>;
+    addProduct(params: Params.FaveAddProductParams): Promise<Responses.OkResponse>;
+    addTag(params: Params.FaveAddTagParams): Promise<Responses.FaveAddTagResponse>;
+    addVideo(params: Params.FaveAddVideoParams): Promise<Responses.OkResponse>;
+    editTag(params: Params.FaveEditTagParams): Promise<Responses.OkResponse>;
+    get(params: Params.FaveGetParams): Promise<Responses.FaveGetResponse>;
+    getPages(params: Params.FaveGetPagesParams): Promise<Responses.FaveGetPagesResponse>;
+    getTags(params: Params.FaveGetTagsParams): Promise<Responses.FaveGetTagsResponse>;
+    markSeen(params: Params.FaveMarkSeenParams): Promise<Responses.BaseBoolResponse>;
+    removeArticle(params: Params.FaveRemoveArticleParams): Promise<Responses.BaseBoolResponse>;
     /**
      * Removes link from the user's faves.
      */
     removeLink(params: Params.FaveRemoveLinkParams): Promise<Responses.OkResponse>;
-    /**
-     * Removes a profile from user faves.
-     */
-    removeUser(params: Params.FaveRemoveUserParams): Promise<Responses.OkResponse>;
+    removePage(params: Params.FaveRemovePageParams): Promise<Responses.OkResponse>;
+    removePost(params: Params.FaveRemovePostParams): Promise<Responses.OkResponse>;
+    removeProduct(params: Params.FaveRemoveProductParams): Promise<Responses.OkResponse>;
+    removeTag(params: Params.FaveRemoveTagParams): Promise<Responses.OkResponse>;
+    reorderTags(params: Params.FaveReorderTagsParams): Promise<Responses.OkResponse>;
+    setPageTags(params: Params.FaveSetPageTagsParams): Promise<Responses.OkResponse>;
+    setTags(params: Params.FaveSetTagsParams): Promise<Responses.OkResponse>;
+    trackPageInteraction(params: Params.FaveTrackPageInteractionParams): Promise<Responses.OkResponse>;
 }
 
 /**
@@ -1135,6 +1125,7 @@ export interface APINotifications {
      * Resets the counter of new notifications about other users' feedback to the current user's wall posts.
      */
     markAsViewed(params: Params.NotificationsMarkAsViewedParams): Promise<Responses.NotificationsMarkAsViewedResponse>;
+    sendMessage(params: Params.NotificationsSendMessageParams): Promise<Responses.NotificationsSendMessageResponse>;
 }
 
 /**
@@ -1779,7 +1770,7 @@ export interface APIWall {
     /**
      * Edits a post on a user wall or community wall.
      */
-    edit(params: Params.WallEditParams): Promise<Responses.OkResponse>;
+    edit(params: Params.WallEditParams): Promise<Responses.WallEditResponse>;
     /**
      * Allows to edit hidden post.
      */
@@ -1870,6 +1861,10 @@ export class APIMethods {
      * The API ads group
      */
     ads: APIAds;
+    /**
+     * The API appWidgets group
+     */
+    appWidgets: APIAppWidgets;
     /**
      * The API apps group
      */

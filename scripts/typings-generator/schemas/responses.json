@@ -16,7 +16,10 @@
               "type": "string",
               "description": "New secret"
             }
-          }
+          },
+          "required": [
+            "token"
+          ]
         }
       }
     },
@@ -1211,47 +1214,53 @@
         }
       }
     },
-    "fave_getLinks_response": {
+    "fave_addTag_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "$ref": "objects.json#/definitions/fave_tag"
+        }
+      }
+    },
+    "fave_getPages_response": {
       "type": "object",
       "properties": {
         "response": {
           "type": "object",
           "properties": {
             "count": {
-              "type": "integer",
-              "description": "Total number"
+              "type": "integer"
             },
             "items": {
               "type": "array",
               "items": {
-                "$ref": "objects.json#/definitions/fave_faves_link"
+                "$ref": "objects.json#/definitions/fave_page"
               }
             }
           }
         }
       }
     },
-    "fave_getMarketItems_response": {
+    "fave_getTags_response": {
       "type": "object",
       "properties": {
         "response": {
           "type": "object",
           "properties": {
             "count": {
-              "type": "integer",
-              "description": "Total number"
+              "type": "integer"
             },
             "items": {
               "type": "array",
               "items": {
-                "$ref": "objects.json#/definitions/market_market_item"
+                "$ref": "objects.json#/definitions/fave_tag"
               }
             }
           }
         }
       }
     },
-    "fave_getPhotos_response": {
+    "fave_get_extended_response": {
       "type": "object",
       "properties": {
         "response": {
@@ -1264,14 +1273,26 @@
             "items": {
               "type": "array",
               "items": {
-                "$ref": "objects.json#/definitions/photos_photo"
+                "$ref": "objects.json#/definitions/fave_bookmark"
+              }
+            },
+            "profiles": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/users_user_full"
+              }
+            },
+            "groups": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/groups_group"
               }
             }
           }
         }
       }
     },
-    "fave_getPosts_response": {
+    "fave_get_response": {
       "type": "object",
       "properties": {
         "response": {
@@ -1284,47 +1305,7 @@
             "items": {
               "type": "array",
               "items": {
-                "$ref": "objects.json#/definitions/wall_wallpost_full"
-              }
-            }
-          }
-        }
-      }
-    },
-    "fave_getUsers_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "type": "object",
-          "properties": {
-            "count": {
-              "type": "integer",
-              "description": "Total number"
-            },
-            "items": {
-              "type": "array",
-              "items": {
-                "$ref": "objects.json#/definitions/users_user_min"
-              }
-            }
-          }
-        }
-      }
-    },
-    "fave_getVideos_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "type": "object",
-          "properties": {
-            "count": {
-              "type": "integer",
-              "description": "Total number"
-            },
-            "items": {
-              "type": "array",
-              "items": {
-                "$ref": "objects.json#/definitions/video_video"
+                "$ref": "objects.json#/definitions/fave_bookmark"
               }
             }
           }
@@ -1841,7 +1822,7 @@
             "items": {
               "type": "array",
               "items": {
-                "$ref": "objects.json#/definitions/groups_owner_xtr_ban_info"
+                "$ref": "objects.json#/definitions/groups_banned_item"
               }
             }
           },
@@ -2027,12 +2008,19 @@
               "items": {
                 "$ref": "objects.json#/definitions/users_user_min"
               }
+            },
+            "groups": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/groups_group_full"
+              }
             }
           },
           "required": [
             "count",
             "items",
-            "profiles"
+            "profiles",
+            "groups"
           ]
         }
       }
@@ -2302,6 +2290,10 @@
             },
             "invitation": {
               "description": "Information whether user has been invited to the group",
+              "$ref": "objects.json#/definitions/base_bool_int"
+            },
+            "can_invite": {
+              "description": "Information whether user can be invited",
               "$ref": "objects.json#/definitions/base_bool_int"
             },
             "can_recall": {
@@ -3458,7 +3450,7 @@
                 "$ref": "objects.json#/definitions/users_user_full"
               }
             },
-            "members": {
+            "profiles": {
               "type": "array",
               "items": {
                 "$ref": "objects.json#/definitions/groups_group_full"
@@ -3629,9 +3621,9 @@
               "type": "string",
               "description": "New offset value"
             },
-            "new_from": {
+            "next_from": {
               "type": "string",
-              "description": "New from value"
+              "description": "Next from value"
             }
           }
         }
@@ -3687,6 +3679,10 @@
               "items": {
                 "$ref": "objects.json#/definitions/groups_group_full"
               }
+            },
+            "next_from": {
+              "type": "string",
+              "description": "New from value"
             }
           }
         }
@@ -3724,6 +3720,19 @@
               "items": {
                 "$ref": "objects.json#/definitions/groups_group_full"
               }
+            },
+            "count": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Filtered number"
+            },
+            "total_count": {
+              "type": "integer",
+              "description": "Total number",
+              "minimum": 0
+            },
+            "next_from": {
+              "type": "string"
             }
           }
         }
@@ -3889,6 +3898,17 @@
         "response": {
           "description": "Result",
           "$ref": "objects.json#/definitions/base_bool_int"
+        }
+      }
+    },
+    "notifications_sendMessage_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "array",
+          "items": {
+            "$ref": "objects.json#/definitions/notifications_send_message_item"
+          }
         }
       }
     },
@@ -4511,11 +4531,27 @@
           "properties": {
             "photo_hash": {
               "type": "string",
-              "description": "Parameter for saveProfilePhoto method"
+              "description": "Photo hash"
             },
             "photo_src": {
               "type": "string",
               "description": "Uploaded image url"
+            },
+            "photo_src_big": {
+              "type": "string",
+              "description": "Uploaded image url"
+            },
+            "photo_src_small": {
+              "type": "string",
+              "description": "Uploaded image url"
+            },
+            "saved": {
+              "type": "integer",
+              "description": "Returns 1 if profile photo is saved"
+            },
+            "post_id": {
+              "type": "integer",
+              "description": "Created post ID"
             }
           },
           "required": [
@@ -4732,6 +4768,10 @@
         "response": {
           "type": "object",
           "properties": {
+            "count": {
+              "type": "integer",
+              "minimum": 0
+            },
             "items": {
               "type": "array",
               "items": {
@@ -4744,7 +4784,11 @@
                 "type": "string"
               }
             }
-          }
+          },
+          "required": [
+            "count",
+            "items"
+          ]
         }
       }
     },
@@ -5247,16 +5291,33 @@
             "items": {
               "type": "array",
               "items": {
-                "type": "array",
-                "items": {
-                  "$ref": "objects.json#/definitions/stories_story"
-                }
+                "$ref": "objects.json#/definitions/stories_story"
               }
+            },
+            "promo_data": {
+              "$ref": "objects.json#/definitions/stories_promo_block"
             }
           },
           "required": [
             "count",
             "items"
+          ]
+        }
+      }
+    },
+    "stories_upload_response": {
+      "withoutRefs": true,
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "story": {
+              "$ref": "objects.json#/definitions/stories_story"
+            }
+          },
+          "required": [
+            "story"
           ]
         }
       }
@@ -5345,14 +5406,7 @@
             "items": {
               "type": "array",
               "items": {
-                "oneOf": [
-                  {
-                    "$ref": "objects.json#/definitions/users_user_xtr_type"
-                  },
-                  {
-                    "$ref": "objects.json#/definitions/groups_group_full"
-                  }
-                ]
+                "$ref": "objects.json#/definitions/users_subscriptions_item"
               }
             }
           },
@@ -5622,30 +5676,6 @@
               "items": {
                 "$ref": "objects.json#/definitions/wall_wall_comment"
               }
-            }
-          },
-          "required": [
-            "count",
-            "items"
-          ]
-        }
-      }
-    },
-    "video_getComments_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "type": "object",
-          "properties": {
-            "count": {
-              "type": "integer",
-              "description": "Total number"
-            },
-            "items": {
-              "type": "array",
-              "items": {
-                "$ref": "objects.json#/definitions/wall_wall_comment"
-              }
             },
             "profiles": {
               "type": "array",
@@ -5665,6 +5695,30 @@
             "items",
             "groups",
             "profiles"
+          ]
+        }
+      }
+    },
+    "video_getComments_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": "integer",
+              "description": "Total number"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/wall_wall_comment"
+              }
+            }
+          },
+          "required": [
+            "count",
+            "items"
           ]
         }
       }
@@ -5827,6 +5881,24 @@
         }
       }
     },
+    "wall_edit_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "post_id": {
+              "type": "integer",
+              "description": "Edited post ID",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "post_id"
+          ]
+        }
+      }
+    },
     "wall_getById_extended_response": {
       "type": "object",
       "properties": {
@@ -5891,7 +5963,7 @@
               "type": "boolean"
             },
             "can_post": {
-              "$ref": "objects.json#/definitions/base_bool_int",
+              "type": "boolean",
               "description": "Information whether current user can comment the post"
             },
             "groups_can_post": {
@@ -5941,7 +6013,7 @@
               }
             },
             "can_post": {
-              "$ref": "objects.json#/definitions/base_bool_int",
+              "type": "boolean",
               "description": "Information whether current user can comment the post"
             },
             "groups_can_post": {

@@ -5,7 +5,7 @@ export interface AccountChangePasswordResponse {
     /**
      * New token
      */
-    token?: string;
+    token: string;
     /**
      * New secret
      */
@@ -374,58 +374,38 @@ export interface DocsSearchResponse {
     items: Objects.DocsDoc[];
 }
 
-export interface FaveGetLinksResponse {
-    /**
-     * Total number
-     */
-    count?: number;
+export type FaveAddTagResponse = Objects.FaveTag;
+
+export interface FaveGetPagesResponse {
     [key: string]: any;
-    items?: Objects.FaveFavesLink[];
+    count?: number;
+    items?: Objects.FavePage[];
 }
 
-export interface FaveGetMarketItemsResponse {
-    /**
-     * Total number
-     */
-    count?: number;
+export interface FaveGetTagsResponse {
     [key: string]: any;
-    items?: Objects.MarketMarketItem[];
+    count?: number;
+    items?: Objects.FaveTag[];
 }
 
-export interface FaveGetPhotosResponse {
+export interface FaveGetExtendedResponse {
     /**
      * Total number
      */
     count?: number;
     [key: string]: any;
-    items?: Objects.PhotosPhoto[];
+    items?: Objects.FaveBookmark[];
+    profiles?: Objects.UsersUserFull[];
+    groups?: Objects.GroupsGroup[];
 }
 
-export interface FaveGetPostsResponse {
+export interface FaveGetResponse {
     /**
      * Total number
      */
     count?: number;
     [key: string]: any;
-    items?: Objects.WallWallpostFull[];
-}
-
-export interface FaveGetUsersResponse {
-    /**
-     * Total number
-     */
-    count?: number;
-    [key: string]: any;
-    items?: Objects.UsersUserMin[];
-}
-
-export interface FaveGetVideosResponse {
-    /**
-     * Total number
-     */
-    count?: number;
-    [key: string]: any;
-    items?: Objects.VideoVideo[];
+    items?: Objects.FaveBookmark[];
 }
 
 export interface FriendsAddListResponse {
@@ -603,7 +583,7 @@ export interface GroupsGetBannedResponse {
      */
     count: number;
     [key: string]: any;
-    items: Objects.GroupsOwnerXtrBanInfo[];
+    items: Objects.GroupsBannedItem[];
 }
 
 export type GroupsGetByIdResponse = Objects.GroupsGroupFull[];
@@ -668,6 +648,7 @@ export interface GroupsGetInvitesExtendedResponse {
     [key: string]: any;
     items: Objects.GroupsGroupXtrInvitedBy[];
     profiles: Objects.UsersUserMin[];
+    groups: Objects.GroupsGroupFull[];
 }
 
 export interface GroupsGetInvitesResponse {
@@ -1163,7 +1144,7 @@ export interface MessagesSetChatPhotoResponse {
 export interface NewsfeedGetBannedExtendedResponse {
     [key: string]: any;
     groups?: Objects.UsersUserFull[];
-    members?: Objects.GroupsGroupFull[];
+    profiles?: Objects.GroupsGroupFull[];
 }
 
 export interface NewsfeedGetBannedResponse {
@@ -1222,9 +1203,9 @@ export interface NewsfeedGetRecommendedResponse {
      */
     new_offset?: string;
     /**
-     * New from value
+     * Next from value
      */
-    new_from?: string;
+    next_from?: string;
     [key: string]: any;
     items?: Objects.NewsfeedNewsfeedItem[];
     profiles?: Objects.UsersUserFull[];
@@ -1241,6 +1222,10 @@ export interface NewsfeedGetSuggestedSourcesResponse {
 }
 
 export interface NewsfeedGetResponse {
+    /**
+     * New from value
+     */
+    next_from?: string;
     [key: string]: any;
     items?: Objects.NewsfeedNewsfeedItem[];
     profiles?: Objects.UsersUserFull[];
@@ -1250,10 +1235,19 @@ export interface NewsfeedGetResponse {
 export type NewsfeedSaveListResponse = number;
 
 export interface NewsfeedSearchExtendedResponse {
+    /**
+     * Filtered number
+     */
+    count?: number;
+    /**
+     * Total number
+     */
+    total_count?: number;
     [key: string]: any;
     items?: Objects.WallWallpostFull[];
     profiles?: Objects.UsersUserFull[];
     groups?: Objects.GroupsGroupFull[];
+    next_from?: string;
 }
 
 export interface NewsfeedSearchResponse {
@@ -1307,6 +1301,8 @@ export interface NotificationsGetResponse {
 }
 
 export type NotificationsMarkAsViewedResponse = Objects.BaseBoolInt;
+
+export type NotificationsSendMessageResponse = Objects.NotificationsSendMessageItem[];
 
 export type OkResponse = Objects.BaseOkResponse;
 
@@ -1494,13 +1490,29 @@ export type PhotosSaveOwnerCoverPhotoResponse = Objects.BaseImage[];
 
 export interface PhotosSaveOwnerPhotoResponse {
     /**
-     * Parameter for saveProfilePhoto method
+     * Photo hash
      */
     photo_hash: string;
     /**
      * Uploaded image url
      */
     photo_src: string;
+    /**
+     * Uploaded image url
+     */
+    photo_src_big?: string;
+    /**
+     * Uploaded image url
+     */
+    photo_src_small?: string;
+    /**
+     * Returns 1 if profile photo is saved
+     */
+    saved?: number;
+    /**
+     * Created post ID
+     */
+    post_id?: number;
     [key: string]: any;
 }
 
@@ -1582,7 +1594,8 @@ export interface PrettyCardsGetResponse {
 
 export interface SearchGetHintsResponse {
     [key: string]: any;
-    items?: Objects.SearchHint[];
+    count: number;
+    items: Objects.SearchHint[];
     suggested_queries?: string[];
 }
 
@@ -1731,7 +1744,11 @@ export interface StoriesGetResponse {
      */
     count: number;
     [key: string]: any;
-    items: Objects.StoriesStory[][];
+    items: Objects.StoriesStory[];
+}
+
+export interface StoriesUploadResponse {
+    [key: string]: any;
 }
 
 export interface StreamingGetServerUrlResponse {
@@ -1773,7 +1790,7 @@ export interface UsersGetSubscriptionsExtendedResponse {
      */
     count: number;
     [key: string]: any;
-    items: any[];
+    items: Objects.UsersSubscriptionsItem[];
 }
 
 export interface UsersGetSubscriptionsResponse {
@@ -1862,6 +1879,8 @@ export interface VideoGetCommentsExtendedResponse {
     count: number;
     [key: string]: any;
     items: Objects.WallWallComment[];
+    profiles: Objects.UsersUserMin[];
+    groups: Objects.GroupsGroupFull[];
 }
 
 export interface VideoGetCommentsResponse {
@@ -1871,8 +1890,6 @@ export interface VideoGetCommentsResponse {
     count: number;
     [key: string]: any;
     items: Objects.WallWallComment[];
-    profiles: Objects.UsersUserMin[];
-    groups: Objects.GroupsGroupFull[];
 }
 
 export interface VideoGetExtendedResponse {
@@ -1927,6 +1944,14 @@ export interface WallCreateCommentResponse {
     [key: string]: any;
 }
 
+export interface WallEditResponse {
+    /**
+     * Edited post ID
+     */
+    post_id: number;
+    [key: string]: any;
+}
+
 export interface WallGetByIdExtendedResponse {
     [key: string]: any;
     items: Objects.WallWallpostFull[];
@@ -1941,6 +1966,10 @@ export interface WallGetCommentsExtendedResponse {
      * Total number
      */
     count: number;
+    /**
+     * Information whether current user can comment the post
+     */
+    can_post?: boolean;
     /**
      * Information whether groups can comment the post
      */
@@ -1961,6 +1990,10 @@ export interface WallGetCommentsResponse {
      * Total number
      */
     count: number;
+    /**
+     * Information whether current user can comment the post
+     */
+    can_post?: boolean;
     /**
      * Information whether groups can comment the post
      */

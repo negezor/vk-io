@@ -335,7 +335,7 @@ export interface AdsCreateTargetGroupParams {
      */
     name: string;
     /**
-     * 'For groups with auditory created with pixel code only.', , Number of days after that users will be automatically removed from the group. '0' — not to remove users.
+     * 'For groups with auditory created with pixel code only.', , Number of days after that users will be automatically removed from the group.
      */
     lifetime?: number;
     target_pixel_id?: number;
@@ -826,6 +826,12 @@ export interface AdsUpdateTargetGroupParams {
     lifetime?: number;
     target_pixel_id?: number;
     target_pixel_rules?: string;
+    [key: string]: any;
+}
+
+export interface AppWidgetsUpdateParams {
+    code: string;
+    type: "compact_list" | "cover_list" | "donation" | "list" | "match" | "matches" | "table" | "text" | "tiles";
     [key: string]: any;
 }
 
@@ -1531,11 +1537,8 @@ export interface DocsSearchParams {
     [key: string]: any;
 }
 
-export interface FaveAddGroupParams {
-    /**
-     * Community ID.
-     */
-    group_id: number;
+export interface FaveAddArticleParams {
+    url: string;
     [key: string]: any;
 }
 
@@ -1547,68 +1550,53 @@ export interface FaveAddLinkParams {
     [key: string]: any;
 }
 
-export interface FaveAddUserParams {
-    /**
-     * Profile ID.
-     */
-    user_id: number;
+export interface FaveAddPageParams {
+    user_id?: number;
+    group_id?: number;
     [key: string]: any;
 }
 
-export interface FaveGetLinksParams {
-    /**
-     * Offset needed to return a specific subset of users.
-     */
-    offset?: number;
-    /**
-     * Number of results to return.
-     */
-    count?: number;
+export interface FaveAddPostParams {
+    owner_id: number;
+    id: number;
+    access_key?: string;
     [key: string]: any;
 }
 
-export interface FaveGetMarketItemsParams {
-    /**
-     * Number of results to return.
-     */
-    count?: number;
-    /**
-     * '1' – to return additional fields 'likes, can_comment, can_repost, photos'. By default: '0'.
-     */
-    extended?: boolean;
-    offset?: number;
+export interface FaveAddProductParams {
+    owner_id: number;
+    id: number;
+    access_key?: string;
     [key: string]: any;
 }
 
-export interface FaveGetPhotosParams {
-    /**
-     * Offset needed to return a specific subset of photos.
-     */
-    offset?: number;
-    /**
-     * Number of photos to return.
-     */
-    count?: number;
+export interface FaveAddTagParams {
+    name?: string;
     [key: string]: any;
 }
 
-export interface FaveGetPostsParams {
-    /**
-     * Offset needed to return a specific subset of posts.
-     */
-    offset?: number;
-    /**
-     * Number of posts to return.
-     */
-    count?: number;
+export interface FaveAddVideoParams {
+    owner_id: number;
+    id: number;
+    access_key?: string;
+    [key: string]: any;
+}
+
+export interface FaveEditTagParams {
+    id: number;
+    name: string;
+    [key: string]: any;
+}
+
+export interface FaveGetParams {
     /**
      * '1' — to return additional 'wall', 'profiles', and 'groups' fields. By default: '0'.
      */
     extended?: boolean;
-    [key: string]: any;
-}
-
-export interface FaveGetUsersParams {
+    /**
+     * Tag ID.
+     */
+    tag_id?: number;
     /**
      * Offset needed to return a specific subset of users.
      */
@@ -1617,30 +1605,32 @@ export interface FaveGetUsersParams {
      * Number of users to return.
      */
     count?: number;
+    item_type?: "article" | "link" | "narrative" | "page" | "podcast" | "post" | "product" | "video";
+    fields?: string;
+    is_from_snackbar?: boolean;
     [key: string]: any;
 }
 
-export interface FaveGetVideosParams {
-    /**
-     * Offset needed to return a specific subset of videos.
-     */
+export interface FaveGetPagesParams {
     offset?: number;
-    /**
-     * Number of videos to return.
-     */
     count?: number;
-    /**
-     * Return an additional information about videos. Also returns all owners profiles and groups.
-     */
-    extended?: boolean;
+    type?: "groups" | "hints" | "users";
+    fields?: Objects.BaseUserGroupFields[];
+    tag_id?: number;
     [key: string]: any;
 }
 
-export interface FaveRemoveGroupParams {
-    /**
-     * Community ID.
-     */
-    group_id: number;
+export interface FaveGetTagsParams {
+    [key: string]: any;
+}
+
+export interface FaveMarkSeenParams {
+    [key: string]: any;
+}
+
+export interface FaveRemoveArticleParams {
+    owner_id: number;
+    article_id: number;
     [key: string]: any;
 }
 
@@ -1649,14 +1639,61 @@ export interface FaveRemoveLinkParams {
      * Link ID (can be obtained by [vk.com/dev/faves.getLinks|faves.getLinks] method).
      */
     link_id?: string;
+    /**
+     * Link URL
+     */
+    link?: string;
     [key: string]: any;
 }
 
-export interface FaveRemoveUserParams {
-    /**
-     * Profile ID.
-     */
-    user_id: number;
+export interface FaveRemovePageParams {
+    user_id?: number;
+    group_id?: number;
+    [key: string]: any;
+}
+
+export interface FaveRemovePostParams {
+    owner_id: number;
+    id: number;
+    [key: string]: any;
+}
+
+export interface FaveRemoveProductParams {
+    owner_id: number;
+    id: number;
+    [key: string]: any;
+}
+
+export interface FaveRemoveTagParams {
+    id: number;
+    [key: string]: any;
+}
+
+export interface FaveReorderTagsParams {
+    ids?: number[] | number;
+    [key: string]: any;
+}
+
+export interface FaveSetPageTagsParams {
+    user_id?: number;
+    group_id?: number;
+    tag_ids?: number[] | number;
+    [key: string]: any;
+}
+
+export interface FaveSetTagsParams {
+    item_type?: "article" | "link" | "narrative" | "page" | "podcast" | "post" | "product" | "video";
+    item_owner_id?: number;
+    item_id?: number;
+    tag_ids?: number[] | number;
+    link_id?: string;
+    link_url?: string;
+    [key: string]: any;
+}
+
+export interface FaveTrackPageInteractionParams {
+    user_id?: number;
+    group_id?: number;
     [key: string]: any;
 }
 
@@ -1764,6 +1801,7 @@ export interface FriendsGetParams {
      */
     name_case?: "nom" | "gen" | "dat" | "acc" | "ins" | "abl";
     fields?: Objects.UsersFields[];
+    ref?: string;
     [key: string]: any;
 }
 
@@ -1880,6 +1918,8 @@ export interface FriendsGetRequestsParams {
      */
     suggested?: boolean;
     need_viewed?: boolean;
+    ref?: string;
+    fields?: Objects.UsersFields[];
     [key: string]: any;
 }
 
@@ -2458,7 +2498,7 @@ export interface GroupsGetMembersParams {
     /**
      * *'friends' – only friends in this community will be returned,, *'unsure' – only those who pressed 'I may attend' will be returned (if it's an event).
      */
-    filter?: "friends" | "unsure" | "managers";
+    filter?: "friends" | "unsure";
     fields?: Objects.UsersFields[];
     [key: string]: any;
 }
@@ -2759,6 +2799,7 @@ export interface GroupsSetCallbackSettingsParams {
      */
     lead_forms_new?: boolean;
     api_version?: string;
+    message_edit?: boolean;
     message_typing_state?: boolean;
     group_change_settings?: boolean;
     group_change_photo?: boolean;
@@ -3144,7 +3185,7 @@ export interface MarketAddParams {
     /**
      * Item price.
      */
-    price: number;
+    price?: number;
     /**
      * Item status ('1' — deleted, '0' — not deleted).
      */
@@ -3157,6 +3198,7 @@ export interface MarketAddParams {
      * Url for button in market item.
      */
     url?: string;
+    old_price?: number;
     photo_ids?: number[] | number;
     [key: string]: any;
 }
@@ -3665,14 +3707,6 @@ export interface MessagesDeleteConversationParams {
      */
     peer_id?: number;
     /**
-     * Offset needed to delete a specific subset of conversations.
-     */
-    offset?: number;
-    /**
-     * Number of conversations to delete. "NOTE: If the number of messages exceeds the maximum, the method shall be called several times."
-     */
-    count?: number;
-    /**
      * Group ID (for group messages with user access token)
      */
     group_id?: number;
@@ -3808,7 +3842,7 @@ export interface MessagesGetConversationsParams {
     /**
      * Filter to apply: 'all' — all conversations, 'unread' — conversations with unread messages, 'important' — conversations, marked as important (only for community messages), 'unanswered' — conversations, marked as unanswered (only for community messages)
      */
-    filter?: "all" | "important" | "message_request" | "unanswered" | "unread";
+    filter?: "all" | "business_notify" | "important" | "message_request" | "unanswered" | "unread";
     /**
      * '1' — return extra information about users and communities
      */
@@ -4058,6 +4092,7 @@ export interface MessagesMarkAsReadParams {
      * Group ID (for group messages with user access token)
      */
     group_id?: number;
+    message_ids?: number[] | number;
     [key: string]: any;
 }
 
@@ -4188,10 +4223,6 @@ export interface MessagesSendParams {
      */
     attachment?: string;
     /**
-     * ID of forwarded messages, separated with a comma. Listed messages of the sender will be shown in the message body at the recipient's. Example: "123,431,544"
-     */
-    forward_messages?: string;
-    /**
      * Sticker id.
      */
     sticker_id?: number;
@@ -4201,7 +4232,9 @@ export interface MessagesSendParams {
     group_id?: number;
     user_ids?: number[] | number;
     reply_to?: number;
-    keyboard?: Objects.MessagesKeyboard;
+    forward_messages?: number[] | number;
+    forward?: string;
+    keyboard?: any;
     payload?: string;
     dont_parse_links?: boolean;
     disable_mentions?: boolean;
@@ -4668,6 +4701,14 @@ export interface NotificationsGetParams {
 }
 
 export interface NotificationsMarkAsViewedParams {
+    [key: string]: any;
+}
+
+export interface NotificationsSendMessageParams {
+    user_ids?: number[] | number;
+    message: string;
+    fragment?: string;
+    group_id?: number;
     [key: string]: any;
 }
 
@@ -6306,10 +6347,6 @@ export interface StoriesHideReplyParams {
      * Story ID.
      */
     story_id: number;
-    /**
-     * Access key for the private object.
-     */
-    access_key?: string;
     [key: string]: any;
 }
 
@@ -6390,9 +6427,9 @@ export interface UsersReportParams {
      */
     user_id: number;
     /**
-     * Type of complaint: 'porn' – pornography, 'spam' – spamming, 'insult' – abusive behavior, 'advertisment' – disruptive advertisements
+     * Type of complaint: 'porn' – pornography, 'spam' – spamming, 'insult' – abusive behavior, 'advertisement' – disruptive advertisements
      */
-    type: "porn" | "spam" | "insult" | "advertisment";
+    type: "porn" | "spam" | "insult" | "advertisement";
     /**
      * Comment describing the complaint.
      */
