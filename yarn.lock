@@ -2837,10 +2837,10 @@ micromatch@^3.1.10, micromatch@^3.1.4:
     snapdragon "^0.8.1"
     to-regex "^3.0.2"
 
-middleware-io@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/middleware-io/-/middleware-io-2.0.0.tgz#659a23aac85851ab28bc4092470b56b09e559d58"
-  integrity sha512-ad95yHgZM+2rhUG8ICo0cKYnEH5ycYe1Yge5XONv4BN+YpqIYoz2PSAtVMV/cTdtjLz16YtLyyHh1aNfyZb57w==
+middleware-io@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/middleware-io/-/middleware-io-2.1.0.tgz#ff399e92d1dbf94fcedd659773d45489f3a7519f"
+  integrity sha512-zIZuD893z8OuNjQjvx2209PYrXpP8VjiDKzj20o1VLa5e8khyxMbLTLBxmT3oFeiDryflzqJNTRQq+5GevhYug==
 
 mime-db@1.40.0:
   version "1.40.0"
