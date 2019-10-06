@@ -14,6 +14,7 @@ const kCopyHistoryAttachments = Symbol('copyHistoryAttachments');
 export interface IWallAttachmentPayload {
 	id: number;
 	to_id: number;
+	owner_id: number;
 	access_key: string;
 
 	from_id?: number;
@@ -71,7 +72,7 @@ export default class WallAttachment extends Attachment {
 	 * Constructor
 	 */
 	public constructor(payload: IWallAttachmentPayload, vk: VK) {
-		super(WALL, payload.to_id, payload.id, payload.access_key);
+		super(WALL, payload.owner_id || payload.to_id, payload.id, payload.access_key);
 
 		this.vk = vk;
 		this.payload = payload;
