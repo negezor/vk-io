@@ -124,6 +124,12 @@ export interface IStoryObject {
 	access_key: string;
 }
 
+const DocumentTypes = {
+	doc: DocumentAttachment,
+	graffiti: GraffitiAttachment,
+	audio_message: AudioMessageAttachment
+};
+
 export default class Upload {
 	private vk: VK;
 
@@ -543,7 +549,7 @@ export default class Upload {
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	async conductDocument(params: IUploadParams & { type?: string }, { attachmentType = 'doc' } = {}): Promise<any> {
-		return this.conduct({
+		const response = await this.conduct({
 			field: 'file',
 			params,
 
@@ -558,12 +564,16 @@ export default class Upload {
 			maxFiles: 1,
 			attachmentType
 		});
+
+		const ConductAttachment = DocumentTypes[response.type] || DocumentTypes.doc;
+
+		return new ConductAttachment(response[response.type], this.vk);
 	}
 
 	/**
 	 * Uploads document
 	 */
-	async document(
+	document(
 		params: IUploadParams & {
 			group_id?: number;
 
@@ -571,11 +581,9 @@ export default class Upload {
 			tags?: string;
 		}
 	): Promise<DocumentAttachment> {
-		const { doc: document } = await this.conductDocument(params, {
+		return this.conductDocument(params, {
 			attachmentType: 'doc'
 		});
-
-		return new DocumentAttachment(document, this.vk);
 	}
 
 	/**
@@ -583,7 +591,7 @@ export default class Upload {
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	async conductWallDocument(params: IUploadParams & { type?: string }, { attachmentType = 'doc' } = {}): Promise<any> {
-		return this.conduct({
+		const response = await this.conduct({
 			field: 'file',
 			params,
 
@@ -598,12 +606,16 @@ export default class Upload {
 			maxFiles: 1,
 			attachmentType
 		});
+
+		const ConductAttachment = DocumentTypes[response.type] || DocumentTypes.doc;
+
+		return new ConductAttachment(response[response.type], this.vk);
 	}
 
 	/**
 	 * Uploads wall document
 	 */
-	async wallDocument(
+	wallDocument(
 		params: IUploadParams & {
 			group_id?: number;
 			// type?: string;
@@ -612,11 +624,9 @@ export default class Upload {
 			tags?: string;
 		}
 	): Promise<DocumentAttachment> {
-		const { doc: document } = await this.conductWallDocument(params, {
+		return this.conductWallDocument(params, {
 			attachmentType: 'doc'
 		});
-
-		return new DocumentAttachment(document, this.vk);
 	}
 
 	/**
@@ -624,7 +634,7 @@ export default class Upload {
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	async conductMessageDocument(params: IUploadParams & { type?: string }, { attachmentType = 'doc' } = {}): Promise<any> {
-		return this.conduct({
+		const response = await this.conduct({
 			field: 'file',
 			params,
 
@@ -639,12 +649,16 @@ export default class Upload {
 			maxFiles: 1,
 			attachmentType
 		});
+
+		const ConductAttachment = DocumentTypes[response.type] || DocumentTypes.doc;
+
+		return new ConductAttachment(response[response.type], this.vk);
 	}
 
 	/**
 	 * Uploads message document
 	 */
-	async messageDocument(
+	messageDocument(
 		params: IUploadParams & {
 			peer_id?: number;
 
@@ -652,17 +666,21 @@ export default class Upload {
 			tags?: string;
 		}
 	): Promise<DocumentAttachment> {
-		const { doc: document } = await this.conductMessageDocument(params, {
-			attachmentType: 'doc'
-		});
-
-		return new DocumentAttachment(document, this.vk);
+		return this.conductMessageDocument(
+			{
+				...params,
+				type: 'doc'
+			},
+			{
+				attachmentType: 'doc'
+			}
+		);
 	}
 
 	/**
 	 * Uploads audio message
 	 */
-	async audioMessage(
+	audioMessage(
 		params: IUploadParams & {
 			peer_id?: number;
 
@@ -670,7 +688,7 @@ export default class Upload {
 			tags?: string;
 		}
 	): Promise<AudioMessageAttachment> {
-		const { audio_message: audioMessage } = await this.conductMessageDocument(
+		return this.conductMessageDocument(
 			{
 				...params,
 				type: 'audio_message'
@@ -679,10 +697,6 @@ export default class Upload {
 				attachmentType: 'audioMessage'
 			}
 		);
-
-		const audioMessageAttachment = new AudioMessageAttachment(audioMessage, this.vk);
-
-		return audioMessageAttachment;
 
 		// { type: 'audio_message',
 		// audio_message: {
@@ -700,12 +714,12 @@ export default class Upload {
 	/**
 	 * Uploads graffiti in documents
 	 */
-	async documentGraffiti(
+	documentGraffiti(
 		params: IUploadParams & {
 			group_id?: number;
 		}
 	): Promise<GraffitiAttachment> {
-		const { graffiti } = await this.conductDocument(
+		return this.conductDocument(
 			{
 				...params,
 				type: 'graffiti'
@@ -714,21 +728,17 @@ export default class Upload {
 				attachmentType: 'graffiti'
 			}
 		);
-
-		const graffitiAttachment = new GraffitiAttachment(graffiti, this.vk);
-
-		return graffitiAttachment;
 	}
 
 	/**
 	 * Uploads graffiti in messages
 	 */
-	async messageGraffiti(
+	messageGraffiti(
 		params: IUploadParams & {
 			peer_id?: number;
 		}
 	): Promise<GraffitiAttachment> {
-		const { graffiti } = await this.conductMessageDocument(
+		return this.conductMessageDocument(
 			{
 				...params,
 				type: 'graffiti'
@@ -737,10 +747,6 @@ export default class Upload {
 				attachmentType: 'graffiti'
 			}
 		);
-
-		const graffitiAttachment = new GraffitiAttachment(graffiti, this.vk);
-
-		return graffitiAttachment;
 	}
 
 	/**
