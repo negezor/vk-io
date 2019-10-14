@@ -8,7 +8,12 @@ import transformMessage from '../../updates/transform-message';
 import MessageForwardsCollection from '../shared/message-forwards-collection';
 
 import { transformAttachments } from '../attachments/helpers';
-import { unescapeHTML, copyParams, getPeerType } from '../../utils/helpers';
+import {
+	unescapeHTML,
+	copyParams,
+	getPeerType,
+	showDeprecatedMessage
+} from '../../utils/helpers';
 import {
 	updatesSources,
 	messageSources,
@@ -519,9 +524,9 @@ export default class MessageContext<S = Record<string, any>>
 	}
 
 	/**
-	 * Sends a photo to the current dialog
+	 * Sends a photos to the current dialog
 	 */
-	async sendPhoto(rawSources, params: object = {}): Promise<number> {
+	async sendPhotos(rawSources, params: object = {}): Promise<number> {
 		const sources = !Array.isArray(rawSources)
 			? [rawSources]
 			: rawSources;
@@ -542,9 +547,18 @@ export default class MessageContext<S = Record<string, any>>
 	}
 
 	/**
-	 * Sends a document to the current dialog
+	 * @deprecated
 	 */
-	async sendDocument(rawSources, params: object = {}): Promise<number> {
+	async sendPhoto(rawSources, params: object = {}): Promise<number> {
+		showDeprecatedMessage('MessageContext, use sendPhotos instead of sendPhoto');
+
+		return this.sendPhotos(rawSources, params);
+	}
+
+	/**
+	 * Sends a documents to the current dialog
+	 */
+	async sendDocuments(rawSources, params: object = {}): Promise<number> {
 		const sources = !Array.isArray(rawSources)
 			? [rawSources]
 			: rawSources;
@@ -564,6 +578,15 @@ export default class MessageContext<S = Record<string, any>>
 		});
 
 		return response;
+	}
+
+	/**
+	 * @deprecated
+	 */
+	async sendDocument(rawSources, params: object = {}): Promise<number> {
+		showDeprecatedMessage('MessageContext, use sendDocuments instead of sendDocument');
+
+		return this.sendDocuments(rawSources, params);
 	}
 
 	/**
