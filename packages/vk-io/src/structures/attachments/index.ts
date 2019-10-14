@@ -8,6 +8,7 @@ export { default as WallAttachment } from './wall';
 export { default as LinkAttachment } from './link';
 export { default as PhotoAttachment } from './photo';
 export { default as AudioAttachment } from './audio';
+export { default as StoryAttachment } from './story';
 export { default as VideoAttachment } from './video';
 export { default as MarketAttachment } from './market';
 export { default as StickerAttachment } from './sticker';

@@ -1905,6 +1905,131 @@ export class VideoAttachment extends Attachment {
 	private checkBooleanInProperty(name: string): number | null;
 }
 
+export interface IStoryAttachmentPayload {
+    id: number;
+    owner_id: number;
+    access_key: string;
+    type?: 'photo' | 'video';
+    photo?: Record<string, any>;
+    video?: Record<string, any>;
+    date?: number;
+    expires_at?: number;
+    views?: number;
+    link?: {
+        text: string;
+        url: string;
+    };
+    replies?: {
+        count: number;
+        new: number;
+    };
+    parent_story_owner_id?: number;
+    parent_story_id?: number;
+    parent_story?: IStoryAttachmentPayload;
+    clickable_stickers: {
+        original_width: number;
+        original_height: number;
+        style: string;
+        mention?: string;
+        hashtag?: string;
+        clickable_stickers: {
+            type: 'mention' | 'hashtag';
+            clickable_area: {
+                x: number;
+                y: number;
+            }[];
+        }[];
+    };
+    is_expired?: boolean;
+    is_deleted?: boolean;
+    can_reply?: number;
+    can_share?: number;
+    can_comment?: number;
+}
+
+export class StoryAttachment extends Attachment {
+    protected vk: VK;
+
+	/**
+	 * Constructor
+	 */
+	public constructor(payload: object, vk?: VK);
+
+    /**
+     * Load attachment payload
+     */
+    loadAttachmentPayload(): Promise<void>;
+    /**
+     * Checks is story expired
+     */
+    readonly isExpired: boolean | undefined;
+    /**
+     * Checks is story deleted
+     */
+    readonly isDeleted: boolean | undefined;
+    /**
+     * Checks can story reply
+     */
+    readonly isCanReply: boolean | undefined;
+    /**
+     * Checks can story share
+     */
+    readonly isCanShare: boolean | undefined;
+    /**
+     * Checks can story comment
+     */
+    readonly isCanComment: boolean | undefined;
+    /**
+     * Returns the type of story
+     */
+    readonly type: IStoryAttachmentPayload['type'] | undefined;
+    /**
+     * Returns the story photo
+     */
+    readonly photo: PhotoAttachment | undefined;
+    /**
+     * Returns the story video
+     */
+    readonly video: PhotoAttachment | undefined;
+    /**
+     * Returns the date when this story was created
+     */
+    readonly createdAt: number | undefined;
+    /**
+     * Returns the date when this story was expires
+     */
+    readonly expiresAt: number | undefined;
+    /**
+     * Returns the story views count
+     */
+    readonly viewsCount: number | undefined;
+    /**
+     * Returns the story link
+     */
+    readonly link: IStoryAttachmentPayload['link'] | undefined;
+    /**
+     * Returns the story replies
+     */
+    readonly replies: IStoryAttachmentPayload['replies'] | undefined;
+    /**
+     * Returns the parent story id
+     */
+    readonly parentStoryId: number | undefined;
+    /**
+     * Returns the parent story owner id
+     */
+    readonly parentStoryOwnerId: number | undefined;
+    /**
+     * Returns the parent story
+     */
+    readonly parentStory: StoryAttachment | undefined;
+    /**
+     * Returns the parent story clickable stickers
+     */
+    readonly clickableStickers: IStoryAttachmentPayload['clickable_stickers'] | undefined;
+}
+
+
 export class WallReplyAttachment extends Attachment {
 	/**
 	 * Constructor

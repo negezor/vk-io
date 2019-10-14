@@ -4,6 +4,7 @@ import {
 	WallAttachment,
 	PhotoAttachment,
 	AudioAttachment,
+	StoryAttachment,
 	VideoAttachment,
 	MarketAttachment,
 	DocumentAttachment,
@@ -105,6 +106,15 @@ describe('Attachments', (): void => {
 			});
 
 			expect(String(attachment)).toBe('audio1234_4567');
+		});
+
+		it('story', (): void => {
+			const attachment = new StoryAttachment({
+				id: 4567,
+				owner_id: 1234
+			});
+
+			expect(String(attachment)).toBe('story1234_4567');
 		});
 
 		it('video', (): void => {
