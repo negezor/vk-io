@@ -103,7 +103,10 @@ const jsonSchemaTypes = {
 		description: type.description && formatTSComments(
 			type.description
 		),
-		type: TypesGenerator.boolean,
+		type: TypesGenerator.union([
+			TypesGenerator.boolean,
+			TypesGenerator.number
+		]),
 		required: typeof type.required === 'boolean'
 			? type.required
 			: false
