@@ -3027,7 +3027,7 @@ export class MessageContext extends Context {
 	 * Sends a photo to the current dialog
 	 */
 
-	public sendPhoto(
+	public sendPhotos(
 		sources: UploadSource[] | UploadSource,
 		params?: Params.MessagesSendParams
 	): Promise<number>;
@@ -3036,7 +3036,7 @@ export class MessageContext extends Context {
 	 * Sends a document to the current dialog
 	 */
 
-	public sendDocument(
+	public sendDocuments(
 		sources: UploadSource[] | UploadSource,
 		params?: Params.MessagesSendParams
 	): Promise<number>;

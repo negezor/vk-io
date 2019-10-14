@@ -396,12 +396,12 @@ context.sendSticker(id); // => Promise<number>
 |----------|--------|-----------------------|
 | id       | number | Идентификатор стикера |
 
-## sendPhoto
+## sendPhotos
 
 Отправляет фото в текущий диалог
 
 ```js
-context.sendPhoto(source [, params]); // => Promise<number>
+context.sendPhotos(source [, params]); // => Promise<number>
 ```
 
 | Параметр | Тип    | Описание                                                               |
@@ -410,12 +410,12 @@ context.sendPhoto(source [, params]); // => Promise<number>
 | params   | Object | [Дополнительные параметры сообщения](https://vk.com/dev/messages.send) |
 
 
-## sendDocument
+## sendDocuments
 
 Отправляет документ в текущий диалог
 
 ```js
-context.sendDocument(source [, params]); // => Promise<number>
+context.sendDocuments(source [, params]); // => Promise<number>
 ```
 
 | Параметр | Тип    | Описание                                                               |

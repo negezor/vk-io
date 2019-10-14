@@ -94,7 +94,7 @@ hearCommand('cat', async (context) => {
 	await Promise.all([
 		context.send('Wait for the uploads awesome 😻'),
 
-		context.sendPhoto('https://loremflickr.com/400/300/')
+		context.sendPhotos('https://loremflickr.com/400/300/')
 	]);
 });
 
