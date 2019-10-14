@@ -57,6 +57,8 @@ export interface IStoryAttachmentPayload {
 	is_expired?: boolean;
 	is_deleted?: boolean;
 
+	seen?: number;
+
 	can_reply?: number;
 	can_share?: number;
 	can_comment?: number;
@@ -119,6 +121,17 @@ export default class StoryAttachment extends Attachment {
 	 */
 	public get isDeleted(): boolean | undefined {
 		return this.payload.is_deleted;
+	}
+
+	/**
+	 * Checks is story viewed by current user
+	 */
+	public get isSeen(): boolean | undefined {
+		if (!this.$filled) {
+			return undefined;
+		}
+
+		return this.payload.seen === 1;
 	}
 
 	/**
@@ -282,6 +295,7 @@ export default class StoryAttachment extends Attachment {
 		return copyParams(this, [
 			'isExpired',
 			'isDeleted',
+			'isSeen',
 			'isCanReply',
 			'isCanShare',
 			'isCanComment',
