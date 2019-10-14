@@ -12,6 +12,7 @@ export * from './api/schemas/responses';
 
 export {
 	CaptchaType,
+	UpdateSource,
 	ResourceType,
 	MessageSource,
 	AttachmentType,
@@ -19,7 +20,7 @@ export {
 	captchaTypes,
 	resourceTypes,
 	messageSources,
-	attachmentTypes
+	attachmentTypes,
 } from './utils/constants';
 
 export { VK, Request };

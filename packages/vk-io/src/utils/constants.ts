@@ -151,6 +151,16 @@ export enum ResourceType {
 export const resourceTypes = ResourceType;
 
 /**
+ * Updates sources
+ */
+export enum UpdateSource {
+	POLLING = 'POLLING',
+	WEBHOOK = 'WEBHOOK'
+}
+
+export const updatesSources = UpdateSource;
+
+/**
  * API error codes
  */
 export enum APIErrorCode {
@@ -273,16 +283,6 @@ export enum SharedErrorCode {
 }
 
 export const sharedErrors = SharedErrorCode;
-
-/**
- * Updates sources
- */
-export enum UpdateSource {
-	POLLING = 'POLLING',
-	WEBHOOK = 'WEBHOOK'
-}
-
-export const updatesSources = UpdateSource;
 
 /**
  * List of user permissions and their bit mask
