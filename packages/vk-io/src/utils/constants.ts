@@ -44,7 +44,7 @@ export const defaultOptions: IVKOptions = {
 	apiMode: 'sequential',
 	apiWait: 3e3,
 	apiLimit: 3,
-	apiVersion: '5.101',
+	apiVersion: '5.102',
 	apiBaseUrl: 'https://api.vk.com/method',
 	apiAttempts: 3,
 	apiTimeout: 10e3,
@@ -83,7 +83,8 @@ export enum attachmentTypes {
 	VIDEO = 'video',
 	WALL_REPLY = 'wall_reply',
 	WALL = 'wall',
-	POLL = 'poll'
+	POLL = 'poll',
+	STORY = 'story'
 }
 
 /**
