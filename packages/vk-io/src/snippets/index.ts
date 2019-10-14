@@ -25,7 +25,7 @@ export default class Snippets {
 	/**
 	 * Defines the type of object (user, community, application, attachment)
 	 */
-	public resolveResource(resource: string): Promise<IResolvedResource> {
+	public resolveResource(resource: string | number): Promise<IResolvedResource> {
 		return this.resourceResolver.resolve(resource);
 	}
 }
