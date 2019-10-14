@@ -80,7 +80,7 @@ interface IImplicitFlowOptions {
 	password: string;
 
 	agent: Agent;
-	scope: string | number;
+	scope: string | number | string[];
 	timeout: number;
 
 	apiVersion: string;

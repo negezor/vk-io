@@ -54,7 +54,7 @@ export default class ImplicitFlowGroups extends ImplicitFlow {
 		let { scope } = this.options;
 
 		if (scope === 'all' || scope === null) {
-			scope = getAllGroupsPermissions();
+			throw new Error('Required option authScope not set');
 		} else if (typeof scope !== 'number') {
 			scope = getGroupsPermissionsByName(scope);
 		}

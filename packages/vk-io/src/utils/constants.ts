@@ -38,7 +38,7 @@ export const defaultOptions: IVKOptions = {
 	phone: null,
 	password: null,
 
-	authScope: 'all',
+	authScope: null,
 	authTimeout: 10e3,
 
 	apiMode: 'sequential',

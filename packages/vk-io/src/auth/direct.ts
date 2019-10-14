@@ -59,7 +59,7 @@ interface IDirectAuthOptions {
 	password: string;
 
 	agent: Agent;
-	scope: string | number;
+	scope: string | number | string[];
 	timeout: number;
 
 	apiVersion: string;
@@ -168,7 +168,7 @@ export default class DirectAuth {
 		let { scope } = this.options;
 
 		if (scope === 'all' || scope === null) {
-			scope = getAllUsersPermissions();
+			throw new Error('Required option authScope not set');
 		} else if (typeof scope !== 'number') {
 			scope = getUsersPermissionsByName(scope);
 		}

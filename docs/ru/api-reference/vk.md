@@ -64,7 +64,7 @@ vk.setOptions(options); // => this
 | login       | string | Логин (email)             | null         |
 | phone       | string | Телефон                   | null         |
 | password    | string | Пароль                    | null         |
-| authScope   | string | Доступ приложения         | all          |
+| authScope   | string | Доступ приложения         | null         |
 | authTimeout | number | Время ожидания запроса    | 10000        |
 
 ### Опции запросов к API

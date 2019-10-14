@@ -24,7 +24,7 @@ export default class ImplicitFlowUser extends ImplicitFlow {
 		let { scope } = this.options;
 
 		if (scope === 'all' || scope === null) {
-			scope = getAllUsersPermissions();
+			throw new Error('Required option authScope not set');
 		} else if (typeof scope !== 'number') {
 			scope = getUsersPermissionsByName(scope);
 		}
