@@ -298,6 +298,20 @@ export default class MessageContext<S = Record<string, any>>
 	}
 
 	/**
+	 * Returns the referral value
+	 */
+	public get referralValue(): string | undefined {
+		return this.payload.ref;
+	}
+
+	/**
+	 * Returns the referral source
+	 */
+	public get referralSource(): string | undefined {
+		return this.payload.ref_source;
+	}
+
+	/**
 	 * Returns the date when this message was created
 	 */
 	public get createdAt(): number {
