@@ -20,4 +20,8 @@ export default class MemoryStorage implements ISessionStorage {
 	public async delete(key: string): Promise<boolean> {
 		return this.store.delete(key);
 	}
+
+	public async touch(key: string) {
+		// ...
+	}
 }
