@@ -45,7 +45,7 @@ export default class CollectStream extends Readable {
 	/**
 	 * Constructor
 	 */
-	constructor(vk: VK, {
+	public constructor(vk: VK, {
 		options,
 		method,
 		limit,
@@ -105,14 +105,14 @@ export default class CollectStream extends Readable {
 	/**
 	 * Returns custom tag
 	 */
-	get [Symbol.toStringTag](): string {
+	public get [Symbol.toStringTag](): string {
 		return this.constructor.name;
 	}
 
 	/**
 	 * Promise based
 	 */
-	then(thenFn, catchFn?): Promise<{
+	public then(thenFn, catchFn?): Promise<{
 		items: object[];
 		profiles: object[];
 		groups: object[];
@@ -145,7 +145,7 @@ export default class CollectStream extends Readable {
 	 * Fetch data
 	 */
 	// eslint-disable-next-line no-underscore-dangle
-	async _read(): Promise<void> {
+	public async _read(): Promise<void> {
 		const isNotFirst = this.total !== null && this.received !== 0;
 
 		if (isNotFirst && (this.total - this.skipOffset) <= this.received) {

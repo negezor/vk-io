@@ -16,14 +16,14 @@ export default class Chain {
 	/**
 	 * Constructor
 	 */
-	constructor(vk: VK) {
+	public constructor(vk: VK) {
 		this.vk = vk;
 	}
 
 	/**
 	 * Returns custom tag
 	 */
-	get [Symbol.toStringTag](): string {
+	public get [Symbol.toStringTag](): string {
 		return this.constructor.name;
 	}
 
@@ -31,7 +31,7 @@ export default class Chain {
 	 * Adds method to queue
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	append(method: string, params: object): Promise<any> {
+	public append(method: string, params: object): Promise<any> {
 		if (this.started) {
 			return Promise.reject(new VKError({
 				message: 'Chain already started',
@@ -50,7 +50,7 @@ export default class Chain {
 	 * Promise based
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	then(thenFn, catchFn): Promise<any[]> {
+	public then(thenFn, catchFn): Promise<any[]> {
 		return Promise.resolve(this.run()).then(thenFn, catchFn);
 	}
 
@@ -58,7 +58,7 @@ export default class Chain {
 	 * Starts the chain
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	async run(): Promise<{ response: any[]; errors: any[] }> {
+	public async run(): Promise<{ response: any[]; errors: any[] }> {
 		if (this.started) {
 			throw new VKError({
 				message: 'Chain already started',

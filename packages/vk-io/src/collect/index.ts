@@ -13,7 +13,7 @@ export default class Collect {
 	/**
 	 * constructor
 	 */
-	constructor(vk: VK) {
+	public constructor(vk: VK) {
 		this.vk = vk;
 
 		for (const [method, limit, max] of LIMITS_METHODS) {
@@ -37,14 +37,14 @@ export default class Collect {
 	/**
 	 * Returns custom tag
 	 */
-	get [Symbol.toStringTag](): string {
+	public get [Symbol.toStringTag](): string {
 		return this.constructor.name;
 	}
 
 	/**
 	 * Returns new Chain instance
 	 */
-	chain(): Chain {
+	public chain(): Chain {
 		return new Chain(this.vk);
 	}
 
@@ -52,7 +52,7 @@ export default class Collect {
 	 * Call multiple executors
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	async executes(method: string, queue: Record<string, any>[]): Promise<{
+	public async executes(method: string, queue: Record<string, any>[]): Promise<{
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		response: any[];
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
