@@ -245,8 +245,6 @@ export default class PollAttachment extends Attachment {
 
 	/**
 	 * Returns the custom data
-	 *
-	 * @type {Object}
 	 */
 	public [inspectCustomData](): object {
 		return copyParams(this, [

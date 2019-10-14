@@ -79,8 +79,6 @@ export default class GraffitiAttachment extends Attachment {
 
 	/**
 	 * Returns the custom data
-	 *
-	 * @type {Object}
 	 */
 	public [inspectCustomData](): object {
 		return copyParams(this, [

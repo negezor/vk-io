@@ -31,22 +31,16 @@ const {
 
 /**
  * Number of two-factorial attempts
- *
- * @type {number}
  */
 const TWO_FACTOR_ATTEMPTS = 3;
 
 /**
  * Number of captcha attempts
- *
- * @type {number}
  */
 const CAPTCHA_ATTEMPTS = 3;
 
 /**
  * Phone number check action
- *
- * @type {string}
  */
 const ACTION_SECURITY_CODE = 'act=security';
 

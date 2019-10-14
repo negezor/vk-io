@@ -28,8 +28,6 @@ const systemMentionRe = /\[([^|]+)|([^|\]]+)\]/;
 
 /**
  * Switch resource types
- *
- * @type {Object}
  */
 const enumResourceTypes = {
 	id: resourceTypes.USER,
@@ -40,8 +38,6 @@ const enumResourceTypes = {
 
 /**
  * Remove search param
- *
- * @type {RegExp}
  */
 const removeSearchParam = /(\?|&)[^=]+=/;
 

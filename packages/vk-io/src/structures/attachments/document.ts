@@ -9,8 +9,6 @@ const { DOCUMENT } = attachmentTypes;
 
 /**
  * Types of documents
- *
- * @type {Map}
  */
 const documentTypes = new Map([
 	[1, 'text'],
@@ -254,8 +252,6 @@ export default class DocumentAttachment extends Attachment {
 
 	/**
 	 * Returns the custom data
-	 *
-	 * @type {Object}
 	 */
 	public [inspectCustomData](): object | null {
 		return copyParams(this, [

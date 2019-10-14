@@ -178,8 +178,6 @@ export default class PhotoAttachment extends Attachment {
 
 	/**
 	 * Returns the custom data
-	 *
-	 * @type {Object}
 	 */
 	public [inspectCustomData](): object | null {
 		return copyParams(this, [

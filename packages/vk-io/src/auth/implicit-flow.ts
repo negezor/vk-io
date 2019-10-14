@@ -24,50 +24,36 @@ const {
 
 /**
  * Blocked action
- *
- * @type {string}
  */
 const ACTION_BLOCKED = 'act=blocked';
 
 /**
  * Two-factor auth check action
- *
- * @type {string}
  */
 const ACTION_AUTH_CODE = 'act=authcheck';
 
 /**
  * Phone number check action
- *
- * @type {string}
  */
 const ACTION_SECURITY_CODE = 'act=security';
 
 /**
  * Number of two-factorial attempts
- *
- * @type {number}
  */
 const TWO_FACTOR_ATTEMPTS = 3;
 
 /**
  * Number of captcha attempts
- *
- * @type {number}
  */
 const CAPTCHA_ATTEMPTS = 3;
 
 /**
  * Removes the prefix
- *
- * @type {RegExp}
  */
 const REPLACE_PREFIX_RE = /^[+|0]+/;
 
 /**
  * Find location.href text
- *
- * @type {RegExp}
  */
 const FIND_LOCATION_HREF_RE = /location\.href\s+=\s+"([^"]+)"/i;
 

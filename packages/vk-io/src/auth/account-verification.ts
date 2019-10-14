@@ -21,36 +21,26 @@ const {
 
 /**
  * Two-factor auth check action
- *
- * @type {string}
  */
 const ACTION_AUTH_CODE = 'act=authcheck';
 
 /**
  * Phone number check action
- *
- * @type {string}
  */
 const ACTION_SECURITY_CODE = 'act=security';
 
 /**
  * Bind a phone to a page
- *
- * @type {string}
  */
 const ACTION_VALIDATE = 'act=validate';
 
 /**
  * Bind a phone to a page action
- *
- * @type {string}
  */
 const ACTION_CAPTCHA = 'act=captcha';
 
 /**
  * Number of two-factorial attempts
- *
- * @type {number}
  */
 const TWO_FACTOR_ATTEMPTS = 3;
 
