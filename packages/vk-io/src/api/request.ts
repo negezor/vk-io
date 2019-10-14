@@ -37,9 +37,8 @@ export default class Request {
 	/**
 	 * Returns custom tag
 	 */
-	// eslint-disable-next-line class-methods-use-this
 	public get [Symbol.toStringTag](): string {
-		return 'Request';
+		return this.constructor.name;
 	}
 
 	/**

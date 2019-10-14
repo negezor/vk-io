@@ -105,9 +105,8 @@ export default class CollectStream extends Readable {
 	/**
 	 * Returns custom tag
 	 */
-	// eslint-disable-next-line class-methods-use-this
 	get [Symbol.toStringTag](): string {
-		return 'CollectStream';
+		return this.constructor.name;
 	}
 
 	/**

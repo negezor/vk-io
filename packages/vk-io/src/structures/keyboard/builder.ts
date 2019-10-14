@@ -29,9 +29,8 @@ export default class KeyboardBuilder {
 	/**
 	 * Returns custom tag
 	 */
-	// eslint-disable-next-line class-methods-use-this
 	public get [Symbol.toStringTag](): string {
-		return 'KeyboardBuilder';
+		return this.constructor.name;
 	}
 
 	/**

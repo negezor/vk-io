@@ -40,9 +40,8 @@ export default class MessageForward {
 	/**
 	 * Returns custom tag
 	 */
-	// eslint-disable-next-line class-methods-use-this
 	public get [Symbol.toStringTag](): string {
-		return 'MessageForward';
+		return this.constructor.name;
 	}
 
 	/**

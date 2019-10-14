@@ -54,9 +54,8 @@ export default class VK {
 	/**
 	 * Returns custom tag
 	 */
-	// eslint-disable-next-line class-methods-use-this
 	public get [Symbol.toStringTag](): string {
-		return 'VK';
+		return this.constructor.name;
 	}
 
 	/**

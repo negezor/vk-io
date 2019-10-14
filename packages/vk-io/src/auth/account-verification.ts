@@ -105,9 +105,8 @@ export default class AccountVerification {
 	/**
 	 * Returns custom tag
 	 */
-	// eslint-disable-next-line class-methods-use-this
 	public get [Symbol.toStringTag](): string {
-		return 'AccountVerification';
+		return this.constructor.name;
 	}
 
 	/**

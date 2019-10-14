@@ -23,9 +23,8 @@ export default class Chain {
 	/**
 	 * Returns custom tag
 	 */
-	// eslint-disable-next-line class-methods-use-this
 	get [Symbol.toStringTag](): string {
-		return 'Chain';
+		return this.constructor.name;
 	}
 
 	/**

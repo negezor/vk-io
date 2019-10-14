@@ -154,9 +154,8 @@ export default class Upload {
 	/**
 	 * Returns custom tag
 	 */
-	// eslint-disable-next-line class-methods-use-this
 	get [Symbol.toStringTag](): string {
-		return 'Upload';
+		return this.constructor.name;
 	}
 
 	/**

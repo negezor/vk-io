@@ -37,9 +37,8 @@ export default class Collect {
 	/**
 	 * Returns custom tag
 	 */
-	// eslint-disable-next-line class-methods-use-this
 	get [Symbol.toStringTag](): string {
-		return 'Collect';
+		return this.constructor.name;
 	}
 
 	/**

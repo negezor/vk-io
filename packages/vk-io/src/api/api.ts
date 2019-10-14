@@ -151,9 +151,8 @@ export default class API {
 	/**
 	 * Returns custom tag
 	 */
-	// eslint-disable-next-line class-methods-use-this
 	public get [Symbol.toStringTag](): string {
-		return 'API';
+		return this.constructor.name;
 	}
 
 	/**
