@@ -1,9 +1,9 @@
 import ISessionStorage from './storage';
 
 export interface IMemoryStoreLike<K, V> {
-    get(key: K): V | undefined;
-    set(key: K, value: V): this | undefined;
-    delete(key: K): boolean | undefined;
+	get(key: K): V | undefined;
+	set(key: K, value: V): this | undefined;
+	delete(key: K): boolean | undefined;
 }
 
 export interface IMemoryStorageOptions {
@@ -31,7 +31,8 @@ export default class MemoryStorage implements ISessionStorage {
 		return this.store.delete(key);
 	}
 
-	public async touch(key: string) {
+	// eslint-disable-next-line class-methods-use-this
+	public async touch(): Promise<void> {
 		// ...
 	}
 }
