@@ -1,9 +1,9 @@
 import { inspect } from 'util';
 
-import { parseAttachment, inspectCustomData } from '../../utils/constants';
+import { parseAttachment, inspectCustomData, AttachmentType } from '../../utils/constants';
 
 export default class Attachment {
-	public type: string;
+	public type: AttachmentType | string;
 
 	public ownerId: number;
 
@@ -19,7 +19,7 @@ export default class Attachment {
 	 * Constructor
 	 */
 	public constructor(
-		type: string,
+		type: AttachmentType | string,
 		ownerId: number,
 		id: number,
 		accessKey: string | null = null
