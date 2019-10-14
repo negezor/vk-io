@@ -57,36 +57,35 @@ hearCommand('help', async (context) => {
 			/cat - Cat photo
 			/purr - Cat purring
 		`,
-		keyboard: Keyboard.keyboard([
-			Keyboard.textButton({
+		keyboard: Keyboard.builder()
+			.textButton({
 				label: 'The help',
 				payload: {
 					command: 'help'
 				}
-			}),
-			Keyboard.textButton({
+			})
+			.row()
+			.textButton({
 				label: 'The current date',
 				payload: {
 					command: 'time'
 				}
-			}),
-			[
-				Keyboard.textButton({
-					label: 'Cat photo',
-					payload: {
-						command: 'cat'
-					},
-					color: Keyboard.PRIMARY_COLOR
-				}),
-				Keyboard.textButton({
-					label: 'Cat purring',
+			})
+			.row()
+			.textButton({
+				label: 'Cat photo',
+				payload: {
+					command: 'cat'
+				},
+				color: Keyboard.PRIMARY_COLOR
+			})
+			.textButton({
+				label: 'Cat purring',
 					payload: {
 						command: 'purr'
 					},
 					color: Keyboard.PRIMARY_COLOR
-				})
-			]
-		])
+			})
 	});
 });
 
