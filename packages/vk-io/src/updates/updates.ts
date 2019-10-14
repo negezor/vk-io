@@ -191,7 +191,6 @@ export type ContextSubTypes = 'new_message' | 'edit_message' | 'message_subscrib
 
 export type ContextPossibleTypes = ContextTypes | ContextSubTypes | string;
 
-
 export default class Updates {
 	protected vk: VK;
 
@@ -438,7 +437,7 @@ export default class Updates {
 		// @ts-ignore
 		return this.dispatchMiddleware(new UpdateContext({
 			vk: this.vk,
-			paylaod: update,
+			payload: update,
 			updateType: type,
 			source: updatesSources.POLLING
 		}));
