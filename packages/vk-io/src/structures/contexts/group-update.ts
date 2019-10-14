@@ -1,9 +1,27 @@
 import Context, { IContextOptions } from './context';
 
-import { PhotoAttachment, Attachment } from '../attachments';
+import {
+	Attachment,
+	ExternalAttachment,
 
+	AudioAttachment,
+	AudioMessageAttachment,
+	DocumentAttachment,
+	GiftAttachment,
+	GraffitiAttachment,
+	LinkAttachment,
+	MarketAlbumAttachment,
+	MarketAttachment,
+	PhotoAttachment,
+	PollAttachment,
+	StickerAttachment,
+	StoryAttachment,
+	VideoAttachment,
+	WallReplyAttachment,
+	WallAttachment
+} from '../attachments';
 import { copyParams } from '../../utils/helpers';
-import { inspectCustomData } from '../../utils/constants';
+import { inspectCustomData, AttachmentType } from '../../utils/constants';
 
 const subTypes = {
 	group_change_photo: 'group_update_photo',
@@ -68,7 +86,7 @@ export default class GroupUpdateContext<S = Record<string, any>>
 	/**
 	 * Checks for the presence of attachments
 	 */
-	hasAttachments(type: string = null): boolean {
+	public hasAttachments(type: AttachmentType | string | null = null): boolean {
 		if (type === null) {
 			return this.attachments.length > 0;
 		}
@@ -116,7 +134,37 @@ export default class GroupUpdateContext<S = Record<string, any>>
 	/**
 	 * Returns the attachments
 	 */
-	public getAttachments(type: string = null): Attachment[] {
+	public getAttachments(type: AttachmentType.AUDIO | 'audio'): AudioAttachment[];
+
+	public getAttachments(type: AttachmentType.AUDIO_MESSAGE | 'audio_message'): AudioMessageAttachment[];
+
+	public getAttachments(type: AttachmentType.GRAFFITI | 'graffiti'): GraffitiAttachment[];
+
+	public getAttachments(type: AttachmentType.DOCUMENT | 'doc'): DocumentAttachment[];
+
+	public getAttachments(type: AttachmentType.MARKET_ALBUM | 'market_album'): MarketAlbumAttachment[];
+
+	public getAttachments(type: AttachmentType.MARKET | 'market'): MarketAttachment[];
+
+	public getAttachments(type: AttachmentType.PHOTO | 'photo'): PhotoAttachment[];
+
+	public getAttachments(type: AttachmentType.STORY | 'story'): StoryAttachment[];
+
+	public getAttachments(type: AttachmentType.VIDEO | 'video'): VideoAttachment[];
+
+	public getAttachments(type: AttachmentType.WALL | 'wall'): WallAttachment[];
+
+	public getAttachments(type: AttachmentType.POLL | 'poll'): PollAttachment[];
+
+	public getAttachments(type: AttachmentType.GIFT | 'gift'): GiftAttachment[];
+
+	public getAttachments(type: AttachmentType.LINK | 'link'): LinkAttachment[];
+
+	public getAttachments(type: AttachmentType.STICKER | 'sticker'): StickerAttachment[];
+
+	public getAttachments(type: AttachmentType.WALL_REPLY | 'wall_reply'): WallReplyAttachment[];
+
+	public getAttachments(type: string | null = null): Attachment[] | ExternalAttachment[] {
 		if (type === null) {
 			return this.attachments;
 		}
