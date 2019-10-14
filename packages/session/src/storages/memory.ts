@@ -1,7 +1,21 @@
 import ISessionStorage from './storage';
 
+export interface IMemoryStoreLike<K, V> {
+    get(key: K): V | undefined;
+    set(key: K, value: V): this | undefined;
+    delete(key: K): boolean | undefined;
+}
+
+export interface IMemoryStorageOptions {
+	store?: IMemoryStoreLike<string, object>;
+}
+
 export default class MemoryStorage implements ISessionStorage {
-	private store: Map<string, object> = new Map();
+	private store: IMemoryStorageOptions['store'];
+
+	constructor({ store = new Map() }: IMemoryStorageOptions = {}) {
+		this.store = store;
+	}
 
 	public async get(key: string): Promise<object> {
 		return this.store.get(key) || null;
