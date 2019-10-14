@@ -1,4 +1,4 @@
-import { VK, Context } from '..';
+import { VK, Context, UpdateSource } from '..';
 
 const vk = new VK();
 
@@ -6,11 +6,14 @@ describe('Contexts', (): void => {
 	describe('Context', (): void => {
 		describe('#context.is()', (): void => {
 			const getContext = (): Context => {
-				const context = new Context(vk);
-
-				context.type = 'message';
-				// @ts-ignore
-				context.subTypes = ['edit_message', 'text'];
+				const context = new Context({
+					vk,
+					type: 'message',
+					subTypes: ['edit_message', 'text'],
+					payload: {},
+					updateType: 'test',
+					source: UpdateSource.POLLING
+				});
 
 				return context;
 			};
