@@ -553,6 +553,13 @@ export default class MessageContext<S = Record<string, any>>
 
 		const response = await this.send({
 			...params,
+			...(
+				!this.isChat
+					? {
+						peer_id: this.peerId
+					}
+					: undefined
+			),
 
 			attachment
 		});
@@ -587,6 +594,13 @@ export default class MessageContext<S = Record<string, any>>
 
 		const response = await this.send({
 			...params,
+			...(
+				!this.isChat
+					? {
+						peer_id: this.peerId
+					}
+					: undefined
+			),
 
 			attachment
 		});
@@ -615,6 +629,13 @@ export default class MessageContext<S = Record<string, any>>
 
 		const response = await this.send({
 			...params,
+			...(
+				!this.isChat
+					? {
+						peer_id: this.peerId
+					}
+					: undefined
+			),
 
 			attachment
 		});
