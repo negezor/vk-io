@@ -428,7 +428,7 @@ export default class Updates {
 
 		const UpdateContext = pollingContexts[type];
 
-		if (!Context) {
+		if (!UpdateContext) {
 			debug(`Unsupported polling context type ${type}`);
 
 			return Promise.resolve();
@@ -453,7 +453,7 @@ export default class Updates {
 
 		const UpdateContext = webhookContexts[type];
 
-		if (!Context) {
+		if (!UpdateContext) {
 			debug(`Unsupported webhook context type ${type}`);
 
 			return Promise.resolve();
