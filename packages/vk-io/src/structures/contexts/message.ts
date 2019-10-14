@@ -128,6 +128,7 @@ export default class MessageContext<S = Record<string, any>>
 		this[kAttachments] = null;
 		this[kReplyMessage] = null;
 
+		// @ts-ignore
 		this.applyPayload(message);
 
 		this.$filled = true;
@@ -464,9 +465,11 @@ export default class MessageContext<S = Record<string, any>>
 	editMessage(params: object): Promise<number> {
 		// @ts-ignore
 		return this.vk.api.messages.edit({
-			attachment: this.attachments.filter(attachment => (
-				attachment.canBeAttached
-			)),
+			attachment: String(
+				this.attachments.filter(attachment => (
+					attachment.canBeAttached
+				))
+			),
 			message: this.text,
 			keep_forward_messages: 1,
 			keep_snippets: 1,
@@ -667,7 +670,7 @@ export default class MessageContext<S = Record<string, any>>
 		const messageIds = await this.vk.api.messages.markAsImportant({
 			...options,
 
-			message_ids: ids.join(',')
+			message_ids: ids
 		});
 
 		if (messageIds.includes(this.id)) {
@@ -685,7 +688,7 @@ export default class MessageContext<S = Record<string, any>>
 		const messageIds = await this.vk.api.messages.delete({
 			...options,
 
-			message_ids: ids.join(',')
+			message_ids: ids
 		});
 
 		return messageIds;

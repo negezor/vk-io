@@ -6,6 +6,10 @@ export * from './structures/keyboard';
 export * from './structures/contexts';
 export * from './structures/attachments';
 
+export * from './api/schemas/params';
+export * from './api/schemas/objects';
+export * from './api/schemas/responses';
+
 export {
 	CaptchaType,
 	ResourceType,

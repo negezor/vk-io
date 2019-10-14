@@ -63,6 +63,7 @@ export default class PhotoAttachment extends Attachment {
 			extended: 0
 		});
 
+		// @ts-ignore
 		this.payload = photo;
 
 		if ('access_key' in this.payload) {

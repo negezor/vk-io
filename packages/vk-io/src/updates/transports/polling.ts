@@ -14,7 +14,7 @@ const debug = createDebug('vk-io:updates');
 /**
  * Version polling
  */
-const POLLING_VERSION = '3';
+const POLLING_VERSION = 3;
 
 export default class PollingTransport {
 	public started = false;
@@ -31,7 +31,7 @@ export default class PollingTransport {
 
 	protected vk: VK;
 
-	protected ts = 0;
+	protected ts: string | number = 0;
 
 	protected pts = 0;
 
@@ -83,7 +83,7 @@ export default class PollingTransport {
 				act: 'a_check',
 				wait: '25',
 				mode: String(this.mode),
-				version: POLLING_VERSION
+				version: String(POLLING_VERSION)
 			}));
 
 			this.startFetchLoop();

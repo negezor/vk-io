@@ -507,6 +507,7 @@ export default class Upload {
 
 			await response.json();
 
+			// @ts-ignore
 			return new VideoAttachment(save, this.vk);
 		}
 

@@ -94,6 +94,7 @@ export default class WallAttachment extends Attachment {
 			extended: 0
 		});
 
+		// @ts-ignore
 		this.payload = post;
 
 		this[kAttachments] = null;

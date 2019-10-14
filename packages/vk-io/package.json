@@ -24,12 +24,11 @@
 		"es7"
 	],
 	"files": [
-		"lib",
-		"typings"
+		"lib"
 	],
 	"main": "lib/index",
 	"module": "lib/index.mjs",
-	"types": "./typings/index.d.ts",
+	"types": "./lib/index.d.ts",
 	"engines": {
 		"node": ">=8.0.0"
 	},

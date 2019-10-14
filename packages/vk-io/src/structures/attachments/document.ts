@@ -65,6 +65,7 @@ export default class DocumentAttachment extends Attachment {
 			docs: `${this.ownerId}_${this.id}`
 		});
 
+		// @ts-ignore
 		this.payload = document;
 
 		if ('access_key' in this.payload) {

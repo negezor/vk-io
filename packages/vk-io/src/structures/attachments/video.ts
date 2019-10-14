@@ -63,6 +63,7 @@ export default class VideoAttachment extends Attachment {
 
 		const [video] = items;
 
+		// @ts-ignore
 		this.payload = video;
 
 		if ('access_key' in this.payload) {

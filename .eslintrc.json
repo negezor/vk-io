@@ -64,12 +64,6 @@
 				"no-param-reassign": "off",
 				"import/no-extraneous-dependencies": "off"
 			}
-		},
-		{
-			"files": ["packages/vk-io/typings/index.d.ts"],
-			"rules": {
-				"no-useless-constructor": "off"
-			}
 		}
 	]
 }

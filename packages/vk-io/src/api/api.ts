@@ -4,6 +4,8 @@ import createDebug from 'debug';
 import { inspect } from 'util';
 import { URLSearchParams } from 'url';
 
+import { APIMethods } from './schemas/methods';
+
 import VK from '../vk';
 import Request from './request';
 import { getRandomId, delay } from '../utils/helpers';
@@ -93,7 +95,7 @@ const groupMethods = [
 /**
  * Working with API methods
  */
-export default class API {
+export default class API extends APIMethods {
 	private queue: Request[] = [];
 
 	private started = false;
@@ -106,6 +108,8 @@ export default class API {
 	 * Constructor
 	 */
 	public constructor(vk: VK) {
+		super();
+
 		this.vk = vk;
 
 		for (const group of groupMethods) {
