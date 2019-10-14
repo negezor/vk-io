@@ -26,12 +26,12 @@ const {
 	formatTSComments
 } = require('./utils/helpers');
 
-const METHODS_FILE = 'methods.d.ts';
-const PARAMS_FILE = 'params.d.ts';
-const OBJECTS_FILE = 'objects.d.ts';
-const RESPONSES_FILE = 'responses.d.ts';
+const METHODS_FILE = 'methods.ts';
+const PARAMS_FILE = 'params.ts';
+const OBJECTS_FILE = 'objects.ts';
+const RESPONSES_FILE = 'responses.ts';
 
-const typeingsDir = '../../packages/vk-io/typings';
+const typeingsDir = '../../packages/vk-io/src/api/schemas';
 
 async function generate() {
 	const [
