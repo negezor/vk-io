@@ -909,6 +909,10 @@ export default class MessageContext<S = Record<string, any>>
 
 		afterAttachments.push('isOutbox');
 
+		if (this.referralValue) {
+			afterAttachments.push('referralValue', 'referralSource');
+		}
+
 		if (this.$match) {
 			afterAttachments.push('$match');
 		}
