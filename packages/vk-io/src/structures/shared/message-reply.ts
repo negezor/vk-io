@@ -16,7 +16,7 @@ export default class MessageReply {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: object, vk: VK) {
+	public constructor(payload: object, vk?: VK) {
 		this.vk = vk;
 
 		this.payload = payload;

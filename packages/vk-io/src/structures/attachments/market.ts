@@ -51,7 +51,7 @@ export default class MarketAttachment extends Attachment {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: IMarketAttachmentPayload, vk: VK) {
+	public constructor(payload: IMarketAttachmentPayload, vk?: VK) {
 		super(MARKET, payload.owner_id, payload.id, payload.access_key);
 
 		this.vk = vk;

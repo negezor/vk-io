@@ -28,7 +28,7 @@ export default class StickerAttachment extends ExternalAttachment {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: IStickerAttachmentPayload, vk: VK) {
+	public constructor(payload: IStickerAttachmentPayload, vk?: VK) {
 		super(STICKER, payload);
 
 		this.vk = vk;

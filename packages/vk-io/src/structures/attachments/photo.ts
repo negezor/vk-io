@@ -40,7 +40,7 @@ export default class PhotoAttachment extends Attachment {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: IPhotoAttachmentPayload, vk: VK) {
+	public constructor(payload: IPhotoAttachmentPayload, vk?: VK) {
 		super(PHOTO, payload.owner_id, payload.id, payload.access_key);
 
 		this.vk = vk;

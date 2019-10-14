@@ -18,7 +18,7 @@ export default class GiftAttachment extends ExternalAttachment {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: IGiftAttachmentPayload, vk: VK) {
+	public constructor(payload: IGiftAttachmentPayload, vk?: VK) {
 		super(GIFT, payload);
 
 		this.vk = vk;

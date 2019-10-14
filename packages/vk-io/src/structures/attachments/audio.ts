@@ -31,7 +31,7 @@ export default class AudioAttachment extends Attachment {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: IAudioAttachmentPayload, vk: VK) {
+	public constructor(payload: IAudioAttachmentPayload, vk?: VK) {
 		super(AUDIO, payload.owner_id, payload.id, payload.access_key);
 
 		this.vk = vk;

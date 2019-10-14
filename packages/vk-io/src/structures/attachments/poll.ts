@@ -45,7 +45,7 @@ export default class PollAttachment extends Attachment {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: IPollAttachmentPayload, vk: VK) {
+	public constructor(payload: IPollAttachmentPayload, vk?: VK) {
 		super(POLL, payload.owner_id, payload.id, payload.access_key);
 
 		this.vk = vk;

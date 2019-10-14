@@ -12,7 +12,7 @@ export default class WallReplyAttachment extends ExternalAttachment {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: object, vk: VK) {
+	public constructor(payload: object, vk?: VK) {
 		super(WALL_REPLY, payload);
 
 		this.vk = vk;

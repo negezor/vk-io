@@ -45,7 +45,7 @@ export default class DocumentAttachment extends Attachment {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: IDocumentAttachmentPayload, vk: VK) {
+	public constructor(payload: IDocumentAttachmentPayload, vk?: VK) {
 		super(DOCUMENT, payload.owner_id, payload.id, payload.access_key);
 
 		this.vk = vk;

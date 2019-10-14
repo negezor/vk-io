@@ -77,7 +77,7 @@ export default class StoryAttachment extends Attachment {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: IStoryAttachmentPayload, vk: VK) {
+	public constructor(payload: IStoryAttachmentPayload, vk?: VK) {
 		super(STORY, payload.owner_id, payload.id, payload.access_key);
 
 		this.vk = vk;

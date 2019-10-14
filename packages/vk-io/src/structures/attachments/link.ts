@@ -36,7 +36,7 @@ export default class LinkAttachment extends ExternalAttachment {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: ILinkAttachmentPayload, vk: VK) {
+	public constructor(payload: ILinkAttachmentPayload, vk?: VK) {
 		super(LINK, payload);
 
 		this.vk = vk;

@@ -25,7 +25,7 @@ export default class MarketAlbumAttachment extends Attachment {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: IMarketAlbumAttachmentPayload, vk: VK) {
+	public constructor(payload: IMarketAlbumAttachmentPayload, vk?: VK) {
 		super(MARKET_ALBUM, payload.owner_id, payload.id, payload.access_key);
 
 		this.vk = vk;

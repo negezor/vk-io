@@ -25,7 +25,7 @@ export default class GraffitiAttachment extends Attachment {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: IGraffitiAttachmentPayload, vk: VK) {
+	public constructor(payload: IGraffitiAttachmentPayload, vk?: VK) {
 		super(GRAFFITI, payload.owner_id, payload.id, payload.access_key);
 
 		this.vk = vk;

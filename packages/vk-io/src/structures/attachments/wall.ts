@@ -71,7 +71,7 @@ export default class WallAttachment extends Attachment {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: IWallAttachmentPayload, vk: VK) {
+	public constructor(payload: IWallAttachmentPayload, vk?: VK) {
 		super(WALL, payload.owner_id || payload.to_id, payload.id, payload.access_key);
 
 		this.vk = vk;

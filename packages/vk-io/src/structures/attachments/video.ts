@@ -38,7 +38,7 @@ export default class VideoAttachment extends Attachment {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: IVideoAttachmentPayload, vk: VK) {
+	public constructor(payload: IVideoAttachmentPayload, vk?: VK) {
 		super(VIDEO, payload.owner_id, payload.id, payload.access_key);
 
 		this.vk = vk;
