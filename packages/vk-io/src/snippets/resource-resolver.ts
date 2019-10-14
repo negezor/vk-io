@@ -47,11 +47,6 @@ const removeSearchParam = /(\?|&)[^=]+=/;
 
 /**
  * Resolve the attachment resource
- *
- * @param {string} resource
- * @param {RegExp} pattern
- *
- * @return {Object}
  */
 const resolveOwnerResource = (resource: string, pattern: RegExp): {
 	id: number;

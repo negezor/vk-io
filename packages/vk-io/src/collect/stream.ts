@@ -112,8 +112,6 @@ export default class CollectStream extends Readable {
 
 	/**
 	 * Promise based
-	 *
-	 * @return {Promise<Object[]>}
 	 */
 	then(thenFn, catchFn?): Promise<{
 		items: object[];

@@ -41,9 +41,6 @@ export default class Auth {
 
 	/**
 	 * Standalone authorization with login & password for group
-	 *
-	 * @param {*}  groups
-	 * @param {Object} options
 	 */
 	public implicitFlowGroups(groups, options = {}): ImplicitFlowGroups {
 		return new ImplicitFlowGroups(this.vk, { ...options, groups });

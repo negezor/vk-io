@@ -51,11 +51,6 @@ export default class Collect {
 
 	/**
 	 * Call multiple executors
-	 *
-	 * @param {string} method
-	 * @param {Array}  queue
-	 *
-	 * @return {Promise<Array>}
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	async executes(method: string, queue: Record<string, any>[]): Promise<{

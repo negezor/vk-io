@@ -63,8 +63,6 @@ export default class GroupUserContext<S = Record<string, any>>
 
 	/**
 	 * Checks that the block has expired
-	 *
-	 * @return {?boolean}
 	 */
 	public get isExpired(): boolean | null {
 		if (this.isBlocked) {
@@ -138,8 +136,6 @@ export default class GroupUserContext<S = Record<string, any>>
 
 	/**
 	 * Adds a user to the community blacklist
-	 *
-	 * @return {Promise}
 	 */
 	unban(): Promise<number> {
 		if (this.isUnblocked) {

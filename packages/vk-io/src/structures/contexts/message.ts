@@ -301,8 +301,6 @@ export default class MessageContext<S = Record<string, any>>
 
 	/**
 	 * Returns geo
-	 *
-	 * @return {?Object}
 	 */
 	public get geo(): object | null {
 		if (!this.hasGeo) {
@@ -522,8 +520,6 @@ export default class MessageContext<S = Record<string, any>>
 
 	/**
 	 * Sends a photo to the current dialog
-	 *
-	 * @param {*[]} sources
 	 */
 	async sendPhoto(rawSources, params: object = {}): Promise<number> {
 		const sources = !Array.isArray(rawSources)
@@ -547,8 +543,6 @@ export default class MessageContext<S = Record<string, any>>
 
 	/**
 	 * Sends a document to the current dialog
-	 *
-	 * @param {*[]} sources
 	 */
 	async sendDocument(rawSources, params: object = {}): Promise<number> {
 		const sources = !Array.isArray(rawSources)
@@ -574,8 +568,6 @@ export default class MessageContext<S = Record<string, any>>
 
 	/**
 	 * Sends a audio message to the current dialog
-	 *
-	 * @param {*}  sourxe
 	 */
 	async sendAudioMessage(source, params: object = {}): Promise<number> {
 		const attachment = await this.vk.upload.audioMessage({
@@ -670,8 +662,6 @@ export default class MessageContext<S = Record<string, any>>
 
 	/**
 	 * Sets a new image for the chat
-	 *
-	 * @param {*}  source
 	 */
 	public async newChatPhoto(source, params: object = {}): Promise<object> {
 		this.assertIsChat();

@@ -1017,10 +1017,6 @@ export default class Upload {
 
 	/**
 	 * Building form data
-	 *
-	 * @param {Object} payload
-	 *
-	 * @return {Promise}
 	 */
 	// eslint-disable-next-line class-methods-use-this
 	async buildPayload({
@@ -1092,11 +1088,6 @@ export default class Upload {
 
 	/**
 	 * Upload form data
-	 *
-	 * @param {URL|string} url
-	 * @param {Object}     options
-	 *
-	 * @return {Promise<Object>}
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	async upload(url: URL | string, { formData, timeout, forceBuffer }): Promise<any> {

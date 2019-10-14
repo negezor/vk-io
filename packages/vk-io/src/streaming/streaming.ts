@@ -188,8 +188,6 @@ export default class StreamingAPI {
 
 	/**
 	 * Returns a list of rules
-	 *
-	 * @return {Promise<Array>}
 	 */
 	public async getRules(): Promise<IStreamingRule[]> {
 		const { rules = [] } = await this.fetchRules('GET');

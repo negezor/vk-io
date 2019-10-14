@@ -131,8 +131,6 @@ export default class DirectAuth {
 
 	/**
 	 * Returns custom tag
-	 *
-	 * @return {string}
 	 */
 	// eslint-disable-next-line class-methods-use-this
 	public get [Symbol.toStringTag](): string {
