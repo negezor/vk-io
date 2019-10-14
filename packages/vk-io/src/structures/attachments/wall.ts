@@ -13,7 +13,7 @@ const kCopyHistoryAttachments = Symbol('copyHistoryAttachments');
 
 export interface IWallAttachmentPayload {
 	id: number;
-	to_id: number;
+	to_id?: number;
 	owner_id: number;
 	access_key?: string;
 

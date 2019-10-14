@@ -11,16 +11,16 @@ export interface IMarketAttachmentPayload {
 	owner_id: number;
 	access_key?: string;
 
-	title: string;
-	description: string;
-	price: {
+	title?: string;
+	description?: string;
+	price?: {
 		amount: number;
 		currency: {
 			id: number;
 			name: string;
 		};
 	};
-	category: {
+	category?: {
 		id: number;
 		name: string;
 		section: {
@@ -28,19 +28,19 @@ export interface IMarketAttachmentPayload {
 			name: string;
 		};
 	};
-	thumb_photo: string;
-	date: number;
-	availability: 0 | 1 | 2;
-	is_favorite: number;
+	thumb_photo?: string;
+	date?: number;
+	availability?: 0 | 1 | 2;
+	is_favorite?: number;
 	photos?: object[];
 	can_comment?: number;
 	can_repost?: number;
-	likes: {
+	likes?: {
 		user_likes: number;
 		count: number;
 	};
-	url: string;
-	button_title: string;
+	url?: string;
+	button_title?: string;
 }
 
 export default class MarketAttachment extends Attachment {

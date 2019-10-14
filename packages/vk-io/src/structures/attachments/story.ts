@@ -39,7 +39,7 @@ export interface IStoryAttachmentPayload {
 
 	parent_story?: IStoryAttachmentPayload;
 
-	clickable_stickers: {
+	clickable_stickers?: {
 		original_width: number;
 		original_height: number;
 		style: string;
