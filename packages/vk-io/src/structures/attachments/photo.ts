@@ -21,7 +21,7 @@ export interface IPhotoSize {
 export interface IPhotoAttachmentPayload {
 	id: number;
 	owner_id: number;
-	access_key: string;
+	access_key?: string;
 
 	album_id?: number;
 	user_id?: number;

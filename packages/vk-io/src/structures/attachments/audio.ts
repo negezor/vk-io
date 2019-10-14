@@ -10,7 +10,7 @@ const { AUDIO } = AttachmentType;
 export interface IAudioAttachmentPayload {
 	id: number;
 	owner_id: number;
-	access_key: string;
+	access_key?: string;
 
 	is_hq?: number;
 	lyrics_id?: number;

@@ -10,7 +10,7 @@ const { POLL } = AttachmentType;
 export interface IPollAttachmentPayload {
 	id: number;
 	owner_id: number;
-	access_key: string;
+	access_key?: string;
 
 	anonymous?: number;
 	multiple?: number;

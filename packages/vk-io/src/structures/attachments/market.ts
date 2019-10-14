@@ -9,7 +9,7 @@ const { MARKET } = AttachmentType;
 export interface IMarketAttachmentPayload {
 	id: number;
 	owner_id: number;
-	access_key: string;
+	access_key?: string;
 
 	title: string;
 	description: string;

@@ -10,7 +10,7 @@ const { AUDIO_MESSAGE } = AttachmentType;
 export interface IAudioMessageAttachmentPayload {
 	id: number;
 	owner_id: number;
-	access_key: string;
+	access_key?: string;
 
 	duration?: number;
 	waveform?: number[];

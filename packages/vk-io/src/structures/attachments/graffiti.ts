@@ -10,7 +10,7 @@ const { GRAFFITI } = AttachmentType;
 export interface IGraffitiAttachmentPayload {
 	id: number;
 	owner_id: number;
-	access_key: string;
+	access_key?: string;
 
 	height?: number;
 	width?: number;

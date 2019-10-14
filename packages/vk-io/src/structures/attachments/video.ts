@@ -10,7 +10,7 @@ const { VIDEO } = AttachmentType;
 export interface IVideoAttachmentPayload {
 	id: number;
 	owner_id: number;
-	access_key: string;
+	access_key?: string;
 
 	repeat?: number;
 	can_add?: number;

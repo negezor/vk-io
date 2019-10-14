@@ -9,7 +9,7 @@ const { MARKET_ALBUM } = AttachmentType;
 export interface IMarketAlbumAttachmentPayload {
 	id: number;
 	owner_id: number;
-	access_key: string;
+	access_key?: string;
 
 	title?: string;
 	photo?: object;

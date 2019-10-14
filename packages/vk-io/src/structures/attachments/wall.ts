@@ -15,7 +15,7 @@ export interface IWallAttachmentPayload {
 	id: number;
 	to_id: number;
 	owner_id: number;
-	access_key: string;
+	access_key?: string;
 
 	from_id?: number;
 	created_by?: number;

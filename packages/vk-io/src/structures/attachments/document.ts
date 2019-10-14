@@ -24,7 +24,7 @@ const documentTypes = new Map([
 export interface IDocumentAttachmentPayload {
 	id: number;
 	owner_id: number;
-	access_key: string;
+	access_key?: string;
 
 	title?: string;
 	size?: number;

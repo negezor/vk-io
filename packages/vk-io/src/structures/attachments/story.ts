@@ -12,7 +12,7 @@ const { STORY } = AttachmentType;
 export interface IStoryAttachmentPayload {
 	id: number;
 	owner_id: number;
-	access_key: string;
+	access_key?: string;
 
 	type?: 'photo' | 'video';
 
