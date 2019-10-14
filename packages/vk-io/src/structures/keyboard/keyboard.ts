@@ -7,6 +7,7 @@ import {
 	IKeyboardApplicationButtonOptions,
 	ButtonColor
 } from './types';
+import { showDeprecatedMessage } from '../../utils/helpers';
 
 export default class Keyboard {
 	/**
@@ -22,7 +23,7 @@ export default class Keyboard {
 	// eslint-disable-next-line class-methods-use-this
 	public static get DEFAULT_COLOR(): ButtonColor.SECONDARY {
 		// eslint-disable-next-line no-console
-		console.log('Keyboard.DEFAULT_COLOR deprecated, use Keyboard.SECONDARY_COLOR instead');
+		showDeprecatedMessage('Keyboard.DEFAULT_COLOR deprecated, use Keyboard.SECONDARY_COLOR instead');
 
 		return ButtonColor.SECONDARY;
 	}

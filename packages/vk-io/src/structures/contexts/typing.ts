@@ -99,9 +99,8 @@ export default class TypingContext<S = Record<string, any>>
 	}
 
 	/**
-	 * Returns the identifier peer
+	 * @deprecated
 	 */
-	// DEPRECATED: Remove in release version
 	public get peerId(): number {
 		showDeprecatedMessage('TypingContext, use toId instead of peerId');
 
@@ -109,9 +108,8 @@ export default class TypingContext<S = Record<string, any>>
 	}
 
 	/**
-	 * Returns the identifier user
+	 * @deprecated
 	 */
-	// DEPRECATED: Remove in release version
 	public get userId(): number {
 		showDeprecatedMessage('TypingContext, use fromId instead of userId');
 
