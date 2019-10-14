@@ -12,7 +12,7 @@ vk.updates.on('message', sessionManager.middleware);
 vk.updates.hear('/counter', async (context) => {
 	const { session } = context;
 
-	if (!session.counter) {
+	if (session.counter === undefined) {
 		session.counter = 0;
 	}
 
