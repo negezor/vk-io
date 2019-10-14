@@ -2,9 +2,9 @@ import VK from '../../vk';
 
 import ExternalAttachment from './external';
 
-import { attachmentTypes, inspectCustomData } from '../../utils/constants';
+import { AttachmentType, inspectCustomData } from '../../utils/constants';
 
-const { GIFT } = attachmentTypes;
+const { GIFT } = AttachmentType;
 
 export interface IGiftAttachmentPayload {
 	id: number;

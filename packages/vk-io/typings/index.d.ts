@@ -4365,137 +4365,183 @@ export class CallbackService {
 /**
  * The attachment types
  */
-export const attachmentTypes: {
-	AUDIO: string;
-	AUDIO_MESSAGE: string;
-	GRAFFITI: string;
-	DOCUMENT: string;
-	GIFT: string;
-	LINK: string;
-	MARKET_ALBUM: string;
-	MARKET: string;
-	PHOTO: string;
-	STICKER: string;
-	VIDEO: string;
-	WALL_REPLY: string;
-	WALL: string;
-	POLL: string;
-};
-
+export declare enum AttachmentType {
+    AUDIO = 'audio',
+    AUDIO_MESSAGE = 'audio_message',
+    GRAFFITI = 'graffiti',
+    DOCUMENT = 'doc',
+    GIFT = 'gift',
+    LINK = 'link',
+    MARKET_ALBUM = 'market_album',
+    MARKET = 'market',
+    PHOTO = 'photo',
+    STICKER = 'sticker',
+    VIDEO = 'video',
+    WALL_REPLY = 'wall_reply',
+    WALL = 'wall',
+    POLL = 'poll',
+    STORY = 'story'
+}
+export declare const attachmentTypes: typeof AttachmentType;
+/**
+ * Default extensions for attachments
+ */
+export declare enum DefaultExtension {
+    photo = 'jpg',
+    video = 'mp4',
+    audio = 'mp3',
+    graffiti = 'png',
+    audioMessage = 'ogg'
+}
+export declare const defaultExtensions: typeof DefaultExtension;
+/**
+ * Default content type for attachments
+ */
+export declare enum DefaultContentType {
+    photo = 'image/jpeg',
+    video = 'video/mp4',
+    audio = 'audio/mp3',
+    graffiti = 'image/png',
+    audioMessage = 'audio/ogg'
+}
+export declare const defaultContentTypes: typeof DefaultContentType;
 /**
  * Sources of captcha
  */
-export const captchaTypes: {
-	API: string;
-	DIRECT_AUTH: string;
-	IMPLICIT_FLOW_AUTH: string;
-	ACCOUNT_VERIFICATION: string;
-};
-
+export declare enum CaptchaType {
+    'API' = 0,
+    'DIRECT_AUTH' = 1,
+    'IMPLICIT_FLOW_AUTH' = 2,
+    'ACCOUNT_VERIFICATION' = 3
+}
+export declare const captchaTypes: typeof CaptchaType;
 /**
  * Message source
  */
-export const messageSources: {
-	USER: string;
-	CHAT: string;
-	GROUP: string;
-	EMAIL: string;
-};
-
+export declare enum MessageSource {
+    USER = 'user',
+    CHAT = 'chat',
+    GROUP = 'group',
+    EMAIL = 'email'
+}
+export declare const messageSources: typeof MessageSource;
 /**
  * Resource types
  */
-export const resourceTypes: {
-	USER: string;
-	GROUP: string;
-	APPLICATION: string;
-};
-
+export declare enum ResourceType {
+    USER = 'user',
+    GROUP = 'group',
+    APPLICATION = 'application'
+}
+export declare const resourceTypes: typeof ResourceType;
 /**
  * API error codes
  */
-export const apiErrors: {
-	UNKNOWN_ERROR: number;
-	APP_SWITCHED_OFF: number;
-	UNKNOWN_METHOD: number;
-	AUTH_FAILURE: number;
-	TOO_MANY_REQUESTS: number;
-	SCOPE_NEEDED: number;
-	INCORRECT_REQUEST: number;
-	TOO_MANY_SIMILAR_ACTIONS: number;
-	INTERNAL_ERROR: number;
-	RESPONSE_SIZE_TOO_BIG: number;
-	CAPTCHA_REQUIRED: number;
-	ACCESS_DENIED: number;
-	USER_VALIDATION_REQUIRED: number;
-	PAGE_BLOCKED: number;
-	STANDALONE_ONLY: number;
-	STANDALONE_AND_OPEN_API_ONLY: number;
-	METHOD_DISABLED: number;
-	CONFIRMATION_REQUIRED: number;
-	GROUP_TOKEN_NOT_VALID: number;
-	APP_TOKEN_NOT_VALID: number;
-	WRONG_PARAMETER: number;
-	INCORRECT_USER_ID: number;
-	ALBUM_ACCESS_DENIED: number;
-	AUDIO_ACCESS_DENIED: number;
-	GROUP_ACCESS_DENIED: number;
-	ALBUM_OVERFLOW: number;
-	PAYMENTS_DISABLED: number;
-	COMMERCIAL_ACCESS_DENIED: number;
-	COMMERCIAL_ERROR: number;
-};
-
+export declare enum APIErrorCode {
+    UNKNOWN_ERROR = 1,
+    APP_SWITCHED_OFF = 2,
+    UNKNOWN_METHOD = 3,
+    INVALID_SIGNATURE = 4,
+    AUTH_FAILURE = 5,
+    TOO_MANY_REQUESTS = 6,
+    SCOPE_NEEDED = 7,
+    INCORRECT_REQUEST = 8,
+    TOO_MANY_SIMILAR_ACTIONS = 9,
+    INTERNAL_ERROR = 10,
+    RESPONSE_SIZE_TOO_BIG = 13,
+    CAPTCHA_REQUIRED = 14,
+    ACCESS_DENIED = 15,
+    USER_VALIDATION_REQUIRED = 17,
+    PAGE_BLOCKED = 18,
+    STANDALONE_ONLY = 20,
+    STANDALONE_AND_OPEN_API_ONLY = 21,
+    METHOD_DISABLED = 23,
+    CONFIRMATION_REQUIRED = 24,
+    GROUP_TOKEN_NOT_VALID = 27,
+    APP_TOKEN_NOT_VALID = 28,
+    METHOD_CALL_LIMIT = 29,
+    PROFILE_IS_PRIVATE = 30,
+    WRONG_PARAMETER = 100,
+    INVALID_APPLICATION_ID = 101,
+    LIMIT_ENTRY_EXHAUSTED = 103,
+    INCORRECT_USER_ID = 113,
+    INVALID_TIMESTAMP = 150,
+    ALBUM_ACCESS_DENIED = 200,
+    AUDIO_ACCESS_DENIED = 201,
+    GROUP_ACCESS_DENIED = 203,
+    ALBUM_OVERFLOW = 300,
+    PAYMENTS_DISABLED = 500,
+    COMMERCIAL_ACCESS_DENIED = 600,
+    COMMERCIAL_ERROR = 603,
+    BLACKLISTED_USER = 900,
+    MESSAGE_COMMUNITY_BLOCKED_BY_USER = 901,
+    MESSAGE_BLOCKED_BY_USER_PRIVACY = 902,
+    UNABLE_TO_EDIT_MESSAGE_AFTER_DAY = 909,
+    MESSAGE_CANNOT_EDIT_IS_TOO_LONG = 910,
+    KEYBOARD_FORMAT_IS_INVALID = 911,
+    CHAT_BOT_FEATURE = 912,
+    TOO_MANY_FORWARDED_MESSAGES = 913,
+    MESSAGE_TOO_LONG = 914,
+    NO_ACCESS_TO_CONVERSATION = 917,
+    CANNOT_EDIT_THIS_TYPE_MESSAGE = 920,
+    UNABLE_TO_FORWARD_MESSAGES = 921,
+    UNABLE_TO_DELETE_MESSAGE_FOR_RECIPIENTS = 924,
+    NOT_ADMIN_CHAT = 925,
+    COMMUNITY_CANNOT_INTERACT_WITH_THIS_PEER = 932,
+    CONTACT_NOT_FOUND = 936
+}
+export declare const apiErrors: typeof APIErrorCode;
 /**
  * Auth error codes
  */
-export const authErrors: {
-	PAGE_BLOCKED: string;
-	INVALID_PHONE_NUMBER: string;
-	AUTHORIZATION_FAILED: string;
-	FAILED_PASSED_CAPTCHA: string;
-	FAILED_PASSED_TWO_FACTOR: string;
-};
-
+export declare enum AuthErrorCode {
+    PAGE_BLOCKED = 'PAGE_BLOCKED',
+    INVALID_PHONE_NUMBER = 'INVALID_PHONE_NUMBER',
+    AUTHORIZATION_FAILED = 'AUTHORIZATION_FAILED',
+    FAILED_PASSED_CAPTCHA = 'FAILED_PASSED_CAPTCHA',
+    FAILED_PASSED_TWO_FACTOR = 'FAILED_PASSED_TWO_FACTOR'
+}
+export declare const authErrors: typeof AuthErrorCode;
 /**
  * Upload error codes
  */
-export const uploadErrors: {
-	MISSING_PARAMETERS: string;
-	NO_FILES_TO_UPLOAD: string;
-	EXCEEDED_MAX_FILES: string;
-	UNSUPPORTED_SOURCE_TYPE: string;
-};
-
+export declare enum UploadErrorCode {
+    MISSING_PARAMETERS = 'MISSING_PARAMETERS',
+    NO_FILES_TO_UPLOAD = 'NO_FILES_TO_UPLOAD',
+    EXCEEDED_MAX_FILES = 'EXCEEDED_MAX_FILES',
+    UNSUPPORTED_SOURCE_TYPE = 'UNSUPPORTED_SOURCE_TYPE'
+}
+export declare const uploadErrors: typeof UploadErrorCode;
 /**
  * Updates error codes
  */
-export const updatesErrors: {
-	NEED_RESTART: string;
-	POLLING_REQUEST_FAILED: string;
-};
-
+export declare enum UpdatesErrorCode {
+    NEED_RESTART = 'NEED_RESTART',
+    POLLING_REQUEST_FAILED = 'POLLING_REQUEST_FAILED'
+}
+export declare const updatesErrors: typeof UpdatesErrorCode;
 /**
  * Collect error codes
  */
-export const collectErrors: {
-	EXECUTE_ERROR: string;
-};
-
+export declare enum CollectErrorCode {
+    EXECUTE_ERROR = 'EXECUTE_ERROR'
+}
+export declare const collectErrors: typeof CollectErrorCode;
 /**
  * Snippets error codes
  */
-export const snippetsErrors: {
-	INVALID_URL: string;
-	INVALID_RESOURCE: string;
-	RESOURCE_NOT_FOUND: string;
-};
-
+export declare enum SnippetErrorCode {
+    INVALID_URL = 'INVALID_URL',
+    INVALID_RESOURCE = 'INVALID_RESOURCE',
+    RESOURCE_NOT_FOUND = 'RESOURCE_NOT_FOUND'
+}
+export declare const snippetsErrors: typeof SnippetErrorCode;
 /**
  * Snippets error codes
  */
-export const sharedErrors: {
-	MISSING_CAPTCHA_HANDLER: string;
-	MISSING_TWO_FACTOR_HANDLER: string;
-};
+export declare enum SharedErrorCode {
+    MISSING_CAPTCHA_HANDLER = 'MISSING_CAPTCHA_HANDLER',
+    MISSING_TWO_FACTOR_HANDLER = 'MISSING_TWO_FACTOR_HANDLER'
+}
+export declare const sharedErrors: typeof SharedErrorCode;
 // }

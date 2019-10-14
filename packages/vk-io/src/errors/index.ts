@@ -10,6 +10,14 @@ export { default as SnippetsError } from './snippets';
 export { default as StreamingRuleError } from './streaming-rule';
 
 export {
+	APIErrorCode,
+	AuthErrorCode,
+	SharedErrorCode,
+	UploadErrorCode,
+	UpdatesErrorCode,
+	CollectErrorCode,
+	SnippetErrorCode,
+
 	apiErrors,
 	authErrors,
 	sharedErrors,

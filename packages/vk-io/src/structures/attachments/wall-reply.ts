@@ -2,9 +2,9 @@ import VK from '../../vk';
 
 import ExternalAttachment from './external';
 
-import { attachmentTypes } from '../../utils/constants';
+import { AttachmentType } from '../../utils/constants';
 
-const { WALL_REPLY } = attachmentTypes;
+const { WALL_REPLY } = AttachmentType;
 
 export default class WallReplyAttachment extends ExternalAttachment {
 	protected vk: VK;

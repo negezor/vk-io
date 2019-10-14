@@ -3,9 +3,9 @@ import VK from '../../vk';
 import Attachment from './attachment';
 
 import { copyParams } from '../../utils/helpers';
-import { attachmentTypes, inspectCustomData } from '../../utils/constants';
+import { AttachmentType, inspectCustomData } from '../../utils/constants';
 
-const { DOCUMENT } = attachmentTypes;
+const { DOCUMENT } = AttachmentType;
 
 /**
  * Types of documents

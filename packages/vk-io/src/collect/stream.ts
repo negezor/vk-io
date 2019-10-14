@@ -4,16 +4,16 @@ import { inspect } from 'util';
 import { Readable } from 'stream';
 
 import VK from '../vk';
-import { CollectError, apiErrors, collectErrors } from '../errors';
+import { CollectError, APIErrorCode, CollectErrorCode } from '../errors';
 
 import Request from '../api/request';
 import getExecuteCode from './execute-code';
 
 const debug = createDebug('vk-io:collect:stream');
 
-const { APP_TOKEN_NOT_VALID, RESPONSE_SIZE_TOO_BIG } = apiErrors;
+const { APP_TOKEN_NOT_VALID, RESPONSE_SIZE_TOO_BIG } = APIErrorCode;
 
-const { EXECUTE_ERROR } = collectErrors;
+const { EXECUTE_ERROR } = CollectErrorCode;
 
 export default class CollectStream extends Readable {
 	protected vk: VK;

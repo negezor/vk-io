@@ -1,7 +1,7 @@
 import VKError from './error';
-import { apiErrors } from '../utils/constants';
+import { APIErrorCode } from '../utils/constants';
 
-const { CAPTCHA_REQUIRED, USER_VALIDATION_REQUIRED, CONFIRMATION_REQUIRED } = apiErrors;
+const { CAPTCHA_REQUIRED, USER_VALIDATION_REQUIRED, CONFIRMATION_REQUIRED } = APIErrorCode;
 
 export interface IAPIErrorParam {
 	key: string;

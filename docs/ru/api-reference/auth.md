@@ -215,10 +215,10 @@ app.get('/vk/valid-auth', async (req, res, next) => {
 Обработка ошибок авторизации
 
 ```js
-import { AuthError, authErrors } from 'vk-io';
+import { AuthError, AuthErrorCode } from 'vk-io';
 ```
 
-Список кодов ошибок в `authErrors`
+Список кодов ошибок в `AuthErrorCode`
 
 | Свойство                   | Тип    | Описание                                          |
 |----------------------------|--------|---------------------------------------------------|
@@ -234,7 +234,7 @@ import { AuthError, authErrors } from 'vk-io';
 auth.implicitFlowUser().run()
 	.catch((error) => {
 		if (error instanceof AuthError) {
-			if (error.code === authErrors.PAGE_BLOCKED) {
+			if (error.code === AuthErrorCode.PAGE_BLOCKED) {
 				console.log('Страница заблокирована :c');
 			}
 		}

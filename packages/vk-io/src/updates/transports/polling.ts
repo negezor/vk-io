@@ -5,9 +5,9 @@ import { URL, URLSearchParams } from 'url';
 
 import VK from '../../vk';
 import { delay } from '../../utils/helpers';
-import { UpdatesError, updatesErrors } from '../../errors';
+import { UpdatesError, UpdatesErrorCode } from '../../errors';
 
-const { NEED_RESTART, POLLING_REQUEST_FAILED } = updatesErrors;
+const { NEED_RESTART, POLLING_REQUEST_FAILED } = UpdatesErrorCode;
 
 const debug = createDebug('vk-io:updates');
 

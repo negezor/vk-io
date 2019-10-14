@@ -4,7 +4,7 @@ import {
 	VK,
 
 	UploadError,
-	uploadErrors,
+	UploadErrorCode,
 
 	PhotoAttachment
 } from '..';
@@ -24,7 +24,7 @@ describe('Uploads', (): void => {
 			await upload.messagePhoto();
 		} catch (error) {
 			expect(error).toBeInstanceOf(UploadError);
-			expect(error.code).toEqual(uploadErrors.MISSING_PARAMETERS);
+			expect(error.code).toEqual(UploadErrorCode.MISSING_PARAMETERS);
 		}
 
 		try {
@@ -32,7 +32,7 @@ describe('Uploads', (): void => {
 			await upload.messagePhoto({});
 		} catch (error) {
 			expect(error).toBeInstanceOf(UploadError);
-			expect(error.code).toEqual(uploadErrors.MISSING_PARAMETERS);
+			expect(error.code).toEqual(UploadErrorCode.MISSING_PARAMETERS);
 		}
 	});
 
@@ -43,7 +43,7 @@ describe('Uploads', (): void => {
 			});
 		} catch (error) {
 			expect(error).toBeInstanceOf(UploadError);
-			expect(error.code).toEqual(uploadErrors.NO_FILES_TO_UPLOAD);
+			expect(error.code).toEqual(UploadErrorCode.NO_FILES_TO_UPLOAD);
 		}
 	});
 
@@ -59,7 +59,7 @@ describe('Uploads', (): void => {
 			});
 		} catch (error) {
 			expect(error).toBeInstanceOf(UploadError);
-			expect(error.code).toEqual(uploadErrors.EXCEEDED_MAX_FILES);
+			expect(error.code).toEqual(UploadErrorCode.EXCEEDED_MAX_FILES);
 		}
 	});
 

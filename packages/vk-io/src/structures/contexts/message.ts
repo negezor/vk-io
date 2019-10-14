@@ -15,8 +15,8 @@ import {
 	showDeprecatedMessage
 } from '../../utils/helpers';
 import {
-	updatesSources,
-	messageSources,
+	UpdateSource,
+	MessageSource,
 	CHAT_PEER,
 	inspectCustomData
 } from '../../utils/constants';
@@ -86,7 +86,7 @@ export default class MessageContext<S = Record<string, any>>
 		});
 
 		let { payload } = options;
-		if (options.source === updatesSources.POLLING) {
+		if (options.source === UpdateSource.POLLING) {
 			// eslint-disable-next-line no-param-reassign
 			// @ts-ignore
 			payload = transformMessage(payload);
@@ -185,35 +185,35 @@ export default class MessageContext<S = Record<string, any>>
 	 * Checks is a chat
 	 */
 	public get isChat(): boolean {
-		return this.peerType === messageSources.CHAT;
+		return this.peerType === MessageSource.CHAT;
 	}
 
 	/**
 	 * Check is a user
 	 */
 	public get isUser(): boolean {
-		return this.senderType === messageSources.USER;
+		return this.senderType === MessageSource.USER;
 	}
 
 	/**
 	 * Checks is a group
 	 */
 	public get isGroup(): boolean {
-		return this.senderType === messageSources.GROUP;
+		return this.senderType === MessageSource.GROUP;
 	}
 
 	/**
 	 * Checks is from the user
 	 */
 	public get isFromUser(): boolean {
-		return this.peerType === messageSources.USER;
+		return this.peerType === MessageSource.USER;
 	}
 
 	/**
 	 * Checks is from the group
 	 */
 	public get isFromGroup(): boolean {
-		return this.peerType === messageSources.GROUP;
+		return this.peerType === MessageSource.GROUP;
 	}
 
 	/**

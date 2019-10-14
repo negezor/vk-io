@@ -3,9 +3,9 @@ import VK from '../../vk';
 import ExternalAttachment from './external';
 
 import { copyParams } from '../../utils/helpers';
-import { attachmentTypes, inspectCustomData } from '../../utils/constants';
+import { AttachmentType, inspectCustomData } from '../../utils/constants';
 
-const { STICKER } = attachmentTypes;
+const { STICKER } = AttachmentType;
 
 export interface IStickerImage {
 	url: string;

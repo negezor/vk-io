@@ -1,10 +1,10 @@
 import VK from '../vk';
-import { VKError, sharedErrors } from '../errors';
+import { VKError, SharedErrorCode } from '../errors';
 
 const {
 	MISSING_CAPTCHA_HANDLER,
 	MISSING_TWO_FACTOR_HANDLER
-} = sharedErrors;
+} = SharedErrorCode;
 
 export interface ICallbackServiceValidate {
 	resolve: (value: string) => Promise<void>;

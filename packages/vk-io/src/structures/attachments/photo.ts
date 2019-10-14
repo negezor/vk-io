@@ -3,9 +3,9 @@ import VK from '../../vk';
 import Attachment from './attachment';
 
 import { copyParams } from '../../utils/helpers';
-import { attachmentTypes, inspectCustomData } from '../../utils/constants';
+import { AttachmentType, inspectCustomData } from '../../utils/constants';
 
-const { PHOTO } = attachmentTypes;
+const { PHOTO } = AttachmentType;
 
 const SMALL_SIZES = ['m', 's'];
 const MEDIUM_SIZES = ['y', 'r', 'q', 'p', ...SMALL_SIZES];

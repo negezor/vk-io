@@ -7,6 +7,11 @@ export * from './structures/contexts';
 export * from './structures/attachments';
 
 export {
+	CaptchaType,
+	ResourceType,
+	MessageSource,
+	AttachmentType,
+
 	captchaTypes,
 	resourceTypes,
 	messageSources,

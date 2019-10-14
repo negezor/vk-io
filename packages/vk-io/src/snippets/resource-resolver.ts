@@ -3,8 +3,8 @@ import { URL } from 'url';
 import VK from '../vk';
 import { SnippetsError } from '../errors';
 import {
-	resourceTypes,
-	snippetsErrors,
+	ResourceType,
+	SnippetErrorCode,
 
 	parseAttachment,
 
@@ -16,7 +16,7 @@ const {
 	INVALID_URL,
 	INVALID_RESOURCE,
 	RESOURCE_NOT_FOUND
-} = snippetsErrors;
+} = SnippetErrorCode;
 
 const numberRe = /^-?\d+$/;
 
@@ -30,10 +30,10 @@ const systemMentionRe = /\[([^|]+)|([^|\]]+)\]/;
  * Switch resource types
  */
 const enumResourceTypes = {
-	id: resourceTypes.USER,
-	club: resourceTypes.GROUP,
-	public: resourceTypes.GROUP,
-	app: resourceTypes.APPLICATION
+	id: ResourceType.USER,
+	club: ResourceType.GROUP,
+	public: ResourceType.GROUP,
+	app: ResourceType.APPLICATION
 };
 
 /**
@@ -212,7 +212,7 @@ export default class ResourceResolver {
 		if (type === 'page') {
 			return {
 				id,
-				type: resourceTypes.GROUP
+				type: ResourceType.GROUP
 			};
 		}
 

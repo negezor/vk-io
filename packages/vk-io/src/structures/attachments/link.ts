@@ -4,9 +4,9 @@ import ExternalAttachment from './external';
 
 import PhotoAttachment, { IPhotoAttachmentPayload } from './photo';
 import { copyParams } from '../../utils/helpers';
-import { attachmentTypes, inspectCustomData } from '../../utils/constants';
+import { AttachmentType, inspectCustomData } from '../../utils/constants';
 
-const { LINK } = attachmentTypes;
+const { LINK } = AttachmentType;
 
 const kPhoto = Symbol('kPhoto');
 

@@ -3,11 +3,11 @@ import VK from '../../vk';
 import Attachment from './attachment';
 
 import { copyParams } from '../../utils/helpers';
-import { attachmentTypes, inspectCustomData } from '../../utils/constants';
+import { AttachmentType, inspectCustomData } from '../../utils/constants';
 import PhotoAttachment, { IPhotoAttachmentPayload } from './photo';
 import VideoAttachment, { IVideoAttachmentPayload } from './video';
 
-const { STORY } = attachmentTypes;
+const { STORY } = AttachmentType;
 
 export interface IStoryAttachmentPayload {
 	id: number;

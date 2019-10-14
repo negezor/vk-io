@@ -19,24 +19,24 @@ import {
 } from '.';
 
 import VK from '../../vk';
-import { attachmentTypes } from '../../utils/constants';
+import { AttachmentType } from '../../utils/constants';
 
 const attachmentsTypes = {
-	[attachmentTypes.POLL]: (): typeof PollAttachment => PollAttachment,
-	[attachmentTypes.GIFT]: (): typeof GiftAttachment => GiftAttachment,
-	[attachmentTypes.WALL]: (): typeof WallAttachment => WallAttachment,
-	[attachmentTypes.LINK]: (): typeof LinkAttachment => LinkAttachment,
-	[attachmentTypes.PHOTO]: (): typeof PhotoAttachment => PhotoAttachment,
-	[attachmentTypes.AUDIO]: (): typeof AudioAttachment => AudioAttachment,
-	[attachmentTypes.STORY]: (): typeof StoryAttachment => StoryAttachment,
-	[attachmentTypes.VIDEO]: (): typeof VideoAttachment => VideoAttachment,
-	[attachmentTypes.DOCUMENT]: (): typeof DocumentAttachment => DocumentAttachment,
-	[attachmentTypes.MARKET]: (): typeof MarketAttachment => MarketAttachment,
-	[attachmentTypes.STICKER]: (): typeof StickerAttachment => StickerAttachment,
-	[attachmentTypes.GRAFFITI]: (): typeof GraffitiAttachment => GraffitiAttachment,
-	[attachmentTypes.WALL_REPLY]: (): typeof WallReplyAttachment => WallReplyAttachment,
-	[attachmentTypes.MARKET_ALBUM]: (): typeof MarketAlbumAttachment => MarketAlbumAttachment,
-	[attachmentTypes.AUDIO_MESSAGE]: (): typeof AudioMessageAttachment => AudioMessageAttachment
+	[AttachmentType.POLL]: (): typeof PollAttachment => PollAttachment,
+	[AttachmentType.GIFT]: (): typeof GiftAttachment => GiftAttachment,
+	[AttachmentType.WALL]: (): typeof WallAttachment => WallAttachment,
+	[AttachmentType.LINK]: (): typeof LinkAttachment => LinkAttachment,
+	[AttachmentType.PHOTO]: (): typeof PhotoAttachment => PhotoAttachment,
+	[AttachmentType.AUDIO]: (): typeof AudioAttachment => AudioAttachment,
+	[AttachmentType.STORY]: (): typeof StoryAttachment => StoryAttachment,
+	[AttachmentType.VIDEO]: (): typeof VideoAttachment => VideoAttachment,
+	[AttachmentType.DOCUMENT]: (): typeof DocumentAttachment => DocumentAttachment,
+	[AttachmentType.MARKET]: (): typeof MarketAttachment => MarketAttachment,
+	[AttachmentType.STICKER]: (): typeof StickerAttachment => StickerAttachment,
+	[AttachmentType.GRAFFITI]: (): typeof GraffitiAttachment => GraffitiAttachment,
+	[AttachmentType.WALL_REPLY]: (): typeof WallReplyAttachment => WallReplyAttachment,
+	[AttachmentType.MARKET_ALBUM]: (): typeof MarketAlbumAttachment => MarketAlbumAttachment,
+	[AttachmentType.AUDIO_MESSAGE]: (): typeof AudioMessageAttachment => AudioMessageAttachment
 };
 
 /**

@@ -150,12 +150,12 @@ vk.api.messages.send()
 После
 
 ```js
-const { APIError, apiErrors } = require('vk-io');
+const { APIError, APIErrorCode } = require('vk-io');
 
 vk.api.messages.send();
 .catch((error) => { // Native promise
 	if (error instanceof APIError) {
-		if (error.code === apiErrors.WRONG_PARAMETER) {
+		if (error.code === APIErrorCode.WRONG_PARAMETER) {
 			return console.error(`Wrong parameter:`, error.params);
 		}
 

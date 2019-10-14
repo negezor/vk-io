@@ -4,9 +4,9 @@ import Attachment from './attachment';
 // eslint-disable-next-line import/no-cycle
 import { transformAttachments } from './helpers';
 import { copyParams } from '../../utils/helpers';
-import { attachmentTypes, inspectCustomData } from '../../utils/constants';
+import { AttachmentType, inspectCustomData } from '../../utils/constants';
 
-const { WALL } = attachmentTypes;
+const { WALL } = AttachmentType;
 
 const kAttachments = Symbol('attachments');
 const kCopyHistoryAttachments = Symbol('copyHistoryAttachments');

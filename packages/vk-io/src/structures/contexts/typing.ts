@@ -4,7 +4,7 @@ import { copyParams, getPeerType, showDeprecatedMessage } from '../../utils/help
 import {
 	CHAT_PEER,
 
-	updatesSources,
+	UpdateSource,
 	inspectCustomData
 } from '../../utils/constants';
 
@@ -42,7 +42,7 @@ export default class TypingContext<S = Record<string, any>>
 				`typing_${getPeerType(options.payload.from_id)}`
 			],
 
-			payload: options.source === updatesSources.POLLING
+			payload: options.source === UpdateSource.POLLING
 				// @ts-ignore
 				? transformPolling(options.payload as [number, number, number], options.updateType)
 				: options.payload

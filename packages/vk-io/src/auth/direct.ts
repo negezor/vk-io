@@ -5,13 +5,13 @@ import { Agent } from 'https';
 import { URL, URLSearchParams } from 'url';
 
 import VK from '../vk';
-import { AuthError, authErrors } from '../errors';
+import { AuthError, AuthErrorCode } from '../errors';
 
 import { fetchCookieFollowRedirectsDecorator, CookieJar } from '../utils/fetch-cookie';
 import {
 	DESKTOP_USER_AGENT,
 
-	captchaTypes
+	CaptchaType
 } from '../utils/constants';
 import {
 	getFullURL,
@@ -27,7 +27,7 @@ const {
 	AUTHORIZATION_FAILED,
 	FAILED_PASSED_CAPTCHA,
 	FAILED_PASSED_TWO_FACTOR
-} = authErrors;
+} = AuthErrorCode;
 
 /**
  * Number of two-factorial attempts
@@ -328,7 +328,7 @@ export default class DirectAuth {
 		}
 
 		const { key, validate } = await this.vk.callbackService.processingCaptcha({
-			type: captchaTypes.DIRECT_AUTH,
+			type: CaptchaType.DIRECT_AUTH,
 			sid,
 			src
 		});

@@ -3,9 +3,9 @@ import VK from '../../vk';
 import Attachment from './attachment';
 
 import { copyParams } from '../../utils/helpers';
-import { attachmentTypes, inspectCustomData } from '../../utils/constants';
+import { AttachmentType, inspectCustomData } from '../../utils/constants';
 
-const { GRAFFITI } = attachmentTypes;
+const { GRAFFITI } = AttachmentType;
 
 export interface IGraffitiAttachmentPayload {
 	id: number;

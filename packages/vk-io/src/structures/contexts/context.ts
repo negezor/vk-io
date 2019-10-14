@@ -1,7 +1,7 @@
 import { inspect } from 'util';
 
 import VK from '../../vk';
-import { inspectCustomData, updatesSources } from '../../utils/constants';
+import { inspectCustomData, UpdateSource } from '../../utils/constants';
 
 export interface IContextOptions<P, S> {
 	vk: VK;
@@ -12,7 +12,7 @@ export interface IContextOptions<P, S> {
 	payload: P;
 	state?: S;
 
-	source: updatesSources;
+	source: UpdateSource;
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	updateType: any;
 

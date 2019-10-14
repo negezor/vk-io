@@ -39,9 +39,9 @@ import {
 	getObjectValue,
 	splitPath
 } from './helpers';
-import { apiErrors } from '../errors';
+import { APIErrorCode } from '../errors';
 
-import { updatesSources } from '../utils/constants';
+import { UpdateSource } from '../utils/constants';
 
 const debug = createDebug('vk-io:updates');
 
@@ -438,7 +438,7 @@ export default class Updates {
 			vk: this.vk,
 			payload: update,
 			updateType: type,
-			source: updatesSources.POLLING
+			source: UpdateSource.POLLING
 		}));
 	}
 
@@ -464,7 +464,7 @@ export default class Updates {
 			payload,
 			groupId,
 			updateType: type,
-			source: updatesSources.WEBHOOK
+			source: UpdateSource.WEBHOOK
 		}));
 	}
 
@@ -512,7 +512,7 @@ export default class Updates {
 
 				this.vk.options.pollingGroupId = group.id;
 			} catch (error) {
-				if (error.code !== apiErrors.WRONG_PARAMETER) {
+				if (error.code !== APIErrorCode.WRONG_PARAMETER) {
 					throw error;
 				}
 

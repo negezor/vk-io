@@ -3,7 +3,7 @@ import createDebug from 'debug';
 import { URL, URLSearchParams } from 'url';
 
 import ImplicitFlow from './implicit-flow';
-import { VKError, AuthError, authErrors } from '../errors';
+import { VKError, AuthError, AuthErrorCode } from '../errors';
 import { CALLBACK_BLANK } from '../utils/constants';
 import {
 	getAllGroupsPermissions,
@@ -12,7 +12,7 @@ import {
 
 const debug = createDebug('vk-io:auth:implicit-flow-user');
 
-const { AUTHORIZATION_FAILED } = authErrors;
+const { AUTHORIZATION_FAILED } = AuthErrorCode;
 
 export default class ImplicitFlowGroups extends ImplicitFlow {
 	groups: number[];

@@ -2,9 +2,9 @@ import VK from '../../vk';
 
 import Attachment from './attachment';
 
-import { attachmentTypes } from '../../utils/constants';
+import { AttachmentType } from '../../utils/constants';
 
-const { MARKET } = attachmentTypes;
+const { MARKET } = AttachmentType;
 
 export interface IMarketAttachmentPayload {
 	id: number;

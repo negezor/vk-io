@@ -69,7 +69,7 @@ export const defaultOptions: IVKOptions = {
 /**
  * The attachment types
  */
-export enum attachmentTypes {
+export enum AttachmentType {
 	AUDIO = 'audio',
 	AUDIO_MESSAGE = 'audio_message',
 	GRAFFITI = 'graffiti',
@@ -87,10 +87,12 @@ export enum attachmentTypes {
 	STORY = 'story'
 }
 
+export const attachmentTypes = AttachmentType;
+
 /**
  * Default extensions for attachments
  */
-export enum defaultExtensions {
+export enum DefaultExtension {
 	photo = 'jpg',
 	video = 'mp4',
 	audio = 'mp3',
@@ -98,10 +100,12 @@ export enum defaultExtensions {
 	audioMessage = 'ogg'
 }
 
+export const defaultExtensions = DefaultExtension;
+
 /**
  * Default content type for attachments
  */
-export enum defaultContentTypes {
+export enum DefaultContentType {
 	photo = 'image/jpeg',
 	video = 'video/mp4',
 	audio = 'audio/mp3',
@@ -109,40 +113,47 @@ export enum defaultContentTypes {
 	audioMessage = 'audio/ogg'
 }
 
+export const defaultContentTypes = DefaultContentType;
+
 /**
  * Sources of captcha
  */
-export enum captchaTypes {
+export enum CaptchaType {
 	'API',
 	'DIRECT_AUTH',
 	'IMPLICIT_FLOW_AUTH',
 	'ACCOUNT_VERIFICATION'
 }
 
+export const captchaTypes = CaptchaType;
 
 /**
  * Message source
  */
-export enum messageSources {
+export enum MessageSource {
 	USER = 'user',
 	CHAT = 'chat',
 	GROUP = 'group',
 	EMAIL = 'email'
 }
 
+export const messageSources = MessageSource;
+
 /**
  * Resource types
  */
-export enum resourceTypes {
+export enum ResourceType {
 	USER = 'user',
 	GROUP = 'group',
 	APPLICATION = 'application'
 }
 
+export const resourceTypes = ResourceType;
+
 /**
  * API error codes
  */
-export enum apiErrors {
+export enum APIErrorCode {
 	UNKNOWN_ERROR = 1,
 	APP_SWITCHED_OFF = 2,
 	UNKNOWN_METHOD = 3,
@@ -196,10 +207,12 @@ export enum apiErrors {
 	CONTACT_NOT_FOUND = 936
 }
 
+export const apiErrors = APIErrorCode;
+
 /**
  * Auth error codes
  */
-export enum authErrors {
+export enum AuthErrorCode {
 	PAGE_BLOCKED = 'PAGE_BLOCKED',
 	INVALID_PHONE_NUMBER = 'INVALID_PHONE_NUMBER',
 	AUTHORIZATION_FAILED = 'AUTHORIZATION_FAILED',
@@ -207,55 +220,69 @@ export enum authErrors {
 	FAILED_PASSED_TWO_FACTOR = 'FAILED_PASSED_TWO_FACTOR'
 }
 
+export const authErrors = AuthErrorCode;
+
 /**
  * Upload error codes
  */
-export enum uploadErrors {
+export enum UploadErrorCode {
 	MISSING_PARAMETERS = 'MISSING_PARAMETERS',
 	NO_FILES_TO_UPLOAD = 'NO_FILES_TO_UPLOAD',
 	EXCEEDED_MAX_FILES = 'EXCEEDED_MAX_FILES',
 	UNSUPPORTED_SOURCE_TYPE = 'UNSUPPORTED_SOURCE_TYPE'
 }
 
+export const uploadErrors = UploadErrorCode;
+
 /**
  * Updates error codes
  */
-export enum updatesErrors {
+export enum UpdatesErrorCode {
 	NEED_RESTART = 'NEED_RESTART',
 	POLLING_REQUEST_FAILED = 'POLLING_REQUEST_FAILED'
 }
 
+export const updatesErrors = UpdatesErrorCode;
+
 /**
  * Collect error codes
  */
-export enum collectErrors {
+export enum CollectErrorCode {
 	EXECUTE_ERROR = 'EXECUTE_ERROR'
 }
+
+export const collectErrors = CollectErrorCode;
 
 /**
  * Snippets error codes
  */
-export enum snippetsErrors {
+export enum SnippetErrorCode {
 	INVALID_URL = 'INVALID_URL',
 	INVALID_RESOURCE = 'INVALID_RESOURCE',
 	RESOURCE_NOT_FOUND = 'RESOURCE_NOT_FOUND'
 }
 
+export const snippetsErrors = SnippetErrorCode;
+
 /**
  * Snippets error codes
  */
-export enum sharedErrors {
+export enum SharedErrorCode {
 	MISSING_CAPTCHA_HANDLER = 'MISSING_CAPTCHA_HANDLER',
 	MISSING_TWO_FACTOR_HANDLER = 'MISSING_TWO_FACTOR_HANDLER'
 }
 
+export const sharedErrors = SharedErrorCode;
+
 /**
  * Updates sources
  */
-export enum updatesSources {
+export enum UpdateSource {
 	POLLING = 'POLLING',
 	WEBHOOK = 'WEBHOOK'
 }
+
+export const updatesSources = UpdateSource;
 
 /**
  * List of user permissions and their bit mask

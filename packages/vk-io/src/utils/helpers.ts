@@ -1,4 +1,4 @@
-import { messageSources, CHAT_PEER } from './constants';
+import { MessageSource, CHAT_PEER } from './constants';
 
 /**
  * Returns method for execute
@@ -109,14 +109,14 @@ export const copyParams = <
  */
 export const getPeerType = (id: number): string => {
 	if (CHAT_PEER < id) {
-		return messageSources.CHAT;
+		return MessageSource.CHAT;
 	}
 
 	if (id < 0) {
-		return messageSources.GROUP;
+		return MessageSource.GROUP;
 	}
 
-	return messageSources.USER;
+	return MessageSource.USER;
 };
 
 

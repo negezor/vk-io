@@ -6,11 +6,11 @@ import { promisify } from 'util';
 import { URL, URLSearchParams } from 'url';
 
 import VK from '../vk';
-import { AuthError, authErrors } from '../errors';
+import { AuthError, AuthErrorCode } from '../errors';
 
 import { parseFormField, getFullURL } from './helpers';
 import { CookieJar, fetchCookieFollowRedirectsDecorator } from '../utils/fetch-cookie';
-import { DESKTOP_USER_AGENT, CALLBACK_BLANK, captchaTypes } from '../utils/constants';
+import { DESKTOP_USER_AGENT, CALLBACK_BLANK, CaptchaType } from '../utils/constants';
 
 const debug = createDebug('vk-io:auth:implicit-flow');
 
@@ -20,7 +20,7 @@ const {
 	AUTHORIZATION_FAILED,
 	FAILED_PASSED_CAPTCHA,
 	FAILED_PASSED_TWO_FACTOR
-} = authErrors;
+} = AuthErrorCode;
 
 /**
  * Blocked action
@@ -362,7 +362,7 @@ export default class ImplicitFlow {
 			const src = $('.oauth_captcha').attr('src') || $('#captcha').attr('src');
 
 			const { key, validate } = await this.vk.callbackService.processingCaptcha({
-				type: captchaTypes.IMPLICIT_FLOW_AUTH,
+				type: CaptchaType.IMPLICIT_FLOW_AUTH,
 				sid: fields.captcha_sid,
 				src
 			});

@@ -13,15 +13,15 @@ import { sequential, parallel, parallelSelected } from './workers';
 import {
 	MINIMUM_TIME_INTERVAL_API,
 
-	apiErrors,
-	captchaTypes
+	APIErrorCode,
+	CaptchaType
 } from '../utils/constants';
 
 const {
 	CAPTCHA_REQUIRED,
 	TOO_MANY_REQUESTS,
 	USER_VALIDATION_REQUIRED
-} = apiErrors;
+} = APIErrorCode;
 
 const debug = createDebug('vk-io:api');
 
@@ -410,7 +410,7 @@ export default class API {
 			const { captchaSid } = error;
 
 			const { key, validate } = await this.vk.callbackService.processingCaptcha({
-				type: captchaTypes.API,
+				type: CaptchaType.API,
 				src: error.captchaImg,
 				sid: captchaSid,
 				request

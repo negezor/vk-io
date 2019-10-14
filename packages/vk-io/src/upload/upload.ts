@@ -8,9 +8,9 @@ import { inspect, deprecate } from 'util';
 
 import VK from '../vk';
 import MultipartStream from './multipart-stream';
-import { UploadError, uploadErrors } from '../errors';
+import { UploadError, UploadErrorCode } from '../errors';
 import { isStream, copyParams, streamToBuffer } from './helpers';
-import { defaultExtensions, defaultContentTypes } from '../utils/constants';
+import { DefaultExtension, DefaultContentType } from '../utils/constants';
 
 import {
 	PhotoAttachment,
@@ -26,7 +26,7 @@ const {
 	NO_FILES_TO_UPLOAD,
 	EXCEEDED_MAX_FILES,
 	UNSUPPORTED_SOURCE_TYPE
-} = uploadErrors;
+} = UploadErrorCode;
 
 const isURL = /^https?:\/\//i;
 
@@ -1057,7 +1057,7 @@ export default class Upload {
 
 				if (!filename) {
 					// eslint-disable-next-line no-param-reassign
-					filename = `file${i}.${defaultExtensions[attachmentType] || 'dat'}`;
+					filename = `file${i}.${DefaultExtension[attachmentType] || 'dat'}`;
 				}
 
 				if (isStream(value) || Buffer.isBuffer(value)) {
@@ -1067,7 +1067,7 @@ export default class Upload {
 
 					const headers = {
 						'Content-Type': contentType === null
-							? defaultContentTypes[attachmentType]
+							? DefaultContentType[attachmentType]
 							: contentType
 					};
 

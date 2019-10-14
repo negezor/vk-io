@@ -3,9 +3,9 @@ import VK from '../../vk';
 import Attachment from './attachment';
 
 import { copyParams } from '../../utils/helpers';
-import { attachmentTypes, inspectCustomData } from '../../utils/constants';
+import { AttachmentType, inspectCustomData } from '../../utils/constants';
 
-const { AUDIO_MESSAGE } = attachmentTypes;
+const { AUDIO_MESSAGE } = AttachmentType;
 
 export interface IAudioMessageAttachmentPayload {
 	id: number;

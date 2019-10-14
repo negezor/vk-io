@@ -5,9 +5,9 @@ import { Agent } from 'https';
 import { URL, URLSearchParams } from 'url';
 
 import VK from '../vk';
-import { AuthError, authErrors } from '../errors';
+import { AuthError, AuthErrorCode } from '../errors';
 import { parseFormField, getFullURL } from './helpers';
-import { DESKTOP_USER_AGENT, CALLBACK_BLANK, captchaTypes } from '../utils/constants';
+import { DESKTOP_USER_AGENT, CALLBACK_BLANK, CaptchaType } from '../utils/constants';
 import { CookieJar, fetchCookieFollowRedirectsDecorator } from '../utils/fetch-cookie';
 
 const debug = createDebug('vk-io:auth:account-verification');
@@ -17,7 +17,7 @@ const {
 	AUTHORIZATION_FAILED,
 	FAILED_PASSED_CAPTCHA,
 	FAILED_PASSED_TWO_FACTOR
-} = authErrors;
+} = AuthErrorCode;
 
 /**
  * Two-factor auth check action
@@ -330,7 +330,7 @@ export default class AccountVerification {
 		const src = $('.captcha_img').attr('src');
 
 		const { key, validate } = await this.vk.callbackService.processingCaptcha({
-			type: captchaTypes.ACCOUNT_VERIFICATION,
+			type: CaptchaType.ACCOUNT_VERIFICATION,
 			sid: fields.captcha_sid,
 			src
 		});
