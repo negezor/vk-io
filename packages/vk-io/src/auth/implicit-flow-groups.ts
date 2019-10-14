@@ -6,7 +6,6 @@ import ImplicitFlow from './implicit-flow';
 import { VKError, AuthError, AuthErrorCode } from '../errors';
 import { CALLBACK_BLANK } from '../utils/constants';
 import {
-	getAllGroupsPermissions,
 	getGroupsPermissionsByName
 } from './helpers';
 

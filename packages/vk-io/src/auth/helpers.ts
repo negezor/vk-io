@@ -3,24 +3,6 @@ import { URL } from 'url';
 import { userScopes, groupScopes } from '../utils/constants';
 
 /**
- * Returns the entire permission bit mask
- */
-export const getAllUsersPermissions = (): number => (
-	Array.from(userScopes.values()).reduce((previous, current) => (
-		previous + current
-	), 0)
-);
-
-/**
- * Returns the entire permission bit mask
- */
-export const getAllGroupsPermissions = (): number => (
-	Array.from(groupScopes.values()).reduce((previous, current) => (
-		previous + current
-	), 0)
-);
-
-/**
  * Returns the bit mask of the user permission by name
  */
 export const getUsersPermissionsByName = (rawScope: string | string[]): number => {

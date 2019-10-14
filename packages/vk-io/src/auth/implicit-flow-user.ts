@@ -6,7 +6,6 @@ import ImplicitFlow from './implicit-flow';
 import { AuthError, AuthErrorCode } from '../errors';
 import { CALLBACK_BLANK } from '../utils/constants';
 import {
-	getAllUsersPermissions,
 	getUsersPermissionsByName
 } from './helpers';
 

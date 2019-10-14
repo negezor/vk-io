@@ -16,7 +16,6 @@ import {
 import {
 	getFullURL,
 	parseFormField,
-	getAllUsersPermissions,
 	getUsersPermissionsByName
 } from './helpers';
 
