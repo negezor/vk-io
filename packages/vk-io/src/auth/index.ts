@@ -105,6 +105,16 @@ export default class Auth {
 	}
 
 	/**
+	 * Direct authorization with login & login in VK Me application
+	 */
+	public vkMeApp(): DirectAuth {
+		return new DirectAuth(this.vk, {
+			appId: 6146827,
+			appSecret: 'qVxWRF1CwHERuIrKBnqe'
+		});
+	}
+
+	/**
 	 * Verifies that the user is authorized through the Open API
 	 */
 	public async userAuthorizedThroughOpenAPI(
