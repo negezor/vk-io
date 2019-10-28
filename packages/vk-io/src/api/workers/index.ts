@@ -1,5 +1,3 @@
-import parallel from './parallel';
-import sequential from './sequential';
-import parallelSelected from './parallel-selected';
-
-export { parallel, sequential, parallelSelected };
+export { default as parallel } from './parallel';
+export { default as sequential } from './sequential';
+export { default as parallelSelected } from './parallel-selected';
