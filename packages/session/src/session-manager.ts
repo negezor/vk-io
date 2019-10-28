@@ -99,11 +99,11 @@ export default class SessionManager {
 
 			await next();
 
-			if (!changed) {
-				return;
+			if (changed) {
+				await $forceUpdate();
+			} else {
+				await storage.touch(storageKey);
 			}
-
-			await $forceUpdate();
 		};
 	}
 }
