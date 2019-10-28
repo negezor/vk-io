@@ -12,6 +12,7 @@ export default async function parallel(next: Function): Promise<void> {
 	const { queue } = this;
 
 	if (queue[0].method.startsWith('execute')) {
+		// @ts-ignore
 		sequential.call(this, next);
 
 		return;

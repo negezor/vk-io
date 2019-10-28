@@ -1856,146 +1856,146 @@ export class APIMethods {
     /**
      * The API account group
      */
-    account: APIAccount;
+    account!: APIAccount;
     /**
      * The API ads group
      */
-    ads: APIAds;
+    ads!: APIAds;
     /**
      * The API appWidgets group
      */
-    appWidgets: APIAppWidgets;
+    appWidgets!: APIAppWidgets;
     /**
      * The API apps group
      */
-    apps: APIApps;
+    apps!: APIApps;
     /**
      * The API auth group
      */
-    auth: APIAuth;
+    auth!: APIAuth;
     /**
      * The API board group
      */
-    board: APIBoard;
+    board!: APIBoard;
     /**
      * The API database group
      */
-    database: APIDatabase;
+    database!: APIDatabase;
     /**
      * The API docs group
      */
-    docs: APIDocs;
+    docs!: APIDocs;
     /**
      * The API fave group
      */
-    fave: APIFave;
+    fave!: APIFave;
     /**
      * The API friends group
      */
-    friends: APIFriends;
+    friends!: APIFriends;
     /**
      * The API gifts group
      */
-    gifts: APIGifts;
+    gifts!: APIGifts;
     /**
      * The API groups group
      */
-    groups: APIGroups;
+    groups!: APIGroups;
     /**
      * The API leads group
      */
-    leads: APILeads;
+    leads!: APILeads;
     /**
      * The API likes group
      */
-    likes: APILikes;
+    likes!: APILikes;
     /**
      * The API market group
      */
-    market: APIMarket;
+    market!: APIMarket;
     /**
      * The API messages group
      */
-    messages: APIMessages;
+    messages!: APIMessages;
     /**
      * The API newsfeed group
      */
-    newsfeed: APINewsfeed;
+    newsfeed!: APINewsfeed;
     /**
      * The API notes group
      */
-    notes: APINotes;
+    notes!: APINotes;
     /**
      * The API notifications group
      */
-    notifications: APINotifications;
+    notifications!: APINotifications;
     /**
      * The API orders group
      */
-    orders: APIOrders;
+    orders!: APIOrders;
     /**
      * The API pages group
      */
-    pages: APIPages;
+    pages!: APIPages;
     /**
      * The API photos group
      */
-    photos: APIPhotos;
+    photos!: APIPhotos;
     /**
      * The API polls group
      */
-    polls: APIPolls;
+    polls!: APIPolls;
     /**
      * The API prettyCards group
      */
-    prettyCards: APIPrettyCards;
+    prettyCards!: APIPrettyCards;
     /**
      * The API search group
      */
-    search: APISearch;
+    search!: APISearch;
     /**
      * The API secure group
      */
-    secure: APISecure;
+    secure!: APISecure;
     /**
      * The API stats group
      */
-    stats: APIStats;
+    stats!: APIStats;
     /**
      * The API status group
      */
-    status: APIStatus;
+    status!: APIStatus;
     /**
      * The API storage group
      */
-    storage: APIStorage;
+    storage!: APIStorage;
     /**
      * The API stories group
      */
-    stories: APIStories;
+    stories!: APIStories;
     /**
      * The API streaming group
      */
-    streaming: APIStreaming;
+    streaming!: APIStreaming;
     /**
      * The API users group
      */
-    users: APIUsers;
+    users!: APIUsers;
     /**
      * The API utils group
      */
-    utils: APIUtils;
+    utils!: APIUtils;
     /**
      * The API video group
      */
-    video: APIVideo;
+    video!: APIVideo;
     /**
      * The API wall group
      */
-    wall: APIWall;
+    wall!: APIWall;
     /**
      * The API widgets group
      */
-    widgets: APIWidgets;
+    widgets!: APIWidgets;
 }
 

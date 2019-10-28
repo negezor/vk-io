@@ -1,3 +1,4 @@
+// @ts-ignore
 import fetch from 'node-fetch';
 
 import { URL } from 'url';
@@ -124,7 +125,9 @@ export interface IStoryObject {
 	access_key: string;
 }
 
-const DocumentTypes = {
+const DocumentTypes: Record<string, typeof DocumentAttachment
+| typeof GraffitiAttachment
+| typeof AudioMessageAttachment> = {
 	doc: DocumentAttachment,
 	graffiti: GraffitiAttachment,
 	audio_message: AudioMessageAttachment
@@ -187,6 +190,7 @@ export default class Upload {
 			attachmentType: 'photo'
 		});
 
+		// @ts-ignore
 		return photos.map(photo => (
 			new PhotoAttachment(photo, this.vk)
 		));
@@ -534,7 +538,7 @@ export default class Upload {
 			values: source.values
 		});
 
-		const video = await this.upload(save.upload_url, {
+		const video = await this.upload(save.upload_url!, {
 			formData,
 			forceBuffer: true,
 			// @ts-ignore
@@ -1024,6 +1028,11 @@ export default class Upload {
 		values,
 		maxFiles,
 		attachmentType
+	}: {
+		field: string;
+		values: (UploadSourceValue | UploadSourceType)[];
+		maxFiles: number;
+		attachmentType?: string;
 	}): Promise<MultipartStream> {
 		const boundary = randomBytes(32).toString('hex');
 		const formData = new MultipartStream(boundary);
@@ -1031,17 +1040,19 @@ export default class Upload {
 		const isMultipart = maxFiles > 1;
 
 		const tasks = values
-			.map(value => (
+			.map((value: UploadSourceValue | UploadSourceType) => (
 				typeof value === 'object' && value.constructor === Object
 					? value
 					: { value }
 			))
+			// @ts-ignore
 			.map(async (
 				{
 					value,
 					filename,
 					contentType = null
-				},
+					// eslint-disable-next-line @typescript-eslint/no-explicit-any
+				}: any,
 				i
 			) => {
 				if (typeof value === 'string') {
@@ -1057,6 +1068,7 @@ export default class Upload {
 				}
 
 				if (!filename) {
+					// @ts-ignore
 					// eslint-disable-next-line no-param-reassign
 					filename = `file${i}.${DefaultExtension[attachmentType] || 'dat'}`;
 				}
@@ -1068,6 +1080,7 @@ export default class Upload {
 
 					const headers = {
 						'Content-Type': contentType === null
+							// @ts-ignore
 							? DefaultContentType[attachmentType]
 							: contentType
 					};
@@ -1090,7 +1103,7 @@ export default class Upload {
 	 * Upload form data
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	async upload(url: URL | string, { formData, timeout, forceBuffer }): Promise<any> {
+	async upload(url: URL | string, { formData, timeout, forceBuffer }: any): Promise<any> {
 		const { agent, uploadTimeout } = this.vk.options;
 
 		const body = forceBuffer

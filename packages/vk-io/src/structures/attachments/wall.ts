@@ -5,6 +5,7 @@ import Attachment from './attachment';
 import { transformAttachments } from './helpers';
 import { copyParams } from '../../utils/helpers';
 import { AttachmentType, inspectCustomData } from '../../utils/constants';
+import ExternalAttachment from './external';
 
 const { WALL } = AttachmentType;
 
@@ -63,17 +64,18 @@ export interface IWallAttachmentPayload {
 	is_favorite?: number;
 }
 
-export default class WallAttachment extends Attachment {
-	protected vk: VK;
+export default class WallAttachment extends Attachment<IWallAttachmentPayload> {
+	protected [kAttachments]: (Attachment | ExternalAttachment)[] | null;
 
-	protected payload: IWallAttachmentPayload;
+	protected [kCopyHistoryAttachments]: WallAttachment[] | null;
 
 	/**
 	 * Constructor
 	 */
 	public constructor(payload: IWallAttachmentPayload, vk?: VK) {
-		super(WALL, payload.owner_id || payload.to_id, payload.id, payload.access_key);
+		super(WALL, payload.owner_id || payload.to_id!, payload.id, payload.access_key);
 
+		// @ts-ignore
 		this.vk = vk;
 		this.payload = payload;
 
@@ -100,7 +102,7 @@ export default class WallAttachment extends Attachment {
 		this[kAttachments] = null;
 		this[kCopyHistoryAttachments] = null;
 
-		if ('access_key' in this.payload) {
+		if (this.payload.access_key) {
 			this.accessKey = this.payload.access_key;
 		}
 
@@ -136,7 +138,7 @@ export default class WallAttachment extends Attachment {
 	/**
 	 * Checks for the presence of attachments
 	 */
-	public hasAttachments(type: string = null): boolean {
+	public hasAttachments(type: string | null = null): boolean {
 		if (type === null) {
 			return this.attachments.length > 0;
 		}
@@ -154,7 +156,7 @@ export default class WallAttachment extends Attachment {
 			return null;
 		}
 
-		return Boolean(this.payload.reposts.user_reposted);
+		return Boolean(this.payload.reposts!.user_reposted);
 	}
 
 	/**
@@ -165,7 +167,7 @@ export default class WallAttachment extends Attachment {
 			return null;
 		}
 
-		return Boolean(this.payload.likes.user_likes);
+		return Boolean(this.payload.likes!.user_likes);
 	}
 
 	/**
@@ -176,7 +178,7 @@ export default class WallAttachment extends Attachment {
 			return null;
 		}
 
-		return Boolean(this.payload.comments.can_post);
+		return Boolean(this.payload.comments!.can_post);
 	}
 
 	/**
@@ -187,7 +189,7 @@ export default class WallAttachment extends Attachment {
 			return null;
 		}
 
-		return Boolean(this.payload.comments.groups_can_post);
+		return Boolean(this.payload.comments!.groups_can_post);
 	}
 
 	/**
@@ -205,7 +207,7 @@ export default class WallAttachment extends Attachment {
 			return null;
 		}
 
-		return Boolean(this.payload.comments.can_close);
+		return Boolean(this.payload.comments!.can_close);
 	}
 
 	/**
@@ -216,7 +218,7 @@ export default class WallAttachment extends Attachment {
 			return null;
 		}
 
-		return Boolean(this.payload.comments.can_open);
+		return Boolean(this.payload.comments!.can_open);
 	}
 
 	/**
@@ -227,7 +229,7 @@ export default class WallAttachment extends Attachment {
 			return null;
 		}
 
-		return Boolean(this.payload.likes.can_like);
+		return Boolean(this.payload.likes!.can_like);
 	}
 
 	/**
@@ -238,7 +240,7 @@ export default class WallAttachment extends Attachment {
 			return null;
 		}
 
-		return Boolean(this.payload.likes.can_publish);
+		return Boolean(this.payload.likes!.can_publish);
 	}
 
 	/**
@@ -373,7 +375,7 @@ export default class WallAttachment extends Attachment {
 		}
 
 		return 'views' in this.payload
-			? this.payload.views.count
+			? this.payload.views!.count
 			: null;
 	}
 
@@ -386,7 +388,7 @@ export default class WallAttachment extends Attachment {
 		}
 
 		return 'likes' in this.payload
-			? this.payload.likes.count
+			? this.payload.likes!.count
 			: null;
 	}
 
@@ -399,7 +401,7 @@ export default class WallAttachment extends Attachment {
 		}
 
 		return 'reposts' in this.payload
-			? this.payload.reposts.count
+			? this.payload.reposts!.count
 			: null;
 	}
 
@@ -412,7 +414,7 @@ export default class WallAttachment extends Attachment {
 		}
 
 		return 'comments' in this.payload
-			? this.payload.comments.count
+			? this.payload.comments!.count
 			: null;
 	}
 
@@ -455,18 +457,18 @@ export default class WallAttachment extends Attachment {
 	/**
 	 * Returns the attachments
 	 */
-	public get attachments(): Attachment[] | null {
+	public get attachments(): (Attachment | ExternalAttachment)[] {
 		if (!this[kAttachments]) {
 			this[kAttachments] = transformAttachments(this.payload.attachments || [], this.vk);
 		}
 
-		return this[kAttachments];
+		return this[kAttachments]!;
 	}
 
 	/**
 	 * Returns the attachments
 	 */
-	public getAttachments(type: string = null): Attachment[] {
+	public getAttachments(type: string | null = null): (Attachment | ExternalAttachment)[] {
 		if (type === null) {
 			return this.attachments;
 		}
@@ -479,6 +481,7 @@ export default class WallAttachment extends Attachment {
 	/**
 	 * Returns the custom data
 	 */
+	// @ts-ignore
 	public [inspectCustomData](): object | null {
 		return copyParams(this, [
 			'authorId',

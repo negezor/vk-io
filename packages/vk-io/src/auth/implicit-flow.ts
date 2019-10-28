@@ -1,4 +1,6 @@
+// @ts-ignore
 import { load as cheerioLoad } from 'cheerio';
+// @ts-ignore
 import createDebug from 'debug';
 
 import { Agent } from 'https';
@@ -11,6 +13,7 @@ import { AuthError, AuthErrorCode } from '../errors';
 import { parseFormField, getFullURL } from './helpers';
 import { CookieJar, fetchCookieFollowRedirectsDecorator } from '../utils/fetch-cookie';
 import { DESKTOP_USER_AGENT, CALLBACK_BLANK, CaptchaType } from '../utils/constants';
+import { ICallbackServiceValidate } from '../utils/callback-service';
 
 const debug = createDebug('vk-io:auth:implicit-flow');
 
@@ -57,16 +60,16 @@ const REPLACE_PREFIX_RE = /^[+|0]+/;
  */
 const FIND_LOCATION_HREF_RE = /location\.href\s+=\s+"([^"]+)"/i;
 
-interface IImplicitFlowOptions {
-	appId: number;
-	appSecret: string;
+export interface IImplicitFlowOptions {
+	appId: number | null;
+	appSecret: string | null;
 
-	login?: string;
-	phone?: string | number;
-	password: string;
+	login: string | null;
+	phone: string | number | null;
+	password: string | null;
 
 	agent: Agent;
-	scope: string | number | string[];
+	scope: string | number | string[] | null;
 	timeout: number;
 
 	apiVersion: string;
@@ -81,13 +84,14 @@ export default class ImplicitFlow {
 
 	public jar: CookieJar;
 
+	// @ts-ignore
 	protected fetchCookie: Function;
 
-	protected captchaValidate = null;
+	protected captchaValidate: ICallbackServiceValidate | null = null;
 
 	protected captchaAttempts = 0;
 
-	protected twoFactorValidate = null;
+	protected twoFactorValidate: ICallbackServiceValidate | null = null;
 
 	protected twoFactorAttempts = 0;
 
@@ -329,10 +333,10 @@ export default class ImplicitFlow {
 	 * Process form auth
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	protected async processAuthForm(response, $): Promise<any> {
+	protected async processAuthForm(response: any, $: any): Promise<any> {
 		debug('process login handle');
 
-		if (this.captchaValidate !== null) {
+		if (this.captchaValidate) {
 			this.captchaValidate.reject(new AuthError({
 				message: 'Incorrect captcha code',
 				code: FAILED_PASSED_CAPTCHA,
@@ -390,7 +394,7 @@ export default class ImplicitFlow {
 	 * Process two-factor form
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	protected async processTwoFactorForm(response, $): Promise<any> {
+	protected async processTwoFactorForm(response: any, $: any): Promise<any> {
 		debug('process two-factor handle');
 
 		if (this.twoFactorValidate !== null) {
@@ -436,7 +440,7 @@ export default class ImplicitFlow {
 	 * Process security form
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	protected async processSecurityForm(response, $): Promise<any> {
+	protected async processSecurityForm(response: any, $: any): Promise<any> {
 		debug('process security form');
 
 		const { login, phone } = this.options;

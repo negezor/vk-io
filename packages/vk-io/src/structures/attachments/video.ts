@@ -30,17 +30,14 @@ export interface IVideoAttachmentPayload {
 	platform?: string;
 }
 
-export default class VideoAttachment extends Attachment {
-	protected vk: VK;
-
-	protected payload: IVideoAttachmentPayload;
-
+export default class VideoAttachment extends Attachment<IVideoAttachmentPayload> {
 	/**
 	 * Constructor
 	 */
 	public constructor(payload: IVideoAttachmentPayload, vk?: VK) {
 		super(VIDEO, payload.owner_id, payload.id, payload.access_key);
 
+		// @ts-ignore
 		this.vk = vk;
 		this.payload = payload;
 
@@ -66,7 +63,7 @@ export default class VideoAttachment extends Attachment {
 		// @ts-ignore
 		this.payload = video;
 
-		if ('access_key' in this.payload) {
+		if (this.payload.access_key) {
 			this.accessKey = this.payload.access_key;
 		}
 
@@ -149,7 +146,7 @@ export default class VideoAttachment extends Attachment {
 			return null;
 		}
 
-		return this.payload.duration;
+		return this.payload.duration!;
 	}
 
 	/**
@@ -199,6 +196,7 @@ export default class VideoAttachment extends Attachment {
 	 * Checks for a boolean value in the property
 	 */
 	protected checkBooleanInProperty(name: string): boolean | null {
+		// @ts-ignore
 		const property = this.payload[name];
 
 		if (typeof property !== 'number') {

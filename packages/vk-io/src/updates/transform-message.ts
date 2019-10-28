@@ -3,15 +3,17 @@
 /**
  * Special attachments in one message
  */
-const specialAttachments = {
-	sticker: (raw): object => ({
+const specialAttachments: Record<string, Function> = {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	sticker: (raw: any): object => ({
 		type: 'sticker',
 		sticker: {
 			sticker_id: Number(raw.attach1),
 			product_id: Number(raw.attach1_product_id)
 		}
 	}),
-	money_transfer: (raw): object => ({
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	money_transfer: (raw: any): object => ({
 		type: 'money_transfer',
 		money_transfer: {
 			data: raw.attach1,
@@ -19,7 +21,8 @@ const specialAttachments = {
 			currency: Number(raw.attach1_currency)
 		}
 	}),
-	gift: (raw): object => ({
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	gift: (raw: any): object => ({
 		type: 'gift',
 		gift: {
 			id: Number(raw.attach1)
@@ -39,7 +42,19 @@ export default function transformMessage({
 	6: extra,
 	7: attachments
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-}): Record<string, any> {
+}: [
+	number,
+	number,
+	number,
+	number,
+	number,
+	number,
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	Record<string, any>,
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	Record<string, any>,
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+]): Record<string, any> {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const message: Record<string, any> = {
 		id,
@@ -154,7 +169,8 @@ export default function transformMessage({
 
 		message.fwd_messages = fwd
 			.split(',')
-			.map((attachment): object => {
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			.map((attachment: any): object => {
 				const [owner] = attachment.split('_');
 
 				return {

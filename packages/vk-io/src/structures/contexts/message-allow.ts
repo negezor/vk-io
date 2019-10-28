@@ -3,7 +3,7 @@ import Context, { IContextOptions } from './context';
 import { copyParams } from '../../utils/helpers';
 import { inspectCustomData } from '../../utils/constants';
 
-const subTypes = {
+const subTypes: Record<string, string> = {
 	message_allow: 'message_subscribe',
 	message_deny: 'message_unsubscribe'
 };

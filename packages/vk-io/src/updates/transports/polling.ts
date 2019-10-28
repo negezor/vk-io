@@ -1,4 +1,6 @@
+// @ts-ignore
 import fetch from 'node-fetch';
+// @ts-ignore
 import createDebug from 'debug';
 
 import { URL, URLSearchParams } from 'url';
@@ -27,7 +29,7 @@ export default class PollingTransport {
 	// eslint-disable-next-line no-bitwise
 	public mode = 2 | 8 | 64;
 
-	public pollingHandler: Function;
+	public pollingHandler!: Function;
 
 	protected vk: VK;
 
@@ -37,7 +39,7 @@ export default class PollingTransport {
 
 	protected restarted = 0;
 
-	protected url?: URL;
+	protected url!: URL;
 
 	public constructor(vk: VK) {
 		this.vk = vk;
@@ -62,7 +64,7 @@ export default class PollingTransport {
 			const { server, key, ts } = isGroup
 				// @ts-ignore
 				? await this.vk.api.groups.getLongPollServer({
-					group_id: pollingGroupId
+					group_id: pollingGroupId!
 				})
 				// @ts-ignore
 				: await this.vk.api.messages.getLongPollServer({
@@ -70,14 +72,14 @@ export default class PollingTransport {
 				});
 
 			if (this.ts === 0) {
-				this.ts = ts;
+				this.ts = ts!;
 			}
 
 			const pollingURL = isGroup
 				? server
 				: `https://${server}`;
 
-			this.url = new URL(pollingURL);
+			this.url = new URL(pollingURL!);
 			this.url.search = String(new URLSearchParams({
 				key,
 				act: 'a_check',
@@ -199,7 +201,8 @@ export default class PollingTransport {
 		}
 
 		/* Async handle updates */
-		response.updates.forEach(async (update): Promise<void> => {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		response.updates.forEach(async (update: Record<string, any>): Promise<void> => {
 			try {
 				await this.pollingHandler(update);
 			} catch (error) {

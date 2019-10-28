@@ -37,17 +37,14 @@ export interface IPollAttachmentPayload {
 	photo?: object;
 }
 
-export default class PollAttachment extends Attachment {
-	protected vk: VK;
-
-	protected payload: IPollAttachmentPayload;
-
+export default class PollAttachment extends Attachment<IPollAttachmentPayload> {
 	/**
 	 * Constructor
 	 */
 	public constructor(payload: IPollAttachmentPayload, vk?: VK) {
 		super(POLL, payload.owner_id, payload.id, payload.access_key);
 
+		// @ts-ignore
 		this.vk = vk;
 		this.payload = payload;
 
@@ -70,7 +67,7 @@ export default class PollAttachment extends Attachment {
 
 		this.payload = poll;
 
-		if ('access_key' in this.payload) {
+		if (this.payload.access_key) {
 			this.accessKey = this.payload.access_key;
 		}
 
@@ -194,7 +191,7 @@ export default class PollAttachment extends Attachment {
 			return null;
 		}
 
-		return this.payload.end_date;
+		return this.payload.end_date!;
 	}
 
 	/**

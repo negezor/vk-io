@@ -20,17 +20,14 @@ export interface IStickerAttachmentPayload {
 	images_with_background: IStickerImage[];
 }
 
-export default class StickerAttachment extends ExternalAttachment {
-	protected vk: VK;
-
-	protected payload: IStickerAttachmentPayload;
-
+export default class StickerAttachment extends ExternalAttachment<IStickerAttachmentPayload> {
 	/**
 	 * Constructor
 	 */
 	public constructor(payload: IStickerAttachmentPayload, vk?: VK) {
 		super(STICKER, payload);
 
+		// @ts-ignore
 		this.vk = vk;
 	}
 

@@ -7,7 +7,7 @@ const {
 } = SharedErrorCode;
 
 export interface ICallbackServiceValidate {
-	resolve: (value: string) => Promise<void>;
+	resolve: () => Promise<void>;
 	reject: (error: Error) => Promise<void>;
 }
 
@@ -56,6 +56,7 @@ export default class CallbackService {
 				return;
 			}
 
+			// @ts-ignore
 			this.captchaHandler(payload, (key: Error | string): Promise<void> => (
 				new Promise((resolve, reject): void => {
 					if (key instanceof Error) {
@@ -95,6 +96,7 @@ export default class CallbackService {
 				return;
 			}
 
+			// @ts-ignore
 			this.twoFactorHandler(payload, (code: Error | string): Promise<void> => (
 				new Promise((resolve, reject): void => {
 					if (code instanceof Error) {

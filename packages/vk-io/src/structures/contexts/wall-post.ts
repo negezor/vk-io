@@ -5,7 +5,7 @@ import { WallAttachment } from '../attachments';
 import { copyParams } from '../../utils/helpers';
 import { inspectCustomData } from '../../utils/constants';
 
-const subTypes = {
+const subTypes: Record<string, string> = {
 	wall_post_new: 'new_wall_post',
 	wall_repost: 'new_wall_repost'
 };

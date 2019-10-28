@@ -4,7 +4,7 @@ export interface IVKOptions {
 	/**
 	 * Access token
 	 */
-	token?: string;
+	token: string | null;
 
 	/**
 	 * HTTPS agent
@@ -14,37 +14,37 @@ export interface IVKOptions {
 	/**
 	 * The return data language
 	 */
-	language?: 'ru' | 'uk' | 'be' | 'en' | 'es' | 'fi' | 'de' | 'it';
+	language: 'ru' | 'uk' | 'be' | 'en' | 'es' | 'fi' | 'de' | 'it' | null;
 
 	/**
 	 * Application ID
 	 */
-	appId?: number;
+	appId: number | null;
 
 	/**
 	 * Secret application key
 	 */
-	appSecret?: string;
+	appSecret: string | null;
 
 	/**
 	 * User login (phone number or email)
 	 */
-	login?: string;
+	login: string | null;
 
 	/**
 	 * User phone number
 	 */
-	phone?: string | number;
+	phone: string | number | null;
 
 	/**
 	 * User password
 	 */
-	password?: string;
+	password: string | null;
 
 	/**
 	 * List of permissions
 	 */
-	authScope: string | string[] | number;
+	authScope: string | string[] | number | null;
 
 	/**
 	 * Wait time for one auth request
@@ -119,17 +119,17 @@ export interface IVKOptions {
 	/**
 	 * Group ID for polling
 	 */
-	pollingGroupId?: number;
+	pollingGroupId: number | null;
 
 	/**
 	 * Webhook secret key
 	 */
-	webhookSecret?: string;
+	webhookSecret: string | null;
 
 	/**
 	 * Webhook confirmation key
 	 */
-	webhookConfirmation?: string;
+	webhookConfirmation: string | null;
 
 	/**
 	 * The number of retries at calling

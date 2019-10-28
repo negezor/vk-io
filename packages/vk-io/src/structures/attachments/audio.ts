@@ -23,17 +23,14 @@ export interface IAudioAttachmentPayload {
 	url?: string;
 }
 
-export default class AudioAttachment extends Attachment {
-	protected vk: VK;
-
-	protected payload: IAudioAttachmentPayload;
-
+export default class AudioAttachment extends Attachment<IAudioAttachmentPayload> {
 	/**
 	 * Constructor
 	 */
 	public constructor(payload: IAudioAttachmentPayload, vk?: VK) {
 		super(AUDIO, payload.owner_id, payload.id, payload.access_key);
 
+		// @ts-ignore
 		this.vk = vk;
 		this.payload = payload;
 
@@ -55,7 +52,7 @@ export default class AudioAttachment extends Attachment {
 
 		this.payload = audio;
 
-		if ('access_key' in this.payload) {
+		if (this.payload.access_key) {
 			this.accessKey = this.payload.access_key;
 		}
 
@@ -118,7 +115,7 @@ export default class AudioAttachment extends Attachment {
 			return null;
 		}
 
-		return this.payload.duration;
+		return this.payload.duration!;
 	}
 
 	/**

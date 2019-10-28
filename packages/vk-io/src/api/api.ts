@@ -1,4 +1,6 @@
+// @ts-ignore
 import fetch from 'node-fetch';
+// @ts-ignore
 import createDebug from 'debug';
 
 import { inspect } from 'util';
@@ -18,6 +20,7 @@ import {
 	APIErrorCode,
 	CaptchaType
 } from '../utils/constants';
+import { IExecuteErrorOptions } from '../errors/execute';
 
 const {
 	CAPTCHA_REQUIRED,
@@ -27,7 +30,7 @@ const {
 
 const debug = createDebug('vk-io:api');
 
-const requestHandlers = {
+const requestHandlers: Record<string, Function> = {
 	sequential,
 	parallel,
 	parallel_selected: parallelSelected
@@ -122,6 +125,7 @@ export default class API extends APIMethods {
 			 * The check is only for the messages group
 			 * Since it is necessary to change the behavior of the sending method
 			 */
+			// @ts-ignore
 			this[group] = new Proxy(
 				isMessagesGroup
 					? {
@@ -137,14 +141,15 @@ export default class API extends APIMethods {
 					: {},
 				{
 					get: isMessagesGroup
-						? (obj, prop: string): Function => obj[prop] || (
+						// eslint-disable-next-line @typescript-eslint/no-explicit-any
+						? (obj: Record<string, any>, prop: string): Function => obj[prop] || (
 							// eslint-disable-next-line @typescript-eslint/no-explicit-any
-							(params): Promise<any> => (
+							(params: object): Promise<any> => (
 								this.enqueue(`${group}.${prop}`, params)
 							)
 						)
 						// eslint-disable-next-line @typescript-eslint/no-explicit-any
-						: (obj, prop: string) => (params): Promise<any> => (
+						: (obj, prop: string) => (params: object): Promise<any> => (
 							this.enqueue(`${group}.${prop}`, params)
 						)
 				}
@@ -321,13 +326,13 @@ export default class API extends APIMethods {
 		}
 
 		if (request.captchaValidate) {
-			request.captchaValidate.resolve(undefined);
+			request.captchaValidate.resolve();
 		}
 
 		if (method.startsWith('execute')) {
 			request.resolve({
 				response: response.response,
-				errors: (response.execute_errors || []).map(error => (
+				errors: (response.execute_errors || []).map((error: IExecuteErrorOptions) => (
 					new ExecuteError(error)
 				))
 			});
@@ -380,7 +385,7 @@ export default class API extends APIMethods {
 			try {
 				const verification = new AccountVerification(this.vk);
 
-				const { token } = await verification.run(error.redirectUri);
+				const { token } = await verification.run(error.redirectUri!);
 
 				debug('Account verification passed');
 

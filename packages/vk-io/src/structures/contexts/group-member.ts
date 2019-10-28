@@ -3,7 +3,7 @@ import Context, { IContextOptions } from './context';
 import { copyParams } from '../../utils/helpers';
 import { inspectCustomData } from '../../utils/constants';
 
-const subTypes = {
+const subTypes: Record<string, string> = {
 	group_leave: 'leave_group_member',
 	group_join: 'join_group_member'
 };
@@ -71,7 +71,7 @@ export default class GroupMemberContext<S = Record<string, any>>
 			return null;
 		}
 
-		return this.payload.join_type;
+		return this.payload.join_type!;
 	}
 
 	/**

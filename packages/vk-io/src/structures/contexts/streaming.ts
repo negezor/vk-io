@@ -260,7 +260,7 @@ export default class StreamingContext<S = Record<string, any>>
 	 * Returns the author platform
 	 */
 	public get authorPlatform(): string | null {
-		return platforms.get(this.payload.author.platform);
+		return platforms.get(this.payload.author.platform!)!;
 	}
 
 	/**
@@ -272,6 +272,7 @@ export default class StreamingContext<S = Record<string, any>>
 
 	public getAttachments(type: AttachmentType.GRAFFITI | 'graffiti'): GraffitiAttachment[];
 
+	// @ts-ignore
 	public getAttachments(type: AttachmentType.DOCUMENT | 'doc'): DocumentAttachment[];
 
 	public getAttachments(type: AttachmentType.MARKET_ALBUM | 'market_album'): MarketAlbumAttachment[];
@@ -296,7 +297,7 @@ export default class StreamingContext<S = Record<string, any>>
 
 	public getAttachments(type: AttachmentType.WALL_REPLY | 'wall_reply'): WallReplyAttachment[];
 
-	public getAttachments(type: string | null = null): Attachment[] | ExternalAttachment[] {
+	public getAttachments(type: string | null = null): (Attachment | ExternalAttachment)[] {
 		if (type === null) {
 			return this.attachments;
 		}
@@ -338,6 +339,7 @@ export default class StreamingContext<S = Record<string, any>>
 		];
 
 		const filtredEmptyProperties = properties.filter(property => (
+			// @ts-ignore
 			this[property] !== null
 		));
 

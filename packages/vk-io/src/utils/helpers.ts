@@ -34,7 +34,7 @@ export const resolveExecuteTask = (
 		reject: Function;
 	}[],
 	result: {
-		errors?: object[];
+		errors: object[];
 		response: (object | false)[];
 	}
 ): void => {

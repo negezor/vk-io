@@ -42,6 +42,7 @@ export default class VKError extends Error {
 		const json: CopiedError = {};
 
 		for (const key of Object.getOwnPropertyNames(this)) {
+			// @ts-ignore
 			json[key] = this[key];
 		}
 

@@ -49,6 +49,7 @@ export const transformAttachments = (attachments: any[] = [], vk: VK): Attachmen
 		.map((item): Attachment | boolean => {
 			const { type } = item;
 
+			// @ts-ignore
 			const attachment = attachmentsTypes[type];
 
 			return attachment

@@ -31,7 +31,7 @@ export const copyParams = <
  */
 export const streamToBuffer = (stream: Readable): Promise<Buffer> => (
 	new Promise((resolve, reject): void => {
-		const accum = [];
+		const accum: Buffer[] = [];
 
 		stream.on('error', reject);
 

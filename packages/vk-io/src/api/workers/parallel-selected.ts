@@ -15,6 +15,7 @@ export default async function parallelSelected(next: Function): Promise<void> {
 	const { queue } = this;
 
 	if (!apiExecuteMethods.includes(queue[0].method)) {
+		// @ts-ignore
 		sequential.call(this, next);
 
 		return;
@@ -44,6 +45,7 @@ export default async function parallelSelected(next: Function): Promise<void> {
 	}
 
 	if (tasks.length === 0) {
+		// @ts-ignore
 		sequential.call(this, next);
 
 		return;

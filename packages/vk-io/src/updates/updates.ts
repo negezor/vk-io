@@ -1,3 +1,4 @@
+// @ts-ignore
 import createDebug from 'debug';
 import {
 	Middleware,
@@ -45,7 +46,8 @@ import { UpdateSource } from '../utils/constants';
 
 const debug = createDebug('vk-io:updates');
 
-const webhookContextsEvents = [
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const webhookContextsEvents: [string[], any][] = [
 	[
 		['message_new', 'message_edit', 'message_reply'],
 		MessageContext
@@ -117,7 +119,8 @@ const webhookContextsEvents = [
 	]
 ];
 
-const pollingContextsEvents = [
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const pollingContextsEvents: [number[], any][] = [
 	[
 		[1, 2, 3],
 		MessageFlagsContext
@@ -150,7 +153,7 @@ const pollingContextsEvents = [
 
 
 const makeContexts = (groups: [(number | string)[], Context][]): Record<string, Context> => {
-	const contexts = {};
+	const contexts: Record<string | number, Context> = {};
 
 	for (const [events, UpdateContext] of groups) {
 		for (const event of events) {
@@ -202,7 +205,7 @@ export default class Updates {
 
 	protected hearStack: Middleware<Context>[] = [];
 
-	protected stackMiddleware: Middleware<Context>;
+	protected stackMiddleware!: Middleware<Context>;
 
 	protected hearFallbackHandler: Middleware<MessageContext> = (
 		context,
@@ -245,6 +248,7 @@ export default class Updates {
 			throw new TypeError('Middleware must be a function');
 		}
 
+		// @ts-ignore
 		this.stack.push(middleware);
 
 		this.reloadMiddleware();
@@ -350,7 +354,7 @@ export default class Updates {
 					[splitPath(path), unifyCondition(value)]
 				));
 
-				return (text, context): boolean => (
+				return (text: string | null, context: MessageContext): boolean => (
 					entries.every(([selectors, callback]): boolean => {
 						const value = getObjectValue(context, selectors);
 
@@ -368,11 +372,11 @@ export default class Updates {
 			textCondition = true;
 
 			if (condition instanceof RegExp) {
-				return (text, context): boolean => {
-					const passed = condition.test(text);
+				return (text: string | null, context: MessageContext): boolean => {
+					const passed = condition.test(text!);
 
 					if (passed) {
-						context.$match = text.match(condition);
+						context.$match = text!.match(condition)!;
 					}
 
 					return passed;
@@ -381,12 +385,13 @@ export default class Updates {
 
 			const stringCondition = String(condition);
 
-			return (text): boolean => text === stringCondition;
+			return (text: string | null): boolean => text === stringCondition;
 		});
 
 		const needText = textCondition && functionCondtion === false;
 
-		this.hearStack.push((context: MessageContext, next): Promise<void> => {
+		// @ts-ignore
+		this.hearStack.push((context: MessageContext, next: Function): Promise<void> => {
 			const { text } = context;
 
 			if (needText && text === null) {
@@ -412,6 +417,7 @@ export default class Updates {
 	 * A handler that is called when handlers are not found
 	 */
 	public setHearFallbackHandler<T = {}>(handler: Middleware<MessageContext & T>): this {
+		// @ts-ignore
 		this.hearFallbackHandler = handler;
 
 		return this;
@@ -420,7 +426,8 @@ export default class Updates {
 	/**
 	 * Handles longpoll event
 	 */
-	public handlePollingUpdate(update): Promise<void> {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	public handlePollingUpdate(update: any[]): Promise<void> {
 		debug('longpoll update', update);
 
 		const { 0: type } = update;
@@ -445,7 +452,8 @@ export default class Updates {
 	/**
 	 * Handles webhook event
 	 */
-	public handleWebhookUpdate(update): Promise<void> {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	public handleWebhookUpdate(update: Record<string, any>): Promise<void> {
 		debug('webhook update', update);
 
 		const { type, object: payload, group_id: groupId } = update;
@@ -536,7 +544,7 @@ export default class Updates {
 	/**
 	 * Returns webhook callback like http[s] or express
 	 */
-	public getWebhookCallback(path: string = null): Function {
+	public getWebhookCallback(path: string | null = null): Function {
 		return this.webhookTransport.getWebhookCallback(path);
 	}
 
@@ -562,6 +570,7 @@ export default class Updates {
 
 		if (this.hearStack.length !== 0) {
 			stack.push(
+				// @ts-ignore
 				getOptionalMiddleware(
 					(context: MessageContext): boolean => context.type === 'message' && !context.isEvent,
 					compose([

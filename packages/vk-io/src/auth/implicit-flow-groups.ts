@@ -1,13 +1,15 @@
+// @ts-ignore
 import createDebug from 'debug';
 
 import { URL, URLSearchParams } from 'url';
 
-import ImplicitFlow from './implicit-flow';
+import ImplicitFlow, { IImplicitFlowOptions } from './implicit-flow';
 import { VKError, AuthError, AuthErrorCode } from '../errors';
 import { CALLBACK_BLANK } from '../utils/constants';
 import {
 	getGroupsPermissionsByName
 } from './helpers';
+import VK from '../vk';
 
 const debug = createDebug('vk-io:auth:implicit-flow-user');
 
@@ -19,7 +21,7 @@ export default class ImplicitFlowGroups extends ImplicitFlow {
 	/**
 	 * Constructor
 	 */
-	constructor(vk, options) {
+	constructor(vk: VK, options: IImplicitFlowOptions & { groups: number[] }) {
 		super(vk, options);
 
 		let { groups = null } = options;
@@ -127,6 +129,7 @@ export default class ImplicitFlowGroups extends ImplicitFlow {
 			});
 		}
 
+		// @ts-ignore
 		return tokens;
 	}
 }

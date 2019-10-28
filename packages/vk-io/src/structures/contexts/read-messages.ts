@@ -3,7 +3,7 @@ import Context, { IContextOptions } from './context';
 import { copyParams } from '../../utils/helpers';
 import { inspectCustomData } from '../../utils/constants';
 
-const subTypes = {
+const subTypes: Record<number, string> = {
 	6: 'read_inbox_messages',
 	7: 'read_outbox_messages'
 };

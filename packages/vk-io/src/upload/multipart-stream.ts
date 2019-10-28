@@ -47,6 +47,7 @@ export default class MultipartStream extends SandwichStream {
 		const partStream = new PassThrough();
 
 		if ('headers' in part) {
+			// @ts-ignore
 			for (const [key, header] of Object.entries(part.headers)) {
 				partStream.write(`${key}:${header}${CRNL}`);
 			}
@@ -70,7 +71,7 @@ export default class MultipartStream extends SandwichStream {
 		field: string,
 		body: MultipartStreamBody,
 		{ filename = null, headers = {} }: {
-			filename?: string;
+			filename?: string | null;
 			headers: IMultipartStreamAddPartOptions['headers'];
 		}
 	): void {

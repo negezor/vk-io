@@ -18,17 +18,14 @@ export interface IAudioMessageAttachmentPayload {
 	link_mp3?: string;
 }
 
-export default class AudioMessageAttachment extends Attachment {
-	protected vk: VK;
-
-	protected payload: IAudioMessageAttachmentPayload;
-
+export default class AudioMessageAttachment extends Attachment<IAudioMessageAttachmentPayload> {
 	/**
 	 * Constructor
 	 */
 	public constructor(payload: IAudioMessageAttachmentPayload, vk?: VK) {
 		super(AUDIO_MESSAGE, payload.owner_id, payload.id, payload.access_key);
 
+		// @ts-ignore
 		this.vk = vk;
 		this.payload = payload;
 
@@ -51,7 +48,7 @@ export default class AudioMessageAttachment extends Attachment {
 		// @ts-ignore
 		this.payload = document;
 
-		if ('access_key' in this.payload) {
+		if (this.payload.access_key) {
 			this.accessKey = this.payload.access_key;
 		}
 
@@ -61,18 +58,18 @@ export default class AudioMessageAttachment extends Attachment {
 	/**
 	 * Returns the duration of the audio message
 	 */
-	public get duration(): number {
+	public get duration(): number | null{
 		if (!this.$filled) {
 			return null;
 		}
 
-		return this.payload.duration;
+		return this.payload.duration!;
 	}
 
 	/**
 	 * Returns the waveform of the audio message
 	 */
-	public get waveform(): number[] {
+	public get waveform(): number[] | null {
 		return this.payload.waveform || null;
 	}
 
@@ -93,7 +90,7 @@ export default class AudioMessageAttachment extends Attachment {
 	/**
 	 * Returns the URL of the audio message
 	 */
-	public get url(): string {
+	public get url(): string | null {
 		return this.mp3Url || this.oggUrl;
 	}
 

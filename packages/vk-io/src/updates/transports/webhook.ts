@@ -1,7 +1,14 @@
+// @ts-ignore
 import createDebug from 'debug';
 
 import { Server as HTTPSServer, createServer as httpsCreateServer } from 'https';
-import { Server as HTTPServer, createServer as httpCreateServer } from 'http';
+import {
+	Server as HTTPServer,
+	IncomingMessage,
+	ServerResponse,
+
+	createServer as httpCreateServer
+} from 'http';
 import { promisify } from 'util';
 
 import VK from '../../vk';
@@ -12,7 +19,7 @@ const debug = createDebug('vk-io:updates');
 export default class WebhookTransport {
 	public started = false;
 
-	public webhookHandler: Function;
+	public webhookHandler!: Function;
 
 	protected webhookServer: HTTPServer | HTTPSServer | null = null;
 
@@ -54,12 +61,12 @@ export default class WebhookTransport {
 			const webhookCallback = this.getWebhookCallback(path);
 
 			const callback = typeof next === 'function'
-				? (req, res): Promise<void> => (
+				? (req: IncomingMessage, res: ServerResponse): Promise<void> => (
 					webhookCallback(req, res, (): void => (
 						next(req, res)
 					))
 				)
-				: (req, res): Promise<void> => (
+				: (req: IncomingMessage, res: ServerResponse): Promise<void> => (
 					webhookCallback(req, res, (): void => {
 						res.writeHead(403);
 						res.end();
@@ -80,6 +87,7 @@ export default class WebhookTransport {
 					: 80
 			);
 
+			// @ts-ignore
 			await listen(serverPort, host);
 
 			debug(`Webhook listening on port: ${serverPort}`);
@@ -110,7 +118,7 @@ export default class WebhookTransport {
 	/**
 	 * Returns webhook callback like http[s] or express
 	 */
-	public getWebhookCallback(path: string = null): Function {
+	public getWebhookCallback(path: string | null = null): Function {
 		const headers = {
 			connection: 'keep-alive',
 			'content-type': 'text/plain'
@@ -120,8 +128,8 @@ export default class WebhookTransport {
 			? (requestPath: string): boolean => requestPath !== path
 			: (): boolean => false;
 
-		return async (req, res, next): Promise<void> => {
-			if (req.method !== 'POST' || checkIsNotValidPath(req.url)) {
+		return async (req: IncomingMessage, res: ServerResponse, next: Function): Promise<void> => {
+			if (req.method !== 'POST' || checkIsNotValidPath(req.url!)) {
 				next();
 
 				return;
@@ -129,8 +137,10 @@ export default class WebhookTransport {
 
 			let update;
 			try {
+				// @ts-ignore
 				update = typeof req.body !== 'object'
 					? await parseRequestJSON(req, res)
+					// @ts-ignore
 					: req.body;
 			} catch (e) {
 				debug(e);
@@ -186,7 +196,8 @@ export default class WebhookTransport {
 	 * Returns the middleware for the webhook under koa
 	 */
 	public getKoaWebhookMiddleware(): Function {
-		return async (context): Promise<void> => {
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		return async (context: any): Promise<void> => {
 			const update = context.request.body;
 
 			const { webhookSecret, webhookConfirmation } = this.vk.options;

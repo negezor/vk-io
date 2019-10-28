@@ -17,17 +17,14 @@ export interface IGraffitiAttachmentPayload {
 	url?: string;
 }
 
-export default class GraffitiAttachment extends Attachment {
-	protected vk: VK;
-
-	protected payload: IGraffitiAttachmentPayload;
-
+export default class GraffitiAttachment extends Attachment<IGraffitiAttachmentPayload> {
 	/**
 	 * Constructor
 	 */
 	public constructor(payload: IGraffitiAttachmentPayload, vk?: VK) {
 		super(GRAFFITI, payload.owner_id, payload.id, payload.access_key);
 
+		// @ts-ignore
 		this.vk = vk;
 		this.payload = payload;
 
@@ -50,7 +47,7 @@ export default class GraffitiAttachment extends Attachment {
 		// @ts-ignore
 		this.payload = document;
 
-		if ('access_key' in this.payload) {
+		if (this.payload.access_key) {
 			this.accessKey = this.payload.access_key;
 		}
 

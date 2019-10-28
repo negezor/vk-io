@@ -41,8 +41,9 @@ import {
 	CHAT_PEER,
 	inspectCustomData
 } from '../../utils/constants';
+import { UploadSource, UploadSourceValue } from '../../upload/upload';
 
-const subTypesEnum = {
+const subTypesEnum: Record<string | number, string> = {
 	4: 'new_message',
 	5: 'edit_message',
 	message_new: 'new_message',
@@ -91,11 +92,17 @@ export type MessageContextOptions<S> =
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default class MessageContext<S = Record<string, any>>
 	extends Context<IMessageContextPayload, S> {
-	public $match: RegExpMatchArray;
+	public $match!: RegExpMatchArray;
 
-	public text: string | null;
+	public text!: string | null;
 
 	protected $filled: boolean;
+
+	protected [kForwards]: MessageForwardsCollection | null;
+
+	protected [kAttachments]: (Attachment | ExternalAttachment)[] | null;
+
+	protected [kReplyMessage]: MessageReply | null;
 
 	public constructor(options: MessageContextOptions<S>) {
 		super({
@@ -139,7 +146,7 @@ export default class MessageContext<S = Record<string, any>>
 			// @ts-ignore
 			: await this.vk.api.messages.getByConversationMessageId({
 				peer_id: this.peerId,
-				conversation_message_ids: this.conversationMessageId
+				conversation_message_ids: this.conversationMessageId!
 			});
 
 		const [message] = items;
@@ -427,7 +434,7 @@ export default class MessageContext<S = Record<string, any>>
 				: new MessageForwardsCollection();
 		}
 
-		return this[kForwards];
+		return this[kForwards]!;
 	}
 
 	/**
@@ -446,12 +453,12 @@ export default class MessageContext<S = Record<string, any>>
 	/**
 	 * Returns the attachments
 	 */
-	public get attachments(): Attachment[] {
+	public get attachments(): (Attachment | ExternalAttachment)[] {
 		if (!this[kAttachments]) {
 			this[kAttachments] = transformAttachments(this.payload.attachments, this.vk);
 		}
 
-		return this[kAttachments];
+		return this[kAttachments]!;
 	}
 
 	/**
@@ -463,6 +470,7 @@ export default class MessageContext<S = Record<string, any>>
 
 	public getAttachments(type: AttachmentType.GRAFFITI | 'graffiti'): GraffitiAttachment[];
 
+	// @ts-ignore
 	public getAttachments(type: AttachmentType.DOCUMENT | 'doc'): DocumentAttachment[];
 
 	public getAttachments(type: AttachmentType.MARKET_ALBUM | 'market_album'): MarketAlbumAttachment[];
@@ -487,7 +495,7 @@ export default class MessageContext<S = Record<string, any>>
 
 	public getAttachments(type: AttachmentType.WALL_REPLY | 'wall_reply'): WallReplyAttachment[];
 
-	public getAttachments(type: string | null = null): Attachment[] | ExternalAttachment[] {
+	public getAttachments(type: string | null = null): (Attachment | ExternalAttachment)[] {
 		if (type === null) {
 			return this.attachments;
 		}
@@ -520,7 +528,7 @@ export default class MessageContext<S = Record<string, any>>
 					attachment.canBeAttached
 				))
 			),
-			message: this.text,
+			message: this.text!,
 			keep_forward_messages: 1,
 			keep_snippets: 1,
 
@@ -593,7 +601,10 @@ export default class MessageContext<S = Record<string, any>>
 	/**
 	 * Sends a photos to the current dialog
 	 */
-	async sendPhotos(rawSources, params: object = {}): Promise<number> {
+	async sendPhotos(
+		rawSources: UploadSource | UploadSource[],
+		params: object = {}
+	): Promise<number> {
 		const sources = !Array.isArray(rawSources)
 			? [rawSources]
 			: rawSources;
@@ -623,7 +634,10 @@ export default class MessageContext<S = Record<string, any>>
 	/**
 	 * @deprecated
 	 */
-	async sendPhoto(rawSources, params: object = {}): Promise<number> {
+	async sendPhoto(
+		rawSources: UploadSource | UploadSource[],
+		params: object = {}
+	): Promise<number> {
 		showDeprecatedMessage('MessageContext, use sendPhotos instead of sendPhoto');
 
 		return this.sendPhotos(rawSources, params);
@@ -632,7 +646,10 @@ export default class MessageContext<S = Record<string, any>>
 	/**
 	 * Sends a documents to the current dialog
 	 */
-	async sendDocuments(rawSources, params: object = {}): Promise<number> {
+	async sendDocuments(
+		rawSources: UploadSource | UploadSource[],
+		params: object = {}
+	): Promise<number> {
 		const sources = !Array.isArray(rawSources)
 			? [rawSources]
 			: rawSources;
@@ -664,7 +681,10 @@ export default class MessageContext<S = Record<string, any>>
 	/**
 	 * @deprecated
 	 */
-	async sendDocument(rawSources, params: object = {}): Promise<number> {
+	async sendDocument(
+		rawSources: UploadSource | UploadSource[],
+		params: object = {}
+	): Promise<number> {
 		showDeprecatedMessage('MessageContext, use sendDocuments instead of sendDocument');
 
 		return this.sendDocuments(rawSources, params);
@@ -673,7 +693,10 @@ export default class MessageContext<S = Record<string, any>>
 	/**
 	 * Sends a audio message to the current dialog
 	 */
-	async sendAudioMessage(source, params: object = {}): Promise<number> {
+	async sendAudioMessage(
+		source: UploadSource,
+		params: object = {}
+	): Promise<number> {
 		const attachment = await this.vk.upload.audioMessage({
 			peer_id: this.senderId,
 
@@ -764,7 +787,7 @@ export default class MessageContext<S = Record<string, any>>
 
 		// @ts-ignore
 		const isRenamed = await this.vk.api.messages.editChat({
-			chat_id: this.chatId,
+			chat_id: this.chatId!,
 			title
 		});
 
@@ -774,13 +797,13 @@ export default class MessageContext<S = Record<string, any>>
 	/**
 	 * Sets a new image for the chat
 	 */
-	public async newChatPhoto(source, params: object = {}): Promise<object> {
+	public async newChatPhoto(source: UploadSourceValue, params: object = {}): Promise<object> {
 		this.assertIsChat();
 
 		const response = await this.vk.upload.chatPhoto({
 			...params,
 
-			chat_id: this.chatId,
+			chat_id: this.chatId!,
 			source
 		});
 
@@ -795,19 +818,19 @@ export default class MessageContext<S = Record<string, any>>
 
 		// @ts-ignore
 		return this.vk.api.messages.deleteChatPhoto({
-			chat_id: this.chatId
+			chat_id: this.chatId!
 		});
 	}
 
 	/**
 	 * Invites a new user
 	 */
-	public async inviteUser(id: number = this.eventMemberId): Promise<boolean> {
+	public async inviteUser(id: number = this.eventMemberId!): Promise<boolean> {
 		this.assertIsChat();
 
 		// @ts-ignore
 		const isInvited = await this.vk.api.messages.addChatUser({
-			chat_id: this.chatId,
+			chat_id: this.chatId!,
 			user_id: id
 		});
 
@@ -817,12 +840,12 @@ export default class MessageContext<S = Record<string, any>>
 	/**
 	 * Excludes user
 	 */
-	public async kickUser(id: number = this.eventMemberId): Promise<boolean> {
+	public async kickUser(id: number = this.eventMemberId!): Promise<boolean> {
 		this.assertIsChat();
 
 		// @ts-ignore
 		const isKicked = await this.vk.api.messages.removeChatUser({
-			chat_id: this.chatId,
+			chat_id: this.chatId!,
 			member_id: id
 		});
 
@@ -917,6 +940,7 @@ export default class MessageContext<S = Record<string, any>>
 			afterAttachments.push('$match');
 		}
 
+		// @ts-ignore
 		return copyParams(this, [
 			'id',
 			'conversationMessageId',

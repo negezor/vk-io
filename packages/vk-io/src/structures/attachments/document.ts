@@ -35,17 +35,14 @@ export interface IDocumentAttachmentPayload {
 	preview?: object;
 }
 
-export default class DocumentAttachment extends Attachment {
-	protected vk: VK;
-
-	protected payload: IDocumentAttachmentPayload;
-
+export default class DocumentAttachment extends Attachment<IDocumentAttachmentPayload> {
 	/**
 	 * Constructor
 	 */
 	public constructor(payload: IDocumentAttachmentPayload, vk?: VK) {
 		super(DOCUMENT, payload.owner_id, payload.id, payload.access_key);
 
+		// @ts-ignore
 		this.vk = vk;
 		this.payload = payload;
 
@@ -68,7 +65,7 @@ export default class DocumentAttachment extends Attachment {
 		// @ts-ignore
 		this.payload = document;
 
-		if ('access_key' in this.payload) {
+		if (this.payload.access_key) {
 			this.accessKey = this.payload.access_key;
 		}
 
@@ -203,7 +200,7 @@ export default class DocumentAttachment extends Attachment {
 			return null;
 		}
 
-		return documentTypes.get(this.typeId);
+		return documentTypes.get(this.typeId!)!;
 	}
 
 	/**
@@ -214,7 +211,7 @@ export default class DocumentAttachment extends Attachment {
 			return null;
 		}
 
-		return this.payload.size;
+		return this.payload.size!;
 	}
 
 	/**
@@ -254,6 +251,7 @@ export default class DocumentAttachment extends Attachment {
 	/**
 	 * Returns the custom data
 	 */
+	// @ts-ignore
 	public [inspectCustomData](): object | null {
 		return copyParams(this, [
 			'title',

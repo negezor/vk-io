@@ -16,7 +16,7 @@ const reasonNames = new Map([
 	[4, 'messages_off_topic']
 ]);
 
-const subTypes = {
+const subTypes: Record<string, string> = {
 	user_block: 'block_group_user',
 	user_unblock: 'unblock_group_user'
 };
@@ -89,7 +89,7 @@ export default class GroupUserContext<S = Record<string, any>>
 	/**
 	 * Returns the reason for the ban
 	 */
-	public get reasonId(): number {
+	public get reasonId(): number | null {
 		return this.payload.reason || null;
 	}
 
@@ -97,6 +97,7 @@ export default class GroupUserContext<S = Record<string, any>>
 	 * Returns the reason name for the ban
 	 */
 	public get reasonName(): string | null {
+		// @ts-ignore
 		return reasonNames.get(this.reasonId);
 	}
 
@@ -129,7 +130,7 @@ export default class GroupUserContext<S = Record<string, any>>
 		return this.vk.api.groups.ban({
 			...params,
 
-			group_id: this.$groupId,
+			group_id: this.$groupId!,
 			user_id: this.userId
 		});
 	}
@@ -147,7 +148,7 @@ export default class GroupUserContext<S = Record<string, any>>
 
 		// @ts-ignore
 		return this.vk.api.groups.unban({
-			group_id: this.$groupId,
+			group_id: this.$groupId!,
 			user_id: this.userId
 		});
 	}

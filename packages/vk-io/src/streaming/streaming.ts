@@ -1,5 +1,8 @@
+// @ts-ignore
 import WebSocket from 'ws';
+// @ts-ignore
 import fetch from 'node-fetch';
+// @ts-ignore
 import createDebug from 'debug';
 
 import { URL, URLSearchParams } from 'url';
@@ -19,15 +22,15 @@ export interface IStreamingRule {
 export default class StreamingAPI {
 	protected socket: WebSocket = null;
 
-	protected key: string = null;
+	protected key: string | null = null;
 
-	protected endpoint: URL = null;
+	protected endpoint: URL | null = null;
 
 	protected started = false;
 
 	private vk: VK;
 
-	private close: () => Promise<void> = null;
+	private close: (() => Promise<void>) | null = null;
 
 	/**
 	 * Constructor
@@ -71,7 +74,7 @@ export default class StreamingAPI {
 
 		this.close = promisify(socket.close).bind(socket);
 
-		socket.on('message', async (data) => {
+		socket.on('message', async (data: string) => {
 			let message;
 
 			try {
@@ -108,7 +111,7 @@ export default class StreamingAPI {
 			}
 		});
 
-		socket.on('error', (error) => {
+		socket.on('error', (error: Error) => {
 			debug('WebSocket error', error);
 		});
 	}
@@ -121,9 +124,9 @@ export default class StreamingAPI {
 			return;
 		}
 
-		await this.close();
+		await this.close!();
 
-		this.started = null;
+		this.started = false;
 
 		this.key = null;
 		this.socket = null;
@@ -133,7 +136,9 @@ export default class StreamingAPI {
 	/**
 	 * Processes server messages
 	 */
-	public async handleServiceMessage({ service_code: code }): Promise<void> {
+	public async handleServiceMessage(
+		{ service_code: code }: { service_code: number }
+	): Promise<void> {
 		if ([3000, 3001].includes(code)) {
 			await this.stop();
 			await this.startWebSocket();
@@ -160,8 +165,8 @@ export default class StreamingAPI {
 	private async fetchRules(method: string, payload: object = {}): Promise<Record<string, any>> {
 		const { agent } = this.vk.options;
 
-		const url = new URL('/rules', this.endpoint);
-		url.searchParams.set('key', this.key);
+		const url = new URL('/rules', this.endpoint!);
+		url.searchParams.set('key', this.key!);
 
 		let body;
 		if (method !== 'GET') {

@@ -1,18 +1,21 @@
 import { inspect } from 'util';
 
+import VK from '../../vk';
 import { inspectCustomData } from '../../utils/constants';
 
-export default class ExternalAttachment {
+export default class ExternalAttachment<P = {}> {
 	public type: string;
 
 	protected $filled: boolean;
 
-	protected payload: object;
+	protected vk!: VK;
+
+	protected payload: P;
 
 	/**
 	 * Constructor
 	 */
-	public constructor(type: string, payload: object) {
+	public constructor(type: string, payload: P) {
 		this.type = type;
 		this.payload = payload;
 
@@ -53,6 +56,7 @@ export default class ExternalAttachment {
 	 * Returns the custom data
 	 */
 	public [inspectCustomData](): object {
+		// @ts-ignore
 		return this.payload;
 	}
 

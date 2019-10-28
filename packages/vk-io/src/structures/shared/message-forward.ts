@@ -3,7 +3,7 @@ import { inspect } from 'util';
 import VK from '../../vk';
 import { copyParams } from '../../utils/helpers';
 import { transformAttachments } from '../attachments/helpers';
-import { Attachment } from '../attachments';
+import { Attachment, ExternalAttachment } from '../attachments';
 
 const kForwards = Symbol('forwards');
 const kAttachments = Symbol('attachments');
@@ -27,6 +27,10 @@ export default class MessageForward {
 	protected vk: VK;
 
 	protected payload: IMessageForwardPayload;
+
+	protected [kForwards]: MessageForward[];
+
+	protected [kAttachments]: (Attachment | ExternalAttachment)[];
 
 	/**
 	 * Constructor
@@ -54,7 +58,7 @@ export default class MessageForward {
 	/**
 	 * Checks for the presence of attachments
 	 */
-	public hasAttachments(type: string = null): boolean {
+	public hasAttachments(type: string | null = null): boolean {
 		if (type === null) {
 			return this.attachments.length > 0;
 		}
@@ -113,7 +117,7 @@ export default class MessageForward {
 	/**
 	 * Returns the attachments
 	 */
-	public get attachments(): Attachment[] {
+	public get attachments(): (Attachment | ExternalAttachment)[] {
 		if (!this[kAttachments]) {
 			this[kAttachments] = transformAttachments(this.payload.attachments, this.vk);
 		}
@@ -124,7 +128,7 @@ export default class MessageForward {
 	/**
 	 * Returns the attachments
 	 */
-	public getAttachments(type: string = null): Attachment[] {
+	public getAttachments(type: string | null = null): (Attachment | ExternalAttachment)[] {
 		if (type === null) {
 			return this.attachments;
 		}

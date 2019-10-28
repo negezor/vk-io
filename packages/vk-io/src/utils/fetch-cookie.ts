@@ -1,4 +1,6 @@
+// @ts-ignore
 import fetch from 'node-fetch';
+// @ts-ignore
 import createDebug from 'debug';
 import { CookieJar } from 'tough-cookie';
 
@@ -32,8 +34,13 @@ export const fetchCookieDecorator = (jar = new CookieJar()): Function => {
 	const setCookie = promisify(jar.setCookie).bind(jar);
 	const getCookieString = promisify(jar.getCookieString).bind(jar);
 
-	return async function fetchCookie(url: URL | string, options = {}): Promise<object> {
-		const previousCookie = await getCookieString(url);
+	// @ts-ignore
+	return async function fetchCookie(
+		url: URL | string,
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		options: Record<string, any> = {}
+	): Promise<object> {
+		const previousCookie = await getCookieString(String(url));
 
 		const { headers = {} } = options;
 
@@ -55,7 +62,8 @@ export const fetchCookieDecorator = (jar = new CookieJar()): Function => {
 			return response;
 		}
 
-		await Promise.all(cookies.map((cookie: string): Promise<void> => (
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		await Promise.all(cookies.map((cookie: string): Promise<any> => (
 			setCookie(cookie, response.url)
 		)));
 
@@ -68,7 +76,9 @@ export const fetchCookieFollowRedirectsDecorator = (jar?: CookieJar): Function =
 
 	return async function fetchCookieFollowRedirects(
 		url: URL | string,
-		options = {}
+		// @ts-ignore
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		options: Record<string, any> = {}
 	): Promise<object> {
 		const response = await fetchCookie(url, {
 			...options,

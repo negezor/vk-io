@@ -32,17 +32,14 @@ export interface IPhotoAttachmentPayload {
 	height?: number;
 }
 
-export default class PhotoAttachment extends Attachment {
-	protected vk: VK;
-
-	protected payload: IPhotoAttachmentPayload;
-
+export default class PhotoAttachment extends Attachment<IPhotoAttachmentPayload> {
 	/**
 	 * Constructor
 	 */
 	public constructor(payload: IPhotoAttachmentPayload, vk?: VK) {
 		super(PHOTO, payload.owner_id, payload.id, payload.access_key);
 
+		// @ts-ignore
 		this.vk = vk;
 		this.payload = payload;
 
@@ -66,7 +63,7 @@ export default class PhotoAttachment extends Attachment {
 		// @ts-ignore
 		this.payload = photo;
 
-		if ('access_key' in this.payload) {
+		if (this.payload.access_key) {
 			this.accessKey = this.payload.access_key;
 		}
 
@@ -170,6 +167,11 @@ export default class PhotoAttachment extends Attachment {
 	public getSizes(sizeTypes: string[]): IPhotoSize[] {
 		const { sizes } = this;
 
+		if (!sizes) {
+			return [];
+		}
+
+		// @ts-ignore
 		return sizeTypes
 			.map((sizeType): IPhotoSize | null => (
 				sizes.find((size): boolean => size.type === sizeType) || null
@@ -180,6 +182,7 @@ export default class PhotoAttachment extends Attachment {
 	/**
 	 * Returns the custom data
 	 */
+	// @ts-ignore
 	public [inspectCustomData](): object | null {
 		return copyParams(this, [
 			'userId',

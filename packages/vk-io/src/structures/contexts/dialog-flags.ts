@@ -3,7 +3,7 @@ import Context, { IContextOptions } from './context';
 import { copyParams } from '../../utils/helpers';
 import { inspectCustomData } from '../../utils/constants';
 
-const subTypes = {
+const subTypes: Record<string, string> = {
 	10: 'remove_dialog_flags',
 	11: 'update_dialog_flags',
 	12: 'set_dialog_flags'

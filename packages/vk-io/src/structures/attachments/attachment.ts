@@ -1,27 +1,30 @@
 import { inspect } from 'util';
 
+import VK from '../../vk';
 import { parseAttachment, inspectCustomData, AttachmentType } from '../../utils/constants';
 
-export default class Attachment {
+export default class Attachment<P = {}> {
 	public type: AttachmentType | string;
 
 	public ownerId: number;
 
 	public id: number;
 
-	public accessKey: string;
+	public accessKey: string | null;
 
 	protected $filled: boolean;
 
-	protected payload: object;
+	protected vk!: VK;
+
+	protected payload!: P;
 
 	/**
 	 * Constructor
 	 */
 	public constructor(
 		type: AttachmentType | string,
-		ownerId: number,
-		id: number,
+		ownerId: number | string,
+		id: number | string,
 		accessKey: string | null = null
 	) {
 		this.type = type;
@@ -44,12 +47,12 @@ export default class Attachment {
 	/**
 	 * Parse attachment with string
 	 */
-	public static fromString(attachment): Attachment {
+	public static fromString(attachment: string): Attachment {
 		if (!parseAttachment.test(attachment)) {
 			throw new TypeError('Incorrect attachment');
 		}
 
-		const [, type, ownerId, id, accessKey] = attachment.match(parseAttachment);
+		const [, type, ownerId, id, accessKey] = attachment.match(parseAttachment)!;
 
 		return new Attachment(type, ownerId, id, accessKey);
 	}

@@ -17,17 +17,14 @@ export interface IMarketAlbumAttachmentPayload {
 	updated_time?: number;
 }
 
-export default class MarketAlbumAttachment extends Attachment {
-	protected vk: VK;
-
-	protected payload: IMarketAlbumAttachmentPayload;
-
+export default class MarketAlbumAttachment extends Attachment<IMarketAlbumAttachmentPayload> {
 	/**
 	 * Constructor
 	 */
 	public constructor(payload: IMarketAlbumAttachmentPayload, vk?: VK) {
 		super(MARKET_ALBUM, payload.owner_id, payload.id, payload.access_key);
 
+		// @ts-ignore
 		this.vk = vk;
 		this.payload = payload;
 
@@ -50,7 +47,7 @@ export default class MarketAlbumAttachment extends Attachment {
 
 		this.payload = album;
 
-		if ('access_key' in this.payload) {
+		if (this.payload.access_key) {
 			this.accessKey = this.payload.access_key;
 		}
 

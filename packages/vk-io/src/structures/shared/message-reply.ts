@@ -3,7 +3,7 @@ import { inspect } from 'util';
 import VK from '../../vk';
 import { copyParams } from '../../utils/helpers';
 import { transformAttachments } from '../attachments/helpers';
-import { Attachment } from '../attachments';
+import { Attachment, ExternalAttachment } from '../attachments';
 
 const kAttachments = Symbol('attachments');
 
@@ -13,10 +13,13 @@ export default class MessageReply {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	protected payload: Record<string, any>;
 
+	protected [kAttachments]: (Attachment | ExternalAttachment)[];
+
 	/**
 	 * Constructor
 	 */
 	public constructor(payload: object, vk?: VK) {
+		// @ts-ignore
 		this.vk = vk;
 
 		this.payload = payload;
@@ -39,7 +42,7 @@ export default class MessageReply {
 	/**
 	 * Checks for the presence of attachments
 	 */
-	public hasAttachments(type: string = null): boolean {
+	public hasAttachments(type: string | null = null): boolean {
 		if (type === null) {
 			return this.attachments.length > 0;
 		}
@@ -101,7 +104,7 @@ export default class MessageReply {
 	/**
 	 * Returns the attachments
 	 */
-	public get attachments(): Attachment[] {
+	public get attachments(): (Attachment | ExternalAttachment)[] {
 		if (!this[kAttachments]) {
 			this[kAttachments] = transformAttachments(this.payload.attachments, this.vk);
 		}
@@ -112,7 +115,7 @@ export default class MessageReply {
 	/**
 	 * Returns the attachments
 	 */
-	public getAttachments(type: string = null): Attachment[] {
+	public getAttachments(type: string | null = null): (Attachment | ExternalAttachment)[] {
 		if (type === null) {
 			return this.attachments;
 		}

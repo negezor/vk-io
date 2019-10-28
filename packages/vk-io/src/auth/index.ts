@@ -41,7 +41,8 @@ export default class Auth {
 	/**
 	 * Standalone authorization with login & password for group
 	 */
-	public implicitFlowGroups(groups, options = {}): ImplicitFlowGroups {
+	public implicitFlowGroups(groups: number[], options = {}): ImplicitFlowGroups {
+		// @ts-ignore
 		return new ImplicitFlowGroups(this.vk, { ...options, groups });
 	}
 
@@ -51,6 +52,7 @@ export default class Auth {
 	public direct(): DirectAuth {
 		const { appId, appSecret } = this.vk.options;
 
+		// @ts-ignore
 		return new DirectAuth(this.vk, { appId, appSecret });
 	}
 

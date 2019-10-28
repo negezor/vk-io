@@ -1,6 +1,6 @@
 import { inspect } from 'util';
 
-import { VKError } from '../errors';
+import { VKError, ExecuteError } from '../errors';
 
 import VK from '../vk';
 import Request from '../api/request';
@@ -11,7 +11,7 @@ export default class Chain {
 
 	protected vk: VK;
 
-	protected queue = [];
+	protected queue: Request[] = [];
 
 	/**
 	 * Constructor
@@ -50,7 +50,8 @@ export default class Chain {
 	 * Promise based
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	public then(thenFn, catchFn): Promise<any[]> {
+	public then(thenFn: Function, catchFn: Function): Promise<any[]> {
+		// @ts-ignore
 		return Promise.resolve(this.run()).then(thenFn, catchFn);
 	}
 
@@ -70,7 +71,11 @@ export default class Chain {
 
 		const { queue } = this;
 
-		let out = {
+		let out: {
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			response: any[];
+			errors: ExecuteError[];
+		} = {
 			response: [],
 			errors: []
 		};

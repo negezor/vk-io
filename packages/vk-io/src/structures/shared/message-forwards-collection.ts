@@ -1,5 +1,5 @@
 import MessageForward from './message-forward';
-import { Attachment } from '../attachments';
+import { Attachment, ExternalAttachment } from '../attachments';
 
 const getForwards = (rootForwards: MessageForward[]): MessageForward[] => {
 	const forwards = [];
@@ -17,10 +17,12 @@ const getForwards = (rootForwards: MessageForward[]): MessageForward[] => {
 const kFlatten = Symbol('flatten');
 
 export default class MessageForwardsCollection extends Array {
+	protected [kFlatten]: MessageForward[];
+
 	/**
 	 * Returns a flat copy of forwards
 	 */
-	get flatten(): MessageForward[] {
+	public get flatten(): MessageForward[] {
 		if (!this[kFlatten]) {
 			this[kFlatten] = getForwards(this);
 		}
@@ -31,7 +33,7 @@ export default class MessageForwardsCollection extends Array {
 	/**
 	 * Checks for the presence of attachments
 	 */
-	hasAttachments(type: string = null): boolean {
+	public hasAttachments(type: string | null = null): boolean {
 		return this.flatten.some(forward => (
 			forward.hasAttachments(type)
 		));
@@ -40,11 +42,12 @@ export default class MessageForwardsCollection extends Array {
 	/**
 	 * Returns the attachments
 	 */
-	getAttachments(type: string = null): Attachment[] {
+	public getAttachments(type: string | null = null): (Attachment | ExternalAttachment)[] {
 		const attachments = this.flatten.map(forward => (
 			forward.getAttachments(type)
 		));
 
+		// @ts-ignore
 		return [].concat(...attachments);
 	}
 }

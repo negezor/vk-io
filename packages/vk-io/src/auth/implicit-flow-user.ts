@@ -1,3 +1,4 @@
+// @ts-ignore
 import createDebug from 'debug';
 
 import { URL, URLSearchParams } from 'url';
@@ -52,7 +53,7 @@ export default class ImplicitFlowUser extends ImplicitFlow {
 	 */
 	// @ts-ignore
 	public async run(): Promise<{
-		email: string;
+		email: string | null;
 		user: number | null;
 		token: string;
 		expires: number | null;
@@ -83,7 +84,7 @@ export default class ImplicitFlowUser extends ImplicitFlow {
 				? Number(user)
 				: null,
 
-			token: params.get('access_token'),
+			token: params.get('access_token')!,
 			expires: expires !== null
 				? Number(expires)
 				: null

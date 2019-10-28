@@ -1,4 +1,6 @@
+// @ts-ignore
 import { load as cheerioLoad } from 'cheerio';
+// @ts-ignore
 import createDebug from 'debug';
 
 import { Agent } from 'https';
@@ -18,6 +20,7 @@ import {
 	parseFormField,
 	getUsersPermissionsByName
 } from './helpers';
+import { ICallbackServiceValidate } from '../utils/callback-service';
 
 const debug = createDebug('vk-io:auth:direct');
 
@@ -43,16 +46,16 @@ const CAPTCHA_ATTEMPTS = 3;
  */
 const ACTION_SECURITY_CODE = 'act=security';
 
-interface IDirectAuthOptions {
-	appId: number;
-	appSecret: string;
+export interface IDirectAuthOptions {
+	appId: number | null;
+	appSecret: string | null;
 
-	login?: string;
-	phone?: string | number;
-	password: string;
+	login: string | null;
+	phone: string | number | null;
+	password: string | null;
 
 	agent: Agent;
-	scope: string | number | string[];
+	scope: string | number | string[] | null;
 	timeout: number;
 
 	apiVersion: string;
@@ -65,15 +68,15 @@ export default class DirectAuth {
 
 	public started: boolean;
 
-	public jar: CookieJar;
+	public jar!: CookieJar;
 
-	protected fetchCookie: Function;
+	protected fetchCookie!: Function;
 
-	protected captchaValidate = null;
+	protected captchaValidate: ICallbackServiceValidate | null = null;
 
 	protected captchaAttempts = 0;
 
-	protected twoFactorValidate = null;
+	protected twoFactorValidate: ICallbackServiceValidate | null = null;
 
 	protected twoFactorAttempts = 0;
 
@@ -132,8 +135,12 @@ export default class DirectAuth {
 	/**
 	 * Executes the HTTP request
 	 */
+	protected fetch(
+		url: string | URL,
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		options: Record<string, any> = {}
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	protected fetch(url, options: Record<string, any> = {}): Promise<Record<string, any>> {
+	): Promise<Record<string, any>> {
 		const { agent, timeout } = this.options;
 
 		const { headers = {} } = options;
@@ -202,6 +209,7 @@ export default class DirectAuth {
 	/**
 	 * Runs authorization
 	 */
+	// @ts-ignore
 	// eslint-disable-next-line consistent-return, @typescript-eslint/no-explicit-any
 	public async run(): Promise<{
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -250,12 +258,12 @@ export default class DirectAuth {
 						email,
 						user: user !== null
 							? Number(user)
-							: null,
+							: 0,
 
 						token,
 						expires: expires !== null
 							? Number(expires)
-							: null
+							: 0
 					};
 				}
 
@@ -305,7 +313,7 @@ export default class DirectAuth {
 	 * Process captcha
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	protected async processCaptcha({ captcha_sid: sid, captcha_img: src }): Promise<any> {
+	protected async processCaptcha({ captcha_sid: sid, captcha_img: src }: any): Promise<any> {
 		debug('captcha process');
 
 		if (this.captchaValidate !== null) {
@@ -345,9 +353,12 @@ export default class DirectAuth {
 	/**
 	 * Process two-factor
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	protected async processTwoFactor(
-		{ validation_type: validationType, phone_mask: phoneMask }
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		{ validation_type: validationType, phone_mask: phoneMask }: {
+			validation_type: string;
+			phone_mask: string;
+		}
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	): Promise<any> {
 		debug('process two-factor handle');
@@ -388,7 +399,7 @@ export default class DirectAuth {
 	 * Process security form
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	protected async processSecurityForm(response, $): Promise<any> {
+	protected async processSecurityForm(response: any, $: any): Promise<any> {
 		debug('process security form');
 
 		const { login, phone } = this.options;

@@ -23,7 +23,7 @@ import {
 import { copyParams } from '../../utils/helpers';
 import { inspectCustomData, AttachmentType } from '../../utils/constants';
 
-const subTypes = {
+const subTypes: Record<string, string> = {
 	group_change_photo: 'group_update_photo',
 	group_update_officers: 'group_update_officers',
 	group_change_settings: 'group_update_settings'
@@ -140,6 +140,7 @@ export default class GroupUpdateContext<S = Record<string, any>>
 
 	public getAttachments(type: AttachmentType.GRAFFITI | 'graffiti'): GraffitiAttachment[];
 
+	// @ts-ignore
 	public getAttachments(type: AttachmentType.DOCUMENT | 'doc'): DocumentAttachment[];
 
 	public getAttachments(type: AttachmentType.MARKET_ALBUM | 'market_album'): MarketAlbumAttachment[];
@@ -164,7 +165,7 @@ export default class GroupUpdateContext<S = Record<string, any>>
 
 	public getAttachments(type: AttachmentType.WALL_REPLY | 'wall_reply'): WallReplyAttachment[];
 
-	public getAttachments(type: string | null = null): Attachment[] | ExternalAttachment[] {
+	public getAttachments(type: string | null = null): (Attachment | ExternalAttachment)[] {
 		if (type === null) {
 			return this.attachments;
 		}

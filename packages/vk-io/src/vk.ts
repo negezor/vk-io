@@ -70,7 +70,7 @@ export default class VK {
 	/**
 	 * Sets token
 	 */
-	public set token(token: string) {
+	public set token(token: string | null) {
 		this.options.token = token;
 	}
 

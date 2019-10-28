@@ -14,9 +14,9 @@ export default class Request {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public promise: Promise<any>;
 
-	public resolve: Function;
+	public resolve!: Function;
 
-	public reject: Function;
+	public reject!: Function;
 
 	public captchaValidate?: ICallbackServiceValidate;
 

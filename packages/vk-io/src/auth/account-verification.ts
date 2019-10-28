@@ -1,4 +1,6 @@
+// @ts-ignore
 import { load as cheerioLoad } from 'cheerio';
+// @ts-ignore
 import createDebug from 'debug';
 
 import { Agent } from 'https';
@@ -9,6 +11,7 @@ import { AuthError, AuthErrorCode } from '../errors';
 import { parseFormField, getFullURL } from './helpers';
 import { DESKTOP_USER_AGENT, CALLBACK_BLANK, CaptchaType } from '../utils/constants';
 import { CookieJar, fetchCookieFollowRedirectsDecorator } from '../utils/fetch-cookie';
+import { ICallbackServiceValidate } from '../utils/callback-service';
 
 const debug = createDebug('vk-io:auth:account-verification');
 
@@ -47,8 +50,8 @@ const TWO_FACTOR_ATTEMPTS = 3;
 interface IAccountVerificationOptions {
 	agent: Agent;
 
-	login?: string;
-	phone?: string | number;
+	login: string | null;
+	phone: string | number | null;
 }
 
 export default class AccountVerification {
@@ -60,11 +63,11 @@ export default class AccountVerification {
 
 	protected fetchCookie: Function;
 
-	protected captchaValidate = null;
+	protected captchaValidate: ICallbackServiceValidate | null = null;
 
 	protected captchaAttempts = 0;
 
-	protected twoFactorValidate = null;
+	protected twoFactorValidate: ICallbackServiceValidate | null = null;
 
 	protected twoFactorAttempts = 0;
 
@@ -126,6 +129,7 @@ export default class AccountVerification {
 	/**
 	 * Runs authorization
 	 */
+	// @ts-ignore
 	// eslint-disable-next-line consistent-return, @typescript-eslint/no-explicit-any
 	public async run(redirectUri: string): Promise<Record<string, any>> {
 		let response = await this.fetch(redirectUri, {
@@ -201,10 +205,10 @@ export default class AccountVerification {
 	 * Process two-factor form
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	protected async processTwoFactorForm(response, $): Promise<any> {
+	protected async processTwoFactorForm(response: any, $: any): Promise<any> {
 		debug('process two-factor handle');
 
-		if (this.twoFactorValidate !== null) {
+		if (this.twoFactorValidate) {
 			this.twoFactorValidate.reject(new AuthError({
 				message: 'Incorrect two-factor code',
 				code: FAILED_PASSED_TWO_FACTOR,
@@ -247,7 +251,7 @@ export default class AccountVerification {
 	 * Process security form
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	protected async processSecurityForm(response, $): Promise<any> {
+	protected async processSecurityForm(response: any, $: any): Promise<any> {
 		debug('process security form');
 
 		const { login, phone } = this.options;
@@ -300,7 +304,7 @@ export default class AccountVerification {
 	 * Process validation form
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	protected processValidateForm(response, $): Promise<any> {
+	protected processValidateForm(response: any, $: any): Promise<any> {
 		const href = $('#activation_wrap a').attr('href');
 		const url = getFullURL(href, response);
 
@@ -313,7 +317,7 @@ export default class AccountVerification {
 	 * Process captcha form
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	protected async processCaptchaForm(response, $): Promise<any> {
+	protected async processCaptchaForm(response: any, $: any): Promise<any> {
 		if (this.captchaValidate !== null) {
 			this.captchaValidate.reject(new AuthError({
 				message: 'Incorrect captcha code',

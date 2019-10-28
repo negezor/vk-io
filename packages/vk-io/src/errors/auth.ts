@@ -8,7 +8,7 @@ export interface IAuthErrorOptions {
 	message: string;
 	code: string;
 
-	pageHtml?: string;
+	pageHtml?: string | null;
 }
 
 export default class AuthError extends VKError {

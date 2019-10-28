@@ -43,17 +43,14 @@ export interface IMarketAttachmentPayload {
 	button_title?: string;
 }
 
-export default class MarketAttachment extends Attachment {
-	protected vk: VK;
-
-	protected payload: IMarketAttachmentPayload;
-
+export default class MarketAttachment extends Attachment<IMarketAttachmentPayload> {
 	/**
 	 * Constructor
 	 */
 	public constructor(payload: IMarketAttachmentPayload, vk?: VK) {
 		super(MARKET, payload.owner_id, payload.id, payload.access_key);
 
+		// @ts-ignore
 		this.vk = vk;
 		this.payload = payload;
 
@@ -76,7 +73,7 @@ export default class MarketAttachment extends Attachment {
 
 		this.payload = market;
 
-		if ('access_key' in this.payload) {
+		if (this.payload.access_key) {
 			this.accessKey = this.payload.access_key;
 		}
 

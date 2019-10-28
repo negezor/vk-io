@@ -1,3 +1,4 @@
+// @ts-ignore
 import createDebug from 'debug';
 
 import { inspect } from 'util';
@@ -14,6 +15,18 @@ const debug = createDebug('vk-io:collect:stream');
 const { APP_TOKEN_NOT_VALID, RESPONSE_SIZE_TOO_BIG } = APIErrorCode;
 
 const { EXECUTE_ERROR } = CollectErrorCode;
+
+export interface ICollectStreamOptions {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	options: Record<string, any> & {
+		parallelCount?: number;
+		count?: number;
+		offset?: number;
+	};
+	method: string;
+	limit: number;
+	max: number | null;
+}
 
 export default class CollectStream extends Readable {
 	protected vk: VK;
@@ -50,7 +63,7 @@ export default class CollectStream extends Readable {
 		method,
 		limit,
 		max = null
-	}) {
+	}: ICollectStreamOptions) {
 		super({
 			objectMode: true
 		});
@@ -80,9 +93,12 @@ export default class CollectStream extends Readable {
 		const hasMax = max !== null;
 		const hasCount = count !== null;
 
+		// @ts-ignore
 		if ((hasCount && hasMax && count > max) || (hasMax && !hasCount)) {
+			// @ts-ignore
 			this.total = max;
 		} else {
+			// @ts-ignore
 			this.total = count;
 		}
 
@@ -112,15 +128,15 @@ export default class CollectStream extends Readable {
 	/**
 	 * Promise based
 	 */
-	public then(thenFn, catchFn?): Promise<{
+	public then(thenFn: Function, catchFn?: Function): Promise<{
 		items: object[];
 		profiles: object[];
 		groups: object[];
 	}> {
 		if (this.promise === null) {
-			let collectItems = [];
-			let collectProfiles = [];
-			let collectGroups = [];
+			let collectItems: object[] = [];
+			let collectProfiles: object[] = [];
+			let collectGroups: object[] = [];
 
 			this.promise = new Promise((resolve, reject): void => {
 				this
@@ -138,6 +154,7 @@ export default class CollectStream extends Readable {
 			});
 		}
 
+		// @ts-ignore
 		return Promise.resolve(this.promise).then(thenFn, catchFn);
 	}
 

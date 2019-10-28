@@ -29,7 +29,7 @@ const systemMentionRe = /\[([^|]+)|([^|\]]+)\]/;
 /**
  * Switch resource types
  */
-const enumResourceTypes = {
+const enumResourceTypes: Record<string, ResourceType> = {
 	id: ResourceType.USER,
 	club: ResourceType.GROUP,
 	public: ResourceType.GROUP,
@@ -53,7 +53,7 @@ const resolveOwnerResource = (resource: string, pattern: RegExp): {
 		1: type,
 		2: owner,
 		3: id
-	} = resource.match(pattern);
+	} = resource.match(pattern)!;
 
 	return {
 		id: Number(id),
@@ -135,7 +135,7 @@ export default class ResourceResolver {
 			return this.resolveScreenName(resource.substring(1));
 		}
 
-		const { 1: mentionResource } = resource.match(systemMentionRe);
+		const { 1: mentionResource } = resource.match(systemMentionRe)!;
 
 		return this.resolveScreenName(mentionResource);
 	}
@@ -181,7 +181,7 @@ export default class ResourceResolver {
 		}
 
 		if (parseResource.test(resource)) {
-			const { 1: typeResource, 2: id } = resource.match(parseResource);
+			const { 1: typeResource, 2: id } = resource.match(parseResource)!;
 
 			let type = typeResource.toLowerCase();
 
@@ -207,7 +207,8 @@ export default class ResourceResolver {
 			});
 		}
 
-		const { type, object_id: id } = response;
+		// @ts-ignore
+		const { type, object_id: id }: Required<typeof response> = response;
 
 		if (type === 'page') {
 			return {

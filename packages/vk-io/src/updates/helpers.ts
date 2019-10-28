@@ -1,3 +1,5 @@
+import { IncomingMessage, ServerResponse } from 'http';
+
 export const splitPath = (path: string): string[] => (
 	path
 		.replace(/\[([^[\]]*)\]/g, '.$1.')
@@ -27,15 +29,15 @@ export const unifyCondition = (condition: any): Function => {
 	}
 
 	if (condition instanceof RegExp) {
-		return (text): boolean => (
-			condition.test(text)
+		return (text: string | null): boolean => (
+			condition.test(text!)
 		);
 	}
 
 	if (Array.isArray(condition)) {
 		const arrayConditions = condition.map(unifyCondition);
 
-		return (value): boolean => (
+		return (value: string | null): boolean => (
 			Array.isArray(value)
 				? arrayConditions.every((cond): boolean => (
 					value.some((val): boolean => cond(val))
@@ -46,18 +48,16 @@ export const unifyCondition = (condition: any): Function => {
 		);
 	}
 
-	return (value): boolean => value === condition;
+	return (value: string | null): boolean => value === condition;
 };
 
-export const parseRequestJSON = (req, res): Promise<object> => (
+export const parseRequestJSON = (req: IncomingMessage, res: ServerResponse): Promise<object> => (
 	new Promise((resolve, reject): void => {
 		let body = '';
 
 		req.on('error', reject);
 		req.on('data', (chunk): void => {
 			if (body.length > 1e6) {
-				body = null;
-
 				res.writeHead(413);
 				res.end();
 

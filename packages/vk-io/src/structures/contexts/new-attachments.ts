@@ -26,7 +26,8 @@ import {
 import { copyParams } from '../../utils/helpers';
 import { inspectCustomData, AttachmentType } from '../../utils/constants';
 
-const subTypes = {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const subTypes: Record<string, [string, any]> = {
 	photo_new: ['new_photo_attachment', PhotoAttachment],
 	video_new: ['new_video_attachment', VideoAttachment],
 	audio_new: ['new_audio_attachment', AudioAttachment]
@@ -102,6 +103,7 @@ export default class NewAttachmentsContext<S = Record<string, any>>
 
 	public getAttachments(type: AttachmentType.GRAFFITI | 'graffiti'): GraffitiAttachment[];
 
+	// @ts-ignore
 	public getAttachments(type: AttachmentType.DOCUMENT | 'doc'): DocumentAttachment[];
 
 	public getAttachments(type: AttachmentType.MARKET_ALBUM | 'market_album'): MarketAlbumAttachment[];
@@ -126,7 +128,7 @@ export default class NewAttachmentsContext<S = Record<string, any>>
 
 	public getAttachments(type: AttachmentType.WALL_REPLY | 'wall_reply'): WallReplyAttachment[];
 
-	public getAttachments(type: string | null = null): Attachment[] | ExternalAttachment[] {
+	public getAttachments(type: string | null = null): (Attachment | ExternalAttachment)[] {
 		if (type === null) {
 			return this.attachments;
 		}

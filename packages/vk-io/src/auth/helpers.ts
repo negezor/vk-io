@@ -13,8 +13,10 @@ export const getUsersPermissionsByName = (rawScope: string | string[]): number =
 	let bitMask = 0;
 
 	for (const name of scope) {
-		if (userScopes.has(name)) {
-			bitMask += userScopes.get(name);
+		const scopeBit = userScopes.get(name);
+
+		if (scopeBit) {
+			bitMask += scopeBit;
 		}
 	}
 
@@ -32,8 +34,10 @@ export const getGroupsPermissionsByName = (rawScope: string | string[]): number 
 	let bitMask = 0;
 
 	for (const name of scope) {
-		if (groupScopes.has(name)) {
-			bitMask += groupScopes.get(name);
+		const scopeBit = groupScopes.get(name);
+
+		if (scopeBit) {
+			bitMask += scopeBit;
 		}
 	}
 

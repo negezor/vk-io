@@ -27,8 +27,9 @@ export const MINIMUM_TIME_INTERVAL_API = 1133;
  * Default options
  */
 export const defaultOptions: IVKOptions = {
-	token: null,
+	// @ts-ignore
 	agent: null,
+	token: null,
 	language: null,
 
 	appId: null,

@@ -10,17 +10,14 @@ export interface IGiftAttachmentPayload {
 	id: number;
 }
 
-export default class GiftAttachment extends ExternalAttachment {
-	protected vk: VK;
-
-	protected payload: IGiftAttachmentPayload;
-
+export default class GiftAttachment extends ExternalAttachment<IGiftAttachmentPayload> {
 	/**
 	 * Constructor
 	 */
 	public constructor(payload: IGiftAttachmentPayload, vk?: VK) {
 		super(GIFT, payload);
 
+		// @ts-ignore
 		this.vk = vk;
 	}
 

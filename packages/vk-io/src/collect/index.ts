@@ -5,29 +5,36 @@ import LIMITS_METHODS from './limits';
 
 import VK from '../vk';
 import Chain from './chain';
+import { APIMethods } from '../api/schemas/methods';
 import { getChainReturn, getExecuteMethod } from '../utils/helpers';
+import { ExecuteError } from '../errors';
 
-export default class Collect {
+export default class Collect extends APIMethods {
 	protected vk: VK;
 
 	/**
 	 * constructor
 	 */
 	public constructor(vk: VK) {
+		super();
+
 		this.vk = vk;
 
 		for (const [method, limit, max] of LIMITS_METHODS) {
 			const [group, name] = method.split('.');
 
 			if (!(group in this)) {
+				// @ts-ignore
 				this[group] = {};
 			}
 
+			// @ts-ignore
 			this[group][name] = (options = {}): CollectStream => (
 				new CollectStream(this.vk, {
 					options,
 					method,
 					limit,
+					// @ts-ignore
 					max
 				})
 			);
@@ -70,7 +77,11 @@ export default class Collect {
 			promises.push(this.vk.api.execute({ code }));
 		}
 
-		let out = {
+		let out: {
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			response: any[];
+			errors: ExecuteError[];
+		} = {
 			response: [],
 			errors: []
 		};

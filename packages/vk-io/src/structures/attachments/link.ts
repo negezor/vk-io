@@ -28,10 +28,8 @@ export interface ILinkAttachmentPayload {
 	photo: IPhotoAttachmentPayload | null;
 }
 
-export default class LinkAttachment extends ExternalAttachment {
-	protected vk: VK;
-
-	protected payload: ILinkAttachmentPayload;
+export default class LinkAttachment extends ExternalAttachment<ILinkAttachmentPayload> {
+	protected [kPhoto]: PhotoAttachment | null;
 
 	/**
 	 * Constructor
@@ -39,6 +37,7 @@ export default class LinkAttachment extends ExternalAttachment {
 	public constructor(payload: ILinkAttachmentPayload, vk?: VK) {
 		super(LINK, payload);
 
+		// @ts-ignore
 		this.vk = vk;
 	}
 

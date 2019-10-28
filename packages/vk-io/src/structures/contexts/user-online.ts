@@ -3,7 +3,7 @@ import Context, { IContextOptions } from './context';
 import { copyParams } from '../../utils/helpers';
 import { platforms, inspectCustomData } from '../../utils/constants';
 
-const subTypes = {
+const subTypes: Record<number, string> = {
 	8: 'user_online',
 	9: 'user_offline'
 };
@@ -85,7 +85,7 @@ export default class UserOnlineContext<S = Record<string, any>>
 	 * Returns the name of the platform from which the user entered
 	 */
 	public get platformName(): string {
-		return platforms.get(this.payload.extra);
+		return platforms.get(this.payload.extra)!;
 	}
 
 	/**

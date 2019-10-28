@@ -69,10 +69,12 @@ const kPhoto = Symbol('photo');
 
 const kParentStory = Symbol('parentStory');
 
-export default class StoryAttachment extends Attachment {
-	protected vk: VK;
+export default class StoryAttachment extends Attachment<IStoryAttachmentPayload> {
+	protected [kVideo]?: VideoAttachment;
 
-	protected payload: IStoryAttachmentPayload;
+	protected [kPhoto]?: PhotoAttachment;
+
+	protected [kParentStory]?: StoryAttachment;
 
 	/**
 	 * Constructor
@@ -80,6 +82,7 @@ export default class StoryAttachment extends Attachment {
 	public constructor(payload: IStoryAttachmentPayload, vk?: VK) {
 		super(STORY, payload.owner_id, payload.id, payload.access_key);
 
+		// @ts-ignore
 		this.vk = vk;
 		this.payload = payload;
 
@@ -102,7 +105,7 @@ export default class StoryAttachment extends Attachment {
 
 		this.payload = story;
 
-		if ('access_key' in this.payload) {
+		if (this.payload.access_key) {
 			this.accessKey = this.payload.access_key;
 		}
 
@@ -183,25 +186,25 @@ export default class StoryAttachment extends Attachment {
 		}
 
 		if (!this[kPhoto]) {
-			this[kPhoto] = new PhotoAttachment(this.payload.photo, this.vk);
+			this[kPhoto] = new PhotoAttachment(this.payload.photo!, this.vk);
 		}
 
-		return this[kPhoto];
+		return this[kPhoto]!;
 	}
 
 	/**
 	 * Returns the story video
 	 */
-	public get video(): PhotoAttachment | undefined {
+	public get video(): VideoAttachment | undefined {
 		if (!this.$filled) {
 			return undefined;
 		}
 
 		if (!this[kVideo]) {
-			this[kVideo] = new VideoAttachment(this.payload.video, this.vk);
+			this[kVideo] = new VideoAttachment(this.payload.video!, this.vk);
 		}
 
-		return this[kVideo];
+		return this[kVideo]!;
 	}
 
 	/**
@@ -262,7 +265,7 @@ export default class StoryAttachment extends Attachment {
 		}
 
 		if (!this[kParentStory]) {
-			this[kParentStory] = new StoryAttachment(this.payload.parent_story, this.vk);
+			this[kParentStory] = new StoryAttachment(this.payload.parent_story!, this.vk);
 		}
 
 		return this[kParentStory];
@@ -278,6 +281,7 @@ export default class StoryAttachment extends Attachment {
 	/**
 	 * Returns the custom data
 	 */
+	// @ts-ignore
 	public [inspectCustomData](): object | undefined {
 		if (this.isDeleted) {
 			return copyParams(this, [
