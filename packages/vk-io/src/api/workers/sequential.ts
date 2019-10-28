@@ -1,6 +1,8 @@
-export default function sequential(next: Function): void {
+import API from '../api';
+
+export default function sequential(api: API, next: Function): void {
 	// @ts-ignore
-	this.callMethod(this.queue.shift());
+	api.callMethod(api.queue.shift());
 
 	next();
 }

@@ -1,19 +1,20 @@
 import Request from '../request';
 import sequential from './sequential';
 
+import API from '../api';
 import {
 	delay,
 	getChainReturn,
 	resolveExecuteTask
 } from '../../utils/helpers';
 
-export default async function parallel(next: Function): Promise<void> {
+export default async function parallel(api: API, next: Function): Promise<void> {
 	// @ts-ignore
-	const { queue } = this;
+	const { queue } = api;
 
 	if (queue[0].method.startsWith('execute')) {
 		// @ts-ignore
-		sequential.call(this, next);
+		sequential(api, next);
 
 		return;
 	}
@@ -22,7 +23,7 @@ export default async function parallel(next: Function): Promise<void> {
 	await delay(0);
 
 	// @ts-ignore
-	const { apiExecuteCount } = this.vk.options;
+	const { apiExecuteCount } = api.vk.options;
 
 	const tasks = [];
 	const chain = [];
@@ -50,7 +51,7 @@ export default async function parallel(next: Function): Promise<void> {
 		});
 
 		// @ts-ignore
-		this.callMethod(request);
+		api.callMethod(request);
 
 		next();
 

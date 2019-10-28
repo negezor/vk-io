@@ -248,7 +248,7 @@ export default class API extends APIMethods {
 				return;
 			}
 
-			handler.call(this, () => {
+			handler(this, () => {
 				setTimeout(work, interval);
 			});
 		};
