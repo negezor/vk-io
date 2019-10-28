@@ -1619,8 +1619,6 @@ export type StatsGetResponse = Objects.StatsPeriod[];
 
 export type StatusGetResponse = Objects.StatusStatus;
 
-export type StorageGetKeysResponse = string[];
-
 export type StorageGetKeysResponse = Objects.StorageValue[];
 
 export type StorageGetResponse = string;
