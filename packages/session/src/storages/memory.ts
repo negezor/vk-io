@@ -3,21 +3,21 @@ import ISessionStorage from './storage';
 export interface IMemoryStoreLike<K, V> {
 	get(key: K): V | undefined;
 	set(key: K, value: V): this | undefined;
-	delete(key: K): boolean | undefined;
+	delete(key: K): boolean;
 }
 
 export interface IMemoryStorageOptions {
-	store?: IMemoryStoreLike<string, object>;
+	store: IMemoryStoreLike<string, object>;
 }
 
 export default class MemoryStorage implements ISessionStorage {
 	private store: IMemoryStorageOptions['store'];
 
-	constructor({ store = new Map() }: IMemoryStorageOptions = {}) {
+	constructor({ store = new Map() }: Partial<IMemoryStorageOptions> = {}) {
 		this.store = store;
 	}
 
-	public async get(key: string): Promise<object> {
+	public async get(key: string): Promise<object | null> {
 		return this.store.get(key) || null;
 	}
 

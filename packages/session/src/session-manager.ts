@@ -6,18 +6,20 @@ export interface ISessionManagerOptions {
 	/**
 	 * Storage based on ISessionStorage interface
 	 */
-	storage?: ISessionStorage;
+	storage: ISessionStorage;
 
 	/**
 	 * Key for session in context
 	 */
-	contextKey?: string;
+	contextKey: string;
 
 	/**
 	 * Returns the key for session storage
 	 */
-	getStorageKey?<T = {}>(context: IContext & T): string;
+	getStorageKey<T = {}>(context: IContext & T): string;
 }
+
+export type SessionForceUpdate = () => Promise<boolean>;
 
 export default class SessionManager {
 	protected storage: ISessionManagerOptions['storage'];
@@ -26,7 +28,7 @@ export default class SessionManager {
 
 	protected getStorageKey: ISessionManagerOptions['getStorageKey'];
 
-	public constructor(options: ISessionManagerOptions = {}) {
+	public constructor(options: Partial<ISessionManagerOptions> = {}) {
 		this.storage = options.storage || (
 			new MemoryStorage()
 		);
@@ -49,8 +51,11 @@ export default class SessionManager {
 
 			let changed = false;
 			const wrapSession = (targetRaw: object): ISessionContext => (
+				new Proxy<
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
+				Record<string, any> & { $forceUpdate: SessionForceUpdate }
 				// eslint-disable-next-line @typescript-eslint/no-use-before-define
-				new Proxy({ ...targetRaw, $forceUpdate }, {
+				>({ ...targetRaw, $forceUpdate }, {
 					set: (target, prop: string, value): boolean => {
 						changed = true;
 
