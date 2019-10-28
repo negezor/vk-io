@@ -33,7 +33,7 @@
 		"node": ">=8.0.0"
 	},
 	"devDependencies": {
-		"@types/node": "^12.7.12",
+		"@types/node": "^12.11.7",
 		"@types/tough-cookie": "^2.3.5"
 	},
 	"dependencies": {
