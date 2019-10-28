@@ -4,6 +4,7 @@
 		"module": "esnext",
 		"lib": ["esnext"],
 		"moduleResolution": "node",
+		"strict": true,
 		"noEmit": true,
 		"declaration": true,
 		"forceConsistentCasingInFileNames": true
