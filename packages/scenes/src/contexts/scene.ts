@@ -15,7 +15,7 @@ export default class SceneContext {
 	 * ctx.scene.session.moduleFlag = true;
 	 * ```
 	 */
-	public session: ISessionContext;
+	public session!: ISessionContext;
 
 	/**
 	 * Base namespace for user input
@@ -25,7 +25,7 @@ export default class SceneContext {
 	 * ```
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	public state: Record<string, any>;
+	public state!: Record<string, any>;
 
 	/**
 	 * Is the scene canceled, used in leaveHandler()
@@ -60,7 +60,7 @@ export default class SceneContext {
 	/**
 	 * Returns current scene
 	 */
-	public get current(): IScene {
+	public get current(): IScene | null {
 		return this.repository.get(this.session.current);
 	}
 

@@ -39,6 +39,7 @@ export default class StepScene<T = MessageContext> implements IScene {
 		context.scene.step = new StepSceneContext({
 			context,
 
+			// @ts-ignore
 			steps: this.steps
 		});
 
