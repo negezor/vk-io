@@ -45,7 +45,7 @@ export const defaultOptions: IVKOptions = {
 	apiMode: 'sequential',
 	apiWait: 3e3,
 	apiLimit: 3,
-	apiVersion: '5.102',
+	apiVersion: '5.103',
 	apiBaseUrl: 'https://api.vk.com/method',
 	apiAttempts: 3,
 	apiTimeout: 10e3,
