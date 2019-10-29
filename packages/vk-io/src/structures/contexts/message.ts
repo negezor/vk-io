@@ -134,7 +134,7 @@ export default class MessageContext<S = Record<string, any>>
 		}
 
 		// Polyfill for all events except new_message
-		if (options.updateType !== 'new_message') {
+		if (options.updateType !== 'message_new') {
 			payload = {
 				// @ts-ignore
 				message: payload,
