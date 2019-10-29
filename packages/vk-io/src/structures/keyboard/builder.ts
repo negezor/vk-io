@@ -176,8 +176,12 @@ export default class KeyboardBuilder {
 			return this;
 		}
 
-		if (this.currentRow.length > 4) {
-			throw new RangeError('Max count of buttons at columns 4');
+		const maxColumnLength = this.isInline
+			? 3
+			: 4;
+
+		if (this.currentRow.length > maxColumnLength) {
+			throw new RangeError(`Max count of buttons at columns ${maxColumnLength}`);
 		}
 
 		this.rows.push(this.currentRow);
@@ -236,8 +240,12 @@ export default class KeyboardBuilder {
 	 * Returns a string to keyboard a VK
 	 */
 	public toString(): string {
-		if (this.rows.length > 10) {
-			throw new RangeError('Max count of keyboard rows 10');
+		const maxRowsLength = this.isInline
+			? 3
+			: 10;
+
+		if (this.rows.length > maxRowsLength) {
+			throw new RangeError(`Max count of keyboard rows ${maxRowsLength}`);
 		}
 
 		const buttons = this.currentRow.length !== 0
