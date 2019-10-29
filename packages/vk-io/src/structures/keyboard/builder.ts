@@ -17,6 +17,11 @@ export default class KeyboardBuilder {
 	protected isOneTime = false;
 
 	/**
+	 * The keyboard must be attached to the message
+	 */
+	protected isInline = false;
+
+	/**
 	 * Rows with all buttons
 	 */
 	protected rows: KeyboardButton[][] = [];
@@ -198,12 +203,28 @@ export default class KeyboardBuilder {
 	}
 
 	/**
+	 * Sets the keyboard inline
+	 *
+	 * ```ts
+	 *  builder.inline();
+	 *
+	 *  builder.inline(false);
+	 * ```
+	 */
+	public inline(enabled = true): this {
+		this.isInline = enabled;
+
+		return this;
+	}
+
+	/**
 	 * Clones the builder with all the settings
 	 */
 	public clone(): KeyboardBuilder {
 		const builder = new KeyboardBuilder();
 
 		builder.oneTime(this.isOneTime);
+		builder.inline(this.isInline);
 
 		builder.rows = [...this.rows];
 		builder.currentRow = [...this.currentRow];
@@ -219,12 +240,21 @@ export default class KeyboardBuilder {
 			throw new RangeError('Max count of keyboard rows 10');
 		}
 
-		return JSON.stringify({
-			one_time: this.isOneTime,
-			buttons: this.currentRow.length !== 0
-				? [...this.rows, this.currentRow]
-				: this.rows
-		});
+		const buttons = this.currentRow.length !== 0
+			? [...this.rows, this.currentRow]
+			: this.rows;
+
+		return JSON.stringify(
+			this.isInline
+				? {
+					buttons,
+					inline: true
+				}
+				: {
+					buttons,
+					one_time: this.isOneTime
+				}
+		);
 	}
 
 	/**
