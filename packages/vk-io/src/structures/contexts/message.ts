@@ -57,32 +57,42 @@ const kReplyMessage = Symbol('replyMessage');
 const kAttachments = Symbol('attachments');
 
 export interface IMessageContextPayload {
-	id: number;
-	conversation_message_id: number;
-	out: number;
-	peer_id: number;
-	from_id: number;
-	text?: string;
-	date: number;
-	random_id: number;
-	ref?: string;
-	ref_source?: string;
-	attachments: object[];
-	important: boolean;
-	geo: object;
-	payload?: string;
-	fwd_messages?: object[];
-	reply_message?: object;
-	action?: {
-		type: string;
-		member_id: number;
+	message: {
+		id: number;
+		conversation_message_id: number;
+		out: number;
+		peer_id: number;
+		from_id: number;
 		text?: string;
-		email?: string;
-		photo?: {
-			photo_50: string;
-			photo_100: string;
-			photo_200: string;
+		date: number;
+		random_id: number;
+		ref?: string;
+		ref_source?: string;
+		attachments: object[];
+		important: boolean;
+		geo: object;
+		payload?: string;
+		fwd_messages?: object[];
+		reply_message?: object;
+		action?: {
+			type: string;
+			member_id: number;
+			text?: string;
+			email?: string;
+			photo?: {
+				photo_50: string;
+				photo_100: string;
+				photo_200: string;
+			};
 		};
+	};
+	client_info: {
+		button_actions: (
+			'text' | 'vkpay' | 'open_app' | 'location'
+		)[];
+		keyboard: boolean;
+		inline_keyboard: boolean;
+		lang_id: number;
 	};
 }
 
@@ -121,6 +131,20 @@ export default class MessageContext<S = Record<string, any>>
 			this.$filled = false;
 		} else {
 			this.$filled = true;
+		}
+
+		// Polyfill for all events except new_message
+		if (options.updateType !== 'new_message') {
+			payload = {
+				// @ts-ignore
+				message: payload,
+				client_info: {
+					button_actions: [],
+					inline_keyboard: false,
+					keyboard: true,
+					lang_id: 0
+				}
+			};
 		}
 
 		this.applyPayload(payload);
@@ -199,14 +223,14 @@ export default class MessageContext<S = Record<string, any>>
 	 * Checks for hast message payload
 	 */
 	public get hasMessagePayload(): boolean {
-		return Boolean(this.payload.payload);
+		return Boolean(this.message.payload);
 	}
 
 	/**
 	 * Checks if there is text
 	 */
 	public get hasGeo(): boolean {
-		return Boolean(this.payload.geo);
+		return Boolean(this.message.geo);
 	}
 
 	/**
@@ -255,7 +279,7 @@ export default class MessageContext<S = Record<string, any>>
 	 * Checks whether the message is outbox
 	 */
 	public get isOutbox(): boolean {
-		return Boolean(this.payload.out);
+		return Boolean(this.message.out);
 	}
 
 	/**
@@ -269,49 +293,49 @@ export default class MessageContext<S = Record<string, any>>
 	 * Checks that the message is important
 	 */
 	public get isImportant(): boolean {
-		return this.payload.important;
+		return this.message.important;
 	}
 
 	/**
 	 * Returns the identifier message
 	 */
 	public get id(): number {
-		return this.payload.id;
+		return this.message.id;
 	}
 
 	/**
 	 * Returns the conversation message id
 	 */
 	public get conversationMessageId(): number | null {
-		return this.payload.conversation_message_id || null;
+		return this.message.conversation_message_id || null;
 	}
 
 	/**
 	 * Returns the destination identifier
 	 */
 	public get peerId(): number {
-		return this.payload.peer_id;
+		return this.message.peer_id;
 	}
 
 	/**
 	 * Returns the peer type
 	 */
 	public get peerType(): string {
-		return getPeerType(this.payload.peer_id);
+		return getPeerType(this.message.peer_id);
 	}
 
 	/**
 	 * Returns the sender identifier
 	 */
 	public get senderId(): number {
-		return this.payload.from_id;
+		return this.message.from_id;
 	}
 
 	/**
 	 * Returns the sender type
 	 */
 	public get senderType(): string {
-		return getPeerType(this.payload.from_id);
+		return getPeerType(this.message.from_id);
 	}
 
 	/**
@@ -329,21 +353,21 @@ export default class MessageContext<S = Record<string, any>>
 	 * Returns the referral value
 	 */
 	public get referralValue(): string | undefined {
-		return this.payload.ref;
+		return this.message.ref;
 	}
 
 	/**
 	 * Returns the referral source
 	 */
 	public get referralSource(): string | undefined {
-		return this.payload.ref_source;
+		return this.message.ref_source;
 	}
 
 	/**
 	 * Returns the date when this message was created
 	 */
 	public get createdAt(): number {
-		return this.payload.date;
+		return this.message.date;
 	}
 
 	/**
@@ -361,7 +385,7 @@ export default class MessageContext<S = Record<string, any>>
 			});
 		}
 
-		return this.payload.geo;
+		return this.message.geo;
 	}
 
 	/**
@@ -369,8 +393,8 @@ export default class MessageContext<S = Record<string, any>>
 	 */
 	public get eventType(): string | null {
 		return (
-			this.payload.action
-			&& this.payload.action.type
+			this.message.action
+			&& this.message.action.type
 		) || null;
 	}
 
@@ -379,8 +403,8 @@ export default class MessageContext<S = Record<string, any>>
 	 */
 	public get eventMemberId(): number | null {
 		return (
-			this.payload.action
-			&& this.payload.action.member_id
+			this.message.action
+			&& this.message.action.member_id
 		) || null;
 	}
 
@@ -389,8 +413,8 @@ export default class MessageContext<S = Record<string, any>>
 	 */
 	public get eventText(): string | null {
 		return (
-			this.payload.action
-			&& this.payload.action.text
+			this.message.action
+			&& this.message.action.text
 		) || null;
 	}
 
@@ -399,8 +423,8 @@ export default class MessageContext<S = Record<string, any>>
 	 */
 	public get eventEmail(): string | null {
 		return (
-			this.payload.action
-			&& this.payload.action.email
+			this.message.action
+			&& this.message.action.email
 		) || null;
 	}
 
@@ -409,7 +433,7 @@ export default class MessageContext<S = Record<string, any>>
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public get messagePayload(): any | null {
-		const { payload = null } = this.payload;
+		const { payload = null } = this.message;
 
 		if (payload === null) {
 			return null;
@@ -423,8 +447,8 @@ export default class MessageContext<S = Record<string, any>>
 	 */
 	public get forwards(): MessageForwardsCollection {
 		if (!this[kForwards]) {
-			this[kForwards] = this.payload.fwd_messages
-				? new MessageForwardsCollection(...this.payload.fwd_messages.map(forward => (
+			this[kForwards] = this.message.fwd_messages
+				? new MessageForwardsCollection(...this.message.fwd_messages.map(forward => (
 					new MessageForward({
 						vk: this.vk,
 						// @ts-ignore
@@ -442,8 +466,8 @@ export default class MessageContext<S = Record<string, any>>
 	 */
 	public get replyMessage(): MessageReply | null {
 		if (!this[kReplyMessage]) {
-			this[kReplyMessage] = this.payload.reply_message
-				? new MessageReply(this.payload.reply_message, this.vk)
+			this[kReplyMessage] = this.message.reply_message
+				? new MessageReply(this.message.reply_message, this.vk)
 				: null;
 		}
 
@@ -455,10 +479,17 @@ export default class MessageContext<S = Record<string, any>>
 	 */
 	public get attachments(): (Attachment | ExternalAttachment)[] {
 		if (!this[kAttachments]) {
-			this[kAttachments] = transformAttachments(this.payload.attachments, this.vk);
+			this[kAttachments] = transformAttachments(this.message.attachments, this.vk);
 		}
 
 		return this[kAttachments]!;
+	}
+
+	/**
+	 * Returns the capabilities of the client the user is using.
+	 */
+	public get clientInfo(): IMessageContextPayload['client_info'] {
+		return this.payload.client_info;
 	}
 
 	/**
@@ -747,7 +778,7 @@ export default class MessageContext<S = Record<string, any>>
 		});
 
 		if (messageIds.includes(this.id)) {
-			this.payload.important = Boolean(options.important);
+			this.message.important = Boolean(options.important);
 		}
 
 		return messageIds;
@@ -883,13 +914,20 @@ export default class MessageContext<S = Record<string, any>>
 	}
 
 	/**
+	 * Return alias of payload.message
+	 */
+	protected get message(): IMessageContextPayload['message'] {
+		return this.payload.message;
+	}
+
+	/**
 	 * Applies the payload
 	 */
 	private applyPayload(payload: IMessageContextPayload): void {
 		this.payload = payload;
 
-		this.text = payload.text
-			? unescapeHTML(payload.text)
+		this.text = payload.message.text
+			? unescapeHTML(payload.message.text)
 			: null;
 	}
 
