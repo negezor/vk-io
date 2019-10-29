@@ -640,21 +640,25 @@ export default class MessageContext<S = Record<string, any>>
 			? [rawSources]
 			: rawSources;
 
+		const peerOptions = (
+			!this.isChat
+				? {
+					peer_id: this.peerId
+				}
+				: undefined
+		);
+
 		const attachment = await Promise.all(sources.map(source => (
 			this.vk.upload.messagePhoto({
-				source
+				source,
+
+				...peerOptions
 			})
 		)));
 
 		const response = await this.send({
+			...peerOptions,
 			...params,
-			...(
-				!this.isChat
-					? {
-						peer_id: this.peerId
-					}
-					: undefined
-			),
 
 			attachment
 		});
@@ -685,23 +689,25 @@ export default class MessageContext<S = Record<string, any>>
 			? [rawSources]
 			: rawSources;
 
+		const peerOptions = (
+			!this.isChat
+				? {
+					peer_id: this.peerId
+				}
+				: undefined
+		);
+
 		const attachment = await Promise.all(sources.map(source => (
 			this.vk.upload.messageDocument({
-				peer_id: this.senderId,
+				source,
 
-				source
+				...peerOptions
 			})
 		)));
 
 		const response = await this.send({
+			...peerOptions,
 			...params,
-			...(
-				!this.isChat
-					? {
-						peer_id: this.peerId
-					}
-					: undefined
-			),
 
 			attachment
 		});
@@ -728,21 +734,23 @@ export default class MessageContext<S = Record<string, any>>
 		source: UploadSource,
 		params: object = {}
 	): Promise<number> {
-		const attachment = await this.vk.upload.audioMessage({
-			peer_id: this.senderId,
+		const peerOptions = (
+			!this.isChat
+				? {
+					peer_id: this.peerId
+				}
+				: undefined
+		);
 
-			source
+		const attachment = await this.vk.upload.audioMessage({
+			source,
+
+			...peerOptions
 		});
 
 		const response = await this.send({
+			...peerOptions,
 			...params,
-			...(
-				!this.isChat
-					? {
-						peer_id: this.peerId
-					}
-					: undefined
-			),
 
 			attachment
 		});
