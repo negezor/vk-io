@@ -20,7 +20,10 @@ export {
 	captchaTypes,
 	resourceTypes,
 	messageSources,
-	attachmentTypes
+	attachmentTypes,
+
+	platforms,
+	inspectCustomData
 } from './utils/constants';
 
 export { VK, Request };
