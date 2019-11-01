@@ -17,3 +17,5 @@ export { default as DocumentAttachment } from './document';
 export { default as WallReplyAttachment } from './wall-reply';
 export { default as MarketAlbumAttachment } from './market-album';
 export { default as AudioMessageAttachment } from './audio-message';
+
+export { transformAttachments } from './helpers';
