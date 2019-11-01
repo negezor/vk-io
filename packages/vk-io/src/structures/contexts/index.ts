@@ -1,4 +1,4 @@
-export { default as Context } from './context';
+export { default as Context, IContextOptions } from './context';
 
 export { default as VoteContext } from './vote';
 export { default as TypingContext } from './typing';
