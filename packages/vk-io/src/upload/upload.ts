@@ -49,7 +49,7 @@ export interface IUploadSourceParams {
 	timeout?: number;
 }
 
-export type UploadSource = IUploadSourceParams | UploadSourceValue[] | UploadSourceValue;
+export type UploadSource = IUploadSourceParams | UploadSourceValue[] | UploadSourceValue | UploadSourceType | UploadSourceType[];
 
 export interface IUploadParams {
 	source: UploadSource;
