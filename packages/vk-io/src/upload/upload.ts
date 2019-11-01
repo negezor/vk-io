@@ -1,4 +1,3 @@
-// @ts-ignore
 import fetch from 'node-fetch';
 
 import { URL } from 'url';
@@ -505,7 +504,7 @@ export default class Upload {
 		save.id = save.video_id;
 
 		if ('link' in params) {
-			const response = await fetch(save.upload_url, {
+			const response = await fetch(save.upload_url!, {
 				agent: this.vk.options.agent
 			});
 
@@ -1110,7 +1109,7 @@ export default class Upload {
 			? await streamToBuffer(formData)
 			: formData;
 
-		let response = await fetch(url, {
+		const response = await fetch(url, {
 			agent,
 			compress: false,
 			method: 'POST',
@@ -1126,11 +1125,11 @@ export default class Upload {
 			throw new Error(response.statusText);
 		}
 
-		response = await response.json();
+		const result = await response.json();
 
-		return response.response !== undefined
-			? response.response
-			: response;
+		return result.response !== undefined
+			? result.response
+			: result;
 	}
 
 	/**

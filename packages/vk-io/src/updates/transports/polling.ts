@@ -1,4 +1,3 @@
-// @ts-ignore
 import fetch from 'node-fetch';
 import createDebug from 'debug';
 
@@ -156,7 +155,7 @@ export default class PollingTransport {
 
 		debug('http -->');
 
-		let response = await fetch(this.url, {
+		const response = await fetch(this.url, {
 			agent: this.vk.options.agent,
 			method: 'GET',
 			timeout: 30e3,
@@ -175,11 +174,11 @@ export default class PollingTransport {
 			});
 		}
 
-		response = await response.json();
+		const result = await response.json();
 
-		if ('failed' in response) {
-			if (response.failed === 1) {
-				this.ts = response.ts;
+		if (result.failed !== undefined) {
+			if (result.failed === 1) {
+				this.ts = result.ts;
 
 				return;
 			}
@@ -193,15 +192,15 @@ export default class PollingTransport {
 		}
 
 		this.restarted = 0;
-		this.ts = response.ts;
+		this.ts = result.ts;
 
-		if ('pts' in response) {
-			this.pts = Number(response.pts);
+		if (result.pts) {
+			this.pts = Number(result.pts);
 		}
 
 		/* Async handle updates */
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		response.updates.forEach(async (update: Record<string, any>): Promise<void> => {
+		result.updates.forEach(async (update: Record<string, any>): Promise<void> => {
 			try {
 				await this.pollingHandler(update);
 			} catch (error) {

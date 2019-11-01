@@ -1,6 +1,5 @@
 // @ts-ignore
 import WebSocket from 'ws';
-// @ts-ignore
 import fetch from 'node-fetch';
 import createDebug from 'debug';
 
@@ -172,7 +171,7 @@ export default class StreamingAPI {
 			body = JSON.stringify(payload);
 		}
 
-		let response = await fetch(url, {
+		const response = await fetch(url, {
 			agent,
 			method,
 			body,
@@ -180,13 +179,14 @@ export default class StreamingAPI {
 				'content-type': 'application/json'
 			}
 		});
-		response = await response.json();
 
-		if ('error' in response) {
-			throw new StreamingRuleError(response.error);
+		const result = await response.json();
+
+		if (result.error !== undefined) {
+			throw new StreamingRuleError(result.error);
 		}
 
-		return response;
+		return result;
 	}
 
 	/**
