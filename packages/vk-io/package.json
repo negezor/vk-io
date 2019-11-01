@@ -43,6 +43,6 @@
 		"node-fetch": "^2.6.0",
 		"sandwich-stream": "^2.0.2",
 		"tough-cookie": "^3.0.1",
-		"ws": "^7.1.2"
+		"ws": "^7.2.0"
 	}
 }
