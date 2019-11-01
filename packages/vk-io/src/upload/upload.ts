@@ -1,7 +1,6 @@
 import fetch from 'node-fetch';
 
 import { URL } from 'url';
-import { Readable } from 'stream';
 import { randomBytes } from 'crypto';
 import { createReadStream } from 'fs';
 import { inspect, deprecate } from 'util';
@@ -33,7 +32,7 @@ const isURL = /^https?:\/\//i;
 /**
  * Stream, buffer, url or file path
  */
-export type UploadSourceType = Readable | Buffer | string;
+export type UploadSourceType = NodeJS.ReadableStream | Buffer | string;
 
 export type UploadSourceValue = UploadSourceType | {
 	value: UploadSourceType;
@@ -49,7 +48,11 @@ export interface IUploadSourceParams {
 	timeout?: number;
 }
 
-export type UploadSource = IUploadSourceParams | UploadSourceValue[] | UploadSourceValue | UploadSourceType | UploadSourceType[];
+export type UploadSource = IUploadSourceParams
+| UploadSourceValue[]
+| UploadSourceValue
+| UploadSourceType
+| UploadSourceType[];
 
 export interface IUploadParams {
 	source: UploadSource;
