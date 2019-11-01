@@ -420,6 +420,8 @@ export default class Updates {
 		// @ts-ignore
 		this.hearFallbackHandler = handler;
 
+		this.reloadMiddleware();
+
 		return this;
 	}
 
