@@ -134,12 +134,14 @@ export default class MessageContext<S = Record<string, any>>
 		}
 
 		// Polyfill for all events except new_message
-		if (options.updateType !== 'message_new') {
+		if (payload.client_info === undefined) {
 			payload = {
 				// @ts-ignore
 				message: payload,
 				client_info: {
-					button_actions: [],
+					button_actions: [
+						'text'
+					],
 					inline_keyboard: false,
 					keyboard: true,
 					lang_id: 0
