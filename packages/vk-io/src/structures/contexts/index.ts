@@ -4,7 +4,6 @@ export { default as VoteContext } from './vote';
 export { default as TypingContext } from './typing';
 export { default as MessageContext } from './message';
 export { default as WallPostContext } from './wall-post';
-export { default as StreamingContext } from './streaming';
 export { default as GroupUserContext } from './group-user';
 export { default as UserOnlineContext } from './user-online';
 export { default as DialogFlagsContext } from './dialog-flags';

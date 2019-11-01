@@ -156,7 +156,8 @@ export const resourceTypes = ResourceType;
  */
 export enum UpdateSource {
 	POLLING = 'POLLING',
-	WEBHOOK = 'WEBHOOK'
+	WEBHOOK = 'WEBHOOK',
+	WEBSOCKET = 'WEBSOCKET'
 }
 
 export const updatesSources = UpdateSource;

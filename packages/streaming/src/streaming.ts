@@ -1,14 +1,14 @@
-// @ts-ignore
-import WebSocket from 'ws';
 import fetch from 'node-fetch';
 import createDebug from 'debug';
+import * as WebSocket from 'ws';
 
+import { VK, UpdateSource } from 'vk-io';
+
+import { inspect } from 'util';
 import { URL, URLSearchParams } from 'url';
-import { inspect, promisify } from 'util';
 
-import VK from '../vk';
-import { StreamingRuleError } from '../errors';
-import { StreamingContext } from '../structures/contexts';
+import { StreamingRuleError } from './errors';
+import { StreamingContext, IStreamingContextPayload } from './contexts';
 
 const debug = createDebug('vk-io:streaming');
 
@@ -18,7 +18,7 @@ export interface IStreamingRule {
 }
 
 export default class StreamingAPI {
-	protected socket: WebSocket = null;
+	protected socket: WebSocket | null = null;
 
 	protected key: string | null = null;
 
@@ -27,8 +27,6 @@ export default class StreamingAPI {
 	protected started = false;
 
 	private vk: VK;
-
-	private close: (() => Promise<void>) | null = null;
 
 	/**
 	 * Constructor
@@ -51,10 +49,9 @@ export default class StreamingAPI {
 		this.started = true;
 
 		try {
-			// @ts-ignore
-			const { key, endpoint } = await this.vk.api.streaming.getServerUrl();
+			const { key, endpoint } = await this.vk.api.streaming.getServerUrl({});
 
-			this.key = key;
+			this.key = key!;
 			this.endpoint = new URL(`https://${endpoint}`);
 
 			const search = new URLSearchParams({ key });
@@ -69,8 +66,6 @@ export default class StreamingAPI {
 		}
 
 		const { socket } = this;
-
-		this.close = promisify(socket.close).bind(socket);
 
 		socket.on('message', async (data: string) => {
 			let message;
@@ -122,7 +117,7 @@ export default class StreamingAPI {
 			return;
 		}
 
-		await this.close!();
+		this.socket!.close();
 
 		this.started = false;
 
@@ -146,11 +141,15 @@ export default class StreamingAPI {
 	/**
 	 * Handles events
 	 */
-	private handleEvent(event: object): Promise<void> {
+	private handleEvent(event: IStreamingContextPayload): Promise<void> {
 		const context = new StreamingContext({
 			vk: this.vk,
-			// @ts-ignore
-			payload: event
+			payload: event,
+
+			state: {},
+
+			updateType: 'publication',
+			source: UpdateSource.WEBSOCKET
 		});
 
 		return this.vk.updates.dispatchMiddleware(context);

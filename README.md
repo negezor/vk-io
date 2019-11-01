@@ -59,6 +59,7 @@ run().catch(console.log);
 ## Community
 ### Useful modules that may be useful to you
 
+* [@vk-io/streaming](packages/streaming): Receiving data with Streaming API
 * [@vk-io/session](packages/session): Simple implementation of the sessions
 * [@vk-io/scenes](packages/scenes): Simple implementation of middleware-based scene management
 

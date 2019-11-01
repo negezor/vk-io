@@ -7,12 +7,12 @@ import Upload from './upload';
 import Collect from './collect';
 import Updates from './updates';
 import Snippets from './snippets';
-import StreamingAPI from './streaming';
 import CallbackService from './utils/callback-service';
 
 import { IVKOptions } from './types';
 
 import { defaultOptions } from './utils/constants';
+import { showDeprecatedMessage } from './utils/helpers';
 
 /**
  * Main class
@@ -40,8 +40,6 @@ export default class VK {
 
 	public snippets = new Snippets(this);
 
-	public streaming = new StreamingAPI(this);
-
 	public callbackService = new CallbackService(this);
 
 	/**
@@ -56,6 +54,14 @@ export default class VK {
 	 */
 	public get [Symbol.toStringTag](): string {
 		return this.constructor.name;
+	}
+
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	public get streaming(): any {
+		showDeprecatedMessage('vk.streaming deprecated, use @vk-io/streaming instead');
+
+		// eslint-disable-next-line
+		return new (require('@vk-io/streaming').StreamingAPI)(this);
 	}
 
 	/**
@@ -112,8 +118,7 @@ export default class VK {
 
 		const {
 			api,
-			updates,
-			streaming
+			updates
 		} = this;
 
 		const {
@@ -131,8 +136,7 @@ export default class VK {
 				token
 			},
 			api,
-			updates,
-			streaming
+			updates
 		};
 
 		return `${options.stylize(name, 'special')} ${inspect(payload, options)}`;

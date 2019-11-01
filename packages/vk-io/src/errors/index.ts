@@ -7,7 +7,6 @@ export { default as CollectError } from './collect';
 export { default as UpdatesError } from './updates';
 export { default as ExecuteError } from './execute';
 export { default as SnippetsError } from './snippets';
-export { default as StreamingRuleError } from './streaming-rule';
 
 export {
 	APIErrorCode,

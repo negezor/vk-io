@@ -1,4 +1,4 @@
-import VKError from './error';
+import { VKError } from 'vk-io';
 
 export interface IStreamingRuleErrorOptions {
 	message: string;

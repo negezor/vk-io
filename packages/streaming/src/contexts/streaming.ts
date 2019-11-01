@@ -1,6 +1,7 @@
-import Context, { IContextOptions } from './context';
-
 import {
+	Context,
+	IContextOptions,
+
 	Attachment,
 	ExternalAttachment,
 
@@ -18,11 +19,16 @@ import {
 	StoryAttachment,
 	VideoAttachment,
 	WallReplyAttachment,
-	WallAttachment
-} from '../attachments';
-import { copyParams } from '../../utils/helpers';
-import { transformAttachments } from '../attachments/helpers';
-import { platforms, inspectCustomData, AttachmentType } from '../../utils/constants';
+	WallAttachment,
+
+	AttachmentType,
+
+	transformAttachments,
+	inspectCustomData,
+	platforms
+} from 'vk-io';
+
+import { copyParams } from '../helpers';
 
 export interface IStreamingContextPayload {
 	event_type: 'post' | 'comment' | 'share' | 'topic_post';
