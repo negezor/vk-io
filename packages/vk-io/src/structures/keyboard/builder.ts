@@ -14,12 +14,12 @@ export default class KeyboardBuilder {
 	/**
 	 * Does the keyboard close after pressing the button
 	 */
-	protected isOneTime = false;
+	public isOneTime = false;
 
 	/**
 	 * The keyboard must be attached to the message
 	 */
-	protected isInline = false;
+	public isInline = false;
 
 	/**
 	 * Rows with all buttons
