@@ -1,4 +1,3 @@
-// @ts-ignore
 import createDebug from 'debug';
 
 import { inspect } from 'util';

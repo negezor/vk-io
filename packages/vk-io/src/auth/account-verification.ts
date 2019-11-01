@@ -1,6 +1,4 @@
-// @ts-ignore
 import { load as cheerioLoad } from 'cheerio';
-// @ts-ignore
 import createDebug from 'debug';
 
 import { Agent } from 'https';

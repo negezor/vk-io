@@ -1,6 +1,5 @@
 // @ts-ignore
 import fetch from 'node-fetch';
-// @ts-ignore
 import createDebug from 'debug';
 
 import { inspect } from 'util';

@@ -1,4 +1,3 @@
-// @ts-ignore
 import createDebug from 'debug';
 
 import { Server as HTTPSServer, createServer as httpsCreateServer } from 'https';

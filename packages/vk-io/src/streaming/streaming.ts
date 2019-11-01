@@ -2,7 +2,6 @@
 import WebSocket from 'ws';
 // @ts-ignore
 import fetch from 'node-fetch';
-// @ts-ignore
 import createDebug from 'debug';
 
 import { URL, URLSearchParams } from 'url';
