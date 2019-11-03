@@ -14,6 +14,8 @@ import { IVKOptions } from './types';
 import { defaultOptions } from './utils/constants';
 import { showDeprecatedMessage } from './utils/helpers';
 
+const kStreaming = Symbol('streaming');
+
 /**
  * Main class
  */
@@ -42,6 +44,9 @@ export default class VK {
 
 	public callbackService = new CallbackService(this);
 
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	protected [kStreaming]: any;
+
 	/**
 	 * Constructor
 	 */
@@ -58,10 +63,14 @@ export default class VK {
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public get streaming(): any {
-		showDeprecatedMessage('vk.streaming deprecated, use @vk-io/streaming instead');
+		if (!this[kStreaming]) {
+			showDeprecatedMessage('vk.streaming deprecated, use @vk-io/streaming instead');
 
-		// eslint-disable-next-line
-		return new (require('@vk-io/streaming').StreamingAPI)(this);
+			// eslint-disable-next-line
+			this[kStreaming] = new (require('@vk-io/streaming').StreamingAPI)(this);
+		}
+
+		return this[kStreaming];
 	}
 
 	/**
