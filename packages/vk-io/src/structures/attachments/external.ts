@@ -56,8 +56,9 @@ export default class ExternalAttachment<P = {}> {
 	 * Returns the custom data
 	 */
 	public [inspectCustomData](): object {
-		// @ts-ignore
-		return this.payload;
+		return {
+			payload: this.payload
+		};
 	}
 
 	/**
