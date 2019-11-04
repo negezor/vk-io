@@ -184,7 +184,6 @@ export default class Upload {
 			getServer: this.vk.api.photos.getUploadServer,
 			serverParams: ['album_id', 'group_id'],
 
-			// @ts-ignore
 			saveFiles: this.vk.api.photos.save,
 			saveParams: ['album_id', 'group_id', 'latitude', 'longitude', 'caption'],
 
@@ -253,7 +252,6 @@ export default class Upload {
 			getServer: this.vk.api.photos.getOwnerPhotoUploadServer,
 			serverParams: ['owner_id'],
 
-			// @ts-ignore
 			saveFiles: this.vk.api.photos.saveOwnerPhoto,
 
 			maxFiles: 1,
@@ -488,7 +486,6 @@ export default class Upload {
 			compression?: number;
 		}
 	): Promise<VideoAttachment> {
-		// @ts-ignore
 		const save = await this.vk.api.video.save(copyParams(params, [
 			'group_id',
 			'album_id',

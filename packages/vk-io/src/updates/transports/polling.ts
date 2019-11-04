@@ -60,11 +60,9 @@ export default class PollingTransport {
 			const isGroup = pollingGroupId !== null;
 
 			const { server, key, ts } = isGroup
-				// @ts-ignore
 				? await this.vk.api.groups.getLongPollServer({
 					group_id: pollingGroupId!
 				})
-				// @ts-ignore
 				: await this.vk.api.messages.getLongPollServer({
 					lp_version: POLLING_VERSION
 				});

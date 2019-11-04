@@ -57,7 +57,6 @@ export default class DocumentAttachment extends Attachment<IDocumentAttachmentPa
 			return;
 		}
 
-		// @ts-ignore
 		const [document] = await this.vk.api.docs.getById({
 			docs: `${this.ownerId}_${this.id}`
 		});

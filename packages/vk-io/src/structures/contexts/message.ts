@@ -165,11 +165,9 @@ export default class MessageContext<S = Record<string, any>>
 		}
 
 		const { items } = this.id !== 0
-			// @ts-ignore
 			? await this.vk.api.messages.getById({
 				message_ids: this.id
 			})
-			// @ts-ignore
 			: await this.vk.api.messages.getByConversationMessageId({
 				peer_id: this.peerId,
 				conversation_message_ids: this.conversationMessageId!
@@ -542,7 +540,6 @@ export default class MessageContext<S = Record<string, any>>
 	 * Gets a link to invite the user to a conversation
 	 */
 	public getInviteLink(params: object = {}): Promise<object> {
-		// @ts-ignore
 		return this.vk.api.messages.getInviteLink({
 			...params,
 
@@ -554,7 +551,6 @@ export default class MessageContext<S = Record<string, any>>
 	 * Edits a message
 	 */
 	editMessage(params: object): Promise<number> {
-		// @ts-ignore
 		return this.vk.api.messages.edit({
 			attachment: String(
 				this.attachments.filter(attachment => (
@@ -587,7 +583,6 @@ export default class MessageContext<S = Record<string, any>>
 	 * Sends a message to the current dialog
 	 */
 	send(text: string | object, params?: object): Promise<number> {
-		// @ts-ignore
 		return this.vk.api.messages.send({
 			peer_id: this.peerId,
 
@@ -764,7 +759,6 @@ export default class MessageContext<S = Record<string, any>>
 	 * Changes the status of typing in the dialog
 	 */
 	async setActivity(): Promise<boolean> {
-		// @ts-ignore
 		const isActivited = await this.vk.api.messages.setActivity({
 			peer_id: this.peerId,
 			type: 'typing'
@@ -780,7 +774,6 @@ export default class MessageContext<S = Record<string, any>>
 		ids = [this.id],
 		options = { important: Number(!this.isImportant) }
 	): Promise<number[]> {
-		// @ts-ignore
 		const messageIds = await this.vk.api.messages.markAsImportant({
 			...options,
 
@@ -798,7 +791,6 @@ export default class MessageContext<S = Record<string, any>>
 	 * Deletes the message
 	 */
 	async deleteMessage(ids: number[] = [this.id], options = { spam: 0 }): Promise<number> {
-		// @ts-ignore
 		const messageIds = await this.vk.api.messages.delete({
 			...options,
 
@@ -812,7 +804,6 @@ export default class MessageContext<S = Record<string, any>>
 	 * Restores the message
 	 */
 	async restoreMessage(): Promise<boolean> {
-		// @ts-ignore
 		const isRestored = await this.vk.api.messages.restore({
 			message_id: this.id
 		});
@@ -826,7 +817,6 @@ export default class MessageContext<S = Record<string, any>>
 	public async renameChat(title: string): Promise<boolean> {
 		this.assertIsChat();
 
-		// @ts-ignore
 		const isRenamed = await this.vk.api.messages.editChat({
 			chat_id: this.chatId!,
 			title
@@ -857,7 +847,6 @@ export default class MessageContext<S = Record<string, any>>
 	public async deleteChatPhoto(): Promise<boolean> {
 		this.assertIsChat();
 
-		// @ts-ignore
 		return this.vk.api.messages.deleteChatPhoto({
 			chat_id: this.chatId!
 		});
@@ -869,7 +858,6 @@ export default class MessageContext<S = Record<string, any>>
 	public async inviteUser(id: number = this.eventMemberId!): Promise<boolean> {
 		this.assertIsChat();
 
-		// @ts-ignore
 		const isInvited = await this.vk.api.messages.addChatUser({
 			chat_id: this.chatId!,
 			user_id: id
@@ -884,7 +872,6 @@ export default class MessageContext<S = Record<string, any>>
 	public async kickUser(id: number = this.eventMemberId!): Promise<boolean> {
 		this.assertIsChat();
 
-		// @ts-ignore
 		const isKicked = await this.vk.api.messages.removeChatUser({
 			chat_id: this.chatId!,
 			member_id: id
@@ -899,7 +886,6 @@ export default class MessageContext<S = Record<string, any>>
 	public async pinMessage(): Promise<boolean> {
 		this.assertIsChat();
 
-		// @ts-ignore
 		const isPinned = await this.vk.api.messages.pin({
 			peer_id: this.peerId,
 			message_id: this.id
@@ -914,7 +900,6 @@ export default class MessageContext<S = Record<string, any>>
 	public async unpinMessage(): Promise<boolean> {
 		this.assertIsChat();
 
-		// @ts-ignore
 		const isUnpinned = await this.vk.api.messages.unpin({
 			peer_id: this.peerId,
 			message_id: this.id

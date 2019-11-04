@@ -54,7 +54,6 @@ export default class PhotoAttachment extends Attachment<IPhotoAttachmentPayload>
 			return;
 		}
 
-		// @ts-ignore
 		const [photo] = await this.vk.api.photos.getById({
 			photos: `${this.ownerId}_${this.id}`,
 			extended: 0

@@ -39,7 +39,6 @@ export default class GraffitiAttachment extends Attachment<IGraffitiAttachmentPa
 			return;
 		}
 
-		// @ts-ignore
 		const [document] = await this.vk.api.docs.getById({
 			docs: `${this.ownerId}_${this.id}`
 		});

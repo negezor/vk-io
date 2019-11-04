@@ -38,7 +38,6 @@ export default class TypingContext<S = Record<string, any>>
 
 			type: 'typing',
 			subTypes: [
-				// @ts-ignore
 				`typing_${getPeerType(options.payload.from_id)}`
 			],
 

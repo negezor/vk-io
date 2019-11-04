@@ -40,7 +40,6 @@ export default class AudioMessageAttachment extends Attachment<IAudioMessageAtta
 			return;
 		}
 
-		// @ts-ignore
 		const [document] = await this.vk.api.docs.getById({
 			docs: `${this.ownerId}_${this.id}`
 		});

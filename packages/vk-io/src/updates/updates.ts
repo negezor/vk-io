@@ -516,10 +516,9 @@ export default class Updates {
 
 		if (!this.vk.options.pollingGroupId) {
 			try {
-				// @ts-ignore
-				const [group] = await this.vk.api.groups.getById();
+				const [group] = await this.vk.api.groups.getById({});
 
-				this.vk.options.pollingGroupId = group.id;
+				this.vk.options.pollingGroupId = group.id!;
 			} catch (error) {
 				if (error.code !== APIErrorCode.WRONG_PARAMETER) {
 					throw error;

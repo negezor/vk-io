@@ -126,7 +126,6 @@ export default class GroupUserContext<S = Record<string, any>>
 			}));
 		}
 
-		// @ts-ignore
 		return this.vk.api.groups.ban({
 			...params,
 
@@ -146,7 +145,6 @@ export default class GroupUserContext<S = Record<string, any>>
 			}));
 		}
 
-		// @ts-ignore
 		return this.vk.api.groups.unban({
 			group_id: this.$groupId!,
 			user_id: this.userId

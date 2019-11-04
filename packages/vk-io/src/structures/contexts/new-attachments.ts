@@ -145,7 +145,6 @@ export default class NewAttachmentsContext<S = Record<string, any>>
 		if (this.isPhoto) {
 			const [photo] = this.getAttachments('photo');
 
-			// @ts-ignore
 			return this.vk.api.photos.delete({
 				owner_id: photo.ownerId,
 				photo_id: photo.id
@@ -155,7 +154,6 @@ export default class NewAttachmentsContext<S = Record<string, any>>
 		if (this.isVideo) {
 			const [video] = this.getAttachments('video');
 
-			// @ts-ignore
 			return this.vk.api.video.delete({
 				owner_id: video.ownerId,
 				video_id: video.id

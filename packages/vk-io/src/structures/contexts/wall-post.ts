@@ -49,7 +49,6 @@ export default class WallPostContext<S = Record<string, any>>
 	public deletePost(): Promise<number> {
 		const { wall } = this;
 
-		// @ts-ignore
 		return this.vk.api.wall.delete({
 			post_id: wall.id,
 			owner_id: wall.ownerId

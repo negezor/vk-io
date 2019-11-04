@@ -72,7 +72,6 @@ export default class DialogFlagsContext<S = Record<string, any>>
 	 * Marks the conversation as answered or unchecked
 	 */
 	public markAsAnsweredConversation(params: object): Promise<number> {
-		// @ts-ignore
 		return this.vk.api.messages.markAsAnsweredConversation({
 			...params,
 
@@ -84,7 +83,6 @@ export default class DialogFlagsContext<S = Record<string, any>>
 	 * Marks the conversation as important or removes the mark
 	 */
 	public markAsImportantConversation(params: object): Promise<number> {
-		// @ts-ignore
 		return this.vk.api.messages.markAsImportantConversation({
 			...params,
 

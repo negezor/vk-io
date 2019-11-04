@@ -52,7 +52,6 @@ export default class VideoAttachment extends Attachment<IVideoAttachmentPayload>
 			return;
 		}
 
-		// @ts-ignore
 		const { items } = await this.vk.api.video.get({
 			videos: `${this.ownerId}_${this.id}`,
 			extended: 0

@@ -90,7 +90,6 @@ export default class WallAttachment extends Attachment<IWallAttachmentPayload> {
 			return;
 		}
 
-		// @ts-ignore
 		const [post] = await this.vk.api.wall.getById({
 			posts: `${this.ownerId}_${this.id}`,
 			extended: 0
