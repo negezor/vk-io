@@ -12,9 +12,10 @@ import { join as pathJoin } from 'path';
 
 const MODULES = [
 	'vk-io',
-	'session',
 	'scenes',
-	'streaming'
+	'session',
+	'streaming',
+	'authorization'
 ];
 
 const coreModules = builtinModules.filter(name => (

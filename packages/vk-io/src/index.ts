@@ -26,6 +26,8 @@ export {
 	inspectCustomData
 } from './utils/constants';
 
+export { ICallbackServiceValidate } from './utils/callback-service';
+
 export { VK, Request };
 
 export default VK;

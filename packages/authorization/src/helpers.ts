@@ -1,6 +1,6 @@
 import { URL } from 'url';
 
-import { userScopes, groupScopes } from '../utils/constants';
+import { userScopes, groupScopes } from './constants';
 
 /**
  * Returns the bit mask of the user permission by name

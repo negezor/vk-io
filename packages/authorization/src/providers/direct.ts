@@ -1,26 +1,21 @@
-import { load as cheerioLoad } from 'cheerio';
 import createDebug from 'debug';
+import { load as cheerioLoad } from 'cheerio';
+
+import { VK, CaptchaType, ICallbackServiceValidate } from 'vk-io';
 
 import { Agent } from 'https';
 import { URL, URLSearchParams } from 'url';
 
-import VK from '../vk';
-import { AuthError, AuthErrorCode } from '../errors';
-
-import { fetchCookieFollowRedirectsDecorator, CookieJar } from '../utils/fetch-cookie';
-import {
-	DESKTOP_USER_AGENT,
-
-	CaptchaType
-} from '../utils/constants';
+import { AuthorizationError } from '../errors';
+import { DESKTOP_USER_AGENT, AuthErrorCode } from '../constants';
+import { fetchCookieFollowRedirectsDecorator, CookieJar } from '../fetch-cookie';
 import {
 	getFullURL,
 	parseFormField,
 	getUsersPermissionsByName
-} from './helpers';
-import { ICallbackServiceValidate } from '../utils/callback-service';
+} from '../helpers';
 
-const debug = createDebug('vk-io:auth:direct');
+const debug = createDebug('vk-io:authorization:direct');
 
 const {
 	INVALID_PHONE_NUMBER,
@@ -218,7 +213,7 @@ export default class DirectAuth {
 		expires: number;
 	}> {
 		if (this.started) {
-			throw new AuthError({
+			throw new AuthorizationError({
 				message: 'Authorization already started!',
 				code: AUTHORIZATION_FAILED
 			});
@@ -267,7 +262,7 @@ export default class DirectAuth {
 
 				if ('error' in text) {
 					if (text.error === 'invalid_client') {
-						throw new AuthError({
+						throw new AuthorizationError({
 							message: `Invalid client (${text.error_description})`,
 							code: AUTHORIZATION_FAILED
 						});
@@ -293,14 +288,14 @@ export default class DirectAuth {
 						continue;
 					}
 
-					throw new AuthError({
+					throw new AuthorizationError({
 						message: 'Unsupported type validation',
 						code: AUTHORIZATION_FAILED
 					});
 				}
 			}
 
-			throw new AuthError({
+			throw new AuthorizationError({
 				message: 'Authorization failed',
 				code: AUTHORIZATION_FAILED
 			});
@@ -315,7 +310,7 @@ export default class DirectAuth {
 		debug('captcha process');
 
 		if (this.captchaValidate !== null) {
-			this.captchaValidate.reject(new AuthError({
+			this.captchaValidate.reject(new AuthorizationError({
 				message: 'Incorrect captcha code',
 				code: FAILED_PASSED_CAPTCHA
 			}));
@@ -326,7 +321,7 @@ export default class DirectAuth {
 		}
 
 		if (this.captchaAttempts >= CAPTCHA_ATTEMPTS) {
-			throw new AuthError({
+			throw new AuthorizationError({
 				message: 'Maximum attempts passage captcha',
 				code: FAILED_PASSED_CAPTCHA
 			});
@@ -362,7 +357,7 @@ export default class DirectAuth {
 		debug('process two-factor handle');
 
 		if (this.twoFactorValidate !== null) {
-			this.twoFactorValidate.reject(new AuthError({
+			this.twoFactorValidate.reject(new AuthorizationError({
 				message: 'Incorrect two-factor code',
 				code: FAILED_PASSED_TWO_FACTOR
 			}));
@@ -373,7 +368,7 @@ export default class DirectAuth {
 		}
 
 		if (this.twoFactorAttempts >= TWO_FACTOR_ATTEMPTS) {
-			throw new AuthError({
+			throw new AuthorizationError({
 				message: 'Failed passed two-factor authentication',
 				code: FAILED_PASSED_TWO_FACTOR
 			});
@@ -408,7 +403,7 @@ export default class DirectAuth {
 		} else if (login !== null && !login.includes('@')) {
 			number = login;
 		} else {
-			throw new AuthError({
+			throw new AuthorizationError({
 				message: 'Missing phone number in the phone or login field',
 				code: INVALID_PHONE_NUMBER
 			});
@@ -437,7 +432,7 @@ export default class DirectAuth {
 		});
 
 		if (rewResponse.url.includes(ACTION_SECURITY_CODE)) {
-			throw new AuthError({
+			throw new AuthorizationError({
 				message: 'Invalid phone number',
 				code: INVALID_PHONE_NUMBER
 			});

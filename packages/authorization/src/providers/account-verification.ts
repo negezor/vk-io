@@ -1,17 +1,17 @@
-import { load as cheerioLoad } from 'cheerio';
 import createDebug from 'debug';
+import { load as cheerioLoad } from 'cheerio';
+
+import { VK, CaptchaType, ICallbackServiceValidate } from 'vk-io';
 
 import { Agent } from 'https';
 import { URL, URLSearchParams } from 'url';
 
-import VK from '../vk';
-import { AuthError, AuthErrorCode } from '../errors';
-import { parseFormField, getFullURL } from './helpers';
-import { DESKTOP_USER_AGENT, CALLBACK_BLANK, CaptchaType } from '../utils/constants';
-import { CookieJar, fetchCookieFollowRedirectsDecorator } from '../utils/fetch-cookie';
-import { ICallbackServiceValidate } from '../utils/callback-service';
+import { AuthorizationError } from '../errors';
+import { parseFormField, getFullURL } from '../helpers';
+import { CookieJar, fetchCookieFollowRedirectsDecorator } from '../fetch-cookie';
+import { DESKTOP_USER_AGENT, CALLBACK_BLANK, AuthErrorCode } from '../constants';
 
-const debug = createDebug('vk-io:auth:account-verification');
+const debug = createDebug('vk-io:authorization:account-verification');
 
 const {
 	INVALID_PHONE_NUMBER,
@@ -149,7 +149,7 @@ export default class AccountVerification {
 				const params = new URLSearchParams(hash);
 
 				if (params.has('error')) {
-					throw new AuthError({
+					throw new AuthorizationError({
 						message: `Failed passed grant access: ${params.get('error_description') || 'Unknown error'}`,
 						code: AUTHORIZATION_FAILED
 					});
@@ -192,7 +192,7 @@ export default class AccountVerification {
 				continue;
 			}
 
-			throw new AuthError({
+			throw new AuthorizationError({
 				message: 'Account verification failed',
 				code: AUTHORIZATION_FAILED
 			});
@@ -207,7 +207,7 @@ export default class AccountVerification {
 		debug('process two-factor handle');
 
 		if (this.twoFactorValidate) {
-			this.twoFactorValidate.reject(new AuthError({
+			this.twoFactorValidate.reject(new AuthorizationError({
 				message: 'Incorrect two-factor code',
 				code: FAILED_PASSED_TWO_FACTOR,
 				pageHtml: $.html()
@@ -217,7 +217,7 @@ export default class AccountVerification {
 		}
 
 		if (this.twoFactorAttempts >= TWO_FACTOR_ATTEMPTS) {
-			throw new AuthError({
+			throw new AuthorizationError({
 				message: 'Failed passed two-factor authentication',
 				code: FAILED_PASSED_TWO_FACTOR
 			});
@@ -260,7 +260,7 @@ export default class AccountVerification {
 		} else if (login !== null && !login.includes('@')) {
 			number = login;
 		} else {
-			throw new AuthError({
+			throw new AuthorizationError({
 				message: 'Missing phone number in the phone or login field',
 				code: INVALID_PHONE_NUMBER
 			});
@@ -289,7 +289,7 @@ export default class AccountVerification {
 		});
 
 		if (rewResponse.url.includes(ACTION_SECURITY_CODE)) {
-			throw new AuthError({
+			throw new AuthorizationError({
 				message: 'Invalid phone number',
 				code: INVALID_PHONE_NUMBER
 			});
@@ -317,7 +317,7 @@ export default class AccountVerification {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	protected async processCaptchaForm(response: any, $: any): Promise<any> {
 		if (this.captchaValidate !== null) {
-			this.captchaValidate.reject(new AuthError({
+			this.captchaValidate.reject(new AuthorizationError({
 				message: 'Incorrect captcha code',
 				code: FAILED_PASSED_CAPTCHA
 			}));

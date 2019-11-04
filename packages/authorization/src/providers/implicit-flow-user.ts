@@ -3,13 +3,12 @@ import createDebug from 'debug';
 import { URL, URLSearchParams } from 'url';
 
 import ImplicitFlow from './implicit-flow';
-import { AuthError, AuthErrorCode } from '../errors';
-import { CALLBACK_BLANK } from '../utils/constants';
-import {
-	getUsersPermissionsByName
-} from './helpers';
+import { AuthorizationError } from '../errors';
 
-const debug = createDebug('vk-io:auth:implicit-flow-user');
+import { getUsersPermissionsByName } from '../helpers';
+import { CALLBACK_BLANK, AuthErrorCode } from '../constants';
+
+const debug = createDebug('vk-io:authorization:implicit-flow-user');
 
 const { AUTHORIZATION_FAILED } = AuthErrorCode;
 
@@ -68,7 +67,7 @@ export default class ImplicitFlowUser extends ImplicitFlow {
 		const params = new URLSearchParams(hash);
 
 		if (params.has('error')) {
-			throw new AuthError({
+			throw new AuthorizationError({
 				message: `Failed passed grant access: ${params.get('error_description') || 'Unknown error'}`,
 				code: AUTHORIZATION_FAILED
 			});

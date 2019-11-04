@@ -1,17 +1,17 @@
-import VKError from './error';
+import { VKError } from 'vk-io';
 
 const { DEBUG = '' } = process.env;
 
-const isDebug = DEBUG.includes('vk-io:auth');
+const isDebug = DEBUG.includes('vk-io:authorization');
 
-export interface IAuthErrorOptions {
+export interface IAuthorizationErrorOptions {
 	message: string;
 	code: string;
 
 	pageHtml?: string | null;
 }
 
-export default class AuthError extends VKError {
+export default class AuthorizationError extends VKError {
 	/**
 	 * HTML error page
 	 */
@@ -20,7 +20,7 @@ export default class AuthError extends VKError {
 	/**
 	 * Constructor
 	 */
-	public constructor({ message, code, pageHtml = null }: IAuthErrorOptions) {
+	public constructor({ message, code, pageHtml = null }: IAuthorizationErrorOptions) {
 		super({ message, code });
 
 		this.pageHtml = isDebug

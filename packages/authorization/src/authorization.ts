@@ -1,10 +1,14 @@
+import { VK } from 'vk-io';
+
 import { inspect } from 'util';
 import { createHash } from 'crypto';
 
-import VK from '../vk';
-import DirectAuth from './direct';
-import ImplicitFlowUser from './implicit-flow-user';
-import ImplicitFlowGroups from './implicit-flow-groups';
+import {
+	DirectAuthorization,
+
+	ImplicitFlowGroups,
+	ImplicitFlowUser
+} from './providers';
 
 const openAPIParams = [
 	'expire',
@@ -14,7 +18,7 @@ const openAPIParams = [
 	'sig'
 ];
 
-export default class Auth {
+export default class Authorization {
 	protected vk: VK;
 
 	/**
@@ -49,18 +53,18 @@ export default class Auth {
 	/**
 	 * Direct authorization with login & login in user application
 	 */
-	public direct(): DirectAuth {
+	public direct(): DirectAuthorization {
 		const { appId, appSecret } = this.vk.options;
 
 		// @ts-ignore
-		return new DirectAuth(this.vk, { appId, appSecret });
+		return new DirectAuthorization(this.vk, { appId, appSecret });
 	}
 
 	/**
 	 * Direct authorization with login & login in android application
 	 */
-	public androidApp(): DirectAuth {
-		return new DirectAuth(this.vk, {
+	public androidApp(): DirectAuthorization {
+		return new DirectAuthorization(this.vk, {
 			appId: 2274003,
 			appSecret: 'hHbZxrka2uZ6jB1inYsH'
 		});
@@ -69,8 +73,8 @@ export default class Auth {
 	/**
 	 * Direct authorization with login & login in windows application
 	 */
-	public windowsApp(): DirectAuth {
-		return new DirectAuth(this.vk, {
+	public windowsApp(): DirectAuthorization {
+		return new DirectAuthorization(this.vk, {
 			appId: 3697615,
 			appSecret: 'AlVXZFMUqyrnABp8ncuU'
 		});
@@ -79,8 +83,8 @@ export default class Auth {
 	/**
 	 * Direct authorization with login & login in windows phone application
 	 */
-	public windowsPhoneApp(): DirectAuth {
-		return new DirectAuth(this.vk, {
+	public windowsPhoneApp(): DirectAuthorization {
+		return new DirectAuthorization(this.vk, {
 			appId: 3502557,
 			appSecret: 'PEObAuQi6KloPM4T30DV'
 		});
@@ -89,8 +93,8 @@ export default class Auth {
 	/**
 	 * Direct authorization with login & login in iphone application
 	 */
-	public iphoneApp(): DirectAuth {
-		return new DirectAuth(this.vk, {
+	public iphoneApp(): DirectAuthorization {
+		return new DirectAuthorization(this.vk, {
 			appId: 3140623,
 			appSecret: 'VeWdmVclDCtn6ihuP1nt'
 		});
@@ -99,8 +103,8 @@ export default class Auth {
 	/**
 	 * Direct authorization with login & login in ipad application
 	 */
-	public ipadApp(): DirectAuth {
-		return new DirectAuth(this.vk, {
+	public ipadApp(): DirectAuthorization {
+		return new DirectAuthorization(this.vk, {
 			appId: 3682744,
 			appSecret: 'mY6CDUswIVdJLCD3j15n'
 		});
@@ -109,8 +113,8 @@ export default class Auth {
 	/**
 	 * Direct authorization with login & login in VK Me application
 	 */
-	public vkMeApp(): DirectAuth {
-		return new DirectAuth(this.vk, {
+	public vkMeApp(): DirectAuthorization {
+		return new DirectAuthorization(this.vk, {
 			appId: 6146827,
 			appSecret: 'qVxWRF1CwHERuIrKBnqe'
 		});

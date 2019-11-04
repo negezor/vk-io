@@ -10,7 +10,6 @@ import VK from '../vk';
 import Request from './request';
 import { getRandomId, delay } from '../utils/helpers';
 import { VKError, APIError, ExecuteError } from '../errors';
-import AccountVerification from '../auth/account-verification';
 import { sequential, parallel, parallelSelected } from './workers';
 import {
 	MINIMUM_TIME_INTERVAL_API,
@@ -376,6 +375,16 @@ export default class API extends APIMethods {
 		if (code === USER_VALIDATION_REQUIRED) {
 			if (this.suspended) {
 				this.requeue(request);
+			}
+
+			let AccountVerification;
+			try {
+				// @ts-ignore
+				AccountVerification = (await import('@vk-io/authorization')).AccountVerification;
+			} catch (importError) {
+				request.reject(error);
+
+				return;
 			}
 
 			this.suspended = true;

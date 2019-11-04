@@ -1,7 +1,7 @@
 {
-	"name": "vk-io",
-	"version": "4.0.0-rc.25",
-	"description": "Modern VK API SDK for Node.js",
+	"name": "@vk-io/authorization",
+	"version": "0.0.0-alpha.1",
+	"description": "Separated module for authorization",
 	"license": "MIT",
 	"author": {
 		"name": "Vladlen (Negezor)",
@@ -15,13 +15,9 @@
 	"bugs": "https://github.com/negezor/vk-io/issues",
 	"keywords": [
 		"vk",
+		"io",
 		"api",
-		"sdk",
-		"bot",
-		"node",
-		"js",
-		"es6",
-		"es7"
+		"authorization"
 	],
 	"files": [
 		"lib"
@@ -30,17 +26,23 @@
 	"module": "lib/index.mjs",
 	"types": "./lib/index.d.ts",
 	"engines": {
-		"node": ">=8.0.0"
+		"node": ">=10.0.0"
 	},
-	"devDependencies": {
-		"@types/debug": "^4.1.5",
-		"@types/node": "^12.12.3",
-		"@types/node-fetch": "^2.5.2"
+	"peerDependencies": {
+		"vk-io": "^4.0.0-rc.26"
 	},
 	"dependencies": {
+		"cheerio": "^1.0.0-rc.3",
 		"debug": "^4.1.1",
-		"middleware-io": "^2.1.0",
 		"node-fetch": "^2.6.0",
-		"sandwich-stream": "^2.0.2"
+		"tough-cookie": "^3.0.1",
+		"ws": "^7.2.0"
+	},
+	"devDependencies": {
+		"@types/cheerio": "^0.22.13",
+		"@types/debug": "^4.1.5",
+		"@types/node-fetch": "^2.5.3",
+		"@types/tough-cookie": "^2.3.5",
+		"@types/ws": "^6.0.3"
 	}
 }

@@ -1,16 +1,16 @@
 import createDebug from 'debug';
 
+import { VK, VKError } from 'vk-io';
+
 import { URL, URLSearchParams } from 'url';
 
 import ImplicitFlow, { IImplicitFlowOptions } from './implicit-flow';
-import { VKError, AuthError, AuthErrorCode } from '../errors';
-import { CALLBACK_BLANK } from '../utils/constants';
-import {
-	getGroupsPermissionsByName
-} from './helpers';
-import VK from '../vk';
 
-const debug = createDebug('vk-io:auth:implicit-flow-user');
+import { AuthorizationError } from '../errors';
+import { getGroupsPermissionsByName } from '../helpers';
+import { CALLBACK_BLANK, AuthErrorCode } from '../constants';
+
+const debug = createDebug('vk-io:authorization:implicit-flow-user');
 
 const { AUTHORIZATION_FAILED } = AuthErrorCode;
 
@@ -99,7 +99,7 @@ export default class ImplicitFlowGroups extends ImplicitFlow {
 		const params = new URLSearchParams(hash);
 
 		if (params.has('error')) {
-			throw new AuthError({
+			throw new AuthorizationError({
 				message: `Failed passed grant access: ${params.get('error_description') || 'Unknown error'}`,
 				code: AUTHORIZATION_FAILED
 			});

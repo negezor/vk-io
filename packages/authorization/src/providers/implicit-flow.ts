@@ -1,19 +1,18 @@
-import { load as cheerioLoad } from 'cheerio';
 import createDebug from 'debug';
+import { load as cheerioLoad } from 'cheerio';
+
+import { VK, CaptchaType, ICallbackServiceValidate } from 'vk-io';
 
 import { Agent } from 'https';
 import { promisify } from 'util';
 import { URL, URLSearchParams } from 'url';
 
-import VK from '../vk';
-import { AuthError, AuthErrorCode } from '../errors';
+import { AuthorizationError } from '../errors';
+import { parseFormField, getFullURL } from '../helpers';
+import { CookieJar, fetchCookieFollowRedirectsDecorator } from '../fetch-cookie';
+import { DESKTOP_USER_AGENT, CALLBACK_BLANK, AuthErrorCode } from '../constants';
 
-import { parseFormField, getFullURL } from './helpers';
-import { CookieJar, fetchCookieFollowRedirectsDecorator } from '../utils/fetch-cookie';
-import { DESKTOP_USER_AGENT, CALLBACK_BLANK, CaptchaType } from '../utils/constants';
-import { ICallbackServiceValidate } from '../utils/callback-service';
-
-const debug = createDebug('vk-io:auth:implicit-flow');
+const debug = createDebug('vk-io:authorization:implicit-flow');
 
 const {
 	PAGE_BLOCKED,
@@ -215,7 +214,7 @@ export default class ImplicitFlow {
 	// eslint-disable-next-line consistent-return, @typescript-eslint/no-explicit-any
 	public async run(): Promise<any> {
 		if (this.started) {
-			throw new AuthError({
+			throw new AuthorizationError({
 				message: 'Authorization already started!',
 				code: AUTHORIZATION_FAILED
 			});
@@ -244,7 +243,7 @@ export default class ImplicitFlow {
 			if (url.includes(ACTION_BLOCKED)) {
 				debug('page blocked');
 
-				throw new AuthError({
+				throw new AuthorizationError({
 					message: 'Page blocked',
 					code: PAGE_BLOCKED
 				});
@@ -274,7 +273,7 @@ export default class ImplicitFlow {
 					? $error.text()
 					: $service.text();
 
-				throw new AuthError({
+				throw new AuthorizationError({
 					message: `Auth form error: ${errorText}`,
 					code: AUTHORIZATION_FAILED,
 					pageHtml: $.html()
@@ -288,7 +287,7 @@ export default class ImplicitFlow {
 			}
 
 			if (url.includes('act=')) {
-				throw new AuthError({
+				throw new AuthorizationError({
 					message: 'Unsupported authorization event',
 					code: AUTHORIZATION_FAILED,
 					pageHtml: $.html()
@@ -309,7 +308,7 @@ export default class ImplicitFlow {
 				const locations = $.html().match(FIND_LOCATION_HREF_RE);
 
 				if (locations === null) {
-					throw new AuthError({
+					throw new AuthorizationError({
 						message: 'Could not log in',
 						code: AUTHORIZATION_FAILED,
 						pageHtml: $.html()
@@ -335,7 +334,7 @@ export default class ImplicitFlow {
 		debug('process login handle');
 
 		if (this.captchaValidate) {
-			this.captchaValidate.reject(new AuthError({
+			this.captchaValidate.reject(new AuthorizationError({
 				message: 'Incorrect captcha code',
 				code: FAILED_PASSED_CAPTCHA,
 				pageHtml: $.html()
@@ -347,7 +346,7 @@ export default class ImplicitFlow {
 		}
 
 		if (this.captchaAttempts > CAPTCHA_ATTEMPTS) {
-			throw new AuthError({
+			throw new AuthorizationError({
 				message: 'Maximum attempts passage captcha',
 				code: FAILED_PASSED_CAPTCHA
 			});
@@ -396,7 +395,7 @@ export default class ImplicitFlow {
 		debug('process two-factor handle');
 
 		if (this.twoFactorValidate !== null) {
-			this.twoFactorValidate.reject(new AuthError({
+			this.twoFactorValidate.reject(new AuthorizationError({
 				message: 'Incorrect two-factor code',
 				code: FAILED_PASSED_TWO_FACTOR,
 				pageHtml: $.html()
@@ -406,7 +405,7 @@ export default class ImplicitFlow {
 		}
 
 		if (this.twoFactorAttempts >= TWO_FACTOR_ATTEMPTS) {
-			throw new AuthError({
+			throw new AuthorizationError({
 				message: 'Failed passed two-factor authentication',
 				code: FAILED_PASSED_TWO_FACTOR
 			});
@@ -449,7 +448,7 @@ export default class ImplicitFlow {
 		} else if (login !== null && !login.includes('@')) {
 			number = login;
 		} else {
-			throw new AuthError({
+			throw new AuthorizationError({
 				message: 'Missing phone number in the phone or login field',
 				code: INVALID_PHONE_NUMBER,
 				pageHtml: $.html()
@@ -475,7 +474,7 @@ export default class ImplicitFlow {
 		});
 
 		if (newResponse.url.includes(ACTION_SECURITY_CODE)) {
-			throw new AuthError({
+			throw new AuthorizationError({
 				message: 'Invalid phone number',
 				code: INVALID_PHONE_NUMBER,
 				pageHtml: $.html()

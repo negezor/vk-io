@@ -2,7 +2,6 @@ import { Agent } from 'https';
 import { inspect } from 'util';
 
 import API from './api';
-import Auth from './auth';
 import Upload from './upload';
 import Collect from './collect';
 import Updates from './updates';
@@ -14,6 +13,7 @@ import { IVKOptions } from './types';
 import { defaultOptions } from './utils/constants';
 import { showDeprecatedMessage } from './utils/helpers';
 
+const kAuth = Symbol('auth');
 const kStreaming = Symbol('streaming');
 
 /**
@@ -32,8 +32,6 @@ export default class VK {
 
 	public api = new API(this);
 
-	public auth = new Auth(this);
-
 	public upload = new Upload(this);
 
 	public collect = new Collect(this);
@@ -43,6 +41,9 @@ export default class VK {
 	public snippets = new Snippets(this);
 
 	public callbackService = new CallbackService(this);
+
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	protected [kAuth]: any;
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	protected [kStreaming]: any;
@@ -59,6 +60,18 @@ export default class VK {
 	 */
 	public get [Symbol.toStringTag](): string {
 		return this.constructor.name;
+	}
+
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	public get auth(): any {
+		if (!this[kAuth]) {
+			showDeprecatedMessage('vk.auth deprecated, use @vk-io/authorization instead');
+
+			// eslint-disable-next-line
+			this[kAuth] = new (require('@vk-io/authorization').Authorization)(this);
+		}
+
+		return this[kAuth];
 	}
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
