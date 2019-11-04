@@ -8,9 +8,7 @@ const CRNL = '\r\n';
 export type MultipartStreamBody = Readable | Buffer | string;
 
 export interface IMultipartStreamAddPartOptions {
-	headers?: {
-		[key: string]: string;
-	};
+	headers?: Record<string, string>;
 	body: MultipartStreamBody;
 }
 

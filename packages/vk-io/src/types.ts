@@ -89,7 +89,7 @@ export interface IVKOptions {
 	/**
 	 * Headers sent to the API
 	 */
-	apiHeaders: { [key: string]: string };
+	apiHeaders: Record<string, string>;
 
 	/**
 	 * Number of requests per execute
