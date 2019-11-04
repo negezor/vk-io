@@ -68,7 +68,7 @@ export default class ExternalAttachment<P = {}> {
 	public [inspect.custom](depth: number, options: Record<string, any>): string {
 		const { name } = this.constructor;
 
-		const customData = this[inspectCustomData]();
+		const customData = this.toJSON();
 
 		const payload = inspect(customData, { ...options, compact: false });
 

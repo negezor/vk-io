@@ -102,7 +102,13 @@ export default class Attachment<P = {}> {
 	 * Returns data for JSON
 	 */
 	public toJSON(): object {
-		return this[inspectCustomData]();
+		return {
+			id: this.id,
+			ownerId: this.ownerId,
+			accessKey: this.accessKey,
+
+			...this[inspectCustomData]()
+		};
 	}
 
 	/**
@@ -121,13 +127,7 @@ export default class Attachment<P = {}> {
 	public [inspect.custom](depth: number, options: Record<string, any>): string {
 		const { name } = this.constructor;
 
-		const customData = {
-			id: this.id,
-			ownerId: this.ownerId,
-			accessKey: this.accessKey,
-
-			...this[inspectCustomData]()
-		};
+		const customData = this.toJSON();
 
 		const payload = this.$filled
 			? `${inspect(customData, { ...options, compact: false })}`
