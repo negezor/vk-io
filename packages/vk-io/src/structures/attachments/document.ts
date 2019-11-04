@@ -251,8 +251,7 @@ export default class DocumentAttachment extends Attachment<IDocumentAttachmentPa
 	/**
 	 * Returns the custom data
 	 */
-	// @ts-ignore
-	public [inspectCustomData](): object | null {
+	public [inspectCustomData](): object {
 		return copyParams(this, [
 			'title',
 			'typeId',

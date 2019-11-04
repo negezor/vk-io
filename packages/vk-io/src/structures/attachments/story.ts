@@ -281,8 +281,7 @@ export default class StoryAttachment extends Attachment<IStoryAttachmentPayload>
 	/**
 	 * Returns the custom data
 	 */
-	// @ts-ignore
-	public [inspectCustomData](): object | undefined {
+	public [inspectCustomData](): object {
 		if (this.isDeleted) {
 			return copyParams(this, [
 				'isDeleted'

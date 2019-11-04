@@ -182,8 +182,7 @@ export default class PhotoAttachment extends Attachment<IPhotoAttachmentPayload>
 	/**
 	 * Returns the custom data
 	 */
-	// @ts-ignore
-	public [inspectCustomData](): object | null {
+	public [inspectCustomData](): object {
 		return copyParams(this, [
 			'userId',
 			'albumId',
