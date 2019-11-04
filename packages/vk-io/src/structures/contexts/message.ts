@@ -847,9 +847,11 @@ export default class MessageContext<S = Record<string, any>>
 	public async deleteChatPhoto(): Promise<boolean> {
 		this.assertIsChat();
 
-		return this.vk.api.messages.deleteChatPhoto({
+		await this.vk.api.messages.deleteChatPhoto({
 			chat_id: this.chatId!
 		});
+
+		return true;
 	}
 
 	/**
