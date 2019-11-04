@@ -4,7 +4,7 @@
 <a href="https://www.npmjs.com/package/@vk-io/authorization"><img src="https://img.shields.io/npm/dt/@vk-io/authorization.svg?style=flat-square" alt="NPM downloads"></a>
 <a href="https://www.codacy.com/app/negezor/vk-io"><img src="https://img.shields.io/codacy/grade/25ee36d46e6e498981a74f8b0653aacc.svg?style=flat-square" alt="Code quality"></a>
 
-VK-IO Authorization API - Separated module for receiving data with Authorization API ⚙️
+VK-IO Authorization API - Separated module for authorization by login & password, and etc... ⚙️
 
 ## Installation
 > **[Node.js](https://nodejs.org/) 10.0.0 or newer is required**  
