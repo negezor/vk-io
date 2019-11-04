@@ -61,6 +61,8 @@ export default async function () {
 					external: [
 						...Object.keys(modulePkg.dependencies || {}),
 						...Object.keys(modulePkg.peerDependencies || {}),
+						// TODO: To make better
+						...MODULES.map(moduleName => `@vk-io/${moduleName}`),
 						...coreModules
 					],
 					output: [
