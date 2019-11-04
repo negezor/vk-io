@@ -32,6 +32,9 @@ export default class Context<P = {}, S = {}> {
 
 	protected payload: P;
 
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	[key: string]: any;
+
 	/**
 	 * Constructor
 	 */
