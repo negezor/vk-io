@@ -16,6 +16,7 @@ export {
 	ResourceType,
 	MessageSource,
 	AttachmentType,
+	AttachmentTypeString,
 
 	captchaTypes,
 	resourceTypes,

@@ -22,6 +22,7 @@ import {
 	WallAttachment,
 
 	AttachmentType,
+	AttachmentTypeString,
 
 	transformAttachments,
 	inspectCustomData,
@@ -139,7 +140,7 @@ export default class StreamingContext<S = Record<string, any>>
 	/**
 	 * Checks for the presence of attachments
 	 */
-	public hasAttachments(type: AttachmentType | string | null = null): boolean {
+	public hasAttachments(type: AttachmentType | AttachmentTypeString | null = null): boolean {
 		if (type === null) {
 			return this.attachments.length > 0;
 		}

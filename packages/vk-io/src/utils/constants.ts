@@ -78,6 +78,22 @@ export enum AttachmentType {
 	STORY = 'story'
 }
 
+export type AttachmentTypeString = 'audio'
+| 'audio_message'
+| 'graffiti'
+| 'doc'
+| 'market_album'
+| 'market'
+| 'photo'
+| 'story'
+| 'video'
+| 'wall'
+| 'poll'
+| 'gift'
+| 'link'
+| 'sticker'
+| 'wall_reply';
+
 export const attachmentTypes = AttachmentType;
 
 /**

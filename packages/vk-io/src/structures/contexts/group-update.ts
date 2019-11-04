@@ -21,7 +21,7 @@ import {
 	WallAttachment
 } from '../attachments';
 import { copyParams } from '../../utils/helpers';
-import { inspectCustomData, AttachmentType } from '../../utils/constants';
+import { inspectCustomData, AttachmentType, AttachmentTypeString } from '../../utils/constants';
 
 const subTypes: Record<string, string> = {
 	group_change_photo: 'group_update_photo',
@@ -86,7 +86,7 @@ export default class GroupUpdateContext<S = Record<string, any>>
 	/**
 	 * Checks for the presence of attachments
 	 */
-	public hasAttachments(type: AttachmentType | string | null = null): boolean {
+	public hasAttachments(type: AttachmentType | AttachmentTypeString | null = null): boolean {
 		if (type === null) {
 			return this.attachments.length > 0;
 		}

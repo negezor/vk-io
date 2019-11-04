@@ -24,7 +24,7 @@ import {
 } from '../attachments';
 
 import { copyParams } from '../../utils/helpers';
-import { inspectCustomData, AttachmentType } from '../../utils/constants';
+import { inspectCustomData, AttachmentType, AttachmentTypeString } from '../../utils/constants';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const subTypes: Record<string, [string, any]> = {
@@ -84,7 +84,7 @@ export default class NewAttachmentsContext<S = Record<string, any>>
 	/**
 	 * Checks for the presence of attachments
 	 */
-	public hasAttachments(type: AttachmentType | string | null = null): boolean {
+	public hasAttachments(type: AttachmentType | AttachmentTypeString | null = null): boolean {
 		if (type === null) {
 			return this.attachments.length > 0;
 		}

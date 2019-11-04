@@ -3,7 +3,7 @@ import Context, { IContextOptions } from './context';
 import { VKError } from '../../errors';
 
 import { copyParams } from '../../utils/helpers';
-import { inspectCustomData, AttachmentType } from '../../utils/constants';
+import { inspectCustomData, AttachmentType, AttachmentTypeString } from '../../utils/constants';
 import {
 	Attachment,
 	ExternalAttachment,
@@ -86,7 +86,7 @@ export default class CommentActionContext<S = Record<string, any>>
 	/**
 	 * Checks for the presence of attachments
 	 */
-	public hasAttachments(type: AttachmentType | string | null = null): boolean {
+	public hasAttachments(type: AttachmentType | AttachmentTypeString | null = null): boolean {
 		if (type === null) {
 			return this.attachments.length > 0;
 		}

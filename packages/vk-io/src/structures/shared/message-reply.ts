@@ -4,6 +4,7 @@ import VK from '../../vk';
 import { copyParams } from '../../utils/helpers';
 import { transformAttachments } from '../attachments/helpers';
 import { Attachment, ExternalAttachment } from '../attachments';
+import { AttachmentTypeString } from '../../utils/constants';
 
 const kAttachments = Symbol('attachments');
 
@@ -42,7 +43,7 @@ export default class MessageReply {
 	/**
 	 * Checks for the presence of attachments
 	 */
-	public hasAttachments(type: string | null = null): boolean {
+	public hasAttachments(type: AttachmentTypeString | null = null): boolean {
 		if (type === null) {
 			return this.attachments.length > 0;
 		}

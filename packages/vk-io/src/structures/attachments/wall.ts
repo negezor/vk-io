@@ -4,7 +4,7 @@ import Attachment from './attachment';
 // eslint-disable-next-line import/no-cycle
 import { transformAttachments } from './helpers';
 import { copyParams } from '../../utils/helpers';
-import { AttachmentType, inspectCustomData } from '../../utils/constants';
+import { AttachmentType, inspectCustomData, AttachmentTypeString } from '../../utils/constants';
 import ExternalAttachment from './external';
 
 const { WALL } = AttachmentType;
@@ -137,7 +137,7 @@ export default class WallAttachment extends Attachment<IWallAttachmentPayload> {
 	/**
 	 * Checks for the presence of attachments
 	 */
-	public hasAttachments(type: string | null = null): boolean {
+	public hasAttachments(type: AttachmentTypeString | null = null): boolean {
 		if (type === null) {
 			return this.attachments.length > 0;
 		}

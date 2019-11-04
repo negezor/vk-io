@@ -39,7 +39,8 @@ import {
 	UpdateSource,
 	MessageSource,
 	CHAT_PEER,
-	inspectCustomData
+	inspectCustomData,
+	AttachmentTypeString
 } from '../../utils/constants';
 import { UploadSource, UploadSourceValue } from '../../upload/upload';
 
@@ -188,7 +189,7 @@ export default class MessageContext<S = Record<string, any>>
 	/**
 	 * Checks for the presence of attachments
 	 */
-	public hasAttachments(type: AttachmentType | string | null = null): boolean {
+	public hasAttachments(type: AttachmentType | AttachmentTypeString | null = null): boolean {
 		if (type === null) {
 			return this.attachments.length > 0;
 		}

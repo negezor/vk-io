@@ -1,5 +1,6 @@
 import MessageForward from './message-forward';
 import { Attachment, ExternalAttachment } from '../attachments';
+import { AttachmentTypeString } from '../../utils/constants';
 
 const getForwards = (rootForwards: MessageForward[]): MessageForward[] => {
 	const forwards = [];
@@ -33,7 +34,7 @@ export default class MessageForwardsCollection extends Array<MessageForward> {
 	/**
 	 * Checks for the presence of attachments
 	 */
-	public hasAttachments(type: string | null = null): boolean {
+	public hasAttachments(type: AttachmentTypeString | null = null): boolean {
 		return this.flatten.some(forward => (
 			forward.hasAttachments(type)
 		));
