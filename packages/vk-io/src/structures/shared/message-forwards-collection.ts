@@ -16,7 +16,7 @@ const getForwards = (rootForwards: MessageForward[]): MessageForward[] => {
 
 const kFlatten = Symbol('flatten');
 
-export default class MessageForwardsCollection extends Array {
+export default class MessageForwardsCollection extends Array<MessageForward> {
 	protected [kFlatten]: MessageForward[];
 
 	/**
