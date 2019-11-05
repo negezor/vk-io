@@ -1,11 +1,13 @@
 import VK from '../../vk';
 
 import Attachment from './attachment';
+import ExternalAttachment from './external';
+import Attachmentable from '../shared/attachmentable';
+
 // eslint-disable-next-line import/no-cycle
 import { transformAttachments } from './helpers';
-import { copyParams } from '../../utils/helpers';
-import { AttachmentType, inspectCustomData, AttachmentTypeString } from '../../utils/constants';
-import ExternalAttachment from './external';
+import { copyParams, applyMixins } from '../../utils/helpers';
+import { AttachmentType, inspectCustomData } from '../../utils/constants';
 
 const { WALL } = AttachmentType;
 
@@ -64,7 +66,7 @@ export interface IWallAttachmentPayload {
 	is_favorite?: number;
 }
 
-export default class WallAttachment extends Attachment<IWallAttachmentPayload> {
+class WallAttachment extends Attachment<IWallAttachmentPayload> {
 	protected [kAttachments]: (Attachment | ExternalAttachment)[] | null;
 
 	protected [kCopyHistoryAttachments]: WallAttachment[] | null;
@@ -132,19 +134,6 @@ export default class WallAttachment extends Attachment<IWallAttachmentPayload> {
 		}
 
 		return Boolean(this.payload.marked_as_ads);
-	}
-
-	/**
-	 * Checks for the presence of attachments
-	 */
-	public hasAttachments(type: AttachmentTypeString | null = null): boolean {
-		if (type === null) {
-			return this.attachments.length > 0;
-		}
-
-		return this.attachments.some((attachment): boolean => (
-			attachment.type === type
-		));
 	}
 
 	/**
@@ -465,19 +454,6 @@ export default class WallAttachment extends Attachment<IWallAttachmentPayload> {
 	}
 
 	/**
-	 * Returns the attachments
-	 */
-	public getAttachments(type: string | null = null): (Attachment | ExternalAttachment)[] {
-		if (type === null) {
-			return this.attachments;
-		}
-
-		return this.attachments.filter((attachment): boolean => (
-			attachment.type === type
-		));
-	}
-
-	/**
 	 * Returns the custom data
 	 */
 	public [inspectCustomData](): object {
@@ -502,3 +478,10 @@ export default class WallAttachment extends Attachment<IWallAttachmentPayload> {
 		]);
 	}
 }
+
+
+// eslint-disable-next-line
+interface WallAttachment extends Attachmentable {}
+applyMixins(WallAttachment, [Attachmentable]);
+
+export default WallAttachment;

@@ -45,6 +45,7 @@ export default class MessageForwardsCollection extends Array<MessageForward> {
 	 */
 	public getAttachments(type: string | null = null): (Attachment | ExternalAttachment)[] {
 		const attachments = this.flatten.map(forward => (
+			// @ts-ignore
 			forward.getAttachments(type)
 		));
 

@@ -1,10 +1,11 @@
 import { inspect } from 'util';
 
 import VK from '../../vk';
-import { copyParams } from '../../utils/helpers';
-import { transformAttachments } from '../attachments/helpers';
+import Attachmentable from './attachmentable';
 import { Attachment, ExternalAttachment } from '../attachments';
-import { AttachmentTypeString } from '../../utils/constants';
+
+import { transformAttachments } from '../attachments/helpers';
+import { copyParams, applyMixins } from '../../utils/helpers';
 
 const kForwards = Symbol('forwards');
 const kAttachments = Symbol('attachments');
@@ -24,7 +25,7 @@ export interface IMessageForwardOptions {
 	payload: IMessageForwardPayload;
 }
 
-export default class MessageForward {
+class MessageForward {
 	protected vk: VK;
 
 	protected payload: IMessageForwardPayload;
@@ -54,19 +55,6 @@ export default class MessageForward {
 	 */
 	public get hasText(): boolean {
 		return this.text !== null;
-	}
-
-	/**
-	 * Checks for the presence of attachments
-	 */
-	public hasAttachments(type: AttachmentTypeString | null = null): boolean {
-		if (type === null) {
-			return this.attachments.length > 0;
-		}
-
-		return this.attachments.some(attachment => (
-			attachment.type === type
-		));
 	}
 
 	/**
@@ -127,19 +115,6 @@ export default class MessageForward {
 	}
 
 	/**
-	 * Returns the attachments
-	 */
-	public getAttachments(type: string | null = null): (Attachment | ExternalAttachment)[] {
-		if (type === null) {
-			return this.attachments;
-		}
-
-		return this.attachments.filter(attachment => (
-			attachment.type === type
-		));
-	}
-
-	/**
 	 * Returns data for JSON
 	 */
 	public toJSON(): object {
@@ -172,3 +147,9 @@ export default class MessageForward {
 		return `${options.stylize(name, 'special')} ${inspect(payload, { ...options, compact: false })}`;
 	}
 }
+
+// eslint-disable-next-line
+interface MessageForward extends Attachmentable {}
+applyMixins(MessageForward, [Attachmentable]);
+
+export default MessageForward;

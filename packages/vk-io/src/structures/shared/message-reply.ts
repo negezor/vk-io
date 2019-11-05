@@ -1,14 +1,16 @@
 import { inspect } from 'util';
 
 import VK from '../../vk';
-import { copyParams } from '../../utils/helpers';
-import { transformAttachments } from '../attachments/helpers';
+
+import Attachmentable from './attachmentable';
 import { Attachment, ExternalAttachment } from '../attachments';
-import { AttachmentTypeString } from '../../utils/constants';
+
+import { transformAttachments } from '../attachments/helpers';
+import { copyParams, applyMixins } from '../../utils/helpers';
 
 const kAttachments = Symbol('attachments');
 
-export default class MessageReply {
+class MessageReply {
 	protected vk: VK;
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -38,19 +40,6 @@ export default class MessageReply {
 	 */
 	public get hasText(): boolean {
 		return this.text !== null;
-	}
-
-	/**
-	 * Checks for the presence of attachments
-	 */
-	public hasAttachments(type: AttachmentTypeString | null = null): boolean {
-		if (type === null) {
-			return this.attachments.length > 0;
-		}
-
-		return this.attachments.some(attachment => (
-			attachment.type === type
-		));
 	}
 
 	/**
@@ -114,19 +103,6 @@ export default class MessageReply {
 	}
 
 	/**
-	 * Returns the attachments
-	 */
-	public getAttachments(type: string | null = null): (Attachment | ExternalAttachment)[] {
-		if (type === null) {
-			return this.attachments;
-		}
-
-		return this.attachments.filter(attachment => (
-			attachment.type === type
-		));
-	}
-
-	/**
 	 * Returns data for JSON
 	 */
 	public toJSON(): object {
@@ -163,3 +139,9 @@ export default class MessageReply {
 		return `${options.stylize(name, 'special')} ${inspect(payload, { ...options, compact: false })}`;
 	}
 }
+
+// eslint-disable-next-line
+interface MessageReply extends Attachmentable {}
+applyMixins(MessageReply, [Attachmentable]);
+
+export default MessageReply;

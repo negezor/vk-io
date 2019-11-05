@@ -1,27 +1,10 @@
 import Context, { IContextOptions } from './context';
 
-import {
-	Attachment,
-	ExternalAttachment,
+import Attachmentable from '../shared/attachmentable';
+import { Attachment, PhotoAttachment } from '../attachments';
 
-	AudioAttachment,
-	AudioMessageAttachment,
-	DocumentAttachment,
-	GiftAttachment,
-	GraffitiAttachment,
-	LinkAttachment,
-	MarketAlbumAttachment,
-	MarketAttachment,
-	PhotoAttachment,
-	PollAttachment,
-	StickerAttachment,
-	StoryAttachment,
-	VideoAttachment,
-	WallReplyAttachment,
-	WallAttachment
-} from '../attachments';
-import { copyParams } from '../../utils/helpers';
-import { inspectCustomData, AttachmentType, AttachmentTypeString } from '../../utils/constants';
+import { inspectCustomData } from '../../utils/constants';
+import { copyParams, applyMixins } from '../../utils/helpers';
 
 const subTypes: Record<string, string> = {
 	group_change_photo: 'group_update_photo',
@@ -42,7 +25,7 @@ export type GroupUpdateContextOptions<S> =
 	Omit<IContextOptions<IGroupUpdateContextPayload, S>, 'type' | 'subTypes'>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default class GroupUpdateContext<S = Record<string, any>>
+class GroupUpdateContext<S = Record<string, any>>
 	extends Context<IGroupUpdateContextPayload, S> {
 	public attachments: Attachment[];
 
@@ -84,19 +67,6 @@ export default class GroupUpdateContext<S = Record<string, any>>
 	}
 
 	/**
-	 * Checks for the presence of attachments
-	 */
-	public hasAttachments(type: AttachmentType | AttachmentTypeString | null = null): boolean {
-		if (type === null) {
-			return this.attachments.length > 0;
-		}
-
-		return this.attachments.some(attachment => (
-			attachment.type === type
-		));
-	}
-
-	/**
 	 * Returns the identifier admin
 	 */
 	public get adminId(): number | null {
@@ -132,50 +102,6 @@ export default class GroupUpdateContext<S = Record<string, any>>
 	}
 
 	/**
-	 * Returns the attachments
-	 */
-	public getAttachments(type: AttachmentType.AUDIO | 'audio'): AudioAttachment[];
-
-	public getAttachments(type: AttachmentType.AUDIO_MESSAGE | 'audio_message'): AudioMessageAttachment[];
-
-	public getAttachments(type: AttachmentType.GRAFFITI | 'graffiti'): GraffitiAttachment[];
-
-	// @ts-ignore
-	public getAttachments(type: AttachmentType.DOCUMENT | 'doc'): DocumentAttachment[];
-
-	public getAttachments(type: AttachmentType.MARKET_ALBUM | 'market_album'): MarketAlbumAttachment[];
-
-	public getAttachments(type: AttachmentType.MARKET | 'market'): MarketAttachment[];
-
-	public getAttachments(type: AttachmentType.PHOTO | 'photo'): PhotoAttachment[];
-
-	public getAttachments(type: AttachmentType.STORY | 'story'): StoryAttachment[];
-
-	public getAttachments(type: AttachmentType.VIDEO | 'video'): VideoAttachment[];
-
-	public getAttachments(type: AttachmentType.WALL | 'wall'): WallAttachment[];
-
-	public getAttachments(type: AttachmentType.POLL | 'poll'): PollAttachment[];
-
-	public getAttachments(type: AttachmentType.GIFT | 'gift'): GiftAttachment[];
-
-	public getAttachments(type: AttachmentType.LINK | 'link'): LinkAttachment[];
-
-	public getAttachments(type: AttachmentType.STICKER | 'sticker'): StickerAttachment[];
-
-	public getAttachments(type: AttachmentType.WALL_REPLY | 'wall_reply'): WallReplyAttachment[];
-
-	public getAttachments(type: string | null = null): (Attachment | ExternalAttachment)[] {
-		if (type === null) {
-			return this.attachments;
-		}
-
-		return this.attachments.filter(attachment => (
-			attachment.type === type
-		));
-	}
-
-	/**
 	 * Returns the custom data
 	 */
 	public [inspectCustomData](): object {
@@ -189,3 +115,9 @@ export default class GroupUpdateContext<S = Record<string, any>>
 		]);
 	}
 }
+
+// eslint-disable-next-line
+interface GroupUpdateContext extends Attachmentable {}
+applyMixins(GroupUpdateContext, [Attachmentable]);
+
+export default GroupUpdateContext;
