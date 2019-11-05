@@ -390,6 +390,7 @@ export default class API extends APIMethods {
 			this.suspended = true;
 
 			try {
+				// @ts-ignore
 				const verification = new AccountVerification(this.vk);
 
 				const { token } = await verification.run(error.redirectUri!);
