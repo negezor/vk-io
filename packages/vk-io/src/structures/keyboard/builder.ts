@@ -176,12 +176,8 @@ export default class KeyboardBuilder {
 			return this;
 		}
 
-		const maxColumnLength = this.isInline
-			? 3
-			: 4;
-
-		if (this.currentRow.length > maxColumnLength) {
-			throw new RangeError(`Max count of buttons at columns ${maxColumnLength}`);
+		if (this.currentRow.length > 5) {
+			throw new RangeError('Max count of buttons at columns 5');
 		}
 
 		this.rows.push(this.currentRow);
@@ -241,7 +237,7 @@ export default class KeyboardBuilder {
 	 */
 	public toString(): string {
 		const maxRowsLength = this.isInline
-			? 3
+			? 6
 			: 10;
 
 		if (this.rows.length > maxRowsLength) {
