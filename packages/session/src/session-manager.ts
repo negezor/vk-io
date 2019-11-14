@@ -2,7 +2,7 @@ import { ISessionStorage, MemoryStorage } from './storages';
 
 import { IContext, ISessionContext, Middleware } from './types';
 
-export interface ISessionManagerOptions {
+export interface ISessionManagerOptions<T = {}> {
 	/**
 	 * Storage based on ISessionStorage interface
 	 */
@@ -16,19 +16,19 @@ export interface ISessionManagerOptions {
 	/**
 	 * Returns the key for session storage
 	 */
-	getStorageKey<T = {}>(context: IContext & T): string;
+	getStorageKey(context: IContext & T): string;
 }
 
 export type SessionForceUpdate = () => Promise<boolean>;
 
-export default class SessionManager {
+export default class SessionManager<T = {}> {
 	protected storage: ISessionManagerOptions['storage'];
 
 	protected contextKey: ISessionManagerOptions['contextKey'];
 
 	protected getStorageKey: ISessionManagerOptions['getStorageKey'];
 
-	public constructor(options: Partial<ISessionManagerOptions> = {}) {
+	public constructor(options: Partial<ISessionManagerOptions<T>> = {}) {
 		this.storage = options.storage || (
 			new MemoryStorage()
 		);
