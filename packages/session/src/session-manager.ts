@@ -63,7 +63,7 @@ export default class SessionManager {
 
 						return true;
 					},
-					deleteProperty(target, prop: string): boolean {
+					deleteProperty: (target, prop: string): boolean => {
 						changed = true;
 
 						delete target[prop];
