@@ -562,7 +562,7 @@ export default class Updates {
 			stack.push(
 				// @ts-ignore
 				getOptionalMiddleware(
-					(context: MessageContext): boolean => context.type === 'message' && !context.isEvent,
+					(context: MessageContext): boolean => context.type === 'new_message' && !context.isEvent,
 					compose([
 						...this.hearStack,
 						this.hearFallbackHandler
