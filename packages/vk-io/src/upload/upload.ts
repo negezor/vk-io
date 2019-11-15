@@ -11,6 +11,8 @@ import { UploadError, UploadErrorCode } from '../errors';
 import { isStream, copyParams, streamToBuffer } from './helpers';
 import { DefaultExtension, DefaultContentType } from '../utils/constants';
 
+import { AllowArray } from '../types';
+
 import {
 	PhotoAttachment,
 	AudioAttachment,
@@ -42,17 +44,15 @@ export type UploadSourceValue = UploadSourceType | {
 };
 
 export interface IUploadSourceParams {
-	values: UploadSourceValue[] | UploadSourceValue;
+	values: AllowArray<UploadSourceValue>;
 
 	uploadUrl?: string;
 	timeout?: number;
 }
 
 export type UploadSource = IUploadSourceParams
-| UploadSourceValue[]
-| UploadSourceValue
-| UploadSourceType
-| UploadSourceType[];
+| AllowArray<UploadSourceValue>
+| AllowArray<UploadSourceType>;
 
 export interface IUploadParams {
 	source: UploadSource;

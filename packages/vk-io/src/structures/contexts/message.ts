@@ -23,6 +23,7 @@ import {
 	CHAT_PEER,
 	inspectCustomData
 } from '../../utils/constants';
+import { AllowArray } from '../../types';
 import { UploadSource, UploadSourceValue } from '../../upload/upload';
 
 const subTypesEnum: Record<string | number, string> = {
@@ -539,7 +540,7 @@ class MessageContext<S = Record<string, any>>
 	 * Sends a photos to the current dialog
 	 */
 	async sendPhotos(
-		rawSources: UploadSource | UploadSource[],
+		rawSources: AllowArray<UploadSource>,
 		params: object = {}
 	): Promise<number> {
 		const sources = !Array.isArray(rawSources)
@@ -576,7 +577,7 @@ class MessageContext<S = Record<string, any>>
 	 * @deprecated
 	 */
 	async sendPhoto(
-		rawSources: UploadSource | UploadSource[],
+		rawSources: AllowArray<UploadSource>,
 		params: object = {}
 	): Promise<number> {
 		showDeprecatedMessage('MessageContext, use sendPhotos instead of sendPhoto');
@@ -588,7 +589,7 @@ class MessageContext<S = Record<string, any>>
 	 * Sends a documents to the current dialog
 	 */
 	async sendDocuments(
-		rawSources: UploadSource | UploadSource[],
+		rawSources: AllowArray<UploadSource>,
 		params: object = {}
 	): Promise<number> {
 		const sources = !Array.isArray(rawSources)
@@ -625,7 +626,7 @@ class MessageContext<S = Record<string, any>>
 	 * @deprecated
 	 */
 	async sendDocument(
-		rawSources: UploadSource | UploadSource[],
+		rawSources: AllowArray<UploadSource>,
 		params: object = {}
 	): Promise<number> {
 		showDeprecatedMessage('MessageContext, use sendDocuments instead of sendDocument');

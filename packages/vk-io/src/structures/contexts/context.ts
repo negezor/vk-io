@@ -3,6 +3,8 @@ import { inspect } from 'util';
 import VK from '../../vk';
 import { inspectCustomData, UpdateSource } from '../../utils/constants';
 
+import { AllowArray } from '../../types';
+
 export interface IContextOptions<P, S> {
 	vk: VK;
 
@@ -62,7 +64,7 @@ export default class Context<P = {}, S = {}> {
 	/**
 	 * Checks whether the context of some of these types
 	 */
-	public is(rawTypes: string | string[]): boolean {
+	public is(rawTypes: AllowArray<string>): boolean {
 		const types = !Array.isArray(rawTypes)
 			? [rawTypes]
 			: rawTypes;

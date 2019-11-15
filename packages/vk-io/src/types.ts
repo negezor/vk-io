@@ -1,5 +1,7 @@
 import { Agent } from 'https';
 
+export type AllowArray<T> = T | T[];
+
 export interface IVKOptions {
 	/**
 	 * Access token
@@ -44,7 +46,7 @@ export interface IVKOptions {
 	/**
 	 * List of permissions
 	 */
-	authScope: string | string[] | number | null;
+	authScope: AllowArray<string> | number | null;
 
 	/**
 	 * Wait time for one auth request
