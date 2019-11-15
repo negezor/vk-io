@@ -115,22 +115,6 @@ class MessageContext<S = Record<string, any>>
 			this.$filled = true;
 		}
 
-		// Polyfill for all events except new_message
-		if (payload.client_info === undefined) {
-			payload = {
-				// @ts-ignore
-				message: payload,
-				client_info: {
-					button_actions: [
-						'text'
-					],
-					inline_keyboard: false,
-					keyboard: true,
-					lang_id: 0
-				}
-			};
-		}
-
 		this.applyPayload(payload);
 
 		this.subTypes = [
@@ -846,6 +830,22 @@ class MessageContext<S = Record<string, any>>
 	 * Applies the payload
 	 */
 	private applyPayload(payload: IMessageContextPayload): void {
+		// Polyfill for all events except new_message
+		if (payload.client_info === undefined) {
+			payload = {
+				// @ts-ignore
+				message: payload,
+				client_info: {
+					button_actions: [
+						'text'
+					],
+					inline_keyboard: false,
+					keyboard: true,
+					lang_id: 0
+				}
+			};
+		}
+
 		this.payload = payload;
 
 		this.text = payload.message.text
