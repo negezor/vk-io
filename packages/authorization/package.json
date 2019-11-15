@@ -39,7 +39,7 @@
 		"ws": "^7.2.0"
 	},
 	"devDependencies": {
-		"@types/cheerio": "^0.22.13",
+		"@types/cheerio": "^0.22.14",
 		"@types/debug": "^4.1.5",
 		"@types/node-fetch": "^2.5.3",
 		"@types/tough-cookie": "^2.3.5",
