@@ -832,6 +832,7 @@ class MessageContext<S = Record<string, any>>
 	private applyPayload(payload: IMessageContextPayload): void {
 		// Polyfill for all events except new_message
 		if (payload.client_info === undefined) {
+			// eslint-disable-next-line no-param-reassign
 			payload = {
 				// @ts-ignore
 				message: payload,
