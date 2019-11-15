@@ -259,33 +259,37 @@ export default class Updates {
 	/**
 	 * Subscribe to events
 	 */
-	public on<T = {}>(events: AllowArray<'message' | 'new_message' | 'edit_message'>, handler: Middleware<MessageContext & T>): this
+	public on<T = {}>(events: AllowArray<'message' | 'new_message' | 'edit_message'>, handler: AllowArray<Middleware<MessageContext & T>>): this
 
-	public on<T = {}>(events: AllowArray<'message_subscribers' | 'message_subscribe' | 'message_unsubscribe'>, handler: Middleware<MessageAllowContext & T>): this
+	public on<T = {}>(events: AllowArray<'message_subscribers' | 'message_subscribe' | 'message_unsubscribe'>, handler: AllowArray<Middleware<MessageAllowContext & T>>): this
 
-	public on<T = {}>(events: AllowArray<'new_attachment' | 'new_photo_attachment' | 'new_video_attachment' | 'new_audio_attachment'>, handler: Middleware<NewAttachmentsContext & T>): this
+	public on<T = {}>(events: AllowArray<'new_attachment' | 'new_photo_attachment' | 'new_video_attachment' | 'new_audio_attachment'>, handler: AllowArray<Middleware<NewAttachmentsContext & T>>): this
 
-	public on<T = {}>(events: AllowArray<'wall_post' | 'new_wall_post' | 'new_wall_repost'>, handler: Middleware<WallPostContext & T>): this
+	public on<T = {}>(events: AllowArray<'wall_post' | 'new_wall_post' | 'new_wall_repost'>, handler: AllowArray<Middleware<WallPostContext & T>>): this
 
-	public on<T = {}>(events: AllowArray<'group_member' | 'join_group_member' | 'leave_group_member'>, handler: Middleware<GroupMemberContext & T>): this
+	public on<T = {}>(events: AllowArray<'group_member' | 'join_group_member' | 'leave_group_member'>, handler: AllowArray<Middleware<GroupMemberContext & T>>): this
 
-	public on<T = {}>(events: AllowArray<'group_user' | 'block_group_user' | 'unblock_group_user'>, handler: Middleware<GroupUserContext & T>): this
+	public on<T = {}>(events: AllowArray<'group_user' | 'block_group_user' | 'unblock_group_user'>, handler: AllowArray<Middleware<GroupUserContext & T>>): this
 
-	public on<T = {}>(events: AllowArray<'comment' | 'photo_comment' | 'video_comment' | 'wall_comment' | 'board_comment' | 'market_comment' | 'new_photo_comment' | 'edit_photo_comment' | 'delete_photo_comment' | 'restore_photo_comment' | 'new_video_comment' | 'edit_video_comment' | 'delete_video_comment' | 'restore_video_comment' | 'new_wall_comment' | 'edit_wall_comment' | 'delete_wall_comment' | 'restore_wall_comment' | 'new_board_comment' | 'edit_board_comment' | 'delete_board_comment' | 'restore_board_comment' | 'new_market_comment' | 'edit_market_comment' | 'delete_market_comment' | 'restore_market_comment'>, handler: Middleware<CommentActionContext & T>): this
+	public on<T = {}>(events: AllowArray<'comment' | 'photo_comment' | 'video_comment' | 'wall_comment' | 'board_comment' | 'market_comment' | 'new_photo_comment' | 'edit_photo_comment' | 'delete_photo_comment' | 'restore_photo_comment' | 'new_video_comment' | 'edit_video_comment' | 'delete_video_comment' | 'restore_video_comment' | 'new_wall_comment' | 'edit_wall_comment' | 'delete_wall_comment' | 'restore_wall_comment' | 'new_board_comment' | 'edit_board_comment' | 'delete_board_comment' | 'restore_board_comment' | 'new_market_comment' | 'edit_market_comment' | 'delete_market_comment' | 'restore_market_comment'>, handler: AllowArray<Middleware<CommentActionContext & T>>): this
 
-	public on<T = {}>(events: AllowArray<'vote' | 'pull_vote'>, handler: Middleware<VoteContext & T>): this
+	public on<T = {}>(events: AllowArray<'vote' | 'pull_vote'>, handler: AllowArray<Middleware<VoteContext & T>>): this
 
-	public on<T = {}>(events: AllowArray<'group_update' | 'group_update_photo' | 'group_update_officers' | 'group_update_settings'>, handler: Middleware<GroupUpdateContext & T>): this
+	public on<T = {}>(events: AllowArray<'group_update' | 'group_update_photo' | 'group_update_officers' | 'group_update_settings'>, handler: AllowArray<Middleware<GroupUpdateContext & T>>): this
 
-	public on<T = {}>(events: AllowArray<'typing' | 'typing_user' | 'typing_group'>, handler: Middleware<TypingContext & T>): this;
+	public on<T = {}>(events: AllowArray<'typing' | 'typing_user' | 'typing_group'>, handler: AllowArray<Middleware<TypingContext & T>>): this;
 
 	public on<T = {}>(
 		rawEvents: AllowArray<ContextPossibleTypes>,
-		handler: Middleware<Context & T>
+		rawHandlers: AllowArray<Middleware<Context & T>>
 	): this {
 		const events = !Array.isArray(rawEvents)
 			? [rawEvents]
 			: rawEvents;
+
+		const handler = Array.isArray(rawHandlers)
+			? compose(rawHandlers)
+			: rawHandlers;
 
 		const hasEvents = events.every(Boolean);
 
