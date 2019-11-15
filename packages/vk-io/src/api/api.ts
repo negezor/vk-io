@@ -89,7 +89,8 @@ const groupMethods = [
 	'utils',
 	'video',
 	'wall',
-	'widgets'
+	'widgets',
+	'junction'
 ];
 
 /**
