@@ -23,6 +23,13 @@ export default class SceneManager {
 	}
 
 	/**
+	 * Checks for has a scene
+	 */
+	public hasScene(slug: string): boolean {
+		return this.repository.has(slug);
+	}
+
+	/**
 	 * Adds a scene to the shared list
 	 */
 	public addScene(scene: IScene): this {
