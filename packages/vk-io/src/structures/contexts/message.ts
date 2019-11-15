@@ -53,7 +53,7 @@ export interface IMessageContextPayload {
 		ref_source?: string;
 		attachments: object[];
 		important: boolean;
-		geo: object;
+		geo: object | null;
 		payload?: string;
 		fwd_messages?: object[];
 		reply_message?: object;

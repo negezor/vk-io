@@ -1,3 +1,6 @@
+// import { MessagesMessage } from '../api/schemas/objects';
+import { IMessageContextPayload } from '../structures/contexts/message';
+
 /* eslint-disable @typescript-eslint/camelcase */
 
 /**
@@ -40,7 +43,8 @@ export default function transformMessage({
 	4: date,
 	5: text,
 	6: extra,
-	7: attachments
+	7: attachments,
+	8: random_id
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 }: [
 	number,
@@ -48,23 +52,23 @@ export default function transformMessage({
 	number,
 	number,
 	number,
-	number,
+	string,
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	Record<string, any>,
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	Record<string, any>,
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	number
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any,
 ]): Record<string, any> {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	const message: Record<string, any> = {
+	const message: Partial<IMessageContextPayload['message']> = {
 		id,
 		date,
 		text,
-		flags,
-		geo: 'geo' in attachments
+		random_id,
+		geo: attachments.geo !== undefined
 			? {}
 			: null,
-		random_id: extra.random_id || null,
 		payload: extra.payload
 			? extra.payload
 			: null
@@ -72,7 +76,7 @@ export default function transformMessage({
 
 	message.peer_id = peer;
 
-	if ('from' in extra) {
+	if (extra.from !== undefined) {
 		message.from_id = Number(extra.from);
 	} else {
 		message.from_id = peer;
@@ -90,7 +94,7 @@ export default function transformMessage({
 		message.important = (flags & 8) !== 0;
 	}
 
-	if ('source_act' in extra) {
+	if (extra.source_act !== undefined) {
 		message.action = {
 			type: extra.source_act,
 			text: extra.source_text,
@@ -105,7 +109,7 @@ export default function transformMessage({
 	} else {
 		const messageAttachments = [];
 
-		for (let i = 1, key = 'attach1'; key in attachments; i += 1, key = `attach${i}`) {
+		for (let i = 1, key = 'attach1'; attachments[key] !== undefined; i += 1, key = `attach${i}`) {
 			const type = attachments[`${key}_type`];
 
 			if (type === 'link') {
@@ -148,7 +152,7 @@ export default function transformMessage({
 
 			const kindKey = `${key}_kind`;
 
-			if (type === 'doc' && kindKey in attachments) {
+			if (type === 'doc' && attachments[kindKey] !== undefined) {
 				attachment[type].kind = attachments[kindKey];
 			}
 
@@ -158,10 +162,11 @@ export default function transformMessage({
 		message.attachments = messageAttachments;
 	}
 
-	let { fwd = null } = attachments;
+	let { fwd } = attachments;
 
 	// Now long poll receive such forward messages 0_0,0_0
-	if (fwd !== null) {
+	// Only for checking the presence of a sent message
+	if (fwd !== undefined) {
 		const indexColon = fwd.indexOf(':');
 		if (indexColon !== -1) {
 			fwd = fwd.substring(0, indexColon);
