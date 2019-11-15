@@ -27,6 +27,7 @@ export {
 	inspectCustomData
 } from './utils/constants';
 
+export { default as Composer } from './structures/shared/composer';
 export { ICallbackServiceValidate } from './utils/callback-service';
 
 export { VK, Request };
