@@ -1,6 +1,6 @@
 {
 	"name": "vk-io",
-	"version": "4.0.0-rc.27",
+	"version": "4.0.0-rc.28",
 	"description": "Modern VK API SDK for Node.js",
 	"license": "MIT",
 	"author": {
