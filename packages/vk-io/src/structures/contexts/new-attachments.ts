@@ -11,8 +11,8 @@ import {
 } from '../attachments';
 import Attachmentable from '../shared/attachmentable';
 
-import { inspectCustomData } from '../../utils/constants';
 import { copyParams, applyMixins } from '../../utils/helpers';
+import { inspectCustomData, AttachmentType } from '../../utils/constants';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const subTypes: Record<string, [string, any]> = {
@@ -74,7 +74,7 @@ class NewAttachmentsContext<S = Record<string, any>>
 	 */
 	public deleteAttachment(): Promise<number> {
 		if (this.isPhoto) {
-			const [photo] = this.getAttachments('photo');
+			const [photo] = this.getAttachments(AttachmentType.PHOTO);
 
 			return this.vk.api.photos.delete({
 				owner_id: photo.ownerId,
@@ -83,7 +83,7 @@ class NewAttachmentsContext<S = Record<string, any>>
 		}
 
 		if (this.isVideo) {
-			const [video] = this.getAttachments('video');
+			const [video] = this.getAttachments(AttachmentType.VIDEO);
 
 			return this.vk.api.video.delete({
 				owner_id: video.ownerId,
@@ -92,7 +92,7 @@ class NewAttachmentsContext<S = Record<string, any>>
 		}
 
 		if (this.isAudio) {
-			const [audio] = this.getAttachments('audio');
+			const [audio] = this.getAttachments(AttachmentType.AUDIO);
 
 			// @ts-ignore
 			return this.vk.api.audio.delete({
