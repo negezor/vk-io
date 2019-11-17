@@ -55,6 +55,8 @@ run().catch(console.log);
 ## Community
 ### Useful modules that may be useful to you
 
+* [@vk-io/authorization](../authorization): Authorization by login & password, and etc... 
+* [@vk-io/streaming](../streaming): Receiving data with Streaming API
 * [@vk-io/session](../session): Simple implementation of the sessions
 * [@vk-io/scenes](../scenes): Simple implementation of middleware-based scene management
 
