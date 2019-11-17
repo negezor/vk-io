@@ -149,9 +149,9 @@ export default class CollectStream<T> extends Readable {
 		catchFn?: (error: Error) => any
 	): Promise<ICollectStreamResult<T>> {
 		if (this.promise === null) {
-			let collectItems: T[] = [];
-			let collectProfiles: UsersUserFull[] = [];
-			let collectGroups: GroupsGroupFull[] = [];
+			const collectItems: T[] = [];
+			const collectProfiles: UsersUserFull[] = [];
+			const collectGroups: GroupsGroupFull[] = [];
 
 			this.promise = new Promise((resolve, reject): void => {
 				this
@@ -162,9 +162,9 @@ export default class CollectStream<T> extends Readable {
 						groups: collectGroups
 					}))
 					.on('data', ({ items, profiles, groups }) => {
-						collectItems = [...collectItems, ...items];
-						collectProfiles = [...collectProfiles, ...profiles];
-						collectGroups = [...collectGroups, ...groups];
+						collectItems.push(...items);
+						collectProfiles.push(...profiles);
+						collectGroups.push(...groups);
 					});
 			});
 		}
