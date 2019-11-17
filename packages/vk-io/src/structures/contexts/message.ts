@@ -227,6 +227,13 @@ class MessageContext<S = Record<string, any>>
 	}
 
 	/**
+	 * Checks a message has arrived in direct messages
+	 */
+	public get isDM(): boolean {
+		return this.isFromUser || this.isFromGroup;
+	}
+
+	/**
 	 * Check is special event
 	 */
 	public get isEvent(): boolean {
