@@ -1,6 +1,9 @@
+/* eslint-disable max-classes-per-file */
 import MessageForward from './message-forward';
 import { Attachment, ExternalAttachment } from '../attachments';
 import { AttachmentTypeString } from '../../utils/constants';
+import Attachmentable from './attachmentable';
+import { applyMixins } from '../../utils/helpers';
 
 const getForwards = (rootForwards: MessageForward[]): MessageForward[] => {
 	const forwards = [];
@@ -17,7 +20,7 @@ const getForwards = (rootForwards: MessageForward[]): MessageForward[] => {
 
 const kFlatten = Symbol('flatten');
 
-export default class MessageForwardsCollection extends Array<MessageForward> {
+class MessageForwardsCollection extends Array<MessageForward> {
 	protected [kFlatten]: MessageForward[];
 
 	/**
@@ -30,26 +33,31 @@ export default class MessageForwardsCollection extends Array<MessageForward> {
 
 		return this[kFlatten];
 	}
-
-	/**
-	 * Checks for the presence of attachments
-	 */
-	public hasAttachments(type: AttachmentTypeString | null = null): boolean {
-		return this.flatten.some(forward => (
-			forward.hasAttachments(type)
-		));
-	}
-
-	/**
-	 * Returns the attachments
-	 */
-	public getAttachments(type: string | null = null): (Attachment | ExternalAttachment)[] {
-		const attachments = this.flatten.map(forward => (
-			// @ts-ignore
-			forward.getAttachments(type)
-		));
-
-		// @ts-ignore
-		return [].concat(...attachments);
-	}
 }
+
+// @ts-ignore
+// eslint-disable-next-line
+interface MessageForwardsCollection extends Attachmentable {}
+applyMixins(MessageForwardsCollection, [
+	class CustomAttachmentable {
+		public flatten!: MessageForward[];
+
+		public hasAttachments(type: AttachmentTypeString | null = null): boolean {
+			return this.flatten.some(forward => (
+				forward.hasAttachments(type)
+			));
+		}
+
+		public getAttachments(type: string | null = null): (Attachment | ExternalAttachment)[] {
+			const attachments = this.flatten.map(forward => (
+				// @ts-ignore
+				forward.getAttachments(type)
+			));
+
+			// @ts-ignore
+			return [].concat(...attachments);
+		}
+	}
+]);
+
+export default MessageForwardsCollection;
