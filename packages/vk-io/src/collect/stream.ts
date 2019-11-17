@@ -4,6 +4,7 @@ import { inspect } from 'util';
 import { Readable } from 'stream';
 
 import VK from '../vk';
+import { UsersUserFull, GroupsGroupFull } from '../api/schemas/objects';
 import { CollectError, APIErrorCode, CollectErrorCode } from '../errors';
 
 import Request from '../api/request';
@@ -27,7 +28,22 @@ export interface ICollectStreamOptions {
 	max: number | null;
 }
 
-export default class CollectStream extends Readable {
+export interface ICollectStreamResult<T> {
+	items: T[];
+	profiles: UsersUserFull[];
+	groups: GroupsGroupFull[];
+}
+
+export interface ICollectChunkData<T> {
+	received: number;
+	percent: number;
+	total: number;
+	items: T[];
+	profiles: UsersUserFull[];
+	groups: GroupsGroupFull[];
+}
+
+export default class CollectStream<T> extends Readable {
 	protected vk: VK;
 
 	protected method: string;
@@ -48,8 +64,7 @@ export default class CollectStream extends Readable {
 
 	protected supportExecute: boolean;
 
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	protected promise: Promise<any> | null;
+	protected promise: Promise<ICollectStreamResult<T>> | null;
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	protected params: Record<string, any>;
@@ -127,15 +142,16 @@ export default class CollectStream extends Readable {
 	/**
 	 * Promise based
 	 */
-	public then(thenFn: Function, catchFn?: Function): Promise<{
-		items: object[];
-		profiles: object[];
-		groups: object[];
-	}> {
+	public then(
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		thenFn: (result: ICollectStreamResult<T>) => any,
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		catchFn?: (error: Error) => any
+	): Promise<ICollectStreamResult<T>> {
 		if (this.promise === null) {
-			let collectItems: object[] = [];
-			let collectProfiles: object[] = [];
-			let collectGroups: object[] = [];
+			let collectItems: T[] = [];
+			let collectProfiles: UsersUserFull[] = [];
+			let collectGroups: GroupsGroupFull[] = [];
 
 			this.promise = new Promise((resolve, reject): void => {
 				this
@@ -153,7 +169,6 @@ export default class CollectStream extends Readable {
 			});
 		}
 
-		// @ts-ignore
 		return Promise.resolve(this.promise).then(thenFn, catchFn);
 	}
 
@@ -333,5 +348,24 @@ export default class CollectStream extends Readable {
 		};
 
 		return `${options.stylize(name, 'special')} ${inspect(payload, options)}`;
+	}
+
+	public on(event: 'close', listener: () => void): this;
+
+	public on(event: 'data', listener: (chunk: ICollectChunkData<T>) => void): this;
+
+	public on(event: 'end', listener: () => void): this;
+
+	public on(event: 'readable', listener: () => void): this;
+
+	public on(event: 'error', listener: (err: Error) => void): this;
+
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	public on(event: string | symbol, listener: (...args: any[]) => void): this {
+		return super.on(event, listener);
+	}
+
+	public [Symbol.asyncIterator](): AsyncIterableIterator<ICollectChunkData<T>> {
+		return this[Symbol.asyncIterator]();
 	}
 }

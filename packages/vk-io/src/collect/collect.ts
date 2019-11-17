@@ -109,6 +109,7 @@ export default class Collect {
 
 	// Allow to call methods like collect.wall.get()
 	[key: string]: {
-		[key: string]: (options: ICollectStreamOptions['options']) => CollectStream;
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		[key: string]: <T = Record<string, any>>(options: ICollectStreamOptions['options']) => CollectStream<T>;
 	};
 }
