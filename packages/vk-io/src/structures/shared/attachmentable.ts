@@ -71,7 +71,7 @@ export default class Attachmentable {
 
 	public getAttachments(type: AttachmentType.WALL_REPLY | 'wall_reply'): WallReplyAttachment[];
 
-	public getAttachments(type: string | null = null): (Attachment | ExternalAttachment)[] {
+	public getAttachments(type: AttachmentType | AttachmentTypeString | null = null): (Attachment | ExternalAttachment)[] {
 		if (type === null) {
 			return this.attachments;
 		}
