@@ -48,7 +48,9 @@ applyMixins(MessageForwardsCollection, [
 			));
 		}
 
-		public getAttachments(type: string | null = null): (Attachment | ExternalAttachment)[] {
+		public getAttachments(
+			type: AttachmentTypeString | null = null
+		): (Attachment | ExternalAttachment)[] {
 			const attachments = this.flatten.map(forward => (
 				// @ts-ignore
 				forward.getAttachments(type)
