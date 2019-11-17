@@ -81,3 +81,8 @@ export default class Attachmentable {
 		));
 	}
 }
+
+export interface IAllAttachmentable {
+	hasAllAttachments: Attachmentable['hasAttachments'];
+	getAllAttachments: Attachmentable['getAttachments'];
+}

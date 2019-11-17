@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 import Context, { IContextOptions } from './context';
 
 import { VKError } from '../../errors';
@@ -7,8 +8,9 @@ import MessageForward from '../shared/message-forward';
 import transformMessage from '../../updates/transform-message';
 import MessageForwardsCollection from '../shared/message-forwards-collection';
 
-import Attachmentable from '../shared/attachmentable';
 import { Attachment, ExternalAttachment } from '../attachments';
+import Attachmentable, { IAllAttachmentable } from '../shared/attachmentable';
+
 import { transformAttachments } from '../attachments/helpers';
 import {
 	unescapeHTML,
@@ -21,7 +23,9 @@ import {
 	UpdateSource,
 	MessageSource,
 	CHAT_PEER,
-	inspectCustomData
+	AttachmentType,
+	inspectCustomData,
+	AttachmentTypeString
 } from '../../utils/constants';
 import { AllowArray } from '../../types';
 import { UploadSource, UploadSourceValue } from '../../upload/upload';
@@ -921,7 +925,35 @@ class MessageContext<S = Record<string, any>>
 }
 
 // eslint-disable-next-line
-interface MessageContext extends Attachmentable {}
-applyMixins(MessageContext, [Attachmentable]);
+interface MessageContext extends Attachmentable, IAllAttachmentable {}
+applyMixins(MessageContext, [
+	Attachmentable,
+	class AllAttachmentable extends Attachmentable {
+		public replyMessage!: MessageReply | null;
+
+		public forwards!: MessageForwardsCollection;
+
+		public hasAllAttachments(type: AttachmentTypeString | null = null): boolean {
+			return (
+				this.hasAttachments(type)
+				|| (this.replyMessage && this.replyMessage.hasAttachments(type))
+				|| this.forwards.hasAttachments(type)
+			);
+		}
+
+		public getAllAttachments(
+			type: AttachmentType | AttachmentTypeString
+		): (Attachment | ExternalAttachment)[] {
+			return [
+				// @ts-ignore
+				...this.getAttachments(type),
+				// @ts-ignore
+				...((this.replyMessage && this.replyMessage.getAttachments(type)) || []),
+				// @ts-ignore
+				...this.forwards.getAttachments(type)
+			];
+		}
+	}
+]);
 
 export default MessageContext;
