@@ -1,23 +1,22 @@
 import { inspect } from 'util';
 
-import CollectStream from './stream';
+import CollectStream, { ICollectStreamOptions } from './stream';
 import LIMITS_METHODS from './limits';
 
 import VK from '../vk';
 import Chain from './chain';
-import { APIMethods } from '../api/schemas/methods';
-import { getChainReturn, getExecuteMethod } from '../utils/helpers';
 import { ExecuteError } from '../errors';
 
-export default class Collect extends APIMethods {
+import { getChainReturn, getExecuteMethod } from '../utils/helpers';
+
+export default class Collect {
+	// @ts-ignore
 	protected vk: VK;
 
 	/**
 	 * constructor
 	 */
 	public constructor(vk: VK) {
-		super();
-
 		this.vk = vk;
 
 		for (const [method, limit, max] of LIMITS_METHODS) {
@@ -51,6 +50,7 @@ export default class Collect extends APIMethods {
 	/**
 	 * Returns new Chain instance
 	 */
+	// @ts-ignore
 	public chain(): Chain {
 		return new Chain(this.vk);
 	}
@@ -58,6 +58,7 @@ export default class Collect extends APIMethods {
 	/**
 	 * Call multiple executors
 	 */
+	// @ts-ignore
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public async executes(method: string, queue: Record<string, any>[]): Promise<{
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -105,4 +106,9 @@ export default class Collect extends APIMethods {
 
 		return `${options.stylize(name, 'special')} {}`;
 	}
+
+	// Allow to call methods like collect.wall.get()
+	[key: string]: {
+		[key: string]: (options: ICollectStreamOptions['options']) => CollectStream;
+	};
 }
