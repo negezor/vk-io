@@ -62,10 +62,6 @@ export default class APIRequest {
 		return getExecuteMethod(this.method, this.params);
 	}
 
-	public make() {
-		// const
-	}
-
 	/**
 	 * Custom inspect object
 	 */
