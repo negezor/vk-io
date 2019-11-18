@@ -25,7 +25,7 @@ export interface ICollectStreamOptions {
 	};
 	method: string;
 	limit: number;
-	max: number | null;
+	max?: number;
 }
 
 export interface ICollectStreamResult<T> {
@@ -52,7 +52,7 @@ export default class CollectStream<T> extends Readable {
 
 	protected parallelCount: number;
 
-	protected total: number;
+	protected total: number | undefined;
 
 	protected offset: number;
 
@@ -76,7 +76,7 @@ export default class CollectStream<T> extends Readable {
 		options,
 		method,
 		limit,
-		max = null
+		max
 	}: ICollectStreamOptions) {
 		super({
 			objectMode: true
@@ -86,8 +86,8 @@ export default class CollectStream<T> extends Readable {
 
 		const {
 			parallelCount = 25,
-			count = null,
 			offset = 0,
+			count,
 			...params
 		} = options;
 
@@ -104,15 +104,13 @@ export default class CollectStream<T> extends Readable {
 
 		this.parallelCount = parallelCount;
 
-		const hasMax = max !== null;
-		const hasCount = count !== null;
+		const hasMax = max !== undefined;
+		const hasCount = count !== undefined;
 
 		// @ts-ignore
 		if ((hasCount && hasMax && count > max) || (hasMax && !hasCount)) {
-			// @ts-ignore
 			this.total = max;
 		} else {
-			// @ts-ignore
 			this.total = count;
 		}
 
@@ -177,9 +175,9 @@ export default class CollectStream<T> extends Readable {
 	 */
 	// eslint-disable-next-line no-underscore-dangle
 	public async _read(): Promise<void> {
-		const isNotFirst = this.total !== null && this.received !== 0;
+		const isNotFirst = this.total !== undefined && this.received !== 0;
 
-		if (isNotFirst && (this.total - this.skipOffset) <= this.received) {
+		if (isNotFirst && (this.total! - this.skipOffset) <= this.received) {
 			this.push(null);
 
 			return;
@@ -218,7 +216,7 @@ export default class CollectStream<T> extends Readable {
 
 			const { count } = result;
 
-			if (this.total === null || this.total > count) {
+			if (this.total === undefined || this.total > count) {
 				this.total = count;
 			}
 
@@ -309,7 +307,7 @@ export default class CollectStream<T> extends Readable {
 
 		const { total, received } = this;
 
-		let percent = Math.round((received / total) * 100);
+		let percent = Math.round((received / total!) * 100);
 
 		if (Number.isNaN(percent)) {
 			percent = 100;

@@ -89,7 +89,6 @@ export default class Collect {
 					options,
 					method,
 					limit,
-					// @ts-ignore
 					max
 				})
 			);
