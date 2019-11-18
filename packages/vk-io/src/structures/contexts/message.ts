@@ -855,7 +855,7 @@ class MessageContext<S = Record<string, any>>
 	 * Returns the custom data
 	 */
 	public [inspectCustomData](): object {
-		const beforeAttachments = [];
+		const beforeAttachments: string[] = [];
 
 		if (this.isEvent) {
 			beforeAttachments.push(
@@ -870,7 +870,7 @@ class MessageContext<S = Record<string, any>>
 			beforeAttachments.push('replyMessage');
 		}
 
-		const afterAttachments = [];
+		const afterAttachments: string[] = [];
 
 		if (this.hasMessagePayload) {
 			afterAttachments.push('messagePayload');

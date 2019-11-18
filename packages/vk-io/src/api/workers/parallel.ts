@@ -25,8 +25,8 @@ export default async function parallel(api: API, next: Function): Promise<void> 
 	// @ts-ignore
 	const { apiExecuteCount } = api.vk.options;
 
-	const tasks = [];
-	const chain = [];
+	const tasks: Request[] = [];
+	const chain: string[] = [];
 
 	for (let i = 0; i < queue.length; i += 1) {
 		if (queue[i].method.startsWith('execute')) {

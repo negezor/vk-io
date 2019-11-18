@@ -107,7 +107,7 @@ export default function transformMessage({
 			specialAttachments[attachments.attach1_type](attachments)
 		];
 	} else {
-		const messageAttachments = [];
+		const messageAttachments: IMessageContextPayload['message']['attachments'] = [];
 
 		for (let i = 1, key = 'attach1'; attachments[key] !== undefined; i += 1, key = `attach${i}`) {
 			const type = attachments[`${key}_type`];

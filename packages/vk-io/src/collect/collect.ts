@@ -70,7 +70,8 @@ export default class Collect {
 			getExecuteMethod(method, params)
 		));
 
-		const promises = [];
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		const promises: Promise<any>[] = [];
 
 		while (queueMethods.length !== 0) {
 			const code = getChainReturn(queueMethods.splice(0, 25));

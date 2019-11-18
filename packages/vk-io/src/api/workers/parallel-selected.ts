@@ -24,8 +24,8 @@ export default async function parallelSelected(api: API, next: Function): Promis
 	// Wait next event loop, saves one request or more
 	await delay(0);
 
-	const tasks = [];
-	const chain = [];
+	const tasks: Request[] = [];
+	const chain: string[] = [];
 
 	for (let i = 0; i < queue.length; i += 1) {
 		if (!apiExecuteMethods.includes(queue[i].method)) {

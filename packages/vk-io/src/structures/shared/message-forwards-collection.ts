@@ -6,7 +6,7 @@ import Attachmentable from './attachmentable';
 import { applyMixins } from '../../utils/helpers';
 
 const getForwards = (rootForwards: MessageForward[]): MessageForward[] => {
-	const forwards = [];
+	const forwards: MessageForward[] = [];
 
 	for (const forward of rootForwards) {
 		forwards.push(
