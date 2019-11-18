@@ -81,10 +81,10 @@ hearCommand('help', async (context) => {
 			})
 			.textButton({
 				label: 'Cat purring',
-					payload: {
-						command: 'purr'
-					},
-					color: Keyboard.PRIMARY_COLOR
+				payload: {
+					command: 'purr'
+				},
+				color: Keyboard.PRIMARY_COLOR
 			})
 	});
 });
