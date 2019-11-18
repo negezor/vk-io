@@ -7,7 +7,7 @@ import { URLSearchParams } from 'url';
 import { APIMethods } from './schemas/methods';
 
 import VK from '../vk';
-import Request from './request';
+import APIRequest from './request';
 import { getRandomId, delay } from '../utils/helpers';
 import { VKError, APIError, ExecuteError } from '../errors';
 import { sequential, parallel, parallelSelected } from './workers';
@@ -97,7 +97,7 @@ const groupMethods = [
  * Working with API methods
  */
 export default class API extends APIMethods {
-	private queue: Request[] = [];
+	private queue: APIRequest[] = [];
 
 	private started = false;
 
@@ -197,7 +197,7 @@ export default class API extends APIMethods {
 	 * Adds request for queue
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	public callWithRequest(request: Request): Promise<any> {
+	public callWithRequest(request: APIRequest): Promise<any> {
 		this.queue.push(request);
 
 		this.worker();
@@ -210,7 +210,7 @@ export default class API extends APIMethods {
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public enqueue(method: string, params: object): Promise<any> {
-		const request = new Request(method, params);
+		const request = new APIRequest(method, params);
 
 		return this.callWithRequest(request);
 	}
@@ -218,7 +218,7 @@ export default class API extends APIMethods {
 	/**
 	 * Adds an element to the beginning of the queue
 	 */
-	protected requeue(request: Request): void {
+	protected requeue(request: APIRequest): void {
 		this.queue.unshift(request);
 
 		this.worker();
@@ -257,7 +257,7 @@ export default class API extends APIMethods {
 	/**
 	 * Calls the api method
 	 */
-	protected async callMethod(request: Request): Promise<void> {
+	protected async callMethod(request: APIRequest): Promise<void> {
 		const { options } = this.vk;
 		const { method } = request;
 
@@ -348,7 +348,7 @@ export default class API extends APIMethods {
 	/**
 	 * Error API handler
 	 */
-	public async handleError(request: Request, error: APIError): Promise<void> {
+	public async handleError(request: APIRequest, error: APIError): Promise<void> {
 		const { code } = error;
 
 		if (code === TOO_MANY_REQUESTS) {

@@ -1,5 +1,5 @@
 import VK from './vk';
-import Request from './api/request';
+import APIRequest from './api/request';
 
 export * from './errors';
 export * from './structures/keyboard';
@@ -30,6 +30,6 @@ export {
 export { default as Composer } from './structures/shared/composer';
 export { ICallbackServiceValidate } from './utils/callback-service';
 
-export { VK, Request };
+export { VK, APIRequest, APIRequest as Request };
 
 export default VK;

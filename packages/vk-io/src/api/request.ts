@@ -3,7 +3,7 @@ import { inspect } from 'util';
 import { getExecuteMethod } from '../utils/helpers';
 import { ICallbackServiceValidate } from '../utils/callback-service';
 
-export default class Request {
+export default class APIRequest {
 	public method: string;
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -55,6 +55,10 @@ export default class Request {
 	 */
 	public toString(): string {
 		return getExecuteMethod(this.method, this.params);
+	}
+
+	public make() {
+		// const
 	}
 
 	/**

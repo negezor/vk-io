@@ -7,7 +7,7 @@ import VK from '../vk';
 import { UsersUserFull, GroupsGroupFull } from '../api/schemas/objects';
 import { CollectError, APIErrorCode, CollectErrorCode } from '../errors';
 
-import Request from '../api/request';
+import APIRequest from '../api/request';
 import getExecuteCode from './execute-code';
 
 const debug = createDebug('vk-io:collect:stream');
@@ -188,7 +188,7 @@ export default class CollectStream<T> extends Readable {
 		let groups;
 
 		if (!this.supportExecute || this.parallelCount === 1) {
-			const request = new Request(this.method, {
+			const request = new APIRequest(this.method, {
 				...this.params,
 
 				offset: this.offset

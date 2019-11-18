@@ -1,4 +1,4 @@
-import Request from '../request';
+import APIRequest from '../request';
 import sequential from './sequential';
 
 import API from '../api';
@@ -25,7 +25,7 @@ export default async function parallel(api: API, next: Function): Promise<void> 
 	// @ts-ignore
 	const { apiExecuteCount } = api.vk.options;
 
-	const tasks: Request[] = [];
+	const tasks: APIRequest[] = [];
 	const chain: string[] = [];
 
 	for (let i = 0; i < queue.length; i += 1) {
@@ -46,7 +46,7 @@ export default async function parallel(api: API, next: Function): Promise<void> 
 	}
 
 	try {
-		const request = new Request('execute', {
+		const request = new APIRequest('execute', {
 			code: getChainReturn(chain)
 		});
 

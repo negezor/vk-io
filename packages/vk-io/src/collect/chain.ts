@@ -3,7 +3,7 @@ import { inspect } from 'util';
 import { VKError, ExecuteError } from '../errors';
 
 import VK from '../vk';
-import Request from '../api/request';
+import APIRequest from '../api/request';
 import { getChainReturn, resolveExecuteTask } from '../utils/helpers';
 
 export default class Chain {
@@ -11,7 +11,7 @@ export default class Chain {
 
 	protected vk: VK;
 
-	protected queue: Request[] = [];
+	protected queue: APIRequest[] = [];
 
 	/**
 	 * Constructor
@@ -39,7 +39,7 @@ export default class Chain {
 			}));
 		}
 
-		const request = new Request(method, params);
+		const request = new APIRequest(method, params);
 
 		this.queue.push(request);
 
