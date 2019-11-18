@@ -39,7 +39,10 @@ export default class Chain {
 			}));
 		}
 
-		const request = new APIRequest(method, params);
+		const request = new APIRequest({
+			method,
+			params
+		});
 
 		this.queue.push(request);
 

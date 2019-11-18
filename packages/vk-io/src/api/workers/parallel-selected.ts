@@ -51,8 +51,11 @@ export default async function parallelSelected(api: API, next: Function): Promis
 	}
 
 	try {
-		const request = new APIRequest('execute', {
-			code: getChainReturn(chain)
+		const request = new APIRequest({
+			method: 'execute',
+			params: {
+				code: getChainReturn(chain)
+			}
 		});
 
 		// @ts-ignore

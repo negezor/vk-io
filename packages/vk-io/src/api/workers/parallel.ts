@@ -46,8 +46,11 @@ export default async function parallel(api: API, next: Function): Promise<void> 
 	}
 
 	try {
-		const request = new APIRequest('execute', {
-			code: getChainReturn(chain)
+		const request = new APIRequest({
+			method: 'execute',
+			params: {
+				code: getChainReturn(chain)
+			}
 		});
 
 		// @ts-ignore

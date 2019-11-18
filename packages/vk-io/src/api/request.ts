@@ -3,6 +3,12 @@ import { inspect } from 'util';
 import { getExecuteMethod } from '../utils/helpers';
 import { ICallbackServiceValidate } from '../utils/callback-service';
 
+export interface IAPIRequestOptions {
+	method: string;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	params: Record<string, any>;
+}
+
 export default class APIRequest {
 	public method: string;
 
@@ -23,8 +29,7 @@ export default class APIRequest {
 	/**
 	 * Constructor
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	public constructor(method: string, params: Record<string, any> = {}) {
+	public constructor({ method, params = {} }: IAPIRequestOptions) {
 		this.method = method;
 		this.params = { ...params };
 

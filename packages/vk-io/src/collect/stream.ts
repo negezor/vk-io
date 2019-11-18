@@ -188,10 +188,13 @@ export default class CollectStream<T> extends Readable {
 		let groups;
 
 		if (!this.supportExecute || this.parallelCount === 1) {
-			const request = new APIRequest(this.method, {
-				...this.params,
+			const request = new APIRequest({
+				method: this.method,
+				params: {
+					...this.params,
 
-				offset: this.offset
+					offset: this.offset
+				}
 			});
 
 			let result;

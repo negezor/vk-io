@@ -210,7 +210,10 @@ export default class API extends APIMethods {
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public enqueue(method: string, params: object): Promise<any> {
-		const request = new APIRequest(method, params);
+		const request = new APIRequest({
+			method,
+			params
+		});
 
 		return this.callWithRequest(request);
 	}
