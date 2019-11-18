@@ -9,8 +9,64 @@ import { ExecuteError } from '../errors';
 
 import { getChainReturn, getExecuteMethod } from '../utils/helpers';
 
+export interface ICollectStreamGroup {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	[key: string]: <T = Record<string, any>>(options: ICollectStreamOptions['options']) => CollectStream<T>;
+}
+
 export default class Collect {
-	// @ts-ignore
+	public account!: ICollectStreamGroup;
+
+	public ads!: ICollectStreamGroup;
+
+	public apps!: ICollectStreamGroup;
+
+	public audio!: ICollectStreamGroup;
+
+	public board!: ICollectStreamGroup;
+
+	public database!: ICollectStreamGroup;
+
+	public docs!: ICollectStreamGroup;
+
+	public fave!: ICollectStreamGroup;
+
+	public friends!: ICollectStreamGroup;
+
+	public gifts!: ICollectStreamGroup;
+
+	public groups!: ICollectStreamGroup;
+
+	public leads!: ICollectStreamGroup;
+
+	public likes!: ICollectStreamGroup;
+
+	public market!: ICollectStreamGroup;
+
+	public messages!: ICollectStreamGroup;
+
+	public notes!: ICollectStreamGroup;
+
+	public orders!: ICollectStreamGroup;
+
+	public photos!: ICollectStreamGroup;
+
+	public places!: ICollectStreamGroup;
+
+	public polls!: ICollectStreamGroup;
+
+	public storage!: ICollectStreamGroup;
+
+	public users!: ICollectStreamGroup;
+
+	public utils!: ICollectStreamGroup;
+
+	public video!: ICollectStreamGroup;
+
+	public wall!: ICollectStreamGroup;
+
+	public widgets!: ICollectStreamGroup;
+
 	protected vk: VK;
 
 	/**
@@ -50,7 +106,6 @@ export default class Collect {
 	/**
 	 * Returns new Chain instance
 	 */
-	// @ts-ignore
 	public chain(): Chain {
 		return new Chain(this.vk);
 	}
@@ -58,7 +113,6 @@ export default class Collect {
 	/**
 	 * Call multiple executors
 	 */
-	// @ts-ignore
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public async executes(method: string, queue: Record<string, any>[]): Promise<{
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -107,10 +161,4 @@ export default class Collect {
 
 		return `${options.stylize(name, 'special')} {}`;
 	}
-
-	// Allow to call methods like collect.wall.get()
-	[key: string]: {
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		[key: string]: <T = Record<string, any>>(options: ICollectStreamOptions['options']) => CollectStream<T>;
-	};
 }
