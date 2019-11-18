@@ -111,7 +111,11 @@ export default class ImplicitFlowGroups extends ImplicitFlow {
 			expires = Number(expires);
 		}
 
-		const tokens = [];
+		const tokens: {
+			group: number;
+			token: string;
+			expires: number;
+		}[] = [];
 
 		for (const [name, value] of params) {
 			if (!name.startsWith('access_token_')) {
@@ -124,7 +128,7 @@ export default class ImplicitFlowGroups extends ImplicitFlow {
 			tokens.push({
 				group: Number(group),
 				token: value,
-				expires
+				expires: expires as number
 			});
 		}
 
