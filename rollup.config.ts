@@ -1,8 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import jsonPlugin from 'rollup-plugin-json';
-import commonjsPlugin from 'rollup-plugin-commonjs';
 import typescriptPlugin from 'rollup-plugin-typescript2';
-import nodeResolvePlugin from 'rollup-plugin-node-resolve';
 /* eslint-enable import/no-extraneous-dependencies */
 
 import { tmpdir } from 'os';
@@ -43,13 +41,10 @@ export default async function () {
 				return {
 					input: pathJoin(src, 'index.ts'),
 					plugins: [
-						nodeResolvePlugin(),
-						commonjsPlugin(),
 						jsonPlugin(),
 						typescriptPlugin({
 							cacheRoot,
 
-							rollupCommonJSResolveHack: true,
 							useTsconfigDeclarationDir: false,
 
 							tsconfigOverride: {
