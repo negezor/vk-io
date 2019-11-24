@@ -59,5 +59,6 @@ run().catch(console.log);
 * [@vk-io/streaming](../streaming): Receiving data with Streaming API
 * [@vk-io/session](../session): Simple implementation of the sessions
 * [@vk-io/scenes](../scenes): Simple implementation of middleware-based scene management
+* [vk-io-question](https://github.com/fakemancat/vk-io-question): Simple promise-based prompt
 
 > If you want to add your module in the list, create a [new issue](https://github.com/negezor/vk-io/issues/new) in the repository.
