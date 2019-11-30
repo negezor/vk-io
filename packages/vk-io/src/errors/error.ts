@@ -16,6 +16,11 @@ export default class VKError extends Error {
 	public code: string | number;
 
 	/**
+	 * Error stack
+	 */
+	public stack!: string;
+
+	/**
 	 * Constructor
 	 */
 	public constructor({ code, message }: IVKErrorOptions) {
