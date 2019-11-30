@@ -22,7 +22,6 @@ export default class VKError extends Error {
 		super(message);
 
 		this.code = code;
-		this.message = message;
 		this.name = this.constructor.name;
 
 		Error.captureStackTrace(this, this.constructor);
