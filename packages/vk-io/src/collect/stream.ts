@@ -331,16 +331,11 @@ export default class CollectStream<T> extends Readable {
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public [inspect.custom](depth: number, options: Record<string, any>): string {
-		const { name } = this.constructor;
 		const { total, offset, received } = this;
 
-		const payload = {
-			total,
-			offset,
-			received
-		};
+		const payload = { total, offset, received };
 
-		return `${options.stylize(name, 'special')} ${inspect(payload, options)}`;
+		return `${options.stylize(this.constructor.name, 'special')} ${inspect(payload, options)}`;
 	}
 
 	public on(event: 'close', listener: () => void): this;

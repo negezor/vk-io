@@ -117,11 +117,10 @@ export default class Chain {
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public [inspect.custom](depth: number, options: Record<string, any>): string {
-		const { name } = this.constructor;
 		const { started, queue } = this;
 
 		const payload = { started, queue };
 
-		return `${options.stylize(name, 'special')} ${inspect(payload, options)}`;
+		return `${options.stylize(this.constructor.name, 'special')} ${inspect(payload, options)}`;
 	}
 }

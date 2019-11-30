@@ -66,12 +66,12 @@ export default class ExternalAttachment<P = {}> {
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public [inspect.custom](depth: number, options: Record<string, any>): string {
-		const { name } = this.constructor;
+		const payload = inspect(this.toJSON(), {
+			...options,
 
-		const customData = this.toJSON();
+			compact: false
+		});
 
-		const payload = inspect(customData, { ...options, compact: false });
-
-		return `${options.stylize(name, 'special')} ${payload}`;
+		return `${options.stylize(this.constructor.name, 'special')} ${payload}`;
 	}
 }

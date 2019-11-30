@@ -102,18 +102,12 @@ export default class Context<P = {}, S = {}> {
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public [inspect.custom](depth: number, options: Record<string, any>): string {
-		const { name } = this.constructor;
+		const payload = inspect(this.toJSON(), {
+			...options,
 
-		const customData = {
-			...this[inspectCustomData](),
+			compact: false
+		});
 
-			type: this.type,
-			subTypes: this.subTypes,
-			state: this.state
-		};
-
-		const payload = inspect(customData, { ...options, compact: false });
-
-		return `${options.stylize(name, 'special')} ${payload}`;
+		return `${options.stylize(this.constructor.name, 'special')} ${payload}`;
 	}
 }

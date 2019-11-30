@@ -579,12 +579,10 @@ export default class Updates {
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public [inspect.custom](depth: number, options: Record<string, any>): string {
-		const { name } = this.constructor;
-
 		const { isStarted, stack } = this;
 
 		const payload = { isStarted, stack };
 
-		return `${options.stylize(name, 'special')} ${inspect(payload, options)}`;
+		return `${options.stylize(this.constructor.name, 'special')} ${inspect(payload, options)}`;
 	}
 }

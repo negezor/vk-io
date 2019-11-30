@@ -1137,8 +1137,6 @@ export default class Upload {
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public [inspect.custom](depth: number, options: Record<string, any>): string {
-		const { name } = this.constructor;
-
-		return `${options.stylize(name, 'special')} {}`;
+		return `${options.stylize(this.constructor.name, 'special')} {}`;
 	}
 }
