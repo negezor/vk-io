@@ -5,8 +5,7 @@ const { CAPTCHA_REQUIRED, USER_VALIDATION_REQUIRED, CONFIRMATION_REQUIRED } = AP
 
 export interface IAPIErrorParam {
 	key: string;
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	value: any;
+	value: string;
 }
 
 export interface IAPIErrorOptions {
