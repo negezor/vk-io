@@ -1,4 +1,4 @@
-import VKError from './error';
+import APIError from './api';
 
 export interface IExecuteErrorOptions {
 	error_code: number;
@@ -6,7 +6,7 @@ export interface IExecuteErrorOptions {
 	method: string;
 }
 
-export default class ExecuteError extends VKError {
+export default class ExecuteError extends APIError {
 	/**
 	 * The method in which the error occurred
 	 */
@@ -16,10 +16,11 @@ export default class ExecuteError extends VKError {
 	 * Constructor
 	 */
 	public constructor(options: IExecuteErrorOptions) {
-		const code = Number(options.error_code);
-		const message = `Code №${code} - ${options.error_msg}`;
-
-		super({ code, message });
+		super({
+			error_code: options.error_code,
+			error_msg: options.error_msg,
+			request_params: []
+		});
 
 		this.method = options.method;
 	}
