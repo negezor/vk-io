@@ -287,15 +287,15 @@ export default class Updates {
 			? [rawEvents]
 			: rawEvents;
 
-		const handler = Array.isArray(rawHandlers)
-			? compose(rawHandlers)
-			: rawHandlers;
-
 		const hasEvents = events.every(Boolean);
 
 		if (!hasEvents) {
 			throw new Error('Events should be not empty');
 		}
+
+		const handler = Array.isArray(rawHandlers)
+			? compose(rawHandlers)
+			: rawHandlers;
 
 		if (typeof handler !== 'function') {
 			throw new TypeError('Handler must be a function');
