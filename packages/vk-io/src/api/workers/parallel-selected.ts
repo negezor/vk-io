@@ -32,7 +32,7 @@ export default async function parallelSelected(api: API, next: Function): Promis
 			continue;
 		}
 
-		const request = queue.splice(i, 1)[0];
+		const [request] = queue.splice(i, 1);
 
 		i -= 1;
 

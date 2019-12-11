@@ -33,7 +33,7 @@ export default async function parallel(api: API, next: Function): Promise<void> 
 			continue;
 		}
 
-		const request = queue.splice(i, 1)[0];
+		const [request] = queue.splice(i, 1);
 
 		i -= 1;
 
