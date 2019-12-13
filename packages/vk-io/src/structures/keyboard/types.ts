@@ -73,6 +73,27 @@ export interface ITextButton extends IButton {
 	};
 }
 
+export interface IURLButton extends IButton {
+	action: {
+		type: 'open_link';
+
+		/**
+		 * Button label, no more than 40 characters
+		 */
+		label: string;
+
+		/**
+		 * The link that will be opened when clicked
+		 */
+		link: string;
+
+		/**
+		 * Payload, preferably use object
+		 */
+		payload: ButtonPayload;
+	};
+}
+
 export interface ILocationButton extends IButton {
 	action: {
 		type: 'location';
@@ -129,6 +150,7 @@ export interface IVKApplicationButton extends IButton {
 
 export type KeyboardButton =
 	ITextButton
+	| IURLButton
 	| ILocationButton
 	| IVKPayButton
 	| IVKApplicationButton;
@@ -144,6 +166,25 @@ export interface IKeyboardTextButtonOptions {
 	 * Button label, no more than 40 characters
 	 */
 	label: string;
+
+	/**
+	 * Payload, preferably use object
+	 *
+	 * No more than 255 characters in JSON stringified
+	 */
+	payload?: ButtonPayload;
+}
+
+export interface IKeyboardURLButtonOptions {
+	/**
+	 * Button label, no more than 40 characters
+	 */
+	label: string;
+
+	/**
+	 * The link that will be opened when clicked
+	 */
+	url: string;
 
 	/**
 	 * Payload, preferably use object
@@ -295,10 +336,11 @@ export interface IKeyboardApplicationButtonOptions {
 export interface IKeyboardProxyButton {
 	options: (
 		IKeyboardTextButtonOptions
+		| IKeyboardURLButtonOptions
 		| IKeyboardLocationRequestButtonOptions
 		| IKeyboardVKPayButtonOptions
 		| IKeyboardApplicationButtonOptions
 	);
 
-	kind: 'text' | 'location_request' | 'vk_pay' | 'vk_application';
+	kind: 'text' | 'url' | 'location_request' | 'vk_pay' | 'vk_application';
 }

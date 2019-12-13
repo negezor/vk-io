@@ -5,6 +5,7 @@ import {
 	KeyboardButton,
 
 	IKeyboardTextButtonOptions,
+	IKeyboardURLButtonOptions,
 	IKeyboardLocationRequestButtonOptions,
 	IKeyboardVKPayButtonOptions,
 	IKeyboardApplicationButtonOptions
@@ -74,6 +75,42 @@ export default class KeyboardBuilder {
 				payload,
 
 				type: 'text'
+			}
+		});
+	}
+
+	/**
+	 * URL button
+	 *
+	 * ```ts
+	 * builder.urlButton({
+	 *  label: 'Buy a coffee',
+	 *  url: 'https://coffee.mania/buy
+	 * });
+	 * ```
+	 */
+	public urlButton({
+		label,
+		url,
+		payload: rawPayload = {}
+	}: IKeyboardURLButtonOptions): this {
+		if (label.length > 40) {
+			throw new RangeError('Maximum length of label 40 characters');
+		}
+
+		const payload = JSON.stringify(rawPayload);
+
+		if (payload.length > 255) {
+			throw new RangeError('Maximum length of payload 255 characters');
+		}
+
+		return this.addWideButton({
+			action: {
+				label,
+				payload,
+
+				link: url,
+				type: 'open_link'
 			}
 		});
 	}

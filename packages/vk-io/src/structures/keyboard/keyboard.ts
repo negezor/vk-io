@@ -2,6 +2,7 @@ import KeyboardBuilder from './builder';
 import {
 	IKeyboardProxyButton,
 	IKeyboardTextButtonOptions,
+	IKeyboardURLButtonOptions,
 	IKeyboardLocationRequestButtonOptions,
 	IKeyboardVKPayButtonOptions,
 	IKeyboardApplicationButtonOptions,
@@ -93,6 +94,12 @@ export default class Keyboard {
 					continue;
 				}
 
+				if (kind === 'url') {
+					builder.urlButton(options as IKeyboardURLButtonOptions);
+
+					continue;
+				}
+
 				if (kind === 'location_request') {
 					builder.locationRequestButton(options as IKeyboardLocationRequestButtonOptions);
 
@@ -127,6 +134,15 @@ export default class Keyboard {
 		options: IKeyboardTextButtonOptions
 	): IKeyboardProxyButton {
 		return { options, kind: 'text' };
+	}
+
+	/**
+	 * URL button
+	 */
+	public static urlButton(
+		options: IKeyboardURLButtonOptions
+	): IKeyboardProxyButton {
+		return { options, kind: 'url' };
 	}
 
 	/**
