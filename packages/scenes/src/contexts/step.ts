@@ -1,4 +1,4 @@
-import { IStepContextOptions } from './step.types';
+import { IStepContextOptions, IStepContextGoOptions } from './step.types';
 import { StepSceneHandler } from '../scenes/step.types';
 import { LastAction } from './scene.types';
 
@@ -73,6 +73,26 @@ export default class StepSceneContext {
 		if (this.context.scene.lastAction !== LastAction.LEAVE && !this.stepChanged) {
 			this.context.scene.session.firstTime = false;
 		}
+	}
+
+	/**
+	 * The go method goes to a specific step
+	 *
+	 * ```ts
+	 * ctx.scene.step.go(3);
+	 * ctx.scene.step.go(3, {
+	 *   silent: true
+	 * });
+	 * ```
+	 */
+	public go(stepId: number, { silent = false }: IStepContextGoOptions = {}): Promise<void> {
+		this.stepId = stepId;
+
+		if (silent) {
+			return Promise.resolve();
+		}
+
+		return this.reenter();
 	}
 
 	/**

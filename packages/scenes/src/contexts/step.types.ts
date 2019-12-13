@@ -1,7 +1,13 @@
 import { IStepContext, StepSceneHandler } from '../scenes/step.types';
 
-// eslint-disable-next-line import/prefer-default-export
 export interface IStepContextOptions {
 	context: IStepContext;
 	steps: StepSceneHandler[];
+}
+
+export interface IStepContextGoOptions {
+	/**
+	 * Logging into a handler without executing it
+	 */
+	silent?: boolean;
 }
