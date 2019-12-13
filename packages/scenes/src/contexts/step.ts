@@ -105,14 +105,8 @@ export default class StepSceneContext {
 	 * });
 	 * ```
 	 */
-	public async next({ silent = false } = {}): Promise<void> {
-		this.stepId += 1;
-
-		if (silent) {
-			return;
-		}
-
-		await this.reenter();
+	public next(options: IStepContextGoOptions): Promise<void> {
+		return this.go(this.stepId + 1, options);
 	}
 
 	/**
@@ -125,13 +119,7 @@ export default class StepSceneContext {
 	 * });
 	 * ```
 	 */
-	public async previous({ silent = false } = {}): Promise<void> {
-		this.stepId -= 1;
-
-		if (silent) {
-			return;
-		}
-
-		await this.reenter();
+	public previous(options: IStepContextGoOptions): Promise<void> {
+		return this.go(this.stepId - 1, options);
 	}
 }
