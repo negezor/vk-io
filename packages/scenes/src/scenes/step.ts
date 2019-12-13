@@ -4,13 +4,7 @@ import IScene from './scene';
 
 import { StepSceneContext } from '../contexts';
 import { LastAction } from '../contexts/scene.types';
-import { StepSceneHandler, IStepContext } from './step.types';
-
-interface IStepSceneOptions<T> {
-	steps: StepSceneHandler<T>[];
-	enterHandler?: StepSceneHandler<T>;
-	leaveHandler?: StepSceneHandler<T>;
-}
+import { StepSceneHandler, IStepContext, IStepSceneOptions } from './step.types';
 
 export default class StepScene<T = MessageContext> implements IScene {
 	public slug: string;
