@@ -1,25 +1,13 @@
 import { ISessionStorage, MemoryStorage } from './storages';
 
-import { IContext, ISessionContext, Middleware } from './types';
+import {
+	IContext,
+	ISessionContext,
+	ISessionManagerOptions,
 
-export interface ISessionManagerOptions<T = {}> {
-	/**
-	 * Storage based on ISessionStorage interface
-	 */
-	storage: ISessionStorage;
-
-	/**
-	 * Key for session in context
-	 */
-	contextKey: string;
-
-	/**
-	 * Returns the key for session storage
-	 */
-	getStorageKey(context: IContext & T): string;
-}
-
-export type SessionForceUpdate = () => Promise<boolean>;
+	Middleware,
+	SessionForceUpdate
+} from './types';
 
 export default class SessionManager<T = {}> {
 	protected storage: ISessionManagerOptions['storage'];
