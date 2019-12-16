@@ -26,6 +26,11 @@
 		}],
 		"@typescript-eslint/ban-ts-ignore": "off",
 		"@typescript-eslint/semi": ["error"],
+		"@typescript-eslint/no-empty-function": "off",
+		"import/extensions": ["error", "ignorePackages", {
+			"js": "never",
+			"ts": "never"
+		}],
 		"import/no-cycle": "off",
 		"no-restricted-syntax": ["error", "WithStatement"],
 		"comma-dangle": ["error", "never"],
