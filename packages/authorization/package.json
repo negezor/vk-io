@@ -35,8 +35,7 @@
 		"cheerio": "^1.0.0-rc.3",
 		"debug": "^4.1.1",
 		"node-fetch": "^2.6.0",
-		"tough-cookie": "^3.0.1",
-		"ws": "^7.2.0"
+		"tough-cookie": "^3.0.1"
 	},
 	"devDependencies": {
 		"@types/cheerio": "^0.22.14",
