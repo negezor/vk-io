@@ -7,7 +7,7 @@ import Attachmentable from '../shared/attachmentable';
 
 import { inspectCustomData } from '../../utils/constants';
 import { transformAttachments } from '../attachments/helpers';
-import { copyParams, applyMixins } from '../../utils/helpers';
+import { copyParams, applyMixins, showDeprecatedMessage } from '../../utils/helpers';
 
 /**
  * Find types
@@ -151,14 +151,23 @@ class CommentActionContext<S = Record<string, any>>
 	}
 
 	/**
-	 * Returns the identifier user
+	 * identifier of who wrote the comment
 	 */
-	public get userId(): number | null {
+	public get fromId(): number | null {
 		return (
 			this.payload.from_id
 			|| this.payload.user_id
 			|| null
 		);
+	}
+
+	/**
+	 * Returns the identifier user
+	 */
+	public get userId(): number | null {
+		showDeprecatedMessage('context.userId deperecated, use context.fromId');
+
+		return this.fromId;
 	}
 
 	/**
