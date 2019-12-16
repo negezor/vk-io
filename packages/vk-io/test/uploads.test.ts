@@ -15,6 +15,8 @@ const vk = new VK({ token: TOKEN });
 
 const IMAGE_URL = 'https://picsum.photos/200/300/?image=1';
 
+jest.setTimeout(30000);
+
 describe('Uploads', (): void => {
 	const { upload } = vk;
 
