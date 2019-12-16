@@ -311,12 +311,16 @@ export default class KeyboardBuilder {
 	 * Adds a wide button to the new row
 	 */
 	protected addWideButton(button: KeyboardButton): this {
-		if (this.currentRow.length !== 0) {
+		if (this.currentRow.length >= 2) {
 			this.row();
 		}
 
 		this.addButton(button);
 
-		return this.row();
+		if (this.currentRow.length === 2) {
+			this.row();
+		}
+
+		return this;
 	}
 }
