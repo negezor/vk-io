@@ -38,10 +38,10 @@
 		"tough-cookie": "^3.0.1"
 	},
 	"devDependencies": {
-		"@types/cheerio": "^0.22.14",
+		"@types/cheerio": "^0.22.15",
 		"@types/debug": "^4.1.5",
 		"@types/node-fetch": "^2.5.3",
-		"@types/tough-cookie": "^2.3.5",
-		"@types/ws": "^6.0.3"
+		"@types/tough-cookie": "^2.3.6",
+		"@types/ws": "^6.0.4"
 	}
 }
