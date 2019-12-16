@@ -137,6 +137,20 @@ class CommentActionContext<S = Record<string, any>>
 	}
 
 	/**
+	 * Checks if the user wrote a message
+	 */
+	public get isUser(): boolean {
+		return this.fromId! > 0;
+	}
+
+	/**
+	 * Checks if the group wrote a message
+	 */
+	public get isGroup(): boolean {
+		return this.fromId! < 0;
+	}
+
+	/**
 	 * Returns the identifier comment
 	 */
 	public get id(): number {
