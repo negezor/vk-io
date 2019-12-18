@@ -240,7 +240,7 @@ upload.document(params); // => Promise<DocumentAttachment>
 Загрузка документа на стену
 
 ```js
-upload.wallDoc(params); // => Promise<DocumentAttachment>
+upload.wallDocument(params); // => Promise<DocumentAttachment>
 ```
 
 | Параметр | Тип    | Описание           |
@@ -259,7 +259,7 @@ upload.wallDoc(params); // => Promise<DocumentAttachment>
 Загрузка документа в сообщение
 
 ```js
-upload.messageDoc(params); // => Promise<DocumentAttachment>
+upload.messageDocument(params); // => Promise<DocumentAttachment>
 ```
 
 | Параметр | Тип    | Описание           |
@@ -295,7 +295,7 @@ upload.audioMessage(params); // => Promise<AudioMessageAttachment>
 Загрузка граффити
 
 ```js
-upload.graffiti(params); // => Promise<GraffitiAttachment>
+upload.documentGraffiti(params); // => Promise<GraffitiAttachment>
 ```
 
 | Параметр | Тип    | Описание           |
@@ -312,25 +312,7 @@ upload.graffiti(params); // => Promise<GraffitiAttachment>
 Загрузка граффити
 
 ```js
-upload.graffiti(params); // => Promise<GraffitiAttachment>
-```
-
-| Параметр | Тип    | Описание           |
-|----------|--------|--------------------|
-| params   | Object | Параметры загрузки |
-
-Список параметров
-
-| Свойство | Тип    | Описание                               |
-|----------|--------|----------------------------------------|
-| peer_id  | number | Идентификатор сообщества               |
-
-## graffiti
-> Устарело, используйте `messageGraffiti`
-Загрузка граффити
-
-```js
-upload.graffiti(params); // => Promise<GraffitiAttachment>
+upload.messageGraffiti(params); // => Promise<GraffitiAttachment>
 ```
 
 | Параметр | Тип    | Описание           |
