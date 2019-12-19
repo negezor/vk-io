@@ -206,6 +206,14 @@ context.senderId; // => number
 context.senderType; // => string
 ```
 
+## clientInfo
+
+Возвращает информацию о клиенте отправителя
+
+```js
+context.senderType; // => Object
+```
+
 ## chatId
 
 Возвращает идентификатор чата
