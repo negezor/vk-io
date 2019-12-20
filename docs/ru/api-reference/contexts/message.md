@@ -211,7 +211,7 @@ context.senderType; // => string
 Возвращает информацию о клиенте отправителя
 
 ```js
-context.senderType; // => Object
+context.clientInfo; // => Object
 ```
 
 ## chatId
