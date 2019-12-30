@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>StepScene | @vk-io/scenes</title>
+	<title>StepScene | @vk-io/scenes - v0.0.0-alpha.5</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">@vk-io/scenes</a>
+					<a href="../index.html" class="title">@vk-io/scenes - v0.0.0-alpha.5</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -124,13 +124,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Step<wbr>Scene<span class="tsd-signature-symbol">(</span>slug<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, rawOptions<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IStepSceneOptions</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../modules/_scenes_step_types_.html#stepscenehandler" class="tsd-signature-type">StepSceneHandler</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_scenes_step_.stepscene.html" class="tsd-signature-type">StepScene</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Step<wbr>Scene<span class="tsd-signature-symbol">(</span>slug<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, rawOptions<span class="tsd-signature-symbol">: </span><a href="../interfaces/_scenes_step_types_.istepsceneoptions.html" class="tsd-signature-type">IStepSceneOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../modules/_scenes_step_types_.html#stepscenehandler" class="tsd-signature-type">StepSceneHandler</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_scenes_step_.stepscene.html" class="tsd-signature-type">StepScene</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/scenes/src/scenes/step.ts#L22">scenes/step.ts:22</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/scenes/src/scenes/step.ts#L16">scenes/src/scenes/step.ts:16</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -139,7 +139,7 @@
 									<h5>slug: <span class="tsd-signature-type">string</span></h5>
 								</li>
 								<li>
-									<h5>rawOptions: <span class="tsd-signature-type">IStepSceneOptions</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../modules/_scenes_step_types_.html#stepscenehandler" class="tsd-signature-type">StepSceneHandler</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h5>
+									<h5>rawOptions: <a href="../interfaces/_scenes_step_types_.istepsceneoptions.html" class="tsd-signature-type">IStepSceneOptions</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="../modules/_scenes_step_types_.html#stepscenehandler" class="tsd-signature-type">StepSceneHandler</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_scenes_step_.stepscene.html" class="tsd-signature-type">StepScene</a></h4>
@@ -152,64 +152,22 @@
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="onenterhandler" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> on<wbr>Enter<wbr>Handler</h3>
-					<div class="tsd-signature tsd-kind-icon">on<wbr>Enter<wbr>Handler<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
+					<div class="tsd-signature tsd-kind-icon">on<wbr>Enter<wbr>Handler<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">IStepSceneOptions&lt;T&gt;[&quot;enterHandler&quot;]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/scenes/src/scenes/step.ts#L20">scenes/step.ts:20</a></li>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/scenes/src/scenes/step.ts#L14">scenes/src/scenes/step.ts:14</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-siganture">
-								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property tsd-is-not-exported">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>context<span class="tsd-signature-symbol">: </span><a href="../interfaces/_scenes_step_types_.istepcontext.html" class="tsd-signature-type">IStepContext</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
-								</ul>
-								<ul class="tsd-descriptions">
-									<li class="tsd-description">
-										<h4 class="tsd-parameters-title">Parameters</h4>
-										<ul class="tsd-parameters">
-											<li>
-												<h5>context: <a href="../interfaces/_scenes_step_types_.istepcontext.html" class="tsd-signature-type">IStepContext</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">T</span></h5>
-											</li>
-										</ul>
-										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
 					<a name="onleavehandler" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagPrivate">Private</span> on<wbr>Leave<wbr>Handler</h3>
-					<div class="tsd-signature tsd-kind-icon">on<wbr>Leave<wbr>Handler<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
+					<div class="tsd-signature tsd-kind-icon">on<wbr>Leave<wbr>Handler<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">IStepSceneOptions&lt;T&gt;[&quot;leaveHandler&quot;]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/scenes/src/scenes/step.ts#L22">scenes/step.ts:22</a></li>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/scenes/src/scenes/step.ts#L16">scenes/src/scenes/step.ts:16</a></li>
 						</ul>
 					</aside>
-					<div class="tsd-type-declaration">
-						<h4>Type declaration</h4>
-						<ul class="tsd-parameters">
-							<li class="tsd-parameter-siganture">
-								<ul class="tsd-signatures tsd-kind-type-literal tsd-parent-kind-property tsd-is-not-exported">
-									<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span>context<span class="tsd-signature-symbol">: </span><a href="../interfaces/_scenes_step_types_.istepcontext.html" class="tsd-signature-type">IStepContext</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
-								</ul>
-								<ul class="tsd-descriptions">
-									<li class="tsd-description">
-										<h4 class="tsd-parameters-title">Parameters</h4>
-										<ul class="tsd-parameters">
-											<li>
-												<h5>context: <a href="../interfaces/_scenes_step_types_.istepcontext.html" class="tsd-signature-type">IStepContext</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">T</span></h5>
-											</li>
-										</ul>
-										<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="slug" class="tsd-anchor"></a>
@@ -218,7 +176,7 @@
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/_scenes_scene_.iscene.html">IScene</a>.<a href="../interfaces/_scenes_scene_.iscene.html#slug">slug</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/scenes/src/scenes/step.ts#L16">scenes/step.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/scenes/src/scenes/step.ts#L10">scenes/src/scenes/step.ts:10</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -228,7 +186,7 @@
 					<div class="tsd-signature tsd-kind-icon">steps<span class="tsd-signature-symbol">:</span> <a href="../modules/_scenes_step_types_.html#stepscenehandler" class="tsd-signature-type">StepSceneHandler</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/scenes/src/scenes/step.ts#L18">scenes/step.ts:18</a></li>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/scenes/src/scenes/step.ts#L12">scenes/src/scenes/step.ts:12</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -245,7 +203,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/scenes/src/scenes/step.ts#L38">scenes/step.ts:38</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/scenes/src/scenes/step.ts#L32">scenes/src/scenes/step.ts:32</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -268,7 +226,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/scenes/src/scenes/step.ts#L54">scenes/step.ts:54</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/scenes/src/scenes/step.ts#L48">scenes/src/scenes/step.ts:48</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -290,46 +248,46 @@
 						<a href="../index.html"><em>Globals</em></a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_cache_repository_.html">"cache-<wbr>repository"</a>
+						<a href="../modules/_cache_repository_.html">&quot;cache-<wbr>repository&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_contexts_index_.html">"contexts/index"</a>
+						<a href="../modules/_contexts_index_.html">&quot;contexts/index&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_contexts_scene_.html">"contexts/scene"</a>
+						<a href="../modules/_contexts_scene_.html">&quot;contexts/scene&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_contexts_scene_types_.html">"contexts/scene.types"</a>
+						<a href="../modules/_contexts_scene_types_.html">&quot;contexts/scene.types&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_contexts_step_.html">"contexts/step"</a>
+						<a href="../modules/_contexts_step_.html">&quot;contexts/step&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_contexts_step_types_.html">"contexts/step.types"</a>
+						<a href="../modules/_contexts_step_types_.html">&quot;contexts/step.types&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_index_.html">"index"</a>
+						<a href="../modules/_index_.html">&quot;index&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_scene_manager_.html">"scene-<wbr>manager"</a>
+						<a href="../modules/_scene_manager_.html">&quot;scene-<wbr>manager&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_scene_manager_types_.html">"scene-<wbr>manager.types"</a>
+						<a href="../modules/_scene_manager_types_.html">&quot;scene-<wbr>manager.types&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_scenes_index_.html">"scenes/index"</a>
+						<a href="../modules/_scenes_index_.html">&quot;scenes/index&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_scenes_scene_.html">"scenes/scene"</a>
+						<a href="../modules/_scenes_scene_.html">&quot;scenes/scene&quot;</a>
 					</li>
 					<li class="current tsd-kind-external-module">
-						<a href="../modules/_scenes_step_.html">"scenes/step"</a>
+						<a href="../modules/_scenes_step_.html">&quot;scenes/step&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_scenes_step_types_.html">"scenes/step.types"</a>
+						<a href="../modules/_scenes_step_types_.html">&quot;scenes/step.types&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_types_.html">"types"</a>
+						<a href="../modules/_types_.html">&quot;types&quot;</a>
 					</li>
 				</ul>
 			</nav>

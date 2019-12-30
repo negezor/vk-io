@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ExecuteError | vk-io</title>
+	<title>ExecuteError | vk-io - v4.0.0-rc.30</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">vk-io</a>
+					<a href="../index.html" class="title">vk-io - v4.0.0-rc.30</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -71,7 +71,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="_errors_error_.vkerror.html" class="tsd-signature-type">VKError</a>
+						<a href="_errors_api_.apierror.html" class="tsd-signature-type">APIError</a>
 						<ul class="tsd-hierarchy">
 							<li>
 								<span class="target">ExecuteError</span>
@@ -93,17 +93,22 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_errors_execute_.executeerror.html#captchaimg" class="tsd-kind-icon">captcha<wbr>Img</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_errors_execute_.executeerror.html#captchasid" class="tsd-kind-icon">captcha<wbr>Sid</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_errors_execute_.executeerror.html#code" class="tsd-kind-icon">code</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_errors_execute_.executeerror.html#confirmationtext" class="tsd-kind-icon">confirmation<wbr>Text</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_errors_execute_.executeerror.html#message" class="tsd-kind-icon">message</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_errors_execute_.executeerror.html#method" class="tsd-kind-icon">method</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_errors_execute_.executeerror.html#name" class="tsd-kind-icon">name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_errors_execute_.executeerror.html#params" class="tsd-kind-icon">params</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_errors_execute_.executeerror.html#redirecturi" class="tsd-kind-icon">redirect<wbr>Uri</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited"><a href="_errors_execute_.executeerror.html#stack" class="tsd-kind-icon">stack</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section tsd-is-inherited">
 							<h3>Accessors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited"><a href="_errors_execute_.executeerror.html#___tostringtag" class="tsd-kind-icon">__@to<wbr>String<wbr>Tag</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited"><a href="_errors_execute_.executeerror.html#_symbol_tostringtag_" class="tsd-kind-icon">[<wbr>Symbol.to<wbr>String<wbr>Tag]</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section tsd-is-inherited">
@@ -126,9 +131,9 @@
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides <a href="_errors_error_.vkerror.html">VKError</a>.<a href="_errors_error_.vkerror.html#constructor">constructor</a></p>
+								<p>Overrides <a href="_errors_api_.apierror.html">APIError</a>.<a href="_errors_api_.apierror.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/vk-io/src/errors/execute.ts#L13">errors/execute.ts:13</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/errors/execute.ts#L13">packages/vk-io/src/errors/execute.ts:13</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -150,18 +155,66 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="captchaimg" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> captcha<wbr>Img</h3>
+					<div class="tsd-signature tsd-kind-icon">captcha<wbr>Img<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_errors_api_.apierror.html">APIError</a>.<a href="_errors_api_.apierror.html#captchaimg">captchaImg</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/errors/api.ts#L36">packages/vk-io/src/errors/api.ts:36</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Image of captcha</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="captchasid" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> captcha<wbr>Sid</h3>
+					<div class="tsd-signature tsd-kind-icon">captcha<wbr>Sid<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_errors_api_.apierror.html">APIError</a>.<a href="_errors_api_.apierror.html#captchasid">captchaSid</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/errors/api.ts#L31">packages/vk-io/src/errors/api.ts:31</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Session identifier captcha</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 					<a name="code" class="tsd-anchor"></a>
 					<h3>code</h3>
 					<div class="tsd-signature tsd-kind-icon">code<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_errors_error_.vkerror.html">VKError</a>.<a href="_errors_error_.vkerror.html#code">code</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/vk-io/src/errors/error.ts#L16">errors/error.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/errors/error.ts#L16">packages/vk-io/src/errors/error.ts:16</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>Error code</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="confirmationtext" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> confirmation<wbr>Text</h3>
+					<div class="tsd-signature tsd-kind-icon">confirmation<wbr>Text<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_errors_api_.apierror.html">APIError</a>.<a href="_errors_api_.apierror.html#confirmationtext">confirmationText</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/errors/api.ts#L46">packages/vk-io/src/errors/api.ts:46</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Required confirmation text</p>
 						</div>
 					</div>
 				</section>
@@ -172,7 +225,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from Error.message</p>
 						<ul>
-							<li>Defined in /mnt/c/Users/negezor/projects/vk-io/node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:974</li>
+							<li>Defined in node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:974</li>
 						</ul>
 					</aside>
 				</section>
@@ -182,7 +235,7 @@
 					<div class="tsd-signature tsd-kind-icon">method<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/vk-io/src/errors/execute.ts#L13">errors/execute.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/errors/execute.ts#L13">packages/vk-io/src/errors/execute.ts:13</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -198,37 +251,74 @@
 					<aside class="tsd-sources">
 						<p>Inherited from Error.name</p>
 						<ul>
-							<li>Defined in /mnt/c/Users/negezor/projects/vk-io/node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:973</li>
+							<li>Defined in node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:973</li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
-					<a name="stack" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> stack</h3>
-					<div class="tsd-signature tsd-kind-icon">stack<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="params" class="tsd-anchor"></a>
+					<h3>params</h3>
+					<div class="tsd-signature tsd-kind-icon">params<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_errors_api_.iapierrorparam.html" class="tsd-signature-type">IAPIErrorParam</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from Error.stack</p>
-						<p>Overrides Error.stack</p>
+						<p>Inherited from <a href="_errors_api_.apierror.html">APIError</a>.<a href="_errors_api_.apierror.html#params">params</a></p>
 						<ul>
-							<li>Defined in /mnt/c/Users/negezor/projects/vk-io/node_modules/typedoc/node_modules/typescript/lib/lib.es5.d.ts:975</li>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/errors/api.ts#L26">packages/vk-io/src/errors/api.ts:26</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Request parameters</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+					<a name="redirecturi" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> redirect<wbr>Uri</h3>
+					<div class="tsd-signature tsd-kind-icon">redirect<wbr>Uri<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_errors_api_.apierror.html">APIError</a>.<a href="_errors_api_.apierror.html#redirecturi">redirectUri</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/errors/api.ts#L41">packages/vk-io/src/errors/api.ts:41</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Redirect URL, eg validation</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
+					<a name="stack" class="tsd-anchor"></a>
+					<h3>stack</h3>
+					<div class="tsd-signature tsd-kind-icon">stack<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_errors_error_.vkerror.html">VKError</a>.<a href="_errors_error_.vkerror.html#stack">stack</a></p>
+						<p>Overrides Error.stack</p>
+						<ul>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/errors/error.ts#L21">packages/vk-io/src/errors/error.ts:21</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Error stack</p>
+						</div>
+					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
 				<h2>Accessors</h2>
 				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
-					<a name="___tostringtag" class="tsd-anchor"></a>
-					<h3>__@to<wbr>String<wbr>Tag</h3>
+					<a name="_symbol_tostringtag_" class="tsd-anchor"></a>
+					<h3>[<wbr>Symbol.to<wbr>String<wbr>Tag]</h3>
 					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> __@toStringTag<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> [Symbol.toStringTag]<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="_errors_error_.vkerror.html">VKError</a>.<a href="_errors_error_.vkerror.html#___tostringtag">__@toStringTag</a></p>
+								<p>Inherited from <a href="_errors_error_.vkerror.html">VKError</a>.<a href="_errors_error_.vkerror.html#_symbol_tostringtag_">[Symbol.toStringTag]</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/vk-io/src/errors/error.ts#L34">errors/error.ts:34</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/errors/error.ts#L38">packages/vk-io/src/errors/error.ts:38</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -254,7 +344,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_errors_error_.vkerror.html">VKError</a>.<a href="_errors_error_.vkerror.html#tojson">toJSON</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/vk-io/src/errors/error.ts#L41">errors/error.ts:41</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/errors/error.ts#L45">packages/vk-io/src/errors/error.ts:45</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -275,7 +365,7 @@
 						<a href="../index.html"><em>Globals</em></a>
 					</li>
 					<li class="current tsd-kind-external-module">
-						<a href="../modules/_errors_execute_.html">"errors/execute"</a>
+						<a href="../modules/_errors_execute_.html">&quot;errors/execute&quot;</a>
 					</li>
 				</ul>
 			</nav>
@@ -290,7 +380,16 @@
 								<a href="_errors_execute_.executeerror.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="_errors_execute_.executeerror.html#captchaimg" class="tsd-kind-icon">captcha<wbr>Img</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="_errors_execute_.executeerror.html#captchasid" class="tsd-kind-icon">captcha<wbr>Sid</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 								<a href="_errors_execute_.executeerror.html#code" class="tsd-kind-icon">code</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="_errors_execute_.executeerror.html#confirmationtext" class="tsd-kind-icon">confirmation<wbr>Text</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 								<a href="_errors_execute_.executeerror.html#message" class="tsd-kind-icon">message</a>
@@ -301,11 +400,17 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 								<a href="_errors_execute_.executeerror.html#name" class="tsd-kind-icon">name</a>
 							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="_errors_execute_.executeerror.html#params" class="tsd-kind-icon">params</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
+								<a href="_errors_execute_.executeerror.html#redirecturi" class="tsd-kind-icon">redirect<wbr>Uri</a>
+							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-inherited">
 								<a href="_errors_execute_.executeerror.html#stack" class="tsd-kind-icon">stack</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
-								<a href="_errors_execute_.executeerror.html#___tostringtag" class="tsd-kind-icon">__@to<wbr>String<wbr>Tag</a>
+								<a href="_errors_execute_.executeerror.html#_symbol_tostringtag_" class="tsd-kind-icon">[<wbr>Symbol.to<wbr>String<wbr>Tag]</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="_errors_execute_.executeerror.html#tojson" class="tsd-kind-icon">toJSON</a>

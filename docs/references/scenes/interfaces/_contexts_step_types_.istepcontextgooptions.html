@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ISessionManagerOptions | @vk-io/session</title>
+	<title>IStepContextGoOptions | @vk-io/scenes - v0.0.0-alpha.5</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">@vk-io/session</a>
+					<a href="../index.html" class="title">@vk-io/scenes - v0.0.0-alpha.5</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -54,13 +54,13 @@
 					<a href="../index.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_session_manager_.html">&quot;session-manager&quot;</a>
+					<a href="../modules/_contexts_step_types_.html">&quot;contexts/step.types&quot;</a>
 				</li>
 				<li>
-					<a href="_session_manager_.isessionmanageroptions.html">ISessionManagerOptions</a>
+					<a href="_contexts_step_types_.istepcontextgooptions.html">IStepContextGoOptions</a>
 				</li>
 			</ul>
-			<h1>Interface ISessionManagerOptions</h1>
+			<h1>Interface IStepContextGoOptions</h1>
 		</div>
 	</div>
 </header>
@@ -71,7 +71,7 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">ISessionManagerOptions</span>
+						<span class="target">IStepContextGoOptions</span>
 					</li>
 				</ul>
 			</section>
@@ -82,14 +82,7 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_session_manager_.isessionmanageroptions.html#contextkey" class="tsd-kind-icon">context<wbr>Key</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_session_manager_.isessionmanageroptions.html#storage" class="tsd-kind-icon">storage</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
-							<h3>Methods</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter"><a href="_session_manager_.isessionmanageroptions.html#getstoragekey" class="tsd-kind-icon">get<wbr>Storage<wbr>Key</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_contexts_step_types_.istepcontextgooptions.html#silent" class="tsd-kind-icon">silent</a></li>
 							</ul>
 						</section>
 					</div>
@@ -98,71 +91,19 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="contextkey" class="tsd-anchor"></a>
-					<h3>context<wbr>Key</h3>
-					<div class="tsd-signature tsd-kind-icon">context<wbr>Key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="silent" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> silent</h3>
+					<div class="tsd-signature tsd-kind-icon">silent<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/session/src/session-manager.ts#L14">session-manager.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/scenes/src/contexts/step.types.ts#L12">scenes/src/contexts/step.types.ts:12</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Key for session in context</p>
+							<p>Logging into a handler without executing it</p>
 						</div>
 					</div>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="storage" class="tsd-anchor"></a>
-					<h3>storage</h3>
-					<div class="tsd-signature tsd-kind-icon">storage<span class="tsd-signature-symbol">:</span> <a href="_storages_storage_.isessionstorage.html" class="tsd-signature-type">ISessionStorage</a></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/session/src/session-manager.ts#L9">session-manager.ts:9</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Storage based on ISessionStorage interface</p>
-						</div>
-					</div>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter">
-					<a name="getstoragekey" class="tsd-anchor"></a>
-					<h3>get<wbr>Storage<wbr>Key</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Storage<wbr>Key&lt;T&gt;<span class="tsd-signature-symbol">(</span>context<span class="tsd-signature-symbol">: </span><a href="_types_.icontext.html" class="tsd-signature-type">IContext</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/session/src/session-manager.ts#L19">session-manager.ts:19</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Returns the key for session storage</p>
-								</div>
-							</div>
-							<h4 class="tsd-type-parameters-title">Type parameters</h4>
-							<ul class="tsd-type-parameters">
-								<li>
-									<h4>T</h4>
-								</li>
-							</ul>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>context: <a href="_types_.icontext.html" class="tsd-signature-type">IContext</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">T</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
-						</li>
-					</ul>
 				</section>
 			</section>
 		</div>
@@ -173,50 +114,65 @@
 						<a href="../index.html"><em>Globals</em></a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_index_.html">"index"</a>
+						<a href="../modules/_cache_repository_.html">&quot;cache-<wbr>repository&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_contexts_index_.html">&quot;contexts/index&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_contexts_scene_.html">&quot;contexts/scene&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_contexts_scene_types_.html">&quot;contexts/scene.types&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_contexts_step_.html">&quot;contexts/step&quot;</a>
 					</li>
 					<li class="current tsd-kind-external-module">
-						<a href="../modules/_session_manager_.html">"session-<wbr>manager"</a>
+						<a href="../modules/_contexts_step_types_.html">&quot;contexts/step.types&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_storages_index_.html">"storages/index"</a>
+						<a href="../modules/_index_.html">&quot;index&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_storages_memory_.html">"storages/memory"</a>
+						<a href="../modules/_scene_manager_.html">&quot;scene-<wbr>manager&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_storages_storage_.html">"storages/storage"</a>
+						<a href="../modules/_scene_manager_types_.html">&quot;scene-<wbr>manager.types&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="../modules/_types_.html">"types"</a>
+						<a href="../modules/_scenes_index_.html">&quot;scenes/index&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_scenes_scene_.html">&quot;scenes/scene&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_scenes_step_.html">&quot;scenes/step&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_scenes_step_types_.html">&quot;scenes/step.types&quot;</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_types_.html">&quot;types&quot;</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="../classes/_session_manager_.sessionmanager.html" class="tsd-kind-icon">Session<wbr>Manager</a>
-					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-parent-kind-external-module">
-						<a href="_session_manager_.isessionmanageroptions.html" class="tsd-kind-icon">ISession<wbr>Manager<wbr>Options</a>
+						<a href="_contexts_step_types_.istepcontextgooptions.html" class="tsd-kind-icon">IStep<wbr>Context<wbr>GoOptions</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_session_manager_.isessionmanageroptions.html#contextkey" class="tsd-kind-icon">context<wbr>Key</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_session_manager_.isessionmanageroptions.html#storage" class="tsd-kind-icon">storage</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter">
-								<a href="_session_manager_.isessionmanageroptions.html#getstoragekey" class="tsd-kind-icon">get<wbr>Storage<wbr>Key</a>
+								<a href="_contexts_step_types_.istepcontextgooptions.html#silent" class="tsd-kind-icon">silent</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
-						<a href="../modules/_session_manager_.html#sessionforceupdate" class="tsd-kind-icon">Session<wbr>Force<wbr>Update</a>
+					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+						<a href="_contexts_step_types_.istepcontextoptions.html" class="tsd-kind-icon">IStep<wbr>Context<wbr>Options</a>
 					</li>
 				</ul>
 			</nav>

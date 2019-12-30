@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>StoryAttachment | vk-io</title>
+	<title>StoryAttachment | vk-io - v4.0.0-rc.30</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">vk-io</a>
+					<a href="../index.html" class="title">vk-io - v4.0.0-rc.30</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -94,7 +94,9 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="_structures_attachments_story_.storyattachment.html#_filled" class="tsd-kind-icon">$filled</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-protected"><a href="_structures_attachments_story_.storyattachment.html#__computed" class="tsd-kind-icon">__computed</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="_structures_attachments_story_.storyattachment.html#_kparentstory_" class="tsd-kind-icon">[k<wbr>Parent<wbr>Story]</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="_structures_attachments_story_.storyattachment.html#_kphoto_" class="tsd-kind-icon">[k<wbr>Photo]</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="_structures_attachments_story_.storyattachment.html#_kvideo_" class="tsd-kind-icon">[k<wbr>Video]</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_structures_attachments_story_.storyattachment.html#accesskey" class="tsd-kind-icon">access<wbr>Key</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_structures_attachments_story_.storyattachment.html#id" class="tsd-kind-icon">id</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_structures_attachments_story_.storyattachment.html#ownerid" class="tsd-kind-icon">owner<wbr>Id</a></li>
@@ -106,7 +108,7 @@
 						<section class="tsd-index-section ">
 							<h3>Accessors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited"><a href="_structures_attachments_story_.storyattachment.html#___tostringtag" class="tsd-kind-icon">__@to<wbr>String<wbr>Tag</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited"><a href="_structures_attachments_story_.storyattachment.html#_symbol_tostringtag_" class="tsd-kind-icon">[<wbr>Symbol.to<wbr>String<wbr>Tag]</a></li>
 								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited"><a href="_structures_attachments_story_.storyattachment.html#canbeattached" class="tsd-kind-icon">can<wbr>BeAttached</a></li>
 								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="_structures_attachments_story_.storyattachment.html#clickablestickers" class="tsd-kind-icon">clickable<wbr>Stickers</a></li>
 								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="_structures_attachments_story_.storyattachment.html#createdat" class="tsd-kind-icon">created<wbr>At</a></li>
@@ -132,6 +134,8 @@
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_structures_attachments_story_.storyattachment.html#_inspect_custom_" class="tsd-kind-icon">[inspect.custom]</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="_structures_attachments_story_.storyattachment.html#_inspectcustomdata_" class="tsd-kind-icon">[inspect<wbr>Custom<wbr>Data]</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_structures_attachments_story_.storyattachment.html#equals" class="tsd-kind-icon">equals</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_structures_attachments_story_.storyattachment.html#loadattachmentpayload" class="tsd-kind-icon">load<wbr>Attachment<wbr>Payload</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_structures_attachments_story_.storyattachment.html#tojson" class="tsd-kind-icon">toJSON</a></li>
@@ -155,7 +159,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides <a href="_structures_attachments_attachment_.attachment.html">Attachment</a>.<a href="_structures_attachments_attachment_.attachment.html#constructor">constructor</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/vk-io/src/structures/attachments/story.ts#L77">structures/attachments/story.ts:77</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/structures/attachments/story.ts#L77">packages/vk-io/src/structures/attachments/story.ts:77</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -186,32 +190,39 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_structures_attachments_attachment_.attachment.html">Attachment</a>.<a href="_structures_attachments_attachment_.attachment.html#_filled">$filled</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/vk-io/src/structures/attachments/attachment.ts#L15">structures/attachments/attachment.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/structures/attachments/attachment.ts#L15">packages/vk-io/src/structures/attachments/attachment.ts:15</a></li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-protected">
-					<a name="__computed" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagProtected">Protected</span> <span class="tsd-flag ts-flagOptional">Optional</span> __computed</h3>
-					<ul class="tsd-signatures tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-protected">
-						<li class="tsd-signature tsd-kind-icon">__computed<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<p>Overrides <a href="_structures_attachments_attachment_.attachment.html">Attachment</a>.<a href="_structures_attachments_attachment_.attachment.html#__computed">__computed</a></p>
-								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/vk-io/src/structures/attachments/story.ts#L284">structures/attachments/story.ts:284</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Returns the custom data</p>
-								</div>
-							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">object</span></h4>
-						</li>
-					</ul>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+					<a name="_kparentstory_" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> <span class="tsd-flag ts-flagOptional">Optional</span> [k<wbr>Parent<wbr>Story]</h3>
+					<div class="tsd-signature tsd-kind-icon">[k<wbr>Parent<wbr>Story]<span class="tsd-signature-symbol">:</span> <a href="_structures_attachments_story_.storyattachment.html" class="tsd-signature-type">StoryAttachment</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/structures/attachments/story.ts#L77">packages/vk-io/src/structures/attachments/story.ts:77</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+					<a name="_kphoto_" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> <span class="tsd-flag ts-flagOptional">Optional</span> [k<wbr>Photo]</h3>
+					<div class="tsd-signature tsd-kind-icon">[k<wbr>Photo]<span class="tsd-signature-symbol">:</span> <a href="_structures_attachments_photo_.photoattachment.html" class="tsd-signature-type">PhotoAttachment</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/structures/attachments/story.ts#L75">packages/vk-io/src/structures/attachments/story.ts:75</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+					<a name="_kvideo_" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> <span class="tsd-flag ts-flagOptional">Optional</span> [k<wbr>Video]</h3>
+					<div class="tsd-signature tsd-kind-icon">[k<wbr>Video]<span class="tsd-signature-symbol">:</span> <a href="_structures_attachments_video_.videoattachment.html" class="tsd-signature-type">VideoAttachment</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/structures/attachments/story.ts#L73">packages/vk-io/src/structures/attachments/story.ts:73</a></li>
+						</ul>
+					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 					<a name="accesskey" class="tsd-anchor"></a>
@@ -220,7 +231,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_structures_attachments_attachment_.attachment.html">Attachment</a>.<a href="_structures_attachments_attachment_.attachment.html#accesskey">accessKey</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/vk-io/src/structures/attachments/attachment.ts#L13">structures/attachments/attachment.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/structures/attachments/attachment.ts#L13">packages/vk-io/src/structures/attachments/attachment.ts:13</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -231,7 +242,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_structures_attachments_attachment_.attachment.html">Attachment</a>.<a href="_structures_attachments_attachment_.attachment.html#id">id</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/vk-io/src/structures/attachments/attachment.ts#L11">structures/attachments/attachment.ts:11</a></li>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/structures/attachments/attachment.ts#L11">packages/vk-io/src/structures/attachments/attachment.ts:11</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -242,7 +253,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_structures_attachments_attachment_.attachment.html">Attachment</a>.<a href="_structures_attachments_attachment_.attachment.html#ownerid">ownerId</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/vk-io/src/structures/attachments/attachment.ts#L9">structures/attachments/attachment.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/structures/attachments/attachment.ts#L9">packages/vk-io/src/structures/attachments/attachment.ts:9</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -253,7 +264,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_structures_attachments_attachment_.attachment.html">Attachment</a>.<a href="_structures_attachments_attachment_.attachment.html#payload">payload</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/vk-io/src/structures/attachments/attachment.ts#L19">structures/attachments/attachment.ts:19</a></li>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/structures/attachments/attachment.ts#L19">packages/vk-io/src/structures/attachments/attachment.ts:19</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -264,7 +275,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_structures_attachments_attachment_.attachment.html">Attachment</a>.<a href="_structures_attachments_attachment_.attachment.html#type">type</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/vk-io/src/structures/attachments/attachment.ts#L7">structures/attachments/attachment.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/structures/attachments/attachment.ts#L7">packages/vk-io/src/structures/attachments/attachment.ts:7</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -275,7 +286,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_structures_attachments_attachment_.attachment.html">Attachment</a>.<a href="_structures_attachments_attachment_.attachment.html#vk">vk</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/vk-io/src/structures/attachments/attachment.ts#L17">structures/attachments/attachment.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/structures/attachments/attachment.ts#L17">packages/vk-io/src/structures/attachments/attachment.ts:17</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -283,17 +294,17 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Accessors</h2>
 				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
-					<a name="___tostringtag" class="tsd-anchor"></a>
-					<h3>__@to<wbr>String<wbr>Tag</h3>
+					<a name="_symbol_tostringtag_" class="tsd-anchor"></a>
+					<h3>[<wbr>Symbol.to<wbr>String<wbr>Tag]</h3>
 					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> __@toStringTag<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> [Symbol.toStringTag]<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="_structures_attachments_attachment_.attachment.html">Attachment</a>.<a href="_structures_attachments_attachment_.attachment.html#___tostringtag">__@toStringTag</a></p>
+								<p>Inherited from <a href="_structures_attachments_attachment_.attachment.html">Attachment</a>.<a href="_structures_attachments_attachment_.attachment.html#_symbol_tostringtag_">[Symbol.toStringTag]</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/vk-io/src/structures/attachments/attachment.ts#L43">structures/attachments/attachment.ts:43</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/structures/attachments/attachment.ts#L43">packages/vk-io/src/structures/attachments/attachment.ts:43</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -316,7 +327,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_structures_attachments_attachment_.attachment.html">Attachment</a>.<a href="_structures_attachments_attachment_.attachment.html#canbeattached">canBeAttached</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/vk-io/src/structures/attachments/attachment.ts#L71">structures/attachments/attachment.ts:71</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/structures/attachments/attachment.ts#L71">packages/vk-io/src/structures/attachments/attachment.ts:71</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -332,13 +343,13 @@
 					<a name="clickablestickers" class="tsd-anchor"></a>
 					<h3>clickable<wbr>Stickers</h3>
 					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> clickableStickers<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></li>
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> clickableStickers<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IStoryAttachmentPayload[&quot;clickable_stickers&quot;]</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/vk-io/src/structures/attachments/story.ts#L277">structures/attachments/story.ts:277</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/structures/attachments/story.ts#L277">packages/vk-io/src/structures/attachments/story.ts:277</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -346,7 +357,7 @@
 									<p>Returns the parent story clickable stickers</p>
 								</div>
 							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">object</span>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">IStoryAttachmentPayload[&quot;clickable_stickers&quot;]</span>
 								<span class="tsd-signature-symbol"> | </span>
 								<span class="tsd-signature-type">undefined</span>
 							</h4>
@@ -363,7 +374,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/vk-io/src/structures/attachments/story.ts#L213">structures/attachments/story.ts:213</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/structures/attachments/story.ts#L213">packages/vk-io/src/structures/attachments/story.ts:213</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -388,7 +399,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/vk-io/src/structures/attachments/story.ts#L220">structures/attachments/story.ts:220</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/structures/attachments/story.ts#L220">packages/vk-io/src/structures/attachments/story.ts:220</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -413,7 +424,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/vk-io/src/structures/attachments/story.ts#L165">structures/attachments/story.ts:165</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/structures/attachments/story.ts#L165">packages/vk-io/src/structures/attachments/story.ts:165</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -438,7 +449,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/vk-io/src/structures/attachments/story.ts#L143">structures/attachments/story.ts:143</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/structures/attachments/story.ts#L143">packages/vk-io/src/structures/attachments/story.ts:143</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -463,7 +474,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/vk-io/src/structures/attachments/story.ts#L154">structures/attachments/story.ts:154</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/structures/attachments/story.ts#L154">packages/vk-io/src/structures/attachments/story.ts:154</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -488,7 +499,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/vk-io/src/structures/attachments/story.ts#L125">structures/attachments/story.ts:125</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/structures/attachments/story.ts#L125">packages/vk-io/src/structures/attachments/story.ts:125</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -513,7 +524,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/vk-io/src/structures/attachments/story.ts#L118">structures/attachments/story.ts:118</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/structures/attachments/story.ts#L118">packages/vk-io/src/structures/attachments/story.ts:118</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -539,7 +550,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_structures_attachments_attachment_.attachment.html">Attachment</a>.<a href="_structures_attachments_attachment_.attachment.html#isfilled">isFilled</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/vk-io/src/structures/attachments/attachment.ts#L63">structures/attachments/attachment.ts:63</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/structures/attachments/attachment.ts#L63">packages/vk-io/src/structures/attachments/attachment.ts:63</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -561,7 +572,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/vk-io/src/structures/attachments/story.ts#L132">structures/attachments/story.ts:132</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/structures/attachments/story.ts#L132">packages/vk-io/src/structures/attachments/story.ts:132</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -580,13 +591,13 @@
 					<a name="link" class="tsd-anchor"></a>
 					<h3>link</h3>
 					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> link<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></li>
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> link<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IStoryAttachmentPayload[&quot;link&quot;]</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/vk-io/src/structures/attachments/story.ts#L234">structures/attachments/story.ts:234</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/structures/attachments/story.ts#L234">packages/vk-io/src/structures/attachments/story.ts:234</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -594,7 +605,7 @@
 									<p>Returns the story link</p>
 								</div>
 							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">object</span>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">IStoryAttachmentPayload[&quot;link&quot;]</span>
 								<span class="tsd-signature-symbol"> | </span>
 								<span class="tsd-signature-type">undefined</span>
 							</h4>
@@ -611,7 +622,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/vk-io/src/structures/attachments/story.ts#L262">structures/attachments/story.ts:262</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/structures/attachments/story.ts#L262">packages/vk-io/src/structures/attachments/story.ts:262</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -636,7 +647,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/vk-io/src/structures/attachments/story.ts#L248">structures/attachments/story.ts:248</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/structures/attachments/story.ts#L248">packages/vk-io/src/structures/attachments/story.ts:248</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -661,7 +672,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/vk-io/src/structures/attachments/story.ts#L255">structures/attachments/story.ts:255</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/structures/attachments/story.ts#L255">packages/vk-io/src/structures/attachments/story.ts:255</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -686,7 +697,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/vk-io/src/structures/attachments/story.ts#L183">structures/attachments/story.ts:183</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/structures/attachments/story.ts#L183">packages/vk-io/src/structures/attachments/story.ts:183</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -705,13 +716,13 @@
 					<a name="replies" class="tsd-anchor"></a>
 					<h3>replies</h3>
 					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> replies<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></li>
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> replies<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IStoryAttachmentPayload[&quot;replies&quot;]</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/vk-io/src/structures/attachments/story.ts#L241">structures/attachments/story.ts:241</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/structures/attachments/story.ts#L241">packages/vk-io/src/structures/attachments/story.ts:241</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -719,7 +730,7 @@
 									<p>Returns the story replies</p>
 								</div>
 							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">object</span>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">IStoryAttachmentPayload[&quot;replies&quot;]</span>
 								<span class="tsd-signature-symbol"> | </span>
 								<span class="tsd-signature-type">undefined</span>
 							</h4>
@@ -730,13 +741,13 @@
 					<a name="storytype" class="tsd-anchor"></a>
 					<h3>story<wbr>Type</h3>
 					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> storyType<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">"video"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"photo"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></li>
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> storyType<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IStoryAttachmentPayload[&quot;type&quot;]</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/vk-io/src/structures/attachments/story.ts#L176">structures/attachments/story.ts:176</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/structures/attachments/story.ts#L176">packages/vk-io/src/structures/attachments/story.ts:176</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -744,9 +755,7 @@
 									<p>Returns the type of story</p>
 								</div>
 							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">"video"</span>
-								<span class="tsd-signature-symbol"> | </span>
-								<span class="tsd-signature-type">"photo"</span>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">IStoryAttachmentPayload[&quot;type&quot;]</span>
 								<span class="tsd-signature-symbol"> | </span>
 								<span class="tsd-signature-type">undefined</span>
 							</h4>
@@ -763,7 +772,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/vk-io/src/structures/attachments/story.ts#L198">structures/attachments/story.ts:198</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/structures/attachments/story.ts#L198">packages/vk-io/src/structures/attachments/story.ts:198</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -788,7 +797,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/vk-io/src/structures/attachments/story.ts#L227">structures/attachments/story.ts:227</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/structures/attachments/story.ts#L227">packages/vk-io/src/structures/attachments/story.ts:227</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -807,6 +816,61 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+					<a name="_inspect_custom_" class="tsd-anchor"></a>
+					<h3>[inspect.custom]</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">[inspect.custom]<span class="tsd-signature-symbol">(</span>depth<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, options<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="_structures_attachments_attachment_.attachment.html">Attachment</a>.<a href="_structures_attachments_attachment_.attachment.html#_inspect_custom_">[inspect.custom]</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/structures/attachments/attachment.ts#L127">packages/vk-io/src/structures/attachments/attachment.ts:127</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Custom inspect object</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>depth: <span class="tsd-signature-type">number</span></h5>
+								</li>
+								<li>
+									<h5>options: <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+					<a name="_inspectcustomdata_" class="tsd-anchor"></a>
+					<h3>[inspect<wbr>Custom<wbr>Data]</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+						<li class="tsd-signature tsd-kind-icon">[inspect<wbr>Custom<wbr>Data]<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Overrides <a href="_structures_attachments_attachment_.attachment.html">Attachment</a>.<a href="_structures_attachments_attachment_.attachment.html#_inspectcustomdata_">[inspectCustomData]</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/structures/attachments/story.ts#L284">packages/vk-io/src/structures/attachments/story.ts:284</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns the custom data</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">object</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 					<a name="equals" class="tsd-anchor"></a>
 					<h3>equals</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
@@ -817,7 +881,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_structures_attachments_attachment_.attachment.html">Attachment</a>.<a href="_structures_attachments_attachment_.attachment.html#equals">equals</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/vk-io/src/structures/attachments/attachment.ts#L78">structures/attachments/attachment.ts:78</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/structures/attachments/attachment.ts#L78">packages/vk-io/src/structures/attachments/attachment.ts:78</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -845,7 +909,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/vk-io/src/structures/attachments/story.ts#L95">structures/attachments/story.ts:95</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/structures/attachments/story.ts#L95">packages/vk-io/src/structures/attachments/story.ts:95</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -868,7 +932,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_structures_attachments_attachment_.attachment.html">Attachment</a>.<a href="_structures_attachments_attachment_.attachment.html#tojson">toJSON</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/vk-io/src/structures/attachments/attachment.ts#L104">structures/attachments/attachment.ts:104</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/structures/attachments/attachment.ts#L104">packages/vk-io/src/structures/attachments/attachment.ts:104</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -891,7 +955,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_structures_attachments_attachment_.attachment.html">Attachment</a>.<a href="_structures_attachments_attachment_.attachment.html#tostring">toString</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/vk-io/src/structures/attachments/attachment.ts#L93">structures/attachments/attachment.ts:93</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/structures/attachments/attachment.ts#L93">packages/vk-io/src/structures/attachments/attachment.ts:93</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -914,7 +978,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_structures_attachments_attachment_.attachment.html">Attachment</a>.<a href="_structures_attachments_attachment_.attachment.html#fromstring">fromString</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/0dba48b/packages/vk-io/src/structures/attachments/attachment.ts#L50">structures/attachments/attachment.ts:50</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/vk-io/src/structures/attachments/attachment.ts#L50">packages/vk-io/src/structures/attachments/attachment.ts:50</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -941,7 +1005,7 @@
 						<a href="../index.html"><em>Globals</em></a>
 					</li>
 					<li class="current tsd-kind-external-module">
-						<a href="../modules/_structures_attachments_story_.html">"structures/attachments/story"</a>
+						<a href="../modules/_structures_attachments_story_.html">&quot;structures/attachments/story&quot;</a>
 					</li>
 				</ul>
 			</nav>
@@ -958,8 +1022,14 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
 								<a href="_structures_attachments_story_.storyattachment.html#_filled" class="tsd-kind-icon">$filled</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite tsd-is-protected">
-								<a href="_structures_attachments_story_.storyattachment.html#__computed" class="tsd-kind-icon">__computed</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+								<a href="_structures_attachments_story_.storyattachment.html#_kparentstory_" class="tsd-kind-icon">[k<wbr>Parent<wbr>Story]</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+								<a href="_structures_attachments_story_.storyattachment.html#_kphoto_" class="tsd-kind-icon">[k<wbr>Photo]</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+								<a href="_structures_attachments_story_.storyattachment.html#_kvideo_" class="tsd-kind-icon">[k<wbr>Video]</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 								<a href="_structures_attachments_story_.storyattachment.html#accesskey" class="tsd-kind-icon">access<wbr>Key</a>
@@ -980,7 +1050,7 @@
 								<a href="_structures_attachments_story_.storyattachment.html#vk" class="tsd-kind-icon">vk</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
-								<a href="_structures_attachments_story_.storyattachment.html#___tostringtag" class="tsd-kind-icon">__@to<wbr>String<wbr>Tag</a>
+								<a href="_structures_attachments_story_.storyattachment.html#_symbol_tostringtag_" class="tsd-kind-icon">[<wbr>Symbol.to<wbr>String<wbr>Tag]</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
 								<a href="_structures_attachments_story_.storyattachment.html#canbeattached" class="tsd-kind-icon">can<wbr>BeAttached</a>
@@ -1041,6 +1111,12 @@
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
 								<a href="_structures_attachments_story_.storyattachment.html#viewscount" class="tsd-kind-icon">views<wbr>Count</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
+								<a href="_structures_attachments_story_.storyattachment.html#_inspect_custom_" class="tsd-kind-icon">[inspect.custom]</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
+								<a href="_structures_attachments_story_.storyattachment.html#_inspectcustomdata_" class="tsd-kind-icon">[inspect<wbr>Custom<wbr>Data]</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="_structures_attachments_story_.storyattachment.html#equals" class="tsd-kind-icon">equals</a>
