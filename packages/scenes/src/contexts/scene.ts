@@ -47,7 +47,7 @@ export default class SceneContext {
 	/**
 	 * Controlled behavior leave
 	 */
-	private leaved = false;
+	private leaving = false;
 
 	public constructor(options: ISceneContextOptions) {
 		this.context = options.context;
@@ -55,6 +55,18 @@ export default class SceneContext {
 		this.repository = options.repository;
 
 		this.updateSession();
+	}
+
+	/**
+	 * Controlled behavior leave
+	 *
+	 * @deprecated use `context.scene.leaving`
+	 */
+	public get leaved(): boolean {
+		// eslint-disable-next-line no-console
+		console.error('[@vk-io/scenes] context.scene.leaved deprecated, use context.scene.leaving instead');
+
+		return this.leaving;
 	}
 
 	/**
@@ -84,14 +96,14 @@ export default class SceneContext {
 
 		const isNotCurrent = current !== null && current.slug !== scene.slug;
 
-		if (!this.leaved && isNotCurrent) {
+		if (!this.leaving && isNotCurrent) {
 			await this.leave({
 				silent: options.silent
 			});
 		}
 
-		if (this.leaved && isNotCurrent) {
-			this.leaved = false;
+		if (this.leaving && isNotCurrent) {
+			this.leaving = false;
 
 			this.reset();
 		}
@@ -143,7 +155,7 @@ export default class SceneContext {
 			return;
 		}
 
-		this.leaved = true;
+		this.leaving = true;
 		this.lastAction = LastAction.LEAVE;
 
 		if (!options.silent) {
@@ -154,11 +166,11 @@ export default class SceneContext {
 			await current.leaveHandler(this.context);
 		}
 
-		if (this.leaved) {
+		if (this.leaving) {
 			this.reset();
 		}
 
-		this.leaved = false;
+		this.leaving = false;
 		this.canceled = false;
 	}
 
