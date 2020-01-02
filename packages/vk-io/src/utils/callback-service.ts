@@ -56,8 +56,7 @@ export default class CallbackService {
 				return;
 			}
 
-			// @ts-ignore
-			this.captchaHandler(payload, (key: Error | string): Promise<void> => (
+			this.captchaHandler!(payload, (key: Error | string): Promise<void> => (
 				new Promise((resolve, reject): void => {
 					if (key instanceof Error) {
 						reject(key);
@@ -96,8 +95,7 @@ export default class CallbackService {
 				return;
 			}
 
-			// @ts-ignore
-			this.twoFactorHandler(payload, (code: Error | string): Promise<void> => (
+			this.twoFactorHandler!(payload, (code: Error | string): Promise<void> => (
 				new Promise((resolve, reject): void => {
 					if (code instanceof Error) {
 						reject(code);
