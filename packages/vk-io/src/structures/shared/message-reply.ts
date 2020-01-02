@@ -2,7 +2,7 @@ import { inspect } from 'util';
 
 import VK from '../../vk';
 
-import Attachmentable from './attachmentable';
+import { Attachmentable } from './attachmentable';
 import { Attachment, ExternalAttachment } from '../attachments';
 
 import { transformAttachments } from '../attachments/helpers';

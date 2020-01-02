@@ -1,7 +1,7 @@
 import { inspect } from 'util';
 
 import VK from '../../vk';
-import Attachmentable from './attachmentable';
+import { Attachmentable } from './attachmentable';
 import { Attachment, ExternalAttachment } from '../attachments';
 
 import { transformAttachments } from '../attachments/helpers';
@@ -150,4 +150,4 @@ class MessageForward {
 interface MessageForward extends Attachmentable {}
 applyMixins(MessageForward, [Attachmentable]);
 
-export default MessageForward;
+export { MessageForward };

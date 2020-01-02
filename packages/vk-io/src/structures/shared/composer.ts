@@ -1,6 +1,6 @@
 import { Composer as MiddlewareComposer } from 'middleware-io';
 
-export default class Composer extends MiddlewareComposer {
+export class Composer extends MiddlewareComposer {
 	/**
 	 * Create new `Composer` instance
 	 */

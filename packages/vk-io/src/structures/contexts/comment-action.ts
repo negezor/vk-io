@@ -3,7 +3,7 @@ import { Context, IContextOptions } from './context';
 import { VKError } from '../../errors';
 
 import { Attachment } from '../attachments';
-import Attachmentable from '../shared/attachmentable';
+import { Attachmentable } from '../shared/attachmentable';
 
 import { inspectCustomData } from '../../utils/constants';
 import { transformAttachments } from '../attachments/helpers';

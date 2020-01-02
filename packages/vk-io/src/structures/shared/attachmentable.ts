@@ -22,7 +22,7 @@ import {
 
 import { AttachmentType, AttachmentTypeString } from '../../utils/constants';
 
-export default class Attachmentable {
+export class Attachmentable {
 	public attachments!: (Attachment | ExternalAttachment)[];
 
 	/**

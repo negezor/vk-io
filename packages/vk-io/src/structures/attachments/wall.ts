@@ -2,7 +2,7 @@ import VK from '../../vk';
 
 import { Attachment } from './attachment';
 import { ExternalAttachment } from './external';
-import Attachmentable from '../shared/attachmentable';
+import { Attachmentable } from '../shared/attachmentable';
 
 // eslint-disable-next-line import/no-cycle
 import { transformAttachments } from './helpers';

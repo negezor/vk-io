@@ -9,7 +9,7 @@ import {
 	PhotoAttachment,
 	VideoAttachment
 } from '../attachments';
-import Attachmentable from '../shared/attachmentable';
+import { Attachmentable } from '../shared/attachmentable';
 
 import { copyParams, applyMixins } from '../../utils/helpers';
 import { inspectCustomData, AttachmentType } from '../../utils/constants';

@@ -1,8 +1,8 @@
 /* eslint-disable max-classes-per-file */
-import MessageForward from './message-forward';
+import { MessageForward } from './message-forward';
 import { Attachment, ExternalAttachment } from '../attachments';
 import { AttachmentTypeString } from '../../utils/constants';
-import Attachmentable from './attachmentable';
+import { Attachmentable } from './attachmentable';
 import { applyMixins } from '../../utils/helpers';
 
 const getForwards = (rootForwards: MessageForward[]): MessageForward[] => {

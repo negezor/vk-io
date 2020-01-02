@@ -1,6 +1,6 @@
 import { Context, IContextOptions } from './context';
 
-import Attachmentable from '../shared/attachmentable';
+import { Attachmentable } from '../shared/attachmentable';
 import { Attachment, PhotoAttachment } from '../attachments';
 
 import { inspectCustomData } from '../../utils/constants';
