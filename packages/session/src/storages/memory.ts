@@ -17,8 +17,8 @@ export default class MemoryStorage implements ISessionStorage {
 		this.store = store;
 	}
 
-	public async get(key: string): Promise<object | null> {
-		return this.store.get(key) || null;
+	public async get(key: string): Promise<object | undefined> {
+		return this.store.get(key);
 	}
 
 	public async set(key: string, value: object): Promise<boolean> {

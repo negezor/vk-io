@@ -1,5 +1,5 @@
 export default interface ISessionStorage {
-	get(key: string): Promise<object | null>;
+	get(key: string): Promise<object | undefined>;
 
 	set(key: string, value: object): Promise<boolean>;
 
