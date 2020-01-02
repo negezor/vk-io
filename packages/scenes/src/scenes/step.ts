@@ -11,9 +11,9 @@ export default class StepScene<T = MessageContext> implements IScene {
 
 	private steps: StepSceneHandler<T>[];
 
-	private onEnterHandler: IStepSceneOptions<T>['enterHandler'];
+	private onEnterHandler: NonNullable<IStepSceneOptions<T>['enterHandler']>;
 
-	private onLeaveHandler: IStepSceneOptions<T>['leaveHandler'];
+	private onLeaveHandler: NonNullable<IStepSceneOptions<T>['leaveHandler']>;
 
 	public constructor(slug: string, rawOptions: IStepSceneOptions<T> | StepSceneHandler<T>[]) {
 		const options = Array.isArray(rawOptions)
@@ -29,7 +29,7 @@ export default class StepScene<T = MessageContext> implements IScene {
 		this.onLeaveHandler = options.leaveHandler || ((): void => {});
 	}
 
-	public async enterHandler(context: IStepContext): Promise<void> {
+	public async enterHandler(context: IStepContext & T): Promise<void> {
 		context.scene.step = new StepSceneContext({
 			context,
 
@@ -37,7 +37,6 @@ export default class StepScene<T = MessageContext> implements IScene {
 			steps: this.steps
 		});
 
-		// @ts-ignore
 		await this.onEnterHandler(context);
 
 		if (context.scene.lastAction !== LastAction.LEAVE) {
@@ -45,8 +44,7 @@ export default class StepScene<T = MessageContext> implements IScene {
 		}
 	}
 
-	public leaveHandler(context: IStepContext): Promise<void> {
-		// @ts-ignore
+	public leaveHandler(context: IStepContext & T): Promise<void> {
 		return this.onLeaveHandler(context);
 	}
 }
