@@ -4,7 +4,7 @@ import Context, { IContextOptions } from './context';
 import { VKError } from '../../errors';
 
 import MessageReply from '../shared/message-reply';
-import MessageForward from '../shared/message-forward';
+import MessageForward, { IMessageForwardPayload } from '../shared/message-forward';
 import transformMessage from '../../updates/transform-message';
 import MessageForwardsCollection from '../shared/message-forwards-collection';
 
@@ -412,8 +412,7 @@ class MessageContext<S = Record<string, any>>
 				? new MessageForwardsCollection(...this.message.fwd_messages.map(forward => (
 					new MessageForward({
 						vk: this.vk,
-						// @ts-ignore
-						payload: forward
+						payload: forward as IMessageForwardPayload
 					})
 				)))
 				: new MessageForwardsCollection();
