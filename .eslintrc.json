@@ -68,7 +68,8 @@
 			"rules": {
 				"no-console": "off",
 				"no-param-reassign": "off",
-				"import/no-extraneous-dependencies": "off"
+				"import/no-extraneous-dependencies": "off",
+				"@typescript-eslint/explicit-function-return-type": "off"
 			}
 		}
 	]
