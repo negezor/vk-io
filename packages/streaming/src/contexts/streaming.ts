@@ -3,30 +3,13 @@ import {
 	IContextOptions,
 
 	Attachment,
-	ExternalAttachment,
-
-	AudioAttachment,
-	AudioMessageAttachment,
-	DocumentAttachment,
-	GiftAttachment,
-	GraffitiAttachment,
-	LinkAttachment,
-	MarketAlbumAttachment,
-	MarketAttachment,
-	PhotoAttachment,
-	PollAttachment,
-	StickerAttachment,
-	StoryAttachment,
-	VideoAttachment,
-	WallReplyAttachment,
-	WallAttachment,
-
-	AttachmentType,
-	AttachmentTypeString,
+	Attachmentable,
 
 	transformAttachments,
 	inspectCustomData,
-	platforms
+	platforms,
+
+	applyMixins
 } from 'vk-io';
 
 import { copyParams } from '../helpers';
@@ -67,7 +50,7 @@ export type StreamingContextOptions<S> =
 	Omit<IContextOptions<IStreamingContextPayload, S>, 'type' | 'subTypes'>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default class StreamingContext<S = Record<string, any>>
+class StreamingContext<S = Record<string, any>>
 	extends Context<IStreamingContextPayload, S> {
 	public attachments: Attachment[];
 
@@ -138,19 +121,6 @@ export default class StreamingContext<S = Record<string, any>>
 	}
 
 	/**
-	 * Checks for the presence of attachments
-	 */
-	public hasAttachments(type: AttachmentType | AttachmentTypeString | null = null): boolean {
-		if (type === null) {
-			return this.attachments.length > 0;
-		}
-
-		return this.attachments.some(attachment => (
-			attachment.type === type
-		));
-	}
-
-	/**
 	 * Returns the event URL
 	 */
 	public get url(): string {
@@ -167,22 +137,22 @@ export default class StreamingContext<S = Record<string, any>>
 	/**
 	 * Returns the text of the post
 	 */
-	public get text(): string | null {
-		return this.payload.text || null;
+	public get text(): string | undefined {
+		return this.payload.text;
 	}
 
 	/**
 	 * Returns the text of the shared post
 	 */
-	public get sharedText(): string | null {
-		return this.payload.shared_post_text || null;
+	public get sharedText(): string | undefined {
+		return this.payload.shared_post_text;
 	}
 
 	/**
 	 * Returns the creation time from original post
 	 */
-	public get sharedAt(): number | null {
-		return this.payload.shared_post_creation_time || null;
+	public get sharedAt(): number | undefined {
+		return this.payload.shared_post_creation_time;
 	}
 
 	/**
@@ -252,66 +222,22 @@ export default class StreamingContext<S = Record<string, any>>
 	/**
 	 * Returns the identifier of the author of the original post
 	 */
-	public get sharedAuthorId(): number | null {
-		return this.payload.author.shared_post_author_id || null;
+	public get sharedAuthorId(): number | undefined {
+		return this.payload.author.shared_post_author_id;
 	}
 
 	/**
 	 * Returns the author url of the original post
 	 */
-	public get sharedAuthorUrl(): string | null {
-		return this.payload.author.shared_post_author_url || null;
+	public get sharedAuthorUrl(): string | undefined {
+		return this.payload.author.shared_post_author_url;
 	}
 
 	/**
 	 * Returns the author platform
 	 */
-	public get authorPlatform(): string | null {
+	public get authorPlatform(): string | undefined {
 		return platforms.get(this.payload.author.platform!)!;
-	}
-
-	/**
-	 * Returns the attachments
-	 */
-	public getAttachments(type: AttachmentType.AUDIO | 'audio'): AudioAttachment[];
-
-	public getAttachments(type: AttachmentType.AUDIO_MESSAGE | 'audio_message'): AudioMessageAttachment[];
-
-	public getAttachments(type: AttachmentType.GRAFFITI | 'graffiti'): GraffitiAttachment[];
-
-	// @ts-ignore
-	public getAttachments(type: AttachmentType.DOCUMENT | 'doc'): DocumentAttachment[];
-
-	public getAttachments(type: AttachmentType.MARKET_ALBUM | 'market_album'): MarketAlbumAttachment[];
-
-	public getAttachments(type: AttachmentType.MARKET | 'market'): MarketAttachment[];
-
-	public getAttachments(type: AttachmentType.PHOTO | 'photo'): PhotoAttachment[];
-
-	public getAttachments(type: AttachmentType.STORY | 'story'): StoryAttachment[];
-
-	public getAttachments(type: AttachmentType.VIDEO | 'video'): VideoAttachment[];
-
-	public getAttachments(type: AttachmentType.WALL | 'wall'): WallAttachment[];
-
-	public getAttachments(type: AttachmentType.POLL | 'poll'): PollAttachment[];
-
-	public getAttachments(type: AttachmentType.GIFT | 'gift'): GiftAttachment[];
-
-	public getAttachments(type: AttachmentType.LINK | 'link'): LinkAttachment[];
-
-	public getAttachments(type: AttachmentType.STICKER | 'sticker'): StickerAttachment[];
-
-	public getAttachments(type: AttachmentType.WALL_REPLY | 'wall_reply'): WallReplyAttachment[];
-
-	public getAttachments(type: string | null = null): (Attachment | ExternalAttachment)[] {
-		if (type === null) {
-			return this.attachments;
-		}
-
-		return this.attachments.filter(attachment => (
-			attachment.type === type
-		));
 	}
 
 	/**
@@ -347,10 +273,18 @@ export default class StreamingContext<S = Record<string, any>>
 
 		const filtredEmptyProperties = properties.filter(property => (
 			// @ts-ignore
-			this[property] !== null
+			this[property] !== undefined
 		));
 
 		// @ts-ignore
 		return copyParams(this, filtredEmptyProperties);
 	}
 }
+
+// eslint-disable-next-line
+interface StreamingContext extends Attachmentable {}
+applyMixins(StreamingContext, [
+	Attachmentable
+]);
+
+export default StreamingContext;

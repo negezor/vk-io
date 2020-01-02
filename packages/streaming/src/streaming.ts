@@ -18,11 +18,11 @@ export interface IStreamingRule {
 }
 
 export default class StreamingAPI {
-	protected socket: WebSocket | null = null;
+	protected socket?: WebSocket;
 
-	protected key: string | null = null;
+	protected key?: string;
 
-	protected endpoint: URL | null = null;
+	protected endpoint?: URL;
 
 	protected started = false;
 
@@ -120,10 +120,6 @@ export default class StreamingAPI {
 		this.socket!.close();
 
 		this.started = false;
-
-		this.key = null;
-		this.socket = null;
-		this.endpoint = null;
 	}
 
 	/**
