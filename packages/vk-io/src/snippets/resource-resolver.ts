@@ -68,7 +68,7 @@ export interface IResolvedResource {
 	type: 'user' | 'group' | 'application' | 'albums' | 'album' | 'wall' | 'club' | 'photo' | 'video' | 'audio' | string;
 }
 
-export default class ResourceResolver {
+export class ResourceResolver {
 	protected vk: VK;
 
 	/**

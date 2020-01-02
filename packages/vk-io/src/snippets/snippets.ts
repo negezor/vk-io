@@ -1,7 +1,7 @@
 import VK from '../vk';
-import ResourceResolver, { IResolvedResource } from './resource-resolver';
+import { ResourceResolver, IResolvedResource } from './resource-resolver';
 
-export default class Snippets {
+export class Snippets {
 	protected vk: VK;
 
 	protected resourceResolver: ResourceResolver;

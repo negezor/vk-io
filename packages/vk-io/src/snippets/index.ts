@@ -1,3 +1,1 @@
-import Snippets from './snippets';
-
-export default Snippets;
+export { Snippets } from './snippets';
