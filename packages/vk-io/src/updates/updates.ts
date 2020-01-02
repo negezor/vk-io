@@ -3,7 +3,7 @@ import {
 	Middleware,
 
 	compose,
-	getOptionalMiddleware,
+	skipMiddleware,
 
 	noopNext
 } from 'middleware-io';
@@ -43,6 +43,7 @@ import { APIErrorCode } from '../errors';
 
 import { AllowArray } from '../types';
 import { UpdateSource } from '../utils/constants';
+import { Composer } from '../structures/shared/composer';
 
 const debug = createDebug('vk-io:updates');
 
@@ -201,16 +202,13 @@ export class Updates {
 
 	protected webhookTransport: WebhookTransport;
 
-	protected stack: Middleware<Context>[] = [];
+	protected composer = Composer.builder<Context>();
 
-	protected hearStack: Middleware<Context>[] = [];
+	protected hearComposer = Composer.builder<MessageContext>();
 
 	protected stackMiddleware!: Middleware<Context>;
 
-	protected hearFallbackHandler: Middleware<MessageContext> = (
-		context,
-		next
-	): Promise<void> => next();
+	protected hearFallbackHandler: Middleware<MessageContext> = skipMiddleware;
 
 	/**
 	 * Constructor
@@ -249,7 +247,7 @@ export class Updates {
 		}
 
 		// @ts-ignore
-		this.stack.push(middleware);
+		this.composer.use(middleware);
 
 		this.reloadMiddleware();
 
@@ -379,8 +377,7 @@ export class Updates {
 
 		const needText = textCondition && functionCondtion === false;
 
-		// @ts-ignore
-		this.hearStack.push((context: MessageContext, next: Function): Promise<void> => {
+		this.hearComposer.use((context: MessageContext, next: Function): Promise<void> => {
 			const { text } = context;
 
 			if (needText && text === undefined) {
@@ -556,22 +553,21 @@ export class Updates {
 	 * Reloads middleware
 	 */
 	protected reloadMiddleware(): void {
-		const stack = [...this.stack];
+		const composer = this.composer.clone();
 
-		if (this.hearStack.length !== 0) {
-			stack.push(
+		if (this.hearComposer.length !== 0) {
+			composer.optional(
 				// @ts-ignore
-				getOptionalMiddleware(
-					(context: MessageContext): boolean => context.is('new_message') && !context.isEvent,
-					compose([
-						...this.hearStack,
-						this.hearFallbackHandler
-					])
-				)
+				(context: MessageContext): boolean => (
+					context.is('new_message') && !context.isEvent
+				),
+				this.hearComposer.clone()
+					.use(this.hearFallbackHandler)
+					.compose()
 			);
 		}
 
-		this.stackMiddleware = compose(stack);
+		this.stackMiddleware = composer.compose();
 	}
 
 	/**
@@ -579,9 +575,9 @@ export class Updates {
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public [inspect.custom](depth: number, options: Record<string, any>): string {
-		const { isStarted, stack } = this;
+		const { isStarted, composer } = this;
 
-		const payload = { isStarted, stack };
+		const payload = { isStarted, composer };
 
 		return `${options.stylize(this.constructor.name, 'special')} ${inspect(payload, options)}`;
 	}
