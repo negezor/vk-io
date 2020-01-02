@@ -25,7 +25,7 @@ export default class Attachment<P = {}> {
 		type: AttachmentType | string,
 		ownerId: number | string,
 		id: number | string,
-		accessKey: string
+		accessKey?: string
 	) {
 		this.type = type;
 
