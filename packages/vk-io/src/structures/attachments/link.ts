@@ -12,24 +12,24 @@ const kPhoto = Symbol('kPhoto');
 
 export interface ILinkAttachmentPayload {
 	title: string;
-	caption: string | null;
-	description: string | null;
+	caption?: string;
+	description?: string;
 	url: string;
-	product: {
+	product?: {
 		price: object;
-	} | null;
-	button: {
+	};
+	button?: {
 		title: string;
 		action: {
 			type: string;
 			url: string;
 		};
-	} | null;
-	photo: IPhotoAttachmentPayload | null;
+	};
+	photo?: IPhotoAttachmentPayload;
 }
 
 export default class LinkAttachment extends ExternalAttachment<ILinkAttachmentPayload> {
-	protected [kPhoto]: PhotoAttachment | null;
+	protected [kPhoto]?: PhotoAttachment;
 
 	/**
 	 * Constructor
@@ -58,15 +58,15 @@ export default class LinkAttachment extends ExternalAttachment<ILinkAttachmentPa
 	/**
 	 * Returns the title
 	 */
-	public get caption(): string | null {
-		return this.payload.caption || null;
+	public get caption(): string | undefined {
+		return this.payload.caption;
 	}
 
 	/**
 	 * Returns the description
 	 */
-	public get description(): string | null {
-		return this.payload.description || null;
+	public get description(): string | undefined {
+		return this.payload.description;
 	}
 
 	/**
@@ -81,7 +81,7 @@ export default class LinkAttachment extends ExternalAttachment<ILinkAttachmentPa
 	 */
 	public get product(): {
 		price: object;
-	} | null {
+	} | undefined {
 		return this.payload.product;
 	}
 
@@ -94,18 +94,18 @@ export default class LinkAttachment extends ExternalAttachment<ILinkAttachmentPa
 			type: string;
 			url: string;
 		};
-	} | null {
-		return this.payload.button || null;
+	} | undefined {
+		return this.payload.button;
 	}
 
 	/**
 	 * Returns the photo
 	 */
-	public get photo(): PhotoAttachment | null {
+	public get photo(): PhotoAttachment | undefined {
 		if (!this[kPhoto]) {
 			this[kPhoto] = this.payload.photo
 				? new PhotoAttachment(this.payload.photo, this.vk)
-				: null;
+				: undefined;
 		}
 
 		return this[kPhoto];

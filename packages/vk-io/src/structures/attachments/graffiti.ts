@@ -56,22 +56,22 @@ export default class GraffitiAttachment extends Attachment<IGraffitiAttachmentPa
 	/**
 	 * Returns the graffiti height
 	 */
-	public get height(): number | null {
-		return this.payload.height || null;
+	public get height(): number | undefined {
+		return this.payload.height;
 	}
 
 	/**
 	 * Returns the graffiti width
 	 */
-	public get width(): number | null {
-		return this.payload.width || null;
+	public get width(): number | undefined {
+		return this.payload.width;
 	}
 
 	/**
 	 * Returns the URL of the document
 	 */
-	public get url(): string | null {
-		return this.payload.url || null;
+	public get url(): string | undefined {
+		return this.payload.url;
 	}
 
 	/**

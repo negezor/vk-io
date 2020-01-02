@@ -72,51 +72,51 @@ export default class VideoAttachment extends Attachment<IVideoAttachmentPayload>
 	/**
 	 * Checks whether the video is repeatable
 	 */
-	public get isRepeat(): boolean | null {
+	public get isRepeat(): boolean | undefined {
 		return this.checkBooleanInProperty('repeat');
 	}
 
 	/**
 	 * Checks that the user can add a video to himself
 	 */
-	public get isCanAdd(): boolean | null {
+	public get isCanAdd(): boolean | undefined {
 		return this.checkBooleanInProperty('can_add');
 	}
 
 	/**
 	 * Checks if the user can edit the video
 	 */
-	public get isCanEdit(): boolean | null {
+	public get isCanEdit(): boolean | undefined {
 		return this.checkBooleanInProperty('can_edit');
 	}
 
 	/**
 	 * Checks whether the video is being processed
 	 */
-	public get isProcessing(): boolean | null {
+	public get isProcessing(): boolean | undefined {
 		return this.checkBooleanInProperty('processing');
 	}
 
 	/**
 	 * Checks whether the video is a broadcast
 	 */
-	public get isBroadcast(): boolean | null {
+	public get isBroadcast(): boolean | undefined {
 		return this.checkBooleanInProperty('live');
 	}
 
 	/**
 	 * Checks whether the video is a broadcast
 	 */
-	public get isUpcoming(): boolean | null {
+	public get isUpcoming(): boolean | undefined {
 		return this.checkBooleanInProperty('upcoming');
 	}
 
 	/**
 	 * Checks is bookmarked current user
 	 */
-	public get isFavorited(): boolean | null {
+	public get isFavorited(): boolean | undefined {
 		if (!this.$filled) {
-			return null;
+			return undefined;
 		}
 
 		return Boolean(this.payload.is_favorite);
@@ -126,80 +126,76 @@ export default class VideoAttachment extends Attachment<IVideoAttachmentPayload>
 	/**
 	 * Returns the title
 	 */
-	public get title(): string | null {
-		return this.payload.title || null;
+	public get title(): string | undefined {
+		return this.payload.title;
 	}
 
 	/**
 	 * Returns the description
 	 */
-	public get description(): string | null {
-		return this.payload.description || null;
+	public get description(): string | undefined {
+		return this.payload.description;
 	}
 
 	/**
 	 * Returns the duration
 	 */
-	public get duration(): number | null {
-		if (!this.$filled) {
-			return null;
-		}
-
-		return this.payload.duration!;
+	public get duration(): number | undefined {
+		return this.payload.duration;
 	}
 
 	/**
 	 * Returns the date when this video was created
 	 */
-	public get createdAt(): number | null {
-		return this.payload.date || null;
+	public get createdAt(): number | undefined {
+		return this.payload.date;
 	}
 
 	/**
 	 * Returns the date when this video was added
 	 */
-	public get addedAt(): number | null {
-		return this.payload.adding_date || null;
+	public get addedAt(): number | undefined {
+		return this.payload.adding_date;
 	}
 
 	/**
 	 * Returns the count views
 	 */
-	public get viewsCount(): number | null {
-		return this.payload.views || null;
+	public get viewsCount(): number | undefined {
+		return this.payload.views;
 	}
 
 	/**
 	 * Returns the count comments
 	 */
-	public get commentsCount(): number | null {
-		return this.payload.comments || null;
+	public get commentsCount(): number | undefined {
+		return this.payload.comments;
 	}
 
 	/**
 	 * Returns the URL of the page with the player
 	 */
-	public get player(): string | null {
-		return this.payload.player || null;
+	public get player(): string | undefined {
+		return this.payload.player;
 	}
 
 
 	/**
 	 * Returns the name of the platform (for video recordings added from external sites)
 	 */
-	public get platformName(): string | null {
-		return this.payload.platform || null;
+	public get platformName(): string | undefined {
+		return this.payload.platform;
 	}
 
 	/**
 	 * Checks for a boolean value in the property
 	 */
-	protected checkBooleanInProperty(name: string): boolean | null {
+	protected checkBooleanInProperty(name: string): boolean | undefined {
 		// @ts-ignore
 		const property = this.payload[name];
 
 		if (typeof property !== 'number') {
-			return null;
+			return undefined;
 		}
 
 		return property === 1;

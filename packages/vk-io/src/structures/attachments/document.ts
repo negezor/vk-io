@@ -74,9 +74,9 @@ export default class DocumentAttachment extends Attachment<IDocumentAttachmentPa
 	/**
 	 * Checks if the document is a text
 	 */
-	public get isText(): boolean | null {
+	public get isText(): boolean | undefined {
 		if (!this.$filled) {
-			return null;
+			return undefined;
 		}
 
 		return this.typeId === 1;
@@ -85,9 +85,9 @@ export default class DocumentAttachment extends Attachment<IDocumentAttachmentPa
 	/**
 	 * Checks if the document is a archive
 	 */
-	public get isArchive(): boolean | null {
+	public get isArchive(): boolean | undefined {
 		if (!this.$filled) {
-			return null;
+			return undefined;
 		}
 
 		return this.typeId === 2;
@@ -96,9 +96,9 @@ export default class DocumentAttachment extends Attachment<IDocumentAttachmentPa
 	/**
 	 * Checks if the document is a gif file
 	 */
-	public get isGif(): boolean | null {
+	public get isGif(): boolean | undefined {
 		if (!this.$filled) {
-			return null;
+			return undefined;
 		}
 
 		return this.typeId === 3;
@@ -107,9 +107,9 @@ export default class DocumentAttachment extends Attachment<IDocumentAttachmentPa
 	/**
 	 * Checks if the document is a image
 	 */
-	public get isImage(): boolean | null {
+	public get isImage(): boolean | undefined {
 		if (!this.$filled) {
-			return null;
+			return undefined;
 		}
 
 		return this.typeId === 4;
@@ -118,9 +118,9 @@ export default class DocumentAttachment extends Attachment<IDocumentAttachmentPa
 	/**
 	 * Checks if the document is a graffiti
 	 */
-	public get isGraffiti(): boolean | null {
+	public get isGraffiti(): boolean | undefined {
 		if (!this.$filled) {
-			return null;
+			return undefined;
 		}
 
 		return this.hasPreviewProperty('graffiti');
@@ -129,9 +129,9 @@ export default class DocumentAttachment extends Attachment<IDocumentAttachmentPa
 	/**
 	 * Checks if the document is a audio
 	 */
-	public get isAudio(): boolean | null {
+	public get isAudio(): boolean | undefined {
 		if (!this.$filled) {
-			return null;
+			return undefined;
 		}
 
 		return this.typeId === 5;
@@ -140,9 +140,9 @@ export default class DocumentAttachment extends Attachment<IDocumentAttachmentPa
 	/**
 	 * Checks if the document is a voice
 	 */
-	public get isVoice(): boolean | null {
+	public get isVoice(): boolean | undefined {
 		if (!this.$filled) {
-			return null;
+			return undefined;
 		}
 
 		return this.hasPreviewProperty('audio_msg');
@@ -151,9 +151,9 @@ export default class DocumentAttachment extends Attachment<IDocumentAttachmentPa
 	/**
 	 * Checks if the document is a video
 	 */
-	public get isVideo(): boolean | null {
+	public get isVideo(): boolean | undefined {
 		if (!this.$filled) {
-			return null;
+			return undefined;
 		}
 
 		return this.typeId === 6;
@@ -162,9 +162,9 @@ export default class DocumentAttachment extends Attachment<IDocumentAttachmentPa
 	/**
 	 * Checks if the document is a book
 	 */
-	public get isBook(): boolean | null {
+	public get isBook(): boolean | undefined {
 		if (!this.$filled) {
-			return null;
+			return undefined;
 		}
 
 		return this.typeId === 7;
@@ -173,30 +173,30 @@ export default class DocumentAttachment extends Attachment<IDocumentAttachmentPa
 	/**
 	 * Returns the document title
 	 */
-	public get title(): string | null {
-		return this.payload.title || null;
+	public get title(): string | undefined {
+		return this.payload.title;
 	}
 
 	/**
 	 * Returns the date when this document was created
 	 */
-	public get createdAt(): number | null {
-		return this.payload.date || null;
+	public get createdAt(): number | undefined {
+		return this.payload.date;
 	}
 
 	/**
 	 * Returns the type identifier (1~8)
 	 */
-	public get typeId(): number | null {
-		return this.payload.type || null;
+	public get typeId(): number | undefined {
+		return this.payload.type;
 	}
 
 	/**
 	 * Returns the type name
 	 */
-	public get typeName(): string | null {
+	public get typeName(): string | undefined {
 		if (!this.$filled) {
-			return null;
+			return undefined;
 		}
 
 		return documentTypes.get(this.typeId!)!;
@@ -205,33 +205,29 @@ export default class DocumentAttachment extends Attachment<IDocumentAttachmentPa
 	/**
 	 * Returns the size in bytes
 	 */
-	public get size(): number | null {
-		if (!this.$filled) {
-			return null;
-		}
-
-		return this.payload.size!;
+	public get size(): number | undefined {
+		return this.payload.size;
 	}
 
 	/**
 	 * Returns the extension
 	 */
-	public get extension(): string | null {
-		return this.payload.ext || null;
+	public get extension(): string | undefined {
+		return this.payload.ext;
 	}
 
 	/**
 	 * Returns the URL of the document
 	 */
-	public get url(): string | null {
-		return this.payload.url || null;
+	public get url(): string | undefined {
+		return this.payload.url;
 	}
 
 	/**
 	 * Returns the info to preview
 	 */
-	public get preview(): object | null {
-		return this.payload.preview || null;
+	public get preview(): object | undefined {
+		return this.payload.preview;
 	}
 
 	/**
@@ -240,7 +236,7 @@ export default class DocumentAttachment extends Attachment<IDocumentAttachmentPa
 	public hasPreviewProperty(name: string): boolean {
 		const { preview } = this;
 
-		if (preview === null) {
+		if (preview === undefined) {
 			return false;
 		}
 

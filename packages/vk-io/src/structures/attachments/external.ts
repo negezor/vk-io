@@ -36,7 +36,6 @@ export default class ExternalAttachment<P = {}> {
 		return this.$filled;
 	}
 
-
 	/**
 	 * Can be attached via string representation
 	 */

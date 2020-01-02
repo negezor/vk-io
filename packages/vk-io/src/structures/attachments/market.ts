@@ -83,9 +83,9 @@ export default class MarketAttachment extends Attachment<IMarketAttachmentPayloa
 	/**
 	 * Checks is bookmarked current user
 	 */
-	public get isFavorited(): boolean | null {
+	public get isFavorited(): boolean | undefined {
 		if (!this.$filled) {
-			return null;
+			return undefined;
 		}
 
 		return Boolean(this.payload.is_favorite);

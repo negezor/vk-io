@@ -72,52 +72,52 @@ export default class PhotoAttachment extends Attachment<IPhotoAttachmentPayload>
 	/**
 	 * Returns the ID of the user who uploaded the image
 	 */
-	public get userId(): number | null {
-		return this.payload.user_id || null;
+	public get userId(): number | undefined {
+		return this.payload.user_id;
 	}
 
 	/**
 	 * Returns the ID of the album
 	 */
-	public get albumId(): number | null {
-		return this.payload.album_id || null;
+	public get albumId(): number | undefined {
+		return this.payload.album_id;
 	}
 
 	/**
 	 * Returns the photo text
 	 */
-	public get text(): string | null {
-		return this.payload.text || null;
+	public get text(): string | undefined {
+		return this.payload.text;
 	}
 
 	/**
 	 * Returns the date when this photo was created
 	 */
-	public get createdAt(): number | null {
-		return this.payload.date || null;
+	public get createdAt(): number | undefined {
+		return this.payload.date;
 	}
 
 	/**
 	 * Returns the photo height
 	 */
-	public get height(): number | null {
-		return this.payload.height || null;
+	public get height(): number | undefined {
+		return this.payload.height;
 	}
 
 	/**
 	 * Returns the photo width
 	 */
-	public get width(): number | null {
-		return this.payload.width || null;
+	public get width(): number | undefined {
+		return this.payload.width;
 	}
 
 	/**
 	 * Returns the URL of a small photo
 	 * (130 or 75)
 	 */
-	public get smallPhoto(): string | null {
+	public get smallPhoto(): string | undefined {
 		if (!this.$filled) {
-			return null;
+			return undefined;
 		}
 
 		const [size] = this.getSizes(SMALL_SIZES);
@@ -129,9 +129,9 @@ export default class PhotoAttachment extends Attachment<IPhotoAttachmentPayload>
 	 * Returns the URL of a medium photo
 	 * (807 or 604 or less)
 	 */
-	public get mediumPhoto(): string | null {
+	public get mediumPhoto(): string | undefined {
 		if (!this.$filled) {
-			return null;
+			return undefined;
 		}
 
 		const [size] = this.getSizes(MEDIUM_SIZES);
@@ -143,9 +143,9 @@ export default class PhotoAttachment extends Attachment<IPhotoAttachmentPayload>
 	 * Returns the URL of a large photo
 	 * (2560 or 1280 or less)
 	 */
-	public get largePhoto(): string | null {
+	public get largePhoto(): string | undefined {
 		if (!this.$filled) {
-			return null;
+			return undefined;
 		}
 
 		const [size] = this.getSizes(LARGE_SIZES);
@@ -156,8 +156,8 @@ export default class PhotoAttachment extends Attachment<IPhotoAttachmentPayload>
 	/**
 	 * Returns the sizes
 	 */
-	public get sizes(): IPhotoSize[] | null {
-		return this.payload.sizes || null;
+	public get sizes(): IPhotoSize[] | undefined {
+		return this.payload.sizes;
 	}
 
 	/**
@@ -172,8 +172,8 @@ export default class PhotoAttachment extends Attachment<IPhotoAttachmentPayload>
 
 		// @ts-ignore
 		return sizeTypes
-			.map((sizeType): IPhotoSize | null => (
-				sizes.find((size): boolean => size.type === sizeType) || null
+			.map((sizeType): IPhotoSize | undefined => (
+				sizes.find((size): boolean => size.type === sizeType)
 			))
 			.filter(Boolean);
 	}

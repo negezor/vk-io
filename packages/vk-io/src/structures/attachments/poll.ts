@@ -77,9 +77,9 @@ export default class PollAttachment extends Attachment<IPollAttachmentPayload> {
 	/**
 	 * Checks whether the poll is anonymous
 	 */
-	public get isAnonymous(): boolean | null {
+	public get isAnonymous(): boolean | undefined {
 		if (!this.$filled) {
-			return null;
+			return undefined;
 		}
 
 		return Boolean(this.payload.anonymous);
@@ -88,9 +88,9 @@ export default class PollAttachment extends Attachment<IPollAttachmentPayload> {
 	/**
 	 * Checks whether the poll allows multiple choice of answers
 	 */
-	public get isMultiple(): boolean | null {
+	public get isMultiple(): boolean | undefined {
 		if (!this.$filled) {
-			return null;
+			return undefined;
 		}
 
 		return Boolean(this.payload.multiple);
@@ -99,9 +99,9 @@ export default class PollAttachment extends Attachment<IPollAttachmentPayload> {
 	/**
 	 * Checks whether the poll is complete
 	 */
-	public get isClosed(): boolean | null {
+	public get isClosed(): boolean | undefined {
 		if (!this.$filled) {
-			return null;
+			return undefined;
 		}
 
 		return Boolean(this.payload.closed);
@@ -110,9 +110,9 @@ export default class PollAttachment extends Attachment<IPollAttachmentPayload> {
 	/**
 	 * Check whether questions are attached to the discussion
 	 */
-	public get isBoard(): boolean | null {
+	public get isBoard(): boolean | undefined {
 		if (!this.$filled) {
-			return null;
+			return undefined;
 		}
 
 		return Boolean(this.payload.is_board);
@@ -121,9 +121,9 @@ export default class PollAttachment extends Attachment<IPollAttachmentPayload> {
 	/**
 	 * Check if can edit the poll
 	 */
-	public get isCanEdit(): boolean | null {
+	public get isCanEdit(): boolean | undefined {
 		if (!this.$filled) {
-			return null;
+			return undefined;
 		}
 
 		return Boolean(this.payload.can_edit);
@@ -132,9 +132,9 @@ export default class PollAttachment extends Attachment<IPollAttachmentPayload> {
 	/**
 	 * Check if can vote in the survey
 	 */
-	public get isCanVote(): boolean | null {
+	public get isCanVote(): boolean | undefined {
 		if (!this.$filled) {
-			return null;
+			return undefined;
 		}
 
 		return Boolean(this.payload.can_vote);
@@ -143,9 +143,9 @@ export default class PollAttachment extends Attachment<IPollAttachmentPayload> {
 	/**
 	 * Check if can complain about the poll
 	 */
-	public get isCanReport(): boolean | null {
+	public get isCanReport(): boolean | undefined {
 		if (!this.$filled) {
-			return null;
+			return undefined;
 		}
 
 		return Boolean(this.payload.can_report);
@@ -154,9 +154,9 @@ export default class PollAttachment extends Attachment<IPollAttachmentPayload> {
 	/**
 	 * Check if can share a survey
 	 */
-	public get isCanShare(): boolean | null {
+	public get isCanShare(): boolean | undefined {
 		if (!this.$filled) {
-			return null;
+			return undefined;
 		}
 
 		return Boolean(this.payload.can_share);
@@ -165,55 +165,51 @@ export default class PollAttachment extends Attachment<IPollAttachmentPayload> {
 	/**
 	 * Returns the ID of the poll author
 	 */
-	public get authorId(): number | null {
-		return this.payload.author_id || null;
+	public get authorId(): number | undefined {
+		return this.payload.author_id;
 	}
 
 	/**
 	 * Returns the question text
 	 */
-	public get question(): string | null {
-		return this.payload.question || null;
+	public get question(): string | undefined {
+		return this.payload.question;
 	}
 
 	/**
 	 * Returns the date when this poll was created
 	 */
-	public get createdAt(): number | null {
-		return this.payload.created || null;
+	public get createdAt(): number | undefined {
+		return this.payload.created;
 	}
 
 	/**
 	 * Returns the end date of the poll in Unixtime. 0, if the poll is unlimited
 	 */
-	public get endedAt(): number | null {
-		if (!this.$filled) {
-			return null;
-		}
-
-		return this.payload.end_date!;
+	public get endedAt(): number | undefined {
+		return this.payload.end_date;
 	}
 
 	/**
 	 * Returns the number of votes
 	 */
-	public get votes(): number | null {
-		return this.payload.votes || null;
+	public get votes(): number | undefined {
+		return this.payload.votes;
 	}
 
 	/**
 	 * Returns the identifiers of the response options selected by the current user
 	 */
-	public get answerIds(): number[] | null {
-		return this.payload.answer_ids || null;
+	public get answerIds(): number[] | undefined {
+		return this.payload.answer_ids;
 	}
 
 	/**
 	 * Returns the identifiers of 3 friends who voted in the poll
 	 */
-	public get friends(): number[] | null {
+	public get friends(): number[] | undefined {
 		if (!this.$filled) {
-			return null;
+			return undefined;
 		}
 
 		return this.payload.friends || [];
@@ -222,22 +218,22 @@ export default class PollAttachment extends Attachment<IPollAttachmentPayload> {
 	/**
 	 * Returns the information about the options for the answer
 	 */
-	public get answers(): object[] | null {
-		return this.payload.answers || null;
+	public get answers(): object[] | undefined {
+		return this.payload.answers;
 	}
 
 	/**
 	 * Returns the poll snippet background
 	 */
-	public get background(): object[] | null {
-		return this.payload.background || null;
+	public get background(): object[] | undefined {
+		return this.payload.background;
 	}
 
 	/**
 	 * Returns a photo - the poll snippet background
 	 */
-	public get photo(): object | null {
-		return this.payload.photo || null;
+	public get photo(): object | undefined {
+		return this.payload.photo;
 	}
 
 	/**

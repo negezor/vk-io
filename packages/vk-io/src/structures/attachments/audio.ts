@@ -62,11 +62,11 @@ export default class AudioAttachment extends Attachment<IAudioAttachmentPayload>
 	/**
 	 * Checks whether audio is in high quality
 	 */
-	public get isHq(): boolean | null {
+	public get isHq(): boolean | undefined {
 		const { is_hq: isHq } = this.payload;
 
 		if (isHq === undefined) {
-			return null;
+			return undefined;
 		}
 
 		return isHq === 1;
@@ -75,61 +75,57 @@ export default class AudioAttachment extends Attachment<IAudioAttachmentPayload>
 	/**
 	 * Returns the ID of the lyric
 	 */
-	public get lyricsId(): number | null {
-		return this.payload.lyrics_id || null;
+	public get lyricsId(): number | undefined {
+		return this.payload.lyrics_id;
 	}
 
 	/**
 	 * Returns the ID of the album
 	 */
-	public get albumId(): number | null {
-		return this.payload.album_id || null;
+	public get albumId(): number | undefined {
+		return this.payload.album_id;
 	}
 
 	/**
 	 * Returns the ID of the genre
 	 */
-	public get genreId(): number | null {
-		return this.payload.genre_id || null;
+	public get genreId(): number | undefined {
+		return this.payload.genre_id;
 	}
 
 	/**
 	 * Returns the title
 	 */
-	public get title(): string | null {
-		return this.payload.title || null;
+	public get title(): string | undefined {
+		return this.payload.title;
 	}
 
 	/**
 	 * Returns the artist
 	 */
-	public get artist(): string | null {
-		return this.payload.artist || null;
+	public get artist(): string | undefined {
+		return this.payload.artist;
 	}
 
 	/**
 	 * Returns the duration
 	 */
-	public get duration(): number | null {
-		if (!this.$filled) {
-			return null;
-		}
-
-		return this.payload.duration!;
+	public get duration(): number | undefined {
+		return this.payload.duration;
 	}
 
 	/**
 	 * Returns the date object when this audio was created
 	 */
-	public get createdAt(): number | null {
-		return this.payload.date || null;
+	public get createdAt(): number | undefined {
+		return this.payload.date;
 	}
 
 	/**
 	 * Returns the URL of the audio
 	 */
-	public get url(): string | null {
-		return this.payload.url || null;
+	public get url(): string | undefined {
+		return this.payload.url;
 	}
 
 	/**

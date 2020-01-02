@@ -57,39 +57,35 @@ export default class AudioMessageAttachment extends Attachment<IAudioMessageAtta
 	/**
 	 * Returns the duration of the audio message
 	 */
-	public get duration(): number | null{
-		if (!this.$filled) {
-			return null;
-		}
-
-		return this.payload.duration!;
+	public get duration(): number | undefined {
+		return this.payload.duration;
 	}
 
 	/**
 	 * Returns the waveform of the audio message
 	 */
-	public get waveform(): number[] | null {
-		return this.payload.waveform || null;
+	public get waveform(): number[] | undefined {
+		return this.payload.waveform;
 	}
 
 	/**
 	 * Returns the ogg URL of the audio message
 	 */
-	public get oggUrl(): string | null {
-		return this.payload.link_ogg || null;
+	public get oggUrl(): string | undefined {
+		return this.payload.link_ogg;
 	}
 
 	/**
 	 * Returns the mp3 URL of the audio message
 	 */
-	public get mp3Url(): string | null {
-		return this.payload.link_mp3 || null;
+	public get mp3Url(): string | undefined {
+		return this.payload.link_mp3;
 	}
 
 	/**
 	 * Returns the URL of the audio message
 	 */
-	public get url(): string | null {
+	public get url(): string | undefined {
 		return this.mp3Url || this.oggUrl;
 	}
 

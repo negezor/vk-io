@@ -10,7 +10,7 @@ export default class Attachment<P = {}> {
 
 	public id: number;
 
-	public accessKey: string | null;
+	public accessKey?: string;
 
 	protected $filled: boolean;
 
@@ -25,7 +25,7 @@ export default class Attachment<P = {}> {
 		type: AttachmentType | string,
 		ownerId: number | string,
 		id: number | string,
-		accessKey: string | null = null
+		accessKey: string
 	) {
 		this.type = type;
 
@@ -91,7 +91,7 @@ export default class Attachment<P = {}> {
 	 * Returns a string to attach a VK
 	 */
 	public toString(): string {
-		const accessKey = this.accessKey !== null
+		const accessKey = this.accessKey !== undefined
 			? `_${this.accessKey}`
 			: '';
 
