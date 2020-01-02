@@ -159,9 +159,7 @@ export default class SceneContext {
 		this.lastAction = LastAction.LEAVE;
 
 		if (!options.silent) {
-			this.canceled = options.canceled !== undefined
-				? options.canceled
-				: false;
+			this.canceled = options.canceled ?? false;
 
 			await current.leaveHandler(this.context);
 		}
