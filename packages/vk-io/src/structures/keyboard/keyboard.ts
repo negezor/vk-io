@@ -1,4 +1,4 @@
-import KeyboardBuilder from './builder';
+import { KeyboardBuilder } from './builder';
 import {
 	IKeyboardProxyButton,
 	IKeyboardTextButtonOptions,
@@ -10,7 +10,7 @@ import {
 } from './types';
 import { showDeprecatedMessage } from '../../utils/helpers';
 
-export default class Keyboard {
+export class Keyboard {
 	/**
 	 * Returns custom tag
 	 */

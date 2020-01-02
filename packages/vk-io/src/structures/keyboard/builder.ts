@@ -11,7 +11,7 @@ import {
 	IKeyboardApplicationButtonOptions
 } from './types';
 
-export default class KeyboardBuilder {
+export class KeyboardBuilder {
 	/**
 	 * Does the keyboard close after pressing the button
 	 */

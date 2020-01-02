@@ -1,4 +1,4 @@
-export { default as Keyboard } from './keyboard';
-export { default as KeyboardBuilder } from './builder';
+export * from './keyboard';
+export * from './builder';
 
 export * from './types';
