@@ -68,14 +68,14 @@ export default class MultipartStream extends SandwichStream {
 	public append(
 		field: string,
 		body: MultipartStreamBody,
-		{ filename = null, headers = {} }: {
-			filename?: string | null;
+		{ filename, headers = {} }: {
+			filename?: string;
 			headers: IMultipartStreamAddPartOptions['headers'];
 		}
 	): void {
 		let header = `form-data; name="${field}"`;
 
-		if (filename !== null) {
+		if (filename !== undefined) {
 			header += `; filename="${filename}"`;
 		}
 

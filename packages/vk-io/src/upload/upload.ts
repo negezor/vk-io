@@ -1049,7 +1049,7 @@ export default class Upload {
 				{
 					value,
 					filename,
-					contentType = null
+					contentType
 					// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				}: any,
 				i
@@ -1078,7 +1078,7 @@ export default class Upload {
 						: field;
 
 					const headers = {
-						'Content-Type': contentType === null
+						'Content-Type': contentType === undefined
 							// @ts-ignore
 							? DefaultContentType[attachmentType]
 							: contentType
