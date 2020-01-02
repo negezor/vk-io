@@ -9,7 +9,7 @@ export interface IExecuteCodeOptions {
 	parallelCount: number;
 }
 
-export default ({ method, params, parallelCount }: IExecuteCodeOptions): string => {
+export const getExecuteCode = ({ method, params, parallelCount }: IExecuteCodeOptions): string => {
 	const methodCode = getExecuteMethod(method, {
 		...params,
 

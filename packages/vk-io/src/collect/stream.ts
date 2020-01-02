@@ -8,7 +8,7 @@ import { UsersUserFull, GroupsGroupFull } from '../api/schemas/objects';
 import { CollectError, APIErrorCode, CollectErrorCode } from '../errors';
 
 import { APIRequest } from '../api/request';
-import getExecuteCode from './execute-code';
+import { getExecuteCode } from './execute-code';
 
 const debug = createDebug('vk-io:collect:stream');
 
@@ -43,7 +43,7 @@ export interface ICollectChunkData<T> {
 	groups: GroupsGroupFull[];
 }
 
-export default class CollectStream<T> extends Readable {
+export class CollectStream<T> extends Readable {
 	protected vk: VK;
 
 	protected method: string;

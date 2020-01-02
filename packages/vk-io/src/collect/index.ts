@@ -1,3 +1,1 @@
-import Collect from './collect';
-
-export default Collect;
+export { Collect } from './collect';

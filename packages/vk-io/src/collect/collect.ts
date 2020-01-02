@@ -1,10 +1,10 @@
 import { inspect } from 'util';
 
-import CollectStream, { ICollectStreamOptions } from './stream';
-import LIMITS_METHODS from './limits';
+import { CollectStream, ICollectStreamOptions } from './stream';
+import { LIMITS_METHODS } from './limits';
 
 import VK from '../vk';
-import Chain from './chain';
+import { Chain } from './chain';
 import { ExecuteError } from '../errors';
 
 import { getChainReturn, getExecuteMethod } from '../utils/helpers';
@@ -14,7 +14,7 @@ export interface ICollectStreamGroup {
 	[key: string]: <T = Record<string, any>>(options: ICollectStreamOptions['options']) => CollectStream<T>;
 }
 
-export default class Collect {
+export class Collect {
 	public account!: ICollectStreamGroup;
 
 	public ads!: ICollectStreamGroup;

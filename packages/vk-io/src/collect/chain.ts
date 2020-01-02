@@ -6,7 +6,7 @@ import VK from '../vk';
 import { APIRequest } from '../api/request';
 import { getChainReturn, resolveExecuteTask } from '../utils/helpers';
 
-export default class Chain {
+export class Chain {
 	public started = false;
 
 	protected vk: VK;

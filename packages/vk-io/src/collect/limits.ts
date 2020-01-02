@@ -2,7 +2,7 @@
  * List limits VK
  * Last updated 09.10.2017
  */
-export default [
+export const LIMITS_METHODS = [
 	/**
 	 * Account
 	 */
