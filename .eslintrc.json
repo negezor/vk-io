@@ -26,8 +26,9 @@
 		}],
 		"@typescript-eslint/ban-ts-ignore": "off",
 		"@typescript-eslint/semi": ["error"],
-		"import/prefer-default-export": "off",
 		"@typescript-eslint/no-empty-function": "off",
+		"import/prefer-default-export": "off",
+		"import/no-default-export": ["error"],
 		"import/extensions": ["error", "ignorePackages", {
 			"js": "never",
 			"ts": "never"
