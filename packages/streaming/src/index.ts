@@ -1,4 +1,4 @@
-import StreamingAPI from './streaming';
+import { StreamingAPI } from './streaming';
 
 export * from './errors';
 export * from './contexts';

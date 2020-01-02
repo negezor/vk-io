@@ -1,1 +1,1 @@
-export { default as StreamingContext, IStreamingContextPayload } from './streaming';
+export { StreamingContext, IStreamingContextPayload } from './streaming';

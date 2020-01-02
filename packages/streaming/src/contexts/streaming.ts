@@ -287,4 +287,4 @@ applyMixins(StreamingContext, [
 	Attachmentable
 ]);
 
-export default StreamingContext;
+export { StreamingContext };

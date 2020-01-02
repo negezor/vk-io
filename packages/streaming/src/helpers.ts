@@ -1,7 +1,6 @@
 /**
  * Copies object params to new object
  */
-// eslint-disable-next-line import/prefer-default-export
 export const copyParams = <
 	T,
 	K extends keyof T

@@ -5,7 +5,7 @@ export interface IStreamingRuleErrorOptions {
 	error_code: number;
 }
 
-export default class StreamingRuleError extends VKError {
+export class StreamingRuleError extends VKError {
 	/**
 	 * Constructor
 	 */

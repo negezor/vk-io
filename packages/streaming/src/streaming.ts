@@ -17,7 +17,7 @@ export interface IStreamingRule {
 	tag: string;
 }
 
-export default class StreamingAPI {
+export class StreamingAPI {
 	protected socket?: WebSocket;
 
 	protected key?: string;
