@@ -92,20 +92,20 @@ export default class SceneContext {
 	public async enter(slug: string, options: ISceneContextEnterOptions = {}): Promise<void> {
 		const scene = this.repository.strictGet(slug);
 
-		const { current } = this;
+		const isCurrent = this.current?.slug === scene.slug;
 
-		const isNotCurrent = current !== undefined && current.slug !== scene.slug;
+		if (!isCurrent) {
+			if (!this.leaving) {
+				await this.leave({
+					silent: options.silent
+				});
+			}
 
-		if (!this.leaving && isNotCurrent) {
-			await this.leave({
-				silent: options.silent
-			});
-		}
+			if (this.leaving) {
+				this.leaving = false;
 
-		if (this.leaving && isNotCurrent) {
-			this.leaving = false;
-
-			this.reset();
+				this.reset();
+			}
 		}
 
 		this.lastAction = LastAction.ENTER;
