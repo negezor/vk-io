@@ -102,7 +102,7 @@ export default function transformMessage({
 		};
 	}
 
-	if (attachments.attach1_type in specialAttachments) {
+	if (specialAttachments[attachments.attach1_type] !== undefined) {
 		message.attachments = [
 			specialAttachments[attachments.attach1_type](attachments)
 		];

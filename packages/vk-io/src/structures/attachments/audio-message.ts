@@ -29,7 +29,7 @@ export default class AudioMessageAttachment extends Attachment<IAudioMessageAtta
 		this.vk = vk;
 		this.payload = payload;
 
-		this.$filled = 'duration' in payload;
+		this.$filled = payload.duration !== undefined;
 	}
 
 	/**

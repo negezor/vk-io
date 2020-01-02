@@ -81,7 +81,7 @@ class WallAttachment extends Attachment<IWallAttachmentPayload> {
 		this.vk = vk;
 		this.payload = payload;
 
-		this.$filled = 'date' in payload;
+		this.$filled = payload.date !== undefined;
 	}
 
 	/**
@@ -351,36 +351,28 @@ class WallAttachment extends Attachment<IWallAttachmentPayload> {
 	 * Returns the number of record views
 	 */
 	public get viewsCount(): number | undefined {
-		return this.payload.views !== undefined
-			? this.payload.views!.count
-			: undefined;
+		return this.payload.views?.count;
 	}
 
 	/**
 	 * Returns the likes count
 	 */
 	public get likesCount(): number | undefined {
-		return this.payload.likes !== undefined
-			? this.payload.likes!.count
-			: undefined;
+		return this.payload.likes?.count;
 	}
 
 	/**
 	 * Returns the reposts count
 	 */
 	public get repostsCount(): number | undefined {
-		return this.payload.reposts !== undefined
-			? this.payload.reposts!.count
-			: undefined;
+		return this.payload.reposts?.count;
 	}
 
 	/**
 	 * Returns the comments count
 	 */
 	public get commentsCount(): number | undefined {
-		return this.payload.comments !== undefined
-			? this.payload.comments!.count
-			: undefined;
+		return this.payload.comments?.count;
 	}
 
 	/**

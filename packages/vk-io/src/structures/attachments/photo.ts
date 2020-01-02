@@ -43,7 +43,7 @@ export default class PhotoAttachment extends Attachment<IPhotoAttachmentPayload>
 		this.vk = vk;
 		this.payload = payload;
 
-		this.$filled = 'album_id' in payload && 'date' in payload;
+		this.$filled = payload.album_id !== undefined && payload.date !== undefined;
 	}
 
 	/**

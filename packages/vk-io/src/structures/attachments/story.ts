@@ -86,7 +86,7 @@ export default class StoryAttachment extends Attachment<IStoryAttachmentPayload>
 		this.vk = vk;
 		this.payload = payload;
 
-		this.$filled = 'is_deleted' in payload || 'is_expired' in payload;
+		this.$filled = payload.is_deleted !== undefined || payload.is_expired !== undefined;
 	}
 
 	/**

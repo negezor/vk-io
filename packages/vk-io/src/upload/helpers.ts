@@ -18,7 +18,7 @@ export const copyParams = <
 	const copies: Pick<T, K> = {};
 
 	for (const property of properties) {
-		if (property in params) {
+		if (params[property] !== undefined) {
 			copies[property] = params[property];
 		}
 	}

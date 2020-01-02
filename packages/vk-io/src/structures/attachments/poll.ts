@@ -48,7 +48,7 @@ export default class PollAttachment extends Attachment<IPollAttachmentPayload> {
 		this.vk = vk;
 		this.payload = payload;
 
-		this.$filled = 'answers' in payload;
+		this.$filled = payload.answers !== undefined;
 	}
 
 	/**

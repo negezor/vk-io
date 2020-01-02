@@ -239,7 +239,7 @@ export default class DirectAuth {
 			}
 
 			if (isJSON) {
-				if ('access_token' in text) {
+				if (text.access_token !== undefined) {
 					const {
 						email,
 						user_id: user,
@@ -260,7 +260,7 @@ export default class DirectAuth {
 					};
 				}
 
-				if ('error' in text) {
+				if (text.error !== undefined) {
 					if (text.error === 'invalid_client') {
 						throw new AuthorizationError({
 							message: `Invalid client (${text.error_description})`,
@@ -275,7 +275,7 @@ export default class DirectAuth {
 					}
 
 					if (text.error === 'need_validation') {
-						if ('validation_type' in text) {
+						if (text.validation_type !== undefined) {
 							response = await this.processTwoFactor(text);
 
 							continue;

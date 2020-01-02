@@ -185,7 +185,7 @@ export default class ResourceResolver {
 
 			let type = typeResource.toLowerCase();
 
-			if (type in enumResourceTypes) {
+			if (enumResourceTypes[type] !== undefined) {
 				type = enumResourceTypes[type];
 			}
 

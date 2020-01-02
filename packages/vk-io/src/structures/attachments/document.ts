@@ -46,7 +46,7 @@ export default class DocumentAttachment extends Attachment<IDocumentAttachmentPa
 		this.vk = vk;
 		this.payload = payload;
 
-		this.$filled = 'ext' in payload && 'date' in payload;
+		this.$filled = payload.ext !== undefined && payload.date !== undefined;
 	}
 
 	/**

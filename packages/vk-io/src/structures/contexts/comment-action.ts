@@ -133,7 +133,7 @@ class CommentActionContext<S = Record<string, any>>
 	 * Checks is reply comment
 	 */
 	public get isReply(): boolean {
-		return 'reply_to_comment' in this.payload;
+		return this.payload.reply_to_comment !== undefined;
 	}
 
 	/**

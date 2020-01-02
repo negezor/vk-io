@@ -78,7 +78,8 @@ export default class Collect {
 		for (const [method, limit, max] of LIMITS_METHODS) {
 			const [group, name] = method.split('.');
 
-			if (!(group in this)) {
+			// @ts-ignore
+			if (this[group] === undefined) {
 				// @ts-ignore
 				this[group] = {};
 			}

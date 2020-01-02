@@ -28,7 +28,7 @@ export default class MarketAlbumAttachment extends Attachment<IMarketAlbumAttach
 		this.vk = vk;
 		this.payload = payload;
 
-		this.$filled = 'title' in payload && 'updated_time' in payload;
+		this.$filled = payload.title !== undefined && payload.updated_time !== undefined;
 	}
 
 	/**

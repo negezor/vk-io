@@ -320,7 +320,7 @@ export default class API extends APIMethods {
 
 		debug(`http <-- ${method} ${endTime}ms`);
 
-		if ('error' in response) {
+		if (response.error !== undefined) {
 			this.handleError(request, new APIError(response.error));
 
 			return;

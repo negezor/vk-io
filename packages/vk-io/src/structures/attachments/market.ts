@@ -54,7 +54,7 @@ export default class MarketAttachment extends Attachment<IMarketAttachmentPayloa
 		this.vk = vk;
 		this.payload = payload;
 
-		this.$filled = 'title' in payload && 'date' in payload;
+		this.$filled = payload.title !== undefined && payload.date !== undefined;
 	}
 
 	/**

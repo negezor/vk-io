@@ -503,7 +503,7 @@ export default class Upload {
 
 		save.id = save.video_id;
 
-		if ('link' in params) {
+		if (params.link !== undefined) {
 			const response = await fetch(save.upload_url!, {
 				agent: this.vk.options.agent
 			});
@@ -961,7 +961,7 @@ export default class Upload {
 		}
 
 		// @ts-ignore
-		if ('uploadUrl' in source) {
+		if (source.uploadUrl !== undefined) {
 			// eslint-disable-next-line no-param-reassign
 			getServer = (): ReturnType<IUploadConduct['getServer']> => ({
 				// @ts-ignore

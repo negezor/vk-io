@@ -359,7 +359,7 @@ export default class ImplicitFlow {
 		fields.email = login || phone;
 		fields.pass = password;
 
-		if ('captcha_sid' in fields) {
+		if (fields.captcha_sid !== undefined) {
 			const src = $('.oauth_captcha').attr('src') || $('#captcha').attr('src');
 
 			const { key, validate } = await this.vk.callbackService.processingCaptcha({

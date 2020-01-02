@@ -34,7 +34,7 @@ export default class AudioAttachment extends Attachment<IAudioAttachmentPayload>
 		this.vk = vk;
 		this.payload = payload;
 
-		this.$filled = 'duration' in payload && 'date' in payload;
+		this.$filled = payload.duration !== undefined && payload.date !== undefined;
 	}
 
 	/**

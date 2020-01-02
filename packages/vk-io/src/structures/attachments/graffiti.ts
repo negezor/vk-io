@@ -28,7 +28,7 @@ export default class GraffitiAttachment extends Attachment<IGraffitiAttachmentPa
 		this.vk = vk;
 		this.payload = payload;
 
-		this.$filled = 'url' in payload;
+		this.$filled = payload.url !== undefined;
 	}
 
 	/**
