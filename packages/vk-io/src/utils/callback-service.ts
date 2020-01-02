@@ -12,9 +12,9 @@ export interface ICallbackServiceValidate {
 }
 
 export default class CallbackService {
-	public captchaHandler: Function | null = null;
+	public captchaHandler?: Function;
 
-	public twoFactorHandler: Function | null = null;
+	public twoFactorHandler?: Function;
 
 	protected vk: VK;
 
@@ -29,14 +29,14 @@ export default class CallbackService {
 	 * Checks if there is a captcha handler
 	 */
 	public get hasCaptchaHandler(): boolean {
-		return this.captchaHandler !== null;
+		return this.captchaHandler !== undefined;
 	}
 
 	/**
 	 * Checks if there is a two-factor handler
 	 */
 	public get hasTwoFactorHandler(): boolean {
-		return this.twoFactorHandler !== null;
+		return this.twoFactorHandler !== undefined;
 	}
 
 	/**

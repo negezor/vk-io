@@ -64,7 +64,7 @@ export default class CollectStream<T> extends Readable {
 
 	protected supportExecute: boolean;
 
-	protected promise: Promise<ICollectStreamResult<T>> | null;
+	protected promise?: Promise<ICollectStreamResult<T>>;
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	protected params: Record<string, any>;
@@ -120,7 +120,7 @@ export default class CollectStream<T> extends Readable {
 		this.received = 0;
 
 		this.attempts = 0;
-		this.promise = null;
+		this.promise = undefined;
 		this.supportExecute = true;
 
 		this.code = getExecuteCode({
@@ -146,7 +146,7 @@ export default class CollectStream<T> extends Readable {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		catchFn?: (error: Error) => any
 	): Promise<ICollectStreamResult<T>> {
-		if (this.promise === null) {
+		if (this.promise === undefined) {
 			const collectItems: T[] = [];
 			const collectProfiles: UsersUserFull[] = [];
 			const collectGroups: GroupsGroupFull[] = [];
