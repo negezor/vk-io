@@ -9,7 +9,7 @@ import {
 	PhotoAttachment
 } from '..';
 
-const { TOKEN = null } = process.env;
+const { TOKEN } = process.env;
 
 const vk = new VK({ token: TOKEN });
 
@@ -65,7 +65,7 @@ describe('Uploads', (): void => {
 		}
 	});
 
-	if (TOKEN === null) {
+	if (TOKEN === undefined) {
 		it('the test is skipped because there is no token', (): void => {});
 
 		return;

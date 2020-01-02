@@ -37,7 +37,7 @@ describe('Attachments', (): void => {
 				type: 'photo',
 				ownerId: 1234,
 				id: 5678,
-				accessKey: null
+				accessKey: undefined
 			});
 
 			expect(Attachment.fromString('photo1234_5678_ACCESS_KEY')).toMatchObject({
