@@ -1,4 +1,4 @@
-import Context, { IContextOptions } from './context';
+import { Context, IContextOptions } from './context';
 
 import { WallAttachment } from '../attachments';
 
@@ -18,7 +18,7 @@ export type WallPostContextOptions<S> =
 	Omit<IContextOptions<IWallPostContextPayload, S>, 'type' | 'subTypes'>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default class WallPostContext<S = Record<string, any>>
+export class WallPostContext<S = Record<string, any>>
 	extends Context<IWallPostContextPayload, S> {
 	public wall: WallAttachment;
 

@@ -1,5 +1,5 @@
 /* eslint-disable max-classes-per-file */
-import Context, { IContextOptions } from './context';
+import { Context, IContextOptions } from './context';
 
 import { VKError } from '../../errors';
 
@@ -915,4 +915,4 @@ applyMixins(MessageContext, [
 	}
 ]);
 
-export default MessageContext;
+export { MessageContext };

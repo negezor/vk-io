@@ -1,4 +1,4 @@
-import Context, { IContextOptions } from './context';
+import { Context, IContextOptions } from './context';
 
 import { copyParams } from '../../utils/helpers';
 import { inspectCustomData } from '../../utils/constants';
@@ -18,7 +18,7 @@ export type GroupMemberContextOptions<S> =
 	Omit<IContextOptions<IGroupMemberContextPayload, S>, 'type' | 'subTypes'>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default class GroupMemberContext<S = Record<string, any>>
+export class GroupMemberContext<S = Record<string, any>>
 	extends Context<IGroupMemberContextPayload, S> {
 	public constructor(options: GroupMemberContextOptions<S>) {
 		super({

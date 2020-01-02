@@ -21,7 +21,7 @@ export interface IContextOptions<P, S> {
 	groupId?: number;
 }
 
-export default class Context<P = {}, S = {}> {
+export class Context<P = {}, S = {}> {
 	public type: string;
 
 	public subTypes: string[];

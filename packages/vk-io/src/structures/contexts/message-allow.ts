@@ -1,4 +1,4 @@
-import Context, { IContextOptions } from './context';
+import { Context, IContextOptions } from './context';
 
 import { copyParams } from '../../utils/helpers';
 import { inspectCustomData } from '../../utils/constants';
@@ -17,7 +17,7 @@ export type MessageAllowContextOptions<S> =
 	Omit<IContextOptions<IMessageAllowContextPayload, S>, 'type' | 'subTypes'>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default class MessageAllowContext<S = Record<string, any>>
+export class MessageAllowContext<S = Record<string, any>>
 	extends Context<IMessageAllowContextPayload, S> {
 	public constructor(options: MessageAllowContextOptions<S>) {
 		super({

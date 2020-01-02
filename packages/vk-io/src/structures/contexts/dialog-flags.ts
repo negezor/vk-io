@@ -1,4 +1,4 @@
-import Context, { IContextOptions } from './context';
+import { Context, IContextOptions } from './context';
 
 import { copyParams } from '../../utils/helpers';
 import { inspectCustomData } from '../../utils/constants';
@@ -18,7 +18,7 @@ export type DialogFlagsContextOptions<S> =
 	Omit<IContextOptions<number[], S>, 'type' | 'subTypes'>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default class DialogFlagsContext<S = Record<string, any>>
+export class DialogFlagsContext<S = Record<string, any>>
 	extends Context<IDialogFlagsContextPayload, S> {
 	public constructor(options: DialogFlagsContextOptions<S>) {
 		const [eventId, peerId, flags] = options.payload;

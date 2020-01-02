@@ -1,4 +1,4 @@
-import Context, { IContextOptions } from './context';
+import { Context, IContextOptions } from './context';
 
 import { copyParams } from '../../utils/helpers';
 import { inspectCustomData } from '../../utils/constants';
@@ -15,7 +15,7 @@ export type VKAppPayloadContextOptions<S> =
 	Omit<IContextOptions<IVKAppPayloadPayload, S>, 'type' | 'subTypes'>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default class VKAppPayloadContext<S = Record<string, any>>
+export class VKAppPayloadContext<S = Record<string, any>>
 	extends Context<IVKAppPayloadPayload, S> {
 	public constructor(options: VKAppPayloadContextOptions<S>) {
 		super({

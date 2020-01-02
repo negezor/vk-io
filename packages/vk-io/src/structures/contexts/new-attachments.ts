@@ -1,4 +1,4 @@
-import Context, { IContextOptions } from './context';
+import { Context, IContextOptions } from './context';
 
 import { VKError } from '../../errors';
 
@@ -124,4 +124,4 @@ class NewAttachmentsContext<S = Record<string, any>>
 interface NewAttachmentsContext extends Attachmentable {}
 applyMixins(NewAttachmentsContext, [Attachmentable]);
 
-export default NewAttachmentsContext;
+export { NewAttachmentsContext };

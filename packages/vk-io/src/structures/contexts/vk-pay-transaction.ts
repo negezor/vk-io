@@ -1,4 +1,4 @@
-import Context, { IContextOptions } from './context';
+import { Context, IContextOptions } from './context';
 
 import { copyParams } from '../../utils/helpers';
 import { inspectCustomData } from '../../utils/constants';
@@ -15,7 +15,7 @@ export type VKPayTransactionContextOptions<S> =
 	Omit<IContextOptions<IVKPayTransactionPayload, S>, 'type' | 'subTypes'>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default class VKPayTransactionContext<S = Record<string, any>>
+export class VKPayTransactionContext<S = Record<string, any>>
 	extends Context<IVKPayTransactionPayload, S> {
 	public constructor(options: VKPayTransactionContextOptions<S>) {
 		super({

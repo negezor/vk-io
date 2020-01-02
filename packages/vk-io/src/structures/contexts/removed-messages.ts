@@ -1,4 +1,4 @@
-import Context, { IContextOptions } from './context';
+import { Context, IContextOptions } from './context';
 
 import { copyParams } from '../../utils/helpers';
 import { inspectCustomData } from '../../utils/constants';
@@ -16,7 +16,7 @@ export type RemovedMessagesContextOptions<S> =
 	Omit<IContextOptions<number[], S>, 'type' | 'subTypes'>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default class RemovedMessagesContext<S = Record<string, any>>
+export class RemovedMessagesContext<S = Record<string, any>>
 	extends Context<IRemovedMessagesContextPayload, S> {
 	public constructor(options: RemovedMessagesContextOptions<S>) {
 		const [eventId, peerId, id] = options.payload;

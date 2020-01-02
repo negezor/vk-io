@@ -1,4 +1,4 @@
-import Context, { IContextOptions } from './context';
+import { Context, IContextOptions } from './context';
 
 import Attachmentable from '../shared/attachmentable';
 import { Attachment, PhotoAttachment } from '../attachments';
@@ -120,4 +120,4 @@ class GroupUpdateContext<S = Record<string, any>>
 interface GroupUpdateContext extends Attachmentable {}
 applyMixins(GroupUpdateContext, [Attachmentable]);
 
-export default GroupUpdateContext;
+export { GroupUpdateContext };

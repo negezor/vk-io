@@ -1,4 +1,4 @@
-import Context, { IContextOptions } from './context';
+import { Context, IContextOptions } from './context';
 
 import { copyParams } from '../../utils/helpers';
 import { inspectCustomData } from '../../utils/constants';
@@ -19,7 +19,7 @@ export type MessageFlagsContextOptions<S> =
 	Omit<IContextOptions<number[], S>, 'type' | 'subTypes'>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default class MessageFlagsContext<S = Record<string, any>>
+export class MessageFlagsContext<S = Record<string, any>>
 	extends Context<IMessageFlagsContextPayload, S> {
 	public constructor(options: MessageFlagsContextOptions<S>) {
 		const [eventId, id, flags, peerId] = options.payload;

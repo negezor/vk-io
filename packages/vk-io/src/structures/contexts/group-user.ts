@@ -1,4 +1,4 @@
-import Context, { IContextOptions } from './context';
+import { Context, IContextOptions } from './context';
 
 import { VKError } from '../../errors';
 
@@ -34,7 +34,7 @@ export type GroupUserContextOptions<S> =
 	Omit<IContextOptions<IGroupUserContextPayload, S>, 'type' | 'subTypes'>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default class GroupUserContext<S = Record<string, any>>
+export class GroupUserContext<S = Record<string, any>>
 	extends Context<IGroupUserContextPayload, S> {
 	public constructor(options: GroupUserContextOptions<S>) {
 		super({

@@ -1,4 +1,4 @@
-import Context, { IContextOptions } from './context';
+import { Context, IContextOptions } from './context';
 
 import { copyParams } from '../../utils/helpers';
 import { inspectCustomData } from '../../utils/constants';
@@ -14,7 +14,7 @@ export type VoteContextOptions<S> =
 	Omit<IContextOptions<IVoteContextPayload, S>, 'type' | 'subTypes'>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default class VoteContext<S = Record<string, any>>
+export class VoteContext<S = Record<string, any>>
 	extends Context<IVoteContextPayload, S> {
 	public constructor(options: VoteContextOptions<S>) {
 		super({

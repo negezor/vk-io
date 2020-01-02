@@ -1,4 +1,4 @@
-import Context, { IContextOptions } from './context';
+import { Context, IContextOptions } from './context';
 
 import { copyParams, getPeerType, showDeprecatedMessage } from '../../utils/helpers';
 import {
@@ -30,7 +30,7 @@ export type TypingContextOptions<S> =
 	Omit<IContextOptions<ITypingContextPayload, S>, 'type' | 'subTypes'>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default class TypingContext<S = Record<string, any>>
+export class TypingContext<S = Record<string, any>>
 	extends Context<ITypingContextPayload, S> {
 	public constructor(options: TypingContextOptions<S>) {
 		super({

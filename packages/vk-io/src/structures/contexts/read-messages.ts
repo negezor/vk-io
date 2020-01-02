@@ -1,4 +1,4 @@
-import Context, { IContextOptions } from './context';
+import { Context, IContextOptions } from './context';
 
 import { copyParams } from '../../utils/helpers';
 import { inspectCustomData } from '../../utils/constants';
@@ -17,7 +17,7 @@ export type ReadMessagesContextContextOptions<S> =
 	Omit<IContextOptions<number[], S>, 'type' | 'subTypes'>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default class ReadMessagesContext<S = Record<string, any>>
+export class ReadMessagesContext<S = Record<string, any>>
 	extends Context<IReadMessagesContextPayload, S> {
 	public constructor(options: ReadMessagesContextContextOptions<S>) {
 		const [eventId, peerId, id] = options.payload;

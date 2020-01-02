@@ -1,4 +1,4 @@
-import Context, { IContextOptions } from './context';
+import { Context, IContextOptions } from './context';
 
 import { copyParams } from '../../utils/helpers';
 import { platforms, inspectCustomData } from '../../utils/constants';
@@ -18,7 +18,7 @@ export type UserOnlineContextOptions<S> =
 	Omit<IContextOptions<[number, number, number, number], S>, 'type' | 'subTypes'>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default class UserOnlineContext<S = Record<string, any>>
+export class UserOnlineContext<S = Record<string, any>>
 	extends Context<IUserOnlineContextPayload, S> {
 	public constructor(options: UserOnlineContextOptions<S>) {
 		const [eventId, userId, extra, date] = options.payload;
