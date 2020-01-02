@@ -70,8 +70,8 @@ export default class UserOnlineContext<S = Record<string, any>>
 	/**
 	 * Returns the user id
 	 */
-	public get userId(): number | null {
-		return this.payload.user_id || null;
+	public get userId(): number | undefined {
+		return this.payload.user_id;
 	}
 
 	/**

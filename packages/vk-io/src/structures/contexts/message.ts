@@ -57,7 +57,7 @@ export interface IMessageContextPayload {
 		ref_source?: string;
 		attachments: object[];
 		important: boolean;
-		geo: object | null;
+		geo?: object;
 		payload?: string;
 		fwd_messages?: object[];
 		reply_message?: object;
@@ -91,15 +91,15 @@ class MessageContext<S = Record<string, any>>
 	extends Context<IMessageContextPayload, S> {
 	public $match!: RegExpMatchArray;
 
-	public text!: string | null;
+	public text?: string;
 
 	protected $filled: boolean;
 
-	protected [kForwards]: MessageForwardsCollection | null;
+	protected [kForwards]?: MessageForwardsCollection;
 
-	protected [kAttachments]: (Attachment | ExternalAttachment)[] | null;
+	protected [kAttachments]?: (Attachment | ExternalAttachment)[];
 
-	protected [kReplyMessage]: MessageReply | null;
+	protected [kReplyMessage]?: MessageReply;
 
 	public constructor(options: MessageContextOptions<S>) {
 		super({
@@ -146,10 +146,6 @@ class MessageContext<S = Record<string, any>>
 
 		const [message] = items;
 
-		this[kForwards] = null;
-		this[kAttachments] = null;
-		this[kReplyMessage] = null;
-
 		// @ts-ignore
 		this.applyPayload(message);
 
@@ -167,7 +163,7 @@ class MessageContext<S = Record<string, any>>
 	 * Checks for reply message
 	 */
 	public get hasReplyMessage(): boolean {
-		return this.replyMessage !== null;
+		return this.replyMessage !== undefined;
 	}
 
 	/**
@@ -237,7 +233,7 @@ class MessageContext<S = Record<string, any>>
 	 * Check is special event
 	 */
 	public get isEvent(): boolean {
-		return this.eventType !== null;
+		return this.eventType !== undefined;
 	}
 
 	/**
@@ -271,8 +267,8 @@ class MessageContext<S = Record<string, any>>
 	/**
 	 * Returns the conversation message id
 	 */
-	public get conversationMessageId(): number | null {
-		return this.message.conversation_message_id || null;
+	public get conversationMessageId(): number | undefined {
+		return this.message.conversation_message_id;
 	}
 
 	/**
@@ -306,9 +302,9 @@ class MessageContext<S = Record<string, any>>
 	/**
 	 * Returns the identifier chat
 	 */
-	public get chatId(): number | null {
+	public get chatId(): number | undefined {
 		if (!this.isChat) {
-			return null;
+			return undefined;
 		}
 
 		return this.peerId - CHAT_PEER;
@@ -338,9 +334,9 @@ class MessageContext<S = Record<string, any>>
 	/**
 	 * Returns geo
 	 */
-	public get geo(): object | null {
+	public get geo(): object | undefined {
 		if (!this.hasGeo) {
-			return null;
+			return undefined;
 		}
 
 		if (!this.$filled) {
@@ -356,52 +352,52 @@ class MessageContext<S = Record<string, any>>
 	/**
 	 * Returns the event name
 	 */
-	public get eventType(): string | null {
+	public get eventType(): string | undefined {
 		return (
 			this.message.action
 			&& this.message.action.type
-		) || null;
+		);
 	}
 
 	/**
 	 * Returns the event member id
 	 */
-	public get eventMemberId(): number | null {
+	public get eventMemberId(): number | undefined {
 		return (
 			this.message.action
 			&& this.message.action.member_id
-		) || null;
+		);
 	}
 
 	/**
 	 * Returns the event name
 	 */
-	public get eventText(): string | null {
+	public get eventText(): string | undefined {
 		return (
 			this.message.action
 			&& this.message.action.text
-		) || null;
+		);
 	}
 
 	/**
 	 * Returns the event email
 	 */
-	public get eventEmail(): string | null {
+	public get eventEmail(): string | undefined {
 		return (
 			this.message.action
 			&& this.message.action.email
-		) || null;
+		);
 	}
 
 	/**
 	 * Returns the message payload
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	public get messagePayload(): any | null {
-		const { payload = null } = this.message;
+	public get messagePayload(): any | undefined {
+		const { payload } = this.message;
 
-		if (payload === null) {
-			return null;
+		if (payload === undefined) {
+			return undefined;
 		}
 
 		return JSON.parse(payload);
@@ -429,11 +425,11 @@ class MessageContext<S = Record<string, any>>
 	/**
 	 * Returns the reply message
 	 */
-	public get replyMessage(): MessageReply | null {
+	public get replyMessage(): MessageReply | undefined {
 		if (!this[kReplyMessage]) {
 			this[kReplyMessage] = this.message.reply_message
 				? new MessageReply(this.message.reply_message, this.vk)
-				: null;
+				: undefined;
 		}
 
 		return this[kReplyMessage];
@@ -836,7 +832,7 @@ class MessageContext<S = Record<string, any>>
 
 		this.text = payload.message.text
 			? unescapeHTML(payload.message.text)
-			: null;
+			: undefined;
 	}
 
 	/**
@@ -909,11 +905,11 @@ interface MessageContext extends Attachmentable, IAllAttachmentable {}
 applyMixins(MessageContext, [
 	Attachmentable,
 	class AllAttachmentable extends Attachmentable {
-		public replyMessage!: MessageReply | null;
+		public replyMessage?: MessageReply;
 
 		public forwards!: MessageForwardsCollection;
 
-		public hasAllAttachments(type: AttachmentTypeString | null = null): boolean {
+		public hasAllAttachments(type: AttachmentTypeString | undefined): boolean {
 			return (
 				this.hasAttachments(type)
 				|| (this.replyMessage && this.replyMessage.hasAttachments(type))

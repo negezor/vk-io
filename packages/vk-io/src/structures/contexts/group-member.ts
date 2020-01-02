@@ -48,9 +48,9 @@ export default class GroupMemberContext<S = Record<string, any>>
 	/**
 	 * Checks is self leave user
 	 */
-	public get isSelfLeave(): boolean | null {
+	public get isSelfLeave(): boolean | undefined {
 		if (this.isJoin) {
-			return null;
+			return undefined;
 		}
 
 		return Boolean(this.payload.self);
@@ -66,9 +66,9 @@ export default class GroupMemberContext<S = Record<string, any>>
 	/**
 	 * Returns the join type
 	 */
-	public get joinType(): string | null {
+	public get joinType(): string | undefined {
 		if (this.isLeave) {
-			return null;
+			return undefined;
 		}
 
 		return this.payload.join_type!;

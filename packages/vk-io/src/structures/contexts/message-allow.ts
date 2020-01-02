@@ -54,8 +54,8 @@ export default class MessageAllowContext<S = Record<string, any>>
 	/**
 	 * Returns the key
 	 */
-	public get key(): string | null {
-		return this.payload.key || null;
+	public get key(): string | undefined {
+		return this.payload.key;
 	}
 
 	/**

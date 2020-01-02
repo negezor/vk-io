@@ -80,7 +80,7 @@ export default class TypingContext<S = Record<string, any>>
 	 * Checks that the message is typed in the chat
 	 */
 	public get isChat(): boolean {
-		return this.chatId !== null;
+		return this.chatId !== undefined;
 	}
 
 	/**
@@ -118,12 +118,12 @@ export default class TypingContext<S = Record<string, any>>
 	/**
 	 * Returns the identifier chat
 	 */
-	public get chatId(): number | null {
+	public get chatId(): number | undefined {
 		const chatId = this.toId - CHAT_PEER;
 
 		return chatId > 0
 			? chatId
-			: null;
+			: undefined;
 	}
 
 	/**

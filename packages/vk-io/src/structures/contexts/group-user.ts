@@ -64,9 +64,9 @@ export default class GroupUserContext<S = Record<string, any>>
 	/**
 	 * Checks that the block has expired
 	 */
-	public get isExpired(): boolean | null {
+	public get isExpired(): boolean | undefined {
 		if (this.isBlocked) {
-			return null;
+			return undefined;
 		}
 
 		return Boolean(this.payload.by_end_date);
@@ -89,30 +89,30 @@ export default class GroupUserContext<S = Record<string, any>>
 	/**
 	 * Returns the reason for the ban
 	 */
-	public get reasonId(): number | null {
-		return this.payload.reason || null;
+	public get reasonId(): number | undefined {
+		return this.payload.reason;
 	}
 
 	/**
 	 * Returns the reason name for the ban
 	 */
-	public get reasonName(): string | null {
+	public get reasonName(): string | undefined {
 		// @ts-ignore
 		return reasonNames.get(this.reasonId);
 	}
 
 	/**
-	 * Returns the unblock date or null if permanent
+	 * Returns the unblock date or undefined if permanent
 	 */
-	public get unblockAt(): number | null {
-		return this.payload.unblock_date || null;
+	public get unblockAt(): number | undefined {
+		return this.payload.unblock_date;
 	}
 
 	/**
 	 * Returns the administrator comment to block
 	 */
-	public get comment(): string | null {
-		return this.payload.comment || null;
+	public get comment(): string | undefined {
+		return this.payload.comment;
 	}
 
 	/**

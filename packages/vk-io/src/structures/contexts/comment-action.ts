@@ -160,25 +160,24 @@ class CommentActionContext<S = Record<string, any>>
 	/**
 	 * Returns the identifier reply comment
 	 */
-	public get replyId(): number | null {
-		return this.payload.reply_to_comment || null;
+	public get replyId(): number | undefined {
+		return this.payload.reply_to_comment;
 	}
 
 	/**
 	 * identifier of who wrote the comment
 	 */
-	public get fromId(): number | null {
+	public get fromId(): number | undefined {
 		return (
 			this.payload.from_id
 			|| this.payload.user_id
-			|| null
 		);
 	}
 
 	/**
 	 * Returns the identifier user
 	 */
-	public get userId(): number | null {
+	public get userId(): number | undefined {
 		showDeprecatedMessage('context.userId deperecated, use context.fromId');
 
 		return this.fromId;
@@ -187,21 +186,21 @@ class CommentActionContext<S = Record<string, any>>
 	/**
 	 * Returns the identifier reply user
 	 */
-	public get replyUserId(): number | null {
-		return this.payload.reply_to_user || null;
+	public get replyUserId(): number | undefined {
+		return this.payload.reply_to_user;
 	}
 
 	/**
 	 * Returns the identifier of the user who deleted the comment
 	 */
-	public get removerUserId(): number | null {
-		return this.payload.deleter_id || null;
+	public get removerUserId(): number | undefined {
+		return this.payload.deleter_id;
 	}
 
 	/**
 	 * Returns the identifier of object
 	 */
-	public get objectId(): number | null {
+	public get objectId(): number | undefined {
 		const { payload } = this;
 
 		return (
@@ -210,14 +209,13 @@ class CommentActionContext<S = Record<string, any>>
 			|| payload.post_id
 			|| payload.topic_id
 			|| payload.item_id
-			|| null
 		);
 	}
 
 	/**
 	 * Returns the identifier of owner
 	 */
-	public get ownerId(): number | null {
+	public get ownerId(): number | undefined {
 		const { payload } = this;
 
 		return (
@@ -227,30 +225,29 @@ class CommentActionContext<S = Record<string, any>>
 			|| payload.post_owner_id
 			|| payload.topic_owner_id
 			|| payload.market_owner_id
-			|| null
 		);
 	}
 
 	/**
 	 * Returns the date creation action comment
 	 */
-	public get createdAt(): number | null {
-		return this.payload.date || null;
+	public get createdAt(): number | undefined {
+		return this.payload.date;
 	}
 
 	/**
 	 * Returns the text comment
 	 */
-	public get text(): string | null {
-		return this.payload.text || null;
+	public get text(): string | undefined {
+		return this.payload.text;
 	}
 
 	/**
 	 * Returns the likes
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	public get likes(): Record<string, any> | null {
-		return this.payload.likes || null;
+	public get likes(): Record<string, any> | undefined {
+		return this.payload.likes;
 	}
 
 	/**
@@ -387,7 +384,7 @@ class CommentActionContext<S = Record<string, any>>
 
 		const filtredEmptyProperties = properties.filter(property => (
 			// @ts-ignore
-			this[property] !== null
+			this[property] !== undefined
 		));
 
 		// @ts-ignore

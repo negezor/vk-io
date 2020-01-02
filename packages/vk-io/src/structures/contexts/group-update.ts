@@ -69,8 +69,8 @@ class GroupUpdateContext<S = Record<string, any>>
 	/**
 	 * Returns the identifier admin
 	 */
-	public get adminId(): number | null {
-		return this.payload.admin_id || null;
+	public get adminId(): number | undefined {
+		return this.payload.admin_id;
 	}
 
 	/**
@@ -83,22 +83,22 @@ class GroupUpdateContext<S = Record<string, any>>
 	/**
 	 * Returns the old level permission
 	 */
-	public get oldLevel(): number | null {
-		return this.payload.level_old || null;
+	public get oldLevel(): number | undefined {
+		return this.payload.level_old;
 	}
 
 	/**
 	 * Returns the new level permission
 	 */
-	public get newLevel(): number | null {
-		return this.payload.level_new || null;
+	public get newLevel(): number | undefined {
+		return this.payload.level_new;
 	}
 
 	/**
 	 * Returns the changes settings
 	 */
-	public get changes(): Record<string, { old_value: string; new_value: string }> | null {
-		return this.payload.changes || null;
+	public get changes(): Record<string, { old_value: string; new_value: string }> | undefined {
+		return this.payload.changes;
 	}
 
 	/**
