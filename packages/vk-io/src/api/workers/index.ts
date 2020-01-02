@@ -1,3 +1,3 @@
-export { default as parallel } from './parallel';
-export { default as sequential } from './sequential';
-export { default as parallelSelected } from './parallel-selected';
+export { parallel } from './parallel';
+export { sequential } from './sequential';
+export { parallelSelected } from './parallel-selected';

@@ -7,7 +7,7 @@ import VK from '../vk';
 import { UsersUserFull, GroupsGroupFull } from '../api/schemas/objects';
 import { CollectError, APIErrorCode, CollectErrorCode } from '../errors';
 
-import APIRequest from '../api/request';
+import { APIRequest } from '../api/request';
 import getExecuteCode from './execute-code';
 
 const debug = createDebug('vk-io:collect:stream');

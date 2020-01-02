@@ -7,7 +7,7 @@ import { URLSearchParams } from 'url';
 import { APIMethods } from './schemas/methods';
 
 import VK from '../vk';
-import APIRequest from './request';
+import { APIRequest } from './request';
 import { getRandomId, delay } from '../utils/helpers';
 import { VKError, APIError, ExecuteError } from '../errors';
 import { sequential, parallel, parallelSelected } from './workers';
@@ -96,7 +96,7 @@ const groupMethods = [
 /**
  * Working with API methods
  */
-export default class API extends APIMethods {
+export class API extends APIMethods {
 	private queue: APIRequest[] = [];
 
 	private started = false;

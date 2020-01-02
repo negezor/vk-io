@@ -1,5 +1,5 @@
 import VK from './vk';
-import APIRequest from './api/request';
+import { APIRequest } from './api/request';
 
 export * from './errors';
 export * from './structures/keyboard';

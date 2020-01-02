@@ -9,7 +9,7 @@ export interface IAPIRequestOptions {
 	params: Record<string, any>;
 }
 
-export default class APIRequest {
+export class APIRequest {
 	public method: string;
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any

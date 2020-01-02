@@ -1,7 +1,7 @@
 import { Agent } from 'https';
 import { inspect } from 'util';
 
-import API from './api';
+import { API } from './api';
 import Upload from './upload';
 import Collect from './collect';
 import Updates from './updates';

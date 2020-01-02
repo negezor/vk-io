@@ -1,14 +1,14 @@
-import APIRequest from '../request';
-import sequential from './sequential';
+import { APIRequest } from '../request';
+import { sequential } from './sequential';
 
-import API from '../api';
+import { API } from '../api';
 import {
 	delay,
 	getChainReturn,
 	resolveExecuteTask
 } from '../../utils/helpers';
 
-export default async function parallelSelected(api: API, next: Function): Promise<void> {
+export async function parallelSelected(api: API, next: Function): Promise<void> {
 	// @ts-ignore
 	const { apiExecuteMethods, apiExecuteCount } = api.vk.options;
 
