@@ -1,10 +1,12 @@
 import { Composer as MiddlewareComposer } from 'middleware-io';
 
-export class Composer extends MiddlewareComposer {
+import { Context } from '../contexts';
+
+export class Composer<T = Context> extends MiddlewareComposer<T> {
 	/**
 	 * Create new `Composer` instance
 	 */
-	public static builder(): Composer {
-		return new Composer();
+	public static builder<T = Context>(): Composer<T> {
+		return new Composer<T>();
 	}
 }
