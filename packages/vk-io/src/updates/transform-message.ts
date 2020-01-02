@@ -70,8 +70,6 @@ export default function transformMessage({
 			? {}
 			: undefined,
 		payload: extra.payload
-			? extra.payload
-			: undefined
 	};
 
 	message.peer_id = peer;
