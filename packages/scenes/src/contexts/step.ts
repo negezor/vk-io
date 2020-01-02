@@ -46,8 +46,8 @@ export default class StepSceneContext {
 	/**
 	 * Returns current handler
 	 */
-	public get current(): StepSceneHandler<{}> | null {
-		return this.steps[this.stepId] || null;
+	public get current(): StepSceneHandler<{}> | undefined {
+		return this.steps[this.stepId];
 	}
 
 	/**

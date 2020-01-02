@@ -72,7 +72,7 @@ export default class SceneContext {
 	/**
 	 * Returns current scene
 	 */
-	public get current(): IScene | null {
+	public get current(): IScene | undefined {
 		return this.repository.get(this.session.current);
 	}
 
@@ -94,7 +94,7 @@ export default class SceneContext {
 
 		const { current } = this;
 
-		const isNotCurrent = current !== null && current.slug !== scene.slug;
+		const isNotCurrent = current !== undefined && current.slug !== scene.slug;
 
 		if (!this.leaving && isNotCurrent) {
 			await this.leave({
