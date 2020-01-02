@@ -38,7 +38,7 @@
 	},
 	"dependencies": {
 		"debug": "^4.1.1",
-		"middleware-io": "^2.1.0",
+		"middleware-io": "^2.3.0",
 		"node-fetch": "^2.6.0",
 		"sandwich-stream": "^2.0.2"
 	}
