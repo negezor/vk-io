@@ -1,4 +1,4 @@
-import ISessionStorage from './storage';
+import { ISessionStorage } from './storage';
 
 export interface IMemoryStoreLike<K, V> {
 	get(key: K): V | undefined;
@@ -10,7 +10,7 @@ export interface IMemoryStorageOptions {
 	store: IMemoryStoreLike<string, object>;
 }
 
-export default class MemoryStorage implements ISessionStorage {
+export class MemoryStorage implements ISessionStorage {
 	private store: IMemoryStorageOptions['store'];
 
 	constructor({ store = new Map() }: Partial<IMemoryStorageOptions> = {}) {

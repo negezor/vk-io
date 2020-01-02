@@ -9,7 +9,7 @@ import {
 	SessionForceUpdate
 } from './types';
 
-export default class SessionManager<T = {}> {
+export class SessionManager<T = {}> {
 	protected storage: ISessionManagerOptions['storage'];
 
 	protected contextKey: ISessionManagerOptions['contextKey'];

@@ -1,3 +1,3 @@
-export { default as ISessionStorage } from './storage';
+export { ISessionStorage } from './storage';
 
-export { default as MemoryStorage, IMemoryStorageOptions, IMemoryStoreLike } from './memory';
+export { MemoryStorage, IMemoryStorageOptions, IMemoryStoreLike } from './memory';

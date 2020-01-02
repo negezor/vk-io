@@ -1,4 +1,4 @@
-import SessionManager from './session-manager';
+import { SessionManager } from './session-manager';
 
 export * from './storages';
 
