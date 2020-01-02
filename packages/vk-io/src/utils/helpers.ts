@@ -94,8 +94,7 @@ export const copyParams = <
 	T,
 	K extends keyof T
 >(params: T, properties: K[]): Pick<T, K> => {
-	// @ts-ignore
-	const copies: Pick<T, K> = {};
+	const copies: Pick<T, K> = {} as T;
 
 	for (const property of properties) {
 		copies[property] = params[property];
