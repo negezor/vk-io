@@ -12,7 +12,7 @@ export interface IMultipartStreamAddPartOptions {
 	body: MultipartStreamBody;
 }
 
-export default class MultipartStream extends SandwichStream {
+export class MultipartStream extends SandwichStream {
 	/**
 	 * Multipart boundary
 	 */

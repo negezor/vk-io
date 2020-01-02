@@ -6,7 +6,7 @@ import { createReadStream } from 'fs';
 import { inspect, deprecate } from 'util';
 
 import VK from '../vk';
-import MultipartStream from './multipart-stream';
+import { MultipartStream } from './multipart-stream';
 import { UploadError, UploadErrorCode } from '../errors';
 import { isStream, copyParams, streamToBuffer } from './helpers';
 import { DefaultExtension, DefaultContentType } from '../utils/constants';
@@ -135,7 +135,7 @@ const DocumentTypes: Record<string, typeof DocumentAttachment
 	audio_message: AudioMessageAttachment
 };
 
-export default class Upload {
+export class Upload {
 	private vk: VK;
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
