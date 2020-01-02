@@ -1,11 +1,11 @@
-import IScene from './scenes/scene';
+import { IScene } from './scenes/scene';
 
 import { IContext, Middleware } from './types';
 import { SceneContext } from './contexts';
-import CacheRepository from './cache-repository';
+import { CacheRepository } from './cache-repository';
 import { SceneRepository, ISceneManagerOptions } from './scene-manager.types';
 
-export default class SceneManager {
+export class SceneManager {
 	private repository: SceneRepository = new CacheRepository();
 
 	public constructor(rawOptions: ISceneManagerOptions | IScene[] = {}) {

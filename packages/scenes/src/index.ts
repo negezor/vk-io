@@ -1,4 +1,4 @@
-import SceneManager from './scene-manager';
+import { SceneManager } from './scene-manager';
 
 export * from './scenes';
 export * from './contexts';

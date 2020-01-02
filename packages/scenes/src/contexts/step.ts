@@ -2,7 +2,7 @@ import { IStepContextOptions, IStepContextGoOptions } from './step.types';
 import { StepSceneHandler } from '../scenes/step.types';
 import { LastAction } from './scene.types';
 
-export default class StepSceneContext {
+export class StepSceneContext {
 	private context: IStepContextOptions['context'];
 
 	private steps: IStepContextOptions['steps'];

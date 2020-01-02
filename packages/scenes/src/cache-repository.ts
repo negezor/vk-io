@@ -1,6 +1,6 @@
 type CacheRepositorySortingValues<Value> = (a: Value, b: Value) => number;
 
-export default class CacheRepository<Key, Value> {
+export class CacheRepository<Key, Value> {
 	private readonly collection: Map<Key, Value> = new Map();
 
 	public keys: Key[] = [];

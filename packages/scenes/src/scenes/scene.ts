@@ -1,6 +1,6 @@
 import { IContext } from '../types';
 
-export default interface IScene {
+export interface IScene {
 	/**
 	 * The unique name of the scene
 	 */

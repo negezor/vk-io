@@ -1,12 +1,12 @@
 import { MessageContext } from 'vk-io';
 
-import IScene from './scene';
+import { IScene } from './scene';
 
 import { StepSceneContext } from '../contexts';
 import { LastAction } from '../contexts/scene.types';
 import { StepSceneHandler, IStepContext, IStepSceneOptions } from './step.types';
 
-export default class StepScene<T = MessageContext> implements IScene {
+export class StepScene<T = MessageContext> implements IScene {
 	public slug: string;
 
 	private steps: StepSceneHandler<T>[];

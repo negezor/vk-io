@@ -8,7 +8,7 @@ import {
 } from './scene.types';
 import { IScene } from '../scenes';
 
-export default class SceneContext {
+export class SceneContext {
 	/**
 	 * Lazy session for submodules
 	 * ```ts
