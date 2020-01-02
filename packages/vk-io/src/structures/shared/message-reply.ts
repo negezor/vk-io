@@ -39,7 +39,7 @@ class MessageReply {
 	 * Checks if there is text
 	 */
 	public get hasText(): boolean {
-		return this.text !== null;
+		return this.text !== undefined;
 	}
 
 	/**
@@ -52,8 +52,8 @@ class MessageReply {
 	/**
 	 * Returns the conversation message id
 	 */
-	public get conversationMessageId(): number | null {
-		return this.payload.conversation_message_id || null;
+	public get conversationMessageId(): number | undefined {
+		return this.payload.conversation_message_id;
 	}
 
 	/**
@@ -87,8 +87,8 @@ class MessageReply {
 	/**
 	 * Returns the message text
 	 */
-	public get text(): string | null {
-		return this.payload.text || null;
+	public get text(): string | undefined {
+		return this.payload.text;
 	}
 
 	/**

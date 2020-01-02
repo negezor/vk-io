@@ -54,7 +54,7 @@ class MessageForward {
 	 * Checks if there is text
 	 */
 	public get hasText(): boolean {
-		return this.text !== null;
+		return this.text !== undefined;
 	}
 
 	/**
@@ -81,8 +81,8 @@ class MessageForward {
 	/**
 	 * Returns the message text
 	 */
-	public get text(): string | null {
-		return this.payload.text || null;
+	public get text(): string | undefined {
+		return this.payload.text;
 	}
 
 	/**

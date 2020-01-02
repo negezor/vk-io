@@ -42,14 +42,14 @@ applyMixins(MessageForwardsCollection, [
 	class CustomAttachmentable {
 		public flatten!: MessageForward[];
 
-		public hasAttachments(type: AttachmentTypeString | null = null): boolean {
+		public hasAttachments(type?: AttachmentTypeString): boolean {
 			return this.flatten.some(forward => (
 				forward.hasAttachments(type)
 			));
 		}
 
 		public getAttachments(
-			type: AttachmentTypeString | null = null
+			type?: AttachmentTypeString
 		): (Attachment | ExternalAttachment)[] {
 			const attachments = this.flatten.map(forward => (
 				// @ts-ignore

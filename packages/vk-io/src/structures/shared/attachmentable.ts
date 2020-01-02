@@ -28,8 +28,8 @@ export default class Attachmentable {
 	/**
 	 * Checks for the presence of attachments
 	 */
-	public hasAttachments(type: AttachmentType | AttachmentTypeString | null = null): boolean {
-		if (type === null) {
+	public hasAttachments(type?: AttachmentType | AttachmentTypeString): boolean {
+		if (type === undefined) {
 			return this.attachments.length > 0;
 		}
 
@@ -71,8 +71,8 @@ export default class Attachmentable {
 
 	public getAttachments(type: AttachmentType.WALL_REPLY | 'wall_reply'): WallReplyAttachment[];
 
-	public getAttachments(type: AttachmentType | AttachmentTypeString | null = null): (Attachment | ExternalAttachment)[] {
-		if (type === null) {
+	public getAttachments(type?: AttachmentType | AttachmentTypeString): (Attachment | ExternalAttachment)[] {
+		if (type === undefined) {
 			return this.attachments;
 		}
 
