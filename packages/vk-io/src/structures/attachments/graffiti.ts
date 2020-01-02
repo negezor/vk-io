@@ -1,6 +1,6 @@
 import VK from '../../vk';
 
-import Attachment from './attachment';
+import { Attachment } from './attachment';
 
 import { copyParams } from '../../utils/helpers';
 import { AttachmentType, inspectCustomData } from '../../utils/constants';
@@ -17,7 +17,7 @@ export interface IGraffitiAttachmentPayload {
 	url?: string;
 }
 
-export default class GraffitiAttachment extends Attachment<IGraffitiAttachmentPayload> {
+export class GraffitiAttachment extends Attachment<IGraffitiAttachmentPayload> {
 	/**
 	 * Constructor
 	 */

@@ -1,21 +1,20 @@
-export { default as Attachment } from './attachment';
-export { default as ExternalAttachment } from './external';
+export * from './attachment';
+export * from './external';
 
-export { default as PollAttachment } from './poll';
-export { default as GiftAttachment } from './gift';
-// eslint-disable-next-line import/no-cycle
-export { default as WallAttachment } from './wall';
-export { default as LinkAttachment } from './link';
-export { default as PhotoAttachment } from './photo';
-export { default as AudioAttachment } from './audio';
-export { default as StoryAttachment } from './story';
-export { default as VideoAttachment } from './video';
-export { default as MarketAttachment } from './market';
-export { default as StickerAttachment } from './sticker';
-export { default as GraffitiAttachment } from './graffiti';
-export { default as DocumentAttachment } from './document';
-export { default as WallReplyAttachment } from './wall-reply';
-export { default as MarketAlbumAttachment } from './market-album';
-export { default as AudioMessageAttachment } from './audio-message';
+export * from './poll';
+export * from './gift';
+export * from './wall';
+export * from './link';
+export * from './photo';
+export * from './audio';
+export * from './story';
+export * from './video';
+export * from './market';
+export * from './sticker';
+export * from './graffiti';
+export * from './document';
+export * from './wall-reply';
+export * from './market-album';
+export * from './audio-message';
 
 export { transformAttachments } from './helpers';

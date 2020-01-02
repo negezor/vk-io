@@ -1,6 +1,6 @@
 import VK from '../../vk';
 
-import ExternalAttachment from './external';
+import { ExternalAttachment } from './external';
 
 import { AttachmentType, inspectCustomData } from '../../utils/constants';
 
@@ -10,7 +10,7 @@ export interface IGiftAttachmentPayload {
 	id: number;
 }
 
-export default class GiftAttachment extends ExternalAttachment<IGiftAttachmentPayload> {
+export class GiftAttachment extends ExternalAttachment<IGiftAttachmentPayload> {
 	/**
 	 * Constructor
 	 */

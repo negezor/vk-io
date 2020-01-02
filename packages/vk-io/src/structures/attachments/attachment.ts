@@ -3,7 +3,7 @@ import { inspect } from 'util';
 import VK from '../../vk';
 import { parseAttachment, inspectCustomData, AttachmentType } from '../../utils/constants';
 
-export default class Attachment<P = {}> {
+export class Attachment<P = {}> {
 	public type: AttachmentType | string;
 
 	public ownerId: number;

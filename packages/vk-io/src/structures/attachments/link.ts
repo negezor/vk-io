@@ -1,8 +1,8 @@
 import VK from '../../vk';
 
-import ExternalAttachment from './external';
+import { ExternalAttachment } from './external';
 
-import PhotoAttachment, { IPhotoAttachmentPayload } from './photo';
+import { PhotoAttachment, IPhotoAttachmentPayload } from './photo';
 import { copyParams } from '../../utils/helpers';
 import { AttachmentType, inspectCustomData } from '../../utils/constants';
 
@@ -28,7 +28,7 @@ export interface ILinkAttachmentPayload {
 	photo?: IPhotoAttachmentPayload;
 }
 
-export default class LinkAttachment extends ExternalAttachment<ILinkAttachmentPayload> {
+export class LinkAttachment extends ExternalAttachment<ILinkAttachmentPayload> {
 	protected [kPhoto]?: PhotoAttachment;
 
 	/**

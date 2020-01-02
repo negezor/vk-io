@@ -1,6 +1,6 @@
 import VK from '../../vk';
 
-import Attachment from './attachment';
+import { Attachment } from './attachment';
 
 import { copyParams } from '../../utils/helpers';
 import { AttachmentType, inspectCustomData } from '../../utils/constants';
@@ -36,7 +36,7 @@ export interface IDocumentAttachmentPayload {
 	preview?: Record<string, any>;
 }
 
-export default class DocumentAttachment extends Attachment<IDocumentAttachmentPayload> {
+export class DocumentAttachment extends Attachment<IDocumentAttachmentPayload> {
 	/**
 	 * Constructor
 	 */

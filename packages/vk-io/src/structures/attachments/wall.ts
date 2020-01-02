@@ -1,7 +1,7 @@
 import VK from '../../vk';
 
-import Attachment from './attachment';
-import ExternalAttachment from './external';
+import { Attachment } from './attachment';
+import { ExternalAttachment } from './external';
 import Attachmentable from '../shared/attachmentable';
 
 // eslint-disable-next-line import/no-cycle
@@ -453,4 +453,4 @@ class WallAttachment extends Attachment<IWallAttachmentPayload> {
 interface WallAttachment extends Attachmentable {}
 applyMixins(WallAttachment, [Attachmentable]);
 
-export default WallAttachment;
+export { WallAttachment };

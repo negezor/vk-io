@@ -1,6 +1,6 @@
 import VK from '../../vk';
 
-import Attachment from './attachment';
+import { Attachment } from './attachment';
 
 import { AttachmentType } from '../../utils/constants';
 
@@ -43,7 +43,7 @@ export interface IMarketAttachmentPayload {
 	button_title?: string;
 }
 
-export default class MarketAttachment extends Attachment<IMarketAttachmentPayload> {
+export class MarketAttachment extends Attachment<IMarketAttachmentPayload> {
 	/**
 	 * Constructor
 	 */

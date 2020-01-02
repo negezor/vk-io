@@ -1,6 +1,6 @@
 import VK from '../../vk';
 
-import Attachment from './attachment';
+import { Attachment } from './attachment';
 
 import { AttachmentType } from '../../utils/constants';
 
@@ -17,7 +17,7 @@ export interface IMarketAlbumAttachmentPayload {
 	updated_time?: number;
 }
 
-export default class MarketAlbumAttachment extends Attachment<IMarketAlbumAttachmentPayload> {
+export class MarketAlbumAttachment extends Attachment<IMarketAlbumAttachmentPayload> {
 	/**
 	 * Constructor
 	 */

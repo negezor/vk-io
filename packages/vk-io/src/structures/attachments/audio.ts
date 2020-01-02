@@ -1,6 +1,6 @@
 import VK from '../../vk';
 
-import Attachment from './attachment';
+import { Attachment } from './attachment';
 
 import { copyParams } from '../../utils/helpers';
 import { AttachmentType, inspectCustomData } from '../../utils/constants';
@@ -23,7 +23,7 @@ export interface IAudioAttachmentPayload {
 	url?: string;
 }
 
-export default class AudioAttachment extends Attachment<IAudioAttachmentPayload> {
+export class AudioAttachment extends Attachment<IAudioAttachmentPayload> {
 	/**
 	 * Constructor
 	 */

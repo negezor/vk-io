@@ -1,6 +1,6 @@
 import VK from '../../vk';
 
-import Attachment from './attachment';
+import { Attachment } from './attachment';
 
 import { copyParams } from '../../utils/helpers';
 import { AttachmentType, inspectCustomData } from '../../utils/constants';
@@ -30,7 +30,7 @@ export interface IVideoAttachmentPayload {
 	platform?: string;
 }
 
-export default class VideoAttachment extends Attachment<IVideoAttachmentPayload> {
+export class VideoAttachment extends Attachment<IVideoAttachmentPayload> {
 	/**
 	 * Constructor
 	 */

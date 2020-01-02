@@ -3,7 +3,7 @@ import { inspect } from 'util';
 import VK from '../../vk';
 import { inspectCustomData } from '../../utils/constants';
 
-export default class ExternalAttachment<P = {}> {
+export class ExternalAttachment<P = {}> {
 	public type: string;
 
 	protected $filled: boolean;

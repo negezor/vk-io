@@ -1,6 +1,6 @@
 import VK from '../../vk';
 
-import ExternalAttachment from './external';
+import { ExternalAttachment } from './external';
 
 import { copyParams } from '../../utils/helpers';
 import { AttachmentType, inspectCustomData } from '../../utils/constants';
@@ -20,7 +20,7 @@ export interface IStickerAttachmentPayload {
 	images_with_background: IStickerImage[];
 }
 
-export default class StickerAttachment extends ExternalAttachment<IStickerAttachmentPayload> {
+export class StickerAttachment extends ExternalAttachment<IStickerAttachmentPayload> {
 	/**
 	 * Constructor
 	 */

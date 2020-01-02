@@ -1,11 +1,11 @@
 import VK from '../../vk';
 
-import Attachment from './attachment';
+import { Attachment } from './attachment';
 
 import { copyParams } from '../../utils/helpers';
 import { AttachmentType, inspectCustomData } from '../../utils/constants';
-import PhotoAttachment, { IPhotoAttachmentPayload } from './photo';
-import VideoAttachment, { IVideoAttachmentPayload } from './video';
+import { PhotoAttachment, IPhotoAttachmentPayload } from './photo';
+import { VideoAttachment, IVideoAttachmentPayload } from './video';
 
 const { STORY } = AttachmentType;
 
@@ -69,7 +69,7 @@ const kPhoto = Symbol('photo');
 
 const kParentStory = Symbol('parentStory');
 
-export default class StoryAttachment extends Attachment<IStoryAttachmentPayload> {
+export class StoryAttachment extends Attachment<IStoryAttachmentPayload> {
 	protected [kVideo]?: VideoAttachment;
 
 	protected [kPhoto]?: PhotoAttachment;
