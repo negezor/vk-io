@@ -11,7 +11,7 @@ export interface ICallbackServiceValidate {
 	reject: (error: Error) => Promise<void>;
 }
 
-export default class CallbackService {
+export class CallbackService {
 	public captchaHandler?: Function;
 
 	public twoFactorHandler?: Function;
