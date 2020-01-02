@@ -130,8 +130,8 @@ class MessageContext<S = Record<string, any>>
 	/**
 	 * Load message payload
 	 */
-	async loadMessagePayload(): Promise<void> {
-		if (this.$filled) {
+	async loadMessagePayload({ force = false } = {}): Promise<void> {
+		if (this.$filled && !force) {
 			return;
 		}
 
