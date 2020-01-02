@@ -31,9 +31,23 @@ export default class SceneManager {
 
 	/**
 	 * Adds a scene to the shared list
+	 *
+	 * @deprecated use `sceneManager.addScenes([scene])`
 	 */
 	public addScene(scene: IScene): this {
-		this.repository.set(scene.slug, scene);
+		// eslint-disable-next-line no-console
+		console.error('[@vk-io/scenes] sceneManager.addScene(scene) deprecated, use sceneManager.addScenes([scene])');
+
+		return this.addScenes([scene]);
+	}
+
+	/**
+	 * Adds scenes to the repository
+	 */
+	public addScenes(scenes: IScene[]): this {
+		for (const scene of scenes) {
+			this.repository.set(scene.slug, scene);
+		}
 
 		return this;
 	}
