@@ -29,7 +29,7 @@ export const unifyCondition = (condition: any): Function => {
 	}
 
 	if (condition instanceof RegExp) {
-		return (text: string | null): boolean => (
+		return (text: string | undefined): boolean => (
 			condition.test(text!)
 		);
 	}
@@ -37,7 +37,7 @@ export const unifyCondition = (condition: any): Function => {
 	if (Array.isArray(condition)) {
 		const arrayConditions = condition.map(unifyCondition);
 
-		return (value: string | null): boolean => (
+		return (value: string | undefined): boolean => (
 			Array.isArray(value)
 				? arrayConditions.every((cond): boolean => (
 					value.some((val): boolean => cond(val))
@@ -48,7 +48,7 @@ export const unifyCondition = (condition: any): Function => {
 		);
 	}
 
-	return (value: string | null): boolean => value === condition;
+	return (value: string | undefined): boolean => value === condition;
 };
 
 export const parseRequestJSON = (req: IncomingMessage, res: ServerResponse): Promise<object> => (

@@ -20,7 +20,7 @@ export default class WebhookTransport {
 
 	public webhookHandler!: Function;
 
-	protected webhookServer: HTTPServer | HTTPSServer | null = null;
+	protected webhookServer?: HTTPServer | HTTPSServer;
 
 	protected vk: VK;
 
@@ -103,27 +103,27 @@ export default class WebhookTransport {
 	public async stop(): Promise<void> {
 		this.started = false;
 
-		if (this.webhookServer !== null) {
+		if (this.webhookServer !== undefined) {
 			const { webhookServer } = this;
 
 			const close = promisify(webhookServer.close).bind(webhookServer);
 
 			await close();
 
-			this.webhookServer = null;
+			this.webhookServer = undefined;
 		}
 	}
 
 	/**
 	 * Returns webhook callback like http[s] or express
 	 */
-	public getWebhookCallback(path: string | null = null): Function {
+	public getWebhookCallback(path?: string): Function {
 		const headers = {
 			connection: 'keep-alive',
 			'content-type': 'text/plain'
 		};
 
-		const checkIsNotValidPath = path !== null
+		const checkIsNotValidPath = path !== undefined
 			? (requestPath: string): boolean => requestPath !== path
 			: (): boolean => false;
 

@@ -68,10 +68,10 @@ export default function transformMessage({
 		random_id,
 		geo: attachments.geo !== undefined
 			? {}
-			: null,
+			: undefined,
 		payload: extra.payload
 			? extra.payload
-			: null
+			: undefined
 	};
 
 	message.peer_id = peer;

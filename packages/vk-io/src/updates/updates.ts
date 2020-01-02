@@ -314,7 +314,7 @@ export default class Updates {
 	 */
 	public hear<T = {}>(
 		hearConditions: (
-			AllowArray<HearCondition<string | null, T & MessageContext>>
+			AllowArray<HearCondition<string | undefined, T & MessageContext>>
 			| AllowArray<HearObjectCondition<T & MessageContext>>),
 		handler: Middleware<MessageContext & T>
 	): this {
@@ -343,7 +343,7 @@ export default class Updates {
 					[splitPath(path), unifyCondition(value)]
 				));
 
-				return (text: string | null, context: MessageContext): boolean => (
+				return (text: string | undefined, context: MessageContext): boolean => (
 					entries.every(([selectors, callback]): boolean => {
 						const value = getObjectValue(context, selectors);
 
@@ -361,7 +361,7 @@ export default class Updates {
 			textCondition = true;
 
 			if (condition instanceof RegExp) {
-				return (text: string | null, context: MessageContext): boolean => {
+				return (text: string | undefined, context: MessageContext): boolean => {
 					const passed = condition.test(text!);
 
 					if (passed) {
@@ -374,7 +374,7 @@ export default class Updates {
 
 			const stringCondition = String(condition);
 
-			return (text: string | null): boolean => text === stringCondition;
+			return (text: string | undefined): boolean => text === stringCondition;
 		});
 
 		const needText = textCondition && functionCondtion === false;
@@ -383,7 +383,7 @@ export default class Updates {
 		this.hearStack.push((context: MessageContext, next: Function): Promise<void> => {
 			const { text } = context;
 
-			if (needText && text === null) {
+			if (needText && text === undefined) {
 				return next();
 			}
 
@@ -534,7 +534,7 @@ export default class Updates {
 	/**
 	 * Returns webhook callback like http[s] or express
 	 */
-	public getWebhookCallback(path: string | null = null): Function {
+	public getWebhookCallback(path?: string): Function {
 		return this.webhookTransport.getWebhookCallback(path);
 	}
 
