@@ -138,8 +138,7 @@ export const applyMixins = (derivedCtor: any, baseCtors: any[]): void => {
 			Object.defineProperty(
 				derivedCtor.prototype,
 				name,
-				// @ts-ignore
-				Object.getOwnPropertyDescriptor(baseCtor.prototype, name)
+				Object.getOwnPropertyDescriptor(baseCtor.prototype, name)!
 			);
 		}
 	}
