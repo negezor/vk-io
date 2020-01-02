@@ -58,15 +58,15 @@ const REPLACE_PREFIX_RE = /^[+|0]+/;
 const FIND_LOCATION_HREF_RE = /location\.href\s+=\s+"([^"]+)"/i;
 
 export interface IImplicitFlowOptions {
-	appId: number | null;
-	appSecret: string | null;
+	appId?: number;
+	appSecret?: string;
 
-	login: string | null;
-	phone: string | number | null;
-	password: string | null;
+	login?: string;
+	phone?: string | number;
+	password?: string;
 
 	agent: Agent;
-	scope: string | number | string[] | null;
+	scope?: string | number | string[];
 	timeout: number;
 
 	apiVersion: string;
@@ -84,11 +84,11 @@ export default class ImplicitFlow {
 	// @ts-ignore
 	protected fetchCookie: Function;
 
-	protected captchaValidate: ICallbackServiceValidate | null = null;
+	protected captchaValidate?: ICallbackServiceValidate;
 
 	protected captchaAttempts = 0;
 
-	protected twoFactorValidate: ICallbackServiceValidate | null = null;
+	protected twoFactorValidate?: ICallbackServiceValidate;
 
 	protected twoFactorAttempts = 0;
 
@@ -132,10 +132,10 @@ export default class ImplicitFlow {
 
 		this.started = false;
 
-		this.captchaValidate = null;
+		this.captchaValidate = undefined;
 		this.captchaAttempts = 0;
 
-		this.twoFactorValidate = null;
+		this.twoFactorValidate = undefined;
 		this.twoFactorAttempts = 0;
 	}
 
@@ -268,7 +268,7 @@ export default class ImplicitFlow {
 
 			const isError = $error.length !== 0;
 
-			if (this.captchaValidate === null && (isError || $service.length !== 0)) {
+			if (this.captchaValidate === undefined && (isError || $service.length !== 0)) {
 				const errorText = isError
 					? $error.text()
 					: $service.text();
@@ -305,9 +305,9 @@ export default class ImplicitFlow {
 					method: 'POST'
 				});
 			} else {
-				const locations = $.html().match(FIND_LOCATION_HREF_RE);
+				const locations = $.html().match(FIND_LOCATION_HREF_RE) || undefined;
 
-				if (locations === null) {
+				if (locations === undefined) {
 					throw new AuthorizationError({
 						message: 'Could not log in',
 						code: AUTHORIZATION_FAILED,
@@ -340,7 +340,7 @@ export default class ImplicitFlow {
 				pageHtml: $.html()
 			}));
 
-			this.captchaValidate = null;
+			this.captchaValidate = undefined;
 
 			this.captchaAttempts += 1;
 		}
@@ -394,7 +394,7 @@ export default class ImplicitFlow {
 	protected async processTwoFactorForm(response: any, $: any): Promise<any> {
 		debug('process two-factor handle');
 
-		if (this.twoFactorValidate !== null) {
+		if (this.twoFactorValidate !== undefined) {
 			this.twoFactorValidate.reject(new AuthorizationError({
 				message: 'Incorrect two-factor code',
 				code: FAILED_PASSED_TWO_FACTOR,
@@ -443,9 +443,9 @@ export default class ImplicitFlow {
 		const { login, phone } = this.options;
 
 		let number;
-		if (phone !== null) {
+		if (phone !== undefined) {
 			number = phone;
-		} else if (login !== null && !login.includes('@')) {
+		} else if (login !== undefined && !login.includes('@')) {
 			number = login;
 		} else {
 			throw new AuthorizationError({

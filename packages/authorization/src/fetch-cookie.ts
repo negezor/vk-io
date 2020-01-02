@@ -11,16 +11,16 @@ const REDIRECT_CODES = [303, 301, 302];
 
 const USER_AGENT_RE = /^User-Agent$/i;
 
-const findUserAgent = (headers: Record<string, string> | null): string | null => {
+const findUserAgent = (headers?: Record<string, string>): string | undefined => {
 	if (!headers) {
-		return null;
+		return undefined;
 	}
 
 	const key = Object.keys(headers)
 		.find((header): boolean => USER_AGENT_RE.test(header));
 
 	if (!key) {
-		return null;
+		return undefined;
 	}
 
 	return headers[key];
@@ -102,7 +102,7 @@ export const fetchCookieFollowRedirectsDecorator = (jar?: CookieJar): Function =
 
 			const redirectResponse = await fetchCookieFollowRedirects(response.headers.get('location'), {
 				method: 'GET',
-				body: null,
+				body: undefined,
 				headers,
 				follow
 			});

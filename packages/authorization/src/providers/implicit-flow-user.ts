@@ -21,7 +21,7 @@ export default class ImplicitFlowUser extends ImplicitFlow {
 		const { appId } = this.options;
 		let { scope } = this.options;
 
-		if (scope === 'all' || scope === null) {
+		if (scope === 'all' || scope === undefined) {
 			throw new Error('Required option authScope not set');
 		} else if (typeof scope !== 'number') {
 			scope = getUsersPermissionsByName(scope);
@@ -51,10 +51,10 @@ export default class ImplicitFlowUser extends ImplicitFlow {
 	 */
 	// @ts-ignore
 	public async run(): Promise<{
-		email: string | null;
-		user: number | null;
+		email: string | undefined;
+		user: number | undefined;
 		token: string;
-		expires: number | null;
+		expires: number | undefined;
 	}> {
 		const { response } = await super.run();
 
@@ -77,15 +77,15 @@ export default class ImplicitFlowUser extends ImplicitFlow {
 		const expires = params.get('expires_in');
 
 		return {
-			email: params.get('email'),
+			email: params.get('email') || undefined,
 			user: user !== null
 				? Number(user)
-				: null,
+				: undefined,
 
 			token: params.get('access_token')!,
 			expires: expires !== null
 				? Number(expires)
-				: null
+				: undefined
 		};
 	}
 }

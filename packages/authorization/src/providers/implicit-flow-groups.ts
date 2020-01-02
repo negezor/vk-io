@@ -23,9 +23,9 @@ export default class ImplicitFlowGroups extends ImplicitFlow {
 	constructor(vk: VK, options: IImplicitFlowOptions & { groups: number[] }) {
 		super(vk, options);
 
-		let { groups = null } = options;
+		let { groups } = options;
 
-		if (groups === null) {
+		if (groups === undefined) {
 			throw new VKError({
 				message: 'Groups list must have',
 				code: 'GROUPS_NOT_SET'
@@ -53,7 +53,7 @@ export default class ImplicitFlowGroups extends ImplicitFlow {
 		const { appId } = this.options;
 		let { scope } = this.options;
 
-		if (scope === 'all' || scope === null) {
+		if (scope === 'all' || scope === undefined) {
 			throw new Error('Required option authScope not set');
 		} else if (typeof scope !== 'number') {
 			scope = getGroupsPermissionsByName(scope);
@@ -105,9 +105,9 @@ export default class ImplicitFlowGroups extends ImplicitFlow {
 			});
 		}
 
-		let expires: string | number | null = params.get('expires_in');
+		let expires: string | number | undefined = params.get('expires_in') || undefined;
 
-		if (expires !== null) {
+		if (expires !== undefined) {
 			expires = Number(expires);
 		}
 

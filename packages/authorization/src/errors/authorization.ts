@@ -8,23 +8,23 @@ export interface IAuthorizationErrorOptions {
 	message: string;
 	code: string;
 
-	pageHtml?: string | null;
+	pageHtml?: string;
 }
 
 export default class AuthorizationError extends VKError {
 	/**
 	 * HTML error page
 	 */
-	public pageHtml: string | null;
+	public pageHtml?: string;
 
 	/**
 	 * Constructor
 	 */
-	public constructor({ message, code, pageHtml = null }: IAuthorizationErrorOptions) {
+	public constructor({ message, code, pageHtml }: IAuthorizationErrorOptions) {
 		super({ message, code });
 
 		this.pageHtml = isDebug
 			? pageHtml
-			: null;
+			: undefined;
 	}
 }

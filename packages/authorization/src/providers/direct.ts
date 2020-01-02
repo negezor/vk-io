@@ -40,15 +40,15 @@ const CAPTCHA_ATTEMPTS = 3;
 const ACTION_SECURITY_CODE = 'act=security';
 
 export interface IDirectAuthOptions {
-	appId: number | null;
-	appSecret: string | null;
+	appId?: number;
+	appSecret?: string;
 
-	login: string | null;
-	phone: string | number | null;
-	password: string | null;
+	login?: string;
+	phone?: string | number;
+	password?: string;
 
 	agent: Agent;
-	scope: string | number | string[] | null;
+	scope?: string | number | string[];
 	timeout: number;
 
 	apiVersion: string;
@@ -65,11 +65,11 @@ export default class DirectAuth {
 
 	protected fetchCookie!: Function;
 
-	protected captchaValidate: ICallbackServiceValidate | null = null;
+	protected captchaValidate?: ICallbackServiceValidate;
 
 	protected captchaAttempts = 0;
 
-	protected twoFactorValidate: ICallbackServiceValidate | null = null;
+	protected twoFactorValidate?: ICallbackServiceValidate;
 
 	protected twoFactorAttempts = 0;
 
@@ -111,10 +111,10 @@ export default class DirectAuth {
 
 		this.started = false;
 
-		this.captchaValidate = null;
+		this.captchaValidate = undefined;
 		this.captchaAttempts = 0;
 
-		this.twoFactorValidate = null;
+		this.twoFactorValidate = undefined;
 		this.twoFactorAttempts = 0;
 	}
 
@@ -160,7 +160,7 @@ export default class DirectAuth {
 	protected getPermissionsPage(query = {}): Promise<any> {
 		let { scope } = this.options;
 
-		if (scope === 'all' || scope === null) {
+		if (scope === 'all' || scope === undefined) {
 			throw new Error('Required option authScope not set');
 		} else if (typeof scope !== 'number') {
 			scope = getUsersPermissionsByName(scope);
@@ -241,20 +241,20 @@ export default class DirectAuth {
 			if (isJSON) {
 				if ('access_token' in text) {
 					const {
-						email = null,
-						user_id: user = null,
-						expires_in: expires = null,
+						email,
+						user_id: user,
+						expires_in: expires,
 						access_token: token
 					} = text;
 
 					return {
 						email,
-						user: user !== null
+						user: user !== undefined
 							? Number(user)
 							: 0,
 
 						token,
-						expires: expires !== null
+						expires: expires
 							? Number(expires)
 							: 0
 					};
@@ -309,13 +309,13 @@ export default class DirectAuth {
 	protected async processCaptcha({ captcha_sid: sid, captcha_img: src }: any): Promise<any> {
 		debug('captcha process');
 
-		if (this.captchaValidate !== null) {
+		if (this.captchaValidate !== undefined) {
 			this.captchaValidate.reject(new AuthorizationError({
 				message: 'Incorrect captcha code',
 				code: FAILED_PASSED_CAPTCHA
 			}));
 
-			this.captchaValidate = null;
+			this.captchaValidate = undefined;
 
 			this.captchaAttempts += 1;
 		}
@@ -356,13 +356,13 @@ export default class DirectAuth {
 	): Promise<any> {
 		debug('process two-factor handle');
 
-		if (this.twoFactorValidate !== null) {
+		if (this.twoFactorValidate !== undefined) {
 			this.twoFactorValidate.reject(new AuthorizationError({
 				message: 'Incorrect two-factor code',
 				code: FAILED_PASSED_TWO_FACTOR
 			}));
 
-			this.twoFactorValidate = null;
+			this.twoFactorValidate = undefined;
 
 			this.twoFactorAttempts += 1;
 		}
@@ -398,9 +398,9 @@ export default class DirectAuth {
 		const { login, phone } = this.options;
 
 		let number;
-		if (phone !== null) {
+		if (phone !== undefined) {
 			number = phone;
-		} else if (login !== null && !login.includes('@')) {
+		} else if (login !== undefined && !login.includes('@')) {
 			number = login;
 		} else {
 			throw new AuthorizationError({

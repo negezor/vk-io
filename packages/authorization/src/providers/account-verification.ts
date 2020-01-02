@@ -48,8 +48,8 @@ const TWO_FACTOR_ATTEMPTS = 3;
 interface IAccountVerificationOptions {
 	agent: Agent;
 
-	login: string | null;
-	phone: string | number | null;
+	login?: string;
+	phone?: string | number;
 }
 
 export default class AccountVerification {
@@ -61,11 +61,11 @@ export default class AccountVerification {
 
 	protected fetchCookie: Function;
 
-	protected captchaValidate: ICallbackServiceValidate | null = null;
+	protected captchaValidate?: ICallbackServiceValidate;
 
 	protected captchaAttempts = 0;
 
-	protected twoFactorValidate: ICallbackServiceValidate | null = null;
+	protected twoFactorValidate?: ICallbackServiceValidate;
 
 	protected twoFactorAttempts = 0;
 
@@ -86,10 +86,10 @@ export default class AccountVerification {
 		this.jar = new CookieJar();
 		this.fetchCookie = fetchCookieFollowRedirectsDecorator(this.jar);
 
-		this.captchaValidate = null;
+		this.captchaValidate = undefined;
 		this.captchaAttempts = 0;
 
-		this.twoFactorValidate = null;
+		this.twoFactorValidate = undefined;
 		this.twoFactorAttempts = 0;
 	}
 
@@ -160,9 +160,9 @@ export default class AccountVerification {
 				return {
 					user: user !== null
 						? Number(user)
-						: null,
+						: undefined,
 
-					token: params.get('access_token')
+					token: params.get('access_token')!
 				};
 			}
 
@@ -255,9 +255,9 @@ export default class AccountVerification {
 		const { login, phone } = this.options;
 
 		let number;
-		if (phone !== null) {
+		if (phone !== undefined) {
 			number = phone;
-		} else if (login !== null && !login.includes('@')) {
+		} else if (login !== undefined && !login.includes('@')) {
 			number = login;
 		} else {
 			throw new AuthorizationError({
@@ -316,13 +316,13 @@ export default class AccountVerification {
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	protected async processCaptchaForm(response: any, $: any): Promise<any> {
-		if (this.captchaValidate !== null) {
+		if (this.captchaValidate !== undefined) {
 			this.captchaValidate.reject(new AuthorizationError({
 				message: 'Incorrect captcha code',
 				code: FAILED_PASSED_CAPTCHA
 			}));
 
-			this.captchaValidate = null;
+			this.captchaValidate = undefined;
 
 			this.captchaAttempts += 1;
 		}
