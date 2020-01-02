@@ -11,7 +11,7 @@ export interface IAuthorizationErrorOptions {
 	pageHtml?: string;
 }
 
-export default class AuthorizationError extends VKError {
+export class AuthorizationError extends VKError {
 	/**
 	 * HTML error page
 	 */

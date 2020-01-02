@@ -2,7 +2,7 @@ import createDebug from 'debug';
 
 import { URL, URLSearchParams } from 'url';
 
-import ImplicitFlow from './implicit-flow';
+import { ImplicitFlow } from './implicit-flow';
 import { AuthorizationError } from '../errors';
 
 import { getUsersPermissionsByName } from '../helpers';
@@ -12,7 +12,7 @@ const debug = createDebug('vk-io:authorization:implicit-flow-user');
 
 const { AUTHORIZATION_FAILED } = AuthErrorCode;
 
-export default class ImplicitFlowUser extends ImplicitFlow {
+export class ImplicitFlowUser extends ImplicitFlow {
 	/**
 	 * Returns permission page
 	 */

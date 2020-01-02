@@ -54,7 +54,7 @@ export interface IDirectAuthOptions {
 	apiVersion: string;
 }
 
-export default class DirectAuth {
+export class DirectAuthorization {
 	protected vk: VK;
 
 	protected options: IDirectAuthOptions;

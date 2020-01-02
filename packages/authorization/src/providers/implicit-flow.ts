@@ -72,7 +72,7 @@ export interface IImplicitFlowOptions {
 	apiVersion: string;
 }
 
-export default class ImplicitFlow {
+export class ImplicitFlow {
 	protected vk: VK;
 
 	protected options: IImplicitFlowOptions;

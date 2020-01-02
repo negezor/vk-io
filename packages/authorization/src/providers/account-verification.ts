@@ -52,7 +52,7 @@ interface IAccountVerificationOptions {
 	phone?: string | number;
 }
 
-export default class AccountVerification {
+export class AccountVerification {
 	protected vk: VK;
 
 	protected options: IAccountVerificationOptions;

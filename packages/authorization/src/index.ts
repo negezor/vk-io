@@ -1,4 +1,4 @@
-import Authorization from './authorization';
+import { Authorization } from './authorization';
 
 export * from './errors';
 export * from './providers';

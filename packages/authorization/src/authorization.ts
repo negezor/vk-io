@@ -18,7 +18,7 @@ const openAPIParams = [
 	'sig'
 ];
 
-export default class Authorization {
+export class Authorization {
 	protected vk: VK;
 
 	/**
