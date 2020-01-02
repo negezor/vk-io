@@ -42,7 +42,7 @@ const attachmentsTypes = {
  * Transform raw attachments to wrapper
  */
 // @ts-ignore
-// eslint-disable-next-line import/prefer-default-export, @typescript-eslint/no-explicit-any
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const transformAttachments = (attachments: any[] = [], vk: VK): Attachment[] => (
 	attachments
 		.map((item): Attachment | boolean => {
