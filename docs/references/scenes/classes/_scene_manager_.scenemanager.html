@@ -102,6 +102,7 @@
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_scene_manager_.scenemanager.html#addscene" class="tsd-kind-icon">add<wbr>Scene</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_scene_manager_.scenemanager.html#addscenes" class="tsd-kind-icon">add<wbr>Scenes</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_scene_manager_.scenemanager.html#hasscene" class="tsd-kind-icon">has<wbr>Scene</a></li>
 							</ul>
 						</section>
@@ -120,7 +121,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/scenes/src/scene-manager.ts#L9">scenes/src/scene-manager.ts:9</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/997316f/packages/scenes/src/scene-manager.ts#L9">scenes/src/scene-manager.ts:9</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -142,7 +143,7 @@
 					<div class="tsd-signature tsd-kind-icon">repository<span class="tsd-signature-symbol">:</span> <a href="../modules/_scene_manager_types_.html#scenerepository" class="tsd-signature-type">SceneRepository</a><span class="tsd-signature-symbol"> =&nbsp;new CacheRepository()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/scenes/src/scene-manager.ts#L9">scenes/src/scene-manager.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/997316f/packages/scenes/src/scene-manager.ts#L9">scenes/src/scene-manager.ts:9</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -159,7 +160,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/scenes/src/scene-manager.ts#L44">scenes/src/scene-manager.ts:44</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/997316f/packages/scenes/src/scene-manager.ts#L58">scenes/src/scene-manager.ts:58</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -181,7 +182,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/scenes/src/scene-manager.ts#L59">scenes/src/scene-manager.ts:59</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/997316f/packages/scenes/src/scene-manager.ts#L73">scenes/src/scene-manager.ts:73</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -206,18 +207,51 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/scenes/src/scene-manager.ts#L35">scenes/src/scene-manager.ts:35</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/997316f/packages/scenes/src/scene-manager.ts#L37">scenes/src/scene-manager.ts:37</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Adds a scene to the shared list</p>
 								</div>
+								<dl class="tsd-comment-tags">
+									<dt>deprecated</dt>
+									<dd><p>use <code>sceneManager.addScenes([scene])</code></p>
+									</dd>
+								</dl>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>scene: <a href="../interfaces/_scenes_scene_.iscene.html" class="tsd-signature-type">IScene</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="addscenes" class="tsd-anchor"></a>
+					<h3>add<wbr>Scenes</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">add<wbr>Scenes<span class="tsd-signature-symbol">(</span>scenes<span class="tsd-signature-symbol">: </span><a href="../interfaces/_scenes_scene_.iscene.html" class="tsd-signature-type">IScene</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/997316f/packages/scenes/src/scene-manager.ts#L47">scenes/src/scene-manager.ts:47</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Adds scenes to the repository</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>scenes: <a href="../interfaces/_scenes_scene_.iscene.html" class="tsd-signature-type">IScene</a><span class="tsd-signature-symbol">[]</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
@@ -234,7 +268,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/4ef2a26/packages/scenes/src/scene-manager.ts#L28">scenes/src/scene-manager.ts:28</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/997316f/packages/scenes/src/scene-manager.ts#L28">scenes/src/scene-manager.ts:28</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -325,6 +359,9 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_scene_manager_.scenemanager.html#addscene" class="tsd-kind-icon">add<wbr>Scene</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="_scene_manager_.scenemanager.html#addscenes" class="tsd-kind-icon">add<wbr>Scenes</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="_scene_manager_.scenemanager.html#hasscene" class="tsd-kind-icon">has<wbr>Scene</a>
