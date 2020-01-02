@@ -9,7 +9,7 @@ export interface IVKErrorOptions {
 /**
  * General error class
  */
-export default class VKError extends Error {
+export class VKError extends Error {
 	/**
 	 * Error code
 	 */

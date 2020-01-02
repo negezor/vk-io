@@ -1,11 +1,11 @@
-export { default as VKError } from './error';
+export * from './error';
 
-export { default as APIError } from './api';
-export { default as UploadError } from './upload';
-export { default as CollectError } from './collect';
-export { default as UpdatesError } from './updates';
-export { default as ExecuteError } from './execute';
-export { default as SnippetsError } from './snippets';
+export * from './api';
+export * from './upload';
+export * from './collect';
+export * from './updates';
+export * from './execute';
+export * from './snippets';
 
 export {
 	APIErrorCode,

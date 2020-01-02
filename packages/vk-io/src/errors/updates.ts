@@ -1,3 +1,3 @@
-import VKError from './error';
+import { VKError } from './error';
 
-export default class UpdatesError extends VKError {}
+export class UpdatesError extends VKError {}

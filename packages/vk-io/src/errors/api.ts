@@ -1,4 +1,4 @@
-import VKError from './error';
+import { VKError } from './error';
 import { APIErrorCode } from '../utils/constants';
 
 const { CAPTCHA_REQUIRED, USER_VALIDATION_REQUIRED, CONFIRMATION_REQUIRED } = APIErrorCode;
@@ -19,7 +19,7 @@ export interface IAPIErrorOptions {
 	confirmation_text?: string;
 }
 
-export default class APIError extends VKError {
+export class APIError extends VKError {
 	/**
 	 * Request parameters
 	 */

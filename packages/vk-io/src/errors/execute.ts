@@ -1,4 +1,4 @@
-import APIError from './api';
+import { APIError } from './api';
 
 export interface IExecuteErrorOptions {
 	error_code: number;
@@ -6,7 +6,7 @@ export interface IExecuteErrorOptions {
 	method: string;
 }
 
-export default class ExecuteError extends APIError {
+export class ExecuteError extends APIError {
 	/**
 	 * The method in which the error occurred
 	 */

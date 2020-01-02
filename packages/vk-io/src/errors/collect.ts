@@ -1,5 +1,5 @@
-import VKError from './error';
-import ExecuteError from './execute';
+import { VKError } from './error';
+import { ExecuteError } from './execute';
 
 export interface ICollectErrorOptions {
 	message: string;
@@ -8,7 +8,7 @@ export interface ICollectErrorOptions {
 	errors: ExecuteError[];
 }
 
-export default class CollectError extends VKError {
+export class CollectError extends VKError {
 	/**
 	 * Errors collect
 	 */
