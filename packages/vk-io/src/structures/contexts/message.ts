@@ -353,40 +353,28 @@ class MessageContext<S = Record<string, any>>
 	 * Returns the event name
 	 */
 	public get eventType(): string | undefined {
-		return (
-			this.message.action
-			&& this.message.action.type
-		);
+		return this.message.action?.type;
 	}
 
 	/**
 	 * Returns the event member id
 	 */
 	public get eventMemberId(): number | undefined {
-		return (
-			this.message.action
-			&& this.message.action.member_id
-		);
+		return this.message.action?.member_id;
 	}
 
 	/**
 	 * Returns the event name
 	 */
 	public get eventText(): string | undefined {
-		return (
-			this.message.action
-			&& this.message.action.text
-		);
+		return this.message.action?.text;
 	}
 
 	/**
 	 * Returns the event email
 	 */
 	public get eventEmail(): string | undefined {
-		return (
-			this.message.action
-			&& this.message.action.email
-		);
+		return this.message.action?.email;
 	}
 
 	/**
@@ -396,11 +384,7 @@ class MessageContext<S = Record<string, any>>
 	public get messagePayload(): any | undefined {
 		const { payload } = this.message;
 
-		if (payload === undefined) {
-			return undefined;
-		}
-
-		return JSON.parse(payload);
+		return payload && JSON.parse(payload);
 	}
 
 	/**

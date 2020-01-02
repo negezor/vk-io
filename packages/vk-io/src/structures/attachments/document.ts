@@ -32,7 +32,8 @@ export interface IDocumentAttachmentPayload {
 	url?: string;
 	date?: number;
 	type?: number;
-	preview?: object;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	preview?: Record<string, any>;
 }
 
 export default class DocumentAttachment extends Attachment<IDocumentAttachmentPayload> {
@@ -226,7 +227,7 @@ export default class DocumentAttachment extends Attachment<IDocumentAttachmentPa
 	/**
 	 * Returns the info to preview
 	 */
-	public get preview(): object | undefined {
+	public get preview(): IDocumentAttachmentPayload['preview'] | undefined {
 		return this.payload.preview;
 	}
 
@@ -234,13 +235,7 @@ export default class DocumentAttachment extends Attachment<IDocumentAttachmentPa
 	 * Checks for a property in preview
 	 */
 	public hasPreviewProperty(name: string): boolean {
-		const { preview } = this;
-
-		if (preview === undefined) {
-			return false;
-		}
-
-		return name in preview;
+		return this.preview?.[name] !== undefined;
 	}
 
 	/**
