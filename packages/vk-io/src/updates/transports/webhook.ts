@@ -150,7 +150,7 @@ export default class WebhookTransport {
 			try {
 				const { webhookSecret, webhookConfirmation } = this.vk.options;
 
-				if (webhookSecret !== null && update.secret !== webhookSecret) {
+				if (webhookSecret !== undefined && update.secret !== webhookSecret) {
 					res.writeHead(403);
 					res.end();
 
@@ -158,7 +158,7 @@ export default class WebhookTransport {
 				}
 
 				if (update.type === 'confirmation') {
-					if (webhookConfirmation === null) {
+					if (webhookConfirmation === undefined) {
 						res.writeHead(500);
 						res.end();
 
@@ -201,14 +201,14 @@ export default class WebhookTransport {
 
 			const { webhookSecret, webhookConfirmation } = this.vk.options;
 
-			if (webhookSecret !== null && update.secret !== webhookSecret) {
+			if (webhookSecret !== undefined && update.secret !== webhookSecret) {
 				context.status = 403;
 
 				return;
 			}
 
 			if (update.type === 'confirmation') {
-				if (webhookConfirmation === null) {
+				if (webhookConfirmation === undefined) {
 					context.status = 500;
 
 					return;

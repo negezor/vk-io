@@ -57,7 +57,7 @@ export default class PollingTransport {
 		try {
 			const { pollingGroupId } = this.vk.options;
 
-			const isGroup = pollingGroupId !== null;
+			const isGroup = pollingGroupId !== undefined;
 
 			const { server, key, ts } = isGroup
 				? await this.vk.api.groups.getLongPollServer({

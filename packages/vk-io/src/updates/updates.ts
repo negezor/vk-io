@@ -473,7 +473,7 @@ export default class Updates {
 	public startPolling(): Promise<void> {
 		const { pollingGroupId } = this.vk.options;
 
-		const isGroup = pollingGroupId !== null;
+		const isGroup = pollingGroupId !== undefined;
 
 		this.pollingTransport.subscribe(
 			isGroup

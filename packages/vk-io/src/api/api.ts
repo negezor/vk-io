@@ -272,7 +272,7 @@ export default class API extends APIMethods {
 			...request.params
 		};
 
-		if (options.language !== null) {
+		if (options.language !== undefined) {
 			params.lang = options.language;
 		}
 

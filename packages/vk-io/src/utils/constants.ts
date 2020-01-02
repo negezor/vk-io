@@ -18,18 +18,18 @@ export const MINIMUM_TIME_INTERVAL_API = 1133;
  */
 export const defaultOptions: IVKOptions = {
 	// @ts-ignore
-	agent: null,
-	token: null,
-	language: null,
+	agent: undefined,
+	token: undefined,
+	language: undefined,
 
-	appId: null,
-	appSecret: null,
+	appId: undefined,
+	appSecret: undefined,
 
-	login: null,
-	phone: null,
-	password: null,
+	login: undefined,
+	phone: undefined,
+	password: undefined,
 
-	authScope: null,
+	authScope: undefined,
 	authTimeout: 10e3,
 
 	apiMode: 'sequential',
@@ -49,10 +49,10 @@ export const defaultOptions: IVKOptions = {
 
 	pollingWait: 3e3,
 	pollingAttempts: 3,
-	pollingGroupId: null,
+	pollingGroupId: undefined,
 
-	webhookSecret: null,
-	webhookConfirmation: null,
+	webhookSecret: undefined,
+	webhookConfirmation: undefined,
 
 	collectAttempts: 3
 };
