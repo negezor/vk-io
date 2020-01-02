@@ -36,7 +36,7 @@ const specialAttachments: Record<string, Function> = {
 /**
  * Transform message to Object
  */
-export default function transformMessage({
+export function transformMessage({
 	1: id,
 	2: flags,
 	3: peer,

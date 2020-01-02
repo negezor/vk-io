@@ -15,7 +15,7 @@ import { parseRequestJSON } from '../helpers';
 
 const debug = createDebug('vk-io:updates');
 
-export default class WebhookTransport {
+export class WebhookTransport {
 	public started = false;
 
 	public webhookHandler!: Function;

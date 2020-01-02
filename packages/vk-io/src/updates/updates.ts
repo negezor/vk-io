@@ -194,7 +194,7 @@ export type ContextSubTypes = 'new_message' | 'edit_message' | 'message_subscrib
 
 export type ContextPossibleTypes = ContextTypes | ContextSubTypes | string;
 
-export default class Updates {
+export class Updates {
 	protected vk: VK;
 
 	protected pollingTransport: PollingTransport;

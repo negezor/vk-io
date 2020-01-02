@@ -1,3 +1,1 @@
-import Updates from './updates';
-
-export default Updates;
+export { Updates } from './updates';

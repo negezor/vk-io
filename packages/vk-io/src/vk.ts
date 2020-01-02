@@ -4,7 +4,7 @@ import { inspect } from 'util';
 import { API } from './api';
 import { Upload } from './upload';
 import { Collect } from './collect';
-import Updates from './updates';
+import { Updates } from './updates';
 import Snippets from './snippets';
 import CallbackService from './utils/callback-service';
 
