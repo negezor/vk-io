@@ -1,6 +1,6 @@
 import { inspect } from 'util';
 
-import VK from '../../vk';
+import { VK } from '../../vk';
 import { inspectCustomData } from '../../utils/constants';
 
 export class ExternalAttachment<P = {}> {

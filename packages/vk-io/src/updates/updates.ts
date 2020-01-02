@@ -32,7 +32,7 @@ import {
 } from '../structures/contexts';
 
 import { PollingTransport, WebhookTransport } from './transports';
-import VK from '../vk';
+import { VK } from '../vk';
 
 import {
 	unifyCondition,

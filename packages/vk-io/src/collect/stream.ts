@@ -3,7 +3,7 @@ import createDebug from 'debug';
 import { inspect } from 'util';
 import { Readable } from 'stream';
 
-import VK from '../vk';
+import { VK } from '../vk';
 import { UsersUserFull, GroupsGroupFull } from '../api/schemas/objects';
 import { CollectError, APIErrorCode, CollectErrorCode } from '../errors';
 

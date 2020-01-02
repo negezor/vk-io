@@ -1,6 +1,6 @@
 import { inspect } from 'util';
 
-import VK from '../../vk';
+import { VK } from '../../vk';
 
 import { Attachmentable } from './attachmentable';
 import { Attachment, ExternalAttachment } from '../attachments';

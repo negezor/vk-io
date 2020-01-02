@@ -1,4 +1,4 @@
-import VK from './vk';
+import { VK } from './vk';
 import { APIRequest } from './api/request';
 
 export * from './errors';

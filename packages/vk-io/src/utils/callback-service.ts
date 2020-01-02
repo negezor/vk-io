@@ -1,4 +1,4 @@
-import VK from '../vk';
+import { VK } from '../vk';
 import { VKError, SharedErrorCode } from '../errors';
 
 const {

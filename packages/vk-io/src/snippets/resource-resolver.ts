@@ -1,6 +1,6 @@
 import { URL } from 'url';
 
-import VK from '../vk';
+import { VK } from '../vk';
 import { SnippetsError } from '../errors';
 import {
 	ResourceType,

@@ -3,7 +3,7 @@ import createDebug from 'debug';
 
 import { URL, URLSearchParams } from 'url';
 
-import VK from '../../vk';
+import { VK } from '../../vk';
 import { delay } from '../../utils/helpers';
 import { UpdatesError, UpdatesErrorCode } from '../../errors';
 

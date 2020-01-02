@@ -6,7 +6,7 @@ import { URLSearchParams } from 'url';
 
 import { APIMethods } from './schemas/methods';
 
-import VK from '../vk';
+import { VK } from '../vk';
 import { APIRequest } from './request';
 import { getRandomId, delay } from '../utils/helpers';
 import { VKError, APIError, ExecuteError } from '../errors';

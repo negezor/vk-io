@@ -3,7 +3,7 @@ import { inspect } from 'util';
 import { CollectStream, ICollectStreamOptions } from './stream';
 import { LIMITS_METHODS } from './limits';
 
-import VK from '../vk';
+import { VK } from '../vk';
 import { Chain } from './chain';
 import { ExecuteError } from '../errors';
 

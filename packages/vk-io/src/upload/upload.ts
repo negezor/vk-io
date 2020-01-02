@@ -5,7 +5,7 @@ import { randomBytes } from 'crypto';
 import { createReadStream } from 'fs';
 import { inspect, deprecate } from 'util';
 
-import VK from '../vk';
+import { VK } from '../vk';
 import { MultipartStream } from './multipart-stream';
 import { UploadError, UploadErrorCode } from '../errors';
 import { isStream, copyParams, streamToBuffer } from './helpers';

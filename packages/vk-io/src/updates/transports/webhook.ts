@@ -10,7 +10,7 @@ import {
 } from 'http';
 import { promisify } from 'util';
 
-import VK from '../../vk';
+import { VK } from '../../vk';
 import { parseRequestJSON } from '../helpers';
 
 const debug = createDebug('vk-io:updates');

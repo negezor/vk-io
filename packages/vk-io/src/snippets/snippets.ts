@@ -1,4 +1,4 @@
-import VK from '../vk';
+import { VK } from '../vk';
 import { ResourceResolver, IResolvedResource } from './resource-resolver';
 
 export class Snippets {

@@ -1,4 +1,4 @@
-import VK from '../../vk';
+import { VK } from '../../vk';
 
 import { Attachment } from './attachment';
 import { ExternalAttachment } from './external';

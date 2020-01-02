@@ -2,7 +2,7 @@ import { inspect } from 'util';
 
 import { VKError, ExecuteError } from '../errors';
 
-import VK from '../vk';
+import { VK } from '../vk';
 import { APIRequest } from '../api/request';
 import { getChainReturn, resolveExecuteTask } from '../utils/helpers';
 

@@ -19,7 +19,7 @@ const kStreaming = Symbol('streaming');
 /**
  * Main class
  */
-export default class VK {
+export class VK {
 	public options: IVKOptions = {
 		...defaultOptions,
 
