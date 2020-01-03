@@ -62,4 +62,4 @@ applyMixins(MessageForwardsCollection, [
 	}
 ]);
 
-export default MessageForwardsCollection;
+export { MessageForwardsCollection };

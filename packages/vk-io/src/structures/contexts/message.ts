@@ -3,10 +3,10 @@ import { Context, IContextOptions } from './context';
 
 import { VKError } from '../../errors';
 
-import MessageReply from '../shared/message-reply';
+import { MessageReply } from '../shared/message-reply';
 import { MessageForward, IMessageForwardPayload } from '../shared/message-forward';
 import { transformMessage } from '../../updates/transform-message';
-import MessageForwardsCollection from '../shared/message-forwards-collection';
+import { MessageForwardsCollection } from '../shared/message-forwards-collection';
 
 import { Attachment, ExternalAttachment } from '../attachments';
 import { Attachmentable, IAllAttachmentable } from '../shared/attachmentable';

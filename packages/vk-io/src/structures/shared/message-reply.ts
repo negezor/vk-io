@@ -142,4 +142,4 @@ class MessageReply {
 interface MessageReply extends Attachmentable {}
 applyMixins(MessageReply, [Attachmentable]);
 
-export default MessageReply;
+export { MessageReply };
