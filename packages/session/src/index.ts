@@ -6,4 +6,5 @@ export * from './types';
 
 export { SessionManager };
 
+// eslint-disable-next-line import/no-default-export
 export default SessionManager;

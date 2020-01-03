@@ -35,4 +35,5 @@ export { Attachmentable, IAllAttachmentable } from './structures/shared/attachme
 
 export { VK, APIRequest, APIRequest as Request };
 
+// eslint-disable-next-line import/no-default-export
 export default VK;
