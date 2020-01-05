@@ -2,7 +2,7 @@ import { VK } from '../../vk';
 
 import { Attachment } from './attachment';
 
-import { copyParams } from '../../utils/helpers';
+import { pickProperties } from '../../utils/helpers';
 import { AttachmentType, inspectCustomData } from '../../utils/constants';
 
 const { PHOTO } = AttachmentType;
@@ -182,7 +182,7 @@ export class PhotoAttachment extends Attachment<IPhotoAttachmentPayload> {
 	 * Returns the custom data
 	 */
 	public [inspectCustomData](): object {
-		return copyParams(this, [
+		return pickProperties(this, [
 			'userId',
 			'albumId',
 			'text',

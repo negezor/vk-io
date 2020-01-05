@@ -5,7 +5,7 @@ import { Attachmentable } from './attachmentable';
 import { Attachment, ExternalAttachment } from '../attachments';
 
 import { transformAttachments } from '../attachments/helpers';
-import { copyParams, applyMixins } from '../../utils/helpers';
+import { pickProperties, applyMixins } from '../../utils/helpers';
 
 const kForwards = Symbol('forwards');
 const kAttachments = Symbol('attachments');
@@ -118,7 +118,7 @@ class MessageForward {
 	 * Returns data for JSON
 	 */
 	public toJSON(): object {
-		return copyParams(this, [
+		return pickProperties(this, [
 			'senderId',
 			'createdAt',
 			'updatedAt',
@@ -133,7 +133,7 @@ class MessageForward {
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public [inspect.custom](depth: number, options: Record<string, any>): string {
-		const payload = copyParams(this, [
+		const payload = pickProperties(this, [
 			'senderId',
 			'createdAt',
 			'updatedAt',

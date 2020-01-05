@@ -90,7 +90,7 @@ export const unescapeHTML = (text: string): string => (
 /**
  * Copies object params to new object
  */
-export const copyParams = <
+export const pickProperties = <
 	T,
 	K extends keyof T
 >(params: T, properties: K[]): Pick<T, K> => {

@@ -6,7 +6,7 @@ import { Attachmentable } from '../shared/attachmentable';
 
 // eslint-disable-next-line import/no-cycle
 import { transformAttachments } from './helpers';
-import { copyParams, applyMixins } from '../../utils/helpers';
+import { pickProperties, applyMixins } from '../../utils/helpers';
 import { AttachmentType, inspectCustomData } from '../../utils/constants';
 
 const { WALL } = AttachmentType;
@@ -426,7 +426,7 @@ class WallAttachment extends Attachment<IWallAttachmentPayload> {
 	 * Returns the custom data
 	 */
 	public [inspectCustomData](): object {
-		return copyParams(this, [
+		return pickProperties(this, [
 			'authorId',
 			'createdUserId',
 			'replyOwnerId',

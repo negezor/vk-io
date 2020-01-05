@@ -2,7 +2,7 @@ import { Context, IContextOptions } from './context';
 
 import { VKError } from '../../errors';
 
-import { copyParams } from '../../utils/helpers';
+import { pickProperties } from '../../utils/helpers';
 import { inspectCustomData } from '../../utils/constants';
 
 /**
@@ -155,7 +155,7 @@ export class GroupUserContext<S = Record<string, any>>
 	 * Returns the custom data
 	 */
 	public [inspectCustomData](): object {
-		return copyParams(this, [
+		return pickProperties(this, [
 			'adminId',
 			'userId',
 			'reasonId',

@@ -2,7 +2,7 @@ import { VK } from '../../vk';
 
 import { Attachment } from './attachment';
 
-import { copyParams } from '../../utils/helpers';
+import { pickProperties } from '../../utils/helpers';
 import { AttachmentType, inspectCustomData } from '../../utils/constants';
 
 const { AUDIO } = AttachmentType;
@@ -132,7 +132,7 @@ export class AudioAttachment extends Attachment<IAudioAttachmentPayload> {
 	 * Returns the custom data
 	 */
 	public [inspectCustomData](): object {
-		return copyParams(this, [
+		return pickProperties(this, [
 			'lyricsId',
 			'albumId',
 			'genreId',

@@ -3,7 +3,7 @@ import { VK } from '../../vk';
 import { ExternalAttachment } from './external';
 
 import { PhotoAttachment, IPhotoAttachmentPayload } from './photo';
-import { copyParams } from '../../utils/helpers';
+import { pickProperties } from '../../utils/helpers';
 import { AttachmentType, inspectCustomData } from '../../utils/constants';
 
 const { LINK } = AttachmentType;
@@ -115,7 +115,7 @@ export class LinkAttachment extends ExternalAttachment<ILinkAttachmentPayload> {
 	 * Returns the custom data
 	 */
 	public [inspectCustomData](): object {
-		return copyParams(this, [
+		return pickProperties(this, [
 			'title',
 			'caption',
 			'description',

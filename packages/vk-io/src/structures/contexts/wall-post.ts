@@ -2,7 +2,7 @@ import { Context, IContextOptions } from './context';
 
 import { WallAttachment } from '../attachments';
 
-import { copyParams } from '../../utils/helpers';
+import { pickProperties } from '../../utils/helpers';
 import { inspectCustomData } from '../../utils/constants';
 
 const subTypes: Record<string, string> = {
@@ -59,7 +59,7 @@ export class WallPostContext<S = Record<string, any>>
 	 * Returns the custom data
 	 */
 	public [inspectCustomData](): object {
-		return copyParams(this, [
+		return pickProperties(this, [
 			'wall',
 			'isRepost'
 		]);

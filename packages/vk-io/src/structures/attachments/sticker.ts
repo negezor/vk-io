@@ -2,7 +2,7 @@ import { VK } from '../../vk';
 
 import { ExternalAttachment } from './external';
 
-import { copyParams } from '../../utils/helpers';
+import { pickProperties } from '../../utils/helpers';
 import { AttachmentType, inspectCustomData } from '../../utils/constants';
 
 const { STICKER } = AttachmentType;
@@ -63,7 +63,7 @@ export class StickerAttachment extends ExternalAttachment<IStickerAttachmentPayl
 	 * Returns the custom data
 	 */
 	public [inspectCustomData](): object {
-		return copyParams(this, [
+		return pickProperties(this, [
 			'id',
 			'productId',
 			'images',

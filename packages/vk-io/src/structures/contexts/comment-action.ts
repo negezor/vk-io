@@ -7,7 +7,7 @@ import { Attachmentable } from '../shared/attachmentable';
 
 import { inspectCustomData } from '../../utils/constants';
 import { transformAttachments } from '../attachments/helpers';
-import { copyParams, applyMixins, showDeprecatedMessage } from '../../utils/helpers';
+import { pickProperties, applyMixins, showDeprecatedMessage } from '../../utils/helpers';
 
 /**
  * Find types
@@ -388,7 +388,7 @@ class CommentActionContext<S = Record<string, any>>
 		));
 
 		// @ts-ignore
-		return copyParams(this, filtredEmptyProperties);
+		return pickProperties(this, filtredEmptyProperties);
 	}
 }
 

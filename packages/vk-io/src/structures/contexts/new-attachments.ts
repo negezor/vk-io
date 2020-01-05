@@ -11,7 +11,7 @@ import {
 } from '../attachments';
 import { Attachmentable } from '../shared/attachmentable';
 
-import { copyParams, applyMixins } from '../../utils/helpers';
+import { pickProperties, applyMixins } from '../../utils/helpers';
 import { inspectCustomData, AttachmentType } from '../../utils/constants';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -111,7 +111,7 @@ class NewAttachmentsContext<S = Record<string, any>>
 	 * Returns the custom data
 	 */
 	public [inspectCustomData](): object {
-		return copyParams(this, [
+		return pickProperties(this, [
 			'attachments',
 			'isPhoto',
 			'isVideo',

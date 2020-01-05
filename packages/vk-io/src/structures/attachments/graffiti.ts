@@ -2,7 +2,7 @@ import { VK } from '../../vk';
 
 import { Attachment } from './attachment';
 
-import { copyParams } from '../../utils/helpers';
+import { pickProperties } from '../../utils/helpers';
 import { AttachmentType, inspectCustomData } from '../../utils/constants';
 
 const { GRAFFITI } = AttachmentType;
@@ -78,7 +78,7 @@ export class GraffitiAttachment extends Attachment<IGraffitiAttachmentPayload> {
 	 * Returns the custom data
 	 */
 	public [inspectCustomData](): object {
-		return copyParams(this, [
+		return pickProperties(this, [
 			'height',
 			'width',
 			'url'

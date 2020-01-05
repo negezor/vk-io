@@ -1,6 +1,6 @@
 import { Context, IContextOptions } from './context';
 
-import { copyParams } from '../../utils/helpers';
+import { pickProperties } from '../../utils/helpers';
 import { platforms, inspectCustomData } from '../../utils/constants';
 
 const subTypes: Record<number, string> = {
@@ -92,7 +92,7 @@ export class UserOnlineContext<S = Record<string, any>>
 	 * Returns the custom data
 	 */
 	public [inspectCustomData](): object {
-		return copyParams(this, [
+		return pickProperties(this, [
 			'userId',
 			'createdAt',
 			'platformName',

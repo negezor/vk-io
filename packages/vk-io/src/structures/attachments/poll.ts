@@ -2,7 +2,7 @@ import { VK } from '../../vk';
 
 import { Attachment } from './attachment';
 
-import { copyParams } from '../../utils/helpers';
+import { pickProperties } from '../../utils/helpers';
 import { AttachmentType, inspectCustomData } from '../../utils/constants';
 
 const { POLL } = AttachmentType;
@@ -240,7 +240,7 @@ export class PollAttachment extends Attachment<IPollAttachmentPayload> {
 	 * Returns the custom data
 	 */
 	public [inspectCustomData](): object {
-		return copyParams(this, [
+		return pickProperties(this, [
 			'authorId',
 			'question',
 			'createdAt',

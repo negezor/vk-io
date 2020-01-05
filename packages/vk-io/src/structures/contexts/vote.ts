@@ -1,6 +1,6 @@
 import { Context, IContextOptions } from './context';
 
-import { copyParams } from '../../utils/helpers';
+import { pickProperties } from '../../utils/helpers';
 import { inspectCustomData } from '../../utils/constants';
 
 export interface IVoteContextPayload {
@@ -59,7 +59,7 @@ export class VoteContext<S = Record<string, any>>
 	 * Returns the custom data
 	 */
 	public [inspectCustomData](): object {
-		return copyParams(this, [
+		return pickProperties(this, [
 			'id',
 			'userId',
 			'ownerId',

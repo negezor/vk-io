@@ -1,6 +1,6 @@
 import { Context, IContextOptions } from './context';
 
-import { copyParams, getPeerType, showDeprecatedMessage } from '../../utils/helpers';
+import { pickProperties, getPeerType, showDeprecatedMessage } from '../../utils/helpers';
 import {
 	CHAT_PEER,
 
@@ -130,7 +130,7 @@ export class TypingContext<S = Record<string, any>>
 	 * Returns the custom data
 	 */
 	public [inspectCustomData](): object {
-		return copyParams(this, [
+		return pickProperties(this, [
 			'fromId',
 			'toId',
 			'chatId',

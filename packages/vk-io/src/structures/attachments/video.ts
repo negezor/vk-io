@@ -2,7 +2,7 @@ import { VK } from '../../vk';
 
 import { Attachment } from './attachment';
 
-import { copyParams } from '../../utils/helpers';
+import { pickProperties } from '../../utils/helpers';
 import { AttachmentType, inspectCustomData } from '../../utils/constants';
 
 const { VIDEO } = AttachmentType;
@@ -205,7 +205,7 @@ export class VideoAttachment extends Attachment<IVideoAttachmentPayload> {
 	 * Returns the custom data
 	 */
 	public [inspectCustomData](): object {
-		return copyParams(this, [
+		return pickProperties(this, [
 			'title',
 			'description',
 			'duration',

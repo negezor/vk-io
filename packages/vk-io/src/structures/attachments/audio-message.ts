@@ -2,7 +2,7 @@ import { VK } from '../../vk';
 
 import { Attachment } from './attachment';
 
-import { copyParams } from '../../utils/helpers';
+import { pickProperties } from '../../utils/helpers';
 import { AttachmentType, inspectCustomData } from '../../utils/constants';
 
 const { AUDIO_MESSAGE } = AttachmentType;
@@ -93,7 +93,7 @@ export class AudioMessageAttachment extends Attachment<IAudioMessageAttachmentPa
 	 * Returns the custom data
 	 */
 	public [inspectCustomData](): object {
-		const payload = copyParams(this, [
+		const payload = pickProperties(this, [
 			'duration',
 			'waveform',
 			'oggUrl',

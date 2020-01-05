@@ -4,7 +4,7 @@ import { Attachmentable } from '../shared/attachmentable';
 import { Attachment, PhotoAttachment } from '../attachments';
 
 import { inspectCustomData } from '../../utils/constants';
-import { copyParams, applyMixins } from '../../utils/helpers';
+import { pickProperties, applyMixins } from '../../utils/helpers';
 
 const subTypes: Record<string, string> = {
 	group_change_photo: 'group_update_photo',
@@ -105,7 +105,7 @@ class GroupUpdateContext<S = Record<string, any>>
 	 * Returns the custom data
 	 */
 	public [inspectCustomData](): object {
-		return copyParams(this, [
+		return pickProperties(this, [
 			'adminId',
 			'userId',
 			'oldLevel',

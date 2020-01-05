@@ -2,7 +2,7 @@ import { VK } from '../../vk';
 
 import { Attachment } from './attachment';
 
-import { copyParams } from '../../utils/helpers';
+import { pickProperties } from '../../utils/helpers';
 import { AttachmentType, inspectCustomData } from '../../utils/constants';
 import { PhotoAttachment, IPhotoAttachmentPayload } from './photo';
 import { VideoAttachment, IVideoAttachmentPayload } from './video';
@@ -283,19 +283,19 @@ export class StoryAttachment extends Attachment<IStoryAttachmentPayload> {
 	 */
 	public [inspectCustomData](): object {
 		if (this.isDeleted) {
-			return copyParams(this, [
+			return pickProperties(this, [
 				'isDeleted'
 			]);
 		}
 
 		if (this.isExpired) {
-			return copyParams(this, [
+			return pickProperties(this, [
 				'isExpired',
 				'expiresAt'
 			]);
 		}
 
-		return copyParams(this, [
+		return pickProperties(this, [
 			'isExpired',
 			'isDeleted',
 			'isSeen',

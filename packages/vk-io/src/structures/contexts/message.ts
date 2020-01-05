@@ -14,7 +14,7 @@ import { Attachmentable, IAllAttachmentable } from '../shared/attachmentable';
 import { transformAttachments } from '../attachments/helpers';
 import {
 	unescapeHTML,
-	copyParams,
+	pickProperties,
 	getPeerType,
 	showDeprecatedMessage,
 	applyMixins
@@ -866,7 +866,7 @@ class MessageContext<S = Record<string, any>>
 		}
 
 		// @ts-ignore
-		return copyParams(this, [
+		return pickProperties(this, [
 			'id',
 			'conversationMessageId',
 			'peerId',
