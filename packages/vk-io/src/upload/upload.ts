@@ -8,8 +8,8 @@ import { inspect, deprecate } from 'util';
 import { VK } from '../vk';
 import { MultipartStream } from './multipart-stream';
 import { UploadError, UploadErrorCode } from '../errors';
-import { isStream, copyParams, streamToBuffer } from './helpers';
 import { DefaultExtension, DefaultContentType } from '../utils/constants';
+import { isStream, pickExistingProperties, streamToBuffer } from './helpers';
 
 import { AllowArray } from '../types';
 
@@ -486,7 +486,7 @@ export class Upload {
 			compression?: number;
 		}
 	): Promise<VideoAttachment> {
-		const save = await this.vk.api.video.save(copyParams(params, [
+		const save = await this.vk.api.video.save(pickExistingProperties(params, [
 			'group_id',
 			'album_id',
 			'link',
@@ -987,7 +987,7 @@ export class Upload {
 		}
 
 		const [{ upload_url: url }, formData] = await Promise.all([
-			getServer(copyParams(params, serverParams)),
+			getServer(pickExistingProperties(params, serverParams)),
 			this.buildPayload({
 				field,
 				// @ts-ignore
@@ -1011,7 +1011,7 @@ export class Upload {
 		}
 
 		const response = await saveFiles({
-			...copyParams(params, saveParams),
+			...pickExistingProperties(params, saveParams),
 			...uploaded
 		});
 

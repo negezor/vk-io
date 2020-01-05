@@ -10,7 +10,7 @@ export const isStream = (source: Readable | Buffer | string): boolean => (
 /**
  * Copies object params to new object
  */
-export const copyParams = <
+export const pickExistingProperties = <
 	T,
 	K extends keyof T
 >(params: T, properties: K[]): Pick<T, K> => {
