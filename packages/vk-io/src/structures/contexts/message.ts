@@ -146,8 +146,7 @@ class MessageContext<S = Record<string, any>>
 
 		const [message] = items;
 
-		// @ts-ignore
-		this.applyPayload(message);
+		this.applyPayload(message as IMessageContextPayload['message']);
 
 		this.$filled = true;
 	}
@@ -793,13 +792,17 @@ class MessageContext<S = Record<string, any>>
 	/**
 	 * Applies the payload
 	 */
-	private applyPayload(payload: IMessageContextPayload): void {
+	private applyPayload(
+		payload: IMessageContextPayload
+		| IMessageContextPayload['message'] & {
+			client_info?: undefined;
+		}
+	): void {
 		// Polyfill for all events except new_message
 		if (payload.client_info === undefined) {
 			// eslint-disable-next-line no-param-reassign
 			payload = {
-				// @ts-ignore
-				message: payload,
+				message: payload as IMessageContextPayload['message'],
 				client_info: {
 					button_actions: [
 						'text'

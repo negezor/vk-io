@@ -59,9 +59,9 @@ export function transformMessage({
 	Record<string, any>,
 	number
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any,
-]): Record<string, any> {
+]): IMessageContextPayload['message'] {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	const message: Partial<IMessageContextPayload['message']> = {
+	const message = {
 		id,
 		date,
 		text,
@@ -70,7 +70,7 @@ export function transformMessage({
 			? {}
 			: undefined,
 		payload: extra.payload
-	};
+	} as IMessageContextPayload['message'];
 
 	message.peer_id = peer;
 
