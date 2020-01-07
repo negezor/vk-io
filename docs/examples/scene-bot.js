@@ -10,7 +10,7 @@ const vk = new VK({
 const sessionManager = new SessionManager();
 const sceneManager = new SceneManager();
 
-sceneManager.addScene(new StepScene('signup', [
+sceneManager.addScenes([new StepScene('signup', [
 	(context) => {
 		if (context.scene.step.firstTime || !context.text) {
 			return context.send('What\'s your name?');
@@ -36,7 +36,7 @@ sceneManager.addScene(new StepScene('signup', [
 
 		await context.scene.leave();
 	}
-]));
+])]);
 
 vk.updates.on('message', sessionManager.middleware);
 vk.updates.on('message', sceneManager.middleware);
