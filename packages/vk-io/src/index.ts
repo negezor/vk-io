@@ -10,6 +10,9 @@ export * from './api/schemas/params';
 export * from './api/schemas/objects';
 export * from './api/schemas/responses';
 
+export * from './structures/shared/message-reply';
+export * from './structures/shared/message-forward';
+
 export {
 	CaptchaType,
 	UpdateSource,
