@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Updates | vk-io - v4.0.0-rc.30</title>
+	<title>Updates | vk-io</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">vk-io - v4.0.0-rc.30</a>
+					<a href="../index.html" class="title">vk-io</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -88,9 +88,10 @@
 						<section class="tsd-index-section tsd-is-private-protected">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="_updates_updates_.updates.html#hearstack" class="tsd-kind-icon">hear<wbr>Stack</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="_updates_updates_.updates.html#composer" class="tsd-kind-icon">composer</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="_updates_updates_.updates.html#hearcomposer" class="tsd-kind-icon">hear<wbr>Composer</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="_updates_updates_.updates.html#hearfallbackhandler" class="tsd-kind-icon">hear<wbr>Fallback<wbr>Handler</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="_updates_updates_.updates.html#pollingtransport" class="tsd-kind-icon">polling<wbr>Transport</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="_updates_updates_.updates.html#stack" class="tsd-kind-icon">stack</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="_updates_updates_.updates.html#stackmiddleware" class="tsd-kind-icon">stack<wbr>Middleware</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="_updates_updates_.updates.html#vk" class="tsd-kind-icon">vk</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="_updates_updates_.updates.html#webhooktransport" class="tsd-kind-icon">webhook<wbr>Transport</a></li>
@@ -113,7 +114,6 @@
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_updates_updates_.updates.html#handlepollingupdate" class="tsd-kind-icon">handle<wbr>Polling<wbr>Update</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_updates_updates_.updates.html#handlewebhookupdate" class="tsd-kind-icon">handle<wbr>Webhook<wbr>Update</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="_updates_updates_.updates.html#hear" class="tsd-kind-icon">hear</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="_updates_updates_.updates.html#hearfallbackhandler" class="tsd-kind-icon">hear<wbr>Fallback<wbr>Handler</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="_updates_updates_.updates.html#on" class="tsd-kind-icon">on</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><a href="_updates_updates_.updates.html#reloadmiddleware" class="tsd-kind-icon">reload<wbr>Middleware</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="_updates_updates_.updates.html#sethearfallbackhandler" class="tsd-kind-icon">set<wbr>Hear<wbr>Fallback<wbr>Handler</a></li>
@@ -139,7 +139,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/997316f/packages/vk-io/src/updates/updates.ts#L213">packages/vk-io/src/updates/updates.ts:213</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/updates/updates.ts#L211">packages/vk-io/src/updates/updates.ts:211</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -161,12 +161,32 @@
 			<section class="tsd-panel-group tsd-member-group tsd-is-private-protected">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
-					<a name="hearstack" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagProtected">Protected</span> hear<wbr>Stack</h3>
-					<div class="tsd-signature tsd-kind-icon">hear<wbr>Stack<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Middleware</span><span class="tsd-signature-symbol">&lt;</span><a href="_structures_contexts_context_.context.html" class="tsd-signature-type">Context</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[]</span></div>
+					<a name="composer" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> composer</h3>
+					<div class="tsd-signature tsd-kind-icon">composer<span class="tsd-signature-symbol">:</span> <a href="_structures_shared_composer_.composer.html" class="tsd-signature-type">Composer</a><span class="tsd-signature-symbol">&lt;</span><a href="_structures_contexts_context_.context.html" class="tsd-signature-type">Context</a><span class="tsd-signature-symbol">&lt;</span><a href="" class="tsd-signature-type">__type</a><span class="tsd-signature-symbol">, </span><a href="" class="tsd-signature-type">__type</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = Composer.builder&lt;Context&gt;()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/997316f/packages/vk-io/src/updates/updates.ts#L206">packages/vk-io/src/updates/updates.ts:206</a></li>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/updates/updates.ts#L205">packages/vk-io/src/updates/updates.ts:205</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+					<a name="hearcomposer" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> hear<wbr>Composer</h3>
+					<div class="tsd-signature tsd-kind-icon">hear<wbr>Composer<span class="tsd-signature-symbol">:</span> <a href="_structures_shared_composer_.composer.html" class="tsd-signature-type">Composer</a><span class="tsd-signature-symbol">&lt;</span><a href="_structures_contexts_message_.messagecontext.html" class="tsd-signature-type">MessageContext</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = Composer.builder&lt;MessageContext&gt;()</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/updates/updates.ts#L207">packages/vk-io/src/updates/updates.ts:207</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+					<a name="hearfallbackhandler" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> hear<wbr>Fallback<wbr>Handler</h3>
+					<div class="tsd-signature tsd-kind-icon">hear<wbr>Fallback<wbr>Handler<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Middleware</span><span class="tsd-signature-symbol">&lt;</span><a href="_structures_contexts_message_.messagecontext.html" class="tsd-signature-type">MessageContext</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = skipMiddleware</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/updates/updates.ts#L211">packages/vk-io/src/updates/updates.ts:211</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -176,17 +196,7 @@
 					<div class="tsd-signature tsd-kind-icon">polling<wbr>Transport<span class="tsd-signature-symbol">:</span> <a href="_updates_transports_polling_.pollingtransport.html" class="tsd-signature-type">PollingTransport</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/997316f/packages/vk-io/src/updates/updates.ts#L200">packages/vk-io/src/updates/updates.ts:200</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
-					<a name="stack" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagProtected">Protected</span> stack</h3>
-					<div class="tsd-signature tsd-kind-icon">stack<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Middleware</span><span class="tsd-signature-symbol">&lt;</span><a href="_structures_contexts_context_.context.html" class="tsd-signature-type">Context</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[]</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/997316f/packages/vk-io/src/updates/updates.ts#L204">packages/vk-io/src/updates/updates.ts:204</a></li>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/updates/updates.ts#L201">packages/vk-io/src/updates/updates.ts:201</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -196,7 +206,7 @@
 					<div class="tsd-signature tsd-kind-icon">stack<wbr>Middleware<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Middleware</span><span class="tsd-signature-symbol">&lt;</span><a href="_structures_contexts_context_.context.html" class="tsd-signature-type">Context</a><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/997316f/packages/vk-io/src/updates/updates.ts#L208">packages/vk-io/src/updates/updates.ts:208</a></li>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/updates/updates.ts#L209">packages/vk-io/src/updates/updates.ts:209</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -206,7 +216,7 @@
 					<div class="tsd-signature tsd-kind-icon">vk<span class="tsd-signature-symbol">:</span> <a href="_vk_.vk.html" class="tsd-signature-type">VK</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/997316f/packages/vk-io/src/updates/updates.ts#L198">packages/vk-io/src/updates/updates.ts:198</a></li>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/updates/updates.ts#L199">packages/vk-io/src/updates/updates.ts:199</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -216,7 +226,7 @@
 					<div class="tsd-signature tsd-kind-icon">webhook<wbr>Transport<span class="tsd-signature-symbol">:</span> <a href="_updates_transports_webhook_.webhooktransport.html" class="tsd-signature-type">WebhookTransport</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/997316f/packages/vk-io/src/updates/updates.ts#L202">packages/vk-io/src/updates/updates.ts:202</a></li>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/updates/updates.ts#L203">packages/vk-io/src/updates/updates.ts:203</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -233,7 +243,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/997316f/packages/vk-io/src/updates/updates.ts#L232">packages/vk-io/src/updates/updates.ts:232</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/updates/updates.ts#L230">packages/vk-io/src/updates/updates.ts:230</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -255,7 +265,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/997316f/packages/vk-io/src/updates/updates.ts#L239">packages/vk-io/src/updates/updates.ts:239</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/updates/updates.ts#L237">packages/vk-io/src/updates/updates.ts:237</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -280,7 +290,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/997316f/packages/vk-io/src/updates/updates.ts#L581">packages/vk-io/src/updates/updates.ts:581</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/updates/updates.ts#L577">packages/vk-io/src/updates/updates.ts:577</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -311,7 +321,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/997316f/packages/vk-io/src/updates/updates.ts#L551">packages/vk-io/src/updates/updates.ts:551</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/updates/updates.ts#L548">packages/vk-io/src/updates/updates.ts:548</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -339,7 +349,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/997316f/packages/vk-io/src/updates/updates.ts#L544">packages/vk-io/src/updates/updates.ts:544</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/updates/updates.ts#L541">packages/vk-io/src/updates/updates.ts:541</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -361,7 +371,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/997316f/packages/vk-io/src/updates/updates.ts#L537">packages/vk-io/src/updates/updates.ts:537</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/updates/updates.ts#L534">packages/vk-io/src/updates/updates.ts:534</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -389,7 +399,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/997316f/packages/vk-io/src/updates/updates.ts#L421">packages/vk-io/src/updates/updates.ts:421</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/updates/updates.ts#L418">packages/vk-io/src/updates/updates.ts:418</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -417,7 +427,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/997316f/packages/vk-io/src/updates/updates.ts#L447">packages/vk-io/src/updates/updates.ts:447</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/updates/updates.ts#L444">packages/vk-io/src/updates/updates.ts:444</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -439,13 +449,13 @@
 					<a name="hear" class="tsd-anchor"></a>
 					<h3>hear</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">hear&lt;T&gt;<span class="tsd-signature-symbol">(</span>hearConditions<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">RegExp</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">RegExp</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">[]</span>, handler<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Middleware</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">MessageContext</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+						<li class="tsd-signature tsd-kind-icon">hear&lt;T&gt;<span class="tsd-signature-symbol">(</span>hearConditions<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">RegExp</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, context<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">U</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">RegExp</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, context<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">U</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span>, handler<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Middleware</span><span class="tsd-signature-symbol">&lt;</span><a href="_structures_contexts_message_.messagecontext.html" class="tsd-signature-type">MessageContext</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/997316f/packages/vk-io/src/updates/updates.ts#L315">packages/vk-io/src/updates/updates.ts:315</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/updates/updates.ts#L313">packages/vk-io/src/updates/updates.ts:313</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -462,51 +472,13 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>hearConditions: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">RegExp</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">RegExp</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">[]</span></h5>
+									<h5>hearConditions: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">RegExp</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, context<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">U</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">RegExp</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>value<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span>, context<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">U</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span></h5>
 								</li>
 								<li>
-									<h5>handler: <span class="tsd-signature-type">Middleware</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">MessageContext</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>handler: <span class="tsd-signature-type">Middleware</span><span class="tsd-signature-symbol">&lt;</span><a href="_structures_contexts_message_.messagecontext.html" class="tsd-signature-type">MessageContext</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-protected">
-					<a name="hearfallbackhandler" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagProtected">Protected</span> hear<wbr>Fallback<wbr>Handler</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
-						<li class="tsd-signature tsd-kind-icon">hear<wbr>Fallback<wbr>Handler<span class="tsd-signature-symbol">(</span>context<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">MessageContext</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">&gt;</span>, next<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/997316f/packages/vk-io/src/updates/updates.ts#L210">packages/vk-io/src/updates/updates.ts:210</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>context: <span class="tsd-signature-type">MessageContext</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">&gt;</span></h5>
-								</li>
-								<li>
-									<h5>next: <span class="tsd-signature-type">function</span></h5>
-									<ul class="tsd-parameters">
-										<li class="tsd-parameter-siganture">
-											<ul class="tsd-signatures tsd-kind-type-literal tsd-is-not-exported">
-												<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NextMiddlewareReturn</span><span class="tsd-signature-symbol">&gt;</span></li>
-											</ul>
-											<ul class="tsd-descriptions">
-												<li class="tsd-description">
-													<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NextMiddlewareReturn</span><span class="tsd-signature-symbol">&gt;</span></h4>
-												</li>
-											</ul>
-										</li>
-									</ul>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -514,22 +486,22 @@
 					<a name="on" class="tsd-anchor"></a>
 					<h3>on</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">on&lt;T&gt;<span class="tsd-signature-symbol">(</span>events<span class="tsd-signature-symbol">: </span><a href="../modules/_types_.html#allowarray" class="tsd-signature-type">AllowArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"message"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"new_message"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"edit_message"</span><span class="tsd-signature-symbol">&gt;</span>, handler<span class="tsd-signature-symbol">: </span><a href="../modules/_types_.html#allowarray" class="tsd-signature-type">AllowArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Middleware</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">MessageContext</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+						<li class="tsd-signature tsd-kind-icon">on&lt;T&gt;<span class="tsd-signature-symbol">(</span>events<span class="tsd-signature-symbol">: </span><a href="../modules/_types_.html#allowarray" class="tsd-signature-type">AllowArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"message"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"new_message"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"edit_message"</span><span class="tsd-signature-symbol">&gt;</span>, handler<span class="tsd-signature-symbol">: </span><a href="../modules/_types_.html#allowarray" class="tsd-signature-type">AllowArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Middleware</span><span class="tsd-signature-symbol">&lt;</span><a href="_structures_contexts_message_.messagecontext.html" class="tsd-signature-type">MessageContext</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 						<li class="tsd-signature tsd-kind-icon">on&lt;T&gt;<span class="tsd-signature-symbol">(</span>events<span class="tsd-signature-symbol">: </span><a href="../modules/_types_.html#allowarray" class="tsd-signature-type">AllowArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"message_subscribers"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"message_subscribe"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"message_unsubscribe"</span><span class="tsd-signature-symbol">&gt;</span>, handler<span class="tsd-signature-symbol">: </span><a href="../modules/_types_.html#allowarray" class="tsd-signature-type">AllowArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Middleware</span><span class="tsd-signature-symbol">&lt;</span><a href="_structures_contexts_message_allow_.messageallowcontext.html" class="tsd-signature-type">MessageAllowContext</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
-						<li class="tsd-signature tsd-kind-icon">on&lt;T&gt;<span class="tsd-signature-symbol">(</span>events<span class="tsd-signature-symbol">: </span><a href="../modules/_types_.html#allowarray" class="tsd-signature-type">AllowArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"new_attachment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"new_photo_attachment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"new_video_attachment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"new_audio_attachment"</span><span class="tsd-signature-symbol">&gt;</span>, handler<span class="tsd-signature-symbol">: </span><a href="../modules/_types_.html#allowarray" class="tsd-signature-type">AllowArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Middleware</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NewAttachmentsContext</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+						<li class="tsd-signature tsd-kind-icon">on&lt;T&gt;<span class="tsd-signature-symbol">(</span>events<span class="tsd-signature-symbol">: </span><a href="../modules/_types_.html#allowarray" class="tsd-signature-type">AllowArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"new_attachment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"new_photo_attachment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"new_video_attachment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"new_audio_attachment"</span><span class="tsd-signature-symbol">&gt;</span>, handler<span class="tsd-signature-symbol">: </span><a href="../modules/_types_.html#allowarray" class="tsd-signature-type">AllowArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Middleware</span><span class="tsd-signature-symbol">&lt;</span><a href="_structures_contexts_new_attachments_.newattachmentscontext.html" class="tsd-signature-type">NewAttachmentsContext</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 						<li class="tsd-signature tsd-kind-icon">on&lt;T&gt;<span class="tsd-signature-symbol">(</span>events<span class="tsd-signature-symbol">: </span><a href="../modules/_types_.html#allowarray" class="tsd-signature-type">AllowArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"wall_post"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"new_wall_post"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"new_wall_repost"</span><span class="tsd-signature-symbol">&gt;</span>, handler<span class="tsd-signature-symbol">: </span><a href="../modules/_types_.html#allowarray" class="tsd-signature-type">AllowArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Middleware</span><span class="tsd-signature-symbol">&lt;</span><a href="_structures_contexts_wall_post_.wallpostcontext.html" class="tsd-signature-type">WallPostContext</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 						<li class="tsd-signature tsd-kind-icon">on&lt;T&gt;<span class="tsd-signature-symbol">(</span>events<span class="tsd-signature-symbol">: </span><a href="../modules/_types_.html#allowarray" class="tsd-signature-type">AllowArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"group_member"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"join_group_member"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"leave_group_member"</span><span class="tsd-signature-symbol">&gt;</span>, handler<span class="tsd-signature-symbol">: </span><a href="../modules/_types_.html#allowarray" class="tsd-signature-type">AllowArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Middleware</span><span class="tsd-signature-symbol">&lt;</span><a href="_structures_contexts_group_member_.groupmembercontext.html" class="tsd-signature-type">GroupMemberContext</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 						<li class="tsd-signature tsd-kind-icon">on&lt;T&gt;<span class="tsd-signature-symbol">(</span>events<span class="tsd-signature-symbol">: </span><a href="../modules/_types_.html#allowarray" class="tsd-signature-type">AllowArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"group_user"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"block_group_user"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"unblock_group_user"</span><span class="tsd-signature-symbol">&gt;</span>, handler<span class="tsd-signature-symbol">: </span><a href="../modules/_types_.html#allowarray" class="tsd-signature-type">AllowArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Middleware</span><span class="tsd-signature-symbol">&lt;</span><a href="_structures_contexts_group_user_.groupusercontext.html" class="tsd-signature-type">GroupUserContext</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
-						<li class="tsd-signature tsd-kind-icon">on&lt;T&gt;<span class="tsd-signature-symbol">(</span>events<span class="tsd-signature-symbol">: </span><a href="../modules/_types_.html#allowarray" class="tsd-signature-type">AllowArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"photo_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"video_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"wall_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"board_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"market_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"new_photo_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"edit_photo_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"delete_photo_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"restore_photo_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"new_video_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"edit_video_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"delete_video_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"restore_video_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"new_wall_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"edit_wall_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"delete_wall_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"restore_wall_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"new_board_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"edit_board_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"delete_board_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"restore_board_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"new_market_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"edit_market_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"delete_market_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"restore_market_comment"</span><span class="tsd-signature-symbol">&gt;</span>, handler<span class="tsd-signature-symbol">: </span><a href="../modules/_types_.html#allowarray" class="tsd-signature-type">AllowArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Middleware</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">CommentActionContext</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+						<li class="tsd-signature tsd-kind-icon">on&lt;T&gt;<span class="tsd-signature-symbol">(</span>events<span class="tsd-signature-symbol">: </span><a href="../modules/_types_.html#allowarray" class="tsd-signature-type">AllowArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"photo_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"video_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"wall_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"board_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"market_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"new_photo_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"edit_photo_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"delete_photo_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"restore_photo_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"new_video_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"edit_video_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"delete_video_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"restore_video_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"new_wall_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"edit_wall_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"delete_wall_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"restore_wall_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"new_board_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"edit_board_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"delete_board_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"restore_board_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"new_market_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"edit_market_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"delete_market_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"restore_market_comment"</span><span class="tsd-signature-symbol">&gt;</span>, handler<span class="tsd-signature-symbol">: </span><a href="../modules/_types_.html#allowarray" class="tsd-signature-type">AllowArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Middleware</span><span class="tsd-signature-symbol">&lt;</span><a href="_structures_contexts_comment_action_.commentactioncontext.html" class="tsd-signature-type">CommentActionContext</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 						<li class="tsd-signature tsd-kind-icon">on&lt;T&gt;<span class="tsd-signature-symbol">(</span>events<span class="tsd-signature-symbol">: </span><a href="../modules/_types_.html#allowarray" class="tsd-signature-type">AllowArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"vote"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"pull_vote"</span><span class="tsd-signature-symbol">&gt;</span>, handler<span class="tsd-signature-symbol">: </span><a href="../modules/_types_.html#allowarray" class="tsd-signature-type">AllowArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Middleware</span><span class="tsd-signature-symbol">&lt;</span><a href="_structures_contexts_vote_.votecontext.html" class="tsd-signature-type">VoteContext</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
-						<li class="tsd-signature tsd-kind-icon">on&lt;T&gt;<span class="tsd-signature-symbol">(</span>events<span class="tsd-signature-symbol">: </span><a href="../modules/_types_.html#allowarray" class="tsd-signature-type">AllowArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"group_update"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"group_update_photo"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"group_update_officers"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"group_update_settings"</span><span class="tsd-signature-symbol">&gt;</span>, handler<span class="tsd-signature-symbol">: </span><a href="../modules/_types_.html#allowarray" class="tsd-signature-type">AllowArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Middleware</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">GroupUpdateContext</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+						<li class="tsd-signature tsd-kind-icon">on&lt;T&gt;<span class="tsd-signature-symbol">(</span>events<span class="tsd-signature-symbol">: </span><a href="../modules/_types_.html#allowarray" class="tsd-signature-type">AllowArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"group_update"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"group_update_photo"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"group_update_officers"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"group_update_settings"</span><span class="tsd-signature-symbol">&gt;</span>, handler<span class="tsd-signature-symbol">: </span><a href="../modules/_types_.html#allowarray" class="tsd-signature-type">AllowArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Middleware</span><span class="tsd-signature-symbol">&lt;</span><a href="_structures_contexts_group_update_.groupupdatecontext.html" class="tsd-signature-type">GroupUpdateContext</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 						<li class="tsd-signature tsd-kind-icon">on&lt;T&gt;<span class="tsd-signature-symbol">(</span>events<span class="tsd-signature-symbol">: </span><a href="../modules/_types_.html#allowarray" class="tsd-signature-type">AllowArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"typing"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"typing_user"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"typing_group"</span><span class="tsd-signature-symbol">&gt;</span>, handler<span class="tsd-signature-symbol">: </span><a href="../modules/_types_.html#allowarray" class="tsd-signature-type">AllowArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Middleware</span><span class="tsd-signature-symbol">&lt;</span><a href="_structures_contexts_typing_.typingcontext.html" class="tsd-signature-type">TypingContext</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/997316f/packages/vk-io/src/updates/updates.ts#L262">packages/vk-io/src/updates/updates.ts:262</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/updates/updates.ts#L260">packages/vk-io/src/updates/updates.ts:260</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -549,7 +521,7 @@
 									<h5>events: <a href="../modules/_types_.html#allowarray" class="tsd-signature-type">AllowArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"message"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"new_message"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"edit_message"</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 								<li>
-									<h5>handler: <a href="../modules/_types_.html#allowarray" class="tsd-signature-type">AllowArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Middleware</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">MessageContext</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>handler: <a href="../modules/_types_.html#allowarray" class="tsd-signature-type">AllowArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Middleware</span><span class="tsd-signature-symbol">&lt;</span><a href="_structures_contexts_message_.messagecontext.html" class="tsd-signature-type">MessageContext</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
@@ -557,7 +529,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/997316f/packages/vk-io/src/updates/updates.ts#L264">packages/vk-io/src/updates/updates.ts:264</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/updates/updates.ts#L262">packages/vk-io/src/updates/updates.ts:262</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -580,7 +552,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/997316f/packages/vk-io/src/updates/updates.ts#L266">packages/vk-io/src/updates/updates.ts:266</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/updates/updates.ts#L264">packages/vk-io/src/updates/updates.ts:264</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -595,7 +567,7 @@
 									<h5>events: <a href="../modules/_types_.html#allowarray" class="tsd-signature-type">AllowArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"new_attachment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"new_photo_attachment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"new_video_attachment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"new_audio_attachment"</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 								<li>
-									<h5>handler: <a href="../modules/_types_.html#allowarray" class="tsd-signature-type">AllowArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Middleware</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">NewAttachmentsContext</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>handler: <a href="../modules/_types_.html#allowarray" class="tsd-signature-type">AllowArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Middleware</span><span class="tsd-signature-symbol">&lt;</span><a href="_structures_contexts_new_attachments_.newattachmentscontext.html" class="tsd-signature-type">NewAttachmentsContext</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
@@ -603,7 +575,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/997316f/packages/vk-io/src/updates/updates.ts#L268">packages/vk-io/src/updates/updates.ts:268</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/updates/updates.ts#L266">packages/vk-io/src/updates/updates.ts:266</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -626,7 +598,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/997316f/packages/vk-io/src/updates/updates.ts#L270">packages/vk-io/src/updates/updates.ts:270</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/updates/updates.ts#L268">packages/vk-io/src/updates/updates.ts:268</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -649,7 +621,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/997316f/packages/vk-io/src/updates/updates.ts#L272">packages/vk-io/src/updates/updates.ts:272</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/updates/updates.ts#L270">packages/vk-io/src/updates/updates.ts:270</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -672,7 +644,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/997316f/packages/vk-io/src/updates/updates.ts#L274">packages/vk-io/src/updates/updates.ts:274</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/updates/updates.ts#L272">packages/vk-io/src/updates/updates.ts:272</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -687,7 +659,7 @@
 									<h5>events: <a href="../modules/_types_.html#allowarray" class="tsd-signature-type">AllowArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"photo_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"video_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"wall_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"board_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"market_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"new_photo_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"edit_photo_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"delete_photo_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"restore_photo_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"new_video_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"edit_video_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"delete_video_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"restore_video_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"new_wall_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"edit_wall_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"delete_wall_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"restore_wall_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"new_board_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"edit_board_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"delete_board_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"restore_board_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"new_market_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"edit_market_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"delete_market_comment"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"restore_market_comment"</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 								<li>
-									<h5>handler: <a href="../modules/_types_.html#allowarray" class="tsd-signature-type">AllowArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Middleware</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">CommentActionContext</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>handler: <a href="../modules/_types_.html#allowarray" class="tsd-signature-type">AllowArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Middleware</span><span class="tsd-signature-symbol">&lt;</span><a href="_structures_contexts_comment_action_.commentactioncontext.html" class="tsd-signature-type">CommentActionContext</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
@@ -695,7 +667,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/997316f/packages/vk-io/src/updates/updates.ts#L276">packages/vk-io/src/updates/updates.ts:276</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/updates/updates.ts#L274">packages/vk-io/src/updates/updates.ts:274</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -718,7 +690,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/997316f/packages/vk-io/src/updates/updates.ts#L278">packages/vk-io/src/updates/updates.ts:278</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/updates/updates.ts#L276">packages/vk-io/src/updates/updates.ts:276</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -733,7 +705,7 @@
 									<h5>events: <a href="../modules/_types_.html#allowarray" class="tsd-signature-type">AllowArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">"group_update"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"group_update_photo"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"group_update_officers"</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">"group_update_settings"</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 								<li>
-									<h5>handler: <a href="../modules/_types_.html#allowarray" class="tsd-signature-type">AllowArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Middleware</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">GroupUpdateContext</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>handler: <a href="../modules/_types_.html#allowarray" class="tsd-signature-type">AllowArray</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Middleware</span><span class="tsd-signature-symbol">&lt;</span><a href="_structures_contexts_group_update_.groupupdatecontext.html" class="tsd-signature-type">GroupUpdateContext</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
@@ -741,7 +713,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/997316f/packages/vk-io/src/updates/updates.ts#L280">packages/vk-io/src/updates/updates.ts:280</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/updates/updates.ts#L278">packages/vk-io/src/updates/updates.ts:278</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -773,7 +745,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/997316f/packages/vk-io/src/updates/updates.ts#L558">packages/vk-io/src/updates/updates.ts:558</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/updates/updates.ts#L555">packages/vk-io/src/updates/updates.ts:555</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -789,13 +761,13 @@
 					<a name="sethearfallbackhandler" class="tsd-anchor"></a>
 					<h3>set<wbr>Hear<wbr>Fallback<wbr>Handler</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Hear<wbr>Fallback<wbr>Handler&lt;T&gt;<span class="tsd-signature-symbol">(</span>handler<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Middleware</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">MessageContext</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
+						<li class="tsd-signature tsd-kind-icon">set<wbr>Hear<wbr>Fallback<wbr>Handler&lt;T&gt;<span class="tsd-signature-symbol">(</span>handler<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Middleware</span><span class="tsd-signature-symbol">&lt;</span><a href="_structures_contexts_message_.messagecontext.html" class="tsd-signature-type">MessageContext</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/997316f/packages/vk-io/src/updates/updates.ts#L408">packages/vk-io/src/updates/updates.ts:408</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/updates/updates.ts#L405">packages/vk-io/src/updates/updates.ts:405</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -812,7 +784,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>handler: <span class="tsd-signature-type">Middleware</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">MessageContext</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>handler: <span class="tsd-signature-type">Middleware</span><span class="tsd-signature-symbol">&lt;</span><a href="_structures_contexts_message_.messagecontext.html" class="tsd-signature-type">MessageContext</a><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
@@ -823,13 +795,13 @@
 					<a name="start" class="tsd-anchor"></a>
 					<h3>start</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">start<span class="tsd-signature-symbol">(</span>__namedParameters<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">object</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">start<span class="tsd-signature-symbol">(</span>__namedParameters<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-symbol">{ </span>webhook<span class="tsd-signature-symbol">: </span><a href="../interfaces/_updates_updates_.iupdatesstartwebhookoptions.html" class="tsd-signature-type">IUpdatesStartWebhookOptions</a><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/997316f/packages/vk-io/src/updates/updates.ts#L500">packages/vk-io/src/updates/updates.ts:500</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/updates/updates.ts#L497">packages/vk-io/src/updates/updates.ts:497</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -840,8 +812,11 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> __namedParameters: <span class="tsd-signature-type">object</span><span class="tsd-signature-symbol"> =&nbsp;{}</span></h5>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> __namedParameters: <span class="tsd-signature-symbol">{ </span>webhook<span class="tsd-signature-symbol">: </span><a href="../interfaces/_updates_updates_.iupdatesstartwebhookoptions.html" class="tsd-signature-type">IUpdatesStartWebhookOptions</a><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> = {}</span></h5>
 									<ul class="tsd-parameters">
+										<li class="tsd-parameter">
+											<h5>webhook<span class="tsd-signature-symbol">: </span><a href="../interfaces/_updates_updates_.iupdatesstartwebhookoptions.html" class="tsd-signature-type">IUpdatesStartWebhookOptions</a></h5>
+										</li>
 									</ul>
 								</li>
 							</ul>
@@ -859,7 +834,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/997316f/packages/vk-io/src/updates/updates.ts#L473">packages/vk-io/src/updates/updates.ts:473</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/updates/updates.ts#L470">packages/vk-io/src/updates/updates.ts:470</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -881,7 +856,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/997316f/packages/vk-io/src/updates/updates.ts#L490">packages/vk-io/src/updates/updates.ts:490</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/updates/updates.ts#L487">packages/vk-io/src/updates/updates.ts:487</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -892,7 +867,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> options: <a href="../interfaces/_updates_updates_.iupdatesstartwebhookoptions.html" class="tsd-signature-type">IUpdatesStartWebhookOptions</a><span class="tsd-signature-symbol"> =&nbsp;{}</span></h5>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> options: <a href="../interfaces/_updates_updates_.iupdatesstartwebhookoptions.html" class="tsd-signature-type">IUpdatesStartWebhookOptions</a><span class="tsd-signature-symbol"> = {}</span></h5>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> next: <span class="tsd-signature-type">Function</span></h5>
@@ -912,7 +887,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/997316f/packages/vk-io/src/updates/updates.ts#L527">packages/vk-io/src/updates/updates.ts:527</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/updates/updates.ts#L524">packages/vk-io/src/updates/updates.ts:524</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -934,7 +909,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/997316f/packages/vk-io/src/updates/updates.ts#L246">packages/vk-io/src/updates/updates.ts:246</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/updates/updates.ts#L244">packages/vk-io/src/updates/updates.ts:244</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -982,13 +957,16 @@
 								<a href="_updates_updates_.updates.html#constructor" class="tsd-kind-icon">constructor</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
-								<a href="_updates_updates_.updates.html#hearstack" class="tsd-kind-icon">hear<wbr>Stack</a>
+								<a href="_updates_updates_.updates.html#composer" class="tsd-kind-icon">composer</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+								<a href="_updates_updates_.updates.html#hearcomposer" class="tsd-kind-icon">hear<wbr>Composer</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+								<a href="_updates_updates_.updates.html#hearfallbackhandler" class="tsd-kind-icon">hear<wbr>Fallback<wbr>Handler</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
 								<a href="_updates_updates_.updates.html#pollingtransport" class="tsd-kind-icon">polling<wbr>Transport</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
-								<a href="_updates_updates_.updates.html#stack" class="tsd-kind-icon">stack</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
 								<a href="_updates_updates_.updates.html#stackmiddleware" class="tsd-kind-icon">stack<wbr>Middleware</a>
@@ -1025,9 +1003,6 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
 								<a href="_updates_updates_.updates.html#hear" class="tsd-kind-icon">hear</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-protected">
-								<a href="_updates_updates_.updates.html#hearfallbackhandler" class="tsd-kind-icon">hear<wbr>Fallback<wbr>Handler</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
 								<a href="_updates_updates_.updates.html#on" class="tsd-kind-icon">on</a>
