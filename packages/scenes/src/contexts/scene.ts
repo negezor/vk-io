@@ -47,7 +47,7 @@ export class SceneContext {
 	/**
 	 * Controlled behavior leave
 	 */
-	private leaving = false;
+	public leaving = false;
 
 	public constructor(options: ISceneContextOptions) {
 		this.context = options.context;
