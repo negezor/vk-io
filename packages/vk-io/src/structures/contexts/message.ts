@@ -40,6 +40,7 @@ const subTypesEnum: Record<string | number, string> = {
 
 const kForwards = Symbol('forwards');
 const kReplyMessage = Symbol('replyMessage');
+const kMessagePayload = Symbol('messagePayload');
 
 const kAttachments = Symbol('attachments');
 
@@ -98,6 +99,9 @@ class MessageContext<S = Record<string, any>>
 	protected [kForwards]?: MessageForwardsCollection;
 
 	protected [kAttachments]?: (Attachment | ExternalAttachment)[];
+
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	protected [kMessagePayload]?: any | undefined;
 
 	protected [kReplyMessage]?: MessageReply;
 
@@ -381,9 +385,17 @@ class MessageContext<S = Record<string, any>>
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public get messagePayload(): any | undefined {
-		const { payload } = this.message;
+		if (this[kMessagePayload] === undefined) {
+			const { payload } = this.message;
 
-		return payload && JSON.parse(payload);
+			if (payload === undefined) {
+				return undefined;
+			}
+
+			this[kMessagePayload] = JSON.parse(payload);
+		}
+
+		return this[kMessagePayload];
 	}
 
 	/**
