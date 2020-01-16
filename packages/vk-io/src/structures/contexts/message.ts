@@ -794,12 +794,10 @@ class MessageContext<S = Record<string, any>>
 	 */
 	private applyPayload(
 		payload: IMessageContextPayload
-		| IMessageContextPayload['message'] & {
-			client_info?: undefined;
-		}
+		| IMessageContextPayload['message']
 	): void {
 		// Polyfill for all events except new_message
-		if (payload.client_info === undefined) {
+		if (!('client_info' in payload)) {
 			// eslint-disable-next-line no-param-reassign
 			payload = {
 				message: payload as IMessageContextPayload['message'],
