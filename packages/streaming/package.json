@@ -9,7 +9,8 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/negezor/vk-io.git"
+		"url": "git+https://github.com/negezor/vk-io.git",
+		"directory": "packages/streaming"
 	},
 	"homepage": "https://github.com/negezor/vk-io#readme",
 	"bugs": "https://github.com/negezor/vk-io/issues",
