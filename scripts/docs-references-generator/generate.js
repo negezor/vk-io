@@ -21,7 +21,9 @@ const MODULES = [
 for (const moduleName of MODULES) {
 	const sourceDir = pathJoin(PACKAGES_DIR, moduleName, 'src');
 
-	const app = new Application({
+	const app = new Application();
+
+	app.bootstrap({
 		mode: 'modules',
 		// logger: 'none',
 		target: 'es6',
