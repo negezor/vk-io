@@ -42,7 +42,6 @@
 		"@types/cheerio": "^0.22.15",
 		"@types/debug": "^4.1.5",
 		"@types/node-fetch": "^2.5.3",
-		"@types/tough-cookie": "^2.3.6",
-		"@types/ws": "^6.0.4"
+		"@types/tough-cookie": "^2.3.6"
 	}
 }
