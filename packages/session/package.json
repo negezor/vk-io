@@ -27,7 +27,7 @@
 	"module": "lib/index.mjs",
 	"types": "./lib/index.d.ts",
 	"engines": {
-		"node": ">=8.0.0"
+		"node": ">=10.0.0"
 	},
 	"peerDependencies": {
 		"vk-io": "^4.0.0-rc.19"
