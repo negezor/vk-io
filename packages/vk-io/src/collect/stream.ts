@@ -354,6 +354,6 @@ export class CollectStream<T> extends Readable {
 	}
 
 	public [Symbol.asyncIterator](): AsyncIterableIterator<ICollectChunkData<T>> {
-		return this[Symbol.asyncIterator]();
+		return super[Symbol.asyncIterator]();
 	}
 }
