@@ -545,8 +545,8 @@ export class Updates {
 	/**
 	 * Calls up the middleware chain
 	 */
-	public dispatchMiddleware(context: Context): Promise<void> {
-		return this.stackMiddleware(context, noopNext);
+	public dispatchMiddleware(context: Context): Promise<unknown> {
+		return this.stackMiddleware(context, noopNext) as Promise<unknown>;
 	}
 
 	/**
