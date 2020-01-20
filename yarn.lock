@@ -2819,10 +2819,10 @@ micromatch@^3.1.10, micromatch@^3.1.4:
     snapdragon "^0.8.1"
     to-regex "^3.0.2"
 
-middleware-io@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/middleware-io/-/middleware-io-2.3.0.tgz#60520b5d5c868dc5804bdce2fa5acc6488dab5e6"
-  integrity sha512-LrEJBOw18Nz3rj9aesy2ouJlOs47uiiz+aQBu1ClM1SufVLDBcfUsa6yEmvAcAn6c9lB12C3NsFGg2Ji2xvHzw==
+middleware-io@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/middleware-io/-/middleware-io-2.4.0.tgz#6c896f65433f5fcd00307e2a569d9f936f04d86f"
+  integrity sha512-pzK7Eg5ZlDesrgThEce4jhl0TJfU6ZTH8TZRKUSnWiN2yMmTSw6/EHpqQOm/g/YzkE83yH9rC3PqN+oPHQox5w==
 
 mime-db@1.42.0:
   version "1.42.0"
