@@ -46,7 +46,7 @@ export interface IVKOptions {
 	/**
 	 * List of permissions
 	 */
-	authScope?: AllowArray<string> | number;
+	authScope: AllowArray<string> | number;
 
 	/**
 	 * Wait time for one auth request
