@@ -27,7 +27,7 @@
 		"prepare": "yarn run rollup:build && yarn run test",
 		"build": "yarn run rollup:build",
 		"watch": "yarn run rollup:watch",
-		"rollup:build": "rollup -c rollup.config.ts",
+		"rollup:build": "rollup -c rollup.config.js",
 		"rollup:watch": "yarn run rollup:build -w",
 		"docs:generate": "node scripts/docs-references-generator/generate.js",
 		"test": "yarn run test:jest && yarn run test:eslint",
