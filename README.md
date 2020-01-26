@@ -24,7 +24,7 @@ You can read the [migration guide here](Upgrade-RU.md) [RU].
 Old version of the library is located [here](https://github.com/negezor/vk-io/tree/v3.2.0).
 
 ## Installation
-> **[Node.js](https://nodejs.org/) 8.0.0 or newer is required**  
+> **[Node.js](https://nodejs.org/) 10.0.0 or newer is required**  
 
 ### Yarn
 Recommended
