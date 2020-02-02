@@ -92,6 +92,8 @@ export interface IMessageContextPayload {
 	};
 }
 
+type MessagePayloadEventType = NonNullable<IMessageContextPayload['message']['action']>['type'];
+
 export type MessageContextOptions<S> =
 	Omit<IContextOptions<IMessageContextPayload, S>, 'type' | 'subTypes'>;
 
@@ -363,7 +365,7 @@ class MessageContext<S = Record<string, any>>
 	/**
 	 * Returns the event name
 	 */
-	public get eventType(): NonNullable<IMessageContextPayload['message']['action']>['type'] | undefined {
+	public get eventType(): MessagePayloadEventType | undefined {
 		return this.message.action?.type;
 	}
 
