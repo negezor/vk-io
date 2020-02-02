@@ -1,9 +1,15 @@
-import { Context, IContextOptions } from './context';
+import { Context, ContextFactoryOptions } from './context';
 
 import { pickProperties } from '../../utils/helpers';
 import { inspectCustomData } from '../../utils/constants';
 
-const subTypes: Record<string, string> = {
+export type MessageAllowContextType = 'message_subscribers';
+
+export type MessageAllowContextSubType =
+'message_subscribe'
+| 'message_unsubscribe';
+
+const subTypes: Record<string, MessageAllowContextSubType> = {
 	message_allow: 'message_subscribe',
 	message_deny: 'message_unsubscribe'
 };
@@ -14,11 +20,16 @@ export interface IMessageAllowContextPayload {
 }
 
 export type MessageAllowContextOptions<S> =
-	Omit<IContextOptions<IMessageAllowContextPayload, S>, 'type' | 'subTypes'>;
+	ContextFactoryOptions<IMessageAllowContextPayload, S>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export class MessageAllowContext<S = Record<string, any>>
-	extends Context<IMessageAllowContextPayload, S> {
+	extends Context<
+	IMessageAllowContextPayload,
+	S,
+	MessageAllowContextType,
+	MessageAllowContextSubType
+	> {
 	public constructor(options: MessageAllowContextOptions<S>) {
 		super({
 			...options,

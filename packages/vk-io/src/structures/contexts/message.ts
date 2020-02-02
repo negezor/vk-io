@@ -1,5 +1,5 @@
 /* eslint-disable max-classes-per-file */
-import { Context, IContextOptions } from './context';
+import { Context, ContextFactoryOptions } from './context';
 
 import { VKError } from '../../errors';
 
@@ -30,7 +30,26 @@ import {
 import { AllowArray } from '../../types';
 import { UploadSource, UploadSourceValue } from '../../upload/upload';
 
-const subTypesEnum: Record<string | number, string> = {
+export type MessageContextType = 'message';
+
+type MessageContextPayloadEventType =
+'chat_photo_update'
+| 'chat_photo_remove'
+| 'chat_create'
+| 'chat_title_update'
+| 'chat_invite_user'
+| 'chat_kick_user'
+| 'chat_pin_message'
+| 'chat_unpin_message'
+| 'chat_invite_user_by_link';
+
+export type MessageContextSubType =
+'new_message'
+| 'edit_message'
+| 'reply_message'
+| MessageContextPayloadEventType;
+
+const subTypesEnum: Record<string | number, MessageContextSubType> = {
 	4: 'new_message',
 	5: 'edit_message',
 	message_new: 'new_message',
@@ -63,15 +82,7 @@ export interface IMessageContextPayload {
 		fwd_messages?: object[];
 		reply_message?: object;
 		action?: {
-			type: 'chat_photo_update'
-			| 'chat_photo_remove'
-			| 'chat_create'
-			| 'chat_title_update'
-			| 'chat_invite_user'
-			| 'chat_kick_user'
-			| 'chat_pin_message'
-			| 'chat_unpin_message'
-			| 'chat_invite_user_by_link';
+			type: MessageContextPayloadEventType;
 			member_id: number;
 			text?: string;
 			email?: string;
@@ -92,14 +103,17 @@ export interface IMessageContextPayload {
 	};
 }
 
-type MessagePayloadEventType = NonNullable<IMessageContextPayload['message']['action']>['type'];
-
 export type MessageContextOptions<S> =
-	Omit<IContextOptions<IMessageContextPayload, S>, 'type' | 'subTypes'>;
+	ContextFactoryOptions<IMessageContextPayload, S>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 class MessageContext<S = Record<string, any>>
-	extends Context<IMessageContextPayload, S> {
+	extends Context<
+	IMessageContextPayload,
+	S,
+	MessageContextType,
+	MessageContextSubType
+	> {
 	public $match!: RegExpMatchArray;
 
 	public text?: string;
@@ -365,7 +379,7 @@ class MessageContext<S = Record<string, any>>
 	/**
 	 * Returns the event name
 	 */
-	public get eventType(): MessagePayloadEventType | undefined {
+	public get eventType(): MessageContextPayloadEventType | undefined {
 		return this.message.action?.type;
 	}
 

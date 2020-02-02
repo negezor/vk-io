@@ -3,7 +3,14 @@ import { Context, IContextOptions } from './context';
 import { pickProperties } from '../../utils/helpers';
 import { inspectCustomData } from '../../utils/constants';
 
-const subTypes: Record<number, string> = {
+export type MessageFlagsContextType = 'message_flags';
+
+export type MessageFlagsContextSubType =
+'update_message_flags'
+| 'set_message_flags'
+| 'remove_message_flags';
+
+const subTypes: Record<number, MessageFlagsContextSubType> = {
 	1: 'update_message_flags',
 	2: 'set_message_flags',
 	3: 'remove_message_flags'
@@ -20,7 +27,12 @@ export type MessageFlagsContextOptions<S> =
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export class MessageFlagsContext<S = Record<string, any>>
-	extends Context<IMessageFlagsContextPayload, S> {
+	extends Context<
+	IMessageFlagsContextPayload,
+	S,
+	MessageFlagsContextType,
+	MessageFlagsContextSubType
+	> {
 	public constructor(options: MessageFlagsContextOptions<S>) {
 		const [eventId, id, flags, peerId] = options.payload;
 

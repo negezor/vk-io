@@ -1,9 +1,17 @@
-import { Context, IContextOptions } from './context';
+import { Context, ContextFactoryOptions } from './context';
 
 import { pickProperties } from '../../utils/helpers';
 import { inspectCustomData } from '../../utils/constants';
 
-const subTypes: Record<string, string> = {
+export type DialogFlagsContextType = 'dialog_flags';
+
+export type DialogFlagsContextSubType =
+'remove_dialog_flags'
+| 'update_dialog_flags'
+| 'set_dialog_flags';
+
+
+const subTypes: Record<string, DialogFlagsContextSubType> = {
 	10: 'remove_dialog_flags',
 	11: 'update_dialog_flags',
 	12: 'set_dialog_flags'
@@ -15,11 +23,16 @@ export interface IDialogFlagsContextPayload {
 }
 
 export type DialogFlagsContextOptions<S> =
-	Omit<IContextOptions<number[], S>, 'type' | 'subTypes'>;
+	ContextFactoryOptions<number[], S>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export class DialogFlagsContext<S = Record<string, any>>
-	extends Context<IDialogFlagsContextPayload, S> {
+	extends Context<
+	IDialogFlagsContextPayload,
+	S,
+	DialogFlagsContextType,
+	DialogFlagsContextSubType
+	> {
 	public constructor(options: DialogFlagsContextOptions<S>) {
 		const [eventId, peerId, flags] = options.payload;
 

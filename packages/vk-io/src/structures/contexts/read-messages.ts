@@ -1,9 +1,15 @@
-import { Context, IContextOptions } from './context';
+import { Context, ContextFactoryOptions } from './context';
 
 import { pickProperties } from '../../utils/helpers';
 import { inspectCustomData } from '../../utils/constants';
 
-const subTypes: Record<number, string> = {
+export type ReadMessagesContextType = 'read_messages';
+
+export type ReadMessagesContextSubType =
+'read_inbox_messages'
+| 'read_outbox_messages';
+
+const subTypes: Record<number, ReadMessagesContextSubType> = {
 	6: 'read_inbox_messages',
 	7: 'read_outbox_messages'
 };
@@ -14,11 +20,16 @@ export interface IReadMessagesContextPayload {
 }
 
 export type ReadMessagesContextContextOptions<S> =
-	Omit<IContextOptions<number[], S>, 'type' | 'subTypes'>;
+	ContextFactoryOptions<number[], S>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export class ReadMessagesContext<S = Record<string, any>>
-	extends Context<IReadMessagesContextPayload, S> {
+	extends Context<
+	IReadMessagesContextPayload,
+	S,
+	ReadMessagesContextType,
+	ReadMessagesContextSubType
+	> {
 	public constructor(options: ReadMessagesContextContextOptions<S>) {
 		const [eventId, peerId, id] = options.payload;
 

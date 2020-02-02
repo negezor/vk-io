@@ -6,7 +6,14 @@ import { Attachment, PhotoAttachment, IPhotoAttachmentPayload } from '../attachm
 import { inspectCustomData } from '../../utils/constants';
 import { pickProperties, applyMixins } from '../../utils/helpers';
 
-const subTypes: Record<string, string> = {
+export type GroupUpdateContextType = 'group_update';
+
+export type GroupUpdateContextSubType =
+'group_update_photo'
+| 'group_update_officers'
+| 'group_update_settings';
+
+const subTypes: Record<string, GroupUpdateContextSubType> = {
 	group_change_photo: 'group_update_photo',
 	group_update_officers: 'group_update_officers',
 	group_change_settings: 'group_update_settings'
@@ -26,7 +33,11 @@ export type GroupUpdateContextOptions<S> =
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 class GroupUpdateContext<S = Record<string, any>>
-	extends Context<IGroupUpdateContextPayload, S> {
+	extends Context<
+	IGroupUpdateContextPayload,
+	S,
+	GroupUpdateContextType,
+	GroupUpdateContextSubType> {
 	public attachments: Attachment[];
 
 	public constructor(options: GroupUpdateContextOptions<S>) {

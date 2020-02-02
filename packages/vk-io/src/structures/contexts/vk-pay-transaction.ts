@@ -1,22 +1,30 @@
-import { Context, IContextOptions } from './context';
+import { Context, ContextFactoryOptions } from './context';
 
 import { pickProperties } from '../../utils/helpers';
 import { inspectCustomData } from '../../utils/constants';
 
+export type VKPayTransactionContextType = 'vk_pay_transaction';
+
+export type VKPayTransactionContextSubType = 'vk_pay_transfer';
+
 export interface IVKPayTransactionPayload {
 	from_id: number;
 	amount: number;
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	description: string;
 	date: number;
 }
 
 export type VKPayTransactionContextOptions<S> =
-	Omit<IContextOptions<IVKPayTransactionPayload, S>, 'type' | 'subTypes'>;
+	ContextFactoryOptions<IVKPayTransactionPayload, S>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export class VKPayTransactionContext<S = Record<string, any>>
-	extends Context<IVKPayTransactionPayload, S> {
+	extends Context<
+	IVKPayTransactionPayload,
+	S,
+	VKPayTransactionContextType,
+	VKPayTransactionContextSubType
+	> {
 	public constructor(options: VKPayTransactionContextOptions<S>) {
 		super({
 			...options,

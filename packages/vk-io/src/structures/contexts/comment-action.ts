@@ -1,4 +1,4 @@
-import { Context, IContextOptions } from './context';
+import { Context, ContextFactoryOptions } from './context';
 
 import { VKError } from '../../errors';
 
@@ -43,11 +43,45 @@ export interface ICommentActionContextPayload {
 }
 
 export type CommentActionContextOptions<S> =
-	Omit<IContextOptions<ICommentActionContextPayload, S>, 'type' | 'subTypes'>;
+	ContextFactoryOptions<ICommentActionContextPayload, S>;
+
+export type CommentActionContextType = 'comment';
+
+export type CommentActionContextSubType =
+'photo_comment'
+| 'video_comment'
+| 'wall_comment'
+| 'board_comment'
+| 'market_comment'
+| 'new_photo_comment'
+| 'edit_photo_comment'
+| 'delete_photo_comment'
+| 'restore_photo_comment'
+| 'new_video_comment'
+| 'edit_video_comment'
+| 'delete_video_comment'
+| 'restore_video_comment'
+| 'new_wall_comment'
+| 'edit_wall_comment'
+| 'delete_wall_comment'
+| 'restore_wall_comment'
+| 'new_board_comment'
+| 'edit_board_comment'
+| 'delete_board_comment'
+| 'restore_board_comment'
+| 'new_market_comment'
+| 'edit_market_comment'
+| 'delete_market_comment'
+| 'restore_market_comment';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 class CommentActionContext<S = Record<string, any>>
-	extends Context<ICommentActionContextPayload, S> {
+	extends Context<
+	ICommentActionContextPayload,
+	S,
+	CommentActionContextType,
+	CommentActionContextSubType
+	> {
 	public attachments: Attachment[];
 
 	public constructor(options: CommentActionContextOptions<S>) {
@@ -58,8 +92,8 @@ class CommentActionContext<S = Record<string, any>>
 
 			type: 'comment',
 			subTypes: [
-				`${initiator}_comment`,
-				`${action}_${initiator}_comment`
+				`${initiator}_comment` as CommentActionContextSubType,
+				`${action}_${initiator}_comment` as CommentActionContextSubType
 			]
 		});
 

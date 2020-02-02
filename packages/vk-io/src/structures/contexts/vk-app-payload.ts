@@ -1,7 +1,11 @@
-import { Context, IContextOptions } from './context';
+import { Context, ContextFactoryOptions } from './context';
 
 import { pickProperties } from '../../utils/helpers';
 import { inspectCustomData } from '../../utils/constants';
+
+export type VKAppPayloadContextType = 'vk_app_event';
+
+export type VKAppPayloadContextSubType = 'vk_app_payload';
 
 export interface IVKAppPayloadPayload {
 	user_id: number;
@@ -12,11 +16,16 @@ export interface IVKAppPayloadPayload {
 }
 
 export type VKAppPayloadContextOptions<S> =
-	Omit<IContextOptions<IVKAppPayloadPayload, S>, 'type' | 'subTypes'>;
+	ContextFactoryOptions<IVKAppPayloadPayload, S>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export class VKAppPayloadContext<S = Record<string, any>>
-	extends Context<IVKAppPayloadPayload, S> {
+	extends Context<
+	IVKAppPayloadPayload,
+	S,
+	VKAppPayloadContextType,
+	VKAppPayloadContextSubType
+	> {
 	public constructor(options: VKAppPayloadContextOptions<S>) {
 		super({
 			...options,

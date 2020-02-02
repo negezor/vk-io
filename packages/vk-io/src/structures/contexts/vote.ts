@@ -1,7 +1,11 @@
-import { Context, IContextOptions } from './context';
+import { Context, ContextFactoryOptions } from './context';
 
 import { pickProperties } from '../../utils/helpers';
 import { inspectCustomData } from '../../utils/constants';
+
+export type VoteContextType = 'vote';
+
+export type VoteContextSubType = 'pull_vote';
 
 export interface IVoteContextPayload {
 	poll_id: number;
@@ -11,11 +15,16 @@ export interface IVoteContextPayload {
 }
 
 export type VoteContextOptions<S> =
-	Omit<IContextOptions<IVoteContextPayload, S>, 'type' | 'subTypes'>;
+	ContextFactoryOptions<IVoteContextPayload, S>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export class VoteContext<S = Record<string, any>>
-	extends Context<IVoteContextPayload, S> {
+	extends Context<
+	IVoteContextPayload,
+	S,
+	VoteContextType,
+	VoteContextSubType
+	> {
 	public constructor(options: VoteContextOptions<S>) {
 		super({
 			...options,

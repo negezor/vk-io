@@ -28,7 +28,43 @@ import {
 	CommentActionContext,
 	NewAttachmentsContext,
 	RemovedMessagesContext,
-	VKPayTransactionContext
+	VKPayTransactionContext,
+
+	CommentActionContextType,
+	DialogFlagsContextType,
+	GroupMemberContextType,
+	GroupUpdateContextType,
+	GroupUserContextType,
+	MessageAllowContextType,
+	MessageFlagsContextType,
+	MessageContextType,
+	NewAttachmentsContextType,
+	ReadMessagesContextType,
+	RemovedMessagesContextType,
+	TypingContextType,
+	UserOnlineContextType,
+	VKAppPayloadContextType,
+	VKPayTransactionContextType,
+	VoteContextType,
+	WallPostContextType,
+
+	CommentActionContextSubType,
+	DialogFlagsContextSubType,
+	GroupMemberContextSubType,
+	GroupUpdateContextSubType,
+	GroupUserContextSubType,
+	MessageAllowContextSubType,
+	MessageFlagsContextSubType,
+	MessageContextSubType,
+	NewAttachmentsContextSubType,
+	ReadMessagesContextSubType,
+	RemovedMessagesContextSubType,
+	TypingContextSubType,
+	UserOnlineContextSubType,
+	VKAppPayloadContextSubType,
+	VKPayTransactionContextSubType,
+	VoteContextSubType,
+	WallPostContextSubType
 } from '../structures/contexts';
 
 import { PollingTransport, WebhookTransport } from './transports';
@@ -170,7 +206,6 @@ const webhookContexts = makeContexts(webhookContextsEvents);
 // @ts-ignore
 const pollingContexts = makeContexts(pollingContextsEvents);
 
-
 export interface IUpdatesStartWebhookOptions {
 	tls?: object;
 	path?: string;
@@ -190,8 +225,43 @@ type HearObjectCondition<T extends Record<string, any>> = {
 /**
  * TODO: Divide into contexts and render possible types.
  */
-export type ContextTypes = 'message' | 'message_subscribers' | 'new_attachment' | 'wall_post' | 'group_member' | 'group_user' | 'comment' | 'vote' | 'group_update' | 'typing';
-export type ContextSubTypes = 'new_message' | 'edit_message' | 'message_subscribe' | 'message_unsubscribe' | 'new_photo_attachment' | 'new_video_attachment' | 'new_audio_attachment' | 'new_wall_post' | 'new_wall_repost' | 'join_group_member' | 'leave_group_member' | 'block_group_user' | 'unblock_group_user' | 'photo_comment' | 'video_comment' | 'wall_comment' | 'board_comment' | 'market_comment' | 'new_photo_comment' | 'edit_photo_comment' | 'delete_photo_comment' | 'restore_photo_comment' | 'new_video_comment' | 'edit_video_comment' | 'delete_video_comment' | 'restore_video_comment' | 'new_wall_comment' | 'edit_wall_comment' | 'delete_wall_comment' | 'restore_wall_comment' | 'new_board_comment' | 'edit_board_comment' | 'delete_board_comment' | 'restore_board_comment' | 'new_market_comment' | 'edit_market_comment' | 'delete_market_comment' | 'restore_market_comment' | 'pull_vote' | 'group_update_photo' | 'group_update_officers' | 'group_update_settings' | 'typing_user' | 'typing_group';
+export type ContextTypes =
+CommentActionContextType
+| DialogFlagsContextType
+| GroupMemberContextType
+| GroupUpdateContextType
+| GroupUserContextType
+| MessageAllowContextType
+| MessageFlagsContextType
+| MessageContextType
+| NewAttachmentsContextType
+| ReadMessagesContextType
+| RemovedMessagesContextType
+| TypingContextType
+| UserOnlineContextType
+| VKAppPayloadContextType
+| VKPayTransactionContextType
+| VoteContextType
+| WallPostContextType;
+
+export type ContextSubTypes =
+CommentActionContextSubType
+| DialogFlagsContextSubType
+| GroupMemberContextSubType
+| GroupUpdateContextSubType
+| GroupUserContextSubType
+| MessageAllowContextSubType
+| MessageFlagsContextSubType
+| MessageContextSubType
+| NewAttachmentsContextSubType
+| ReadMessagesContextSubType
+| RemovedMessagesContextSubType
+| TypingContextSubType
+| UserOnlineContextSubType
+| VKAppPayloadContextSubType
+| VKPayTransactionContextSubType
+| VoteContextSubType
+| WallPostContextSubType;
 
 export type ContextPossibleTypes = ContextTypes | ContextSubTypes | string;
 
@@ -257,25 +327,55 @@ export class Updates {
 	/**
 	 * Subscribe to events
 	 */
-	public on<T = {}>(events: AllowArray<'message' | 'new_message' | 'edit_message'>, handler: AllowArray<Middleware<MessageContext & T>>): this
+	public on<T = {}>(
+		events: AllowArray<MessageContextType | MessageContextSubType>,
+		handler: AllowArray<Middleware<MessageContext & T>>
+	): this
 
-	public on<T = {}>(events: AllowArray<'message_subscribers' | 'message_subscribe' | 'message_unsubscribe'>, handler: AllowArray<Middleware<MessageAllowContext & T>>): this
+	public on<T = {}>(
+		events: AllowArray<MessageAllowContextType | MessageAllowContextSubType>,
+		handler: AllowArray<Middleware<MessageAllowContext & T>>
+	): this
 
-	public on<T = {}>(events: AllowArray<'new_attachment' | 'new_photo_attachment' | 'new_video_attachment' | 'new_audio_attachment'>, handler: AllowArray<Middleware<NewAttachmentsContext & T>>): this
+	public on<T = {}>(
+		events: AllowArray<NewAttachmentsContextType | NewAttachmentsContextSubType>,
+		handler: AllowArray<Middleware<NewAttachmentsContext & T>>
+	): this
 
-	public on<T = {}>(events: AllowArray<'wall_post' | 'new_wall_post' | 'new_wall_repost'>, handler: AllowArray<Middleware<WallPostContext & T>>): this
+	public on<T = {}>(
+		events: AllowArray<WallPostContextType | WallPostContextSubType>,
+		handler: AllowArray<Middleware<WallPostContext & T>>
+	): this
 
-	public on<T = {}>(events: AllowArray<'group_member' | 'join_group_member' | 'leave_group_member'>, handler: AllowArray<Middleware<GroupMemberContext & T>>): this
+	public on<T = {}>(
+		events: AllowArray<GroupMemberContextType | GroupMemberContextSubType>,
+		handler: AllowArray<Middleware<GroupMemberContext & T>>
+	): this
 
-	public on<T = {}>(events: AllowArray<'group_user' | 'block_group_user' | 'unblock_group_user'>, handler: AllowArray<Middleware<GroupUserContext & T>>): this
+	public on<T = {}>(
+		events: AllowArray<GroupUserContextType | GroupUserContextSubType>,
+		handler: AllowArray<Middleware<GroupUserContext & T>>
+	): this
 
-	public on<T = {}>(events: AllowArray<'comment' | 'photo_comment' | 'video_comment' | 'wall_comment' | 'board_comment' | 'market_comment' | 'new_photo_comment' | 'edit_photo_comment' | 'delete_photo_comment' | 'restore_photo_comment' | 'new_video_comment' | 'edit_video_comment' | 'delete_video_comment' | 'restore_video_comment' | 'new_wall_comment' | 'edit_wall_comment' | 'delete_wall_comment' | 'restore_wall_comment' | 'new_board_comment' | 'edit_board_comment' | 'delete_board_comment' | 'restore_board_comment' | 'new_market_comment' | 'edit_market_comment' | 'delete_market_comment' | 'restore_market_comment'>, handler: AllowArray<Middleware<CommentActionContext & T>>): this
+	public on<T = {}>(
+		events: AllowArray<CommentActionContextType | CommentActionContextSubType>,
+		handler: AllowArray<Middleware<CommentActionContext & T>>
+	): this
 
-	public on<T = {}>(events: AllowArray<'vote' | 'pull_vote'>, handler: AllowArray<Middleware<VoteContext & T>>): this
+	public on<T = {}>(
+		events: AllowArray<VoteContextType | VoteContextSubType>,
+		handler: AllowArray<Middleware<VoteContext & T>>
+	): this
 
-	public on<T = {}>(events: AllowArray<'group_update' | 'group_update_photo' | 'group_update_officers' | 'group_update_settings'>, handler: AllowArray<Middleware<GroupUpdateContext & T>>): this
+	public on<T = {}>(
+		events: AllowArray<GroupUpdateContextType | GroupUpdateContextSubType>,
+		handler: AllowArray<Middleware<GroupUpdateContext & T>>
+	): this
 
-	public on<T = {}>(events: AllowArray<'typing' | 'typing_user' | 'typing_group'>, handler: AllowArray<Middleware<TypingContext & T>>): this;
+	public on<T = {}>(
+		events: AllowArray<TypingContextType | TypingContextSubType>,
+		handler: AllowArray<Middleware<TypingContext & T>>
+	): this;
 
 	public on<T = {}>(
 		rawEvents: AllowArray<ContextPossibleTypes>,

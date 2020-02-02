@@ -1,9 +1,15 @@
-import { Context, IContextOptions } from './context';
+import { Context, ContextFactoryOptions } from './context';
 
 import { pickProperties } from '../../utils/helpers';
 import { platforms, inspectCustomData } from '../../utils/constants';
 
-const subTypes: Record<number, string> = {
+export type UserOnlineContextType = 'user_active';
+
+export type UserOnlineContextSubType =
+'user_online'
+| 'user_offline';
+
+const subTypes: Record<number, UserOnlineContextSubType> = {
 	8: 'user_online',
 	9: 'user_offline'
 };
@@ -15,11 +21,16 @@ export interface IUserOnlineContextPayload {
 }
 
 export type UserOnlineContextOptions<S> =
-	Omit<IContextOptions<[number, number, number, number], S>, 'type' | 'subTypes'>;
+	ContextFactoryOptions<[number, number, number, number], S>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export class UserOnlineContext<S = Record<string, any>>
-	extends Context<IUserOnlineContextPayload, S> {
+	extends Context<
+	IUserOnlineContextPayload,
+	S,
+	UserOnlineContextType,
+	UserOnlineContextSubType
+	> {
 	public constructor(options: UserOnlineContextOptions<S>) {
 		const [eventId, userId, extra, date] = options.payload;
 

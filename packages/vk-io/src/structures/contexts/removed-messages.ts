@@ -1,9 +1,15 @@
-import { Context, IContextOptions } from './context';
+import { Context, ContextFactoryOptions } from './context';
 
 import { pickProperties } from '../../utils/helpers';
 import { inspectCustomData } from '../../utils/constants';
 
-const subTypes: Record<number, string> = {
+export type RemovedMessagesContextType = 'removed_messages';
+
+export type RemovedMessagesContextSubType =
+'delete_messages'
+| 'restore_messages';
+
+const subTypes: Record<number, RemovedMessagesContextSubType> = {
 	13: 'delete_messages',
 	14: 'restore_messages'
 };
@@ -13,11 +19,16 @@ export interface IRemovedMessagesContextPayload {
 }
 
 export type RemovedMessagesContextOptions<S> =
-	Omit<IContextOptions<number[], S>, 'type' | 'subTypes'>;
+	ContextFactoryOptions<number[], S>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export class RemovedMessagesContext<S = Record<string, any>>
-	extends Context<IRemovedMessagesContextPayload, S> {
+	extends Context<
+	IRemovedMessagesContextPayload,
+	S,
+	RemovedMessagesContextType,
+	RemovedMessagesContextSubType
+	> {
 	public constructor(options: RemovedMessagesContextOptions<S>) {
 		const [eventId, peerId, id] = options.payload;
 

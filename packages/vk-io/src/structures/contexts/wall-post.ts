@@ -1,11 +1,17 @@
-import { Context, IContextOptions } from './context';
+import { Context, ContextFactoryOptions } from './context';
 
 import { WallAttachment, IWallAttachmentPayload } from '../attachments';
 
 import { pickProperties } from '../../utils/helpers';
 import { inspectCustomData } from '../../utils/constants';
 
-const subTypes: Record<string, string> = {
+export type WallPostContextType = 'wall_post';
+
+export type WallPostContextSubType =
+'new_wall_post'
+| 'new_wall_repost';
+
+const subTypes: Record<string, WallPostContextSubType> = {
 	wall_post_new: 'new_wall_post',
 	wall_repost: 'new_wall_repost'
 };
@@ -16,11 +22,16 @@ export interface IWallPostContextPayload extends IWallAttachmentPayload {
 }
 
 export type WallPostContextOptions<S> =
-	Omit<IContextOptions<IWallPostContextPayload, S>, 'type' | 'subTypes'>;
+	ContextFactoryOptions<IWallPostContextPayload, S>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export class WallPostContext<S = Record<string, any>>
-	extends Context<IWallPostContextPayload, S> {
+	extends Context<
+	IWallPostContextPayload,
+	S,
+	WallPostContextType,
+	WallPostContextSubType
+	> {
 	public wall: WallAttachment;
 
 	public constructor(options: WallPostContextOptions<S>) {

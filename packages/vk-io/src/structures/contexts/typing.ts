@@ -1,4 +1,4 @@
-import { Context, IContextOptions } from './context';
+import { Context, ContextFactoryOptions } from './context';
 
 import { pickProperties, getPeerType, showDeprecatedMessage } from '../../utils/helpers';
 import {
@@ -20,6 +20,12 @@ const transformPolling = (
 	state: 'typing'
 });
 
+export type TypingContextType = 'typing';
+
+export type TypingContextSubType =
+'typing_user'
+| 'typing_group';
+
 export interface ITypingContextPayload {
 	from_id: number;
 	to_id: number;
@@ -27,18 +33,23 @@ export interface ITypingContextPayload {
 }
 
 export type TypingContextOptions<S> =
-	Omit<IContextOptions<ITypingContextPayload, S>, 'type' | 'subTypes'>;
+	ContextFactoryOptions<ITypingContextPayload, S>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export class TypingContext<S = Record<string, any>>
-	extends Context<ITypingContextPayload, S> {
+	extends Context<
+	ITypingContextPayload,
+	S,
+	TypingContextType,
+	TypingContextSubType
+	> {
 	public constructor(options: TypingContextOptions<S>) {
 		super({
 			...options,
 
 			type: 'typing',
 			subTypes: [
-				`typing_${getPeerType(options.payload.from_id)}`
+				`typing_${getPeerType(options.payload.from_id)}` as TypingContextSubType
 			],
 
 			payload: options.source === UpdateSource.POLLING

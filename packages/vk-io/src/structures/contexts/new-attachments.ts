@@ -1,4 +1,4 @@
-import { Context, IContextOptions } from './context';
+import { Context, ContextFactoryOptions } from './context';
 
 import { VKError } from '../../errors';
 
@@ -14,8 +14,15 @@ import { Attachmentable } from '../shared/attachmentable';
 import { pickProperties, applyMixins } from '../../utils/helpers';
 import { inspectCustomData, AttachmentType } from '../../utils/constants';
 
+export type NewAttachmentsContextType = 'new_attachment';
+
+export type NewAttachmentsContextSubType =
+'new_photo_attachment'
+| 'new_video_attachment'
+| 'new_audio_attachment';
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const subTypes: Record<string, [string, any]> = {
+const subTypes: Record<string, [NewAttachmentsContextSubType, any]> = {
 	photo_new: ['new_photo_attachment', PhotoAttachment],
 	video_new: ['new_video_attachment', VideoAttachment],
 	audio_new: ['new_audio_attachment', AudioAttachment]
@@ -26,11 +33,16 @@ export interface INewAttachmentsContextPayload {
 }
 
 export type NewAttachmentsContextOptions<S> =
-	Omit<IContextOptions<INewAttachmentsContextPayload, S>, 'type' | 'subTypes'>;
+	ContextFactoryOptions<INewAttachmentsContextPayload, S>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 class NewAttachmentsContext<S = Record<string, any>>
-	extends Context<INewAttachmentsContextPayload, S> {
+	extends Context<
+	INewAttachmentsContextPayload,
+	S,
+	NewAttachmentsContextType,
+	NewAttachmentsContextSubType
+	> {
 	public attachments: Attachment[];
 
 	public constructor(options: NewAttachmentsContextOptions<S>) {

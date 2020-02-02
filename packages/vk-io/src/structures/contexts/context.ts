@@ -5,11 +5,16 @@ import { inspectCustomData, UpdateSource } from '../../utils/constants';
 
 import { AllowArray } from '../../types';
 
-export interface IContextOptions<P, S> {
+export interface IContextOptions<
+	P,
+	S,
+	Type extends string = string,
+	SubType extends string = string
+> {
 	vk: VK;
 
-	type: string;
-	subTypes: string[];
+	type: Type;
+	subTypes: SubType[];
 
 	payload: P;
 	state?: S;
@@ -20,10 +25,18 @@ export interface IContextOptions<P, S> {
 	groupId?: number;
 }
 
-export class Context<P = {}, S = {}> {
-	public type: string;
+export type ContextFactoryOptions<P, S> =
+	Omit<IContextOptions<P, S>, 'type' | 'subTypes'>;
 
-	public subTypes: string[];
+export class Context<
+	P = {},
+	S = {},
+	Type extends string = string,
+	SubType extends string = string
+> {
+	public type: Type;
+
+	public subTypes: SubType[];
 
 	public state: S;
 
@@ -39,7 +52,7 @@ export class Context<P = {}, S = {}> {
 	/**
 	 * Constructor
 	 */
-	public constructor(options: IContextOptions<P, S>) {
+	public constructor(options: IContextOptions<P, S, Type, SubType>) {
 		this.vk = options.vk;
 
 		this.type = options.type;
@@ -61,7 +74,7 @@ export class Context<P = {}, S = {}> {
 	/**
 	 * Checks whether the context of some of these types
 	 */
-	public is(rawTypes: AllowArray<string>): boolean {
+	public is(rawTypes: AllowArray<Type | SubType>): boolean {
 		const types = !Array.isArray(rawTypes)
 			? [rawTypes]
 			: rawTypes;

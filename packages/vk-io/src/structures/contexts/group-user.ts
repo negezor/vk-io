@@ -1,4 +1,4 @@
-import { Context, IContextOptions } from './context';
+import { Context, ContextFactoryOptions } from './context';
 
 import { VKError } from '../../errors';
 
@@ -16,7 +16,13 @@ const reasonNames = new Map([
 	[4, 'messages_off_topic']
 ]);
 
-const subTypes: Record<string, string> = {
+export type GroupUserContextType = 'group_user';
+
+export type GroupUserContextSubType =
+'block_group_user'
+| 'unblock_group_user';
+
+const subTypes: Record<string, GroupUserContextSubType> = {
 	user_block: 'block_group_user',
 	user_unblock: 'unblock_group_user'
 };
@@ -31,11 +37,16 @@ export interface IGroupUserContextPayload {
 }
 
 export type GroupUserContextOptions<S> =
-	Omit<IContextOptions<IGroupUserContextPayload, S>, 'type' | 'subTypes'>;
+	ContextFactoryOptions<IGroupUserContextPayload, S>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export class GroupUserContext<S = Record<string, any>>
-	extends Context<IGroupUserContextPayload, S> {
+	extends Context<
+	IGroupUserContextPayload,
+	S,
+	GroupUserContextType,
+	GroupUserContextSubType
+	> {
 	public constructor(options: GroupUserContextOptions<S>) {
 		super({
 			...options,
