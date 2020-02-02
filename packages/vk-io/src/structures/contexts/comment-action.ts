@@ -51,7 +51,7 @@ class CommentActionContext<S = Record<string, any>>
 	public attachments: Attachment[];
 
 	public constructor(options: CommentActionContextOptions<S>) {
-		const { 1: initiator, 3: action } = options.updateType.match(findTypes);
+		const { 1: initiator, 3: action } = (options.updateType as string).match(findTypes)!;
 
 		super({
 			...options,

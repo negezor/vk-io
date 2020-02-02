@@ -15,8 +15,7 @@ export interface IContextOptions<P, S> {
 	state?: S;
 
 	source: UpdateSource;
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	updateType: any;
+	updateType: string | number;
 
 	groupId?: number;
 }
