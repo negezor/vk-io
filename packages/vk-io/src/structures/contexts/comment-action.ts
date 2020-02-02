@@ -269,12 +269,11 @@ class CommentActionContext<S = Record<string, any>>
 		}
 
 		if (this.isBoardComment) {
-			// @ts-ignore
 			return this.vk.api.board.editComment({
 				...options,
 
 				comment_id: this.id,
-				topic_id: this.objectId!,
+				topic_id: this.objectId,
 				group_id: this.$groupId!
 			});
 		}
@@ -287,22 +286,18 @@ class CommentActionContext<S = Record<string, any>>
 		};
 
 		if (this.isPhotoComment) {
-			// @ts-ignore
 			return this.vk.api.photos.editComment(params);
 		}
 
 		if (this.isVideoComment) {
-			// @ts-ignore
 			return this.vk.api.video.editComment(params);
 		}
 
 		if (this.isWallComment) {
-			// @ts-ignore
 			return this.vk.api.wall.editComment(params);
 		}
 
 		if (this.isMarketComment) {
-			// @ts-ignore
 			return this.vk.api.market.editComment(params);
 		}
 
@@ -324,10 +319,9 @@ class CommentActionContext<S = Record<string, any>>
 		}
 
 		if (this.isBoardComment) {
-			// @ts-ignore
 			return this.vk.api.board.deleteComment({
 				comment_id: this.id,
-				topic_id: this.objectId!,
+				topic_id: this.objectId,
 				group_id: this.$groupId!
 			});
 		}
@@ -338,22 +332,18 @@ class CommentActionContext<S = Record<string, any>>
 		};
 
 		if (this.isPhotoComment) {
-			// @ts-ignore
 			return this.vk.api.photos.deleteComment(params);
 		}
 
 		if (this.isVideoComment) {
-			// @ts-ignore
 			return this.vk.api.video.deleteComment(params);
 		}
 
 		if (this.isWallComment) {
-			// @ts-ignore
 			return this.vk.api.wall.deleteComment(params);
 		}
 
 		if (this.isMarketComment) {
-			// @ts-ignore
 			return this.vk.api.market.deleteComment(params);
 		}
 
@@ -383,11 +373,9 @@ class CommentActionContext<S = Record<string, any>>
 		];
 
 		const filtredEmptyProperties = properties.filter(property => (
-			// @ts-ignore
 			this[property] !== undefined
 		));
 
-		// @ts-ignore
 		return pickProperties(this, filtredEmptyProperties);
 	}
 }

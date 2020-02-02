@@ -97,8 +97,7 @@ export class GroupUserContext<S = Record<string, any>>
 	 * Returns the reason name for the ban
 	 */
 	public get reasonName(): string | undefined {
-		// @ts-ignore
-		return reasonNames.get(this.reasonId);
+		return reasonNames.get(this.reasonId!);
 	}
 
 	/**

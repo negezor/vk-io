@@ -878,7 +878,6 @@ class MessageContext<S = Record<string, any>>
 			afterAttachments.push('$match');
 		}
 
-		// @ts-ignore
 		return pickProperties(this, [
 			'id',
 			'conversationMessageId',

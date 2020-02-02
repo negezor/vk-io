@@ -47,9 +47,7 @@ export class Context<P = {}, S = {}> {
 		this.subTypes = options.subTypes;
 
 		this.payload = options.payload;
-		// @ts-ignore
-		this.state = options.state || {};
-
+		this.state = options.state || {} as S;
 
 		this.$groupId = options.groupId;
 	}

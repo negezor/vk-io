@@ -1,6 +1,6 @@
 import { Context, IContextOptions } from './context';
 
-import { WallAttachment } from '../attachments';
+import { WallAttachment, IWallAttachmentPayload } from '../attachments';
 
 import { pickProperties } from '../../utils/helpers';
 import { inspectCustomData } from '../../utils/constants';
@@ -10,8 +10,9 @@ const subTypes: Record<string, string> = {
 	wall_repost: 'new_wall_repost'
 };
 
-export interface IWallPostContextPayload {
-	id: number;
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+export interface IWallPostContextPayload extends IWallAttachmentPayload {
+
 }
 
 export type WallPostContextOptions<S> =
@@ -32,7 +33,6 @@ export class WallPostContext<S = Record<string, any>>
 			]
 		});
 
-		// @ts-ignore
 		this.wall = new WallAttachment(this.payload, this.vk);
 	}
 

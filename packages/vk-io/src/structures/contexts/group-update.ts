@@ -1,7 +1,7 @@
 import { Context, IContextOptions } from './context';
 
 import { Attachmentable } from '../shared/attachmentable';
-import { Attachment, PhotoAttachment } from '../attachments';
+import { Attachment, PhotoAttachment, IPhotoAttachmentPayload } from '../attachments';
 
 import { inspectCustomData } from '../../utils/constants';
 import { pickProperties, applyMixins } from '../../utils/helpers';
@@ -18,7 +18,7 @@ export interface IGroupUpdateContextPayload {
 	level_old?: number;
 	level_new?: number;
 	changes?: Record<string, { old_value: string; new_value: string }>;
-	photo?: object;
+	photo?: IPhotoAttachmentPayload;
 }
 
 export type GroupUpdateContextOptions<S> =
@@ -40,8 +40,7 @@ class GroupUpdateContext<S = Record<string, any>>
 		});
 
 		this.attachments = options.updateType === 'group_change_photo'
-			// @ts-ignore
-			? [new PhotoAttachment(this.payload.photo, this.vk)]
+			? [new PhotoAttachment(this.payload.photo!, this.vk)]
 			: [];
 	}
 
