@@ -137,7 +137,7 @@ export class StreamingAPI {
 	/**
 	 * Handles events
 	 */
-	private handleEvent(event: IStreamingContextPayload): Promise<void> {
+	private async handleEvent(event: IStreamingContextPayload): Promise<void> {
 		const context = new StreamingContext({
 			vk: this.vk,
 			payload: event,
@@ -148,7 +148,7 @@ export class StreamingAPI {
 			source: UpdateSource.WEBSOCKET
 		});
 
-		return this.vk.updates.dispatchMiddleware(context);
+		await this.vk.updates.dispatchMiddleware(context);
 	}
 
 	/**
