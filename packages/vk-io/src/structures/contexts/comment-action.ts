@@ -200,7 +200,7 @@ class CommentActionContext<S = Record<string, any>>
 	/**
 	 * Returns the identifier of object
 	 */
-	public get objectId(): number | undefined {
+	public get objectId(): number {
 		const { payload } = this;
 
 		return (
@@ -209,13 +209,13 @@ class CommentActionContext<S = Record<string, any>>
 			|| payload.post_id
 			|| payload.topic_id
 			|| payload.item_id
-		);
+		)!;
 	}
 
 	/**
 	 * Returns the identifier of owner
 	 */
-	public get ownerId(): number | undefined {
+	public get ownerId(): number {
 		const { payload } = this;
 
 		return (
@@ -225,7 +225,7 @@ class CommentActionContext<S = Record<string, any>>
 			|| payload.post_owner_id
 			|| payload.topic_owner_id
 			|| payload.market_owner_id
-		);
+		)!;
 	}
 
 	/**
