@@ -63,7 +63,15 @@ export interface IMessageContextPayload {
 		fwd_messages?: object[];
 		reply_message?: object;
 		action?: {
-			type: string;
+			type: 'chat_photo_update'
+			| 'chat_photo_remove'
+			| 'chat_create'
+			| 'chat_title_update'
+			| 'chat_invite_user'
+			| 'chat_kick_user'
+			| 'chat_pin_message'
+			| 'chat_unpin_message'
+			| 'chat_invite_user_by_link';
 			member_id: number;
 			text?: string;
 			email?: string;
@@ -355,7 +363,7 @@ class MessageContext<S = Record<string, any>>
 	/**
 	 * Returns the event name
 	 */
-	public get eventType(): string | undefined {
+	public get eventType(): NonNullable<IMessageContextPayload['message']['action']>['type'] | undefined {
 		return this.message.action?.type;
 	}
 
