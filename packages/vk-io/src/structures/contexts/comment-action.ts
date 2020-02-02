@@ -48,7 +48,7 @@ export type CommentActionContextOptions<S> =
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 class CommentActionContext<S = Record<string, any>>
 	extends Context<ICommentActionContextPayload, S> {
-	attachments: Attachment[];
+	public attachments: Attachment[];
 
 	public constructor(options: CommentActionContextOptions<S>) {
 		const { 1: initiator, 3: action } = options.updateType.match(findTypes);
