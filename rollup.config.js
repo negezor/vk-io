@@ -26,6 +26,7 @@ const getModulePath = path => (
 	pathJoin(__dirname, 'packages', path)
 );
 
+// eslint-disable-next-line import/no-default-export
 export default async function () {
 	return Promise.all(
 		MODULES
@@ -49,9 +50,12 @@ export default async function () {
 
 							tsconfigOverride: {
 								outDir: lib,
-								rootDir: src,
-								include: [src]
-							}
+								rootDir: src
+							},
+
+							include: [
+								pathJoin(src, '**/*.ts')
+							]
 						})
 					],
 					external: [
