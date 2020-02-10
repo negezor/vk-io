@@ -10,18 +10,29 @@ import { pickProperties, applyMixins } from '../../utils/helpers';
 
 const kAttachments = Symbol('attachments');
 
+export interface IMessageReplyPayload {
+	id: number;
+	conversation_message_id: number;
+	peer_id: number;
+	text?: string;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	attachments: any[];
+	from_id: number;
+	date: number;
+	update_time?: number;
+}
+
 class MessageReply {
 	protected vk: VK;
 
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	protected payload: Record<string, any>;
+	protected payload: IMessageReplyPayload;
 
 	protected [kAttachments]: (Attachment | ExternalAttachment)[];
 
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: object, vk?: VK) {
+	public constructor(payload: IMessageReplyPayload, vk?: VK) {
 		// @ts-ignore
 		this.vk = vk;
 
@@ -52,7 +63,7 @@ class MessageReply {
 	/**
 	 * Returns the conversation message id
 	 */
-	public get conversationMessageId(): number | undefined {
+	public get conversationMessageId(): number {
 		return this.payload.conversation_message_id;
 	}
 
@@ -73,7 +84,7 @@ class MessageReply {
 	/**
 	 * Returns the date when this message was updated
 	 */
-	public get updatedAt(): number {
+	public get updatedAt(): number | undefined {
 		return this.payload.update_time;
 	}
 
