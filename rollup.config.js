@@ -50,12 +50,9 @@ export default async function () {
 
 							tsconfigOverride: {
 								outDir: lib,
-								rootDir: src
-							},
-
-							include: [
-								pathJoin(src, '**/*.ts')
-							]
+								rootDir: src,
+								include: [src]
+							}
 						})
 					],
 					external: [
