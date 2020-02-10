@@ -79,7 +79,7 @@ export interface IMessageContextPayload {
 		important: boolean;
 		geo?: object;
 		payload?: string;
-		fwd_messages?: object[];
+		fwd_messages?: IMessageForwardPayload[];
 		reply_message?: object;
 		action?: {
 			type: MessageContextPayloadEventType;
@@ -431,7 +431,7 @@ class MessageContext<S = Record<string, any>>
 				? new MessageForwardsCollection(...this.message.fwd_messages.map(forward => (
 					new MessageForward({
 						vk: this.vk,
-						payload: forward as IMessageForwardPayload
+						payload: forward
 					})
 				)))
 				: new MessageForwardsCollection();
