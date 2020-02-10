@@ -931,7 +931,7 @@ applyMixins(MessageContext, [
 		public hasAllAttachments(type: AttachmentTypeString | undefined): boolean {
 			return (
 				this.hasAttachments(type)
-				|| (this.replyMessage && this.replyMessage.hasAttachments(type))
+				|| (this.replyMessage?.hasAttachments(type))
 				|| this.forwards.hasAttachments(type)
 			);
 		}
@@ -943,7 +943,7 @@ applyMixins(MessageContext, [
 				// @ts-ignore
 				...this.getAttachments(type),
 				// @ts-ignore
-				...((this.replyMessage && this.replyMessage.getAttachments(type)) || []),
+				...((this.replyMessage?.getAttachments(type)) ?? []),
 				// @ts-ignore
 				...this.forwards.getAttachments(type)
 			];
