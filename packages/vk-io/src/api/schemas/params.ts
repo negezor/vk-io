@@ -7430,6 +7430,10 @@ export interface WallPostParams {
      * Post ID. Used for publishing of scheduled and suggested posts.
      */
     post_id?: number;
+	/**
+     * Link to the source.
+     */
+    copyright?: string;
     attachments?: string[] | string;
     guid?: string;
     mark_as_ads?: boolean | number;
