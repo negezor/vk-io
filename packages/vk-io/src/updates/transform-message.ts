@@ -172,19 +172,16 @@ export function transformMessage({
 
 		message.fwd_messages = fwd
 			.split(',')
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			.map((attachment: any): object => {
-				const [owner] = attachment.split('_');
-
-				return {
-					date: 0,
-					from_id: Number(owner),
-					text: '',
-					fwd_messages: [],
-					attachments: [],
-					update_time: 0
-				};
-			});
+			.map((attachment: string): object => ({
+				date: 0,
+				from_id: Number(
+					attachment.substring(0, attachment.indexOf('_'))
+				),
+				text: '',
+				fwd_messages: [],
+				attachments: [],
+				update_time: 0
+			}));
 	}
 
 	return message;
