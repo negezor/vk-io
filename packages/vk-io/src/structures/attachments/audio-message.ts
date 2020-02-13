@@ -101,8 +101,10 @@ export class AudioMessageAttachment extends Attachment<IAudioMessageAttachmentPa
 			'url'
 		]);
 
-		// @ts-ignore
-		payload.waveform = `[...${this.waveform.length} elements]`;
+		if (this.waveform !== undefined) {
+			// @ts-ignore
+			payload.waveform = `[...${this.waveform.length} elements]`;
+		}
 
 		return payload;
 	}
