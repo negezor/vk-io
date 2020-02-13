@@ -1,35 +1,77 @@
 // import { MessagesMessage } from '../api/schemas/objects';
 import { IMessageContextPayload } from '../structures/contexts/message';
+import { AttachmentType } from '../utils/constants';
 
 /* eslint-disable @typescript-eslint/camelcase */
 
-/**
- * Special attachments in one message
- */
-const specialAttachments: Record<string, Function> = {
+const DocumentKind: Record<string, AttachmentType> = {
+	audiomsg: AttachmentType.AUDIO_MESSAGE,
+	graffiti: AttachmentType.GRAFFITI // I know what is stupid
+};
+
+const idToAttachmentPayload = (key: string): { id: number; owner_id: number } => {
+	const delimiterIndex = key.indexOf('_');
+
+	return {
+		id: Number(key.substring(delimiterIndex + 1)),
+		owner_id: Number(key.substring(0, delimiterIndex))
+	};
+};
+
+const attachmentHandlers = {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	sticker: (raw: any): object => ({
+	sticker: (raw: any, key: string): object => ({
 		type: 'sticker',
 		sticker: {
-			sticker_id: Number(raw.attach1),
-			product_id: Number(raw.attach1_product_id)
+			sticker_id: Number(raw[key]),
+			product_id: Number(raw[`${key}_product_id`])
 		}
 	}),
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	money_transfer: (raw: any): object => ({
+	money_transfer: (raw: any, key: string): object => ({
 		type: 'money_transfer',
 		money_transfer: {
-			data: raw.attach1,
-			amount: Number(raw.attach1_amount),
-			currency: Number(raw.attach1_currency)
+			data: raw[key],
+			amount: Number(raw[`${key}_amount`]),
+			currency: Number(raw[`${key}_currency`])
 		}
 	}),
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	gift: (raw: any): object => ({
+	gift: (raw: any, key: string): object => ({
 		type: 'gift',
 		gift: {
-			id: Number(raw.attach1)
+			id: Number(raw[key])
 		}
+	}),
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	link: (raw: any, key: string): object => {
+		const photoId = raw[`${key}_photo`];
+
+		return {
+			type: 'link',
+			link: {
+				url: raw[`${key}_url`],
+				title: raw[`${key}_title`],
+				description: raw[`${key}_desc`],
+				photo: photoId !== undefined
+					? idToAttachmentPayload(photoId)
+					: undefined
+			}
+		};
+	},
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	doc: (raw: any, key: string): object => {
+		const type = DocumentKind[raw[`${key}_kind`]] || AttachmentType.DOCUMENT;
+
+		return {
+			type,
+			[type]: idToAttachmentPayload(raw[key])
+		};
+	},
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	default: (raw: any, key: string, type: string): object => ({
+		type,
+		[type]: idToAttachmentPayload(raw[key])
 	})
 };
 
@@ -100,64 +142,21 @@ export function transformMessage({
 		};
 	}
 
-	if (specialAttachments[attachments.attach1_type] !== undefined) {
-		message.attachments = [
-			specialAttachments[attachments.attach1_type](attachments)
-		];
-	} else {
-		const messageAttachments: IMessageContextPayload['message']['attachments'] = [];
+	message.attachments = [];
 
-		for (let i = 1, key = 'attach1'; attachments[key] !== undefined; i += 1, key = `attach${i}`) {
-			const type = attachments[`${key}_type`];
+	for (let i = 1, key = 'attach1'; attachments[key] !== undefined; i += 1, key = `attach${i}`) {
+		const type = attachments[`${key}_type`];
 
-			if (type === 'link') {
-				// eslint-disable-next-line @typescript-eslint/no-explicit-any
-				const attachment: Record<string, any> = {
-					type: 'link',
-					link: {
-						url: attachments[`${key}_url`],
-						title: attachments[`${key}_title`],
-						description: attachments[`${key}_desc`]
-					}
-				};
+		// @ts-ignore
+		const handler = attachmentHandlers[type] || attachmentHandlers.default;
 
-				const photoKey = `${key}_photo`;
-
-				if (attachments[photoKey]) {
-					const [owner, attachmentId] = attachments[photoKey].split('_');
-
-					attachment.link.photo = {
-						id: Number(attachmentId),
-						owner_id: Number(owner)
-					};
-				}
-
-				messageAttachments.push(attachment);
-
-				continue;
-			}
-
-			const [owner, attachmentId] = attachments[key].split('_');
-
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			const attachment: Record<string, any> = {
-				type,
-				[type]: {
-					id: Number(attachmentId),
-					owner_id: Number(owner)
-				}
-			};
-
-			const kindKey = `${key}_kind`;
-
-			if (type === 'doc' && attachments[kindKey] !== undefined) {
-				attachment[type].kind = attachments[kindKey];
-			}
-
-			messageAttachments.push(attachment);
-		}
-
-		message.attachments = messageAttachments;
+		message.attachments.push(
+			handler(
+				attachments,
+				key,
+				type
+			)
+		);
 	}
 
 	let { fwd } = attachments;
