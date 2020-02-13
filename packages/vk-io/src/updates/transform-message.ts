@@ -86,7 +86,8 @@ export function transformMessage({
 	5: text,
 	6: extra,
 	7: attachments,
-	8: random_id
+	8: random_id,
+	9: conversation_message_id
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 }: [
 	number,
@@ -99,12 +100,14 @@ export function transformMessage({
 	Record<string, any>,
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	Record<string, any>,
+	number,
 	number
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any,
 ]): IMessageContextPayload['message'] {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const message = {
 		id,
+		conversation_message_id,
 		date,
 		text,
 		random_id,
