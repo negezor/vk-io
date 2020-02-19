@@ -906,7 +906,7 @@ applyMixins(MessageContext, [
 
 		public forwards!: MessageForwardsCollection;
 
-		public hasAllAttachments(type: AttachmentTypeString | undefined): boolean {
+		public hasAllAttachments(type: AttachmentType | AttachmentTypeString | undefined): boolean {
 			return (
 				this.hasAttachments(type)
 				|| (this.replyMessage?.hasAttachments(type))
