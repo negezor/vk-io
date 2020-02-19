@@ -1,9 +1,9 @@
 import fetch from 'node-fetch';
 
 import { URL } from 'url';
+import { inspect } from 'util';
 import { randomBytes } from 'crypto';
 import { createReadStream } from 'fs';
-import { inspect, deprecate } from 'util';
 
 import { VK } from '../vk';
 import { MultipartStream } from './multipart-stream';
@@ -138,22 +138,11 @@ const DocumentTypes: Record<string, typeof DocumentAttachment
 export class Upload {
 	private vk: VK;
 
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	public graffiti: (params: object) => Promise<any>;
-
 	/**
 	 * Constructor
 	 */
 	constructor(vk: VK) {
 		this.vk = vk;
-
-		this.graffiti = deprecate(
-			params => (
-				// @ts-ignore
-				this.messageGraffiti(params)
-			),
-			'graffiti(params) is deprecated, use messageGraffiti(params) instead'
-		);
 	}
 
 	/**
