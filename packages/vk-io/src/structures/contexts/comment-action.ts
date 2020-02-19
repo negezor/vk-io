@@ -7,7 +7,7 @@ import { Attachmentable } from '../shared/attachmentable';
 
 import { inspectCustomData } from '../../utils/constants';
 import { transformAttachments } from '../attachments/helpers';
-import { pickProperties, applyMixins, showDeprecatedMessage } from '../../utils/helpers';
+import { pickProperties, applyMixins } from '../../utils/helpers';
 
 /**
  * Find types
@@ -206,15 +206,6 @@ class CommentActionContext<S = Record<string, any>>
 			this.payload.from_id
 			|| this.payload.user_id
 		);
-	}
-
-	/**
-	 * Returns the identifier user
-	 */
-	public get userId(): number | undefined {
-		showDeprecatedMessage('context.userId deperecated, use context.fromId');
-
-		return this.fromId;
 	}
 
 	/**

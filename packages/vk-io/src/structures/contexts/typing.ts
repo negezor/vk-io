@@ -1,6 +1,6 @@
 import { Context, ContextFactoryOptions } from './context';
 
-import { pickProperties, getPeerType, showDeprecatedMessage } from '../../utils/helpers';
+import { pickProperties, getPeerType } from '../../utils/helpers';
 import {
 	CHAT_PEER,
 
@@ -106,24 +106,6 @@ export class TypingContext<S = Record<string, any>>
 	 */
 	public get toId(): number {
 		return this.payload.to_id;
-	}
-
-	/**
-	 * @deprecated
-	 */
-	public get peerId(): number {
-		showDeprecatedMessage('TypingContext, use toId instead of peerId');
-
-		return this.toId;
-	}
-
-	/**
-	 * @deprecated
-	 */
-	public get userId(): number {
-		showDeprecatedMessage('TypingContext, use fromId instead of userId');
-
-		return this.fromId;
 	}
 
 	/**

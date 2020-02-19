@@ -16,7 +16,6 @@ import {
 	unescapeHTML,
 	pickProperties,
 	getPeerType,
-	showDeprecatedMessage,
 	applyMixins,
 	getRandomId
 } from '../../utils/helpers';
@@ -593,18 +592,6 @@ class MessageContext<S = Record<string, any>>
 	}
 
 	/**
-	 * @deprecated
-	 */
-	async sendPhoto(
-		rawSources: AllowArray<UploadSource>,
-		params: object = {}
-	): Promise<number> {
-		showDeprecatedMessage('MessageContext, use sendPhotos instead of sendPhoto');
-
-		return this.sendPhotos(rawSources, params);
-	}
-
-	/**
 	 * Sends a documents to the current dialog
 	 */
 	async sendDocuments(
@@ -630,18 +617,6 @@ class MessageContext<S = Record<string, any>>
 		});
 
 		return response;
-	}
-
-	/**
-	 * @deprecated
-	 */
-	async sendDocument(
-		rawSources: AllowArray<UploadSource>,
-		params: object = {}
-	): Promise<number> {
-		showDeprecatedMessage('MessageContext, use sendDocuments instead of sendDocument');
-
-		return this.sendDocuments(rawSources, params);
 	}
 
 	/**
