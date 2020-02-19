@@ -58,18 +58,6 @@ export class SceneContext {
 	}
 
 	/**
-	 * Controlled behavior leave
-	 *
-	 * @deprecated use `context.scene.leaving`
-	 */
-	public get leaved(): boolean {
-		// eslint-disable-next-line no-console
-		console.error('[@vk-io/scenes] context.scene.leaved deprecated, use context.scene.leaving instead');
-
-		return this.leaving;
-	}
-
-	/**
 	 * Returns current scene
 	 */
 	public get current(): IScene | undefined {

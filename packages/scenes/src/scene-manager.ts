@@ -16,9 +16,7 @@ export class SceneManager {
 			: rawOptions;
 
 		if (options.scenes) {
-			for (const scene of options.scenes) {
-				this.addScene(scene);
-			}
+			this.addScenes(options.scenes);
 		}
 	}
 
@@ -27,18 +25,6 @@ export class SceneManager {
 	 */
 	public hasScene(slug: string): boolean {
 		return this.repository.has(slug);
-	}
-
-	/**
-	 * Adds a scene to the shared list
-	 *
-	 * @deprecated use `sceneManager.addScenes([scene])`
-	 */
-	public addScene(scene: IScene): this {
-		// eslint-disable-next-line no-console
-		console.error('[@vk-io/scenes] sceneManager.addScene(scene) deprecated, use sceneManager.addScenes([scene])');
-
-		return this.addScenes([scene]);
 	}
 
 	/**
