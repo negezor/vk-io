@@ -114,44 +114,13 @@ export class API extends APIMethods {
 		this.vk = vk;
 
 		for (const group of groupMethods) {
-			const isMessagesGroup = group === 'messages';
-
-			/**
-			 * NOTE: Optimization for other methods
-			 *
-			 * Instead of checking everywhere the presence of a property in an object
-			 * The check is only for the messages group
-			 * Since it is necessary to change the behavior of the sending method
-			 */
 			// @ts-ignore
-			this[group] = new Proxy(
-				isMessagesGroup
-					? {
-						// eslint-disable-next-line @typescript-eslint/no-explicit-any
-						send: (params: Record<string, any> = {}): Promise<number> => {
-							const messageParams = params.random_id === undefined
-								? { ...params, random_id: getRandomId() }
-								: params;
-
-							return this.enqueue('messages.send', messageParams);
-						}
-					}
-					: {},
-				{
-					get: isMessagesGroup
-						// eslint-disable-next-line @typescript-eslint/no-explicit-any
-						? (obj: Record<string, any>, prop: string): Function => obj[prop] || (
-							// eslint-disable-next-line @typescript-eslint/no-explicit-any
-							(params: object): Promise<any> => (
-								this.enqueue(`${group}.${prop}`, params)
-							)
-						)
-						// eslint-disable-next-line @typescript-eslint/no-explicit-any
-						: (obj, prop: string) => (params: object): Promise<any> => (
-							this.enqueue(`${group}.${prop}`, params)
-						)
-				}
-			);
+			this[group] = new Proxy(Object.create(null), {
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
+				get: (obj, prop: string) => (params: object): Promise<any> => (
+					this.enqueue(`${group}.${prop}`, params)
+				)
+			});
 		}
 	}
 
