@@ -17,7 +17,8 @@ import {
 	pickProperties,
 	getPeerType,
 	showDeprecatedMessage,
-	applyMixins
+	applyMixins,
+	getRandomId
 } from '../../utils/helpers';
 import {
 	UpdateSource,
@@ -520,6 +521,8 @@ class MessageContext<S = Record<string, any>>
 	send(text: string | object, params?: object): Promise<number> {
 		return this.vk.api.messages.send({
 			peer_id: this.peerId,
+			// @ts-ignore
+			random_id: getRandomId(),
 
 			...(
 				typeof text !== 'object'
