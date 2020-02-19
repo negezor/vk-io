@@ -103,6 +103,7 @@ export const fetchCookieFollowRedirectsDecorator = (jar?: CookieJar): Function =
 			const redirectResponse = await fetchCookieFollowRedirects(response.headers.get('location'), {
 				method: 'GET',
 				body: undefined,
+				agent: options.agent,
 				headers,
 				follow
 			});
