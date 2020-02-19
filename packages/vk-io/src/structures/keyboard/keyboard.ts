@@ -8,7 +8,6 @@ import {
 	IKeyboardApplicationButtonOptions,
 	ButtonColor
 } from './types';
-import { showDeprecatedMessage } from '../../utils/helpers';
 
 export class Keyboard {
 	/**
@@ -16,17 +15,6 @@ export class Keyboard {
 	 */
 	public get [Symbol.toStringTag](): string {
 		return this.constructor.name;
-	}
-
-	/**
-	 * @deprecated Use Keyboard.SECONDARY_COLOR instead
-	 */
-	// eslint-disable-next-line class-methods-use-this
-	public static get DEFAULT_COLOR(): ButtonColor.SECONDARY {
-		// eslint-disable-next-line no-console
-		showDeprecatedMessage('Keyboard.DEFAULT_COLOR deprecated, use Keyboard.SECONDARY_COLOR instead');
-
-		return ButtonColor.SECONDARY;
 	}
 
 	/**
