@@ -8,7 +8,7 @@ import { APIMethods } from './schemas/methods';
 
 import { VK } from '../vk';
 import { APIRequest } from './request';
-import { getRandomId, delay } from '../utils/helpers';
+import { delay } from '../utils/helpers';
 import { VKError, APIError, ExecuteError } from '../errors';
 import { sequential, parallel, parallelSelected } from './workers';
 import {
