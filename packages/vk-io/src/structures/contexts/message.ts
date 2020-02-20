@@ -77,7 +77,30 @@ export interface IMessageContextPayload {
 		ref_source?: string;
 		attachments: object[];
 		important: boolean;
-		geo?: object;
+		geo?: {
+			type: 'point';
+			coordinates: {
+				latitude: number;
+				longitude: number;
+			};
+			place?: {
+				id: number;
+				title?: string;
+				latitude?: number;
+				longitude?: number;
+				created?: number;
+				icon?: string;
+				country: number;
+				city: string;
+
+				type?: number;
+				group_id?: number;
+				group_photo?: string;
+				checkins?: number;
+				updated?: number;
+				address?: number;
+			};
+		};
 		payload?: string;
 		reply_message?: IMessageReplyPayload;
 		fwd_messages?: IMessageForwardPayload[];
@@ -361,7 +384,7 @@ class MessageContext<S = Record<string, any>>
 	/**
 	 * Returns geo
 	 */
-	public get geo(): object | undefined {
+	public get geo(): IMessageContextPayload['message']['geo'] | undefined {
 		if (!this.hasGeo) {
 			return undefined;
 		}
