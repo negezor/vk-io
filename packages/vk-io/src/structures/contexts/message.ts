@@ -17,7 +17,8 @@ import {
 	pickProperties,
 	getPeerType,
 	applyMixins,
-	getRandomId
+	getRandomId,
+	useLazyLoad
 } from '../../utils/helpers';
 import {
 	UpdateSource,
@@ -143,14 +144,14 @@ class MessageContext<S = Record<string, any>>
 
 	protected $filled: boolean;
 
-	protected [kForwards]?: MessageForwardsCollection;
+	protected [kForwards]: () => MessageForwardsCollection;
 
-	protected [kAttachments]?: (Attachment | ExternalAttachment)[];
+	protected [kReplyMessage]: () => MessageReply | undefined;
+
+	protected [kAttachments]: () => (Attachment | ExternalAttachment)[];
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	protected [kMessagePayload]?: any | undefined;
-
-	protected [kReplyMessage]?: MessageReply;
+	protected [kMessagePayload]: () => any | undefined;
 
 	public constructor(options: MessageContextOptions<S>) {
 		super({
@@ -432,59 +433,28 @@ class MessageContext<S = Record<string, any>>
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public get messagePayload(): any | undefined {
-		if (this[kMessagePayload] === undefined) {
-			const { payload } = this.message;
-
-			if (payload === undefined) {
-				return undefined;
-			}
-
-			this[kMessagePayload] = JSON.parse(payload);
-		}
-
-		return this[kMessagePayload];
+		return this[kMessagePayload]();
 	}
 
 	/**
 	 * Returns the forwards
 	 */
 	public get forwards(): MessageForwardsCollection {
-		if (!this[kForwards]) {
-			this[kForwards] = this.message.fwd_messages
-				? new MessageForwardsCollection(...this.message.fwd_messages.map(forward => (
-					new MessageForward({
-						vk: this.vk,
-						payload: forward
-					})
-				)))
-				: new MessageForwardsCollection();
-		}
-
-		return this[kForwards]!;
+		return this[kForwards]();
 	}
 
 	/**
 	 * Returns the reply message
 	 */
 	public get replyMessage(): MessageReply | undefined {
-		if (!this[kReplyMessage]) {
-			this[kReplyMessage] = this.message.reply_message
-				? new MessageReply(this.message.reply_message, this.vk)
-				: undefined;
-		}
-
-		return this[kReplyMessage];
+		return this[kReplyMessage]();
 	}
 
 	/**
 	 * Returns the attachments
 	 */
 	public get attachments(): (Attachment | ExternalAttachment)[] {
-		if (!this[kAttachments]) {
-			this[kAttachments] = transformAttachments(this.message.attachments, this.vk);
-		}
-
-		return this[kAttachments]!;
+		return this[kAttachments]();
 	}
 
 	/**
@@ -840,9 +810,44 @@ class MessageContext<S = Record<string, any>>
 
 		this.payload = payload;
 
-		this.text = payload.message.text
-			? unescapeHTML(payload.message.text)
+		const { text } = payload.message;
+
+		this.text = text
+			? unescapeHTML(text)
 			: undefined;
+
+		this[kReplyMessage] = useLazyLoad(() => {
+			const { reply_message: replyMessage } = this.message;
+
+			return replyMessage
+				? new MessageReply(replyMessage, this.vk)
+				: undefined;
+		});
+
+		this[kForwards] = useLazyLoad(() => {
+			const { fwd_messages: fwdMessages } = this.message;
+
+			return fwdMessages
+				? new MessageForwardsCollection(...fwdMessages.map(forward => (
+					new MessageForward({
+						vk: this.vk,
+						payload: forward
+					})
+				)))
+				: new MessageForwardsCollection();
+		});
+
+		this[kAttachments] = useLazyLoad(() => (
+			transformAttachments(this.message.attachments, this.vk)
+		));
+
+		this[kMessagePayload] = useLazyLoad(() => {
+			const { payload: messagePayload } = this.message;
+
+			return messagePayload
+				? JSON.parse(messagePayload)
+				: undefined;
+		});
 	}
 
 	/**
