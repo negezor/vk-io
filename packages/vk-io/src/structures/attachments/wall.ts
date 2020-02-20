@@ -6,8 +6,8 @@ import { Attachmentable } from '../shared/attachmentable';
 
 // eslint-disable-next-line import/no-cycle
 import { transformAttachments } from './helpers';
-import { pickProperties, applyMixins } from '../../utils/helpers';
 import { AttachmentType, inspectCustomData } from '../../utils/constants';
+import { pickProperties, applyMixins, useLazyLoad } from '../../utils/helpers';
 
 const { WALL } = AttachmentType;
 
@@ -67,9 +67,9 @@ export interface IWallAttachmentPayload {
 }
 
 class WallAttachment extends Attachment<IWallAttachmentPayload> {
-	protected [kAttachments]?: (Attachment | ExternalAttachment)[];
+	protected [kAttachments]: () => (Attachment | ExternalAttachment)[];
 
-	protected [kCopyHistoryAttachments]?: WallAttachment[];
+	protected [kCopyHistoryAttachments]: () => WallAttachment[];
 
 	/**
 	 * Constructor
@@ -82,6 +82,8 @@ class WallAttachment extends Attachment<IWallAttachmentPayload> {
 		this.payload = payload;
 
 		this.$filled = payload.date !== undefined;
+
+		this.applyPayload(payload);
 	}
 
 	/**
@@ -103,6 +105,8 @@ class WallAttachment extends Attachment<IWallAttachmentPayload> {
 		if (this.payload.access_key) {
 			this.accessKey = this.payload.access_key;
 		}
+
+		this.applyPayload(post as IWallAttachmentPayload);
 
 		this.$filled = true;
 	}
@@ -397,30 +401,36 @@ class WallAttachment extends Attachment<IWallAttachmentPayload> {
 	}
 
 	/**
-	 * Returns the history of reposts for post
-	 */
-	public get copyHistory(): WallAttachment[] | undefined {
-		if (!this[kCopyHistoryAttachments]) {
-			this[kCopyHistoryAttachments] = this.payload.copy_history
-				? this.payload.copy_history.map((history): WallAttachment => (
-					new WallAttachment(history, this.vk)
-				))
-				: [];
-		}
-
-		return this[kCopyHistoryAttachments];
-	}
-
-	/**
 	 * Returns the attachments
 	 */
 	public get attachments(): (Attachment | ExternalAttachment)[] {
-		if (!this[kAttachments]) {
-			this[kAttachments] = transformAttachments(this.payload.attachments || [], this.vk);
-		}
-
-		return this[kAttachments]!;
+		return this[kAttachments]();
 	}
+
+	/**
+	 * Returns the history of reposts for post
+	 */
+	public get copyHistory(): WallAttachment[] | undefined {
+		return this[kCopyHistoryAttachments]();
+	}
+
+	/**
+	 * Applies the payload
+	 */
+	private applyPayload(payload: IWallAttachmentPayload): void {
+		this[kAttachments] = useLazyLoad(() => (
+			transformAttachments(payload.attachments || [], this.vk)
+		));
+
+		this[kCopyHistoryAttachments] = useLazyLoad(() => (
+			payload.copy_history
+				? payload.copy_history.map((history): WallAttachment => (
+					new WallAttachment(history, this.vk)
+				))
+				: []
+		));
+	}
+
 
 	/**
 	 * Returns the custom data

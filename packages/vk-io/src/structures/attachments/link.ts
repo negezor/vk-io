@@ -2,8 +2,8 @@ import { VK } from '../../vk';
 
 import { ExternalAttachment } from './external';
 
-import { PhotoAttachment, IPhotoAttachmentPayload } from './photo';
 import { pickProperties } from '../../utils/helpers';
+import { PhotoAttachment, IPhotoAttachmentPayload } from './photo';
 import { AttachmentType, inspectCustomData } from '../../utils/constants';
 
 const { LINK } = AttachmentType;
@@ -29,7 +29,7 @@ export interface ILinkAttachmentPayload {
 }
 
 export class LinkAttachment extends ExternalAttachment<ILinkAttachmentPayload> {
-	protected [kPhoto]?: PhotoAttachment;
+	protected [kPhoto]: PhotoAttachment | undefined;
 
 	/**
 	 * Constructor
@@ -39,6 +39,10 @@ export class LinkAttachment extends ExternalAttachment<ILinkAttachmentPayload> {
 
 		// @ts-ignore
 		this.vk = vk;
+
+		this[kPhoto] = payload.photo
+			? new PhotoAttachment(payload.photo, this.vk)
+			: undefined;
 	}
 
 	/**
@@ -102,12 +106,6 @@ export class LinkAttachment extends ExternalAttachment<ILinkAttachmentPayload> {
 	 * Returns the photo
 	 */
 	public get photo(): PhotoAttachment | undefined {
-		if (!this[kPhoto]) {
-			this[kPhoto] = this.payload.photo
-				? new PhotoAttachment(this.payload.photo, this.vk)
-				: undefined;
-		}
-
 		return this[kPhoto];
 	}
 

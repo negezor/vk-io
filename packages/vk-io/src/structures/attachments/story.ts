@@ -2,7 +2,7 @@ import { VK } from '../../vk';
 
 import { Attachment } from './attachment';
 
-import { pickProperties } from '../../utils/helpers';
+import { pickProperties, useLazyLoad } from '../../utils/helpers';
 import { AttachmentType, inspectCustomData } from '../../utils/constants';
 import { PhotoAttachment, IPhotoAttachmentPayload } from './photo';
 import { VideoAttachment, IVideoAttachmentPayload } from './video';
@@ -70,11 +70,11 @@ const kPhoto = Symbol('photo');
 const kParentStory = Symbol('parentStory');
 
 export class StoryAttachment extends Attachment<IStoryAttachmentPayload> {
-	protected [kVideo]?: VideoAttachment;
+	protected [kPhoto]: () => PhotoAttachment | undefined;
 
-	protected [kPhoto]?: PhotoAttachment;
+	protected [kVideo]: () => VideoAttachment | undefined;
 
-	protected [kParentStory]?: StoryAttachment;
+	protected [kParentStory]: () => StoryAttachment | undefined;
 
 	/**
 	 * Constructor
@@ -87,6 +87,8 @@ export class StoryAttachment extends Attachment<IStoryAttachmentPayload> {
 		this.payload = payload;
 
 		this.$filled = payload.is_deleted !== undefined || payload.is_expired !== undefined;
+
+		this.applyPayload(payload);
 	}
 
 	/**
@@ -108,6 +110,8 @@ export class StoryAttachment extends Attachment<IStoryAttachmentPayload> {
 		if (this.payload.access_key) {
 			this.accessKey = this.payload.access_key;
 		}
+
+		this.applyPayload(story as IStoryAttachmentPayload);
 
 		this.$filled = true;
 	}
@@ -181,30 +185,14 @@ export class StoryAttachment extends Attachment<IStoryAttachmentPayload> {
 	 * Returns the story photo
 	 */
 	public get photo(): PhotoAttachment | undefined {
-		if (!this.$filled) {
-			return undefined;
-		}
-
-		if (!this[kPhoto]) {
-			this[kPhoto] = new PhotoAttachment(this.payload.photo!, this.vk);
-		}
-
-		return this[kPhoto]!;
+		return this[kPhoto]();
 	}
 
 	/**
 	 * Returns the story video
 	 */
 	public get video(): VideoAttachment | undefined {
-		if (!this.$filled) {
-			return undefined;
-		}
-
-		if (!this[kVideo]) {
-			this[kVideo] = new VideoAttachment(this.payload.video!, this.vk);
-		}
-
-		return this[kVideo]!;
+		return this[kVideo]();
 	}
 
 	/**
@@ -260,15 +248,7 @@ export class StoryAttachment extends Attachment<IStoryAttachmentPayload> {
 	 * Returns the parent story
 	 */
 	public get parentStory(): StoryAttachment | undefined {
-		if (!this.$filled) {
-			return undefined;
-		}
-
-		if (!this[kParentStory]) {
-			this[kParentStory] = new StoryAttachment(this.payload.parent_story!, this.vk);
-		}
-
-		return this[kParentStory];
+		return this[kParentStory]();
 	}
 
 	/**
@@ -276,6 +256,29 @@ export class StoryAttachment extends Attachment<IStoryAttachmentPayload> {
 	 */
 	public get clickableStickers(): IStoryAttachmentPayload['clickable_stickers'] | undefined {
 		return this.payload.clickable_stickers;
+	}
+
+	/**
+	 * Applies the payload
+	 */
+	private applyPayload(payload: IStoryAttachmentPayload): void {
+		this[kPhoto] = useLazyLoad(() => (
+			payload.photo
+				? new PhotoAttachment(payload.photo, this.vk)
+				: undefined
+		));
+
+		this[kVideo] = useLazyLoad(() => (
+			payload.video
+				? new VideoAttachment(payload.video, this.vk)
+				: undefined
+		));
+
+		this[kParentStory] = useLazyLoad(() => (
+			payload.parent_story
+				? new StoryAttachment(payload.parent_story, this.vk)
+				: undefined
+		));
 	}
 
 	/**
