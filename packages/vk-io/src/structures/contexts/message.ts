@@ -472,17 +472,6 @@ class MessageContext<S = Record<string, any>>
 	}
 
 	/**
-	 * Gets a link to invite the user to a conversation
-	 */
-	public getInviteLink(params: object = {}): Promise<object> {
-		return this.vk.api.messages.getInviteLink({
-			...params,
-
-			peer_id: this.peerId
-		});
-	}
-
-	/**
 	 * Edits a message
 	 */
 	editMessage(params: object): Promise<number> {
