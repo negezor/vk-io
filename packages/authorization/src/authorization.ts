@@ -56,7 +56,6 @@ export class Authorization {
 	public direct(): DirectAuthorization {
 		const { appId, appSecret } = this.vk.options;
 
-		// @ts-ignore
 		return new DirectAuthorization(this.vk, { appId, appSecret });
 	}
 
