@@ -3022,10 +3022,10 @@ micromatch@^4.0.2:
     braces "^3.0.1"
     picomatch "^2.0.5"
 
-middleware-io@^2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/middleware-io/-/middleware-io-2.4.0.tgz#6c896f65433f5fcd00307e2a569d9f936f04d86f"
-  integrity sha512-pzK7Eg5ZlDesrgThEce4jhl0TJfU6ZTH8TZRKUSnWiN2yMmTSw6/EHpqQOm/g/YzkE83yH9rC3PqN+oPHQox5w==
+middleware-io@^2.5.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/middleware-io/-/middleware-io-2.5.0.tgz#7ce650077259c1ca718fdf27e883c9fbc3e55966"
+  integrity sha512-UGy7fSCIX1QlTT+5lZAvp2M5mMBd0gdErmuAd7RWM9BTHnLH1iMSzHlelUe7di1EIgTcSFOlm7UL/pzP57+X/w==
 
 mime-db@1.42.0:
   version "1.42.0"
