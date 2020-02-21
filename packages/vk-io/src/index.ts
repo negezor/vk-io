@@ -1,6 +1,4 @@
-import { VK } from './vk';
-import { APIRequest } from './api/request';
-
+// TODO: In TypeScript 3.8 make exports * as Name
 import * as Params from './api/schemas/params';
 import * as Objects from './api/schemas/objects';
 import * as Responses from './api/schemas/responses';
@@ -36,15 +34,9 @@ export { ICallbackServiceValidate } from './utils/callback-service';
 export { getRandomId, applyMixins } from './utils/helpers';
 export { Attachmentable, IAllAttachmentable } from './structures/shared/attachmentable';
 
-export {
-	VK,
-	APIRequest,
-	APIRequest as Request,
+export { APIRequest, APIRequest as Request } from './api/request';
 
-	Params,
-	Objects,
-	Responses
-};
+export { Params, Responses, Objects };
 
 // eslint-disable-next-line import/no-default-export
-export default VK;
+export { VK, VK as default } from './vk';

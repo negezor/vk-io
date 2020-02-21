@@ -1,14 +1,8 @@
-import { SceneManager } from './scene-manager';
-
 export * from './scenes';
 export * from './contexts';
 
 export * from './types';
 export * from './scene-manager.types';
 
-export {
-	SceneManager
-};
-
 // eslint-disable-next-line import/no-default-export
-export default SceneManager;
+export { SceneManager, SceneManager as default } from './scene-manager';
