@@ -10,12 +10,11 @@ import {
 	ImplicitFlowUser
 } from './providers';
 
-const openAPIParams = [
+const openAPIProperties = [
 	'expire',
 	'secret',
 	'mid',
-	'sid',
-	'sig'
+	'sid'
 ];
 
 export class Authorization {
@@ -123,27 +122,22 @@ export class Authorization {
 	 * Verifies that the user is authorized through the Open API
 	 */
 	public async userAuthorizedThroughOpenAPI(
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		params: Record<string, any>
+		params: Record<'expire' | 'mid' | 'secret' | 'sid' | 'sig', string>
 	): Promise<{ authorized: boolean }> {
-		const paramsKeys = Object.keys(params)
-			.filter(key => openAPIParams.includes(key))
-			.sort();
-
-		let sign = '';
-		for (const key of paramsKeys) {
-			if (key !== 'sig') {
-				sign += `${key}=${params[key]}`;
-			}
-		}
+		let sign = ([...openAPIProperties] as (keyof typeof params)[])
+			.sort()
+			.map(key => `${key}=${params[key]}`)
+			.join('');
 
 		sign += this.vk.options.appSecret;
 		sign = createHash('md5')
 			.update(sign)
 			.digest('hex');
 
-		const isNotExpire = params.expire > (Date.now() / 1000);
-		const authorized = params.sig === sign && isNotExpire;
+		const expire = Number(params.expire);
+
+		const isExpired = Number.isNaN(expire) || expire < (Date.now() / 1000);
+		const authorized = params.sig === sign && !isExpired;
 
 		return { authorized };
 	}
