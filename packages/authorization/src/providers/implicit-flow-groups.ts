@@ -6,6 +6,7 @@ import { URL, URLSearchParams } from 'url';
 
 import { ImplicitFlow, IImplicitFlowOptions } from './implicit-flow';
 
+import { Response } from '../fetch-cookie';
 import { AuthorizationError } from '../errors';
 import { getGroupsPermissionsByName } from '../helpers';
 import { CALLBACK_BLANK, AuthErrorCode } from '../constants';
@@ -48,8 +49,7 @@ export class ImplicitFlowGroups extends ImplicitFlow {
 	/**
 	 * Returns permission page
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	protected getPermissionsPage(): Promise<any> {
+	protected getPermissionsPage(): Promise<Response> {
 		const { appId } = this.options;
 		let { scope } = this.options;
 
@@ -61,15 +61,14 @@ export class ImplicitFlowGroups extends ImplicitFlow {
 
 		debug('auth scope %s', scope);
 
-		// @ts-ignore
 		const params = new URLSearchParams({
 			group_ids: this.groups.join(','),
 			redirect_uri: CALLBACK_BLANK,
 			response_type: 'token',
 			display: 'page',
 			v: this.options.apiVersion,
-			client_id: appId,
-			scope
+			client_id: String(appId),
+			scope: String(scope)
 		});
 
 		const url = new URL(`https://oauth.vk.com/authorize?${params}`);
@@ -132,7 +131,6 @@ export class ImplicitFlowGroups extends ImplicitFlow {
 			});
 		}
 
-		// @ts-ignore
 		return tokens;
 	}
 }

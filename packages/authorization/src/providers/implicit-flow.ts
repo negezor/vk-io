@@ -8,8 +8,17 @@ import { promisify } from 'util';
 import { URL, URLSearchParams } from 'url';
 
 import { AuthorizationError } from '../errors';
-import { parseFormField, getFullURL } from '../helpers';
-import { CookieJar, fetchCookieFollowRedirectsDecorator } from '../fetch-cookie';
+import { parseFormField, getFullURL, CheerioStatic } from '../helpers';
+import {
+	CookieJar,
+
+	FetchWrapper,
+	RequestInfo,
+	RequestInit,
+	Response,
+
+	fetchCookieFollowRedirectsDecorator
+} from '../fetch-cookie';
 import { DESKTOP_USER_AGENT, CALLBACK_BLANK, AuthErrorCode } from '../constants';
 
 const debug = createDebug('vk-io:authorization:implicit-flow');
@@ -72,7 +81,7 @@ export interface IImplicitFlowOptions {
 	apiVersion: string;
 }
 
-export class ImplicitFlow {
+export abstract class ImplicitFlow {
 	protected vk: VK;
 
 	protected options: IImplicitFlowOptions;
@@ -81,8 +90,7 @@ export class ImplicitFlow {
 
 	public jar: CookieJar;
 
-	// @ts-ignore
-	protected fetchCookie: Function;
+	protected fetchCookie!: FetchWrapper;
 
 	protected captchaValidate?: ICallbackServiceValidate;
 
@@ -182,13 +190,10 @@ export class ImplicitFlow {
 	/**
 	 * Executes the HTTP request
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	protected fetch(
-		url: string | URL,
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		options: Record<string, any> = {}
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	): Promise<any> {
+		url: RequestInfo,
+		options: RequestInit = {}
+	): Promise<Response> {
 		const { agent, timeout } = this.options;
 
 		const { headers = {} } = options;
@@ -211,8 +216,7 @@ export class ImplicitFlow {
 	/**
 	 * Runs authorization
 	 */
-	// eslint-disable-next-line consistent-return, @typescript-eslint/no-explicit-any
-	public async run(): Promise<any> {
+	public async run(): Promise<{ response: Response }> {
 		if (this.started) {
 			throw new AuthorizationError({
 				message: 'Authorization already started!',
@@ -226,7 +230,6 @@ export class ImplicitFlow {
 
 		debug('get permissions page');
 
-		// @ts-ignore
 		let response = await this.getPermissionsPage();
 
 		const isProcessed = true;
@@ -324,13 +327,14 @@ export class ImplicitFlow {
 				});
 			}
 		}
+
+		throw new Error('Fallback error');
 	}
 
 	/**
 	 * Process form auth
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	protected async processAuthForm(response: any, $: any): Promise<any> {
+	protected async processAuthForm(response: Response, $: CheerioStatic): Promise<Response> {
 		debug('process login handle');
 
 		if (this.captchaValidate) {
@@ -356,8 +360,8 @@ export class ImplicitFlow {
 
 		const { action, fields } = parseFormField($);
 
-		fields.email = login || phone;
-		fields.pass = password;
+		fields.email = String(login || phone);
+		fields.pass = String(password);
 
 		if (fields.captcha_sid !== undefined) {
 			const src = $('.oauth_captcha').attr('src') || $('#captcha').attr('src');
@@ -390,8 +394,7 @@ export class ImplicitFlow {
 	/**
 	 * Process two-factor form
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	protected async processTwoFactorForm(response: any, $: any): Promise<any> {
+	protected async processTwoFactorForm(response: Response, $: CheerioStatic): Promise<Response> {
 		debug('process two-factor handle');
 
 		if (this.twoFactorValidate !== undefined) {
@@ -436,8 +439,7 @@ export class ImplicitFlow {
 	/**
 	 * Process security form
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	protected async processSecurityForm(response: any, $: any): Promise<any> {
+	protected async processSecurityForm(response: Response, $: CheerioStatic): Promise<Response> {
 		debug('process security form');
 
 		const { login, phone } = this.options;
@@ -483,4 +485,6 @@ export class ImplicitFlow {
 
 		return newResponse;
 	}
+
+	protected abstract getPermissionsPage(): Promise<Response>;
 }

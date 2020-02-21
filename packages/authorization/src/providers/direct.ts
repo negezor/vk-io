@@ -8,8 +8,19 @@ import { URL, URLSearchParams } from 'url';
 
 import { AuthorizationError } from '../errors';
 import { DESKTOP_USER_AGENT, AuthErrorCode } from '../constants';
-import { fetchCookieFollowRedirectsDecorator, CookieJar } from '../fetch-cookie';
 import {
+	CookieJar,
+
+	FetchWrapper,
+	RequestInfo,
+	RequestInit,
+	Response,
+
+	fetchCookieFollowRedirectsDecorator
+} from '../fetch-cookie';
+import {
+	CheerioStatic,
+
 	getFullURL,
 	parseFormField,
 	getUsersPermissionsByName
@@ -63,7 +74,7 @@ export class DirectAuthorization {
 
 	public jar!: CookieJar;
 
-	protected fetchCookie!: Function;
+	protected fetchCookie!: FetchWrapper;
 
 	protected captchaValidate?: ICallbackServiceValidate;
 
@@ -129,11 +140,9 @@ export class DirectAuthorization {
 	 * Executes the HTTP request
 	 */
 	protected fetch(
-		url: string | URL,
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		options: Record<string, any> = {}
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	): Promise<Record<string, any>> {
+		url: RequestInfo,
+		options: RequestInit = {}
+	): Promise<Response> {
 		const { agent, timeout } = this.options;
 
 		const { headers = {} } = options;
@@ -156,8 +165,7 @@ export class DirectAuthorization {
 	/**
 	 * Returns permission page
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	protected getPermissionsPage(query = {}): Promise<any> {
+	protected getPermissionsPage(query = {}): Promise<Response> {
 		let { scope } = this.options;
 
 		if (scope === 'all' || scope === undefined) {
@@ -202,14 +210,10 @@ export class DirectAuthorization {
 	/**
 	 * Runs authorization
 	 */
-	// @ts-ignore
-	// eslint-disable-next-line consistent-return, @typescript-eslint/no-explicit-any
 	public async run(): Promise<{
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		email: any;
+		email?: string;
 		user: number;
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		token: any;
+		token: string;
 		expires: number;
 	}> {
 		if (this.started) {
@@ -283,7 +287,7 @@ export class DirectAuthorization {
 
 						const $ = cheerioLoad(text);
 
-						response = this.processSecurityForm(response, $);
+						response = await this.processSecurityForm(response, $);
 
 						continue;
 					}
@@ -300,13 +304,19 @@ export class DirectAuthorization {
 				code: AUTHORIZATION_FAILED
 			});
 		}
+
+		throw new Error('Fallback error');
 	}
 
 	/**
 	 * Process captcha
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	protected async processCaptcha({ captcha_sid: sid, captcha_img: src }: any): Promise<any> {
+	protected async processCaptcha(
+		{ captcha_sid: sid, captcha_img: src }: {
+			captcha_sid: number;
+			captcha_img: string;
+		}
+	): Promise<Response> {
 		debug('captcha process');
 
 		if (this.captchaValidate !== undefined) {
@@ -347,13 +357,11 @@ export class DirectAuthorization {
 	 * Process two-factor
 	 */
 	protected async processTwoFactor(
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		{ validation_type: validationType, phone_mask: phoneMask }: {
 			validation_type: string;
 			phone_mask: string;
 		}
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	): Promise<any> {
+	): Promise<Response> {
 		debug('process two-factor handle');
 
 		if (this.twoFactorValidate !== undefined) {
@@ -391,8 +399,7 @@ export class DirectAuthorization {
 	/**
 	 * Process security form
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	protected async processSecurityForm(response: any, $: any): Promise<any> {
+	protected async processSecurityForm(response: Response, $: CheerioStatic): Promise<Response> {
 		debug('process security form');
 
 		const { login, phone } = this.options;

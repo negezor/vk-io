@@ -1,6 +1,11 @@
+import { load as cheerioLoad } from 'cheerio';
+
 import { URL } from 'url';
 
+import { Response } from './fetch-cookie';
 import { userScopes, groupScopes } from './constants';
+
+export type CheerioStatic = ReturnType<typeof cheerioLoad>;
 
 /**
  * Returns the bit mask of the user permission by name
@@ -47,19 +52,20 @@ export const getGroupsPermissionsByName = (rawScope: string | string[]): number 
 /**
  * Parse form
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const parseFormField = ($: any): { action: string; fields: Record<string, any> } => {
-	const $form = $('form[action][method]');
+export const parseFormField = ($: unknown): {
+	action: string;
+	fields: Record<string, string>;
+} => {
+	const $form = ($ as CheerioStatic)('form[action][method]');
 
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	const fields: Record<string, any> = {};
+	const fields: Record<string, string> = {};
 
 	for (const { name, value } of $form.serializeArray()) {
 		fields[name] = value;
 	}
 
 	return {
-		action: $form.attr('action'),
+		action: $form.attr('action')!,
 		fields
 	};
 };
@@ -67,8 +73,7 @@ export const parseFormField = ($: any): { action: string; fields: Record<string,
 /**
  * Returns full URL use Response
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const getFullURL = (action: string, { url }: { url: string }): URL => {
+export const getFullURL = (action: string, { url }: Response): URL => {
 	if (action.startsWith('https://')) {
 		return new URL(action);
 	}

@@ -5,6 +5,7 @@ import { URL, URLSearchParams } from 'url';
 import { ImplicitFlow } from './implicit-flow';
 import { AuthorizationError } from '../errors';
 
+import { Response } from '../fetch-cookie';
 import { getUsersPermissionsByName } from '../helpers';
 import { CALLBACK_BLANK, AuthErrorCode } from '../constants';
 
@@ -16,8 +17,7 @@ export class ImplicitFlowUser extends ImplicitFlow {
 	/**
 	 * Returns permission page
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	protected getPermissionsPage(): Promise<any> {
+	protected getPermissionsPage(): Promise<Response> {
 		const { appId } = this.options;
 		let { scope } = this.options;
 

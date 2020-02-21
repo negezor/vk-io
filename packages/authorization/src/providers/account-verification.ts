@@ -7,8 +7,17 @@ import { Agent } from 'https';
 import { URL, URLSearchParams } from 'url';
 
 import { AuthorizationError } from '../errors';
-import { parseFormField, getFullURL } from '../helpers';
-import { CookieJar, fetchCookieFollowRedirectsDecorator } from '../fetch-cookie';
+import { CheerioStatic, parseFormField, getFullURL } from '../helpers';
+import {
+	CookieJar,
+
+	FetchWrapper,
+	RequestInfo,
+	RequestInit,
+	Response,
+
+	fetchCookieFollowRedirectsDecorator
+} from '../fetch-cookie';
 import { DESKTOP_USER_AGENT, CALLBACK_BLANK, AuthErrorCode } from '../constants';
 
 const debug = createDebug('vk-io:authorization:account-verification');
@@ -59,7 +68,7 @@ export class AccountVerification {
 
 	public jar: CookieJar;
 
-	protected fetchCookie: Function;
+	protected fetchCookie: FetchWrapper;
 
 	protected captchaValidate?: ICallbackServiceValidate;
 
@@ -103,8 +112,7 @@ export class AccountVerification {
 	/**
 	 * Executes the HTTP request
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	protected fetch(url: URL | string, options: Record<string, any> = {}): Promise<any> {
+	protected fetch(url: RequestInfo, options: RequestInit = {}): Promise<Response> {
 		const { agent } = this.options;
 
 		const { headers = {} } = options;
@@ -127,9 +135,7 @@ export class AccountVerification {
 	/**
 	 * Runs authorization
 	 */
-	// @ts-ignore
-	// eslint-disable-next-line consistent-return, @typescript-eslint/no-explicit-any
-	public async run(redirectUri: string): Promise<Record<string, any>> {
+	public async run(redirectUri: RequestInfo): Promise<{ user: number; token: string }> {
 		let response = await this.fetch(redirectUri, {
 			method: 'GET'
 		});
@@ -155,13 +161,10 @@ export class AccountVerification {
 					});
 				}
 
-				const user = params.get('user_id');
+				const user = params.get('user_id')!;
 
 				return {
-					user: user !== null
-						? Number(user)
-						: undefined,
-
+					user: Number(user),
 					token: params.get('access_token')!
 				};
 			}
@@ -197,13 +200,14 @@ export class AccountVerification {
 				code: AUTHORIZATION_FAILED
 			});
 		}
+
+		throw new Error('Fallback error');
 	}
 
 	/**
 	 * Process two-factor form
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	protected async processTwoFactorForm(response: any, $: any): Promise<any> {
+	protected async processTwoFactorForm(response: Response, $: CheerioStatic): Promise<Response> {
 		debug('process two-factor handle');
 
 		if (this.twoFactorValidate) {
@@ -248,8 +252,7 @@ export class AccountVerification {
 	/**
 	 * Process security form
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	protected async processSecurityForm(response: any, $: any): Promise<any> {
+	protected async processSecurityForm(response: Response, $: CheerioStatic): Promise<Response> {
 		debug('process security form');
 
 		const { login, phone } = this.options;
@@ -301,9 +304,8 @@ export class AccountVerification {
 	/**
 	 * Process validation form
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	protected processValidateForm(response: any, $: any): Promise<any> {
-		const href = $('#activation_wrap a').attr('href');
+	protected processValidateForm(response: Response, $: CheerioStatic): Promise<Response> {
+		const href = $('#activation_wrap a').attr('href')!;
 		const url = getFullURL(href, response);
 
 		return this.fetch(url, {
@@ -314,8 +316,7 @@ export class AccountVerification {
 	/**
 	 * Process captcha form
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	protected async processCaptchaForm(response: any, $: any): Promise<any> {
+	protected async processCaptchaForm(response: Response, $: CheerioStatic): Promise<Response> {
 		if (this.captchaValidate !== undefined) {
 			this.captchaValidate.reject(new AuthorizationError({
 				message: 'Incorrect captcha code',
