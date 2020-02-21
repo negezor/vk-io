@@ -1,12 +1,11 @@
-import { ISessionStorage, MemoryStorage } from './storages';
+import { MemoryStorage } from './storages';
 
 import {
 	IContext,
 	ISessionContext,
 	ISessionManagerOptions,
 
-	Middleware,
-	SessionForceUpdate
+	Middleware
 } from './types';
 
 export class SessionManager<T = {}> {
