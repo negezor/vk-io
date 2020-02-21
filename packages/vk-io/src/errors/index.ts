@@ -13,12 +13,5 @@ export {
 	UploadErrorCode,
 	UpdatesErrorCode,
 	CollectErrorCode,
-	SnippetErrorCode,
-
-	apiErrors,
-	sharedErrors,
-	uploadErrors,
-	updatesErrors,
-	collectErrors,
-	snippetsErrors
+	SnippetErrorCode
 } from '../utils/constants';

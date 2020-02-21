@@ -95,8 +95,6 @@ export type AttachmentTypeString = 'audio'
 | 'sticker'
 | 'wall_reply';
 
-export const attachmentTypes = AttachmentType;
-
 /**
  * Default extensions for attachments
  */
@@ -107,8 +105,6 @@ export enum DefaultExtension {
 	graffiti = 'png',
 	audioMessage = 'ogg'
 }
-
-export const defaultExtensions = DefaultExtension;
 
 /**
  * Default content type for attachments
@@ -121,8 +117,6 @@ export enum DefaultContentType {
 	audioMessage = 'audio/ogg'
 }
 
-export const defaultContentTypes = DefaultContentType;
-
 /**
  * Sources of captcha
  */
@@ -132,8 +126,6 @@ export enum CaptchaType {
 	'IMPLICIT_FLOW_AUTH',
 	'ACCOUNT_VERIFICATION'
 }
-
-export const captchaTypes = CaptchaType;
 
 /**
  * Message source
@@ -145,8 +137,6 @@ export enum MessageSource {
 	EMAIL = 'email'
 }
 
-export const messageSources = MessageSource;
-
 /**
  * Resource types
  */
@@ -156,8 +146,6 @@ export enum ResourceType {
 	APPLICATION = 'application'
 }
 
-export const resourceTypes = ResourceType;
-
 /**
  * Updates sources
  */
@@ -166,8 +154,6 @@ export enum UpdateSource {
 	WEBHOOK = 'WEBHOOK',
 	WEBSOCKET = 'WEBSOCKET'
 }
-
-export const updatesSources = UpdateSource;
 
 /**
  * API error codes
@@ -226,8 +212,6 @@ export enum APIErrorCode {
 	CONTACT_NOT_FOUND = 936
 }
 
-export const apiErrors = APIErrorCode;
-
 /**
  * Upload error codes
  */
@@ -238,8 +222,6 @@ export enum UploadErrorCode {
 	UNSUPPORTED_SOURCE_TYPE = 'UNSUPPORTED_SOURCE_TYPE'
 }
 
-export const uploadErrors = UploadErrorCode;
-
 /**
  * Updates error codes
  */
@@ -248,16 +230,12 @@ export enum UpdatesErrorCode {
 	POLLING_REQUEST_FAILED = 'POLLING_REQUEST_FAILED'
 }
 
-export const updatesErrors = UpdatesErrorCode;
-
 /**
  * Collect error codes
  */
 export enum CollectErrorCode {
 	EXECUTE_ERROR = 'EXECUTE_ERROR'
 }
-
-export const collectErrors = CollectErrorCode;
 
 /**
  * Snippets error codes
@@ -268,8 +246,6 @@ export enum SnippetErrorCode {
 	RESOURCE_NOT_FOUND = 'RESOURCE_NOT_FOUND'
 }
 
-export const snippetsErrors = SnippetErrorCode;
-
 /**
  * Snippets error codes
  */
@@ -277,8 +253,6 @@ export enum SharedErrorCode {
 	MISSING_CAPTCHA_HANDLER = 'MISSING_CAPTCHA_HANDLER',
 	MISSING_TWO_FACTOR_HANDLER = 'MISSING_TWO_FACTOR_HANDLER'
 }
-
-export const sharedErrors = SharedErrorCode;
 
 /**
  * VK Platforms

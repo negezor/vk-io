@@ -19,11 +19,6 @@ export {
 	AttachmentType,
 	AttachmentTypeString,
 
-	captchaTypes,
-	resourceTypes,
-	messageSources,
-	attachmentTypes,
-
 	platforms,
 	inspectCustomData
 } from './utils/constants';
