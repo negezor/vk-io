@@ -1,4 +1,4 @@
-import { Context, ContextFactoryOptions } from './context';
+import { Context, ContextFactoryOptions, ContextDefaultState } from './context';
 
 import { WallAttachment, IWallAttachmentPayload } from '../attachments';
 
@@ -24,8 +24,7 @@ export interface IWallPostContextPayload extends IWallAttachmentPayload {
 export type WallPostContextOptions<S> =
 	ContextFactoryOptions<IWallPostContextPayload, S>;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export class WallPostContext<S = Record<string, any>>
+export class WallPostContext<S = ContextDefaultState>
 	extends Context<
 	IWallPostContextPayload,
 	S,

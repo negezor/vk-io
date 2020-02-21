@@ -1,4 +1,4 @@
-import { Context, ContextFactoryOptions } from './context';
+import { Context, ContextFactoryOptions, ContextDefaultState } from './context';
 
 import { pickProperties } from '../../utils/helpers';
 import { inspectCustomData } from '../../utils/constants';
@@ -17,8 +17,7 @@ export interface IVoteContextPayload {
 export type VoteContextOptions<S> =
 	ContextFactoryOptions<IVoteContextPayload, S>;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export class VoteContext<S = Record<string, any>>
+export class VoteContext<S = ContextDefaultState>
 	extends Context<
 	IVoteContextPayload,
 	S,

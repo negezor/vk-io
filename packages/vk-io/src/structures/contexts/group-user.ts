@@ -1,4 +1,4 @@
-import { Context, ContextFactoryOptions } from './context';
+import { Context, ContextFactoryOptions, ContextDefaultState } from './context';
 
 import { VKError } from '../../errors';
 
@@ -39,8 +39,7 @@ export interface IGroupUserContextPayload {
 export type GroupUserContextOptions<S> =
 	ContextFactoryOptions<IGroupUserContextPayload, S>;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export class GroupUserContext<S = Record<string, any>>
+export class GroupUserContext<S = ContextDefaultState>
 	extends Context<
 	IGroupUserContextPayload,
 	S,

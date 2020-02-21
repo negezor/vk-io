@@ -1,4 +1,4 @@
-import { Context, ContextFactoryOptions } from './context';
+import { Context, ContextFactoryOptions, ContextDefaultState } from './context';
 
 import { VKError } from '../../errors';
 
@@ -74,8 +74,7 @@ export type CommentActionContextSubType =
 | 'delete_market_comment'
 | 'restore_market_comment';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-class CommentActionContext<S = Record<string, any>>
+class CommentActionContext<S = ContextDefaultState>
 	extends Context<
 	ICommentActionContextPayload,
 	S,

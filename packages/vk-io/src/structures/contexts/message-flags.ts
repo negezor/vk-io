@@ -1,4 +1,4 @@
-import { Context, IContextOptions } from './context';
+import { Context, ContextFactoryOptions, ContextDefaultState } from './context';
 
 import { pickProperties } from '../../utils/helpers';
 import { inspectCustomData } from '../../utils/constants';
@@ -23,10 +23,9 @@ export interface IMessageFlagsContextPayload {
 }
 
 export type MessageFlagsContextOptions<S> =
-	Omit<IContextOptions<number[], S>, 'type' | 'subTypes'>;
+ContextFactoryOptions<number[], S>;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export class MessageFlagsContext<S = Record<string, any>>
+export class MessageFlagsContext<S = ContextDefaultState>
 	extends Context<
 	IMessageFlagsContextPayload,
 	S,

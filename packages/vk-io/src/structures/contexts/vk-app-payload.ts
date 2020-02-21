@@ -1,4 +1,4 @@
-import { Context, ContextFactoryOptions } from './context';
+import { Context, ContextFactoryOptions, ContextDefaultState } from './context';
 
 import { pickProperties } from '../../utils/helpers';
 import { inspectCustomData } from '../../utils/constants';
@@ -18,8 +18,7 @@ export interface IVKAppPayloadPayload {
 export type VKAppPayloadContextOptions<S> =
 	ContextFactoryOptions<IVKAppPayloadPayload, S>;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export class VKAppPayloadContext<S = Record<string, any>>
+export class VKAppPayloadContext<S = ContextDefaultState>
 	extends Context<
 	IVKAppPayloadPayload,
 	S,

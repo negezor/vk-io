@@ -1,4 +1,4 @@
-import { Context, ContextFactoryOptions } from './context';
+import { Context, ContextFactoryOptions, ContextDefaultState } from './context';
 
 import { pickProperties } from '../../utils/helpers';
 import { platforms, inspectCustomData } from '../../utils/constants';
@@ -23,8 +23,7 @@ export interface IUserOnlineContextPayload {
 export type UserOnlineContextOptions<S> =
 	ContextFactoryOptions<[number, number, number, number], S>;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export class UserOnlineContext<S = Record<string, any>>
+export class UserOnlineContext<S = ContextDefaultState>
 	extends Context<
 	IUserOnlineContextPayload,
 	S,

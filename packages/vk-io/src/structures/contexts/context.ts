@@ -5,6 +5,9 @@ import { inspectCustomData, UpdateSource } from '../../utils/constants';
 
 import { AllowArray } from '../../types';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type ContextDefaultState = Record<string, any>;
+
 export interface IContextOptions<
 	P,
 	S,
@@ -30,7 +33,7 @@ export type ContextFactoryOptions<P, S> =
 
 export class Context<
 	P = {},
-	S = {},
+	S = ContextDefaultState,
 	Type extends string = string,
 	SubType extends string = string
 > {

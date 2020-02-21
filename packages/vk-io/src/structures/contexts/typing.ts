@@ -1,4 +1,4 @@
-import { Context, ContextFactoryOptions } from './context';
+import { Context, ContextFactoryOptions, ContextDefaultState } from './context';
 
 import { pickProperties, getPeerType } from '../../utils/helpers';
 import {
@@ -35,8 +35,7 @@ export interface ITypingContextPayload {
 export type TypingContextOptions<S> =
 	ContextFactoryOptions<ITypingContextPayload, S>;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export class TypingContext<S = Record<string, any>>
+export class TypingContext<S = ContextDefaultState>
 	extends Context<
 	ITypingContextPayload,
 	S,

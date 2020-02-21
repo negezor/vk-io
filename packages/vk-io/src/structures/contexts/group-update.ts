@@ -1,4 +1,4 @@
-import { Context, IContextOptions } from './context';
+import { Context, ContextFactoryOptions, ContextDefaultState } from './context';
 
 import { Attachmentable } from '../shared/attachmentable';
 import { Attachment, PhotoAttachment, IPhotoAttachmentPayload } from '../attachments';
@@ -29,10 +29,9 @@ export interface IGroupUpdateContextPayload {
 }
 
 export type GroupUpdateContextOptions<S> =
-	Omit<IContextOptions<IGroupUpdateContextPayload, S>, 'type' | 'subTypes'>;
+	ContextFactoryOptions<IGroupUpdateContextPayload, S>;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-class GroupUpdateContext<S = Record<string, any>>
+class GroupUpdateContext<S = ContextDefaultState>
 	extends Context<
 	IGroupUpdateContextPayload,
 	S,

@@ -1,4 +1,4 @@
-import { Context, ContextFactoryOptions } from './context';
+import { Context, ContextFactoryOptions, ContextDefaultState } from './context';
 
 import { pickProperties } from '../../utils/helpers';
 import { inspectCustomData } from '../../utils/constants';
@@ -25,8 +25,7 @@ export interface IDialogFlagsContextPayload {
 export type DialogFlagsContextOptions<S> =
 	ContextFactoryOptions<number[], S>;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export class DialogFlagsContext<S = Record<string, any>>
+export class DialogFlagsContext<S = ContextDefaultState>
 	extends Context<
 	IDialogFlagsContextPayload,
 	S,
