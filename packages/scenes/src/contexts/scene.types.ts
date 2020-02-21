@@ -16,8 +16,7 @@ export interface ISceneContextEnterOptions {
 	/**
 	 * The standard state for the scene
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	state?: Record<string, any>;
+	state?: Record<string, unknown>;
 }
 
 export interface ISceneContextLeaveOptions {

@@ -44,7 +44,7 @@ export class StepScene<T = MessageContext> implements IScene {
 		}
 	}
 
-	public leaveHandler(context: IStepContext & T): Promise<void> {
-		return this.onLeaveHandler(context);
+	public leaveHandler(context: IStepContext & T): Promise<unknown> {
+		return Promise.resolve(this.onLeaveHandler(context));
 	}
 }
