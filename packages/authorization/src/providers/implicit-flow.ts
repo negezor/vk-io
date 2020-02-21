@@ -216,7 +216,7 @@ export abstract class ImplicitFlow {
 	/**
 	 * Runs authorization
 	 */
-	public async run(): Promise<{ response: Response }> {
+	protected async login(): Promise<{ response: Response }> {
 		if (this.started) {
 			throw new AuthorizationError({
 				message: 'Authorization already started!',

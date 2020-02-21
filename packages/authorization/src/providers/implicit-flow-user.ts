@@ -49,14 +49,13 @@ export class ImplicitFlowUser extends ImplicitFlow {
 	/**
 	 * Starts authorization
 	 */
-	// @ts-ignore
 	public async run(): Promise<{
 		email: string | undefined;
 		user: number | undefined;
 		token: string;
 		expires: number | undefined;
 	}> {
-		const { response } = await super.run();
+		const { response } = await super.login();
 
 		let { hash } = new URL(response.url);
 

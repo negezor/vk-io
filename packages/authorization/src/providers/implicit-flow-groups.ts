@@ -81,13 +81,12 @@ export class ImplicitFlowGroups extends ImplicitFlow {
 	/**
 	 * Starts authorization
 	 */
-	// @ts-ignore
 	public async run(): Promise<{
 		group: number;
 		token: string;
 		expires: number;
 	}[]> {
-		const { response } = await super.run();
+		const { response } = await super.login();
 
 		let { hash } = new URL(response.url);
 
