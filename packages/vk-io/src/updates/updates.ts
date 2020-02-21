@@ -328,53 +328,88 @@ export class Updates {
 	 * Subscribe to events
 	 */
 	public on<T = {}>(
-		events: AllowArray<MessageContextType | MessageContextSubType>,
-		handler: AllowArray<Middleware<MessageContext & T>>
-	): this
+		events: AllowArray<CommentActionContextType | CommentActionContextSubType>,
+		handler: AllowArray<Middleware<CommentActionContext & T>>
+	): this;
 
 	public on<T = {}>(
-		events: AllowArray<MessageAllowContextType | MessageAllowContextSubType>,
-		handler: AllowArray<Middleware<MessageAllowContext & T>>
-	): this
-
-	public on<T = {}>(
-		events: AllowArray<NewAttachmentsContextType | NewAttachmentsContextSubType>,
-		handler: AllowArray<Middleware<NewAttachmentsContext & T>>
-	): this
-
-	public on<T = {}>(
-		events: AllowArray<WallPostContextType | WallPostContextSubType>,
-		handler: AllowArray<Middleware<WallPostContext & T>>
-	): this
+		events: AllowArray<DialogFlagsContextType | DialogFlagsContextSubType>,
+		handler: AllowArray<Middleware<DialogFlagsContext & T>>
+	): this;
 
 	public on<T = {}>(
 		events: AllowArray<GroupMemberContextType | GroupMemberContextSubType>,
 		handler: AllowArray<Middleware<GroupMemberContext & T>>
-	): this
-
-	public on<T = {}>(
-		events: AllowArray<GroupUserContextType | GroupUserContextSubType>,
-		handler: AllowArray<Middleware<GroupUserContext & T>>
-	): this
-
-	public on<T = {}>(
-		events: AllowArray<CommentActionContextType | CommentActionContextSubType>,
-		handler: AllowArray<Middleware<CommentActionContext & T>>
-	): this
-
-	public on<T = {}>(
-		events: AllowArray<VoteContextType | VoteContextSubType>,
-		handler: AllowArray<Middleware<VoteContext & T>>
-	): this
+	): this;
 
 	public on<T = {}>(
 		events: AllowArray<GroupUpdateContextType | GroupUpdateContextSubType>,
 		handler: AllowArray<Middleware<GroupUpdateContext & T>>
-	): this
+	): this;
+
+	public on<T = {}>(
+		events: AllowArray<GroupUserContextType | GroupUserContextSubType>,
+		handler: AllowArray<Middleware<GroupUserContext & T>>
+	): this;
+
+	public on<T = {}>(
+		events: AllowArray<MessageAllowContextType | MessageAllowContextSubType>,
+		handler: AllowArray<Middleware<MessageAllowContext & T>>
+	): this;
+
+	public on<T = {}>(
+		events: AllowArray<MessageFlagsContextType | MessageFlagsContextSubType>,
+		handler: AllowArray<Middleware<MessageFlagsContext & T>>
+	): this;
+
+	public on<T = {}>(
+		events: AllowArray<MessageContextType | MessageContextSubType>,
+		handler: AllowArray<Middleware<MessageContext & T>>
+	): this;
+
+	public on<T = {}>(
+		events: AllowArray<NewAttachmentsContextType | NewAttachmentsContextSubType>,
+		handler: AllowArray<Middleware<NewAttachmentsContext & T>>
+	): this;
+
+	public on<T = {}>(
+		events: AllowArray<ReadMessagesContextType | ReadMessagesContextSubType>,
+		handler: AllowArray<Middleware<ReadMessagesContext & T>>
+	): this;
+
+	public on<T = {}>(
+		events: AllowArray<RemovedMessagesContextType | RemovedMessagesContextSubType>,
+		handler: AllowArray<Middleware<RemovedMessagesContext & T>>
+	): this;
 
 	public on<T = {}>(
 		events: AllowArray<TypingContextType | TypingContextSubType>,
 		handler: AllowArray<Middleware<TypingContext & T>>
+	): this;
+
+	public on<T = {}>(
+		events: AllowArray<UserOnlineContextType | UserOnlineContextSubType>,
+		handler: AllowArray<Middleware<UserOnlineContext & T>>
+	): this;
+
+	public on<T = {}>(
+		events: AllowArray<VKAppPayloadContextType | VKAppPayloadContextSubType>,
+		handler: AllowArray<Middleware<VKAppPayloadContext & T>>
+	): this;
+
+	public on<T = {}>(
+		events: AllowArray<VKPayTransactionContextType | VKPayTransactionContextSubType>,
+		handler: AllowArray<Middleware<VKPayTransactionContext & T>>
+	): this;
+
+	public on<T = {}>(
+		events: AllowArray<VoteContextType | VoteContextSubType>,
+		handler: AllowArray<Middleware<VoteContext & T>>
+	): this;
+
+	public on<T = {}>(
+		events: AllowArray<WallPostContextType | WallPostContextSubType>,
+		handler: AllowArray<Middleware<WallPostContext & T>>
 	): this;
 
 	public on<T = {}>(
