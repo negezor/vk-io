@@ -7,8 +7,8 @@ const {
 } = SharedErrorCode;
 
 export interface ICallbackServiceValidate {
-	resolve: () => Promise<void>;
-	reject: (error: Error) => Promise<void>;
+	resolve: () => void;
+	reject: (error: Error) => void;
 }
 
 export class CallbackService {
@@ -65,7 +65,6 @@ export class CallbackService {
 						return;
 					}
 
-					// @ts-ignore
 					resolveProcessing({
 						key,
 						validate: {
@@ -104,7 +103,6 @@ export class CallbackService {
 						return;
 					}
 
-					// @ts-ignore
 					resolveProcessing({
 						code,
 						validate: {
