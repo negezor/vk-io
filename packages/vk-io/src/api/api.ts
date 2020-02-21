@@ -233,8 +233,7 @@ export class API extends APIMethods {
 		const { options } = this.vk;
 		const { method } = request;
 
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		const params: Record<string, any> = {
+		const params: APIRequest['params'] = {
 			access_token: options.token,
 			v: options.apiVersion,
 
