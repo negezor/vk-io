@@ -2,8 +2,7 @@ import { Context } from 'vk-io';
 
 import { ISessionStorage } from './storages';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type Middleware<T> = (context: T, next: Function) => any;
+export type Middleware<T> = (context: T, next: Function) => unknown;
 
 export type SessionForceUpdate = () => Promise<boolean>;
 
