@@ -39,11 +39,8 @@ export class SessionManager<T = {}> {
 
 			let changed = false;
 			const wrapSession = (targetRaw: object): ISessionContext => (
-				new Proxy<
-				// eslint-disable-next-line @typescript-eslint/no-explicit-any
-				Record<string, any> & { $forceUpdate: SessionForceUpdate }
 				// eslint-disable-next-line @typescript-eslint/no-use-before-define
-				>({ ...targetRaw, $forceUpdate }, {
+				new Proxy<ISessionContext>({ ...targetRaw, $forceUpdate }, {
 					set: (target, prop: string, value): boolean => {
 						changed = true;
 
