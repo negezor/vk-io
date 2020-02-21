@@ -200,8 +200,7 @@ class StreamingContext<S = Record<string, any>>
 	/**
 	 * Returns the information of author
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	public get author(): Record<string, any> {
+	public get author(): IStreamingContextPayload['author'] {
 		return this.payload.author;
 	}
 
