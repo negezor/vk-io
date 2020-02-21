@@ -1,6 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type CopiedError = Record<string, any>;
-
 export interface IVKErrorOptions {
 	code: string | number;
 	message: string;
@@ -42,12 +39,11 @@ export class VKError extends Error {
 	/**
 	 * Returns property for json
 	 */
-	public toJSON(): CopiedError {
-		const json: CopiedError = {};
+	public toJSON(): Pick<this, keyof this> {
+		const json = {} as Pick<this, keyof this>;
 
 		for (const key of Object.getOwnPropertyNames(this)) {
-			// @ts-ignore
-			json[key] = this[key];
+			json[key as keyof this] = this[key as keyof this];
 		}
 
 		return json;
