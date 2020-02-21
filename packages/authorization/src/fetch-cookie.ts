@@ -1,23 +1,40 @@
-import fetch from 'node-fetch';
+import fetch, {
+	RequestInfo,
+	RequestInit,
+	Response
+} from 'node-fetch';
 import createDebug from 'debug';
 import { CookieJar } from 'tough-cookie';
 
-import { URL } from 'url';
 import { promisify } from 'util';
+
+export type Headers = Record<string, string>;
+
+export type FetchWrapper = (
+	url: RequestInfo,
+	options?: RequestInit
+) => Promise<Response>;
+
+export {
+	CookieJar,
+	RequestInfo,
+	RequestInit,
+	Response
+};
 
 const debug = createDebug('vk-io:util:fetch-cookie');
 
-const REDIRECT_CODES = [303, 301, 302];
+const userAgentRe = /^User-Agent$/i;
 
-const USER_AGENT_RE = /^User-Agent$/i;
+const redirectCodes = new Set([303, 301, 302]);
 
-const findUserAgent = (headers?: Record<string, string>): string | undefined => {
+const findUserAgent = (headers?: Headers): string | undefined => {
 	if (!headers) {
 		return undefined;
 	}
 
 	const key = Object.keys(headers)
-		.find((header): boolean => USER_AGENT_RE.test(header));
+		.find((header): boolean => userAgentRe.test(header));
 
 	if (!key) {
 		return undefined;
@@ -26,21 +43,19 @@ const findUserAgent = (headers?: Record<string, string>): string | undefined => 
 	return headers[key];
 };
 
-export { CookieJar };
-
-export const fetchCookieDecorator = (jar = new CookieJar()): Function => {
+export const fetchCookieDecorator = (jar = new CookieJar()): FetchWrapper => {
 	const setCookie = promisify(jar.setCookie).bind(jar);
 	const getCookieString = promisify(jar.getCookieString).bind(jar);
 
-	// @ts-ignore
 	return async function fetchCookie(
-		url: URL | string,
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		options: Record<string, any> = {}
-	): Promise<object> {
+		url: RequestInfo,
+		options: RequestInit = {}
+	): Promise<Response> {
 		const previousCookie = await getCookieString(String(url));
 
-		const { headers = {} } = options;
+		const { headers = {} } = options as {
+			headers: Headers;
+		};
 
 		if (previousCookie) {
 			headers.cookie = previousCookie;
@@ -60,8 +75,7 @@ export const fetchCookieDecorator = (jar = new CookieJar()): Function => {
 			return response;
 		}
 
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		await Promise.all(cookies.map((cookie: string): Promise<any> => (
+		await Promise.all(cookies.map((cookie: string): Promise<unknown> => (
 			setCookie(cookie, response.url)
 		)));
 
@@ -69,38 +83,42 @@ export const fetchCookieDecorator = (jar = new CookieJar()): Function => {
 	};
 };
 
-export const fetchCookieFollowRedirectsDecorator = (jar?: CookieJar): Function => {
+export const fetchCookieFollowRedirectsDecorator = (jar?: CookieJar): FetchWrapper => {
 	const fetchCookie = fetchCookieDecorator(jar);
 
 	return async function fetchCookieFollowRedirects(
-		url: URL | string,
-		// @ts-ignore
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		options: Record<string, any> = {}
-	): Promise<object> {
+		url: RequestInfo,
+		options: RequestInit = {}
+	): Promise<Response> {
 		const response = await fetchCookie(url, {
 			...options,
 
 			redirect: 'manual'
 		});
 
-		const isRedirect = REDIRECT_CODES.includes(response.status);
+		const isRedirect = redirectCodes.has(response.status);
 
 		if (isRedirect && options.redirect !== 'manual' && options.follow !== 0) {
-			debug('Redirect to', response.headers.get('location'));
+			const location = response.headers.get('location');
+
+			debug('Redirect to', location);
+
+			if (!location) {
+				throw new Error('Location header missing');
+			}
 
 			let follow;
 			if (options.follow) {
 				follow = options.follow - 1;
 			}
 
-			const userAgent = findUserAgent(options.headers);
+			const userAgent = findUserAgent(options.headers as Headers);
 
-			const headers = userAgent
+			const headers: Headers = userAgent !== undefined
 				? { 'User-Agent': userAgent }
 				: {};
 
-			const redirectResponse = await fetchCookieFollowRedirects(response.headers.get('location'), {
+			const redirectResponse = await fetchCookieFollowRedirects(location, {
 				method: 'GET',
 				body: undefined,
 				agent: options.agent,
