@@ -185,19 +185,18 @@ export class DirectAuthorization {
 			apiVersion
 		} = this.options;
 
-		// @ts-ignore
 		const params = new URLSearchParams({
 			...query,
-			username: login || phone,
+			username: String(login || phone),
 			grant_type: 'password',
 			client_secret: appSecret,
-			'2fa_supported': this.vk.callbackService.hasTwoFactorHandler
+			'2fa_supported': String(this.vk.callbackService.hasTwoFactorHandler
 				? 1
-				: 0,
+				: 0),
 			v: apiVersion,
-			client_id: appId,
+			client_id: String(appId),
 			password,
-			scope
+			scope: String(scope)
 		});
 
 		const url = new URL(`https://oauth.vk.com/token?${params}`);

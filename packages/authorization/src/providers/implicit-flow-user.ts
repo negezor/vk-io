@@ -29,14 +29,13 @@ export class ImplicitFlowUser extends ImplicitFlow {
 
 		debug('auth scope %s', scope);
 
-		// @ts-ignore
 		const params = new URLSearchParams({
 			redirect_uri: CALLBACK_BLANK,
 			response_type: 'token',
 			display: 'page',
 			v: this.options.apiVersion,
-			client_id: appId,
-			scope
+			client_id: String(appId),
+			scope: String(scope)
 		});
 
 		const url = new URL(`https://oauth.vk.com/authorize?${params}`);
