@@ -220,9 +220,6 @@ type HearObjectCondition<T extends Record<string, any>> = {
 	[P in keyof T]: AllowArray<HearCondition<T[P], T>>;
 };
 
-/**
- * TODO: Divide into contexts and render possible types.
- */
 export type ContextTypes =
 CommentActionContextType
 | DialogFlagsContextType
