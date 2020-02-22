@@ -5,4 +5,4 @@ node_js:
 
 install:
   - yarn install --ignore-scripts
-  - yarn run prepare
+  - yarn run build
