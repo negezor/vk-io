@@ -2,7 +2,7 @@ import { VK } from '../../vk';
 
 import { ExternalAttachment } from './external';
 
-import { AttachmentType, inspectCustomData } from '../../utils/constants';
+import { AttachmentType, kSerializeData } from '../../utils/constants';
 
 const { GIFT } = AttachmentType;
 
@@ -31,7 +31,7 @@ export class GiftAttachment extends ExternalAttachment<IGiftAttachmentPayload> {
 	/**
 	 * Returns the custom data
 	 */
-	public [inspectCustomData](): object {
+	public [kSerializeData](): object {
 		return {
 			id: this.id
 		};

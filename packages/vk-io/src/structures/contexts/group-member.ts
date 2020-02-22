@@ -1,7 +1,7 @@
 import { Context, ContextFactoryOptions, ContextDefaultState } from './context';
 
 import { pickProperties } from '../../utils/helpers';
-import { inspectCustomData } from '../../utils/constants';
+import { kSerializeData } from '../../utils/constants';
 
 export type GroupMemberContextType = 'group_member';
 
@@ -87,7 +87,7 @@ export class GroupMemberContext<S = ContextDefaultState>
 	/**
 	 * Returns the custom data
 	 */
-	public [inspectCustomData](): object {
+	public [kSerializeData](): object {
 		return pickProperties(this, [
 			'userId',
 			'joinType',

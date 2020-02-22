@@ -4,7 +4,7 @@ import { ExternalAttachment } from './external';
 
 import { pickProperties } from '../../utils/helpers';
 import { PhotoAttachment, IPhotoAttachmentPayload } from './photo';
-import { AttachmentType, inspectCustomData } from '../../utils/constants';
+import { AttachmentType, kSerializeData } from '../../utils/constants';
 
 const { LINK } = AttachmentType;
 
@@ -112,7 +112,7 @@ export class LinkAttachment extends ExternalAttachment<ILinkAttachmentPayload> {
 	/**
 	 * Returns the custom data
 	 */
-	public [inspectCustomData](): object {
+	public [kSerializeData](): object {
 		return pickProperties(this, [
 			'title',
 			'caption',

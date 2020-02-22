@@ -1,7 +1,7 @@
 import { Context, ContextFactoryOptions, ContextDefaultState } from './context';
 
 import { pickProperties } from '../../utils/helpers';
-import { platforms, inspectCustomData } from '../../utils/constants';
+import { platforms, kSerializeData } from '../../utils/constants';
 
 export type UserOnlineContextType = 'user_active';
 
@@ -101,7 +101,7 @@ export class UserOnlineContext<S = ContextDefaultState>
 	/**
 	 * Returns the custom data
 	 */
-	public [inspectCustomData](): object {
+	public [kSerializeData](): object {
 		return pickProperties(this, [
 			'userId',
 			'createdAt',

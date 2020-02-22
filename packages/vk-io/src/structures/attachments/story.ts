@@ -3,7 +3,7 @@ import { VK } from '../../vk';
 import { Attachment } from './attachment';
 
 import { pickProperties, useLazyLoad } from '../../utils/helpers';
-import { AttachmentType, inspectCustomData } from '../../utils/constants';
+import { AttachmentType, kSerializeData } from '../../utils/constants';
 import { PhotoAttachment, IPhotoAttachmentPayload } from './photo';
 import { VideoAttachment, IVideoAttachmentPayload } from './video';
 
@@ -284,7 +284,7 @@ export class StoryAttachment extends Attachment<IStoryAttachmentPayload> {
 	/**
 	 * Returns the custom data
 	 */
-	public [inspectCustomData](): object {
+	public [kSerializeData](): object {
 		if (this.isDeleted) {
 			return pickProperties(this, [
 				'isDeleted'

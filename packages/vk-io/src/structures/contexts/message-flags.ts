@@ -1,7 +1,7 @@
 import { Context, ContextFactoryOptions, ContextDefaultState } from './context';
 
 import { pickProperties } from '../../utils/helpers';
-import { inspectCustomData } from '../../utils/constants';
+import { kSerializeData } from '../../utils/constants';
 
 export type MessageFlagsContextType = 'message_flags';
 
@@ -171,7 +171,7 @@ export class MessageFlagsContext<S = ContextDefaultState>
 	/**
 	 * Returns the custom data
 	 */
-	public [inspectCustomData](): object {
+	public [kSerializeData](): object {
 		return pickProperties(this, [
 			'id',
 			'peerId',

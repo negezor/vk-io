@@ -3,7 +3,7 @@ import { VK } from '../../vk';
 import { ExternalAttachment } from './external';
 
 import { pickProperties } from '../../utils/helpers';
-import { AttachmentType, inspectCustomData } from '../../utils/constants';
+import { AttachmentType, kSerializeData } from '../../utils/constants';
 
 const { STICKER } = AttachmentType;
 
@@ -62,7 +62,7 @@ export class StickerAttachment extends ExternalAttachment<IStickerAttachmentPayl
 	/**
 	 * Returns the custom data
 	 */
-	public [inspectCustomData](): object {
+	public [kSerializeData](): object {
 		return pickProperties(this, [
 			'id',
 			'productId',

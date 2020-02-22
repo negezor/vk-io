@@ -3,7 +3,7 @@ import { VK } from '../../vk';
 import { Attachment } from './attachment';
 
 import { pickProperties } from '../../utils/helpers';
-import { AttachmentType, inspectCustomData } from '../../utils/constants';
+import { AttachmentType, kSerializeData } from '../../utils/constants';
 
 const { DOCUMENT } = AttachmentType;
 
@@ -241,7 +241,7 @@ export class DocumentAttachment extends Attachment<IDocumentAttachmentPayload> {
 	/**
 	 * Returns the custom data
 	 */
-	public [inspectCustomData](): object {
+	public [kSerializeData](): object {
 		return pickProperties(this, [
 			'title',
 			'typeId',

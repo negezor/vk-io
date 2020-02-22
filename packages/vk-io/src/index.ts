@@ -20,8 +20,7 @@ export {
 	AttachmentTypeString,
 
 	platforms,
-	kSerializeData,
-	inspectCustomData
+	kSerializeData
 } from './utils/constants';
 
 export { Composer } from './structures/shared/composer';

@@ -3,7 +3,7 @@ import { Context, ContextFactoryOptions, ContextDefaultState } from './context';
 import { Attachmentable } from '../shared/attachmentable';
 import { Attachment, PhotoAttachment, IPhotoAttachmentPayload } from '../attachments';
 
-import { inspectCustomData } from '../../utils/constants';
+import { kSerializeData } from '../../utils/constants';
 import { pickProperties, applyMixins } from '../../utils/helpers';
 
 export type GroupUpdateContextType = 'group_update';
@@ -113,7 +113,7 @@ class GroupUpdateContext<S = ContextDefaultState>
 	/**
 	 * Returns the custom data
 	 */
-	public [inspectCustomData](): object {
+	public [kSerializeData](): object {
 		return pickProperties(this, [
 			'adminId',
 			'userId',

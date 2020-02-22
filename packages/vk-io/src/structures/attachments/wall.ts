@@ -6,7 +6,7 @@ import { Attachmentable } from '../shared/attachmentable';
 
 // eslint-disable-next-line import/no-cycle
 import { transformAttachments } from './helpers';
-import { AttachmentType, inspectCustomData } from '../../utils/constants';
+import { AttachmentType, kSerializeData } from '../../utils/constants';
 import { pickProperties, applyMixins, useLazyLoad } from '../../utils/helpers';
 
 const { WALL } = AttachmentType;
@@ -435,7 +435,7 @@ class WallAttachment extends Attachment<IWallAttachmentPayload> {
 	/**
 	 * Returns the custom data
 	 */
-	public [inspectCustomData](): object {
+	public [kSerializeData](): object {
 		return pickProperties(this, [
 			'authorId',
 			'createdUserId',

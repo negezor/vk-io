@@ -25,7 +25,7 @@ import {
 	MessageSource,
 	CHAT_PEER,
 	AttachmentType,
-	inspectCustomData,
+	kSerializeData,
 	AttachmentTypeString
 } from '../../utils/constants';
 import { AllowArray } from '../../types';
@@ -864,7 +864,7 @@ class MessageContext<S = ContextDefaultState>
 	/**
 	 * Returns the custom data
 	 */
-	public [inspectCustomData](): object {
+	public [kSerializeData](): object {
 		const beforeAttachments: string[] = [];
 
 		if (this.isEvent) {

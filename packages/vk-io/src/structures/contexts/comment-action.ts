@@ -5,7 +5,7 @@ import { VKError } from '../../errors';
 import { Attachment } from '../attachments';
 import { Attachmentable } from '../shared/attachmentable';
 
-import { inspectCustomData } from '../../utils/constants';
+import { kSerializeData } from '../../utils/constants';
 import { transformAttachments } from '../attachments/helpers';
 import { pickProperties, applyMixins } from '../../utils/helpers';
 
@@ -380,7 +380,7 @@ class CommentActionContext<S = ContextDefaultState>
 	/**
 	 * Returns the custom data
 	 */
-	public [inspectCustomData](): object {
+	public [kSerializeData](): object {
 		const properties = [
 			'id',
 			'replyId',

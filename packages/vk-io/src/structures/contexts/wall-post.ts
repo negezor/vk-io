@@ -3,7 +3,7 @@ import { Context, ContextFactoryOptions, ContextDefaultState } from './context';
 import { WallAttachment, IWallAttachmentPayload } from '../attachments';
 
 import { pickProperties } from '../../utils/helpers';
-import { inspectCustomData } from '../../utils/constants';
+import { kSerializeData } from '../../utils/constants';
 
 export type WallPostContextType = 'wall_post';
 
@@ -68,7 +68,7 @@ export class WallPostContext<S = ContextDefaultState>
 	/**
 	 * Returns the custom data
 	 */
-	public [inspectCustomData](): object {
+	public [kSerializeData](): object {
 		return pickProperties(this, [
 			'wall',
 			'isRepost'

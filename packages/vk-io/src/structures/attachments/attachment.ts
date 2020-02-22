@@ -1,7 +1,7 @@
 import { inspect } from 'util';
 
 import { VK } from '../../vk';
-import { parseAttachment, inspectCustomData, AttachmentType } from '../../utils/constants';
+import { parseAttachment, kSerializeData, AttachmentType } from '../../utils/constants';
 
 export class Attachment<P = {}> {
 	public type: AttachmentType | string;
@@ -107,14 +107,14 @@ export class Attachment<P = {}> {
 			ownerId: this.ownerId,
 			accessKey: this.accessKey,
 
-			...this[inspectCustomData]()
+			...this[kSerializeData]()
 		};
 	}
 
 	/**
 	 * Returns the custom data
 	 */
-	public [inspectCustomData](): object {
+	public [kSerializeData](): object {
 		return {
 			payload: this.payload
 		};

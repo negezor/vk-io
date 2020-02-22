@@ -5,7 +5,7 @@ import {
 	CHAT_PEER,
 
 	UpdateSource,
-	inspectCustomData
+	kSerializeData
 } from '../../utils/constants';
 
 const transformPolling = (
@@ -121,7 +121,7 @@ export class TypingContext<S = ContextDefaultState>
 	/**
 	 * Returns the custom data
 	 */
-	public [inspectCustomData](): object {
+	public [kSerializeData](): object {
 		return pickProperties(this, [
 			'fromId',
 			'toId',

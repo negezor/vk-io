@@ -1,7 +1,7 @@
 import { inspect } from 'util';
 
 import { VK } from '../../vk';
-import { inspectCustomData, UpdateSource } from '../../utils/constants';
+import { kSerializeData, UpdateSource } from '../../utils/constants';
 
 import { AllowArray } from '../../types';
 
@@ -92,7 +92,7 @@ export class Context<
 	 */
 	public toJSON(): object {
 		return {
-			...this[inspectCustomData](),
+			...this[kSerializeData](),
 
 			type: this.type,
 			subTypes: this.subTypes,
@@ -103,7 +103,7 @@ export class Context<
 	/**
 	 * Returns the custom data
 	 */
-	public [inspectCustomData](): object {
+	public [kSerializeData](): object {
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
 		const { vk, ...payload } = this;
 

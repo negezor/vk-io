@@ -3,7 +3,7 @@ import { VK } from '../../vk';
 import { Attachment } from './attachment';
 
 import { pickProperties } from '../../utils/helpers';
-import { AttachmentType, inspectCustomData } from '../../utils/constants';
+import { AttachmentType, kSerializeData } from '../../utils/constants';
 
 const { GRAFFITI } = AttachmentType;
 
@@ -77,7 +77,7 @@ export class GraffitiAttachment extends Attachment<IGraffitiAttachmentPayload> {
 	/**
 	 * Returns the custom data
 	 */
-	public [inspectCustomData](): object {
+	public [kSerializeData](): object {
 		return pickProperties(this, [
 			'height',
 			'width',

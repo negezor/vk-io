@@ -3,7 +3,7 @@ import { Context, ContextFactoryOptions, ContextDefaultState } from './context';
 import { VKError } from '../../errors';
 
 import { pickProperties } from '../../utils/helpers';
-import { inspectCustomData } from '../../utils/constants';
+import { kSerializeData } from '../../utils/constants';
 
 /**
  * Causes of blocking
@@ -163,7 +163,7 @@ export class GroupUserContext<S = ContextDefaultState>
 	/**
 	 * Returns the custom data
 	 */
-	public [inspectCustomData](): object {
+	public [kSerializeData](): object {
 		return pickProperties(this, [
 			'adminId',
 			'userId',

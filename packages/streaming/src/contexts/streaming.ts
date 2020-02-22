@@ -6,7 +6,7 @@ import {
 	Attachmentable,
 
 	transformAttachments,
-	inspectCustomData,
+	kSerializeData,
 	platforms,
 
 	applyMixins,
@@ -242,7 +242,7 @@ class StreamingContext<S = ContextDefaultState>
 	/**
 	 * Returns the custom data
 	 */
-	public [inspectCustomData](): object {
+	public [kSerializeData](): object {
 		const properties = [
 			'url',
 			'created',

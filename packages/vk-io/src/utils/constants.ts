@@ -284,11 +284,6 @@ export const parseResource = /(id|club|public|albums|tag|app(?:lication))([-\d]+
 export const parseOwnerResource = /(album|topic|wall|page|videos)([-\d]+)_(\d+)/;
 
 /**
- * Inspect custom data
- */
-export const inspectCustomData = Symbol('inspectCustomData');
-
-/**
  * Symbol of data definition for serialization
  */
 export const kSerializeData = Symbol('serializeData');

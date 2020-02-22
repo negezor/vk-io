@@ -1,7 +1,7 @@
 import { inspect } from 'util';
 
 import { VK } from '../../vk';
-import { inspectCustomData } from '../../utils/constants';
+import { kSerializeData } from '../../utils/constants';
 
 export class ExternalAttachment<P = {}> {
 	public type: string;
@@ -48,13 +48,13 @@ export class ExternalAttachment<P = {}> {
 	 * Returns data for JSON
 	 */
 	public toJSON(): object {
-		return this[inspectCustomData]();
+		return this[kSerializeData]();
 	}
 
 	/**
 	 * Returns the custom data
 	 */
-	public [inspectCustomData](): object {
+	public [kSerializeData](): object {
 		return {
 			payload: this.payload
 		};

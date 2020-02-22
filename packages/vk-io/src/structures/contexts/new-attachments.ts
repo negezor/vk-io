@@ -12,7 +12,7 @@ import {
 import { Attachmentable } from '../shared/attachmentable';
 
 import { pickProperties, applyMixins } from '../../utils/helpers';
-import { inspectCustomData, AttachmentType } from '../../utils/constants';
+import { kSerializeData, AttachmentType } from '../../utils/constants';
 
 export type NewAttachmentsContextType = 'new_attachment';
 
@@ -121,7 +121,7 @@ class NewAttachmentsContext<S = ContextDefaultState>
 	/**
 	 * Returns the custom data
 	 */
-	public [inspectCustomData](): object {
+	public [kSerializeData](): object {
 		return pickProperties(this, [
 			'attachments',
 			'isPhoto',
