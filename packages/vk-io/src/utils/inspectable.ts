@@ -12,7 +12,7 @@ export interface IInspectableContext<P> {
 	inspect: (payload: P, options?: { compact?: boolean }) => string;
 }
 
-type Inspectableserialize<T, P> = (instance: T) => P;
+type InspectableSerialize<T, P> = (instance: T) => P;
 type InspectableStringify<T, P> = (
 	instance: T,
 	payload: P,
@@ -20,7 +20,7 @@ type InspectableStringify<T, P> = (
 ) => string;
 
 export interface IInspectableOptions<T, P> {
-	serialize?: Inspectableserialize<T, P>;
+	serialize?: InspectableSerialize<T, P>;
 	stringify?: InspectableStringify<T, P>;
 }
 
