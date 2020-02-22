@@ -1,6 +1,6 @@
 import {
 	Context,
-	IContextOptions,
+	ContextFactoryOptions,
 
 	Attachment,
 	Attachmentable,
@@ -9,7 +9,8 @@ import {
 	inspectCustomData,
 	platforms,
 
-	applyMixins
+	applyMixins,
+	ContextDefaultState
 } from 'vk-io';
 
 import { copyParams } from '../helpers';
@@ -47,10 +48,9 @@ export interface IStreamingContextPayload {
 }
 
 export type StreamingContextOptions<S> =
-	Omit<IContextOptions<IStreamingContextPayload, S>, 'type' | 'subTypes'>;
+	ContextFactoryOptions<IStreamingContextPayload, S>;
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-class StreamingContext<S = Record<string, any>>
+class StreamingContext<S = ContextDefaultState>
 	extends Context<IStreamingContextPayload, S> {
 	public attachments: Attachment[];
 
