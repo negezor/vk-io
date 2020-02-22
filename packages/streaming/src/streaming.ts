@@ -154,8 +154,7 @@ export class StreamingAPI {
 	/**
 	 * Executes the HTTP request for rules
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	private async fetchRules(method: string, payload: object = {}): Promise<Record<string, any>> {
+	private async fetchRules<T = never>(method: string, payload: object = {}): Promise<T> {
 		const { agent } = this.vk.options;
 
 		const url = new URL('/rules', this.endpoint!);
@@ -188,7 +187,7 @@ export class StreamingAPI {
 	 * Returns a list of rules
 	 */
 	public async getRules(): Promise<IStreamingRule[]> {
-		const { rules = [] } = await this.fetchRules('GET');
+		const { rules = [] } = await this.fetchRules<{ rules?: IStreamingRule[] }>('GET');
 
 		return rules;
 	}
