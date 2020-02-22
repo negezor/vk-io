@@ -170,12 +170,11 @@ export class PhotoAttachment extends Attachment<IPhotoAttachmentPayload> {
 			return [];
 		}
 
-		// @ts-ignore
 		return sizeTypes
 			.map((sizeType): IPhotoSize | undefined => (
 				sizes.find((size): boolean => size.type === sizeType)
 			))
-			.filter(Boolean);
+			.filter(Boolean) as IPhotoSize[];
 	}
 
 	/**
