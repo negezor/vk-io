@@ -348,7 +348,7 @@ export class CollectStream<T> extends Readable {
 
 inspectable(CollectStream, {
 	// @ts-ignore
-	serealize: ({ total, offset, received }) => ({
+	serialize: ({ total, offset, received }) => ({
 		total,
 		offset,
 		received

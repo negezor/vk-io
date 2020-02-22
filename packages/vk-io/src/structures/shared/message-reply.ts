@@ -134,7 +134,7 @@ interface MessageReply extends Attachmentable {}
 applyMixins(MessageReply, [Attachmentable]);
 
 inspectable(MessageReply, {
-	serealize: instance => instance.toJSON()
+	serialize: instance => instance.toJSON()
 });
 
 export { MessageReply };

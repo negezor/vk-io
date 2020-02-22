@@ -61,5 +61,5 @@ export class ExternalAttachment<P = {}> {
 }
 
 inspectable(ExternalAttachment, {
-	serealize: instance => instance.toJSON()
+	serialize: instance => instance.toJSON()
 });

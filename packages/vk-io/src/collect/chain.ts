@@ -114,7 +114,7 @@ export class Chain {
 
 inspectable(Chain, {
 	// @ts-ignore
-	serealize: ({ started, queue }) => ({
+	serialize: ({ started, queue }) => ({
 		started,
 		queue
 	})

@@ -143,5 +143,5 @@ export class Authorization {
 }
 
 inspectable(Authorization, {
-	serealize: () => ({})
+	serialize: () => ({})
 });

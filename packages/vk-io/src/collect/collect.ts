@@ -153,5 +153,5 @@ export class Collect {
 }
 
 inspectable(Collect, {
-	serealize: () => ({})
+	serialize: () => ({})
 });

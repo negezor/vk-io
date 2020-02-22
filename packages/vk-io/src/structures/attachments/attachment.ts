@@ -121,7 +121,7 @@ export class Attachment<P = {}> {
 }
 
 inspectable(Attachment, {
-	serealize: (instance) => instance.toJSON(),
+	serialize: (instance) => instance.toJSON(),
 	stringify: (instance, payload, context): string => (
 		`${context.stylize(instance.constructor.name, 'special')} <${context.stylize(String(instance), 'string')}> ${context.inspect(payload)}`
 	)

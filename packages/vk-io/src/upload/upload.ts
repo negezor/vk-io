@@ -1123,5 +1123,5 @@ export class Upload {
 }
 
 inspectable(Upload, {
-	serealize: () => ({})
+	serialize: () => ({})
 });

@@ -228,7 +228,7 @@ export class StreamingAPI {
 
 inspectable(StreamingAPI, {
 	// @ts-ignore
-	serealize: ({ started }) => ({
+	serialize: ({ started }) => ({
 		started
 	})
 });

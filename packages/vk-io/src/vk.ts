@@ -99,7 +99,7 @@ export class VK {
 }
 
 inspectable(VK, {
-	serealize: ({
+	serialize: ({
 		api,
 		updates,
 		options: { appId, token }

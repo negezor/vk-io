@@ -111,5 +111,5 @@ export class Context<
 }
 
 inspectable(Context, {
-	serealize: instance => instance.toJSON()
+	serialize: instance => instance.toJSON()
 });

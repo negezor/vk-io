@@ -12,7 +12,7 @@ export interface IInspectableContext<P> {
 	inspect: (payload: P, options?: { compact?: boolean }) => string;
 }
 
-type InspectableSerealize<T, P> = (instance: T) => P;
+type Inspectableserialize<T, P> = (instance: T) => P;
 type InspectableStringify<T, P> = (
 	instance: T,
 	payload: P,
@@ -20,7 +20,7 @@ type InspectableStringify<T, P> = (
 ) => string;
 
 export interface IInspectableOptions<T, P> {
-	serealize?: InspectableSerealize<T, P>;
+	serialize?: Inspectableserialize<T, P>;
 	stringify?: InspectableStringify<T, P>;
 }
 
@@ -28,7 +28,7 @@ export const inspectable = <T, P = object>(
 	klass: Constructor<T>,
 	{
 		// @ts-ignore
-		serealize = (instance): P => instance[kSerializeData](),
+		serialize = (instance): P => instance[kSerializeData](),
 		stringify = (instance, payload, context): string => (
 			`${context.stylize(klass.name, 'special')} ${context.inspect(payload)}`
 		)
@@ -47,7 +47,7 @@ export const inspectable = <T, P = object>(
 				)
 			};
 
-			const payload = serealize(this);
+			const payload = serialize(this);
 
 			return stringify(this, payload, context);
 		}

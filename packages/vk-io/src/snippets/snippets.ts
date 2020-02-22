@@ -32,5 +32,5 @@ export class Snippets {
 }
 
 inspectable(Snippets, {
-	serealize: () => ({})
+	serialize: () => ({})
 });

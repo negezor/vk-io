@@ -419,7 +419,7 @@ export class API extends APIMethods {
 
 inspectable(API, {
 	// @ts-ignore
-	serealize: ({ started, queue }) => ({
+	serialize: ({ started, queue }) => ({
 		started,
 		queue
 	})

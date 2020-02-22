@@ -63,7 +63,7 @@ export class APIRequest {
 }
 
 inspectable(APIRequest, {
-	serealize: ({ method, params }) => ({
+	serialize: ({ method, params }) => ({
 		method,
 		params
 	})

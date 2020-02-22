@@ -133,7 +133,7 @@ interface MessageForward extends Attachmentable {}
 applyMixins(MessageForward, [Attachmentable]);
 
 inspectable(MessageForward, {
-	serealize: instance => instance.toJSON()
+	serialize: instance => instance.toJSON()
 });
 
 export { MessageForward };

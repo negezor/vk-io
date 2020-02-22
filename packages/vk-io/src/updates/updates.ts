@@ -704,7 +704,7 @@ export class Updates {
 
 inspectable(Updates, {
 	// @ts-ignore
-	serealize: ({ isStarted, composer }) => ({
+	serialize: ({ isStarted, composer }) => ({
 		isStarted,
 		composer
 	})
