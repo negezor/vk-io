@@ -115,7 +115,7 @@ export class PhotoAttachment extends Attachment<IPhotoAttachmentPayload> {
 	 * Returns the URL of a small photo
 	 * (130 or 75)
 	 */
-	public get smallPhoto(): string | undefined {
+	public get smallSizeUrl(): string | undefined {
 		if (!this.$filled) {
 			return undefined;
 		}
@@ -129,7 +129,7 @@ export class PhotoAttachment extends Attachment<IPhotoAttachmentPayload> {
 	 * Returns the URL of a medium photo
 	 * (807 or 604 or less)
 	 */
-	public get mediumPhoto(): string | undefined {
+	public get mediumSizeUrl(): string | undefined {
 		if (!this.$filled) {
 			return undefined;
 		}
@@ -143,7 +143,7 @@ export class PhotoAttachment extends Attachment<IPhotoAttachmentPayload> {
 	 * Returns the URL of a large photo
 	 * (2560 or 1280 or less)
 	 */
-	public get largePhoto(): string | undefined {
+	public get largeSizeUrl(): string | undefined {
 		if (!this.$filled) {
 			return undefined;
 		}
@@ -189,9 +189,9 @@ export class PhotoAttachment extends Attachment<IPhotoAttachmentPayload> {
 			'createdAt',
 			'height',
 			'width',
-			'smallPhoto',
-			'mediumPhoto',
-			'largePhoto',
+			'smallSizeUrl',
+			'mediumSizeUrl',
+			'largeSizeUrl',
 			'sizes'
 		]);
 	}
