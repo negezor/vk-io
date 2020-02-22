@@ -8,7 +8,7 @@ type NodeInspectContext = typeof inspect.defaultOptions & {
 };
 
 export interface IInspectableContext<P> {
-	stylize: (text: string, color: 'special') => string;
+	stylize: (text: string, color: 'special' | 'string') => string;
 	inspect: (payload: P, options?: { compact?: boolean }) => string;
 }
 
