@@ -75,15 +75,15 @@ import {
 } from './helpers';
 import { APIErrorCode } from '../errors';
 
-import { AllowArray } from '../types';
 import { UpdateSource } from '../utils/constants';
+import { AllowArray, Constructor } from '../types';
 import { inspectable } from '../utils/inspectable';
 import { Composer } from '../structures/shared/composer';
 
 const debug = createDebug('vk-io:updates');
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const webhookContextsEvents: [string[], any][] = [
+const webhookContextsEvents: [string[], Constructor<any>][] = [
 	[
 		['message_new', 'message_edit', 'message_reply'],
 		MessageContext
@@ -156,7 +156,7 @@ const webhookContextsEvents: [string[], any][] = [
 ];
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const pollingContextsEvents: [number[], any][] = [
+const pollingContextsEvents: [number[], Constructor<any>][] = [
 	[
 		[1, 2, 3],
 		MessageFlagsContext
@@ -187,9 +187,10 @@ const pollingContextsEvents: [number[], any][] = [
 	]
 ];
 
-
-const makeContexts = (groups: [(number | string)[], Context][]): Record<string, Context> => {
-	const contexts: Record<string | number, Context> = {};
+const makeContexts = (
+	groups: [(number | string)[], Constructor<Context>][]
+): Record<string, Constructor<Context>> => {
+	const contexts: Record<string | number, Constructor<Context>> = {};
 
 	for (const [events, UpdateContext] of groups) {
 		for (const event of events) {
@@ -200,9 +201,7 @@ const makeContexts = (groups: [(number | string)[], Context][]): Record<string, 
 	return contexts;
 };
 
-// @ts-ignore
 const webhookContexts = makeContexts(webhookContextsEvents);
-// @ts-ignore
 const pollingContexts = makeContexts(pollingContextsEvents);
 
 export interface IUpdatesStartWebhookOptions {
@@ -549,7 +548,7 @@ export class Updates {
 	 * Handles longpoll event
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	public handlePollingUpdate(update: any[]): Promise<void> {
+	public async handlePollingUpdate(update: any[]): Promise<void> {
 		debug('longpoll update', update);
 
 		const { 0: type } = update;
@@ -559,11 +558,10 @@ export class Updates {
 		if (!UpdateContext) {
 			debug(`Unsupported polling context type ${type}`);
 
-			return Promise.resolve();
+			return;
 		}
 
-		// @ts-ignore
-		return this.dispatchMiddleware(new UpdateContext({
+		await this.dispatchMiddleware(new UpdateContext({
 			vk: this.vk,
 			payload: update,
 			updateType: type,
@@ -575,7 +573,7 @@ export class Updates {
 	 * Handles webhook event
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	public handleWebhookUpdate(update: Record<string, any>): Promise<void> {
+	public async handleWebhookUpdate(update: Record<string, any>): Promise<void> {
 		debug('webhook update', update);
 
 		const { type, object: payload, group_id: groupId } = update;
@@ -585,11 +583,10 @@ export class Updates {
 		if (!UpdateContext) {
 			debug(`Unsupported webhook context type ${type}`);
 
-			return Promise.resolve();
+			return;
 		}
 
-		// @ts-ignore
-		return this.dispatchMiddleware(new UpdateContext({
+		await this.dispatchMiddleware(new UpdateContext({
 			vk: this.vk,
 			payload,
 			groupId,
