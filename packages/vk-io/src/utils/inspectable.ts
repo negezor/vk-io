@@ -27,15 +27,11 @@ export interface IInspectableOptions<T, P> {
 export const inspectable = <T, P = object>(
 	klass: Constructor<T>,
 	{
-		serealize = (instance): P => (
-			// @ts-ignore
-			instance[kSerializeData]()
-		),
-		stringify = (instance, payload, context): string => {
-			const stringified = context.inspect(payload);
-
-			return `${context.stylize(klass.name, 'special')} ${stringified}`;
-		}
+		// @ts-ignore
+		serealize = (instance): P => instance[kSerializeData](),
+		stringify = (instance, payload, context): string => (
+			`${context.stylize(klass.name, 'special')} ${context.inspect(payload)}`
+		)
 	}: IInspectableOptions<T, P> = {}
 ): void => {
 	Object.defineProperty(klass.prototype, inspect.custom, {
