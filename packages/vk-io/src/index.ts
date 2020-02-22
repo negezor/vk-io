@@ -26,6 +26,7 @@ export {
 export { Composer } from './structures/shared/composer';
 export { ICallbackServiceValidate } from './utils/callback-service';
 
+export { inspectable } from './utils/inspectable';
 export { getRandomId, applyMixins } from './utils/helpers';
 export { Attachmentable, IAllAttachmentable } from './structures/shared/attachmentable';
 
