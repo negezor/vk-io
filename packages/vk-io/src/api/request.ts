@@ -1,5 +1,4 @@
-import { inspect } from 'util';
-
+import { inspectable } from '../utils/inspectable';
 import { getExecuteMethod } from '../utils/helpers';
 import { ICallbackServiceValidate } from '../utils/callback-service';
 
@@ -61,16 +60,11 @@ export class APIRequest {
 	public toString(): string {
 		return getExecuteMethod(this.method, this.params);
 	}
-
-	/**
-	 * Custom inspect object
-	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	public [inspect.custom](depth: number, options: Record<string, any>): string {
-		const { method, params, promise } = this;
-
-		const payload = { method, params, promise };
-
-		return `${options.stylize(this.constructor.name, 'special')} ${inspect(payload, options)}`;
-	}
 }
+
+inspectable(APIRequest, {
+	serealize: ({ method, params }) => ({
+		method,
+		params
+	})
+});

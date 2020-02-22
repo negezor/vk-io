@@ -1,9 +1,8 @@
-import { inspect } from 'util';
-
 import { VK } from '../../vk';
 import { Attachmentable } from './attachmentable';
 import { Attachment, ExternalAttachment } from '../attachments';
 
+import { inspectable } from '../../utils/inspectable';
 import { transformAttachments } from '../attachments/helpers';
 import { pickProperties, applyMixins } from '../../utils/helpers';
 
@@ -127,27 +126,14 @@ class MessageForward {
 			'forwards'
 		]);
 	}
-
-	/**
-	 * Custom inspect object
-	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	public [inspect.custom](depth: number, options: Record<string, any>): string {
-		const payload = pickProperties(this, [
-			'senderId',
-			'createdAt',
-			'updatedAt',
-			'text',
-			'attachments',
-			'forwards'
-		]);
-
-		return `${options.stylize(this.constructor.name, 'special')} ${inspect(payload, { ...options, compact: false })}`;
-	}
 }
 
 // eslint-disable-next-line
 interface MessageForward extends Attachmentable {}
 applyMixins(MessageForward, [Attachmentable]);
+
+inspectable(MessageForward, {
+	serealize: instance => instance.toJSON()
+});
 
 export { MessageForward };

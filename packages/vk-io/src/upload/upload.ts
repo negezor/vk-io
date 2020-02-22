@@ -1,7 +1,6 @@
 import fetch from 'node-fetch';
 
 import { URL } from 'url';
-import { inspect } from 'util';
 import { randomBytes } from 'crypto';
 import { createReadStream } from 'fs';
 
@@ -12,6 +11,7 @@ import { DefaultExtension, DefaultContentType } from '../utils/constants';
 import { isStream, pickExistingProperties, streamToBuffer } from './helpers';
 
 import { AllowArray } from '../types';
+import { inspectable } from '../utils/inspectable';
 
 import {
 	PhotoAttachment,
@@ -1120,12 +1120,8 @@ export class Upload {
 			? result.response
 			: result;
 	}
-
-	/**
-	 * Custom inspect object
-	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	public [inspect.custom](depth: number, options: Record<string, any>): string {
-		return `${options.stylize(this.constructor.name, 'special')} {}`;
-	}
 }
+
+inspectable(Upload, {
+	serealize: () => ({})
+});

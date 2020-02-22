@@ -2,9 +2,8 @@ import fetch from 'node-fetch';
 import createDebug from 'debug';
 import * as WebSocket from 'ws';
 
-import { VK, UpdateSource } from 'vk-io';
+import { VK, UpdateSource, inspectable } from 'vk-io';
 
-import { inspect } from 'util';
 import { URL, URLSearchParams } from 'url';
 
 import { StreamingRuleError } from './errors';
@@ -225,18 +224,11 @@ export class StreamingAPI {
 			this.deleteRule(tag)
 		)));
 	}
-
-	/**
-	 * Custom inspect object
-	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	public [inspect.custom](depth: number, options: Record<string, any>): string {
-		const { name } = this.constructor;
-
-		const { started } = this;
-
-		const payload = { started };
-
-		return `${options.stylize(name, 'special')} ${inspect(payload, options)}`;
-	}
 }
+
+inspectable(StreamingAPI, {
+	// @ts-ignore
+	serealize: ({ started }) => ({
+		started
+	})
+});

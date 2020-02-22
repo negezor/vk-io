@@ -1,10 +1,9 @@
-import { inspect } from 'util';
-
 import { VK } from '../../vk';
 
 import { Attachmentable } from './attachmentable';
 import { Attachment, ExternalAttachment } from '../attachments';
 
+import { inspectable } from '../../utils/inspectable';
 import { transformAttachments } from '../attachments/helpers';
 import { pickProperties, applyMixins } from '../../utils/helpers';
 
@@ -128,29 +127,14 @@ class MessageReply {
 			'attachments'
 		]);
 	}
-
-	/**
-	 * Custom inspect object
-	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	public [inspect.custom](depth: number, options: Record<string, any>): string {
-		const payload = pickProperties(this, [
-			'id',
-			'conversationMessageId',
-			'peerId',
-			'senderId',
-			'createdAt',
-			'updatedAt',
-			'text',
-			'attachments'
-		]);
-
-		return `${options.stylize(this.constructor.name, 'special')} ${inspect(payload, { ...options, compact: false })}`;
-	}
 }
 
 // eslint-disable-next-line
 interface MessageReply extends Attachmentable {}
 applyMixins(MessageReply, [Attachmentable]);
+
+inspectable(MessageReply, {
+	serealize: instance => instance.toJSON()
+});
 
 export { MessageReply };

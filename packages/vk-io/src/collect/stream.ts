@@ -1,6 +1,5 @@
 import createDebug from 'debug';
 
-import { inspect } from 'util';
 import { Readable } from 'stream';
 
 import { VK } from '../vk';
@@ -9,6 +8,7 @@ import { CollectError, APIErrorCode, CollectErrorCode } from '../errors';
 
 import { APIRequest } from '../api/request';
 import { getExecuteCode } from './execute-code';
+import { inspectable } from '../utils/inspectable';
 
 const debug = createDebug('vk-io:collect:stream');
 
@@ -326,18 +326,6 @@ export class CollectStream<T> extends Readable {
 		});
 	}
 
-	/**
-	 * Custom inspect object
-	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	public [inspect.custom](depth: number, options: Record<string, any>): string {
-		const { total, offset, received } = this;
-
-		const payload = { total, offset, received };
-
-		return `${options.stylize(this.constructor.name, 'special')} ${inspect(payload, options)}`;
-	}
-
 	public on(event: 'close', listener: () => void): this;
 
 	public on(event: 'data', listener: (chunk: ICollectChunkData<T>) => void): this;
@@ -357,3 +345,12 @@ export class CollectStream<T> extends Readable {
 		return super[Symbol.asyncIterator]();
 	}
 }
+
+inspectable(CollectStream, {
+	// @ts-ignore
+	serealize: ({ total, offset, received }) => ({
+		total,
+		offset,
+		received
+	})
+});

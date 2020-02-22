@@ -1,11 +1,11 @@
 import { Agent } from 'https';
-import { inspect } from 'util';
 
 import { API } from './api';
 import { Upload } from './upload';
 import { Collect } from './collect';
 import { Updates } from './updates';
 import { Snippets } from './snippets';
+import { inspectable } from './utils/inspectable';
 import { CallbackService } from './utils/callback-service';
 
 import { IVKOptions } from './types';
@@ -96,35 +96,16 @@ export class VK {
 	public set twoFactorHandler(handler: Function) {
 		this.callbackService.twoFactorHandler = handler;
 	}
-
-	/**
-	 * Custom inspect object
-	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	public [inspect.custom](depth: number, options: Record<string, any>): string {
-		const {
-			api,
-			updates
-		} = this;
-
-		const {
-			appId,
-			token,
-			login,
-			phone
-		} = this.options;
-
-		const payload = {
-			options: {
-				appId,
-				login,
-				phone,
-				token
-			},
-			api,
-			updates
-		};
-
-		return `${options.stylize(this.constructor.name, 'special')} ${inspect(payload, options)}`;
-	}
 }
+
+inspectable(VK, {
+	serealize: ({
+		api,
+		updates,
+		options: { appId, token }
+	}) => ({
+		options: { appId, token },
+		api,
+		updates
+	})
+});

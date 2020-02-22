@@ -1,4 +1,5 @@
 import { VK } from '../vk';
+import { inspectable } from '../utils/inspectable';
 import { ResourceResolver, IResolvedResource } from './resource-resolver';
 
 export class Snippets {
@@ -29,3 +30,7 @@ export class Snippets {
 		return this.resourceResolver.resolve(resource);
 	}
 }
+
+inspectable(Snippets, {
+	serealize: () => ({})
+});

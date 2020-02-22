@@ -1,6 +1,5 @@
-import { inspect } from 'util';
-
 import { VK } from '../../vk';
+import { inspectable } from '../../utils/inspectable';
 import { parseAttachment, kSerializeData, AttachmentType } from '../../utils/constants';
 
 export class Attachment<P = {}> {
@@ -119,18 +118,11 @@ export class Attachment<P = {}> {
 			payload: this.payload
 		};
 	}
-
-	/**
-	 * Custom inspect object
-	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	public [inspect.custom](depth: number, options: Record<string, any>): string {
-		const payload = inspect(this.toJSON(), {
-			...options,
-
-			compact: false
-		});
-
-		return `${options.stylize(this.constructor.name, 'special')} <${options.stylize(this, 'string')}> ${payload}`;
-	}
 }
+
+inspectable(Attachment, {
+	serealize: (instance) => instance.toJSON(),
+	stringify: (instance, payload, context): string => (
+		`${context.stylize(instance.constructor.name, 'special')} <${context.stylize(String(instance), 'string')}> ${context.inspect(payload)}`
+	)
+});

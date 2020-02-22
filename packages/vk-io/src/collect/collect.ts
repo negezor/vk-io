@@ -1,5 +1,3 @@
-import { inspect } from 'util';
-
 import { CollectStream, ICollectStreamOptions } from './stream';
 import { LIMITS_METHODS } from './limits';
 
@@ -7,6 +5,7 @@ import { VK } from '../vk';
 import { Chain } from './chain';
 import { ExecuteError } from '../errors';
 
+import { inspectable } from '../utils/inspectable';
 import { getChainReturn, getExecuteMethod } from '../utils/helpers';
 
 export interface ICollectStreamGroup {
@@ -151,12 +150,8 @@ export class Collect {
 
 		return out;
 	}
-
-	/**
-	 * Custom inspect object
-	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	public [inspect.custom](depth: number, options: Record<string, any>): string {
-		return `${options.stylize(this.constructor.name, 'special')} {}`;
-	}
 }
+
+inspectable(Collect, {
+	serealize: () => ({})
+});

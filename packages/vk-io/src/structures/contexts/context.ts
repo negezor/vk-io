@@ -1,9 +1,8 @@
-import { inspect } from 'util';
-
 import { VK } from '../../vk';
 import { kSerializeData, UpdateSource } from '../../utils/constants';
 
 import { AllowArray } from '../../types';
+import { inspectable } from '../../utils/inspectable';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ContextDefaultState = Record<string, any>;
@@ -109,18 +108,8 @@ export class Context<
 
 		return payload;
 	}
-
-	/**
-	 * Custom inspect object
-	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	public [inspect.custom](depth: number, options: Record<string, any>): string {
-		const payload = inspect(this.toJSON(), {
-			...options,
-
-			compact: false
-		});
-
-		return `${options.stylize(this.constructor.name, 'special')} ${payload}`;
-	}
 }
+
+inspectable(Context, {
+	serealize: instance => instance.toJSON()
+});

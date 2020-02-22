@@ -1,9 +1,8 @@
-import { inspect } from 'util';
-
 import { VKError, ExecuteError } from '../errors';
 
 import { VK } from '../vk';
 import { APIRequest } from '../api/request';
+import { inspectable } from '../utils/inspectable';
 import { getChainReturn, resolveExecuteTask } from '../utils/helpers';
 
 export class Chain {
@@ -111,16 +110,12 @@ export class Chain {
 
 		return out;
 	}
-
-	/**
-	 * Custom inspect object
-	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	public [inspect.custom](depth: number, options: Record<string, any>): string {
-		const { started, queue } = this;
-
-		const payload = { started, queue };
-
-		return `${options.stylize(this.constructor.name, 'special')} ${inspect(payload, options)}`;
-	}
 }
+
+inspectable(Chain, {
+	// @ts-ignore
+	serealize: ({ started, queue }) => ({
+		started,
+		queue
+	})
+});

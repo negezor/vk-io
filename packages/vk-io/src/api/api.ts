@@ -1,7 +1,6 @@
 import fetch from 'node-fetch';
 import createDebug from 'debug';
 
-import { inspect } from 'util';
 import { URLSearchParams } from 'url';
 
 import { APIMethods } from './schemas/methods';
@@ -9,6 +8,7 @@ import { APIMethods } from './schemas/methods';
 import { VK } from '../vk';
 import { APIRequest } from './request';
 import { delay } from '../utils/helpers';
+import { inspectable } from '../utils/inspectable';
 import { VKError, APIError, ExecuteError } from '../errors';
 import { sequential, parallel, parallelSelected } from './workers';
 import {
@@ -415,16 +415,12 @@ export class API extends APIMethods {
 			request.reject(e);
 		}
 	}
-
-	/**
-	 * Custom inspect object
-	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	public [inspect.custom](depth: number, options: Record<string, any>): string {
-		const { started, queue } = this;
-
-		const payload = { started, queue };
-
-		return `${options.stylize(this.constructor.name, 'special')} ${inspect(payload, options)}`;
-	}
 }
+
+inspectable(API, {
+	// @ts-ignore
+	serealize: ({ started, queue }) => ({
+		started,
+		queue
+	})
+});

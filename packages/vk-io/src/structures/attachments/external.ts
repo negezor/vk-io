@@ -1,6 +1,5 @@
-import { inspect } from 'util';
-
 import { VK } from '../../vk';
+import { inspectable } from '../../utils/inspectable';
 import { kSerializeData } from '../../utils/constants';
 
 export class ExternalAttachment<P = {}> {
@@ -59,18 +58,8 @@ export class ExternalAttachment<P = {}> {
 			payload: this.payload
 		};
 	}
-
-	/**
-	 * Custom inspect object
-	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	public [inspect.custom](depth: number, options: Record<string, any>): string {
-		const payload = inspect(this.toJSON(), {
-			...options,
-
-			compact: false
-		});
-
-		return `${options.stylize(this.constructor.name, 'special')} ${payload}`;
-	}
 }
+
+inspectable(ExternalAttachment, {
+	serealize: instance => instance.toJSON()
+});

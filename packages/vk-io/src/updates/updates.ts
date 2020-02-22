@@ -8,8 +8,6 @@ import {
 	noopNext
 } from 'middleware-io';
 
-import { inspect } from 'util';
-
 import {
 	Context,
 	VoteContext,
@@ -79,6 +77,7 @@ import { APIErrorCode } from '../errors';
 
 import { AllowArray } from '../types';
 import { UpdateSource } from '../utils/constants';
+import { inspectable } from '../utils/inspectable';
 import { Composer } from '../structures/shared/composer';
 
 const debug = createDebug('vk-io:updates');
@@ -704,16 +703,12 @@ export class Updates {
 
 		this.stackMiddleware = composer.compose();
 	}
-
-	/**
-	 * Custom inspect object
-	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	public [inspect.custom](depth: number, options: Record<string, any>): string {
-		const { isStarted, composer } = this;
-
-		const payload = { isStarted, composer };
-
-		return `${options.stylize(this.constructor.name, 'special')} ${inspect(payload, options)}`;
-	}
 }
+
+inspectable(Updates, {
+	// @ts-ignore
+	serealize: ({ isStarted, composer }) => ({
+		isStarted,
+		composer
+	})
+});
