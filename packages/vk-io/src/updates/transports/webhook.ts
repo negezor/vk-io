@@ -78,8 +78,6 @@ export class WebhookTransport {
 
 			const { webhookServer } = this;
 
-			const listen = promisify(webhookServer.listen).bind(webhookServer);
-
 			const serverPort = port || (
 				tls
 					? 443
@@ -87,7 +85,7 @@ export class WebhookTransport {
 			);
 
 			// @ts-ignore
-			await listen(serverPort, host);
+			await promisify(webhookServer.listen).call(webhookServer, serverPort, host);
 
 			debug(`Webhook listening on port: ${serverPort}`);
 		} catch (error) {
@@ -106,9 +104,7 @@ export class WebhookTransport {
 		if (this.webhookServer !== undefined) {
 			const { webhookServer } = this;
 
-			const close = promisify(webhookServer.close).bind(webhookServer);
-
-			await close();
+			await promisify(webhookServer.close).call(webhookServer);
 
 			this.webhookServer = undefined;
 		}
