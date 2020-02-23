@@ -503,18 +503,17 @@ export class Upload {
 			return new VideoAttachment(save, this.vk);
 		}
 
-		let { source } = params;
+		const { source: rawSource } = params;
 
-		if (typeof source !== 'object' || source.constructor !== Object) {
-			// @ts-ignore
-			source = {
-				values: source
-			};
-		}
+		const source = typeof rawSource !== 'object'
+			|| rawSource.constructor !== Object
+			|| 'value' in rawSource
+			? {
+				values: rawSource
+			} as IUploadSourceParams
+			: rawSource as IUploadSourceParams;
 
-		// @ts-ignore
 		if (!Array.isArray(source.values)) {
-			// @ts-ignore
 			source.values = [source.values];
 		}
 
@@ -522,14 +521,12 @@ export class Upload {
 			maxFiles: 1,
 			field: 'video_file',
 			attachmentType: 'video',
-			// @ts-ignore
 			values: source.values
 		});
 
 		const video = await this.upload(save.upload_url!, {
 			formData,
 			forceBuffer: true,
-			// @ts-ignore
 			timeout: source.timeout
 		});
 
@@ -930,26 +927,20 @@ export class Upload {
 			});
 		}
 
-		let { source } = params;
+		const { source: rawSource } = params;
 
-		if (
-			typeof source !== 'object'
-			|| source.constructor !== Object
-			// @ts-ignore
-			|| source.value !== undefined) {
-			// @ts-ignore
-			source = {
-				values: source
-			};
-		}
+		const source = typeof rawSource !== 'object'
+			|| rawSource.constructor !== Object
+			|| 'value' in rawSource
+			? {
+				values: rawSource
+			} as IUploadSourceParams
+			: rawSource as IUploadSourceParams;
 
-		// @ts-ignore
 		if (!Array.isArray(source.values)) {
-			// @ts-ignore
 			source.values = [source.values];
 		}
 
-		// @ts-ignore
 		if (source.uploadUrl !== undefined) {
 			// eslint-disable-next-line no-param-reassign
 			getServer = (): ReturnType<IUploadConduct['getServer']> => ({
@@ -979,7 +970,6 @@ export class Upload {
 			getServer(pickExistingProperties(params, serverParams)),
 			this.buildPayload({
 				field,
-				// @ts-ignore
 				values: source.values,
 				maxFiles,
 				attachmentType
@@ -989,7 +979,6 @@ export class Upload {
 		const uploaded = await this.upload(url, {
 			formData,
 			forceBuffer,
-			// @ts-ignore
 			timeout: source.timeout
 		});
 
@@ -1033,7 +1022,6 @@ export class Upload {
 					? value
 					: { value }
 			))
-			// @ts-ignore
 			.map(async (
 				{
 					value,
@@ -1056,9 +1044,8 @@ export class Upload {
 				}
 
 				if (!filename) {
-					// @ts-ignore
 					// eslint-disable-next-line no-param-reassign
-					filename = `file${i}.${DefaultExtension[attachmentType] || 'dat'}`;
+					filename = `file${i}.${DefaultExtension[attachmentType as keyof typeof DefaultExtension] || 'dat'}`;
 				}
 
 				if (isStream(value) || Buffer.isBuffer(value)) {
@@ -1068,8 +1055,7 @@ export class Upload {
 
 					const headers = {
 						'Content-Type': contentType === undefined
-							// @ts-ignore
-							? DefaultContentType[attachmentType]
+							? DefaultContentType[attachmentType as keyof typeof DefaultContentType]
 							: contentType
 					};
 
