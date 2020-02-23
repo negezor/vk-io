@@ -77,10 +77,9 @@ export class Collect {
 		for (const [method, limit, max] of LIMITS_METHODS) {
 			const [group, name] = method.split('.');
 
-			// @ts-ignore
-			if (this[group] === undefined) {
+			if (this[group as keyof this] === undefined) {
 				// @ts-ignore
-				this[group] = {};
+				this[group] = {} as ICollectStreamGroup;
 			}
 
 			// @ts-ignore

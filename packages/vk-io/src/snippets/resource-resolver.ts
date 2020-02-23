@@ -195,7 +195,6 @@ export class ResourceResolver {
 			};
 		}
 
-		// @ts-ignore
 		const response = await this.vk.api.utils.resolveScreenName({
 			screen_name: resource
 		});

@@ -45,7 +45,6 @@ export class MultipartStream extends SandwichStream {
 		const partStream = new PassThrough();
 
 		if (part.headers !== undefined) {
-			// @ts-ignore
 			for (const [key, header] of Object.entries(part.headers)) {
 				partStream.write(`${key}:${header}${CRNL}`);
 			}

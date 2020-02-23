@@ -271,11 +271,9 @@ class StreamingContext<S = ContextDefaultState>
 		];
 
 		const filtredEmptyProperties = properties.filter(property => (
-			// @ts-ignore
 			this[property] !== undefined
-		));
+		)) as (keyof this)[];
 
-		// @ts-ignore
 		return copyParams(this, filtredEmptyProperties);
 	}
 }

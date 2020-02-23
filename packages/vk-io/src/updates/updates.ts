@@ -311,7 +311,6 @@ export class Updates {
 			throw new TypeError('Middleware must be a function');
 		}
 
-		// @ts-ignore
 		this.composer.use(middleware);
 
 		this.reloadMiddleware();
@@ -462,7 +461,6 @@ export class Updates {
 
 		let textCondition = false;
 		let functionCondtion = false;
-		// @ts-ignore
 		const conditions = rawConditions.map((condition): Function => {
 			if (typeof condition === 'object' && !(condition instanceof RegExp)) {
 				functionCondtion = true;
@@ -685,7 +683,6 @@ export class Updates {
 
 		if (this.hearComposer.length !== 0) {
 			composer.optional(
-				// @ts-ignore
 				(context: MessageContext): boolean => (
 					context.is('new_message') && !context.isEvent
 				),
