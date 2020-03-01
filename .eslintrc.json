@@ -20,6 +20,7 @@
 	"rules": {
 		"@typescript-eslint/interface-name-prefix": ["error", "always"],
 		"@typescript-eslint/no-non-null-assertion": "off",
+  		"@typescript-eslint/no-unused-expressions": ["error"],
 		"@typescript-eslint/indent": ["error", "tab"],
 		"@typescript-eslint/camelcase": ["error", {
 			"properties": "never"
@@ -36,6 +37,7 @@
 		"import/no-cycle": "off",
 		"no-restricted-syntax": ["error", "WithStatement"],
 		"comma-dangle": ["error", "never"],
+		"no-unused-expressions": "off",
 		"no-param-reassign": ["error", {
 			"props": false
 		}],
