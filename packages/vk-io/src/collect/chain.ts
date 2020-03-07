@@ -39,6 +39,7 @@ export class Chain {
 		}
 
 		const request = new APIRequest({
+			vk: this.vk,
 			method,
 			params
 		});

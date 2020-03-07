@@ -1,8 +1,11 @@
+import { VK } from '../vk';
 import { inspectable } from '../utils/inspectable';
 import { getExecuteMethod } from '../utils/helpers';
 import { ICallbackServiceValidate } from '../utils/callback-service';
 
 export interface IAPIRequestOptions {
+	vk: VK;
+
 	method: string;
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	params: Record<string, any>;
@@ -25,10 +28,14 @@ export class APIRequest {
 
 	public captchaValidate?: ICallbackServiceValidate;
 
+	protected vk: VK;
+
 	/**
 	 * Constructor
 	 */
-	public constructor({ method, params = {} }: IAPIRequestOptions) {
+	public constructor({ vk, method, params = {} }: IAPIRequestOptions) {
+		this.vk = vk;
+
 		this.method = method;
 		this.params = { ...params };
 

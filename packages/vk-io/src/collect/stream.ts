@@ -189,6 +189,7 @@ export class CollectStream<T> extends Readable {
 
 		if (!this.supportExecute || this.parallelCount === 1) {
 			const request = new APIRequest({
+				vk: this.vk,
 				method: this.method,
 				params: {
 					...this.params,

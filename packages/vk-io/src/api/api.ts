@@ -180,6 +180,7 @@ export class API extends APIMethods {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public enqueue(method: string, params: object): Promise<any> {
 		const request = new APIRequest({
+			vk: this.vk,
 			method,
 			params
 		});
