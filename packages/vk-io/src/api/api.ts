@@ -1,7 +1,4 @@
-import fetch from 'node-fetch';
 import createDebug from 'debug';
-
-import { URLSearchParams } from 'url';
 
 import { APIMethods } from './schemas/methods';
 
@@ -234,35 +231,13 @@ export class API extends APIMethods {
 		const { options } = this.vk;
 		const { method } = request;
 
-		const params: APIRequest['params'] = {
-			access_token: options.token,
-			v: options.apiVersion,
-
-			...request.params
-		};
-
-		if (options.language !== undefined) {
-			params.lang = options.language;
-		}
-
 		debug(`http --> ${method}`);
 
 		const startTime = Date.now();
 
 		let response;
 		try {
-			response = await fetch(`${options.apiBaseUrl}/${method}`, {
-				method: 'POST',
-				compress: false,
-				agent: options.agent,
-				timeout: options.apiTimeout,
-				headers: {
-					...options.apiHeaders,
-
-					connection: 'keep-alive'
-				},
-				body: new URLSearchParams(params)
-			});
+			response = await request.make();
 
 			response = await response.json();
 		} catch (error) {

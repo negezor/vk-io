@@ -1,3 +1,6 @@
+import fetch, { Response } from 'node-fetch';
+import { AbortController } from 'abort-controller';
+
 import { VK } from '../vk';
 import { inspectable } from '../utils/inspectable';
 import { getExecuteMethod } from '../utils/helpers';
@@ -57,6 +60,42 @@ export class APIRequest {
 	 */
 	public toString(): string {
 		return getExecuteMethod(this.method, this.params);
+	}
+
+	/**
+	 * Sends a request to the server
+	 */
+	public make(): Promise<Response> {
+		const { options } = this.vk;
+
+		const params: APIRequest['params'] = {
+			access_token: options.token,
+			v: options.apiVersion,
+
+			...this.params
+		};
+
+		if (options.language !== undefined) {
+			params.lang = options.language;
+		}
+
+		const controller = new AbortController();
+
+		const timeout = setTimeout(() => controller.abort(), options.apiTimeout);
+
+		return fetch(`${options.apiBaseUrl}/${this.method}`, {
+			method: 'POST',
+			compress: false,
+			agent: options.agent,
+			signal: controller.signal,
+			headers: {
+				...options.apiHeaders,
+
+				connection: 'keep-alive'
+			},
+			body: new URLSearchParams(params)
+		})
+			.finally(() => clearTimeout(timeout));
 	}
 }
 
