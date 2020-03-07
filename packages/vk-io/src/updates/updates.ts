@@ -547,7 +547,7 @@ export class Updates {
 	 * Handles longpoll event
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	public async handlePollingUpdate(update: any[]): Promise<void> {
+	public handlePollingUpdate(update: any[]): Promise<void> {
 		debug('longpoll update', update);
 
 		const { 0: type } = update;
@@ -557,10 +557,10 @@ export class Updates {
 		if (!UpdateContext) {
 			debug(`Unsupported polling context type ${type}`);
 
-			return;
+			return Promise.resolve();
 		}
 
-		await this.dispatchMiddleware(new UpdateContext({
+		return this.dispatchMiddleware(new UpdateContext({
 			vk: this.vk,
 			payload: update,
 			updateType: type,
@@ -572,7 +572,7 @@ export class Updates {
 	 * Handles webhook event
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	public async handleWebhookUpdate(update: Record<string, any>): Promise<void> {
+	public handleWebhookUpdate(update: Record<string, any>): Promise<void> {
 		debug('webhook update', update);
 
 		const { type, object: payload, group_id: groupId } = update;
@@ -582,10 +582,10 @@ export class Updates {
 		if (!UpdateContext) {
 			debug(`Unsupported webhook context type ${type}`);
 
-			return;
+			return Promise.resolve();
 		}
 
-		await this.dispatchMiddleware(new UpdateContext({
+		return this.dispatchMiddleware(new UpdateContext({
 			vk: this.vk,
 			payload,
 			groupId,
@@ -675,8 +675,8 @@ export class Updates {
 	/**
 	 * Calls up the middleware chain
 	 */
-	public dispatchMiddleware(context: Context): Promise<unknown> {
-		return this.stackMiddleware(context, noopNext) as Promise<unknown>;
+	public dispatchMiddleware(context: Context): Promise<void> {
+		return this.stackMiddleware(context, noopNext) as Promise<void>;
 	}
 
 	/**
