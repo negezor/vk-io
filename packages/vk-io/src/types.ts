@@ -61,7 +61,7 @@ export interface IVKOptions {
 	 * - `sequential` - in order
 	 * - `parallel` - all requests are sent through execute
 	 * - `parallel_selected` - only the specified methods in `apiExecuteMethods`
-	 * are collected in `execute`,other methods as in `sequential` mode
+	 * are collected in `execute`, other methods as in `sequential` mode
 	 */
 	apiMode: 'sequential' | 'parallel' | 'parallel_selected';
 
