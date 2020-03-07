@@ -1,4 +1,5 @@
 import { Agent } from 'https';
+import { EventEmitter } from 'events';
 
 import { API } from './api';
 import { Upload } from './upload';
@@ -25,6 +26,8 @@ export class VK {
 			keepAliveMsecs: 10000
 		})
 	};
+
+	public internalHooks = new EventEmitter();
 
 	public api = new API(this);
 
@@ -57,6 +60,10 @@ export class VK {
 	 */
 	public setOptions(options: Partial<IVKOptions>): this {
 		Object.assign(this.options, options);
+
+		this.internalHooks.emit('update_options', {
+			keys: Object.keys(options)
+		});
 
 		return this;
 	}
