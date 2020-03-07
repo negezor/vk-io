@@ -25,7 +25,6 @@ export async function parallelSelected(api: API, next: Function): Promise<void> 
 	await delay(0);
 
 	const tasks: APIRequest[] = [];
-	const chain: string[] = [];
 
 	for (let i = 0; i < queue.length; i += 1) {
 		if (!apiExecuteMethods.includes(queue[i].method)) {
@@ -37,7 +36,6 @@ export async function parallelSelected(api: API, next: Function): Promise<void> 
 		i -= 1;
 
 		tasks.push(request);
-		chain.push(String(request));
 
 		if (tasks.length >= apiExecuteCount) {
 			break;
@@ -56,7 +54,7 @@ export async function parallelSelected(api: API, next: Function): Promise<void> 
 			vk: api.vk,
 			method: 'execute',
 			params: {
-				code: getChainReturn(chain)
+				code: getChainReturn(tasks.map(String))
 			}
 		});
 

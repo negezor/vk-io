@@ -26,7 +26,6 @@ export async function parallel(api: API, next: Function): Promise<void> {
 	const { apiExecuteCount } = api.vk.options;
 
 	const tasks: APIRequest[] = [];
-	const chain: string[] = [];
 
 	for (let i = 0; i < queue.length; i += 1) {
 		if (queue[i].method.startsWith('execute')) {
@@ -38,7 +37,6 @@ export async function parallel(api: API, next: Function): Promise<void> {
 		i -= 1;
 
 		tasks.push(request);
-		chain.push(String(request));
 
 		if (tasks.length >= apiExecuteCount) {
 			break;
@@ -51,7 +49,7 @@ export async function parallel(api: API, next: Function): Promise<void> {
 			vk: api.vk,
 			method: 'execute',
 			params: {
-				code: getChainReturn(chain)
+				code: getChainReturn(tasks.map(String))
 			}
 		});
 
