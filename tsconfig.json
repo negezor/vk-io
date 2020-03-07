@@ -6,6 +6,7 @@
 		"strict": true,
 		"noEmit": true,
 		"declaration": true,
+		"strictNullChecks": true,
 		"forceConsistentCasingInFileNames": true
 	}
 }
