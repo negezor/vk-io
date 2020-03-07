@@ -267,7 +267,11 @@ export class Updates {
 
 	protected webhookTransport: WebhookTransport;
 
-	protected composer = Composer.builder<Context>();
+	protected composer = Composer.builder<Context>()
+		.caught((context, error) => {
+			// eslint-disable-next-line no-console
+			console.error(error);
+		});
 
 	protected hearComposer = Composer.builder<MessageContext>();
 
