@@ -34,6 +34,7 @@ export const defaultOptions: IVKOptions = {
 	authTimeout: 10e3,
 
 	apiMode: 'sequential',
+	apiRequestMode: 'sequential',
 	apiWait: 3e3,
 	apiLimit: 3,
 	apiVersion: '5.103',

@@ -66,6 +66,15 @@ export interface IVKOptions {
 	apiMode: 'sequential' | 'parallel' | 'parallel_selected';
 
 	/**
+	 * Determines how requests will be sent
+	 *
+	 * - `sequential` - through the interval
+	 * - `burst` - in parallel,
+	 * the maximum number of requests (attention, may cause an EAI_AGAIN error)
+	 */
+	apiRequestMode: 'sequential' | 'burst';
+
+	/**
 	 * Time to wait before re-querying
 	 */
 	apiWait: number;
