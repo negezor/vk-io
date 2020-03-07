@@ -17,7 +17,7 @@ export class APIRequest {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public params: Record<string, any>;
 
-	public attempts = 0;
+	public retries = 0;
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public promise: Promise<any>;
@@ -50,15 +50,6 @@ export class APIRequest {
 	 */
 	public get [Symbol.toStringTag](): string {
 		return this.constructor.name;
-	}
-
-	/**
-	 * Adds attempt
-	 */
-	public addAttempt(): number {
-		this.attempts += 1;
-
-		return this.attempts;
 	}
 
 	/**

@@ -266,10 +266,12 @@ export class API extends APIMethods {
 
 			response = await response.json();
 		} catch (error) {
-			if (request.addAttempt() <= options.apiAttempts) {
+			if (request.retries === options.apiAttempts) {
+				request.retries += 1;
+
 				await delay(options.apiWait);
 
-				debug(`Request ${method} restarted ${request.attempts} times`);
+				debug(`Request ${method} restarted ${request.retries} times`);
 
 				this.requeue(request);
 
