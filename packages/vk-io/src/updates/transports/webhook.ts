@@ -219,10 +219,7 @@ export class WebhookTransport {
 			context.set('connection', 'keep-alive');
 
 			/* Do not delay server response */
-			this.webhookHandler(update).catch((error: Error): void => {
-				// eslint-disable-next-line no-console
-				console.error('Handle webhook update error', error);
-			});
+			setImmediate(() => this.webhookHandler(update));
 		};
 	}
 }

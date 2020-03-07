@@ -197,15 +197,9 @@ export class PollingTransport {
 		}
 
 		/* Async handle updates */
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		result.updates.forEach(async (update: Record<string, any>): Promise<void> => {
-			try {
-				await this.pollingHandler(update);
-			} catch (error) {
-				// eslint-disable-next-line no-console
-				console.error('Handle polling update error:', error);
-			}
-		});
+		for (const update of result.updates) {
+			this.pollingHandler(update);
+		}
 	}
 
 	public subscribe(handler: Function): void {
