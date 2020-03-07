@@ -1,50 +1,9 @@
-import createDebug from 'debug';
-
 import { APIMethods } from './schemas/methods';
 
 import { VK } from '../vk';
+import { APIManager } from './manager';
 import { APIRequest } from './request';
-import { delay } from '../utils/helpers';
 import { inspectable } from '../utils/inspectable';
-import { VKError, APIError, ExecuteError } from '../errors';
-import { sequential, parallel, parallelSelected } from './workers';
-import {
-	MINIMUM_TIME_INTERVAL_API,
-
-	APIErrorCode,
-	CaptchaType
-} from '../utils/constants';
-import { IExecuteErrorOptions } from '../errors/execute';
-
-const {
-	CAPTCHA_REQUIRED,
-	TOO_MANY_REQUESTS,
-	USER_VALIDATION_REQUIRED
-} = APIErrorCode;
-
-const debug = createDebug('vk-io:api');
-
-const requestHandlers: Record<string, Function> = {
-	sequential,
-	parallel,
-	parallel_selected: parallelSelected
-};
-
-/**
- * Returns request handler
- */
-const getRequestHandler = (mode = 'sequential'): Function => {
-	const handler = requestHandlers[mode];
-
-	if (!handler) {
-		throw new VKError({
-			message: 'Unsuported api mode',
-			code: 'UNSUPPORTED_MODE'
-		});
-	}
-
-	return handler;
-};
 
 const groupMethods = [
 	'account',
@@ -94,13 +53,9 @@ const groupMethods = [
  * Working with API methods
  */
 export class API extends APIMethods {
-	private queue: APIRequest[] = [];
-
-	private started = false;
-
-	private suspended = false;
-
 	private vk: VK;
+
+	private manager: APIManager;
 
 	/**
 	 * Constructor
@@ -109,13 +64,18 @@ export class API extends APIMethods {
 		super();
 
 		this.vk = vk;
+		this.manager = new APIManager(vk);
 
 		for (const group of groupMethods) {
 			// @ts-ignore
 			this[group] = new Proxy(Object.create(null), {
 				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				get: (obj, prop: string) => (params: object): Promise<any> => (
-					this.enqueue(`${group}.${prop}`, params)
+					this.manager.callWithRequest(new APIRequest({
+						vk: this.vk,
+						method: `${group}.${prop}`,
+						params
+					}))
 				)
 			});
 		}
@@ -133,7 +93,7 @@ export class API extends APIMethods {
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public execute(params: object): Promise<any> {
-		return this.enqueue('execute', params);
+		return this.call('execute', params);
 	}
 
 	/**
@@ -141,7 +101,7 @@ export class API extends APIMethods {
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public procedure(name: string, params: object): Promise<any> {
-		return this.enqueue(`execute.${name}`, params);
+		return this.call(`execute.${name}`, params);
 	}
 
 	/**
@@ -149,7 +109,12 @@ export class API extends APIMethods {
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public call(method: string, params: object): Promise<any> {
-		return this.enqueue(method, params);
+		return this.manager.callWithRequest(new APIRequest({
+			method,
+			params,
+
+			vk: this.vk
+		}));
 	}
 
 	/**
@@ -157,235 +122,10 @@ export class API extends APIMethods {
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public callWithRequest(request: APIRequest): Promise<any> {
-		this.queue.push(request);
-
-		this.worker();
-
-		return request.promise;
-	}
-
-	/**
-	 * Adds method to queue
-	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	public enqueue(method: string, params: object): Promise<any> {
-		const request = new APIRequest({
-			vk: this.vk,
-			method,
-			params
-		});
-
-		return this.callWithRequest(request);
-	}
-
-	/**
-	 * Adds an element to the beginning of the queue
-	 */
-	protected requeue(request: APIRequest): void {
-		this.queue.unshift(request);
-
-		this.worker();
-	}
-
-	/**
-	 * Running queue
-	 */
-	private worker(): void {
-		if (this.started) {
-			return;
-		}
-
-		this.started = true;
-
-		const { apiLimit, apiMode } = this.vk.options;
-
-		const handler = getRequestHandler(apiMode);
-		const interval = Math.round(MINIMUM_TIME_INTERVAL_API / apiLimit);
-
-		const work = (): void => {
-			if (this.queue.length === 0 || this.suspended) {
-				this.started = false;
-
-				return;
-			}
-
-			handler(this, () => {
-				setTimeout(work, interval);
-			});
-		};
-
-		work();
-	}
-
-	/**
-	 * Calls the api method
-	 */
-	protected async callMethod(request: APIRequest): Promise<void> {
-		const { options } = this.vk;
-		const { method } = request;
-
-		debug(`http --> ${method}`);
-
-		const startTime = Date.now();
-
-		let response;
-		try {
-			response = await request.make();
-
-			response = await response.json();
-		} catch (error) {
-			if (request.retries === options.apiAttempts) {
-				request.retries += 1;
-
-				await delay(options.apiWait);
-
-				debug(`Request ${method} restarted ${request.retries} times`);
-
-				this.requeue(request);
-
-				return;
-			}
-
-			request.captchaValidate?.reject(error);
-
-			request.reject(error);
-
-			return;
-		}
-
-		const endTime = (Date.now() - startTime).toLocaleString();
-
-		debug(`http <-- ${method} ${endTime}ms`);
-
-		if (response.error !== undefined) {
-			this.handleError(request, new APIError(response.error));
-
-			return;
-		}
-
-		request.captchaValidate?.resolve();
-
-		if (method.startsWith('execute')) {
-			request.resolve({
-				response: response.response,
-				errors: (response.execute_errors || []).map((error: IExecuteErrorOptions) => (
-					new ExecuteError(error)
-				))
-			});
-
-			return;
-		}
-
-		request.resolve(
-			response.response !== undefined
-				? response.response
-				: response
-		);
-	}
-
-	/**
-	 * Error API handler
-	 */
-	public async handleError(request: APIRequest, error: APIError): Promise<void> {
-		const { code } = error;
-
-		if (code === TOO_MANY_REQUESTS) {
-			if (this.suspended) {
-				this.requeue(request);
-
-				return;
-			}
-
-			this.suspended = true;
-
-			await delay((MINIMUM_TIME_INTERVAL_API / this.vk.options.apiLimit) + 50);
-
-			this.suspended = false;
-
-			this.requeue(request);
-
-			return;
-		}
-
-		request.captchaValidate?.reject(error);
-
-		if (code === USER_VALIDATION_REQUIRED) {
-			if (this.suspended) {
-				this.requeue(request);
-			}
-
-			let AccountVerification;
-			try {
-				// @ts-ignore
-				AccountVerification = (await import('@vk-io/authorization')).AccountVerification;
-			} catch (importError) {
-				request.reject(error);
-
-				return;
-			}
-
-			this.suspended = true;
-
-			try {
-				// @ts-ignore
-				const verification = new AccountVerification(this.vk);
-
-				const { token } = await verification.run(error.redirectUri!);
-
-				debug('Account verification passed');
-
-				this.vk.token = token;
-
-				this.suspended = false;
-
-				this.requeue(request);
-			} catch (verificationError) {
-				debug('Account verification error', verificationError);
-
-				request.reject(error);
-
-				await delay(15e3);
-
-				this.suspended = false;
-
-				this.worker();
-			}
-
-			return;
-		}
-
-		if (code !== CAPTCHA_REQUIRED || !this.vk.callbackService.hasCaptchaHandler) {
-			request.reject(error);
-
-			return;
-		}
-
-		try {
-			const { captchaSid } = error;
-
-			const { key, validate } = await this.vk.callbackService.processingCaptcha({
-				type: CaptchaType.API,
-				src: error.captchaImg,
-				sid: captchaSid,
-				request
-			});
-
-			request.captchaValidate = validate;
-
-			request.params.captcha_sid = captchaSid;
-			request.params.captcha_key = key;
-
-			this.requeue(request);
-		} catch (e) {
-			request.reject(e);
-		}
+		return this.manager.callWithRequest(request);
 	}
 }
 
 inspectable(API, {
-	// @ts-ignore
-	serialize: ({ started, queue }) => ({
-		started,
-		queue
-	})
+	serialize: () => ({})
 });
