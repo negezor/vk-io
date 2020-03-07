@@ -52,6 +52,8 @@ export async function parallelSelected(api: API, next: Function): Promise<void> 
 
 	try {
 		const request = new APIRequest({
+			// @ts-ignore
+			vk: api.vk,
 			method: 'execute',
 			params: {
 				code: getChainReturn(chain)
