@@ -253,9 +253,7 @@ export class API extends APIMethods {
 				return;
 			}
 
-			if (request.captchaValidate) {
-				request.captchaValidate.reject(error);
-			}
+			request.captchaValidate?.reject(error);
 
 			request.reject(error);
 
@@ -272,9 +270,7 @@ export class API extends APIMethods {
 			return;
 		}
 
-		if (request.captchaValidate) {
-			request.captchaValidate.resolve();
-		}
+		request.captchaValidate?.resolve();
 
 		if (method.startsWith('execute')) {
 			request.resolve({
@@ -318,9 +314,7 @@ export class API extends APIMethods {
 			return;
 		}
 
-		if (request.captchaValidate) {
-			request.captchaValidate.reject(error);
-		}
+		request.captchaValidate?.reject(error);
 
 		if (code === USER_VALIDATION_REQUIRED) {
 			if (this.suspended) {
