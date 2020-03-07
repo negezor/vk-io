@@ -129,13 +129,6 @@ export class API extends APIMethods {
 	}
 
 	/**
-	 * Returns the current used API version
-	 */
-	public get API_VERSION(): string {
-		return this.vk.options.apiVersion;
-	}
-
-	/**
 	 * Call execute method
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
