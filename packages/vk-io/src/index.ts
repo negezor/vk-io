@@ -23,14 +23,14 @@ export {
 	kSerializeData
 } from './utils/constants';
 
+export { APIRequest } from './api/request';
+
 export { Composer } from './structures/shared/composer';
 export { ICallbackServiceValidate } from './utils/callback-service';
 
 export { inspectable } from './utils/inspectable';
 export { getRandomId, applyMixins } from './utils/helpers';
 export { Attachmentable, IAllAttachmentable } from './structures/shared/attachmentable';
-
-export { APIRequest, APIRequest as Request } from './api/request';
 
 export { Params, Responses, Objects };
 
