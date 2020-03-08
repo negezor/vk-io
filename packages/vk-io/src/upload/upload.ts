@@ -1,4 +1,5 @@
 import fetch from 'node-fetch';
+import { AbortController } from 'abort-controller';
 
 import { URL } from 'url';
 import { randomBytes } from 'crypto';
@@ -1084,27 +1085,35 @@ export class Upload {
 			? await streamToBuffer(formData)
 			: formData;
 
-		const response = await fetch(url, {
-			agent,
-			compress: false,
-			method: 'POST',
-			timeout: timeout || uploadTimeout,
-			headers: {
-				Connection: 'keep-alive',
-				'Content-Type': `multipart/form-data; boundary=${formData.boundary}`
-			},
-			body
-		});
+		const controller = new AbortController();
 
-		if (!response.ok) {
-			throw new Error(response.statusText);
+		const interval = setTimeout(() => controller.abort(), timeout || uploadTimeout);
+
+		try {
+			const response = await fetch(url, {
+				agent,
+				compress: false,
+				method: 'POST',
+				signal: controller.signal,
+				headers: {
+					Connection: 'keep-alive',
+					'Content-Type': `multipart/form-data; boundary=${formData.boundary}`
+				},
+				body
+			});
+
+			if (!response.ok) {
+				throw new Error(response.statusText);
+			}
+
+			const result = await response.json();
+
+			return result.response !== undefined
+				? result.response
+				: result;
+		} finally {
+			clearTimeout(interval);
 		}
-
-		const result = await response.json();
-
-		return result.response !== undefined
-			? result.response
-			: result;
 	}
 }
 
