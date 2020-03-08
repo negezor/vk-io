@@ -1,5 +1,6 @@
 import fetch from 'node-fetch';
 import createDebug from 'debug';
+import { AbortController } from 'abort-controller';
 
 import { URL, URLSearchParams } from 'url';
 
@@ -153,26 +154,35 @@ export class PollingTransport {
 
 		debug('http -->');
 
-		const response = await fetch(this.url, {
-			agent: this.vk.options.agent,
-			method: 'GET',
-			timeout: 30e3,
-			compress: false,
-			headers: {
-				connection: 'keep-alive'
-			}
-		});
+		const controller = new AbortController();
 
-		debug(`http <-- ${response.status}`);
+		const interval = setTimeout(() => controller.abort(), 30e3);
 
-		if (!response.ok) {
-			throw new UpdatesError({
-				code: POLLING_REQUEST_FAILED,
-				message: 'Polling request failed'
+		let result;
+		try {
+			const response = await fetch(this.url, {
+				agent: this.vk.options.agent,
+				method: 'GET',
+				compress: false,
+				signal: controller.signal,
+				headers: {
+					connection: 'keep-alive'
+				}
 			});
-		}
 
-		const result = await response.json();
+			debug(`http <-- ${response.status}`);
+
+			if (!response.ok) {
+				throw new UpdatesError({
+					code: POLLING_REQUEST_FAILED,
+					message: 'Polling request failed'
+				});
+			}
+
+			result = await response.json();
+		} finally {
+			clearTimeout(interval);
+		}
 
 		if (result.failed !== undefined) {
 			if (result.failed === 1) {
