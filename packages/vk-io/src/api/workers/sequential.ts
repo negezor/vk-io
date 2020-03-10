@@ -133,7 +133,7 @@ export class SequentialWorker extends APIWorker {
 
 				debug('Account verification passed');
 
-				this.vk.token = token;
+				this.vk.setOptions({ token });
 
 				this.resume();
 
