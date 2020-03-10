@@ -66,7 +66,7 @@ export class Collect {
 
 	public widgets!: ICollectStreamGroup;
 
-	protected vk: VK;
+	private vk: VK;
 
 	/**
 	 * constructor
