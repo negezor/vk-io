@@ -1,6 +1,7 @@
 import { VK } from '../../vk';
 import { inspectable } from '../../utils/inspectable';
-import { parseAttachment, kSerializeData, AttachmentType } from '../../utils/constants';
+import { parseAttachmentRe } from '../../utils/helpers';
+import { kSerializeData, AttachmentType } from '../../utils/constants';
 
 export class Attachment<P = {}> {
 	public type: AttachmentType | string;
@@ -47,11 +48,11 @@ export class Attachment<P = {}> {
 	 * Parse attachment with string
 	 */
 	public static fromString(attachment: string): Attachment {
-		if (!parseAttachment.test(attachment)) {
+		if (!parseAttachmentRe.test(attachment)) {
 			throw new TypeError('Incorrect attachment');
 		}
 
-		const [, type, ownerId, id, accessKey] = attachment.match(parseAttachment)!;
+		const [, type, ownerId, id, accessKey] = attachment.match(parseAttachmentRe)!;
 
 		return new Attachment(type, ownerId, id, accessKey);
 	}

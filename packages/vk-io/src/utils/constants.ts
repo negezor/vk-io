@@ -270,21 +270,6 @@ export const platforms = new Map<number, string>([
 ]);
 
 /**
- * Parse attachments with RegExp
- */
-export const parseAttachment = /(photo|video|audio|doc|audio_message|graffiti|wall|market|poll|gift)([-\d]+)_(\d+)_?(\w+)?/;
-
-/**
- * Parse resource with RegExp
- */
-export const parseResource = /(id|club|public|albums|tag|app(?:lication))([-\d]+)/;
-
-/**
- * Parse owner resource with RegExp
- */
-export const parseOwnerResource = /(album|topic|wall|page|videos)([-\d]+)_(\d+)/;
-
-/**
  * Symbol of data definition for serialization
  */
 export const kSerializeData = Symbol('serializeData');

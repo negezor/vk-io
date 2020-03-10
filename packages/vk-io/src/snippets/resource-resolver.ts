@@ -2,15 +2,8 @@ import { URL } from 'url';
 
 import { VK } from '../vk';
 import { SnippetsError } from '../errors';
-import {
-	ResourceType,
-	SnippetErrorCode,
-
-	parseAttachment,
-
-	parseResource,
-	parseOwnerResource
-} from '../utils/constants';
+import { ResourceType, SnippetErrorCode } from '../utils/constants';
+import { parseResourceRe, parseAttachmentRe, parseOwnerResourceRe } from '../utils/helpers';
 
 const {
 	INVALID_URL,
@@ -157,12 +150,12 @@ export class ResourceResolver {
 			});
 		}
 
-		if (parseAttachment.test(search)) {
-			return resolveOwnerResource(search, parseAttachment);
+		if (parseAttachmentRe.test(search)) {
+			return resolveOwnerResource(search, parseAttachmentRe);
 		}
 
-		if (parseOwnerResource.test(search)) {
-			return resolveOwnerResource(search, parseOwnerResource);
+		if (parseOwnerResourceRe.test(search)) {
+			return resolveOwnerResource(search, parseOwnerResourceRe);
 		}
 
 		return this.resolveScreenName(pathname.substring(1));
@@ -172,16 +165,16 @@ export class ResourceResolver {
 	 * Resolve screen name
 	 */
 	protected async resolveScreenName(resource: string): Promise<IResolvedResource> {
-		if (parseAttachment.test(resource)) {
-			return resolveOwnerResource(resource, parseAttachment);
+		if (parseAttachmentRe.test(resource)) {
+			return resolveOwnerResource(resource, parseAttachmentRe);
 		}
 
-		if (parseOwnerResource.test(resource)) {
-			return resolveOwnerResource(resource, parseOwnerResource);
+		if (parseOwnerResourceRe.test(resource)) {
+			return resolveOwnerResource(resource, parseOwnerResourceRe);
 		}
 
-		if (parseResource.test(resource)) {
-			const { 1: typeResource, 2: id } = resource.match(parseResource)!;
+		if (parseResourceRe.test(resource)) {
+			const { 1: typeResource, 2: id } = resource.match(parseResourceRe)!;
 
 			let type = typeResource.toLowerCase();
 
