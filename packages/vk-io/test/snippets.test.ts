@@ -65,7 +65,7 @@ describe('Snippets', (): void => {
 
 			expect(payloads).toContainEqual(expect.objectContaining({
 				id: 456264771,
-				owner: 1,
+				ownerId: 1,
 				type: 'photo'
 			}));
 		});
@@ -126,17 +126,17 @@ describe('Snippets', (): void => {
 				},
 				{
 					id: 0,
-					owner: 1,
+					ownerId: 1,
 					type: 'album'
 				},
 				{
 					id: 32279,
-					owner: 1,
+					ownerId: 1,
 					type: 'wall'
 				},
 				{
 					id: 49296,
-					owner: -1,
+					ownerId: -1,
 					type: 'wall'
 				}
 			];
