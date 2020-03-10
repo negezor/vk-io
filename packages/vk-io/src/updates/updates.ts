@@ -261,23 +261,23 @@ CommentActionContextSubType
 export type ContextPossibleTypes = ContextTypes | ContextSubTypes | string;
 
 export class Updates {
-	protected vk: VK;
+	private vk: VK;
 
-	protected pollingTransport: PollingTransport;
+	private pollingTransport: PollingTransport;
 
-	protected webhookTransport: WebhookTransport;
+	private webhookTransport: WebhookTransport;
 
-	protected composer = Composer.builder<Context>()
+	private composer = Composer.builder<Context>()
 		.caught((context, error) => {
 			// eslint-disable-next-line no-console
 			console.error(error);
 		});
 
-	protected hearComposer = Composer.builder<MessageContext>();
+	private hearComposer = Composer.builder<MessageContext>();
 
-	protected stackMiddleware!: Middleware<Context>;
+	private stackMiddleware!: Middleware<Context>;
 
-	protected hearFallbackHandler: Middleware<MessageContext> = skipMiddleware;
+	private hearFallbackHandler: Middleware<MessageContext> = skipMiddleware;
 
 	/**
 	 * Constructor
