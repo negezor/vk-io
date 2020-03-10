@@ -69,20 +69,6 @@ export class VK {
 	}
 
 	/**
-	 * Sets token
-	 */
-	public set token(token: string | undefined) {
-		this.options.token = token;
-	}
-
-	/**
-	 * Returns token
-	 */
-	public get token(): string | undefined {
-		return this.options.token;
-	}
-
-	/**
 	 * Sets captcha handler
 	 *
 	 * ```ts
