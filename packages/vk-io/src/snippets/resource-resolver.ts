@@ -46,25 +46,25 @@ const removeSearchParam = /(\?|&)[^=]+=/;
  */
 const resolveOwnerResource = (resource: string, pattern: RegExp): {
 	id: number;
-	owner: number;
+	ownerId: number;
 	type: string;
 } => {
 	const {
 		1: type,
-		2: owner,
+		2: ownerId,
 		3: id
 	} = resource.match(pattern)!;
 
 	return {
 		id: Number(id),
-		owner: Number(owner),
+		ownerId: Number(ownerId),
 		type: type.toLowerCase().replace(removeSearchParam, '')
 	};
 };
 
 export interface IResolvedResource {
 	id: number;
-	owner?: number;
+	ownerId?: number;
 	type: 'user' | 'group' | 'application' | 'albums' | 'album' | 'wall' | 'club' | 'photo' | 'video' | 'audio' | string;
 }
 
