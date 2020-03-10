@@ -3,9 +3,9 @@ import { inspectable } from '../utils/inspectable';
 import { ResourceResolver, IResolvedResource } from './resource-resolver';
 
 export class Snippets {
-	protected vk: VK;
+	private vk: VK;
 
-	protected resourceResolver: ResourceResolver;
+	private resourceResolver: ResourceResolver;
 
 	/**
 	 * Constructor
