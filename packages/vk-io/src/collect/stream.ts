@@ -60,7 +60,7 @@ export class CollectStream<T> extends Readable {
 
 	protected received: number;
 
-	protected attempts: number;
+	protected retries: number;
 
 	protected supportExecute: boolean;
 
@@ -119,7 +119,7 @@ export class CollectStream<T> extends Readable {
 
 		this.received = 0;
 
-		this.attempts = 0;
+		this.retries = 0;
 		this.promise = undefined;
 		this.supportExecute = true;
 
@@ -202,15 +202,13 @@ export class CollectStream<T> extends Readable {
 			try {
 				result = await this.vk.api.callWithRequest(request);
 			} catch (error) {
-				const { collectRetryLimit } = this.vk.options;
-
-				if (this.attempts >= collectRetryLimit) {
+				if (this.retries === this.vk.options.collectRetryLimit) {
 					this.emit('error', error);
 
 					return;
 				}
 
-				this.attempts += 1;
+				this.retries += 1;
 
 				// eslint-disable-next-line no-underscore-dangle
 				this._read();
@@ -263,15 +261,13 @@ export class CollectStream<T> extends Readable {
 					return;
 				}
 
-				const { collectRetryLimit } = this.vk.options;
-
-				if (this.attempts >= collectRetryLimit) {
+				if (this.retries === this.vk.options.collectRetryLimit) {
 					this.emit('error', error);
 
 					return;
 				}
 
-				this.attempts += 1;
+				this.retries += 1;
 
 				// eslint-disable-next-line no-underscore-dangle
 				this._read();
