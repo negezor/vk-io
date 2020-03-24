@@ -202,9 +202,9 @@ export class CollectStream<T> extends Readable {
 			try {
 				result = await this.vk.api.callWithRequest(request);
 			} catch (error) {
-				const { collectAttempts } = this.vk.options;
+				const { collectRetryLimit } = this.vk.options;
 
-				if (this.attempts >= collectAttempts) {
+				if (this.attempts >= collectRetryLimit) {
 					this.emit('error', error);
 
 					return;
@@ -263,9 +263,9 @@ export class CollectStream<T> extends Readable {
 					return;
 				}
 
-				const { collectAttempts } = this.vk.options;
+				const { collectRetryLimit } = this.vk.options;
 
-				if (this.attempts >= collectAttempts) {
+				if (this.attempts >= collectRetryLimit) {
 					this.emit('error', error);
 
 					return;

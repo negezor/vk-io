@@ -152,5 +152,5 @@ export interface IVKOptions {
 	/**
 	 * The number of retries at calling
 	 */
-	collectAttempts: number;
+	collectRetryLimit: number;
 }

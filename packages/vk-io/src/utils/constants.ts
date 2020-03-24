@@ -56,7 +56,7 @@ export const defaultOptions: IVKOptions = {
 	webhookSecret: undefined,
 	webhookConfirmation: undefined,
 
-	collectAttempts: 3
+	collectRetryLimit: 3
 };
 
 /**
