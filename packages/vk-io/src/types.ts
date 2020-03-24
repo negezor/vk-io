@@ -132,7 +132,7 @@ export interface IVKOptions {
 	/**
 	 * The number of retries at calling
 	 */
-	pollingAttempts: number;
+	pollingRetryLimit: number;
 
 	/**
 	 * Group ID for polling

@@ -115,9 +115,9 @@ export class PollingTransport {
 		} catch (error) {
 			debug('longpoll error', error);
 
-			const { pollingWait, pollingAttempts } = this.vk.options;
+			const { pollingWait, pollingRetryLimit } = this.vk.options;
 
-			if (error.code !== NEED_RESTART && this.restarted < pollingAttempts) {
+			if (error.code !== NEED_RESTART && this.restarted < pollingRetryLimit) {
 				this.restarted += 1;
 
 				debug('longpoll restart request');

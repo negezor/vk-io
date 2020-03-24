@@ -50,7 +50,7 @@ export const defaultOptions: IVKOptions = {
 	uploadTimeout: 20e3,
 
 	pollingWait: 3e3,
-	pollingAttempts: 3,
+	pollingRetryLimit: 3,
 	pollingGroupId: undefined,
 
 	webhookSecret: undefined,
