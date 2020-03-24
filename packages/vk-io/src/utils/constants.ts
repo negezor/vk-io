@@ -39,7 +39,7 @@ export const defaultOptions: IVKOptions = {
 	apiLimit: 3,
 	apiVersion: '5.103',
 	apiBaseUrl: 'https://api.vk.com/method',
-	apiAttempts: 3,
+	apiRetryLimit: 3,
 	apiTimeout: 10e3,
 	apiHeaders: {
 		'User-Agent': `vk-io/${version} (+https://github.com/negezor/vk-io)`

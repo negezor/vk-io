@@ -97,7 +97,7 @@ export interface IVKOptions {
 	/**
 	 * The number of retries at calling
 	 */
-	apiAttempts: number;
+	apiRetryLimit: number;
 
 	/**
 	 * Wait time for one request

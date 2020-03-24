@@ -33,7 +33,7 @@ export class SequentialWorker extends APIWorker {
 
 			response = await response.json();
 		} catch (error) {
-			if (request.retries === options.apiAttempts) {
+			if (request.retries === options.apiRetryLimit) {
 				debug(`${method} <X-`);
 
 				request.captchaValidate?.reject(error);
