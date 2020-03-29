@@ -51,34 +51,17 @@ export const unifyCondition = (condition: any): Function => {
 	return (value: string | undefined): boolean => value === condition;
 };
 
-export const parseRequestJSON = (req: IncomingMessage, res: ServerResponse): Promise<object> => (
-	new Promise((resolve, reject): void => {
-		let body = '';
+export const parseRequestJSON = async (req: IncomingMessage): Promise<object> => {
+	const chunks = [];
+	let totalSize = 0;
 
-		req.on('error', reject);
-		req.on('data', (chunk): void => {
-			if (body.length > 1e6) {
-				res.writeHead(413);
-				res.end();
+	for await (const chunk of req) {
+		totalSize += chunk.length;
 
-				req.connection.destroy();
+		chunks.push(chunk);
+	}
 
-				reject();
-
-				return;
-			}
-
-			body += String(chunk);
-		});
-
-		req.on('end', (): void => {
-			try {
-				const json = JSON.parse(body);
-
-				resolve(json);
-			} catch (e) {
-				reject(e);
-			}
-		});
-	})
-);
+	return JSON.parse(
+		Buffer.concat(chunks, totalSize).toString('utf8')
+	);
+};
