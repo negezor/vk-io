@@ -13,6 +13,7 @@ const MODULES = [
 	'scenes',
 	'session',
 	'streaming',
+	'commander',
 	'authorization'
 ];
 
@@ -67,11 +68,11 @@ export default async function () {
 							file: pathJoin(modulePath, `${modulePkg.main}.js`),
 							format: 'cjs',
 							exports: 'named'
-						},
-						{
-							file: pathJoin(modulePath, `${modulePkg.main}.mjs`),
-							format: 'esm'
 						}
+						// {
+						// 	file: pathJoin(modulePath, `${modulePkg.main}.mjs`),
+						// 	format: 'esm'
+						// }
 					]
 				};
 			})
