@@ -13,7 +13,6 @@ const MODULES = [
 	'scenes',
 	'session',
 	'streaming',
-	'commander',
 	'authorization'
 ];
 
