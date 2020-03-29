@@ -7,7 +7,7 @@ import { Collect } from './collect';
 import { Updates } from './updates';
 import { Snippets } from './snippets';
 import { inspectable } from './utils/inspectable';
-import { CallbackService, CaptchaHandler, TwoFactorHandler } from './utils/callback-service';
+import { CallbackService } from './utils/callback-service';
 
 import { IVKOptions } from './types';
 
@@ -66,28 +66,6 @@ export class VK {
 		});
 
 		return this;
-	}
-
-	/**
-	 * Sets captcha handler
-	 *
-	 * ```ts
-	 * vk.captchaHandler = (payload, retry) => {...};
-	 * ```
-	 */
-	public set captchaHandler(handler: CaptchaHandler) {
-		this.callbackService.captchaHandler = handler;
-	}
-
-	/**
-	 * Sets two-factor handler
-	 *
-	 * ```ts
-	 * vk.twoFactorHandler = (payload, retry) => {...};
-	 * ```
-	 */
-	public set twoFactorHandler(handler: TwoFactorHandler) {
-		this.callbackService.twoFactorHandler = handler;
 	}
 }
 
