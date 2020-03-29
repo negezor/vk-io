@@ -2,6 +2,7 @@ import { URLSearchParams } from 'url';
 
 import {
 	ButtonColor,
+	ButtonPayload,
 	KeyboardButton,
 
 	IKeyboardTextButtonOptions,
@@ -10,6 +11,16 @@ import {
 	IKeyboardVKPayButtonOptions,
 	IKeyboardApplicationButtonOptions
 } from './types';
+
+const serializePayload = (rawPayload: ButtonPayload): string => {
+	const payload = JSON.stringify(rawPayload);
+
+	if (payload.length > 255) {
+		throw new RangeError('Maximum length of payload 255 characters');
+	}
+
+	return payload;
+};
 
 export class KeyboardBuilder {
 	/**
@@ -62,11 +73,7 @@ export class KeyboardBuilder {
 			throw new RangeError('Maximum length of label 40 characters');
 		}
 
-		const payload = JSON.stringify(rawPayload);
-
-		if (payload.length > 255) {
-			throw new RangeError('Maximum length of payload 255 characters');
-		}
+		const payload = serializePayload(rawPayload);
 
 		return this.addButton({
 			color,
@@ -98,11 +105,7 @@ export class KeyboardBuilder {
 			throw new RangeError('Maximum length of label 40 characters');
 		}
 
-		const payload = JSON.stringify(rawPayload);
-
-		if (payload.length > 255) {
-			throw new RangeError('Maximum length of payload 255 characters');
-		}
+		const payload = serializePayload(rawPayload);
 
 		return this.addWideButton({
 			action: {
@@ -129,11 +132,7 @@ export class KeyboardBuilder {
 	public locationRequestButton({
 		payload: rawPayload = {}
 	}: IKeyboardLocationRequestButtonOptions): this {
-		const payload = JSON.stringify(rawPayload);
-
-		if (payload.length > 255) {
-			throw new RangeError('Maximum length of payload 255 characters');
-		}
+		const payload = serializePayload(rawPayload);
 
 		return this.addWideButton({
 			action: {
