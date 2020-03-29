@@ -23,7 +23,7 @@ export const getExecuteMethod = (
 	params: Record<string, object | string> = {}
 ): string => {
 	const param = JSON.stringify(params, (key, value) => (
-		typeof value === 'object'
+		typeof value === 'object' && value !== params
 			? String(value)
 			: value
 	));
