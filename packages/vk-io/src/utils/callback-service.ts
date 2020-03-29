@@ -73,17 +73,17 @@ export class CallbackService {
 		key: string;
 		validate: ICallbackServiceValidate;
 	}> {
+		const { captchaHandler } = this;
+
+		if (captchaHandler === undefined) {
+			return Promise.reject(new VKError({
+				message: 'Missing captcha handler',
+				code: MISSING_CAPTCHA_HANDLER
+			}));
+		}
+
 		return new Promise((resolveProcessing, rejectProcessing): void => {
-			if (!this.hasCaptchaHandler) {
-				rejectProcessing(new VKError({
-					message: 'Missing captcha handler',
-					code: MISSING_CAPTCHA_HANDLER
-				}));
-
-				return;
-			}
-
-			this.captchaHandler!(payload, (key: Error | string): Promise<void> => (
+			captchaHandler(payload, (key): Promise<void> => (
 				new Promise((resolve, reject): void => {
 					if (key instanceof Error) {
 						reject(key);
@@ -111,17 +111,17 @@ export class CallbackService {
 		code: string;
 		validate: ICallbackServiceValidate;
 	}> {
+		const { twoFactorHandler } = this;
+
+		if (twoFactorHandler === undefined) {
+			return Promise.reject(new VKError({
+				message: 'Missing two-factor handler',
+				code: MISSING_TWO_FACTOR_HANDLER
+			}));
+		}
+
 		return new Promise((resolveProcessing, rejectProcessing): void => {
-			if (!this.hasTwoFactorHandler) {
-				rejectProcessing(new VKError({
-					message: 'Missing two-factor handler',
-					code: MISSING_TWO_FACTOR_HANDLER
-				}));
-
-				return;
-			}
-
-			this.twoFactorHandler!(payload, (code: Error | string): Promise<void> => (
+			twoFactorHandler(payload, (code): Promise<void> => (
 				new Promise((resolve, reject): void => {
 					if (code instanceof Error) {
 						reject(code);
