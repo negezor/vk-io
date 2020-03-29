@@ -332,6 +332,13 @@ export class AccountVerification {
 
 		const src = $('.captcha_img').attr('src');
 
+		if (!src) {
+			throw new AuthorizationError({
+				message: 'Failed get captcha image',
+				code: AUTHORIZATION_FAILED
+			});
+		}
+
 		const { key, validate } = await this.vk.callbackService.processingCaptcha({
 			type: CaptchaType.ACCOUNT_VERIFICATION,
 			sid: fields.captcha_sid,

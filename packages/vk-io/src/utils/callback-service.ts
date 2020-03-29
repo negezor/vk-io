@@ -1,10 +1,37 @@
 import { VK } from '../vk';
+import { APIRequest } from '../api/request';
+
 import { VKError, SharedErrorCode } from '../errors';
+import { CaptchaType } from './constants';
 
 const {
 	MISSING_CAPTCHA_HANDLER,
 	MISSING_TWO_FACTOR_HANDLER
 } = SharedErrorCode;
+
+export interface ICallbackServiceCaptchaPayload {
+	type: CaptchaType;
+	sid: string | number;
+	src: string;
+	request?: APIRequest;
+}
+
+export interface ICallbackServiceTwoFactorPayload {
+	phoneMask?: string;
+	type?: 'app' | 'sms';
+}
+
+export type CallbackServiceRetry = (code: Error | string) => Promise<void>;
+
+export type CaptchaHandler = (
+	payload: ICallbackServiceCaptchaPayload,
+	retry: CallbackServiceRetry
+) => Promise<void> | void;
+
+export type TwoFactorHandler = (
+	payload: ICallbackServiceTwoFactorPayload,
+	retry: CallbackServiceRetry
+) => Promise<void> | void;
 
 export interface ICallbackServiceValidate {
 	resolve: () => void;
@@ -12,9 +39,9 @@ export interface ICallbackServiceValidate {
 }
 
 export class CallbackService {
-	public captchaHandler?: Function;
+	public captchaHandler?: CaptchaHandler;
 
-	public twoFactorHandler?: Function;
+	public twoFactorHandler?: TwoFactorHandler;
 
 	protected vk: VK;
 
@@ -42,7 +69,7 @@ export class CallbackService {
 	/**
 	 * Processing captcha
 	 */
-	public processingCaptcha(payload: object): Promise<{
+	public processingCaptcha(payload: ICallbackServiceCaptchaPayload): Promise<{
 		key: string;
 		validate: ICallbackServiceValidate;
 	}> {
@@ -80,7 +107,7 @@ export class CallbackService {
 	/**
 	 * Processing two-factor
 	 */
-	public processingTwoFactor(payload: object): Promise<{
+	public processingTwoFactor(payload: ICallbackServiceTwoFactorPayload): Promise<{
 		code: string;
 		validate: ICallbackServiceValidate;
 	}> {

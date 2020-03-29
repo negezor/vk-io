@@ -7,7 +7,7 @@ import { Collect } from './collect';
 import { Updates } from './updates';
 import { Snippets } from './snippets';
 import { inspectable } from './utils/inspectable';
-import { CallbackService } from './utils/callback-service';
+import { CallbackService, CaptchaHandler, TwoFactorHandler } from './utils/callback-service';
 
 import { IVKOptions } from './types';
 
@@ -75,7 +75,7 @@ export class VK {
 	 * vk.captchaHandler = (payload, retry) => {...};
 	 * ```
 	 */
-	public set captchaHandler(handler: Function) {
+	public set captchaHandler(handler: CaptchaHandler) {
 		this.callbackService.captchaHandler = handler;
 	}
 
@@ -86,7 +86,7 @@ export class VK {
 	 * vk.twoFactorHandler = (payload, retry) => {...};
 	 * ```
 	 */
-	public set twoFactorHandler(handler: Function) {
+	public set twoFactorHandler(handler: TwoFactorHandler) {
 		this.callbackService.twoFactorHandler = handler;
 	}
 }

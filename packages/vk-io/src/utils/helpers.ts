@@ -131,7 +131,6 @@ export const getPeerType = (id: number): string => {
 	return MessageSource.USER;
 };
 
-
 /**
  * Displays deprecated message
  */

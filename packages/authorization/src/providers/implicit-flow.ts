@@ -366,6 +366,13 @@ export abstract class ImplicitFlow {
 		if (fields.captcha_sid !== undefined) {
 			const src = $('.oauth_captcha').attr('src') || $('#captcha').attr('src');
 
+			if (!src) {
+				throw new AuthorizationError({
+					message: 'Failed get captcha image',
+					code: AUTHORIZATION_FAILED
+				});
+			}
+
 			const { key, validate } = await this.vk.callbackService.processingCaptcha({
 				type: CaptchaType.IMPLICIT_FLOW_AUTH,
 				sid: fields.captcha_sid,

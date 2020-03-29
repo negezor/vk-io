@@ -162,8 +162,8 @@ export class SequentialWorker extends APIWorker {
 
 			const { key, validate } = await this.vk.callbackService.processingCaptcha({
 				type: CaptchaType.API,
-				src: error.captchaImg,
-				sid: captchaSid,
+				src: error.captchaImg!,
+				sid: captchaSid!,
 				request
 			});
 
