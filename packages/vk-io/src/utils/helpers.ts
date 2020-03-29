@@ -22,15 +22,13 @@ export const getExecuteMethod = (
 	method: string,
 	params: Record<string, object | string> = {}
 ): string => {
-	const options: Record<string, string> = {};
-
-	for (const [key, value] of Object.entries(params)) {
-		options[key] = typeof value === 'object'
+	const param = JSON.stringify(params, (key, value) => (
+		typeof value === 'object'
 			? String(value)
-			: value;
-	}
+			: value
+	));
 
-	return `API.${method}(${JSON.stringify(options)})`;
+	return `API.${method}(${param})`;
 };
 
 /**
