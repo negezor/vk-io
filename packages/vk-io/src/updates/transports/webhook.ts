@@ -134,7 +134,7 @@ export class WebhookTransport {
 			try {
 				// @ts-ignore
 				update = typeof req.body !== 'object'
-					? await parseRequestJSON(req, res)
+					? await parseRequestJSON(req)
 					// @ts-ignore
 					: req.body;
 			} catch (e) {
