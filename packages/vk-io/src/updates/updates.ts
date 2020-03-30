@@ -534,7 +534,7 @@ export class Updates {
 	/**
 	 * A handler that is called when handlers are not found
 	 */
-	public setHearFallbackHandler<T = {}>(handler: Middleware<MessageContext & T>): this {
+	public onHearFallback<T = {}>(handler: Middleware<MessageContext & T>): this {
 		// @ts-ignore
 		this.hearFallbackHandler = handler;
 
