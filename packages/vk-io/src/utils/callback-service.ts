@@ -39,11 +39,11 @@ export interface ICallbackServiceValidate {
 }
 
 export class CallbackService {
-	public captchaHandler?: CaptchaHandler;
+	private captchaHandler?: CaptchaHandler;
 
-	public twoFactorHandler?: TwoFactorHandler;
+	private twoFactorHandler?: TwoFactorHandler;
 
-	protected vk: VK;
+	private vk: VK;
 
 	/**
 	 * Constructor
@@ -64,6 +64,24 @@ export class CallbackService {
 	 */
 	public get hasTwoFactorHandler(): boolean {
 		return this.twoFactorHandler !== undefined;
+	}
+
+	/**
+	 * Sets a handler for captcha processing
+	 */
+	public onCaptcha(handler: CaptchaHandler): this {
+		this.captchaHandler = handler;
+
+		return this;
+	}
+
+	/**
+	 * Sets a handler for two factor processing
+	 */
+	public onTwoFactor(handler: TwoFactorHandler): this {
+		this.twoFactorHandler = handler;
+
+		return this;
 	}
 
 	/**
