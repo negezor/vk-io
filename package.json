@@ -8,19 +8,19 @@
 		"node": ">=10.0.0"
 	},
 	"devDependencies": {
-		"@types/jest": "^25.1.4",
-		"@types/node": "^13.9.5",
-		"@typescript-eslint/eslint-plugin": "^2.25.0",
-		"@typescript-eslint/parser": "^2.25.0",
+		"@types/jest": "^25.2.1",
+		"@types/node": "^13.11.1",
+		"@typescript-eslint/eslint-plugin": "^2.27.0",
+		"@typescript-eslint/parser": "^2.27.0",
 		"eslint": "^6.8.0",
 		"eslint-config-airbnb-base": "^14.1.0",
 		"eslint-plugin-import": "^2.20.2",
-		"jest": "^25.2.4",
-		"rollup": "^2.1.0",
+		"jest": "^25.3.0",
+		"rollup": "^2.6.0",
 		"rollup-plugin-json": "^4.0.0",
 		"rollup-plugin-typescript2": "^0.27.0",
-		"ts-jest": "^25.2.1",
-		"typedoc": "^0.17.3",
+		"ts-jest": "^25.3.1",
+		"typedoc": "^0.17.4",
 		"typescript": "^3.8.3"
 	},
 	"scripts": {
