@@ -329,9 +329,13 @@ export class CollectStream<T> extends Readable {
 
 	public on(event: 'end', listener: () => void): this;
 
+	public on(event: 'error', listener: (err: Error) => void): this;
+
+	public on(event: 'pause', listener: () => void): this;
+
 	public on(event: 'readable', listener: () => void): this;
 
-	public on(event: 'error', listener: (err: Error) => void): this;
+	public on(event: 'resume', listener: () => void): this;
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public on(event: string | symbol, listener: (...args: any[]) => void): this {
