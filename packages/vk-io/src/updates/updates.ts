@@ -1,12 +1,5 @@
 import createDebug from 'debug';
-import {
-	Middleware,
-
-	compose,
-	skipMiddleware,
-
-	noopNext
-} from 'middleware-io';
+import { Middleware, compose, noopNext } from 'middleware-io';
 
 import {
 	Context,
@@ -65,20 +58,16 @@ import {
 	WallPostContextSubType
 } from '../structures/contexts';
 
-import { PollingTransport, WebhookTransport } from './transports';
 import { VK } from '../vk';
+import { Hears, HearConditions } from './hears';
+import { Composer } from '../structures/shared/composer';
+import { PollingTransport, WebhookTransport } from './transports';
 
-import {
-	unifyCondition,
-	getObjectValue,
-	splitPath
-} from './helpers';
 import { APIErrorCode } from '../errors';
 
 import { UpdateSource } from '../utils/constants';
 import { AllowArray, Constructor } from '../types';
 import { inspectable } from '../utils/inspectable';
-import { Composer } from '../structures/shared/composer';
 
 const debug = createDebug('vk-io:updates');
 
@@ -211,15 +200,6 @@ export interface IUpdatesStartWebhookOptions {
 	host?: string;
 }
 
-type HearFunctionCondition<T, U> = (value: T, context: U) => boolean;
-
-type HearCondition<T, U> = HearFunctionCondition<T, U> | RegExp | string;
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type HearObjectCondition<T extends Record<string, any>> = {
-	[P in keyof T]: AllowArray<HearCondition<T[P], T>>;
-};
-
 export type ContextTypes =
 CommentActionContextType
 | DialogFlagsContextType
@@ -273,11 +253,9 @@ export class Updates {
 			console.error(error);
 		});
 
-	private hearComposer = Composer.builder<MessageContext>();
+	private hears = new Hears();
 
-	private stackMiddleware!: Middleware<Context>;
-
-	private hearFallbackHandler: Middleware<MessageContext> = skipMiddleware;
+	private composed!: Middleware<Context>;
 
 	/**
 	 * Constructor
@@ -285,7 +263,7 @@ export class Updates {
 	public constructor(vk: VK) {
 		this.vk = vk;
 
-		this.reloadMiddleware();
+		this.recompose();
 
 		this.pollingTransport = new PollingTransport(vk);
 		this.webhookTransport = new WebhookTransport(vk);
@@ -317,7 +295,7 @@ export class Updates {
 
 		this.composer.use(middleware);
 
-		this.reloadMiddleware();
+		this.recompose();
 
 		return this;
 	}
@@ -444,89 +422,12 @@ export class Updates {
 	 * Listen by context condition
 	 */
 	public hear<T = {}>(
-		hearConditions: (
-			AllowArray<HearCondition<string | undefined, T & MessageContext>>
-			| AllowArray<HearObjectCondition<T & MessageContext>>),
+		hearConditions: HearConditions<T>,
 		handler: Middleware<MessageContext & T>
 	): this {
-		const rawConditions = !Array.isArray(hearConditions)
-			? [hearConditions]
-			: hearConditions;
+		this.hears.hear(hearConditions, handler);
 
-		const hasConditions = rawConditions.every(Boolean);
-
-		if (!hasConditions) {
-			throw new Error('Condition should be not empty');
-		}
-
-		if (typeof handler !== 'function') {
-			throw new TypeError('Handler must be a function');
-		}
-
-		let textCondition = false;
-		let functionCondtion = false;
-		const conditions = rawConditions.map((condition): Function => {
-			if (typeof condition === 'object' && !(condition instanceof RegExp)) {
-				functionCondtion = true;
-
-				const entries = Object.entries(condition).map(([path, value]): [string[], Function] => (
-					[splitPath(path), unifyCondition(value)]
-				));
-
-				return (text: string | undefined, context: MessageContext): boolean => (
-					entries.every(([selectors, callback]): boolean => {
-						const value = getObjectValue(context, selectors);
-
-						return callback(value, context);
-					})
-				);
-			}
-
-			if (typeof condition === 'function') {
-				functionCondtion = true;
-
-				return condition;
-			}
-
-			textCondition = true;
-
-			if (condition instanceof RegExp) {
-				return (text: string | undefined, context: MessageContext): boolean => {
-					const passed = condition.test(text!);
-
-					if (passed) {
-						context.$match = text!.match(condition)!;
-					}
-
-					return passed;
-				};
-			}
-
-			const stringCondition = String(condition);
-
-			return (text: string | undefined): boolean => text === stringCondition;
-		});
-
-		const needText = textCondition && functionCondtion === false;
-
-		this.hearComposer.use((context: MessageContext, next: Function): Promise<void> => {
-			const { text } = context;
-
-			if (needText && text === undefined) {
-				return next();
-			}
-
-			const hasSome = conditions.some((condition): boolean => (
-				condition(text, context)
-			));
-
-			return hasSome
-				// @ts-ignore
-				? handler(context, next)
-				: next();
-		});
-
-		this.reloadMiddleware();
+		this.recompose();
 
 		return this;
 	}
@@ -535,10 +436,9 @@ export class Updates {
 	 * A handler that is called when handlers are not found
 	 */
 	public onHearFallback<T = {}>(handler: Middleware<MessageContext & T>): this {
-		// @ts-ignore
-		this.hearFallbackHandler = handler;
+		this.hears.onFallback(handler);
 
-		this.reloadMiddleware();
+		this.recompose();
 
 		return this;
 	}
@@ -676,27 +576,25 @@ export class Updates {
 	 * Calls up the middleware chain
 	 */
 	public dispatchMiddleware(context: Context): Promise<void> {
-		return this.stackMiddleware(context, noopNext) as Promise<void>;
+		return this.composed(context, noopNext) as Promise<void>;
 	}
 
 	/**
 	 * Reloads middleware
 	 */
-	protected reloadMiddleware(): void {
+	protected recompose(): void {
 		const composer = this.composer.clone();
 
-		if (this.hearComposer.length !== 0) {
+		if (this.hears.length !== 0) {
 			composer.optional(
 				(context: MessageContext): boolean => (
 					context.is('new_message') && !context.isEvent
 				),
-				this.hearComposer.clone()
-					.use(this.hearFallbackHandler)
-					.compose()
+				this.hears.middleware
 			);
 		}
 
-		this.stackMiddleware = composer.compose();
+		this.composed = composer.compose();
 	}
 }
 
