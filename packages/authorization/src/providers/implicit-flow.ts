@@ -4,7 +4,6 @@ import { load as cheerioLoad } from 'cheerio';
 import { VK, CaptchaType, ICallbackServiceValidate } from 'vk-io';
 
 import { Agent } from 'https';
-import { promisify } from 'util';
 import { URL, URLSearchParams } from 'url';
 
 import { AuthorizationError } from '../errors';
@@ -174,11 +173,9 @@ export abstract class ImplicitFlow {
 	public async getCookies(): Promise<{ 'login.vk.com': string; 'vk.com': string }> {
 		const { jar } = this;
 
-		const getCookieString = promisify(jar.getCookieString).bind(jar);
-
 		const [login, main] = await Promise.all([
-			getCookieString('https://login.vk.com'),
-			getCookieString('https://vk.com')
+			jar.getCookieString('https://login.vk.com'),
+			jar.getCookieString('https://vk.com')
 		]);
 
 		return {

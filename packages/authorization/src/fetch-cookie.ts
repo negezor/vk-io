@@ -6,8 +6,6 @@ import fetch, {
 import createDebug from 'debug';
 import { CookieJar } from 'tough-cookie';
 
-import { promisify } from 'util';
-
 export type Headers = Record<string, string>;
 
 export type FetchWrapper = (
@@ -43,15 +41,12 @@ const findUserAgent = (headers?: Headers): string | undefined => {
 	return headers[key];
 };
 
-export const fetchCookieDecorator = (jar = new CookieJar()): FetchWrapper => {
-	const setCookie = promisify(jar.setCookie).bind(jar);
-	const getCookieString = promisify(jar.getCookieString).bind(jar);
-
-	return async function fetchCookie(
+export const fetchCookieDecorator = (jar = new CookieJar()): FetchWrapper => (
+	async function fetchCookie(
 		url: RequestInfo,
 		options: RequestInit = {}
 	): Promise<Response> {
-		const previousCookie = await getCookieString(String(url));
+		const previousCookie = await jar.getCookieString(String(url));
 
 		const { headers = {} } = options as {
 			headers: Headers;
@@ -76,12 +71,12 @@ export const fetchCookieDecorator = (jar = new CookieJar()): FetchWrapper => {
 		}
 
 		await Promise.all(cookies.map((cookie: string): Promise<unknown> => (
-			setCookie(cookie, response.url)
+			jar.setCookie(cookie, response.url)
 		)));
 
 		return response;
-	};
-};
+	}
+);
 
 export const fetchCookieFollowRedirectsDecorator = (jar?: CookieJar): FetchWrapper => {
 	const fetchCookie = fetchCookieDecorator(jar);
