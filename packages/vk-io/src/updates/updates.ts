@@ -59,7 +59,7 @@ import {
 } from '../structures/contexts';
 
 import { VK } from '../vk';
-import { Hears, HearConditions } from './hears';
+import { HearManager, HearConditions } from './hear-manager';
 import { Composer } from '../structures/shared/composer';
 import { PollingTransport, WebhookTransport } from './transports';
 
@@ -253,7 +253,7 @@ export class Updates {
 			console.error(error);
 		});
 
-	private hears = new Hears();
+	private hearManager = new HearManager();
 
 	private composed!: Middleware<Context>;
 
@@ -425,7 +425,7 @@ export class Updates {
 		hearConditions: HearConditions<T>,
 		handler: Middleware<MessageContext & T>
 	): this {
-		this.hears.hear(hearConditions, handler);
+		this.hearManager.hear(hearConditions, handler);
 
 		this.recompose();
 
@@ -436,7 +436,7 @@ export class Updates {
 	 * A handler that is called when handlers are not found
 	 */
 	public onHearFallback<T = {}>(handler: Middleware<MessageContext & T>): this {
-		this.hears.onFallback(handler);
+		this.hearManager.onFallback(handler);
 
 		this.recompose();
 
@@ -585,12 +585,12 @@ export class Updates {
 	protected recompose(): void {
 		const composer = this.composer.clone();
 
-		if (this.hears.length !== 0) {
+		if (this.hearManager.length !== 0) {
 			composer.optional(
 				(context: MessageContext): boolean => (
 					context.is('new_message') && !context.isEvent
 				),
-				this.hears.middleware
+				this.hearManager.middleware
 			);
 		}
 

@@ -26,7 +26,7 @@ export type HearConditions<T> = (
 	| AllowArray<HearObjectCondition<T & MessageContext>>
 );
 
-export class Hears {
+export class HearManager {
 	private composer = Composer.builder<MessageContext>();
 
 	private fallbackHandler: Middleware<MessageContext> = skipMiddleware;
