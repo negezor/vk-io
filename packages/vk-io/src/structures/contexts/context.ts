@@ -1,8 +1,9 @@
+import { inspectable } from 'inspectable';
+
 import { VK } from '../../vk';
 import { kSerializeData, UpdateSource } from '../../utils/constants';
 
 import { AllowArray } from '../../types';
-import { inspectable } from '../../utils/inspectable';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ContextDefaultState = Record<string, any>;

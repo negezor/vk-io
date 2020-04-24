@@ -1,6 +1,8 @@
 import fetch from 'node-fetch';
 import { AbortController } from 'abort-controller';
 
+import { inspectable } from 'inspectable';
+
 import { URL } from 'url';
 import { randomBytes } from 'crypto';
 import { createReadStream } from 'fs';
@@ -12,7 +14,6 @@ import { DefaultExtension, DefaultContentType } from '../utils/constants';
 import { isStream, pickExistingProperties, streamToBuffer } from './helpers';
 
 import { AllowArray } from '../types';
-import { inspectable } from '../utils/inspectable';
 
 import {
 	PhotoAttachment,
@@ -1117,6 +1118,4 @@ export class Upload {
 	}
 }
 
-inspectable(Upload, {
-	serialize: () => ({})
-});
+inspectable(Upload);

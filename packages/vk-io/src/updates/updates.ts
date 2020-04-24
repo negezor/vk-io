@@ -1,4 +1,5 @@
 import createDebug from 'debug';
+import { inspectable } from 'inspectable';
 import { Middleware, compose, noopNext } from 'middleware-io';
 
 import {
@@ -67,7 +68,6 @@ import { APIErrorCode } from '../errors';
 
 import { UpdateSource } from '../utils/constants';
 import { AllowArray, Constructor } from '../types';
-import { inspectable } from '../utils/inspectable';
 
 const debug = createDebug('vk-io:updates');
 

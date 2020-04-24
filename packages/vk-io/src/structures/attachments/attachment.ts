@@ -1,5 +1,6 @@
+import { inspectable } from 'inspectable';
+
 import { VK } from '../../vk';
-import { inspectable } from '../../utils/inspectable';
 import { parseAttachmentRe } from '../../utils/helpers';
 import { kSerializeData, AttachmentType } from '../../utils/constants';
 

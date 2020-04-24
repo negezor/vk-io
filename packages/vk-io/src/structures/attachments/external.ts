@@ -1,5 +1,6 @@
+import { inspectable } from 'inspectable';
+
 import { VK } from '../../vk';
-import { inspectable } from '../../utils/inspectable';
 import { kSerializeData } from '../../utils/constants';
 
 export class ExternalAttachment<P = {}> {

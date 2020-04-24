@@ -1,3 +1,5 @@
+import { inspectable } from 'inspectable';
+
 import { CollectStream, ICollectStreamOptions } from './stream';
 import { LIMITS_METHODS } from './limits';
 
@@ -5,7 +7,6 @@ import { VK } from '../vk';
 import { Chain } from './chain';
 import { ExecuteError } from '../errors';
 
-import { inspectable } from '../utils/inspectable';
 import { getChainReturn, getExecuteMethod } from '../utils/helpers';
 
 export interface ICollectStreamGroup {
@@ -151,6 +152,4 @@ export class Collect {
 	}
 }
 
-inspectable(Collect, {
-	serialize: () => ({})
-});
+inspectable(Collect);

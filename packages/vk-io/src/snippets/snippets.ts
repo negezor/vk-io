@@ -1,5 +1,6 @@
+import { inspectable } from 'inspectable';
+
 import { VK } from '../vk';
-import { inspectable } from '../utils/inspectable';
 import { ResourceResolver, IResolvedResource } from './resource-resolver';
 
 export class Snippets {
@@ -31,6 +32,4 @@ export class Snippets {
 	}
 }
 
-inspectable(Snippets, {
-	serialize: () => ({})
-});
+inspectable(Snippets);

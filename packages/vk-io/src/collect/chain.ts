@@ -1,8 +1,9 @@
+import { inspectable } from 'inspectable';
+
 import { VKError, ExecuteError } from '../errors';
 
 import { VK } from '../vk';
 import { APIRequest } from '../api/request';
-import { inspectable } from '../utils/inspectable';
 import { getChainReturn, resolveExecuteTask } from '../utils/helpers';
 
 export class Chain {

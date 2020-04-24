@@ -1,4 +1,5 @@
 import createDebug from 'debug';
+import { inspectable } from 'inspectable';
 
 import { Readable } from 'stream';
 
@@ -8,7 +9,6 @@ import { CollectError, APIErrorCode, CollectErrorCode } from '../errors';
 
 import { APIRequest } from '../api/request';
 import { getExecuteCode } from './execute-code';
-import { inspectable } from '../utils/inspectable';
 
 const debug = createDebug('vk-io:collect:stream');
 

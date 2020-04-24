@@ -1,9 +1,10 @@
+import { inspectable } from 'inspectable';
+
 import { APIMethods } from './schemas/methods';
 
 import { VK } from '../vk';
 import { APIManager } from './manager';
 import { APIRequest } from './request';
-import { inspectable } from '../utils/inspectable';
 
 const groupMethods = [
 	'account',
@@ -126,6 +127,4 @@ export class API extends APIMethods {
 	}
 }
 
-inspectable(API, {
-	serialize: () => ({})
-});
+inspectable(API);

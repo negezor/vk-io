@@ -1,3 +1,5 @@
+import { inspectable } from 'inspectable';
+
 import { Agent } from 'https';
 import { EventEmitter } from 'events';
 
@@ -6,7 +8,6 @@ import { Upload } from './upload';
 import { Collect } from './collect';
 import { Updates } from './updates';
 import { Snippets } from './snippets';
-import { inspectable } from './utils/inspectable';
 import { CallbackService } from './utils/callback-service';
 
 import { IVKOptions } from './types';

@@ -1,8 +1,9 @@
 import fetch, { Response } from 'node-fetch';
 import { AbortController } from 'abort-controller';
 
+import { inspectable } from 'inspectable';
+
 import { VK } from '../vk';
-import { inspectable } from '../utils/inspectable';
 import { getExecuteMethod } from '../utils/helpers';
 import { ICallbackServiceValidate } from '../utils/callback-service';
 

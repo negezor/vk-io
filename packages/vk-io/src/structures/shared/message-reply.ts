@@ -1,9 +1,10 @@
+import { inspectable } from 'inspectable';
+
 import { VK } from '../../vk';
 
 import { Attachmentable } from './attachmentable';
 import { Attachment, ExternalAttachment } from '../attachments';
 
-import { inspectable } from '../../utils/inspectable';
 import { transformAttachments } from '../attachments/helpers';
 import { pickProperties, applyMixins } from '../../utils/helpers';
 
