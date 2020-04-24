@@ -2208,6 +2208,11 @@ inquirer@^7.0.0:
     strip-ansi "^6.0.0"
     through "^2.3.6"
 
+inspectable@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/inspectable/-/inspectable-0.0.1.tgz#15fe1c103af22562038e16f173ae3751d8f0c40c"
+  integrity sha512-C6Aq4A2TLxqO42PVmaE5ioYk5I+TMU79jRgSEDVHe1pLQP6bne6wP4pU12Da+oSuA5wKG1HTvg6SxvF7p9hxTQ==
+
 interpret@^1.0.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/interpret/-/interpret-1.2.0.tgz#d5061a6224be58e8083985f5014d844359576296"

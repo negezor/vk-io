@@ -40,6 +40,7 @@
 	"dependencies": {
 		"abort-controller": "^3.0.0",
 		"debug": "^4.1.1",
+		"inspectable": "^0.0.1",
 		"middleware-io": "^2.5.0",
 		"node-fetch": "^2.6.0",
 		"sandwich-stream": "^2.0.2"
