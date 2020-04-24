@@ -1,4 +1,5 @@
-import { VK, inspectable } from 'vk-io';
+import { VK } from 'vk-io';
+import { inspectable } from 'inspectable';
 
 import { createHash } from 'crypto';
 
@@ -142,6 +143,4 @@ export class Authorization {
 	}
 }
 
-inspectable(Authorization, {
-	serialize: () => ({})
-});
+inspectable(Authorization);
