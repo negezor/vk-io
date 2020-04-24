@@ -1,8 +1,9 @@
 import fetch from 'node-fetch';
 import createDebug from 'debug';
 import * as WebSocket from 'ws';
+import { inspectable } from 'inspectable';
 
-import { VK, UpdateSource, inspectable } from 'vk-io';
+import { VK, UpdateSource } from 'vk-io';
 
 import { URL, URLSearchParams } from 'url';
 
