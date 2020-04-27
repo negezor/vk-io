@@ -30,7 +30,7 @@ import {
 } from '../../utils/constants';
 import { AllowArray } from '../../types';
 import { UploadSource, UploadSourceValue } from '../../upload/upload';
-import { MessagesSendParams } from '../../../lib/api/schemas/params';
+import { MessagesSendParams } from '../../../src/api/schemas/params';
 
 export type MessageContextType = 'message';
 
