@@ -1,186 +1,5 @@
 {
-  "errors": [
-    {
-      "name": "API_ERROR_UNKNOWN",
-      "code": 1,
-      "description": "Unknown error occurred"
-    },
-    {
-      "name": "API_ERROR_DISABLED",
-      "code": 2,
-      "description": "Application is disabled. Enable your application or use test mode"
-    },
-    {
-      "name": "API_ERROR_METHOD",
-      "code": 3,
-      "description": "Unknown method passed"
-    },
-    {
-      "name": "API_ERROR_SIGNATURE",
-      "code": 4,
-      "description": "Incorrect signature"
-    },
-    {
-      "name": "API_ERROR_AUTH",
-      "code": 5,
-      "description": "User authorization failed"
-    },
-    {
-      "name": "API_ERROR_TOO_MANY",
-      "code": 6,
-      "description": "Too many requests per second"
-    },
-    {
-      "name": "API_ERROR_PERMISSION",
-      "code": 7,
-      "description": "Permission to perform this action is denied"
-    },
-    {
-      "name": "API_ERROR_REQUEST",
-      "code": 8,
-      "description": "Invalid request"
-    },
-    {
-      "name": "API_ERROR_FLOOD",
-      "code": 9,
-      "description": "Flood control"
-    },
-    {
-      "name": "API_ERROR_SERVER",
-      "code": 10,
-      "description": "Internal server error"
-    },
-    {
-      "name": "API_ERROR_ENABLED_IN_TEST",
-      "code": 11,
-      "description": "In test mode application should be disabled or user should be authorized"
-    },
-    {
-      "name": "API_ERROR_CAPTCHA",
-      "code": 14,
-      "description": "Captcha needed"
-    },
-    {
-      "name": "API_ERROR_ACCESS",
-      "code": 15,
-      "description": "Access denied"
-    },
-    {
-      "name": "API_ERROR_AUTH_HTTPS",
-      "code": 16,
-      "description": "HTTP authorization failed"
-    },
-    {
-      "name": "API_ERROR_AUTH_VALIDATION",
-      "code": 17,
-      "description": "Validation required"
-    },
-    {
-      "name": "API_ERROR_USER_DELETED",
-      "code": 18,
-      "description": "User was deleted or banned"
-    },
-    {
-      "name": "API_ERROR_METHOD_PERMISSION",
-      "code": 20,
-      "description": "Permission to perform this action is denied for non-standalone applications"
-    },
-    {
-      "name": "API_ERROR_METHOD_ADS",
-      "code": 21,
-      "description": "Permission to perform this action is allowed only for standalone and OpenAPI applications"
-    },
-    {
-      "name": "API_ERROR_METHOD_DISABLED",
-      "code": 23,
-      "description": "This method was disabled"
-    },
-    {
-      "name": "API_ERROR_NEED_CONFIRMATION",
-      "code": 24,
-      "description": "Confirmation required"
-    },
-    {
-      "name": "API_ERROR_NEED_TOKEN_CONFIRMATION",
-      "code": 25,
-      "description": "Token confirmation required"
-    },
-    {
-      "name": "API_ERROR_GROUP_AUTH",
-      "code": 27,
-      "description": "Group authorization failed"
-    },
-    {
-      "name": "API_ERROR_APP_AUTH",
-      "code": 28,
-      "description": "Application authorization failed"
-    },
-    {
-      "name": "API_ERROR_RATE_LIMIT",
-      "code": 29,
-      "description": "Rate limit reached"
-    },
-    {
-      "name": "API_ERROR_PRIVATE_PROFILE",
-      "code": 30,
-      "description": "This profile is private"
-    },
-    {
-      "name": "API_ERROR_PARAM",
-      "code": 100,
-      "description": "One of the parameters specified was missing or invalid"
-    },
-    {
-      "name": "API_ERROR_PARAM_API_ID",
-      "code": 101,
-      "description": "Invalid application API ID"
-    },
-    {
-      "name": "API_ERROR_PARAM_USER_ID",
-      "code": 113,
-      "description": "Invalid user id"
-    },
-    {
-      "name": "API_ERROR_PARAM_TIMESTAMP",
-      "code": 150,
-      "description": "Invalid timestamp"
-    },
-    {
-      "name": "API_ERROR_ACCESS_ALBUM",
-      "code": 200,
-      "description": "Access denied"
-    },
-    {
-      "name": "API_ERROR_ACCESS_AUDIO",
-      "code": 201,
-      "description": "Access denied"
-    },
-    {
-      "name": "API_ERROR_ACCESS_GROUP",
-      "code": 203,
-      "description": "Access to group denied"
-    },
-    {
-      "name": "API_ERROR_ALBUM_FULL",
-      "code": 300,
-      "description": "This album is full"
-    },
-    {
-      "name": "API_ERROR_VOTES_PERMISSION",
-      "code": 500,
-      "description": "Permission denied. You must enable votes processing in application settings"
-    },
-    {
-      "name": "API_ERROR_ADS_PERMISSION",
-      "code": 600,
-      "description": "Permission denied. You have no access to operations specified with given object(s)"
-    },
-    {
-      "name": "API_ERROR_ADS_SPECIFIC",
-      "code": 603,
-      "description": "Some ads error occured"
-    }
-  ],
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "methods": [
     {
       "name": "account.ban",
@@ -1446,6 +1265,16 @@
           "name": "campaign_ids",
           "description": "Filter of advertising campaigns to show. Serialized JSON array with campaign IDs. Only campaigns that exist in 'campaign_ids' and belong to the specified advertising account will be shown. If the parameter is null, all campaigns will be shown.",
           "type": "string"
+        },
+        {
+          "name": "fields",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "ads_count"
+            ]
+          }
         }
       ],
       "responses": {
@@ -1749,6 +1578,17 @@
           "description": "Date to show statistics to. For different value of 'period' different date format is used: *day: YYYY-MM-DD, example: 2011-09-27 — September 27, 2011, **0 — current day,, *month: YYYY-MM, example: 2011-09 — September 2011, **0 — current month,, *overall: 0.",
           "type": "string",
           "required": true
+        },
+        {
+          "name": "stats_fields",
+          "description": "Additional fields to add to statistics",
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "views_times"
+            ]
+          }
         }
       ],
       "responses": {
@@ -2297,7 +2137,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "objects.json#/definitions/base_ok_response"
+          "$ref": "responses.json#/definitions/ok_response"
         }
       },
       "errors": [
@@ -2645,6 +2485,70 @@
           "$ref": "responses.json#/definitions/apps_getScore_response"
         }
       }
+    },
+    {
+      "name": "apps.promoHasActiveGift",
+      "access_token_type": [
+        "user"
+      ],
+      "parameters": [
+        {
+          "name": "promo_id",
+          "description": "Id of game promo action",
+          "type": "integer",
+          "required": true,
+          "minimum": 0
+        },
+        {
+          "name": "user_id",
+          "type": "integer",
+          "minimum": 0
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/base_bool_response"
+        }
+      },
+      "errors": [
+        {
+          "code": 106,
+          "name": "API_ERROR_ACTION_FAILED",
+          "description": "Unable to process action"
+        }
+      ]
+    },
+    {
+      "name": "apps.promoUseGift",
+      "access_token_type": [
+        "user"
+      ],
+      "parameters": [
+        {
+          "name": "promo_id",
+          "description": "Id of game promo action",
+          "type": "integer",
+          "required": true,
+          "minimum": 0
+        },
+        {
+          "name": "user_id",
+          "type": "integer",
+          "minimum": 0
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/base_bool_response"
+        }
+      },
+      "errors": [
+        {
+          "code": 106,
+          "name": "API_ERROR_ACTION_FAILED",
+          "description": "Unable to process action"
+        }
+      ]
     },
     {
       "name": "apps.sendRequest",
@@ -3941,6 +3845,11 @@
           "name": "owner_id",
           "description": "ID of the user or community that owns the documents. Use a negative value to designate a community ID.",
           "type": "integer"
+        },
+        {
+          "name": "return_tags",
+          "type": "boolean",
+          "default": false
         }
       ],
       "responses": {
@@ -3964,6 +3873,11 @@
           "items": {
             "type": "string"
           }
+        },
+        {
+          "name": "return_tags",
+          "type": "boolean",
+          "default": false
         }
       ],
       "responses": {
@@ -4094,6 +4008,11 @@
           "name": "tags",
           "description": "Document tags.",
           "type": "string"
+        },
+        {
+          "name": "return_tags",
+          "type": "boolean",
+          "default": false
         }
       ],
       "responses": {
@@ -4132,6 +4051,7 @@
           "name": "count",
           "description": "Number of results to return.",
           "type": "integer",
+          "default": 20,
           "minimum": 0
         },
         {
@@ -4139,6 +4059,10 @@
           "description": "Offset needed to return a specific subset of results.",
           "type": "integer",
           "minimum": 0
+        },
+        {
+          "name": "return_tags",
+          "type": "boolean"
         }
       ],
       "responses": {
@@ -4161,7 +4085,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/base_bool_response"
+          "$ref": "responses.json#/definitions/ok_response"
         }
       },
       "errors": [
@@ -4279,6 +4203,15 @@
           "name": "name",
           "type": "string",
           "maxLength": 50
+        },
+        {
+          "name": "position",
+          "type": "string",
+          "default": "back",
+          "enum": [
+            "back",
+            "front"
+          ]
         }
       ],
       "responses": {
@@ -5644,7 +5577,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/groups_add_address_response"
+          "$ref": "responses.json#/definitions/groups_addAddress_response"
         }
       },
       "errors": [
@@ -6637,7 +6570,6 @@
             "type": "integer",
             "minimum": 0
           },
-          "minItems": 0,
           "maxItems": 100
         },
         {
@@ -6671,22 +6603,6 @@
           "name": "fields",
           "description": "Address fields",
           "type": "array",
-          "default": [
-            "id",
-            "title",
-            "address",
-            "additional_address",
-            "country_id",
-            "city_id",
-            "metro_station_id",
-            "latitude",
-            "longitude",
-            "distance",
-            "work_info_status",
-            "timetable",
-            "phone",
-            "time_offset"
-          ],
           "items": {
             "$ref": "objects.json#/definitions/addresses_fields"
           }
@@ -6702,6 +6618,11 @@
           "code": 125,
           "name": "API_ERROR_PARAM_GROUP_ID",
           "description": "Invalid group id"
+        },
+        {
+          "code": 260,
+          "name": "API_ERROR_ACCESS_GROUPS",
+          "description": "Access to the groups list is denied due to the user's privacy settings"
         }
       ]
     },
@@ -8288,6 +8209,11 @@
           "code": 103,
           "name": "API_ERROR_LIMITS",
           "description": "Out of limits"
+        },
+        {
+          "code": 106,
+          "name": "API_ERROR_ACTION_FAILED",
+          "description": "Unable to process action"
         }
       ]
     },
@@ -8354,6 +8280,11 @@
           "type": "integer",
           "required": true,
           "minimum": 0
+        },
+        {
+          "name": "access_key",
+          "description": "Access key required for an object owned by a private entity.",
+          "type": "string"
         }
       ],
       "responses": {
@@ -9755,6 +9686,12 @@
           "description": "ID of the user to be added to the chat.",
           "type": "integer",
           "minimum": 0
+        },
+        {
+          "name": "visible_messages_count",
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 1000
         }
       ],
       "responses": {
@@ -9782,6 +9719,21 @@
           "code": 936,
           "name": "API_ERROR_MESSAGES_CONTACT_NOT_FOUND",
           "description": "Contact not found"
+        },
+        {
+          "code": 945,
+          "name": "API_ERROR_MESSAGES_CHAT_DISABLED",
+          "description": "Chat was disabled"
+        },
+        {
+          "code": 947,
+          "name": "API_ERROR_MESSAGES_MEMBER_ACCESS_TO_GROUP_DENIED",
+          "description": "Can't add user to chat, because user has no access to group"
+        },
+        {
+          "code": 946,
+          "name": "API_ERROR_MESSAGES_CHAT_UNSUPPORTED",
+          "description": "Chat not supported"
         }
       ]
     },
@@ -9814,7 +9766,8 @@
       "name": "messages.createChat",
       "description": "Creates a chat with several participants.",
       "access_token_type": [
-        "user"
+        "user",
+        "group"
       ],
       "parameters": [
         {
@@ -9830,6 +9783,11 @@
           "name": "title",
           "description": "Chat title.",
           "type": "string"
+        },
+        {
+          "name": "group_id",
+          "type": "integer",
+          "minimum": 0
         }
       ],
       "responses": {
@@ -9925,6 +9883,11 @@
           "code": 925,
           "name": "API_ERROR_MESSAGES_CHAT_NOT_ADMIN",
           "description": "You are not admin of this chat"
+        },
+        {
+          "code": 945,
+          "name": "API_ERROR_MESSAGES_CHAT_DISABLED",
+          "description": "Chat was disabled"
         }
       ]
     },
@@ -10007,12 +9970,6 @@
           "type": "string"
         },
         {
-          "name": "message_id",
-          "type": "integer",
-          "required": true,
-          "minimum": 0
-        },
-        {
           "name": "lat",
           "description": "Geographical latitude of a check-in, in degrees (from -90 to 90).",
           "type": "number"
@@ -10047,6 +10004,11 @@
           "name": "dont_parse_links",
           "type": "boolean",
           "default": false
+        },
+        {
+          "name": "message_id",
+          "type": "integer",
+          "minimum": 0
         }
       ],
       "responses": {
@@ -10094,6 +10056,11 @@
           "code": 940,
           "name": "API_ERROR_MESSAGES_TOO_MANY_POSTS",
           "description": "Too many posts in messages"
+        },
+        {
+          "code": 946,
+          "name": "API_ERROR_MESSAGES_CHAT_UNSUPPORTED",
+          "description": "Chat not supported"
         }
       ]
     },
@@ -10130,6 +10097,16 @@
           "code": 925,
           "name": "API_ERROR_MESSAGES_CHAT_NOT_ADMIN",
           "description": "You are not admin of this chat"
+        },
+        {
+          "code": 945,
+          "name": "API_ERROR_MESSAGES_CHAT_DISABLED",
+          "description": "Chat was disabled"
+        },
+        {
+          "code": 946,
+          "name": "API_ERROR_MESSAGES_CHAT_UNSUPPORTED",
+          "description": "Chat not supported"
         }
       ]
     },
@@ -10349,9 +10326,7 @@
           "default": "all",
           "enum": [
             "all",
-            "business_notify",
             "important",
-            "message_request",
             "unanswered",
             "unread"
           ]
@@ -10388,6 +10363,11 @@
         }
       },
       "errors": [
+        {
+          "code": 927,
+          "name": "API_ERROR_MESSAGES_CHAT_NOT_EXIST",
+          "description": "Chat does not exist"
+        },
         {
           "code": 936,
           "name": "API_ERROR_MESSAGES_CONTACT_NOT_FOUND",
@@ -11109,6 +11089,16 @@
           "code": 936,
           "name": "API_ERROR_MESSAGES_CONTACT_NOT_FOUND",
           "description": "Contact not found"
+        },
+        {
+          "code": 945,
+          "name": "API_ERROR_MESSAGES_CHAT_DISABLED",
+          "description": "Chat was disabled"
+        },
+        {
+          "code": 946,
+          "name": "API_ERROR_MESSAGES_CHAT_UNSUPPORTED",
+          "description": "Chat not supported"
         }
       ]
     },
@@ -11332,10 +11322,6 @@
           }
         },
         {
-          "name": "forward",
-          "type": "string"
-        },
-        {
           "name": "sticker_id",
           "description": "Sticker id.",
           "type": "integer",
@@ -11366,6 +11352,15 @@
           "name": "disable_mentions",
           "type": "boolean",
           "default": false
+        },
+        {
+          "name": "intent",
+          "type": "string",
+          "enum": [
+            "bot_ad_invite",
+            "bot_ad_promo",
+            "promo_newsletter"
+          ]
         }
       ],
       "responses": {
@@ -11431,6 +11426,31 @@
           "code": 940,
           "name": "API_ERROR_MESSAGES_TOO_MANY_POSTS",
           "description": "Too many posts in messages"
+        },
+        {
+          "code": 943,
+          "name": "API_ERROR_MESSAGES_INTENT_CANT_USE",
+          "description": "Cannot use this intent"
+        },
+        {
+          "code": 944,
+          "name": "API_ERROR_MESSAGES_INTENT_LIMIT_OVERFLOW",
+          "description": "Limits overflow for this intent"
+        },
+        {
+          "code": 946,
+          "name": "API_ERROR_MESSAGES_CHAT_UNSUPPORTED",
+          "description": "Chat not supported"
+        },
+        {
+          "code": 945,
+          "name": "API_ERROR_MESSAGES_CHAT_DISABLED",
+          "description": "Chat was disabled"
+        },
+        {
+          "code": 925,
+          "name": "API_ERROR_MESSAGES_CHAT_NOT_ADMIN",
+          "description": "You are not admin of this chat"
         }
       ]
     },
@@ -12760,7 +12780,8 @@
         {
           "name": "message",
           "type": "string",
-          "required": true
+          "required": true,
+          "maxLength": 254
         },
         {
           "name": "fragment",
@@ -16470,11 +16491,15 @@
           "required": true
         },
         {
-          "name": "post_id",
-          "description": "wall post id. Note that stats are available only for '300' last (newest) posts on a community wall.",
-          "type": "integer",
+          "name": "post_ids",
+          "description": "wall posts id",
+          "type": "array",
           "required": true,
-          "minimum": 0
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "maxItems": 30
         }
       ],
       "responses": {
@@ -16568,7 +16593,9 @@
       "name": "storage.get",
       "description": "Returns a value of variable with the name set by key parameter.",
       "access_token_type": [
-        "user"
+        "user",
+        "group",
+        "service"
       ],
       "parameters": [
         {
@@ -16588,19 +16615,14 @@
           "name": "user_id",
           "type": "integer",
           "minimum": 0
-        },
-        {
-          "name": "global",
-          "type": "boolean",
-          "default": 0
         }
       ],
       "responses": {
-        "keyResponse": {
-          "$ref": "responses.json#/definitions/storage_get_response"
+        "response": {
+          "$ref": "responses.json#/definitions/storage_get_v5110_response"
         },
         "keysResponse": {
-          "$ref": "responses.json#/definitions/storage_get_keys_response"
+          "$ref": "responses.json#/definitions/storage_get_with_keys_response"
         }
       }
     },
@@ -16608,7 +16630,9 @@
       "name": "storage.getKeys",
       "description": "Returns the names of all variables.",
       "access_token_type": [
-        "user"
+        "user",
+        "group",
+        "service"
       ],
       "parameters": [
         {
@@ -16616,11 +16640,6 @@
           "description": "user id, whose variables names are returned if they were requested with a server method.",
           "type": "integer",
           "minimum": 0
-        },
-        {
-          "name": "global",
-          "type": "boolean",
-          "default": 0
         },
         {
           "name": "offset",
@@ -16647,7 +16666,9 @@
       "name": "storage.set",
       "description": "Saves a value of variable with the name set by 'key' parameter.",
       "access_token_type": [
-        "user"
+        "user",
+        "group",
+        "service"
       ],
       "parameters": [
         {
@@ -16664,11 +16685,6 @@
           "name": "user_id",
           "type": "integer",
           "minimum": 0
-        },
-        {
-          "name": "global",
-          "type": "boolean",
-          "default": 0
         }
       ],
       "responses": {
@@ -16754,14 +16770,18 @@
           "description": "'1' — to return additional fields for users and communities. Default value is 0.",
           "type": "boolean",
           "default": false
+        },
+        {
+          "name": "fields",
+          "type": "array",
+          "items": {
+            "$ref": "objects.json#/definitions/base_user_group_fields"
+          }
         }
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/stories_get_response"
-        },
-        "extendedResponse": {
-          "$ref": "responses.json#/definitions/stories_get_extended_response"
+          "$ref": "responses.json#/definitions/stories_get_V5113_response"
         }
       }
     },
@@ -16887,6 +16907,10 @@
           "description": "ID of the community to upload the story (should be verified or with the \"fire\" icon).",
           "type": "integer",
           "minimum": 0
+        },
+        {
+          "name": "clickable_stickers",
+          "type": "string"
         }
       ],
       "responses": {
@@ -16955,10 +16979,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/stories_getReplies_response"
-        },
-        "extendedResponse": {
-          "$ref": "responses.json#/definitions/stories_getReplies_extended_response"
+          "$ref": "responses.json#/definitions/stories_get_V5113_response"
         }
       }
     },
@@ -17034,6 +17055,10 @@
           "description": "ID of the community to upload the story (should be verified or with the \"fire\" icon).",
           "type": "integer",
           "minimum": 0
+        },
+        {
+          "name": "clickable_stickers",
+          "type": "string"
         }
       ],
       "responses": {
@@ -17103,10 +17128,10 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/stories_getViewers_response"
+          "$ref": "responses.json#/definitions/stories_getViewers_extended_V5115_response"
         },
         "extendedResponse": {
-          "$ref": "responses.json#/definitions/stories_getViewers_extended_response"
+          "$ref": "responses.json#/definitions/stories_getViewers_extended_V5115_response"
         }
       },
       "errors": [
@@ -17168,6 +17193,64 @@
       "responses": {
         "response": {
           "$ref": "responses.json#/definitions/ok_response"
+        }
+      }
+    },
+    {
+      "name": "stories.search",
+      "access_token_type": [
+        "user"
+      ],
+      "parameters": [
+        {
+          "name": "q",
+          "type": "string",
+          "maxLength": 255
+        },
+        {
+          "name": "place_id",
+          "type": "integer",
+          "minimum": 0
+        },
+        {
+          "name": "latitude",
+          "type": "number"
+        },
+        {
+          "name": "longitude",
+          "type": "number"
+        },
+        {
+          "name": "radius",
+          "type": "integer",
+          "minimum": 0
+        },
+        {
+          "name": "mentioned_id",
+          "type": "integer"
+        },
+        {
+          "name": "count",
+          "type": "integer",
+          "default": 20,
+          "minimum": 1,
+          "maximum": 1000
+        },
+        {
+          "name": "extended",
+          "type": "boolean"
+        },
+        {
+          "name": "fields",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/stories_get_V5113_response"
         }
       }
     },
@@ -17255,7 +17338,7 @@
         },
         {
           "name": "fields",
-          "description": "Profile fields to return. Sample values: 'nickname', 'screen_name', 'sex', 'bdate' (birthdate), 'city', 'country', 'timezone', 'photo', 'photo_medium', 'photo_big', 'has_mobile', 'contacts', 'education', 'online', 'counters', 'relation', 'last_seen', 'activity', 'can_write_private_message', 'can_see_all_posts', 'can_post', 'universities',",
+          "description": "Profile fields to return. Sample values: 'nickname', 'screen_name', 'sex', 'bdate' (birthdate), 'city', 'country', 'timezone', 'photo', 'photo_medium', 'photo_big', 'has_mobile', 'contacts', 'education', 'online', 'counters', 'relation', 'last_seen', 'activity', 'can_write_private_message', 'can_see_all_posts', 'can_post', 'universities', 'can_invite_to_chats'",
           "type": "array",
           "items": {
             "$ref": "objects.json#/definitions/users_fields"
@@ -17403,24 +17486,6 @@
         },
         "extendedResponse": {
           "$ref": "responses.json#/definitions/users_getSubscriptions_extended_response"
-        }
-      }
-    },
-    {
-      "name": "users.isAppUser",
-      "description": "Returns information whether a user installed the application.",
-      "access_token_type": [
-        "user"
-      ],
-      "parameters": [
-        {
-          "name": "user_id",
-          "type": "integer"
-        }
-      ],
-      "responses": {
-        "response": {
-          "$ref": "responses.json#/definitions/users_isAppUser_response"
         }
       }
     },
@@ -17671,11 +17736,6 @@
         {
           "name": "religion",
           "description": "Users' religious affiliation.",
-          "type": "string"
-        },
-        {
-          "name": "interests",
-          "description": "Users' interests.",
           "type": "string"
         },
         {
@@ -19422,6 +19482,10 @@
         {
           "name": "poster_bkg_access_hash",
           "type": "string"
+        },
+        {
+          "name": "copyright",
+          "type": "string"
         }
       ],
       "responses": {
@@ -19678,6 +19742,53 @@
           "$ref": "responses.json#/definitions/wall_getById_extended_response"
         }
       }
+    },
+    {
+      "name": "wall.getComment",
+      "description": "Returns a comment on a post on a user wall or community wall.",
+      "access_token_type": [
+        "user"
+      ],
+      "parameters": [
+        {
+          "name": "owner_id",
+          "description": "User ID or community ID. Use a negative value to designate a community ID.",
+          "type": "integer"
+        },
+        {
+          "name": "comment_id",
+          "description": "Comment ID.",
+          "type": "integer",
+          "required": true,
+          "minimum": 0
+        },
+        {
+          "name": "extended",
+          "type": "boolean"
+        },
+        {
+          "name": "fields",
+          "type": "array",
+          "items": {
+            "$ref": "objects.json#/definitions/base_user_group_fields"
+          }
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/wall_getComment_response"
+        },
+        "extendedResponse": {
+          "$ref": "responses.json#/definitions/wall_getComment_extended_response"
+        }
+      },
+      "errors": [
+        {
+          "code": 212,
+          "name": "API_ERROR_WALL_ACCESS_REPLIES",
+          "description": "Access to post comments denied"
+        }
+      ]
     },
     {
       "name": "wall.getComments",
@@ -19960,6 +20071,10 @@
         {
           "name": "mute_notifications",
           "type": "boolean"
+        },
+        {
+          "name": "copyright",
+          "type": "string"
         }
       ],
       "responses": {
@@ -20515,6 +20630,188 @@
           "$ref": "responses.json#/definitions/widgets_getPages_response"
         }
       }
+    }
+  ],
+  "errors": [
+    {
+      "name": "API_ERROR_UNKNOWN",
+      "code": 1,
+      "description": "Unknown error occurred"
+    },
+    {
+      "name": "API_ERROR_DISABLED",
+      "code": 2,
+      "description": "Application is disabled. Enable your application or use test mode"
+    },
+    {
+      "name": "API_ERROR_METHOD",
+      "code": 3,
+      "description": "Unknown method passed"
+    },
+    {
+      "name": "API_ERROR_SIGNATURE",
+      "code": 4,
+      "description": "Incorrect signature"
+    },
+    {
+      "name": "API_ERROR_AUTH",
+      "code": 5,
+      "description": "User authorization failed"
+    },
+    {
+      "name": "API_ERROR_TOO_MANY",
+      "code": 6,
+      "description": "Too many requests per second"
+    },
+    {
+      "name": "API_ERROR_PERMISSION",
+      "code": 7,
+      "description": "Permission to perform this action is denied"
+    },
+    {
+      "name": "API_ERROR_REQUEST",
+      "code": 8,
+      "description": "Invalid request"
+    },
+    {
+      "name": "API_ERROR_FLOOD",
+      "code": 9,
+      "description": "Flood control"
+    },
+    {
+      "name": "API_ERROR_SERVER",
+      "code": 10,
+      "description": "Internal server error"
+    },
+    {
+      "name": "API_ERROR_ENABLED_IN_TEST",
+      "code": 11,
+      "description": "In test mode application should be disabled or user should be authorized"
+    },
+    {
+      "name": "API_ERROR_CAPTCHA",
+      "code": 14,
+      "description": "Captcha needed"
+    },
+    {
+      "name": "API_ERROR_ACCESS",
+      "code": 15,
+      "description": "Access denied"
+    },
+    {
+      "name": "API_ERROR_AUTH_HTTPS",
+      "code": 16,
+      "description": "HTTP authorization failed"
+    },
+    {
+      "name": "API_ERROR_AUTH_VALIDATION",
+      "code": 17,
+      "description": "Validation required"
+    },
+    {
+      "name": "API_ERROR_USER_DELETED",
+      "code": 18,
+      "description": "User was deleted or banned"
+    },
+    {
+      "name": "API_ERROR_METHOD_PERMISSION",
+      "code": 20,
+      "description": "Permission to perform this action is denied for non-standalone applications"
+    },
+    {
+      "name": "API_ERROR_METHOD_ADS",
+      "code": 21,
+      "description": "Permission to perform this action is allowed only for standalone and OpenAPI applications"
+    },
+    {
+      "name": "API_ERROR_METHOD_DISABLED",
+      "code": 23,
+      "description": "This method was disabled"
+    },
+    {
+      "name": "API_ERROR_NEED_CONFIRMATION",
+      "code": 24,
+      "description": "Confirmation required"
+    },
+    {
+      "name": "API_ERROR_NEED_TOKEN_CONFIRMATION",
+      "code": 25,
+      "description": "Token confirmation required"
+    },
+    {
+      "name": "API_ERROR_GROUP_AUTH",
+      "code": 27,
+      "description": "Group authorization failed"
+    },
+    {
+      "name": "API_ERROR_APP_AUTH",
+      "code": 28,
+      "description": "Application authorization failed"
+    },
+    {
+      "name": "API_ERROR_RATE_LIMIT",
+      "code": 29,
+      "description": "Rate limit reached"
+    },
+    {
+      "name": "API_ERROR_PRIVATE_PROFILE",
+      "code": 30,
+      "description": "This profile is private"
+    },
+    {
+      "name": "API_ERROR_PARAM",
+      "code": 100,
+      "description": "One of the parameters specified was missing or invalid"
+    },
+    {
+      "name": "API_ERROR_PARAM_API_ID",
+      "code": 101,
+      "description": "Invalid application API ID"
+    },
+    {
+      "name": "API_ERROR_PARAM_USER_ID",
+      "code": 113,
+      "description": "Invalid user id"
+    },
+    {
+      "name": "API_ERROR_PARAM_TIMESTAMP",
+      "code": 150,
+      "description": "Invalid timestamp"
+    },
+    {
+      "name": "API_ERROR_ACCESS_ALBUM",
+      "code": 200,
+      "description": "Access denied"
+    },
+    {
+      "name": "API_ERROR_ACCESS_AUDIO",
+      "code": 201,
+      "description": "Access denied"
+    },
+    {
+      "name": "API_ERROR_ACCESS_GROUP",
+      "code": 203,
+      "description": "Access to group denied"
+    },
+    {
+      "name": "API_ERROR_ALBUM_FULL",
+      "code": 300,
+      "description": "This album is full"
+    },
+    {
+      "name": "API_ERROR_VOTES_PERMISSION",
+      "code": 500,
+      "description": "Permission denied. You must enable votes processing in application settings"
+    },
+    {
+      "name": "API_ERROR_ADS_PERMISSION",
+      "code": 600,
+      "description": "Permission denied. You have no access to operations specified with given object(s)"
+    },
+    {
+      "name": "API_ERROR_ADS_SPECIFIC",
+      "code": 603,
+      "description": "Some ads error occured"
     }
   ]
 }
