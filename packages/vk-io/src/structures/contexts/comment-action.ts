@@ -8,6 +8,7 @@ import { Attachmentable } from '../shared/attachmentable';
 import { kSerializeData } from '../../utils/constants';
 import { transformAttachments } from '../attachments/helpers';
 import { pickProperties, applyMixins } from '../../utils/helpers';
+import { VK } from '../../vk';
 
 /**
  * Find types
@@ -283,17 +284,24 @@ class CommentActionContext<S = ContextDefaultState>
 
 	/**
 	 * Edits a comment
+   * 
+   * @param {object} options Options to pass to one of commentEdit methods
+   * @param {VK | undefined} fromUser VK Instance with user token. Useful if you got comment event from group and can't edit it.
+   * 
+   * @see https://vk.com/dev/wall.editComment 
 	 */
-	editComment(options: object): Promise<number> {
+	editComment(options: object, fromUser?: VK): Promise<number> {
 		if (this.isDelete) {
 			return Promise.reject(new VKError({
 				message: 'Comment is deleted',
 				code: 'ALREADY_DELETED'
 			}));
-		}
+    }
+    
+    const instance = fromUser ? fromUser : this.vk;
 
 		if (this.isBoardComment) {
-			return this.vk.api.board.editComment({
+			return instance.api.board.editComment({
 				...options,
 
 				comment_id: this.id,
@@ -310,19 +318,19 @@ class CommentActionContext<S = ContextDefaultState>
 		};
 
 		if (this.isPhotoComment) {
-			return this.vk.api.photos.editComment(params);
+			return instance.api.photos.editComment(params);
 		}
 
 		if (this.isVideoComment) {
-			return this.vk.api.video.editComment(params);
+			return instance.api.video.editComment(params);
 		}
 
 		if (this.isWallComment) {
-			return this.vk.api.wall.editComment(params);
+			return instance.api.wall.editComment(params);
 		}
 
 		if (this.isMarketComment) {
-			return this.vk.api.market.editComment(params);
+			return instance.api.market.editComment(params);
 		}
 
 		return Promise.reject(new VKError({
@@ -333,8 +341,12 @@ class CommentActionContext<S = ContextDefaultState>
 
 	/**
 	 * Removes comment
+   * 
+   * @param {VK | undefined} fromUser VK Instance with user token. Useful if you got comment event from group and can't edit it.
+   * 
+   * @see https://vk.com/dev/wall.deleteComment
 	 */
-	deleteComment(): Promise<number> {
+	deleteComment(fromUser?: VK): Promise<number> {
 		if (this.isDelete) {
 			return Promise.reject(new VKError({
 				message: 'Comment is deleted',
@@ -348,7 +360,9 @@ class CommentActionContext<S = ContextDefaultState>
 				topic_id: this.objectId,
 				group_id: this.$groupId!
 			});
-		}
+    }
+    
+    const instance = fromUser ? fromUser : this.vk;
 
 		const params = {
 			comment_id: this.id,
@@ -356,19 +370,19 @@ class CommentActionContext<S = ContextDefaultState>
 		};
 
 		if (this.isPhotoComment) {
-			return this.vk.api.photos.deleteComment(params);
+			return instance.api.photos.deleteComment(params);
 		}
 
 		if (this.isVideoComment) {
-			return this.vk.api.video.deleteComment(params);
+			return instance.api.video.deleteComment(params);
 		}
 
 		if (this.isWallComment) {
-			return this.vk.api.wall.deleteComment(params);
+			return instance.api.wall.deleteComment(params);
 		}
 
 		if (this.isMarketComment) {
-			return this.vk.api.market.deleteComment(params);
+			return instance.api.market.deleteComment(params);
 		}
 
 		return Promise.reject(new VKError({
@@ -396,11 +410,11 @@ class CommentActionContext<S = ContextDefaultState>
 			'isReply'
 		];
 
-		const filtredEmptyProperties = properties.filter(property => (
+		const filteredEmptyProperties = properties.filter(property => (
 			this[property] !== undefined
 		));
 
-		return pickProperties(this, filtredEmptyProperties);
+		return pickProperties(this, filteredEmptyProperties);
 	}
 }
 

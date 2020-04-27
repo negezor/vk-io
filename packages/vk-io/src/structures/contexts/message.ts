@@ -30,6 +30,7 @@ import {
 } from '../../utils/constants';
 import { AllowArray } from '../../types';
 import { UploadSource, UploadSourceValue } from '../../upload/upload';
+import { MessagesSendParams } from '../../../lib/api/schemas/params';
 
 export type MessageContextType = 'message';
 
@@ -79,7 +80,7 @@ export interface IMessageContextPayload {
 		attachments: object[];
 		important: boolean;
 		geo?: {
-			type: 'point';
+			type: "point";
 			coordinates: {
 				latitude: number;
 				longitude: number;
@@ -118,9 +119,8 @@ export interface IMessageContextPayload {
 		};
 	};
 	client_info: {
-		button_actions: (
-			'text' | 'vkpay' | 'open_app' | 'location'
-		)[];
+		button_actions: ("text" | "vkpay" | "open_app" | "location" | "open_link")[];
+		carousel: boolean;
 		keyboard: boolean;
 		inline_keyboard: boolean;
 		lang_id: number;
@@ -179,7 +179,7 @@ class MessageContext<S = ContextDefaultState>
 	}
 
 	/**
-	 * Load message payload
+	 * Loads message payload
 	 */
 	async loadMessagePayload({ force = false } = {}): Promise<void> {
 		if (this.$filled && !force) {
@@ -203,7 +203,7 @@ class MessageContext<S = ContextDefaultState>
 	}
 
 	/**
-	 * Checks if there is text
+	 * Checks if message has text
 	 */
 	public get hasText(): boolean {
 		return Boolean(this.text);
@@ -231,28 +231,28 @@ class MessageContext<S = ContextDefaultState>
 	}
 
 	/**
-	 * Checks if there is text
+	 * Checks if message has attached geolocation
 	 */
 	public get hasGeo(): boolean {
 		return Boolean(this.message.geo);
 	}
 
 	/**
-	 * Checks is a chat
+	 * Checks is message from chat
 	 */
 	public get isChat(): boolean {
 		return this.peerType === MessageSource.CHAT;
 	}
 
 	/**
-	 * Check is a user
+	 * Check sender is a user
 	 */
 	public get isUser(): boolean {
 		return this.senderType === MessageSource.USER;
 	}
 
 	/**
-	 * Checks is a group
+	 * Checks sender is a group
 	 */
 	public get isGroup(): boolean {
 		return this.senderType === MessageSource.GROUP;
@@ -331,7 +331,7 @@ class MessageContext<S = ContextDefaultState>
 	/**
 	 * Returns the peer type
 	 */
-	public get peerType(): string {
+	public get peerType(): MessageSource {
 		return getPeerType(this.message.peer_id);
 	}
 
@@ -345,7 +345,7 @@ class MessageContext<S = ContextDefaultState>
 	/**
 	 * Returns the sender type
 	 */
-	public get senderType(): string {
+	public get senderType(): MessageSource {
 		return getPeerType(this.message.from_id);
 	}
 
@@ -498,7 +498,7 @@ class MessageContext<S = ContextDefaultState>
 	/**
 	 * Sends a message to the current dialog
 	 */
-	send(text: string | object, params?: object): Promise<number> {
+	send(text: string | MessagesSendParams, params: MessagesSendParams = {}): Promise<number> {
 		return this.vk.api.messages.send({
 			peer_id: this.peerId,
 			// @ts-ignore
@@ -519,7 +519,7 @@ class MessageContext<S = ContextDefaultState>
 	/**
 	 * Responds to the current message
 	 */
-	reply(text: string | object, params?: object): Promise<number> {
+	reply(text: string | MessagesSendParams, params?: MessagesSendParams): Promise<number> {
 		return this.send({
 			reply_to: this.id,
 
@@ -549,13 +549,13 @@ class MessageContext<S = ContextDefaultState>
 	 */
 	async sendPhotos(
 		rawSources: AllowArray<UploadSource>,
-		params: object = {}
+		params: MessagesSendParams = {}
 	): Promise<number> {
 		const sources = !Array.isArray(rawSources)
 			? [rawSources]
 			: rawSources;
 
-		const attachment = await Promise.all(sources.map(source => (
+		const photos = await Promise.all(sources.map(source => (
 			this.vk.upload.messagePhoto({
 				source,
 
@@ -566,7 +566,7 @@ class MessageContext<S = ContextDefaultState>
 		const response = await this.send({
 			...params,
 
-			attachment
+			attachment: photos.join(',')
 		});
 
 		return response;
@@ -583,7 +583,7 @@ class MessageContext<S = ContextDefaultState>
 			? [rawSources]
 			: rawSources;
 
-		const attachment = await Promise.all(sources.map(source => (
+		const docs = await Promise.all(sources.map(source => (
 			this.vk.upload.messageDocument({
 				source,
 
@@ -594,7 +594,7 @@ class MessageContext<S = ContextDefaultState>
 		const response = await this.send({
 			...params,
 
-			attachment
+			attachment: docs.join(',')
 		});
 
 		return response;
@@ -607,7 +607,7 @@ class MessageContext<S = ContextDefaultState>
 		source: UploadSource,
 		params: object = {}
 	): Promise<number> {
-		const attachment = await this.vk.upload.audioMessage({
+		const audioMessage = await this.vk.upload.audioMessage({
 			source,
 
 			peer_id: this.peerId
@@ -616,7 +616,7 @@ class MessageContext<S = ContextDefaultState>
 		const response = await this.send({
 			...params,
 
-			attachment
+			attachment: String(audioMessage)
 		});
 
 		return response;
@@ -800,9 +800,10 @@ class MessageContext<S = ContextDefaultState>
 					button_actions: [
 						'text'
 					],
-					inline_keyboard: false,
+          inline_keyboard: false,
+          carousel: false,
 					keyboard: true,
-					lang_id: 0
+					lang_id: 0,
 				}
 			};
 		}

@@ -119,7 +119,7 @@ export const pickProperties = <
 /**
  * Returns peer id type
  */
-export const getPeerType = (id: number): string => {
+export const getPeerType = (id: number): MessageSource => {
 	if (CHAT_PEER < id) {
 		return MessageSource.CHAT;
 	}

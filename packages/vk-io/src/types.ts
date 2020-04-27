@@ -14,7 +14,7 @@ export interface IVKOptions {
 	/**
 	 * HTTPS agent
 	 *
-	 * @see {https://nodejs.org/api/https.html#https_class_https_agent}
+	 * @see https://nodejs.org/api/https.html#https_class_https_agent
 	 */
 	agent: Agent;
 
@@ -99,7 +99,7 @@ export interface IVKOptions {
 	/**
 	 * VK API version
 	 *
-	 * @see {https://vk.com/dev/versions}
+	 * @see https://vk.com/dev/versions
 	 */
 	apiVersion: string;
 

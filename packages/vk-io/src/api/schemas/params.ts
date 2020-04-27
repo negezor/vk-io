@@ -4236,6 +4236,7 @@ export interface MessagesSendParams {
     forward?: string;
     keyboard?: any;
     payload?: string;
+    template?: string;
     dont_parse_links?: boolean | number;
     disable_mentions?: boolean | number;
     [key: string]: any;
