@@ -520,6 +520,7 @@ export interface AdsGetCampaignsParams {
      * Filter of advertising campaigns to show. Serialized JSON array with campaign IDs. Only campaigns that exist in 'campaign_ids' and belong to the specified advertising account will be shown. If the parameter is null, all campaigns will be shown.
      */
     campaign_ids?: string;
+    fields?: ("ads_count")[] | ("ads_count");
     [key: string]: any;
 }
 
@@ -636,6 +637,7 @@ export interface AdsGetStatisticsParams {
      * Date to show statistics to. For different value of 'period' different date format is used: *day: YYYY-MM-DD, example: 2011-09-27 — September 27, 2011, **0 — current day,, *month: YYYY-MM, example: 2011-09 — September 2011, **0 — current month,, *overall: 0.
      */
     date_to: string;
+    stats_fields?: ("views_times")[] | ("views_times");
     [key: string]: any;
 }
 
@@ -930,6 +932,24 @@ export interface AppsGetScopesParams {
 
 export interface AppsGetScoreParams {
     user_id: number;
+    [key: string]: any;
+}
+
+export interface AppsPromoHasActiveGiftParams {
+    /**
+     * Id of game promo action
+     */
+    promo_id: number;
+    user_id?: number;
+    [key: string]: any;
+}
+
+export interface AppsPromoUseGiftParams {
+    /**
+     * Id of game promo action
+     */
+    promo_id: number;
+    user_id?: number;
     [key: string]: any;
 }
 
@@ -1460,11 +1480,13 @@ export interface DocsGetParams {
      */
     owner_id?: number;
     type?: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
+    return_tags?: boolean | number;
     [key: string]: any;
 }
 
 export interface DocsGetByIdParams {
     docs?: string[] | string;
+    return_tags?: boolean | number;
     [key: string]: any;
 }
 
@@ -1517,6 +1539,7 @@ export interface DocsSaveParams {
      * Document tags.
      */
     tags?: string;
+    return_tags?: boolean | number;
     [key: string]: any;
 }
 
@@ -1534,6 +1557,7 @@ export interface DocsSearchParams {
      */
     offset?: number;
     search_own?: boolean | number;
+    return_tags?: boolean | number;
     [key: string]: any;
 }
 
@@ -1572,6 +1596,7 @@ export interface FaveAddProductParams {
 
 export interface FaveAddTagParams {
     name?: string;
+    position?: "back" | "front";
     [key: string]: any;
 }
 
@@ -3106,6 +3131,10 @@ export interface LikesDeleteParams {
      * Object ID.
      */
     item_id: number;
+    /**
+     * Access key required for an object owned by a private entity.
+     */
+    access_key?: string;
     type?: Objects.LikesType;
     [key: string]: any;
 }
@@ -3650,6 +3679,7 @@ export interface MessagesAddChatUserParams {
      * ID of the user to be added to the chat.
      */
     user_id?: number;
+    visible_messages_count?: number;
     [key: string]: any;
 }
 
@@ -3668,6 +3698,7 @@ export interface MessagesCreateChatParams {
      */
     title?: string;
     user_ids?: number[] | number;
+    group_id?: number;
     [key: string]: any;
 }
 
@@ -3754,8 +3785,8 @@ export interface MessagesEditParams {
      * Group ID (for group messages with user access token)
      */
     group_id?: number;
-    message_id: number;
     dont_parse_links?: boolean | number;
+    message_id?: number;
     [key: string]: any;
 }
 
@@ -3842,7 +3873,7 @@ export interface MessagesGetConversationsParams {
     /**
      * Filter to apply: 'all' — all conversations, 'unread' — conversations with unread messages, 'important' — conversations, marked as important (only for community messages), 'unanswered' — conversations, marked as unanswered (only for community messages)
      */
-    filter?: "all" | "business_notify" | "important" | "message_request" | "unanswered" | "unread";
+    filter?: "all" | "important" | "unanswered" | "unread";
     /**
      * '1' — return extra information about users and communities
      */
@@ -4233,11 +4264,11 @@ export interface MessagesSendParams {
     user_ids?: number[] | number;
     reply_to?: number;
     forward_messages?: number[] | number;
-    forward?: string;
     keyboard?: any;
     payload?: string;
     dont_parse_links?: boolean | number;
     disable_mentions?: boolean | number;
+    intent?: "bot_ad_invite" | "bot_ad_promo" | "promo_newsletter";
     [key: string]: any;
 }
 
@@ -6117,10 +6148,7 @@ export interface StatsGetPostReachParams {
      * post owner community id. Specify with "-" sign.
      */
     owner_id: string;
-    /**
-     * wall post id. Note that stats are available only for '300' last (newest) posts on a community wall.
-     */
-    post_id: number;
+    post_ids?: number[] | number;
     [key: string]: any;
 }
 
@@ -6154,7 +6182,6 @@ export interface StorageGetParams {
     key?: string;
     keys?: string[] | string;
     user_id?: number;
-    global?: boolean | number;
     [key: string]: any;
 }
 
@@ -6167,7 +6194,6 @@ export interface StorageGetKeysParams {
      * amount of variable names the info needs to be collected from.
      */
     count?: number;
-    global?: boolean | number;
     offset?: number;
     [key: string]: any;
 }
@@ -6176,7 +6202,6 @@ export interface StorageSetParams {
     key: string;
     value?: string;
     user_id?: number;
-    global?: boolean | number;
     [key: string]: any;
 }
 
@@ -6206,6 +6231,7 @@ export interface StoriesGetParams {
      * '1' — to return additional fields for users and communities. Default value is 0.
      */
     extended?: boolean | number;
+    fields?: Objects.BaseUserGroupFields[];
     [key: string]: any;
 }
 
@@ -6247,6 +6273,7 @@ export interface StoriesGetPhotoUploadServerParams {
     group_id?: number;
     user_ids?: number[] | number;
     link_text?: Objects.StoriesUploadLinkText;
+    clickable_stickers?: string;
     [key: string]: any;
 }
 
@@ -6302,6 +6329,7 @@ export interface StoriesGetVideoUploadServerParams {
     group_id?: number;
     user_ids?: number[] | number;
     link_text?: Objects.StoriesUploadLinkText;
+    clickable_stickers?: string;
     [key: string]: any;
 }
 
@@ -6347,6 +6375,19 @@ export interface StoriesHideReplyParams {
      * Story ID.
      */
     story_id: number;
+    [key: string]: any;
+}
+
+export interface StoriesSearchParams {
+    q?: string;
+    place_id?: number;
+    latitude?: number;
+    longitude?: number;
+    radius?: number;
+    mentioned_id?: number;
+    count?: number;
+    extended?: boolean | number;
+    fields?: string[] | string;
     [key: string]: any;
 }
 
@@ -6413,11 +6454,6 @@ export interface UsersGetSubscriptionsParams {
      */
     count?: number;
     fields?: Objects.UsersFields[];
-    [key: string]: any;
-}
-
-export interface UsersIsAppUserParams {
-    user_id?: number;
     [key: string]: any;
 }
 
@@ -6542,10 +6578,6 @@ export interface UsersSearchParams {
      * Users' religious affiliation.
      */
     religion?: string;
-    /**
-     * Users' interests.
-     */
-    interests?: string;
     /**
      * Name of the company where users work.
      */
@@ -7192,6 +7224,7 @@ export interface WallEditParams {
     poster_bkg_id?: number;
     poster_bkg_owner_id?: number;
     poster_bkg_access_hash?: string;
+    copyright?: string;
     [key: string]: any;
 }
 
@@ -7300,6 +7333,20 @@ export interface WallGetByIdParams {
      */
     copy_history_depth?: number;
     posts?: string[] | string;
+    fields?: Objects.BaseUserGroupFields[];
+    [key: string]: any;
+}
+
+export interface WallGetCommentParams {
+    /**
+     * User ID or community ID. Use a negative value to designate a community ID.
+     */
+    owner_id?: number;
+    /**
+     * Comment ID.
+     */
+    comment_id: number;
+    extended?: boolean | number;
     fields?: Objects.BaseUserGroupFields[];
     [key: string]: any;
 }
@@ -7435,6 +7482,7 @@ export interface WallPostParams {
     mark_as_ads?: boolean | number;
     close_comments?: boolean | number;
     mute_notifications?: boolean | number;
+    copyright?: string;
     [key: string]: any;
 }
 

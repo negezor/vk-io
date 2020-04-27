@@ -267,6 +267,8 @@ export interface APIApps {
      * Returns user score in app
      */
     getScore(params: Params.AppsGetScoreParams): Promise<Responses.AppsGetScoreResponse>;
+    promoHasActiveGift(params: Params.AppsPromoHasActiveGiftParams): Promise<Responses.BaseBoolResponse>;
+    promoUseGift(params: Params.AppsPromoUseGiftParams): Promise<Responses.BaseBoolResponse>;
     /**
      * Sends a request to another user in an app that uses VK authorization.
      */
@@ -453,7 +455,7 @@ export interface APIDocs {
  * The API fave group
  */
 export interface APIFave {
-    addArticle(params: Params.FaveAddArticleParams): Promise<Responses.BaseBoolResponse>;
+    addArticle(params: Params.FaveAddArticleParams): Promise<Responses.OkResponse>;
     /**
      * Adds a link to user faves.
      */
@@ -1513,7 +1515,7 @@ export interface APIStorage {
     /**
      * Returns a value of variable with the name set by key parameter.
      */
-    get(params: Params.StorageGetParams): Promise<Responses.StorageGetResponse>;
+    get(params: Params.StorageGetParams): Promise<Responses.StorageGetV5110Response>;
     /**
      * Returns the names of all variables.
      */
@@ -1539,7 +1541,7 @@ export interface APIStories {
     /**
      * Returns stories available for current user.
      */
-    get(params: Params.StoriesGetParams): Promise<Responses.StoriesGetResponse>;
+    get(params: Params.StoriesGetParams): Promise<Responses.StoriesGetV5113Response>;
     /**
      * Returns list of sources hidden from current user's feed.
      */
@@ -1555,7 +1557,7 @@ export interface APIStories {
     /**
      * Returns replies to the story.
      */
-    getReplies(params: Params.StoriesGetRepliesParams): Promise<Responses.StoriesGetRepliesResponse>;
+    getReplies(params: Params.StoriesGetRepliesParams): Promise<Responses.StoriesGetV5113Response>;
     /**
      * Returns stories available for current user.
      */
@@ -1567,7 +1569,7 @@ export interface APIStories {
     /**
      * Returns a list of story viewers.
      */
-    getViewers(params: Params.StoriesGetViewersParams): Promise<Responses.StoriesGetViewersResponse>;
+    getViewers(params: Params.StoriesGetViewersParams): Promise<Responses.StoriesGetViewersExtendedV5115Response>;
     /**
      * Hides all replies in the last 24 hours from the user to current user's stories.
      */
@@ -1576,6 +1578,7 @@ export interface APIStories {
      * Hides the reply to the current user's story.
      */
     hideReply(params: Params.StoriesHideReplyParams): Promise<Responses.OkResponse>;
+    search(params: Params.StoriesSearchParams): Promise<Responses.StoriesGetV5113Response>;
     /**
      * Allows to show stories from hidden sources in current user's feed.
      */
@@ -1609,10 +1612,6 @@ export interface APIUsers {
      * Returns a list of IDs of users and communities followed by the user.
      */
     getSubscriptions(params: Params.UsersGetSubscriptionsParams): Promise<Responses.UsersGetSubscriptionsResponse>;
-    /**
-     * Returns information whether a user installed the application.
-     */
-    isAppUser(params: Params.UsersIsAppUserParams): Promise<Responses.UsersIsAppUserResponse>;
     /**
      * Reports (submits a complain about) a user.
      */
@@ -1787,6 +1786,10 @@ export interface APIWall {
      * Returns a list of posts from user or community walls by their IDs.
      */
     getById(params: Params.WallGetByIdParams): Promise<Responses.WallGetByIdResponse>;
+    /**
+     * Returns a comment on a post on a user wall or community wall.
+     */
+    getComment(params: Params.WallGetCommentParams): Promise<Responses.WallGetCommentResponse>;
     /**
      * Returns a list of comments on a post on a user wall or community wall.
      */
