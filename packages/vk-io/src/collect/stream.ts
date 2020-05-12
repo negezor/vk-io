@@ -307,11 +307,7 @@ export class CollectStream<T> extends Readable {
 
 		const { total, received } = this;
 
-		let percent = Math.round((received / total!) * 100);
-
-		if (Number.isNaN(percent)) {
-			percent = 100;
-		}
+		const percent = Math.floor((received / total!) * 100);
 
 		this.push({
 			received,
