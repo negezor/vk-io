@@ -84,8 +84,8 @@ export class WebhookTransport {
 					: 80
 			);
 
-			// @ts-ignore
-			await promisify(webhookServer.listen).call(webhookServer, serverPort, host);
+			await promisify<number, string | undefined>(webhookServer.listen)
+				.call(webhookServer, serverPort, host);
 
 			debug(`Webhook listening on port: ${serverPort}`);
 		} catch (error) {
