@@ -410,7 +410,7 @@ export class Updates {
 			throw new TypeError('Handler must be a function');
 		}
 
-		return this.use((context, next): Promise<void> => (
+		return this.use((context, next): unknown => (
 			context.is(events)
 				// @ts-ignore
 				? handler(context, next)
