@@ -34,7 +34,7 @@
 	},
 	"dependencies": {
 		"debug": "^4.1.1",
-		"inspectable": "^0.0.1",
+		"inspectable": "^1.0.0",
 		"node-fetch": "^2.6.0",
 		"ws": "^7.3.0"
 	},

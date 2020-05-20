@@ -2236,10 +2236,10 @@ inquirer@^7.0.0:
     strip-ansi "^6.0.0"
     through "^2.3.6"
 
-inspectable@^0.0.1:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/inspectable/-/inspectable-0.0.1.tgz#15fe1c103af22562038e16f173ae3751d8f0c40c"
-  integrity sha512-C6Aq4A2TLxqO42PVmaE5ioYk5I+TMU79jRgSEDVHe1pLQP6bne6wP4pU12Da+oSuA5wKG1HTvg6SxvF7p9hxTQ==
+inspectable@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/inspectable/-/inspectable-1.0.0.tgz#0d5e4b2e8ca3b5de54b535ffc934d46fd22cf019"
+  integrity sha512-dw5aUFDQE+EIAXt3mBpIMEKQAlWSgzOlI/zGd/6mfbDDgfvkJFF4v2vLkHULvSvJ34CBP0jPGdlcd+6rVHtpVQ==
 
 interpret@^1.0.0:
   version "1.2.0"
