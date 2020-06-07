@@ -1056,6 +1056,7 @@ export class Upload {
 						: field;
 
 					const headers = {
+						// eslint-disable-next-line @typescript-eslint/naming-convention
 						'Content-Type': contentType === undefined
 							? DefaultContentType[attachmentType as keyof typeof DefaultContentType]
 							: contentType
@@ -1078,7 +1079,8 @@ export class Upload {
 	/**
 	 * Upload form data
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	// eslint-disable-next-line max-len
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 	async upload(url: URL | string, { formData, timeout, forceBuffer }: any): Promise<any> {
 		const { agent, uploadTimeout } = this.vk.options;
 
@@ -1097,7 +1099,9 @@ export class Upload {
 				method: 'POST',
 				signal: controller.signal,
 				headers: {
+					// eslint-disable-next-line @typescript-eslint/naming-convention
 					Connection: 'keep-alive',
+					// eslint-disable-next-line @typescript-eslint/naming-convention
 					'Content-Type': `multipart/form-data; boundary=${formData.boundary}`
 				},
 				body

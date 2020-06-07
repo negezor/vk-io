@@ -139,7 +139,8 @@ export const showDeprecatedMessage = (message: string): void => {
 	console.log(' \u001b[31mDeprecated:\u001b[39m', message);
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// eslint-disable-next-line max-len
+// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 export const applyMixins = (derivedCtor: any, baseCtors: any[]): void => {
 	for (const baseCtor of baseCtors) {
 		for (const name of Object.getOwnPropertyNames(baseCtor.prototype)) {

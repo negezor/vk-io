@@ -127,6 +127,7 @@ export class AccountVerification {
 			headers: {
 				...headers,
 
+				// eslint-disable-next-line @typescript-eslint/naming-convention
 				'User-Agent': DESKTOP_USER_AGENT
 			}
 		});

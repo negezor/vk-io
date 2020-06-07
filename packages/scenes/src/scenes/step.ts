@@ -24,8 +24,10 @@ export class StepScene<T = MessageContext> implements IScene {
 
 		this.steps = options.steps;
 
+		// eslint-disable-next-line @typescript-eslint/no-empty-function
 		this.onEnterHandler = options.enterHandler || ((): void => {});
 
+		// eslint-disable-next-line @typescript-eslint/no-empty-function
 		this.onLeaveHandler = options.leaveHandler || ((): void => {});
 	}
 

@@ -42,6 +42,7 @@ export const defaultOptions: IVKOptions = {
 	apiRetryLimit: 3,
 	apiTimeout: 10e3,
 	apiHeaders: {
+		// eslint-disable-next-line @typescript-eslint/naming-convention
 		'User-Agent': `vk-io/${version} (+https://github.com/negezor/vk-io)`
 	},
 	apiExecuteCount: 25,
@@ -241,7 +242,7 @@ export enum CollectErrorCode {
 /**
  * Snippets error codes
  */
-export enum SnippetErrorCode {
+export enum ResourceErrorCode {
 	INVALID_URL = 'INVALID_URL',
 	INVALID_RESOURCE = 'INVALID_RESOURCE',
 	RESOURCE_NOT_FOUND = 'RESOURCE_NOT_FOUND'

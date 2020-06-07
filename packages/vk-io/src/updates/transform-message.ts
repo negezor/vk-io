@@ -2,8 +2,6 @@
 import { IMessageContextPayload } from '../structures/contexts/message';
 import { AttachmentType } from '../utils/constants';
 
-/* eslint-disable @typescript-eslint/camelcase */
-
 const DocumentKind: Record<string, AttachmentType> = {
 	audiomsg: AttachmentType.AUDIO_MESSAGE,
 	graffiti: AttachmentType.GRAFFITI // I know what is stupid

@@ -82,6 +82,7 @@ export class MultipartStream extends SandwichStream {
 			headers: {
 				...headers,
 
+				// eslint-disable-next-line @typescript-eslint/naming-convention
 				'Content-Disposition': header
 			},
 			body

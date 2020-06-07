@@ -22,8 +22,7 @@ export const getObjectValue = (source: Record<string, any>, selectors: string[])
 	return link;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const unifyCondition = (condition: any): Function => {
+export const unifyCondition = (condition: unknown): Function => {
 	if (typeof condition === 'function') {
 		return condition;
 	}
