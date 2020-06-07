@@ -5,7 +5,7 @@ export * from './upload';
 export * from './collect';
 export * from './updates';
 export * from './execute';
-export * from './snippets';
+export * from './resource';
 
 export {
 	APIErrorCode,
@@ -13,5 +13,5 @@ export {
 	UploadErrorCode,
 	UpdatesErrorCode,
 	CollectErrorCode,
-	SnippetErrorCode
+	ResourceErrorCode
 } from '../utils/constants';

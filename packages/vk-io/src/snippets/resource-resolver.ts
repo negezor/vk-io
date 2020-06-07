@@ -1,15 +1,15 @@
 import { URL } from 'url';
 
 import { VK } from '../vk';
-import { SnippetsError } from '../errors';
-import { ResourceType, SnippetErrorCode } from '../utils/constants';
+import { ResourceError } from '../errors';
+import { ResourceType, ResourceErrorCode } from '../utils/constants';
 import { parseResourceRe, parseAttachmentRe, parseOwnerResourceRe } from '../utils/helpers';
 
 const {
 	INVALID_URL,
 	INVALID_RESOURCE,
 	RESOURCE_NOT_FOUND
-} = SnippetErrorCode;
+} = ResourceErrorCode;
 
 const numberRe = /^-?\d+$/;
 
@@ -76,7 +76,7 @@ export class ResourceResolver {
 	 */
 	public async resolve(rawResource: string | number): Promise<IResolvedResource> {
 		if (!rawResource) {
-			throw new SnippetsError({
+			throw new ResourceError({
 				code: INVALID_RESOURCE,
 				message: 'Resource is required'
 			});
@@ -144,7 +144,7 @@ export class ResourceResolver {
 		const { pathname, search } = new URL(resourceUrl);
 
 		if (pathname === '/') {
-			throw new SnippetsError({
+			throw new ResourceError({
 				code: INVALID_URL,
 				message: 'URL should contain path'
 			});
@@ -193,7 +193,7 @@ export class ResourceResolver {
 		});
 
 		if (Array.isArray(response)) {
-			throw new SnippetsError({
+			throw new ResourceError({
 				message: 'Resource not found',
 				code: RESOURCE_NOT_FOUND
 			});
