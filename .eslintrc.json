@@ -11,33 +11,50 @@
 	],
 	"parser": "@typescript-eslint/parser",
 	"parserOptions": {
-		"project": "./tsconfig.json"
+		"project": "./tsconfig.json",
+		"sourceType": "module"
 	},
 	"plugins": [
 		"import",
 		"@typescript-eslint"
 	],
 	"rules": {
-		"@typescript-eslint/interface-name-prefix": ["error", "always"],
 		"@typescript-eslint/no-non-null-assertion": "off",
-  		"@typescript-eslint/no-unused-expressions": ["error"],
-		"@typescript-eslint/indent": ["error", "tab"],
-		"@typescript-eslint/camelcase": ["error", {
-			"properties": "never"
+		"@typescript-eslint/naming-convention": [
+			"error",
+			{
+				"selector": "interface",
+				"format": ["PascalCase"],
+				"prefix": ["I"]
+			},
+			{
+				"selector": "property",
+				"format": ["camelCase", "snake_case", "UPPER_CASE"]
+			}
+		],
+		"@typescript-eslint/ban-ts-comment": ["error", {
+			"ts-ignore": false
 		}],
-		"@typescript-eslint/ban-ts-ignore": "off",
+		"@typescript-eslint/ban-types": ["error", {
+			"types": {
+				"{}": false,
+				"object": false,
+				"Function": false
+			},
+			"extendDefaults": true
+		}],
+		"@typescript-eslint/indent": ["error", "tab"],
 		"@typescript-eslint/semi": ["error"],
-		"@typescript-eslint/no-empty-function": "off",
-		"import/prefer-default-export": "off",
-		"import/no-default-export": ["error"],
 		"import/extensions": ["error", "ignorePackages", {
 			"js": "never",
 			"ts": "never"
 		}],
+		"import/prefer-default-export": "off",
+		"import/no-default-export": ["error"],
 		"import/no-cycle": "off",
 		"no-restricted-syntax": ["error", "WithStatement"],
+		"linebreak-style": ["error", "unix"],
 		"comma-dangle": ["error", "never"],
-		"no-unused-expressions": "off",
 		"no-param-reassign": ["error", {
 			"props": false
 		}],
@@ -48,6 +65,7 @@
 		"no-tabs": ["error", {
 			"allowIndentationTabs": true
 		}],
+		"camelcase": "off",
 		"indent": "off",
 		"semi": "off"
 	},
