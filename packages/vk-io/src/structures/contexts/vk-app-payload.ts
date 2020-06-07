@@ -5,7 +5,7 @@ import { kSerializeData } from '../../utils/constants';
 
 export type VKAppPayloadContextType = 'vk_app_event';
 
-export type VKAppPayloadContextSubType = 'vk_app_payload';
+export type VKAppPayloadContextSubType = 'app_payload';
 
 export interface IVKAppPayloadPayload {
 	user_id: number;
@@ -30,7 +30,9 @@ export class VKAppPayloadContext<S = ContextDefaultState>
 			...options,
 
 			type: 'vk_app_event',
-			subTypes: ['vk_app_payload']
+			subTypes: [
+				options.updateType as VKAppPayloadContextSubType
+			]
 		});
 	}
 

@@ -5,7 +5,7 @@ import { kSerializeData } from '../../utils/constants';
 
 export type VKPayTransactionContextType = 'vk_pay_transaction';
 
-export type VKPayTransactionContextSubType = 'vk_pay_transfer';
+export type VKPayTransactionContextSubType = 'vkpay_transaction';
 
 export interface IVKPayTransactionPayload {
 	from_id: number;
@@ -29,7 +29,9 @@ export class VKPayTransactionContext<S = ContextDefaultState>
 			...options,
 
 			type: 'vk_pay_transaction',
-			subTypes: ['vk_pay_transfer']
+			subTypes: [
+				options.updateType as VKPayTransactionContextSubType
+			]
 		});
 	}
 

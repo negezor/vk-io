@@ -45,17 +45,14 @@ type MessageContextPayloadEventType =
 | 'chat_invite_user_by_link';
 
 export type MessageContextSubType =
-'new_message'
-| 'edit_message'
-| 'reply_message'
+'message_new'
+| 'message_edit'
+| 'message_reply'
 | MessageContextPayloadEventType;
 
 const subTypesEnum: Record<string | number, MessageContextSubType> = {
-	4: 'new_message',
-	5: 'edit_message',
-	message_new: 'new_message',
-	message_edit: 'edit_message',
-	message_reply: 'reply_message'
+	4: 'message_new',
+	5: 'message_edit'
 };
 
 const kForwards = Symbol('forwards');
@@ -174,7 +171,9 @@ class MessageContext<S = ContextDefaultState>
 		this.applyPayload(payload);
 
 		this.subTypes = [
-			this.eventType || subTypesEnum[options.updateType]
+			this.eventType
+			|| subTypesEnum[options.updateType]
+			|| options.updateType as MessageContextSubType
 		];
 	}
 

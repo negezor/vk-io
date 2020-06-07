@@ -9,15 +9,6 @@ import { kSerializeData } from '../../utils/constants';
 import { transformAttachments } from '../attachments/helpers';
 import { pickProperties, applyMixins } from '../../utils/helpers';
 
-/**
- * Find types
- *
- * ```
- * wall_reply_new
- * ```
- */
-const findTypes = /([^_]+)_([^_]+)_([^_]+)/;
-
 export interface ICommentActionContextPayload {
 	id: number;
 	owner_id: number;
@@ -50,29 +41,29 @@ export type CommentActionContextType = 'comment';
 export type CommentActionContextSubType =
 'photo_comment'
 | 'video_comment'
-| 'wall_comment'
+| 'wall_reply'
 | 'board_comment'
 | 'market_comment'
-| 'new_photo_comment'
-| 'edit_photo_comment'
-| 'delete_photo_comment'
-| 'restore_photo_comment'
-| 'new_video_comment'
-| 'edit_video_comment'
-| 'delete_video_comment'
-| 'restore_video_comment'
-| 'new_wall_comment'
-| 'edit_wall_comment'
-| 'delete_wall_comment'
-| 'restore_wall_comment'
-| 'new_board_comment'
-| 'edit_board_comment'
-| 'delete_board_comment'
-| 'restore_board_comment'
-| 'new_market_comment'
-| 'edit_market_comment'
-| 'delete_market_comment'
-| 'restore_market_comment';
+| 'photo_comment_new'
+| 'photo_comment_edit'
+| 'photo_comment_delete'
+| 'photo_comment_restore'
+| 'video_comment_new'
+| 'video_comment_edit'
+| 'video_comment_delete'
+| 'video_comment_restore'
+| 'wall_reply_new'
+| 'wall_reply_edit'
+| 'wall_reply_restore'
+| 'wall_reply_delete'
+| 'board_comment_new'
+| 'board_comment_edit'
+| 'board_comment_delete'
+| 'board_comment_restore'
+| 'market_comment_new'
+| 'market_comment_edit'
+| 'market_comment_delete'
+| 'market_comment_restore';
 
 class CommentActionContext<S = ContextDefaultState>
 	extends Context<
@@ -84,15 +75,18 @@ class CommentActionContext<S = ContextDefaultState>
 	public attachments: Attachment[];
 
 	public constructor(options: CommentActionContextOptions<S>) {
-		const { 1: initiator, 3: action } = (options.updateType as string).match(findTypes)!;
+		const initiator = (options.updateType as string).substring(
+			0,
+			(options.updateType as string).lastIndexOf('_')
+		);
 
 		super({
 			...options,
 
 			type: 'comment',
 			subTypes: [
-				`${initiator}_comment` as CommentActionContextSubType,
-				`${action}_${initiator}_comment` as CommentActionContextSubType
+				initiator as CommentActionContextSubType,
+				options.updateType as CommentActionContextSubType
 			]
 		});
 

@@ -8,13 +8,8 @@ import { kSerializeData } from '../../utils/constants';
 export type WallPostContextType = 'wall_post';
 
 export type WallPostContextSubType =
-'new_wall_post'
-| 'new_wall_repost';
-
-const subTypes: Record<string, WallPostContextSubType> = {
-	wall_post_new: 'new_wall_post',
-	wall_repost: 'new_wall_repost'
-};
+'wall_post_new'
+| 'wall_repost';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface IWallPostContextPayload extends IWallAttachmentPayload {
@@ -39,7 +34,7 @@ export class WallPostContext<S = ContextDefaultState>
 
 			type: 'wall_post',
 			subTypes: [
-				subTypes[options.updateType]
+				options.updateType as WallPostContextSubType
 			]
 		});
 

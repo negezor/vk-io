@@ -6,12 +6,12 @@ import { kSerializeData } from '../../utils/constants';
 export type RemovedMessagesContextType = 'removed_messages';
 
 export type RemovedMessagesContextSubType =
-'delete_messages'
-| 'restore_messages';
+'messages_delete'
+| 'messages_restore';
 
 const subTypes: Record<number, RemovedMessagesContextSubType> = {
-	13: 'delete_messages',
-	14: 'restore_messages'
+	13: 'messages_delete',
+	14: 'messages_restore'
 };
 export interface IRemovedMessagesContextPayload {
 	id: number;
@@ -50,14 +50,14 @@ export class RemovedMessagesContext<S = ContextDefaultState>
 	 * Checks that messages have been deleted
 	 */
 	public get isRemoved(): boolean {
-		return this.subTypes.includes('delete_messages');
+		return this.subTypes.includes('messages_delete');
 	}
 
 	/**
 	 * Checks that messages have been restored
 	 */
 	public get isRecovery(): boolean {
-		return this.subTypes.includes('restore_messages');
+		return this.subTypes.includes('messages_restore');
 	}
 
 	/**

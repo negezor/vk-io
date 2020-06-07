@@ -6,13 +6,8 @@ import { kSerializeData } from '../../utils/constants';
 export type MessageAllowContextType = 'message_subscribers';
 
 export type MessageAllowContextSubType =
-'message_subscribe'
-| 'message_unsubscribe';
-
-const subTypes: Record<string, MessageAllowContextSubType> = {
-	message_allow: 'message_subscribe',
-	message_deny: 'message_unsubscribe'
-};
+'message_allow'
+| 'message_deny';
 
 export interface IMessageAllowContextPayload {
 	user_id: number;
@@ -35,7 +30,7 @@ export class MessageAllowContext<S = ContextDefaultState>
 
 			type: 'message_subscribers',
 			subTypes: [
-				subTypes[options.updateType]
+				options.updateType as MessageAllowContextSubType
 			]
 		});
 	}
@@ -44,14 +39,14 @@ export class MessageAllowContext<S = ContextDefaultState>
 	 * Checks that the user has subscribed to messages
 	 */
 	public get isSubscribed(): boolean {
-		return this.subTypes.includes('message_subscribe');
+		return this.subTypes.includes('message_allow');
 	}
 
 	/**
 	 * Checks that the user has unsubscribed from the messages
 	 */
 	public get isUbsubscribed(): boolean {
-		return this.subTypes.includes('message_unsubscribe');
+		return this.subTypes.includes('message_deny');
 	}
 
 	/**

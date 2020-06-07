@@ -5,7 +5,7 @@ import { kSerializeData } from '../../utils/constants';
 
 export type VoteContextType = 'vote';
 
-export type VoteContextSubType = 'pull_vote';
+export type VoteContextSubType = 'poll_vote_new';
 
 export interface IVoteContextPayload {
 	poll_id: number;
@@ -30,7 +30,7 @@ export class VoteContext<S = ContextDefaultState>
 
 			type: 'vote',
 			subTypes: [
-				'pull_vote'
+				options.updateType as VoteContextSubType
 			]
 		});
 	}

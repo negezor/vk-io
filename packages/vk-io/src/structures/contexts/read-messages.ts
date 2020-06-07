@@ -6,12 +6,12 @@ import { kSerializeData } from '../../utils/constants';
 export type ReadMessagesContextType = 'read_messages';
 
 export type ReadMessagesContextSubType =
-'read_inbox_messages'
-| 'read_outbox_messages';
+'messages_inbox_read'
+| 'messages_outbox_read';
 
 const subTypes: Record<number, ReadMessagesContextSubType> = {
-	6: 'read_inbox_messages',
-	7: 'read_outbox_messages'
+	6: 'messages_inbox_read',
+	7: 'messages_outbox_read'
 };
 
 export interface IReadMessagesContextPayload {
@@ -51,14 +51,14 @@ export class ReadMessagesContext<S = ContextDefaultState>
 	 * Checks that inbox messages are read
 	 */
 	public get isInbox(): boolean {
-		return this.subTypes.includes('read_inbox_messages');
+		return this.subTypes.includes('messages_inbox_read');
 	}
 
 	/**
 	 * Checks that outbox messages are read
 	 */
 	public get isOutbox(): boolean {
-		return this.subTypes.includes('read_outbox_messages');
+		return this.subTypes.includes('messages_outbox_read');
 	}
 
 	/**

@@ -6,13 +6,8 @@ import { kSerializeData } from '../../utils/constants';
 export type GroupMemberContextType = 'group_member';
 
 export type GroupMemberContextSubType =
-'leave_group_member'
-| 'join_group_member';
-
-const subTypes: Record<string, GroupMemberContextSubType> = {
-	group_leave: 'leave_group_member',
-	group_join: 'join_group_member'
-};
+'group_leave'
+| 'group_join';
 
 export interface IGroupMemberContextPayload {
 	user_id: number;
@@ -36,7 +31,7 @@ export class GroupMemberContext<S = ContextDefaultState>
 
 			type: 'group_member',
 			subTypes: [
-				subTypes[options.updateType]
+				options.updateType as GroupMemberContextSubType
 			]
 		});
 	}
@@ -45,14 +40,14 @@ export class GroupMemberContext<S = ContextDefaultState>
 	 * Checks is join user
 	 */
 	public get isJoin(): boolean {
-		return this.subTypes.includes('join_group_member');
+		return this.subTypes.includes('group_join');
 	}
 
 	/**
 	 * Checks is leave user
 	 */
 	public get isLeave(): boolean {
-		return this.subTypes.includes('leave_group_member');
+		return this.subTypes.includes('group_leave');
 	}
 
 	/**

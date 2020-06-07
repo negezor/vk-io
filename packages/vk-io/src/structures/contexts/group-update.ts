@@ -9,15 +9,9 @@ import { pickProperties, applyMixins } from '../../utils/helpers';
 export type GroupUpdateContextType = 'group_update';
 
 export type GroupUpdateContextSubType =
-'group_update_photo'
-| 'group_update_officers'
-| 'group_update_settings';
-
-const subTypes: Record<string, GroupUpdateContextSubType> = {
-	group_change_photo: 'group_update_photo',
-	group_update_officers: 'group_update_officers',
-	group_change_settings: 'group_update_settings'
-};
+'group_change_photo'
+| 'group_officers_edit'
+| 'group_change_settings';
 
 export interface IGroupUpdateContextPayload {
 	user_id: number;
@@ -45,7 +39,7 @@ class GroupUpdateContext<S = ContextDefaultState>
 
 			type: 'group_update',
 			subTypes: [
-				subTypes[options.updateType]
+				options.updateType as GroupUpdateContextSubType
 			]
 		});
 
@@ -58,21 +52,21 @@ class GroupUpdateContext<S = ContextDefaultState>
 	 * Checks is change photo
 	 */
 	public get isChangePhoto(): boolean {
-		return this.subTypes.includes('group_update_photo');
+		return this.subTypes.includes('group_change_photo');
 	}
 
 	/**
 	 * Checks is change officers
 	 */
 	public get isChangeOfficers(): boolean {
-		return this.subTypes.includes('group_update_officers');
+		return this.subTypes.includes('group_officers_edit');
 	}
 
 	/**
 	 * Checks is change settings
 	 */
 	public get isChangeSettings(): boolean {
-		return this.subTypes.includes('group_update_settings');
+		return this.subTypes.includes('group_change_settings');
 	}
 
 	/**

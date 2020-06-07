@@ -6,14 +6,14 @@ import { kSerializeData } from '../../utils/constants';
 export type MessageFlagsContextType = 'message_flags';
 
 export type MessageFlagsContextSubType =
-'update_message_flags'
-| 'set_message_flags'
-| 'remove_message_flags';
+'message_flags_update'
+| 'message_flags_set'
+| 'message_flags_delete';
 
 const subTypes: Record<number, MessageFlagsContextSubType> = {
-	1: 'update_message_flags',
-	2: 'set_message_flags',
-	3: 'remove_message_flags'
+	1: 'message_flags_update',
+	2: 'message_flags_set',
+	3: 'message_flags_delete'
 };
 
 export interface IMessageFlagsContextPayload {

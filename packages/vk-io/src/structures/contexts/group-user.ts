@@ -19,13 +19,8 @@ const reasonNames = new Map([
 export type GroupUserContextType = 'group_user';
 
 export type GroupUserContextSubType =
-'block_group_user'
-| 'unblock_group_user';
-
-const subTypes: Record<string, GroupUserContextSubType> = {
-	user_block: 'block_group_user',
-	user_unblock: 'unblock_group_user'
-};
+'user_block'
+| 'user_unblock';
 
 export interface IGroupUserContextPayload {
 	admin_id: number;
@@ -52,7 +47,7 @@ export class GroupUserContext<S = ContextDefaultState>
 
 			type: 'group_user',
 			subTypes: [
-				subTypes[options.updateType]
+				options.updateType as GroupUserContextSubType
 			]
 		});
 	}
@@ -61,14 +56,14 @@ export class GroupUserContext<S = ContextDefaultState>
 	 * Checks is join user
 	 */
 	public get isBlocked(): boolean {
-		return this.subTypes.includes('block_group_user');
+		return this.subTypes.includes('user_block');
 	}
 
 	/**
 	 * Checks is leave user
 	 */
 	public get isUnblocked(): boolean {
-		return this.subTypes.includes('unblock_group_user');
+		return this.subTypes.includes('user_unblock');
 	}
 
 	/**

@@ -17,15 +17,15 @@ import { kSerializeData, AttachmentType } from '../../utils/constants';
 export type NewAttachmentsContextType = 'new_attachment';
 
 export type NewAttachmentsContextSubType =
-'new_photo_attachment'
-| 'new_video_attachment'
-| 'new_audio_attachment';
+'photo_new'
+| 'video_new'
+| 'audio_new';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const subTypes: Record<string, [NewAttachmentsContextSubType, any]> = {
-	photo_new: ['new_photo_attachment', PhotoAttachment],
-	video_new: ['new_video_attachment', VideoAttachment],
-	audio_new: ['new_audio_attachment', AudioAttachment]
+const subAttachmentTypes: Record<string, any> = {
+	photo_new: PhotoAttachment,
+	video_new: VideoAttachment,
+	audio_new: AudioAttachment
 };
 
 export interface INewAttachmentsContextPayload {
@@ -45,14 +45,14 @@ class NewAttachmentsContext<S = ContextDefaultState>
 	public attachments: Attachment[];
 
 	public constructor(options: NewAttachmentsContextOptions<S>) {
-		const [subType, PayloadAttachment] = subTypes[options.updateType];
+		const PayloadAttachment = subAttachmentTypes[options.updateType];
 
 		super({
 			...options,
 
 			type: 'new_attachment',
 			subTypes: [
-				subType
+				options.updateType as NewAttachmentsContextSubType
 			]
 		});
 
@@ -63,21 +63,21 @@ class NewAttachmentsContext<S = ContextDefaultState>
 	 * Checks is attachment photo
 	 */
 	public get isPhoto(): boolean {
-		return this.subTypes.includes('new_photo_attachment');
+		return this.subTypes.includes('photo_new');
 	}
 
 	/**
 	 * Checks is attachment video
 	 */
 	public get isVideo(): boolean {
-		return this.subTypes.includes('new_video_attachment');
+		return this.subTypes.includes('video_new');
 	}
 
 	/**
 	 * Checks is attachment audio
 	 */
 	public get isAudio(): boolean {
-		return this.subTypes.includes('new_audio_attachment');
+		return this.subTypes.includes('audio_new');
 	}
 
 	/**
