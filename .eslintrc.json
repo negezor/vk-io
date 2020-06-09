@@ -19,6 +19,7 @@
 		"@typescript-eslint"
 	],
 	"rules": {
+		"@typescript-eslint/no-unused-expressions": ["error"],
 		"@typescript-eslint/no-non-null-assertion": "off",
 		"@typescript-eslint/naming-convention": [
 			"error",
@@ -58,6 +59,7 @@
 		"no-param-reassign": ["error", {
 			"props": false
 		}],
+		"no-unused-expressions": "off",
 		"no-dupe-class-members": "off",
 		"no-await-in-loop": "off",
 		"arrow-parens": "off",
