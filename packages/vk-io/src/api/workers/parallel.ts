@@ -1,15 +1,14 @@
-import { APIWorker } from './worker';
 import { APIRequest } from '../request';
 import { SequentialWorker } from './sequential';
 
 import { getChainReturn, resolveExecuteTask } from '../../utils/helpers';
 
-export class ParallelWorker extends APIWorker {
+export class ParallelWorker extends SequentialWorker {
 	protected async execute(): Promise<void> {
 		const { queue } = this;
 
 		if (this.skipMethod(queue[0].method)) {
-			SequentialWorker.prototype.execute.call(this);
+			super.execute();
 
 			return;
 		}
@@ -46,7 +45,7 @@ export class ParallelWorker extends APIWorker {
 			}
 		});
 
-		SequentialWorker.prototype.execute.call(this, request);
+		super.execute(request);
 
 		try {
 			resolveExecuteTask(tasks, await request.promise);

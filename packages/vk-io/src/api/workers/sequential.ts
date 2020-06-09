@@ -17,7 +17,7 @@ const {
 const debug = createDebug('vk-io:api');
 
 export class SequentialWorker extends APIWorker {
-	public async execute(request: APIRequest | undefined = this.queue.shift()): Promise<void> {
+	protected async execute(request: APIRequest | undefined = this.queue.shift()): Promise<void> {
 		if (!request) {
 			return;
 		}
