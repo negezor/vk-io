@@ -76,11 +76,7 @@ export class SequentialWorker extends APIWorker {
 			return;
 		}
 
-		request.resolve(
-			response.response !== undefined
-				? response.response
-				: response
-		);
+		request.resolve(response.response ?? response);
 	}
 
 	/**
