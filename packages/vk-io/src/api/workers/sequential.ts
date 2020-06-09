@@ -22,7 +22,6 @@ export class SequentialWorker extends APIWorker {
 			return;
 		}
 
-		const { options } = this.vk;
 		const { method } = request;
 
 		debug(`${method} -->`);
@@ -33,6 +32,8 @@ export class SequentialWorker extends APIWorker {
 
 			response = await response.json();
 		} catch (error) {
+			const { options } = this.vk;
+
 			if (request.retries === options.apiRetryLimit) {
 				debug(`${method} <X-`);
 
