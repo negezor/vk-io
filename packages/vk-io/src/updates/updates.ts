@@ -588,7 +588,7 @@ export class Updates {
 		if (this.hearManager.length !== 0) {
 			composer.optional(
 				(context: MessageContext): boolean => (
-					context.is('new_message') && !context.isEvent
+					context.is('message_new') && !context.isEvent
 				),
 				this.hearManager.middleware
 			);
