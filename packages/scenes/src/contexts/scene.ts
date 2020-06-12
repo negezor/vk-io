@@ -160,7 +160,6 @@ export class SceneContext {
 		this.canceled = false;
 	}
 
-
 	/**
 	 * Reset state/session
 	 */
