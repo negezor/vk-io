@@ -56,7 +56,7 @@ export class Chain {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public then(thenFn: Function, catchFn: Function): Promise<any[]> {
 		// @ts-ignore
-		return Promise.resolve(this.run()).then(thenFn, catchFn);
+		return this.run().then(thenFn, catchFn);
 	}
 
 	/**
