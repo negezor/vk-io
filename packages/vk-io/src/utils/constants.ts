@@ -123,10 +123,10 @@ export enum DefaultContentType {
  * Sources of captcha
  */
 export enum CaptchaType {
-	'API',
-	'DIRECT_AUTH',
-	'IMPLICIT_FLOW_AUTH',
-	'ACCOUNT_VERIFICATION'
+	'API' = 'API',
+	'DIRECT_AUTH' = 'DIRECT_AUTH',
+	'IMPLICIT_FLOW_AUTH' = 'IMPLICIT_FLOW_AUTH',
+	'ACCOUNT_VERIFICATION' = 'ACCOUNT_VERIFICATION'
 }
 
 /**
