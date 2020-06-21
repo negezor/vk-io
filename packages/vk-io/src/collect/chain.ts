@@ -75,7 +75,7 @@ export class Chain {
 
 		const { queue } = this;
 
-		let out: {
+		const out: {
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			response: any[];
 			errors: ExecuteError[];
@@ -97,10 +97,8 @@ export class Chain {
 
 				resolveExecuteTask(tasks, response);
 
-				out = {
-					response: [...out.response, ...response.response],
-					errors: [...out.errors, ...response.errors]
-				};
+				out.response.push(...response.response);
+				out.errors.push(...response.errors);
 			} catch (error) {
 				for (const task of tasks) {
 					task.reject(error);

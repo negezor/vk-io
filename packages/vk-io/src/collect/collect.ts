@@ -132,7 +132,7 @@ export class Collect {
 			promises.push(this.vk.api.execute({ code }));
 		}
 
-		let out: {
+		const out: {
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			response: any[];
 			errors: ExecuteError[];
@@ -142,10 +142,8 @@ export class Collect {
 		};
 
 		for (const { response, errors } of await Promise.all(promises)) {
-			out = {
-				response: [...out.response, ...response],
-				errors: [...out.errors, ...errors]
-			};
+			out.response.push(...response);
+			out.errors.push(...errors);
 		}
 
 		return out;
