@@ -1,5 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import jsonPlugin from 'rollup-plugin-json';
+import jsonPlugin from '@rollup/plugin-json';
 import typescriptPlugin from 'rollup-plugin-typescript2';
 /* eslint-enable import/no-extraneous-dependencies */
 
