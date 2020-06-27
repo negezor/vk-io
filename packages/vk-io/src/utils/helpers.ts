@@ -16,20 +16,25 @@ export const parseOwnerResourceRe = /(album|topic|wall|page|videos)(-?\d+)_(\d+)
 export const parseAttachmentRe = /(photo|video|audio|doc|audio_message|graffiti|wall|market|poll|gift)(-?\d+)_(\d+)_?(\w+)?/;
 
 /**
+ * Returns params for execute
+ */
+export const getExecuteParams = (params: Record<string, object | string>): string => (
+	JSON.stringify(params, (key, value) => (
+		typeof value === 'object' && value !== params
+			? String(value)
+			: value
+	))
+);
+
+/**
  * Returns method for execute
  */
 export const getExecuteMethod = (
 	method: string,
 	params: Record<string, object | string> = {}
-): string => {
-	const param = JSON.stringify(params, (key, value) => (
-		typeof value === 'object' && value !== params
-			? String(value)
-			: value
-	));
-
-	return `API.${method}(${param})`;
-};
+): string => (
+	`API.${method}(${getExecuteParams(params)})`
+);
 
 /**
  * Returns chain for execute

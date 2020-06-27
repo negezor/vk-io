@@ -1,6 +1,4 @@
-import { getExecuteMethod } from '../utils/helpers';
-
-const unespaceOffset = /"offset":"(\w+)"/g;
+import { getExecuteParams } from '../utils/helpers';
 
 export interface IExecuteCodeOptions {
 	method: string;
@@ -9,16 +7,13 @@ export interface IExecuteCodeOptions {
 	parallelCount: number;
 }
 
-export const getExecuteCode = ({ method, params, parallelCount }: IExecuteCodeOptions): string => {
-	const methodCode = getExecuteMethod(method, {
-		...params,
+export const getExecuteCode = ({ method, params, parallelCount }: IExecuteCodeOptions): string => (
+	`
+		var params = ${getExecuteParams(params)};
 
-		offset: 'offset'
-	});
+		params.offset = parseInt(Args.offset);
 
-	const code = `
 		var total = parseInt(Args.total);
-		var offset = parseInt(Args.offset);
 		var received = parseInt(Args.received);
 
 		var proceed = total == 0 || received < total;
@@ -26,7 +21,7 @@ export const getExecuteCode = ({ method, params, parallelCount }: IExecuteCodeOp
 		var i = 0, items = [], profiles = [], groups = [], result, length;
 
 		while (i < ${parallelCount} && proceed) {
-			result = ${methodCode};
+			result = API.${method}(params);
 			length = result.items.length;
 
 			if (total == 0 || total > result.count) {
@@ -39,8 +34,8 @@ export const getExecuteCode = ({ method, params, parallelCount }: IExecuteCodeOp
 			if (result.groups)
 				groups = groups + result.groups;
 
-			offset = offset + length;
 			received = received + length;
+			params.offset = params.offset + length;
 
 			proceed = received < total;
 			i = i + 1;
@@ -52,7 +47,5 @@ export const getExecuteCode = ({ method, params, parallelCount }: IExecuteCodeOp
 			profiles: profiles.splice(0, total),
 			groups: groups.splice(0, total)
 		};
-	`;
-
-	return code.replace(unespaceOffset, '"offset":$1');
-};
+	`
+);
