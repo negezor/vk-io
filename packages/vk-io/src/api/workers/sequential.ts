@@ -29,8 +29,6 @@ export class SequentialWorker extends APIWorker {
 		let response;
 		try {
 			response = await request.make();
-
-			response = await response.json();
 		} catch (error) {
 			const { options } = this.vk;
 

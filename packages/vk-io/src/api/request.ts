@@ -1,4 +1,4 @@
-import fetch, { Response } from 'node-fetch';
+import fetch from 'node-fetch';
 import { AbortController } from 'abort-controller';
 
 import { inspectable } from 'inspectable';
@@ -66,7 +66,8 @@ export class APIRequest {
 	/**
 	 * Sends a request to the server
 	 */
-	public make(): Promise<Response> {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	public async make(): Promise<any> {
 		const { options } = this.vk;
 
 		const params: APIRequest['params'] = {
@@ -84,19 +85,26 @@ export class APIRequest {
 
 		const timeout = setTimeout(() => controller.abort(), options.apiTimeout);
 
-		return fetch(`${options.apiBaseUrl}/${this.method}`, {
-			method: 'POST',
-			compress: false,
-			agent: options.agent,
-			signal: controller.signal,
-			headers: {
-				...options.apiHeaders,
+		try {
+			const response = await fetch(`${options.apiBaseUrl}/${this.method}`, {
+				method: 'POST',
+				compress: false,
+				agent: options.agent,
+				signal: controller.signal,
+				headers: {
+					...options.apiHeaders,
 
-				connection: 'keep-alive'
-			},
-			body: new URLSearchParams(params)
-		})
-			.finally(() => clearTimeout(timeout));
+					connection: 'keep-alive'
+				},
+				body: new URLSearchParams(params)
+			});
+
+			const result = await response.json();
+
+			return result;
+		} finally {
+			clearTimeout(timeout);
+		}
 	}
 }
 
