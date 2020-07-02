@@ -37,7 +37,7 @@ export class WebhookTransport {
 
 		tls,
 		host,
-		port,
+		port: customPort,
 
 		next = (req, res): void => {
 			res.writeHead(403);
@@ -75,19 +75,16 @@ export class WebhookTransport {
 
 			const { webhookServer } = this;
 
-			const serverPort = port || (
+			const port = customPort || (
 				tls
 					? 443
 					: 80
 			);
 
 			await promisify<ListenOptions>(webhookServer.listen)
-				.call(webhookServer, {
-					host,
-					port: serverPort
-				});
+				.call(webhookServer, { host, port });
 
-			debug(`Webhook listening on port: ${serverPort}`);
+			debug(`Webhook listening on port: ${port}`);
 		} catch (error) {
 			this.started = false;
 
