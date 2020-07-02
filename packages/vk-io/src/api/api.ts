@@ -93,7 +93,7 @@ export class API extends APIMethods {
 	 * Call execute method
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	public execute(params: object): Promise<any> {
+	public execute(params: Record<string, unknown> & { code: string }): Promise<any> {
 		return this.call('execute', params);
 	}
 
