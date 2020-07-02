@@ -32,24 +32,24 @@ export class WebhookTransport {
 	/**
 	 * Starts the webhook server
 	 */
-	public async start(
-		{
-			path = '/',
+	public async start({
+		path = '/',
 
-			tls,
-			host,
-			port
-		}: {
-			path?: string;
-			tls?: object;
-			host?: string;
-			port?: number;
-		} = {},
-		next: (req: IncomingMessage, res: ServerResponse) => unknown = (req, res): void => {
+		tls,
+		host,
+		port,
+
+		next = (req, res): void => {
 			res.writeHead(403);
 			res.end();
 		}
-	): Promise<void> {
+	}: {
+		path?: string;
+		tls?: object;
+		host?: string;
+		port?: number;
+		next?: (req: IncomingMessage, res: ServerResponse) => unknown
+	} = {}): Promise<void> {
 		if (this.started) {
 			throw new Error('Webhook updates already started');
 		}
