@@ -44,7 +44,10 @@ export class WebhookTransport {
 			host?: string;
 			port?: number;
 		} = {},
-		next?: Function
+		next: (req: IncomingMessage, res: ServerResponse) => unknown = (req, res): void => {
+			res.writeHead(403);
+			res.end();
+		}
 	): Promise<void> {
 		if (this.started) {
 			throw new Error('Webhook updates already started');
@@ -59,18 +62,11 @@ export class WebhookTransport {
 		try {
 			const webhookCallback = this.getWebhookCallback(path);
 
-			const callback = typeof next === 'function'
-				? (req: IncomingMessage, res: ServerResponse): Promise<void> => (
-					webhookCallback(req, res, (): void => (
-						next(req, res)
-					))
-				)
-				: (req: IncomingMessage, res: ServerResponse): Promise<void> => (
-					webhookCallback(req, res, (): void => {
-						res.writeHead(403);
-						res.end();
-					})
-				);
+			const callback = (req: IncomingMessage, res: ServerResponse): Promise<void> => (
+				webhookCallback(req, res, (): unknown => (
+					next(req, res)
+				))
+			);
 
 			this.webhookServer = tls
 				? httpsCreateServer(tls, callback)
