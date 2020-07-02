@@ -74,9 +74,14 @@ inspectable(VK, {
 	serialize: ({
 		api,
 		updates,
-		options: { appId, token }
+		options
 	}) => ({
-		options: { appId, token },
+		options: {
+			appId: options.appId,
+			token: options.token
+				? '[set]'
+				: '[none]'
+		},
 		api,
 		updates
 	})
