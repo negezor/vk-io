@@ -8,6 +8,7 @@ import {
 
 	createServer as httpCreateServer
 } from 'http';
+import { ListenOptions } from 'net';
 import { promisify } from 'util';
 
 import { VK } from '../../vk';
@@ -80,8 +81,11 @@ export class WebhookTransport {
 					: 80
 			);
 
-			await promisify<number, string | undefined>(webhookServer.listen)
-				.call(webhookServer, serverPort, host);
+			await promisify<ListenOptions>(webhookServer.listen)
+				.call(webhookServer, {
+					host,
+					port: serverPort
+				});
 
 			debug(`Webhook listening on port: ${serverPort}`);
 		} catch (error) {
