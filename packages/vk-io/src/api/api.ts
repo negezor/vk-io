@@ -53,7 +53,7 @@ const groupMethods = [
 /**
  * Working with API methods
  */
-export class API extends APIMethods {
+class API {
 	private vk: VK;
 
 	private manager: APIManager;
@@ -62,8 +62,6 @@ export class API extends APIMethods {
 	 * Constructor
 	 */
 	public constructor(vk: VK) {
-		super();
-
 		this.vk = vk;
 		this.manager = new APIManager(vk);
 
@@ -128,3 +126,8 @@ export class API extends APIMethods {
 }
 
 inspectable(API);
+
+// eslint-disable-next-line
+interface API extends APIMethods {}
+
+export { API };

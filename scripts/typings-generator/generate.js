@@ -9,7 +9,6 @@ const ts = require('typescript');
 const createPrinter = require('./printer');
 const {
 	TypesGenerator,
-	ClassGenerator,
 	InterfaceGenerator
 } = require('./generators');
 
@@ -226,7 +225,7 @@ async function generate() {
 		);
 	}
 
-	const apiMethodsClass = new ClassGenerator({
+	const apiMethodsInterface = new InterfaceGenerator({
 		name: 'APIMethods'
 	});
 
@@ -237,7 +236,7 @@ async function generate() {
 			})
 		);
 
-		apiMethodsClass.addProperty({
+		apiMethodsInterface.addProperty({
 			name,
 			type: group.name,
 			description: group.description,
@@ -254,7 +253,7 @@ async function generate() {
 	}
 
 	writeMethodsNode(
-		apiMethodsClass.toASTNode({
+		apiMethodsInterface.toASTNode({
 			exported: true
 		})
 	);
