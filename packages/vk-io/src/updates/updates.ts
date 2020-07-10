@@ -514,11 +514,8 @@ export class Updates {
 	/**
 	 * Starts the webhook server
 	 */
-	public async startWebhook(
-		options: IUpdatesStartWebhookOptions = {},
-		next?: Function
-	): Promise<void> {
-		return this.webhookTransport.start(options, next);
+	public async startWebhook(options: IUpdatesStartWebhookOptions = {}): Promise<void> {
+		return this.webhookTransport.start(options);
 	}
 
 	/**
