@@ -147,13 +147,29 @@ export interface IVKApplicationButton extends IButton {
 	};
 }
 
+export interface ICallbackButton extends IButton {
+	action: {
+		type: 'callback';
+
+		/**
+		 * Button label, no more than 40 characters
+		 */
+		label: string;
+
+		/**
+		 * Payload, preferably use object
+		 */
+		payload: ButtonPayload;
+	};
+}
+
 export type KeyboardButton =
 	ITextButton
 	| IURLButton
 	| ILocationButton
 	| IVKPayButton
-	| IVKApplicationButton;
-
+	| IVKApplicationButton
+	| ICallbackButton;
 
 export interface IKeyboardTextButtonOptions {
 	/**
@@ -332,6 +348,20 @@ export interface IKeyboardApplicationButtonOptions {
 	hash?: string;
 }
 
+export interface IKeyboardCallbackButtonOptions {
+	/**
+	 * Button label, no more than 40 characters
+	 */
+	label: string;
+
+	/**
+	 * Payload, preferably use object
+	 *
+	 * No more than 255 characters in JSON stringified
+	 */
+	payload?: ButtonPayload;
+}
+
 export interface IKeyboardProxyButton {
 	options: (
 		IKeyboardTextButtonOptions
@@ -339,7 +369,8 @@ export interface IKeyboardProxyButton {
 		| IKeyboardLocationRequestButtonOptions
 		| IKeyboardVKPayButtonOptions
 		| IKeyboardApplicationButtonOptions
+		| IKeyboardCallbackButtonOptions
 	);
 
-	kind: 'text' | 'url' | 'location_request' | 'vk_pay' | 'vk_application';
+	kind: 'text' | 'url' | 'location_request' | 'vk_pay' | 'vk_application' | 'callback';
 }

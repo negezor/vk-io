@@ -6,6 +6,8 @@ import {
 	IKeyboardLocationRequestButtonOptions,
 	IKeyboardVKPayButtonOptions,
 	IKeyboardApplicationButtonOptions,
+	IKeyboardCallbackButtonOptions,
+
 	ButtonColor
 } from './types';
 
@@ -106,6 +108,12 @@ export class Keyboard {
 					continue;
 				}
 
+				if (kind === 'callback') {
+					builder.callbackButton(options as IKeyboardCallbackButtonOptions);
+
+					continue;
+				}
+
 				throw new TypeError('Unsupported type button');
 			}
 
@@ -158,5 +166,15 @@ export class Keyboard {
 		options: IKeyboardApplicationButtonOptions
 	): IKeyboardProxyButton {
 		return { options, kind: 'vk_application' };
+	}
+
+	/**
+	 * Allows without sending a message from the user
+	 * to receive a notification of a button click and perform the necessary action
+	 */
+	public static callbackButton(
+		options: IKeyboardCallbackButtonOptions
+	): IKeyboardProxyButton {
+		return { options, kind: 'callback' };
 	}
 }

@@ -9,7 +9,8 @@ import {
 	IKeyboardURLButtonOptions,
 	IKeyboardLocationRequestButtonOptions,
 	IKeyboardVKPayButtonOptions,
-	IKeyboardApplicationButtonOptions
+	IKeyboardApplicationButtonOptions,
+	IKeyboardCallbackButtonOptions
 } from './types';
 
 const serializePayload = (rawPayload: ButtonPayload): string => {
@@ -200,6 +201,40 @@ export class KeyboardBuilder {
 				owner_id: ownerId,
 
 				type: 'open_app'
+			}
+		});
+	}
+
+	/**
+	 * Allows without sending a message from the user
+	 * to receive a notification of a button click and perform the necessary action
+	 *
+	 * ```ts
+	 * builder.callbackButton({
+	 *  label: 'Buy a coffee',
+	 *  payload: {
+	 *   command: 'buy',
+	 *   item: 'coffee'
+	 *  }
+	 * });
+	 * ```
+	 */
+	public callbackButton({
+		label,
+		payload: rawPayload = {}
+	}: IKeyboardCallbackButtonOptions): this {
+		if (label.length > 40) {
+			throw new RangeError('Maximum length of label 40 characters');
+		}
+
+		const payload = serializePayload(rawPayload);
+
+		return this.addButton({
+			action: {
+				label,
+				payload,
+
+				type: 'callback'
 			}
 		});
 	}
