@@ -116,6 +116,10 @@ export const resolveResource = async ({
 		);
 	}
 
+	if (parseTargetResourceRe.test(resource)) {
+		return resolveTargetResouce(resource);
+	}
+
 	if (!isVKUrlRe.test(resource)) {
 		return resolveSlugResource(resource, api);
 	}
