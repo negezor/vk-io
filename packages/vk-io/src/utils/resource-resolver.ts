@@ -51,7 +51,7 @@ const resolveTargetResouce = (resource: string): IResolvedTargetResource => {
 
 	return {
 		id: Number(rawId),
-		type: enumResourceTypes[rawType]
+		type: enumResourceTypes[rawType] || rawType
 	};
 };
 
