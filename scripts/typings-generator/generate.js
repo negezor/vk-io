@@ -229,6 +229,8 @@ async function generate() {
 		);
 	}
 
+	// writeConstantsNode
+
 	writeConstantsNode(
 		TypesGenerator.declarationExport(
 			ts.createEnumDeclaration(
@@ -237,11 +239,16 @@ async function generate() {
 				'APIErrorCode',
 				Object.entries(errors)
 					.map(([name, info]) => (
-						ts.createEnumMember(
-							name.substring(10).toUpperCase(),
-							ts.createNumericLiteral(
-								String(info.code)
-							)
+						ts.addSyntheticLeadingComment(
+							ts.createEnumMember(
+								name.substring(10).toUpperCase(),
+								ts.createNumericLiteral(
+									String(info.code)
+								)
+							),
+							ts.SyntaxKind.MultiLineCommentTrivia,
+							formatTSComments(`${info.description}\n\nCode: \`${info.code}\``),
+							true
 						)
 					))
 			)
