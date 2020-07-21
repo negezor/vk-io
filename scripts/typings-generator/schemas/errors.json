@@ -1,0 +1,747 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "errors": {
+    "api_error_unknown": {
+      "code": 1,
+      "description": "Unknown error occurred",
+      "global": true
+    },
+    "api_error_disabled": {
+      "code": 2,
+      "description": "Application is disabled. Enable your application or use test mode",
+      "global": true
+    },
+    "api_error_method": {
+      "code": 3,
+      "description": "Unknown method passed",
+      "global": true
+    },
+    "api_error_signature": {
+      "code": 4,
+      "description": "Incorrect signature",
+      "global": true
+    },
+    "api_error_auth": {
+      "code": 5,
+      "description": "User authorization failed",
+      "global": true
+    },
+    "api_error_too_many": {
+      "code": 6,
+      "description": "Too many requests per second",
+      "global": true
+    },
+    "api_error_permission": {
+      "code": 7,
+      "description": "Permission to perform this action is denied",
+      "global": true
+    },
+    "api_error_request": {
+      "code": 8,
+      "description": "Invalid request",
+      "global": true
+    },
+    "api_error_flood": {
+      "code": 9,
+      "description": "Flood control",
+      "global": true
+    },
+    "api_error_server": {
+      "code": 10,
+      "description": "Internal server error",
+      "global": true
+    },
+    "api_error_enabled_in_test": {
+      "code": 11,
+      "description": "In test mode application should be disabled or user should be authorized",
+      "global": true
+    },
+    "api_error_compile": {
+      "code": 12,
+      "description": "Unable to compile code"
+    },
+    "api_error_runtime": {
+      "code": 13,
+      "description": "Runtime error occurred during code invocation"
+    },
+    "api_error_captcha": {
+      "code": 14,
+      "description": "Captcha needed",
+      "global": true
+    },
+    "api_error_access": {
+      "code": 15,
+      "description": "Access denied",
+      "global": true
+    },
+    "api_error_auth_https": {
+      "code": 16,
+      "description": "HTTP authorization failed",
+      "global": true
+    },
+    "api_error_auth_validation": {
+      "code": 17,
+      "description": "Validation required",
+      "global": true
+    },
+    "api_error_user_deleted": {
+      "code": 18,
+      "description": "User was deleted or banned",
+      "global": true
+    },
+    "api_error_blocked": {
+      "code": 19,
+      "description": "Content blocked"
+    },
+    "api_error_method_permission": {
+      "code": 20,
+      "description": "Permission to perform this action is denied for non-standalone applications",
+      "global": true
+    },
+    "api_error_method_ads": {
+      "code": 21,
+      "description": "Permission to perform this action is allowed only for standalone and OpenAPI applications",
+      "global": true
+    },
+    "api_error_upload": {
+      "code": 22,
+      "description": "Upload error"
+    },
+    "api_error_method_disabled": {
+      "code": 23,
+      "description": "This method was disabled",
+      "global": true
+    },
+    "api_error_need_confirmation": {
+      "code": 24,
+      "description": "Confirmation required",
+      "global": true
+    },
+    "api_error_need_token_confirmation": {
+      "code": 25,
+      "description": "Token confirmation required",
+      "global": true
+    },
+    "api_error_group_auth": {
+      "code": 27,
+      "description": "Group authorization failed",
+      "global": true
+    },
+    "api_error_app_auth": {
+      "code": 28,
+      "description": "Application authorization failed",
+      "global": true
+    },
+    "api_error_rate_limit": {
+      "code": 29,
+      "description": "Rate limit reached",
+      "global": true
+    },
+    "api_error_private_profile": {
+      "code": 30,
+      "description": "This profile is private",
+      "global": true
+    },
+    "api_error_not_implemented_yet": {
+      "code": 33,
+      "description": "Not implemented yet",
+      "global": true
+    },
+    "api_error_client_update_needed": {
+      "code": 35,
+      "description": "Client update needed"
+    },
+    "api_error_param": {
+      "code": 100,
+      "description": "One of the parameters specified was missing or invalid",
+      "global": true
+    },
+    "api_error_param_api_id": {
+      "code": 101,
+      "description": "Invalid application API ID",
+      "global": true
+    },
+    "api_error_limits": {
+      "code": 103,
+      "description": "Out of limits"
+    },
+    "api_error_not_found": {
+      "code": 104,
+      "description": "Not found"
+    },
+    "api_error_save_file": {
+      "code": 105,
+      "description": "Couldn't save file"
+    },
+    "api_error_action_failed": {
+      "code": 106,
+      "description": "Unable to process action"
+    },
+    "api_error_param_user_id": {
+      "code": 113,
+      "description": "Invalid user id",
+      "global": true
+    },
+    "api_error_param_album_id": {
+      "code": 114,
+      "description": "Invalid album id"
+    },
+    "api_error_param_server": {
+      "code": 118,
+      "description": "Invalid server"
+    },
+    "api_error_param_title": {
+      "code": 119,
+      "description": "Invalid title"
+    },
+    "api_error_param_hash": {
+      "code": 121,
+      "description": "Invalid hash"
+    },
+    "api_error_param_photos": {
+      "code": 122,
+      "description": "Invalid photos"
+    },
+    "api_error_param_group_id": {
+      "code": 125,
+      "description": "Invalid group id"
+    },
+    "api_error_param_photo": {
+      "code": 129,
+      "description": "Invalid photo"
+    },
+    "api_error_param_page_id": {
+      "code": 140,
+      "description": "Page not found"
+    },
+    "api_error_access_page": {
+      "code": 141,
+      "description": "Access to page denied"
+    },
+    "api_error_mobile_not_activated": {
+      "code": 146,
+      "description": "The mobile number of the user is unknown"
+    },
+    "api_error_insufficient_funds": {
+      "code": 147,
+      "description": "Application has insufficient funds"
+    },
+    "api_error_access_menu": {
+      "code": 148,
+      "description": "Access to the menu of the user denied"
+    },
+    "api_error_param_timestamp": {
+      "code": 150,
+      "description": "Invalid timestamp",
+      "global": true
+    },
+    "api_error_friends_list_id": {
+      "code": 171,
+      "description": "Invalid list id"
+    },
+    "api_error_friends_list_limit": {
+      "code": 173,
+      "description": "Reached the maximum number of lists"
+    },
+    "api_error_friends_add_yourself": {
+      "code": 174,
+      "description": "Cannot add user himself as friend"
+    },
+    "api_error_friends_add_in_enemy": {
+      "code": 175,
+      "description": "Cannot add this user to friends as they have put you on their blacklist"
+    },
+    "api_error_friends_add_enemy": {
+      "code": 176,
+      "description": "Cannot add this user to friends as you put him on blacklist"
+    },
+    "api_error_friends_add_not_found": {
+      "code": 177,
+      "description": "Cannot add this user to friends as user not found"
+    },
+    "api_error_param_note_id": {
+      "code": 180,
+      "description": "Note not found"
+    },
+    "api_error_access_note": {
+      "code": 181,
+      "description": "Access to note denied"
+    },
+    "api_error_access_note_comment": {
+      "code": 182,
+      "description": "You can't comment this note"
+    },
+    "api_error_access_comment": {
+      "code": 183,
+      "description": "Access to comment denied"
+    },
+    "api_error_access_album": {
+      "code": 200,
+      "description": "Access denied",
+      "global": true
+    },
+    "api_error_access_audio": {
+      "code": 201,
+      "description": "Access denied",
+      "global": true
+    },
+    "api_error_access_group": {
+      "code": 203,
+      "description": "Access to group denied",
+      "global": true
+    },
+    "api_error_access_video": {
+      "code": 204,
+      "description": "Access denied"
+    },
+    "api_error_access_market": {
+      "code": 205,
+      "description": "Access denied"
+    },
+    "api_error_wall_access_post": {
+      "code": 210,
+      "description": "Access to wall's post denied"
+    },
+    "api_error_wall_access_comment": {
+      "code": 211,
+      "description": "Access to wall's comment denied"
+    },
+    "api_error_wall_access_replies": {
+      "code": 212,
+      "description": "Access to post comments denied"
+    },
+    "api_error_wall_access_add_reply": {
+      "code": 213,
+      "description": "Access to status replies denied"
+    },
+    "api_error_wall_add_post": {
+      "code": 214,
+      "description": "Access to adding post denied"
+    },
+    "api_error_wall_ads_published": {
+      "code": 219,
+      "description": "Advertisement post was recently added"
+    },
+    "api_error_wall_too_many_recipients": {
+      "code": 220,
+      "description": "Too many recipients"
+    },
+    "api_error_status_no_audio": {
+      "code": 221,
+      "description": "User disabled track name broadcast"
+    },
+    "api_error_wall_links_forbidden": {
+      "code": 222,
+      "description": "Hyperlinks are forbidden"
+    },
+    "api_error_wall_reply_owner_flood": {
+      "code": 223,
+      "description": "Too many replies"
+    },
+    "api_error_wall_ads_post_limit_reached": {
+      "code": 224,
+      "description": "Too many ads posts"
+    },
+    "api_error_polls_access": {
+      "code": 250,
+      "description": "Access to poll denied"
+    },
+    "api_error_polls_poll_id": {
+      "code": 251,
+      "description": "Invalid poll id"
+    },
+    "api_error_polls_answer_id": {
+      "code": 252,
+      "description": "Invalid answer id"
+    },
+    "api_error_polls_access_without_vote": {
+      "code": 253,
+      "description": "Access denied, please vote first"
+    },
+    "api_error_access_groups": {
+      "code": 260,
+      "description": "Access to the groups list is denied due to the user's privacy settings"
+    },
+    "api_error_album_full": {
+      "code": 300,
+      "description": "This album is full",
+      "global": true
+    },
+    "api_error_albums_limit": {
+      "code": 302,
+      "description": "Albums number limit is reached"
+    },
+    "api_error_votes_permission": {
+      "code": 500,
+      "description": "Permission denied. You must enable votes processing in application settings",
+      "global": true
+    },
+    "api_error_votes": {
+      "code": 503,
+      "description": "Not enough votes"
+    },
+    "api_error_ads_permission": {
+      "code": 600,
+      "description": "Permission denied. You have no access to operations specified with given object(s)",
+      "global": true
+    },
+    "api_error_weighted_flood": {
+      "code": 601,
+      "description": "Permission denied. You have requested too many actions this day. Try later."
+    },
+    "api_error_ads_partial_success": {
+      "code": 602,
+      "description": "Some part of the request has not been completed"
+    },
+    "api_error_ads_specific": {
+      "code": 603,
+      "description": "Some ads error occured",
+      "global": true
+    },
+    "api_error_ads_object_deleted": {
+      "code": 629,
+      "description": "Object deleted"
+    },
+    "api_error_group_change_creator": {
+      "code": 700,
+      "description": "Cannot edit creator role"
+    },
+    "api_error_group_not_in_club": {
+      "code": 701,
+      "description": "User should be in club"
+    },
+    "api_error_group_too_many_officers": {
+      "code": 702,
+      "description": "Too many officers in club"
+    },
+    "api_error_group_need_2fa": {
+      "code": 703,
+      "description": "You need to enable 2FA for this action"
+    },
+    "api_error_group_host_need_2fa": {
+      "code": 704,
+      "description": "User needs to enable 2FA for this action"
+    },
+    "api_error_group_too_many_addresses": {
+      "code": 706,
+      "description": "Too many addresses in club"
+    },
+    "api_error_group_app_is_not_installed_in_community": {
+      "code": 711,
+      "description": "Application is not installed in community"
+    },
+    "api_error_group_invite_links_not_valid": {
+      "code": 714,
+      "description": "Invite link is invalid - expired, deleted or not exists"
+    },
+    "api_error_video_already_added": {
+      "code": 800,
+      "description": "This video is already added"
+    },
+    "api_error_video_comments_closed": {
+      "code": 801,
+      "description": "Comments for this video are closed"
+    },
+    "api_error_messages_user_blocked": {
+      "code": 900,
+      "description": "Can't send messages for users from blacklist"
+    },
+    "api_error_messages_deny_send": {
+      "code": 901,
+      "description": "Can't send messages for users without permission"
+    },
+    "api_error_messages_privacy": {
+      "code": 902,
+      "description": "Can't send messages to this user due to their privacy settings"
+    },
+    "api_error_messages_too_old_pts": {
+      "code": 907,
+      "description": "Value of ts or pts is too old"
+    },
+    "api_error_messages_too_new_pts": {
+      "code": 908,
+      "description": "Value of ts or pts is too new"
+    },
+    "api_error_messages_edit_expired": {
+      "code": 909,
+      "description": "Can't edit this message, because it's too old"
+    },
+    "api_error_messages_too_big": {
+      "code": 910,
+      "description": "Can't sent this message, because it's too big"
+    },
+    "api_error_messages_keyboard_invalid": {
+      "code": 911,
+      "description": "Keyboard format is invalid"
+    },
+    "api_error_messages_chat_bot_feature": {
+      "code": 912,
+      "description": "This is a chat bot feature, change this status in settings"
+    },
+    "api_error_messages_too_long_forwards": {
+      "code": 913,
+      "description": "Too many forwarded messages"
+    },
+    "api_error_messages_too_long_message": {
+      "code": 914,
+      "description": "Message is too long"
+    },
+    "api_error_messages_chat_user_no_access": {
+      "code": 917,
+      "description": "You don't have access to this chat"
+    },
+    "api_error_messages_cant_see_invite_link": {
+      "code": 919,
+      "description": "You can't see invite link for this chat"
+    },
+    "api_error_messages_edit_kind_disallowed": {
+      "code": 920,
+      "description": "Can't edit this kind of message"
+    },
+    "api_error_messages_cant_fwd": {
+      "code": 921,
+      "description": "Can't forward these messages"
+    },
+    "api_error_messages_cant_delete_for_all": {
+      "code": 924,
+      "description": "Can't delete this message for everybody"
+    },
+    "api_error_messages_chat_not_admin": {
+      "code": 925,
+      "description": "You are not admin of this chat"
+    },
+    "api_error_messages_chat_not_exist": {
+      "code": 927,
+      "description": "Chat does not exist"
+    },
+    "api_error_messages_cant_change_invite_link": {
+      "code": 931,
+      "description": "You can't change invite link for this chat"
+    },
+    "api_error_messages_group_peer_access": {
+      "code": 932,
+      "description": "Your community can't interact with this peer"
+    },
+    "api_error_messages_chat_user_not_in_chat": {
+      "code": 935,
+      "description": "User not found in chat"
+    },
+    "api_error_messages_contact_not_found": {
+      "code": 936,
+      "description": "Contact not found"
+    },
+    "api_error_messages_message_request_already_sent": {
+      "code": 939,
+      "description": "Message request already sent"
+    },
+    "api_error_messages_too_many_posts": {
+      "code": 940,
+      "description": "Too many posts in messages"
+    },
+    "api_error_messages_cant_pin_one_time_story": {
+      "code": 942,
+      "description": "Cannot pin one-time story"
+    },
+    "api_error_messages_intent_cant_use": {
+      "code": 943,
+      "description": "Cannot use this intent"
+    },
+    "api_error_messages_intent_limit_overflow": {
+      "code": 944,
+      "description": "Limits overflow for this intent"
+    },
+    "api_error_messages_chat_disabled": {
+      "code": 945,
+      "description": "Chat was disabled"
+    },
+    "api_error_messages_chat_unsupported": {
+      "code": 946,
+      "description": "Chat not supported"
+    },
+    "api_error_messages_member_access_to_group_denied": {
+      "code": 947,
+      "description": "Can't add user to chat, because user has no access to group"
+    },
+    "api_error_messages_cant_edit_pinned_yet": {
+      "code": 949,
+      "description": "Can't edit pinned message yet"
+    },
+    "api_error_messages_peer_blocked_reason_by_time": {
+      "code": 950,
+      "description": "Can't send message, reply timed out"
+    },
+    "api_error_param_phone": {
+      "code": 1000,
+      "description": "Invalid phone number"
+    },
+    "api_error_phone_already_used": {
+      "code": 1004,
+      "description": "This phone number is used by another user"
+    },
+    "api_error_auth_flood_error": {
+      "code": 1105,
+      "description": "Too many auth attempts, try again later"
+    },
+    "api_error_auth_delay": {
+      "code": 1112,
+      "description": "Processing.. Try later"
+    },
+    "api_error_param_doc_id": {
+      "code": 1150,
+      "description": "Invalid document id"
+    },
+    "api_error_param_doc_delete_access": {
+      "code": 1151,
+      "description": "Access to document deleting is denied"
+    },
+    "api_error_param_doc_title": {
+      "code": 1152,
+      "description": "Invalid document title"
+    },
+    "api_error_param_doc_access": {
+      "code": 1153,
+      "description": "Access to document is denied"
+    },
+    "api_error_photo_changed": {
+      "code": 1160,
+      "description": "Original photo was changed"
+    },
+    "api_error_too_many_lists": {
+      "code": 1170,
+      "description": "Too many feed lists"
+    },
+    "api_error_apps_already_unlocked": {
+      "code": 1251,
+      "description": "This achievement is already unlocked"
+    },
+    "api_error_apps_subscription_not_found": {
+      "code": 1256,
+      "description": "Subscription not found"
+    },
+    "api_error_apps_subscription_invalid_status": {
+      "code": 1257,
+      "description": "Subscription is in invalid status"
+    },
+    "api_error_invalid_address": {
+      "code": 1260,
+      "description": "Invalid screen name"
+    },
+    "api_error_communities_catalog_disabled": {
+      "code": 1310,
+      "description": "Catalog is not available for this user"
+    },
+    "api_error_communities_categories_disabled": {
+      "code": 1311,
+      "description": "Catalog categories are not available for this user"
+    },
+    "api_error_market_restore_too_late": {
+      "code": 1400,
+      "description": "Too late for restore"
+    },
+    "api_error_market_comments_closed": {
+      "code": 1401,
+      "description": "Comments for this market are closed"
+    },
+    "api_error_market_album_not_found": {
+      "code": 1402,
+      "description": "Album not found"
+    },
+    "api_error_market_item_not_found": {
+      "code": 1403,
+      "description": "Item not found"
+    },
+    "api_error_market_item_already_added": {
+      "code": 1404,
+      "description": "Item already added to album"
+    },
+    "api_error_market_too_many_items": {
+      "code": 1405,
+      "description": "Too many items"
+    },
+    "api_error_market_too_many_items_in_album": {
+      "code": 1406,
+      "description": "Too many items in album"
+    },
+    "api_error_market_too_many_albums": {
+      "code": 1407,
+      "description": "Too many albums"
+    },
+    "api_error_market_item_has_bad_links": {
+      "code": 1408,
+      "description": "Item has bad links in description"
+    },
+    "api_error_story_expired": {
+      "code": 1600,
+      "description": "Story has already expired"
+    },
+    "api_error_story_incorrect_reply_privacy": {
+      "code": 1602,
+      "description": "Incorrect reply privacy"
+    },
+    "api_error_pretty_cards_card_not_found": {
+      "code": 1900,
+      "description": "Card not found"
+    },
+    "api_error_pretty_cards_too_many_cards": {
+      "code": 1901,
+      "description": "Too many cards"
+    },
+    "api_error_pretty_cards_card_is_connected_to_post": {
+      "code": 1902,
+      "description": "Card is connected to post"
+    },
+    "api_error_callback_api_servers_limit": {
+      "code": 2000,
+      "description": "Servers number limit is reached"
+    },
+    "api_error_recaptcha": {
+      "code": 3300,
+      "description": "Recaptcha needed",
+      "global": true
+    },
+    "api_error_phone_validation_need": {
+      "code": 3301,
+      "description": "Phone validation needed",
+      "global": true
+    },
+    "api_error_password_validation_need": {
+      "code": 3302,
+      "description": "Password validation needed",
+      "global": true
+    },
+    "api_error_otp_validation_need": {
+      "code": 3303,
+      "description": "Otp app validation needed",
+      "global": true
+    },
+    "api_error_email_confirmation_need": {
+      "code": 3304,
+      "description": "Email confirmation needed",
+      "global": true
+    },
+    "api_error_assert_votes": {
+      "code": 3305,
+      "description": "Assert votes",
+      "global": true
+    },
+    "api_error_token_extension_required": {
+      "code": 3609,
+      "description": "Token extension required",
+      "global": true
+    },
+    "api_error_user_deactivated": {
+      "code": 3610,
+      "description": "User is deactivated",
+      "global": true
+    },
+    "api_error_user_service_deactivated": {
+      "code": 3611,
+      "description": "Service is deactivated for user",
+      "global": true
+    },
+    "api_error_fave_aliexpress_tag": {
+      "code": 3800,
+      "description": "Can't set AliExpress tag to this type of object"
+    }
+  }
+}
