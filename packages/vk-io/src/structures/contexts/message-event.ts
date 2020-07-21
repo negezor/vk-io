@@ -12,7 +12,8 @@ export interface IMessageEventContextPayload {
 	conversation_message_id: number;
 	peer_id: number;
 	event_id: string;
-	payload: string;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	payload: any;
 }
 
 export type MessageEventContextOptions<S> =
@@ -67,7 +68,8 @@ export class MessageEventContext<S = ContextDefaultState>
 	/**
 	 * Returns the event payload
 	 */
-	public get eventPayload(): string {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	public get eventPayload(): any {
 		return this.payload.payload;
 	}
 
