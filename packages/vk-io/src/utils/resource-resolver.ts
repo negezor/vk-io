@@ -24,8 +24,8 @@ const systemMentionRe = /\[([^|]+)\|[^\]]+\]/;
 
 const isVKUrlRe = /^(?:https:\/\/)?(?:m\.)?vk.com\//;
 
-const parseTargetResourceRe = /^([^\d]+)(\d+)$/;
-const parseOwnerResourceRe = /(\w+)(-?\d+)_(\d+)/;
+const parseTargetResourceRe = /^(\w+)(-?\d+)$/;
+const parseOwnerResourceRe = /^(\w+)(-?\d+)_(\d+)/;
 
 const enumResourceTypes: Record<string, IResolvedTargetResource['type']> = {
 	id: ResourceType.USER,
