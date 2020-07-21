@@ -3,6 +3,28 @@ import { Context, ContextFactoryOptions, ContextDefaultState } from './context';
 import { pickProperties } from '../../utils/helpers';
 import { kSerializeData } from '../../utils/constants';
 
+export interface IMessageEventShowSnackbar {
+	type: 'show_snackbar';
+	text: string;
+}
+
+export interface IMessageEventOpenLink {
+	type: 'open_link';
+	link: string;
+}
+
+export interface IMessageEventOpenApp {
+	type: 'open_app';
+	app_id: number;
+	owner_id?: number;
+	hash: string;
+}
+
+export type MessageEventAction =
+IMessageEventShowSnackbar
+| IMessageEventOpenLink
+| IMessageEventOpenApp;
+
 export type MessageEventContextType = 'message_event';
 
 export type MessageEventContextSubType = 'message_event';
@@ -71,6 +93,18 @@ export class MessageEventContext<S = ContextDefaultState>
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public get eventPayload(): any {
 		return this.payload.payload;
+	}
+
+	/**
+	 * Dispatches an event with an action that will occur when the callback button is pressed
+	 */
+	public answer(eventData: MessageEventAction): Promise<1> {
+		return this.vk.api.messages.sendMessageEventAnswer({
+			event_id: this.eventId,
+			peer_id: this.peerId,
+			user_id: this.userId,
+			event_data: JSON.stringify(eventData)
+		});
 	}
 
 	/**
