@@ -357,6 +357,11 @@ export class Updates {
 	): this;
 
 	public on<T = {}>(
+		events: AllowArray<MessageEventContextType | MessageEventContextSubType>,
+		handler: AllowArray<Middleware<MessageEventContext & T>>
+	): this;
+
+	public on<T = {}>(
 		events: AllowArray<MessageContextType | MessageContextSubType>,
 		handler: AllowArray<Middleware<MessageContext & T>>
 	): this;
@@ -404,6 +409,11 @@ export class Updates {
 	public on<T = {}>(
 		events: AllowArray<WallPostContextType | WallPostContextSubType>,
 		handler: AllowArray<Middleware<WallPostContext & T>>
+	): this;
+
+	public on<T = {}>(
+		events: AllowArray<LikeContextType | LikeContextSubType>,
+		handler: AllowArray<Middleware<LikeContext & T>>
 	): this;
 
 	public on<T = {}>(
