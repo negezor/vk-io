@@ -124,14 +124,16 @@ export const resolveResource = async ({
 		? `https://${resource}`
 		: resource;
 
-	const { pathname, search } = new URL(resourceUrl);
+	const { pathname: rawPathname, search } = new URL(resourceUrl);
 
-	if (pathname === '/') {
+	if (rawPathname === '/') {
 		throw new ResourceError({
 			code: ResourceErrorCode.INVALID_URL,
 			message: 'URL should contain path'
 		});
 	}
+
+	const pathname = rawPathname.substring(1);
 
 	if (parseOwnerResourceRe.test(search)) {
 		return resolveOwnerResource(pathname);
