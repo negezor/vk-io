@@ -132,7 +132,7 @@ export const resolveResource = async ({
 		? `https://${resource}`
 		: resource;
 
-	const { pathname: rawPathname, search } = new URL(resourceUrl);
+	const { pathname: rawPathname, searchParams } = new URL(resourceUrl);
 
 	if (rawPathname === '/') {
 		throw new ResourceError({
@@ -143,7 +143,9 @@ export const resolveResource = async ({
 
 	const pathname = rawPathname.substring(1);
 
-	if (parseOwnerResourceRe.test(search)) {
+	const search = searchParams.get('w') || searchParams.get('z');
+
+	if (search && parseOwnerResourceRe.test(search)) {
 		return resolveOwnerResource(search);
 	}
 
