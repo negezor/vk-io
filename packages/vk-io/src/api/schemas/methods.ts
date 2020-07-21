@@ -7,7 +7,7 @@ import * as Responses from "./responses";
  * The API account group
  */
 export interface APIAccount {
-    ban(params: Params.AccountBanParams): Promise<Responses.OkResponse>;
+    ban(params: Params.AccountBanParams): Promise<Responses.BaseOkResponse>;
     /**
      * Changes a user password after access is successfully restored with the [vk.com/dev/auth.restore|auth.restore] method.
      */
@@ -43,7 +43,7 @@ export interface APIAccount {
     /**
      * Subscribes an iOS/Android/Windows Phone-based device to receive push notifications
      */
-    registerDevice(params: Params.AccountRegisterDeviceParams): Promise<Responses.OkResponse>;
+    registerDevice(params: Params.AccountRegisterDeviceParams): Promise<Responses.BaseOkResponse>;
     /**
      * Edits current profile info.
      */
@@ -51,32 +51,32 @@ export interface APIAccount {
     /**
      * Allows to edit the current account info.
      */
-    setInfo(params: Params.AccountSetInfoParams): Promise<Responses.OkResponse>;
+    setInfo(params: Params.AccountSetInfoParams): Promise<Responses.BaseOkResponse>;
     /**
      * Sets an application screen name (up to 17 characters), that is shown to the user in the left menu.
      */
-    setNameInMenu(params: Params.AccountSetNameInMenuParams): Promise<Responses.OkResponse>;
+    setNameInMenu(params: Params.AccountSetNameInMenuParams): Promise<Responses.BaseOkResponse>;
     /**
      * Marks a current user as offline.
      */
-    setOffline(params: Params.AccountSetOfflineParams): Promise<Responses.OkResponse>;
+    setOffline(params: Params.AccountSetOfflineParams): Promise<Responses.BaseOkResponse>;
     /**
      * Marks the current user as online for 15 minutes.
      */
-    setOnline(params: Params.AccountSetOnlineParams): Promise<Responses.OkResponse>;
+    setOnline(params: Params.AccountSetOnlineParams): Promise<Responses.BaseOkResponse>;
     /**
      * Change push settings.
      */
-    setPushSettings(params: Params.AccountSetPushSettingsParams): Promise<Responses.OkResponse>;
+    setPushSettings(params: Params.AccountSetPushSettingsParams): Promise<Responses.BaseOkResponse>;
     /**
      * Mutes push notifications for the set period of time.
      */
-    setSilenceMode(params: Params.AccountSetSilenceModeParams): Promise<Responses.OkResponse>;
-    unban(params: Params.AccountUnbanParams): Promise<Responses.OkResponse>;
+    setSilenceMode(params: Params.AccountSetSilenceModeParams): Promise<Responses.BaseOkResponse>;
+    unban(params: Params.AccountUnbanParams): Promise<Responses.BaseOkResponse>;
     /**
      * Unsubscribes a device from push notifications.
      */
-    unregisterDevice(params: Params.AccountUnregisterDeviceParams): Promise<Responses.OkResponse>;
+    unregisterDevice(params: Params.AccountUnregisterDeviceParams): Promise<Responses.BaseOkResponse>;
 }
 
 /**
@@ -122,7 +122,7 @@ export interface APIAds {
     /**
      * Deletes a retarget group.
      */
-    deleteTargetGroup(params: Params.AdsDeleteTargetGroupParams): Promise<Responses.OkResponse>;
+    deleteTargetGroup(params: Params.AdsDeleteTargetGroupParams): Promise<Responses.BaseOkResponse>;
     /**
      * Returns a list of advertising accounts.
      */
@@ -163,6 +163,8 @@ export interface APIAds {
      * Returns information about current state of a counter — number of remaining runs of methods and time to the next counter nulling in seconds.
      */
     getFloodStats(params: Params.AdsGetFloodStatsParams): Promise<Responses.AdsGetFloodStatsResponse>;
+    getLookalikeRequests(params: Params.AdsGetLookalikeRequestsParams): Promise<Responses.AdsGetLookalikeRequestsResponse>;
+    getMusicians(params: Params.AdsGetMusiciansParams): Promise<Responses.AdsGetMusiciansResponse>;
     /**
      * Returns a list of managers and supervisors of advertising account.
      */
@@ -222,7 +224,7 @@ export interface APIAds {
     /**
      * Edits a retarget group.
      */
-    updateTargetGroup(params: Params.AdsUpdateTargetGroupParams): Promise<Responses.OkResponse>;
+    updateTargetGroup(params: Params.AdsUpdateTargetGroupParams): Promise<Responses.BaseOkResponse>;
 }
 
 /**
@@ -232,7 +234,7 @@ export interface APIAppWidgets {
     /**
      * Allows to update community app widget
      */
-    update(params: Params.AppWidgetsUpdateParams): Promise<Responses.OkResponse>;
+    update(params: Params.AppWidgetsUpdateParams): Promise<Responses.BaseOkResponse>;
 }
 
 /**
@@ -242,7 +244,7 @@ export interface APIApps {
     /**
      * Deletes all request notifications from the current app.
      */
-    deleteAppRequests(params: Params.AppsDeleteAppRequestsParams): Promise<Responses.OkResponse>;
+    deleteAppRequests(params: Params.AppsDeleteAppRequestsParams): Promise<Responses.BaseOkResponse>;
     /**
      * Returns applications data.
      */
@@ -282,7 +284,7 @@ export interface APIAuth {
     /**
      * Checks a user's phone number for correctness.
      */
-    checkPhone(params: Params.AuthCheckPhoneParams): Promise<Responses.OkResponse>;
+    checkPhone(params: Params.AuthCheckPhoneParams): Promise<Responses.BaseOkResponse>;
     /**
      * Allows to restore account access using a code received via SMS. " This method is only available for apps with [vk.com/dev/auth_direct|Direct authorization] access. "
      */
@@ -300,7 +302,7 @@ export interface APIBoard {
     /**
      * Closes a topic on a community's discussion board so that comments cannot be posted.
      */
-    closeTopic(params: Params.BoardCloseTopicParams): Promise<Responses.OkResponse>;
+    closeTopic(params: Params.BoardCloseTopicParams): Promise<Responses.BaseOkResponse>;
     /**
      * Adds a comment on a topic on a community's discussion board.
      */
@@ -308,23 +310,23 @@ export interface APIBoard {
     /**
      * Deletes a comment on a topic on a community's discussion board.
      */
-    deleteComment(params: Params.BoardDeleteCommentParams): Promise<Responses.OkResponse>;
+    deleteComment(params: Params.BoardDeleteCommentParams): Promise<Responses.BaseOkResponse>;
     /**
      * Deletes a topic from a community's discussion board.
      */
-    deleteTopic(params: Params.BoardDeleteTopicParams): Promise<Responses.OkResponse>;
+    deleteTopic(params: Params.BoardDeleteTopicParams): Promise<Responses.BaseOkResponse>;
     /**
      * Edits a comment on a topic on a community's discussion board.
      */
-    editComment(params: Params.BoardEditCommentParams): Promise<Responses.OkResponse>;
+    editComment(params: Params.BoardEditCommentParams): Promise<Responses.BaseOkResponse>;
     /**
      * Edits the title of a topic on a community's discussion board.
      */
-    editTopic(params: Params.BoardEditTopicParams): Promise<Responses.OkResponse>;
+    editTopic(params: Params.BoardEditTopicParams): Promise<Responses.BaseOkResponse>;
     /**
      * Pins a topic (fixes its place) to the top of a community's discussion board.
      */
-    fixTopic(params: Params.BoardFixTopicParams): Promise<Responses.OkResponse>;
+    fixTopic(params: Params.BoardFixTopicParams): Promise<Responses.BaseOkResponse>;
     /**
      * Returns a list of comments on a topic on a community's discussion board.
      */
@@ -336,15 +338,15 @@ export interface APIBoard {
     /**
      * Re-opens a previously closed topic on a community's discussion board.
      */
-    openTopic(params: Params.BoardOpenTopicParams): Promise<Responses.OkResponse>;
+    openTopic(params: Params.BoardOpenTopicParams): Promise<Responses.BaseOkResponse>;
     /**
      * Restores a comment deleted from a topic on a community's discussion board.
      */
-    restoreComment(params: Params.BoardRestoreCommentParams): Promise<Responses.OkResponse>;
+    restoreComment(params: Params.BoardRestoreCommentParams): Promise<Responses.BaseOkResponse>;
     /**
      * Unpins a pinned topic from the top of a community's discussion board.
      */
-    unfixTopic(params: Params.BoardUnfixTopicParams): Promise<Responses.OkResponse>;
+    unfixTopic(params: Params.BoardUnfixTopicParams): Promise<Responses.BaseOkResponse>;
 }
 
 /**
@@ -412,11 +414,11 @@ export interface APIDocs {
     /**
      * Deletes a user or community document.
      */
-    delete(params: Params.DocsDeleteParams): Promise<Responses.OkResponse>;
+    delete(params: Params.DocsDeleteParams): Promise<Responses.BaseOkResponse>;
     /**
      * Edits a document.
      */
-    edit(params: Params.DocsEditParams): Promise<Responses.OkResponse>;
+    edit(params: Params.DocsEditParams): Promise<Responses.BaseOkResponse>;
     /**
      * Returns detailed information about user or community documents.
      */
@@ -452,20 +454,27 @@ export interface APIDocs {
 }
 
 /**
+ * The API downloadedGames group
+ */
+export interface APIDownloadedGames {
+    getPaidStatus(params: Params.DownloadedGamesGetPaidStatusParams): Promise<Responses.DownloadedGamesPaidStatusResponse>;
+}
+
+/**
  * The API fave group
  */
 export interface APIFave {
-    addArticle(params: Params.FaveAddArticleParams): Promise<Responses.OkResponse>;
+    addArticle(params: Params.FaveAddArticleParams): Promise<Responses.BaseOkResponse>;
     /**
      * Adds a link to user faves.
      */
-    addLink(params: Params.FaveAddLinkParams): Promise<Responses.OkResponse>;
-    addPage(params: Params.FaveAddPageParams): Promise<Responses.OkResponse>;
-    addPost(params: Params.FaveAddPostParams): Promise<Responses.OkResponse>;
-    addProduct(params: Params.FaveAddProductParams): Promise<Responses.OkResponse>;
+    addLink(params: Params.FaveAddLinkParams): Promise<Responses.BaseOkResponse>;
+    addPage(params: Params.FaveAddPageParams): Promise<Responses.BaseOkResponse>;
+    addPost(params: Params.FaveAddPostParams): Promise<Responses.BaseOkResponse>;
+    addProduct(params: Params.FaveAddProductParams): Promise<Responses.BaseOkResponse>;
     addTag(params: Params.FaveAddTagParams): Promise<Responses.FaveAddTagResponse>;
-    addVideo(params: Params.FaveAddVideoParams): Promise<Responses.OkResponse>;
-    editTag(params: Params.FaveEditTagParams): Promise<Responses.OkResponse>;
+    addVideo(params: Params.FaveAddVideoParams): Promise<Responses.BaseOkResponse>;
+    editTag(params: Params.FaveEditTagParams): Promise<Responses.BaseOkResponse>;
     get(params: Params.FaveGetParams): Promise<Responses.FaveGetResponse>;
     getPages(params: Params.FaveGetPagesParams): Promise<Responses.FaveGetPagesResponse>;
     getTags(params: Params.FaveGetTagsParams): Promise<Responses.FaveGetTagsResponse>;
@@ -474,15 +483,15 @@ export interface APIFave {
     /**
      * Removes link from the user's faves.
      */
-    removeLink(params: Params.FaveRemoveLinkParams): Promise<Responses.OkResponse>;
-    removePage(params: Params.FaveRemovePageParams): Promise<Responses.OkResponse>;
-    removePost(params: Params.FaveRemovePostParams): Promise<Responses.OkResponse>;
-    removeProduct(params: Params.FaveRemoveProductParams): Promise<Responses.OkResponse>;
-    removeTag(params: Params.FaveRemoveTagParams): Promise<Responses.OkResponse>;
-    reorderTags(params: Params.FaveReorderTagsParams): Promise<Responses.OkResponse>;
-    setPageTags(params: Params.FaveSetPageTagsParams): Promise<Responses.OkResponse>;
-    setTags(params: Params.FaveSetTagsParams): Promise<Responses.OkResponse>;
-    trackPageInteraction(params: Params.FaveTrackPageInteractionParams): Promise<Responses.OkResponse>;
+    removeLink(params: Params.FaveRemoveLinkParams): Promise<Responses.BaseOkResponse>;
+    removePage(params: Params.FaveRemovePageParams): Promise<Responses.BaseOkResponse>;
+    removePost(params: Params.FaveRemovePostParams): Promise<Responses.BaseOkResponse>;
+    removeProduct(params: Params.FaveRemoveProductParams): Promise<Responses.BaseOkResponse>;
+    removeTag(params: Params.FaveRemoveTagParams): Promise<Responses.BaseOkResponse>;
+    reorderTags(params: Params.FaveReorderTagsParams): Promise<Responses.BaseOkResponse>;
+    setPageTags(params: Params.FaveSetPageTagsParams): Promise<Responses.BaseOkResponse>;
+    setTags(params: Params.FaveSetTagsParams): Promise<Responses.BaseOkResponse>;
+    trackPageInteraction(params: Params.FaveTrackPageInteractionParams): Promise<Responses.BaseOkResponse>;
 }
 
 /**
@@ -508,19 +517,19 @@ export interface APIFriends {
     /**
      * Marks all incoming friend requests as viewed.
      */
-    deleteAllRequests(params: Params.FriendsDeleteAllRequestsParams): Promise<Responses.OkResponse>;
+    deleteAllRequests(params: Params.FriendsDeleteAllRequestsParams): Promise<Responses.BaseOkResponse>;
     /**
      * Deletes a friend list of the current user.
      */
-    deleteList(params: Params.FriendsDeleteListParams): Promise<Responses.OkResponse>;
+    deleteList(params: Params.FriendsDeleteListParams): Promise<Responses.BaseOkResponse>;
     /**
      * Edits the friend lists of the selected user.
      */
-    edit(params: Params.FriendsEditParams): Promise<Responses.OkResponse>;
+    edit(params: Params.FriendsEditParams): Promise<Responses.BaseOkResponse>;
     /**
      * Edits a friend list of the current user.
      */
-    editList(params: Params.FriendsEditListParams): Promise<Responses.OkResponse>;
+    editList(params: Params.FriendsEditListParams): Promise<Responses.BaseOkResponse>;
     /**
      * Returns a list of user IDs or detailed information about a user's friends.
      */
@@ -586,33 +595,33 @@ export interface APIGroups {
     /**
      * Allows to approve join request to the community.
      */
-    approveRequest(params: Params.GroupsApproveRequestParams): Promise<Responses.OkResponse>;
-    ban(params: Params.GroupsBanParams): Promise<Responses.OkResponse>;
+    approveRequest(params: Params.GroupsApproveRequestParams): Promise<Responses.BaseOkResponse>;
+    ban(params: Params.GroupsBanParams): Promise<Responses.BaseOkResponse>;
     /**
      * Creates a new community.
      */
     create(params: Params.GroupsCreateParams): Promise<Responses.GroupsCreateResponse>;
-    deleteCallbackServer(params: Params.GroupsDeleteCallbackServerParams): Promise<Responses.OkResponse>;
+    deleteCallbackServer(params: Params.GroupsDeleteCallbackServerParams): Promise<Responses.BaseOkResponse>;
     /**
      * Allows to delete a link from the community.
      */
-    deleteLink(params: Params.GroupsDeleteLinkParams): Promise<Responses.OkResponse>;
-    disableOnline(params: Params.GroupsDisableOnlineParams): Promise<Responses.OkResponse>;
+    deleteLink(params: Params.GroupsDeleteLinkParams): Promise<Responses.BaseOkResponse>;
+    disableOnline(params: Params.GroupsDisableOnlineParams): Promise<Responses.BaseOkResponse>;
     /**
      * Edits a community.
      */
-    edit(params: Params.GroupsEditParams): Promise<Responses.OkResponse>;
+    edit(params: Params.GroupsEditParams): Promise<Responses.BaseOkResponse>;
     editAddress(params: Params.GroupsEditAddressParams): Promise<Responses.GroupsEditAddressResponse>;
-    editCallbackServer(params: Params.GroupsEditCallbackServerParams): Promise<Responses.OkResponse>;
+    editCallbackServer(params: Params.GroupsEditCallbackServerParams): Promise<Responses.BaseOkResponse>;
     /**
      * Allows to edit a link in the community.
      */
-    editLink(params: Params.GroupsEditLinkParams): Promise<Responses.OkResponse>;
+    editLink(params: Params.GroupsEditLinkParams): Promise<Responses.BaseOkResponse>;
     /**
      * Allows to add, remove or edit the community manager.
      */
-    editManager(params: Params.GroupsEditManagerParams): Promise<Responses.OkResponse>;
-    enableOnline(params: Params.GroupsEnableOnlineParams): Promise<Responses.OkResponse>;
+    editManager(params: Params.GroupsEditManagerParams): Promise<Responses.BaseOkResponse>;
+    enableOnline(params: Params.GroupsEnableOnlineParams): Promise<Responses.BaseOkResponse>;
     /**
      * Returns a list of the communities to which a user belongs.
      */
@@ -678,7 +687,7 @@ export interface APIGroups {
     /**
      * Allows to invite friends to the community.
      */
-    invite(params: Params.GroupsInviteParams): Promise<Responses.OkResponse>;
+    invite(params: Params.GroupsInviteParams): Promise<Responses.BaseOkResponse>;
     /**
      * Returns information specifying whether a user is a member of a community.
      */
@@ -686,19 +695,19 @@ export interface APIGroups {
     /**
      * With this method you can join the group or public page, and also confirm your participation in an event.
      */
-    join(params: Params.GroupsJoinParams): Promise<Responses.OkResponse>;
+    join(params: Params.GroupsJoinParams): Promise<Responses.BaseOkResponse>;
     /**
      * With this method you can leave a group, public page, or event.
      */
-    leave(params: Params.GroupsLeaveParams): Promise<Responses.OkResponse>;
+    leave(params: Params.GroupsLeaveParams): Promise<Responses.BaseOkResponse>;
     /**
      * Removes a user from the community.
      */
-    removeUser(params: Params.GroupsRemoveUserParams): Promise<Responses.OkResponse>;
+    removeUser(params: Params.GroupsRemoveUserParams): Promise<Responses.BaseOkResponse>;
     /**
      * Allows to reorder links in the community.
      */
-    reorderLink(params: Params.GroupsReorderLinkParams): Promise<Responses.OkResponse>;
+    reorderLink(params: Params.GroupsReorderLinkParams): Promise<Responses.BaseOkResponse>;
     /**
      * Returns a list of communities matching the search criteria.
      */
@@ -706,12 +715,12 @@ export interface APIGroups {
     /**
      * Allow to set notifications settings for group.
      */
-    setCallbackSettings(params: Params.GroupsSetCallbackSettingsParams): Promise<Responses.OkResponse>;
+    setCallbackSettings(params: Params.GroupsSetCallbackSettingsParams): Promise<Responses.BaseOkResponse>;
     /**
      * Sets Long Poll notification settings
      */
-    setLongPollSettings(params: Params.GroupsSetLongPollSettingsParams): Promise<Responses.OkResponse>;
-    unban(params: Params.GroupsUnbanParams): Promise<Responses.OkResponse>;
+    setLongPollSettings(params: Params.GroupsSetLongPollSettingsParams): Promise<Responses.BaseOkResponse>;
+    unban(params: Params.GroupsUnbanParams): Promise<Responses.BaseOkResponse>;
 }
 
 /**
@@ -781,7 +790,7 @@ export interface APIMarket {
     /**
      * Adds an item to one or multiple collections.
      */
-    addToAlbum(params: Params.MarketAddToAlbumParams): Promise<Responses.OkResponse>;
+    addToAlbum(params: Params.MarketAddToAlbumParams): Promise<Responses.BaseOkResponse>;
     /**
      * Creates a new comment for an item.
      */
@@ -789,11 +798,11 @@ export interface APIMarket {
     /**
      * Deletes an item.
      */
-    delete(params: Params.MarketDeleteParams): Promise<Responses.OkResponse>;
+    delete(params: Params.MarketDeleteParams): Promise<Responses.BaseOkResponse>;
     /**
      * Deletes a collection of items.
      */
-    deleteAlbum(params: Params.MarketDeleteAlbumParams): Promise<Responses.OkResponse>;
+    deleteAlbum(params: Params.MarketDeleteAlbumParams): Promise<Responses.BaseOkResponse>;
     /**
      * Deletes an item's comment
      */
@@ -801,15 +810,15 @@ export interface APIMarket {
     /**
      * Edits an item.
      */
-    edit(params: Params.MarketEditParams): Promise<Responses.OkResponse>;
+    edit(params: Params.MarketEditParams): Promise<Responses.BaseOkResponse>;
     /**
      * Edits a collection of items
      */
-    editAlbum(params: Params.MarketEditAlbumParams): Promise<Responses.OkResponse>;
+    editAlbum(params: Params.MarketEditAlbumParams): Promise<Responses.BaseOkResponse>;
     /**
      * Chages item comment's text
      */
-    editComment(params: Params.MarketEditCommentParams): Promise<Responses.OkResponse>;
+    editComment(params: Params.MarketEditCommentParams): Promise<Responses.BaseOkResponse>;
     /**
      * Returns items list for a community.
      */
@@ -837,27 +846,27 @@ export interface APIMarket {
     /**
      * Removes an item from one or multiple collections.
      */
-    removeFromAlbum(params: Params.MarketRemoveFromAlbumParams): Promise<Responses.OkResponse>;
+    removeFromAlbum(params: Params.MarketRemoveFromAlbumParams): Promise<Responses.BaseOkResponse>;
     /**
      * Reorders the collections list.
      */
-    reorderAlbums(params: Params.MarketReorderAlbumsParams): Promise<Responses.OkResponse>;
+    reorderAlbums(params: Params.MarketReorderAlbumsParams): Promise<Responses.BaseOkResponse>;
     /**
      * Changes item place in a collection.
      */
-    reorderItems(params: Params.MarketReorderItemsParams): Promise<Responses.OkResponse>;
+    reorderItems(params: Params.MarketReorderItemsParams): Promise<Responses.BaseOkResponse>;
     /**
      * Sends a complaint to the item.
      */
-    report(params: Params.MarketReportParams): Promise<Responses.OkResponse>;
+    report(params: Params.MarketReportParams): Promise<Responses.BaseOkResponse>;
     /**
      * Sends a complaint to the item's comment.
      */
-    reportComment(params: Params.MarketReportCommentParams): Promise<Responses.OkResponse>;
+    reportComment(params: Params.MarketReportCommentParams): Promise<Responses.BaseOkResponse>;
     /**
      * Restores recently deleted item
      */
-    restore(params: Params.MarketRestoreParams): Promise<Responses.OkResponse>;
+    restore(params: Params.MarketRestoreParams): Promise<Responses.BaseOkResponse>;
     /**
      * Restores a recently deleted comment
      */
@@ -875,11 +884,11 @@ export interface APIMessages {
     /**
      * Adds a new user to a chat.
      */
-    addChatUser(params: Params.MessagesAddChatUserParams): Promise<Responses.OkResponse>;
+    addChatUser(params: Params.MessagesAddChatUserParams): Promise<Responses.BaseOkResponse>;
     /**
      * Allows sending messages from community to the current user.
      */
-    allowMessagesFromGroup(params: Params.MessagesAllowMessagesFromGroupParams): Promise<Responses.OkResponse>;
+    allowMessagesFromGroup(params: Params.MessagesAllowMessagesFromGroupParams): Promise<Responses.BaseOkResponse>;
     /**
      * Creates a chat with several participants.
      */
@@ -899,7 +908,7 @@ export interface APIMessages {
     /**
      * Denies sending message from community to the current user.
      */
-    denyMessagesFromGroup(params: Params.MessagesDenyMessagesFromGroupParams): Promise<Responses.OkResponse>;
+    denyMessagesFromGroup(params: Params.MessagesDenyMessagesFromGroupParams): Promise<Responses.BaseOkResponse>;
     /**
      * Edits the message.
      */
@@ -907,7 +916,7 @@ export interface APIMessages {
     /**
      * Edits the title of a chat.
      */
-    editChat(params: Params.MessagesEditChatParams): Promise<Responses.OkResponse>;
+    editChat(params: Params.MessagesEditChatParams): Promise<Responses.BaseOkResponse>;
     /**
      * Returns messages by their IDs within the conversation.
      */
@@ -958,7 +967,7 @@ export interface APIMessages {
     /**
      * Marks and unmarks conversations as unanswered.
      */
-    markAsAnsweredConversation(params: Params.MessagesMarkAsAnsweredConversationParams): Promise<Responses.OkResponse>;
+    markAsAnsweredConversation(params: Params.MessagesMarkAsAnsweredConversationParams): Promise<Responses.BaseOkResponse>;
     /**
      * Marks and unmarks messages as important (starred).
      */
@@ -966,11 +975,11 @@ export interface APIMessages {
     /**
      * Marks and unmarks conversations as important.
      */
-    markAsImportantConversation(params: Params.MessagesMarkAsImportantConversationParams): Promise<Responses.OkResponse>;
+    markAsImportantConversation(params: Params.MessagesMarkAsImportantConversationParams): Promise<Responses.BaseOkResponse>;
     /**
      * Marks messages as read.
      */
-    markAsRead(params: Params.MessagesMarkAsReadParams): Promise<Responses.OkResponse>;
+    markAsRead(params: Params.MessagesMarkAsReadParams): Promise<Responses.BaseOkResponse>;
     /**
      * Pin a message.
      */
@@ -978,11 +987,11 @@ export interface APIMessages {
     /**
      * Allows the current user to leave a chat or, if the current user started the chat, allows the user to remove another user from the chat.
      */
-    removeChatUser(params: Params.MessagesRemoveChatUserParams): Promise<Responses.OkResponse>;
+    removeChatUser(params: Params.MessagesRemoveChatUserParams): Promise<Responses.BaseOkResponse>;
     /**
      * Restores a deleted message.
      */
-    restore(params: Params.MessagesRestoreParams): Promise<Responses.OkResponse>;
+    restore(params: Params.MessagesRestoreParams): Promise<Responses.BaseOkResponse>;
     /**
      * Returns a list of the current user's private messages that match search criteria.
      */
@@ -995,15 +1004,16 @@ export interface APIMessages {
      * Sends a message.
      */
     send(params: Params.MessagesSendParams): Promise<Responses.MessagesSendResponse>;
+    sendMessageEventAnswer(params: Params.MessagesSendMessageEventAnswerParams): Promise<Responses.BaseOkResponse>;
     /**
      * Changes the status of a user as typing in a conversation.
      */
-    setActivity(params: Params.MessagesSetActivityParams): Promise<Responses.OkResponse>;
+    setActivity(params: Params.MessagesSetActivityParams): Promise<Responses.BaseOkResponse>;
     /**
      * Sets a previously-uploaded picture as the cover picture of a chat.
      */
     setChatPhoto(params: Params.MessagesSetChatPhotoParams): Promise<Responses.MessagesSetChatPhotoResponse>;
-    unpin(params: Params.MessagesUnpinParams): Promise<Responses.OkResponse>;
+    unpin(params: Params.MessagesUnpinParams): Promise<Responses.BaseOkResponse>;
 }
 
 /**
@@ -1013,12 +1023,12 @@ export interface APINewsfeed {
     /**
      * Prevents news from specified users and communities from appearing in the current user's newsfeed.
      */
-    addBan(params: Params.NewsfeedAddBanParams): Promise<Responses.OkResponse>;
+    addBan(params: Params.NewsfeedAddBanParams): Promise<Responses.BaseOkResponse>;
     /**
      * Allows news from previously banned users and communities to be shown in the current user's newsfeed.
      */
-    deleteBan(params: Params.NewsfeedDeleteBanParams): Promise<Responses.OkResponse>;
-    deleteList(params: Params.NewsfeedDeleteListParams): Promise<Responses.OkResponse>;
+    deleteBan(params: Params.NewsfeedDeleteBanParams): Promise<Responses.BaseOkResponse>;
+    deleteList(params: Params.NewsfeedDeleteListParams): Promise<Responses.BaseOkResponse>;
     /**
      * Returns data required to show newsfeed for the current user.
      */
@@ -1050,7 +1060,7 @@ export interface APINewsfeed {
     /**
      * Hides an item from the newsfeed.
      */
-    ignoreItem(params: Params.NewsfeedIgnoreItemParams): Promise<Responses.OkResponse>;
+    ignoreItem(params: Params.NewsfeedIgnoreItemParams): Promise<Responses.BaseOkResponse>;
     /**
      * Creates and edits user newsfeed lists
      */
@@ -1062,11 +1072,11 @@ export interface APINewsfeed {
     /**
      * Returns a hidden item to the newsfeed.
      */
-    unignoreItem(params: Params.NewsfeedUnignoreItemParams): Promise<Responses.OkResponse>;
+    unignoreItem(params: Params.NewsfeedUnignoreItemParams): Promise<Responses.BaseOkResponse>;
     /**
      * Unsubscribes the current user from specified newsfeeds.
      */
-    unsubscribe(params: Params.NewsfeedUnsubscribeParams): Promise<Responses.OkResponse>;
+    unsubscribe(params: Params.NewsfeedUnsubscribeParams): Promise<Responses.BaseOkResponse>;
 }
 
 /**
@@ -1084,19 +1094,19 @@ export interface APINotes {
     /**
      * Deletes a note of the current user.
      */
-    delete(params: Params.NotesDeleteParams): Promise<Responses.OkResponse>;
+    delete(params: Params.NotesDeleteParams): Promise<Responses.BaseOkResponse>;
     /**
      * Deletes a comment on a note.
      */
-    deleteComment(params: Params.NotesDeleteCommentParams): Promise<Responses.OkResponse>;
+    deleteComment(params: Params.NotesDeleteCommentParams): Promise<Responses.BaseOkResponse>;
     /**
      * Edits a note of the current user.
      */
-    edit(params: Params.NotesEditParams): Promise<Responses.OkResponse>;
+    edit(params: Params.NotesEditParams): Promise<Responses.BaseOkResponse>;
     /**
      * Edits a comment on a note.
      */
-    editComment(params: Params.NotesEditCommentParams): Promise<Responses.OkResponse>;
+    editComment(params: Params.NotesEditCommentParams): Promise<Responses.BaseOkResponse>;
     /**
      * Returns a list of notes created by a user.
      */
@@ -1112,7 +1122,7 @@ export interface APINotes {
     /**
      * Restores a deleted comment on a note.
      */
-    restoreComment(params: Params.NotesRestoreCommentParams): Promise<Responses.OkResponse>;
+    restoreComment(params: Params.NotesRestoreCommentParams): Promise<Responses.BaseOkResponse>;
 }
 
 /**
@@ -1160,7 +1170,7 @@ export interface APIPages {
     /**
      * Allows to clear the cache of particular 'external' pages which may be attached to VK posts.
      */
-    clearCache(params: Params.PagesClearCacheParams): Promise<Responses.OkResponse>;
+    clearCache(params: Params.PagesClearCacheParams): Promise<Responses.BaseOkResponse>;
     /**
      * Returns information about a wiki page.
      */
@@ -1198,7 +1208,7 @@ export interface APIPhotos {
     /**
      * Confirms a tag on a photo.
      */
-    confirmTag(params: Params.PhotosConfirmTagParams): Promise<Responses.OkResponse>;
+    confirmTag(params: Params.PhotosConfirmTagParams): Promise<Responses.BaseOkResponse>;
     /**
      * Allows to copy a photo to the "Saved photos" album
      */
@@ -1214,11 +1224,11 @@ export interface APIPhotos {
     /**
      * Deletes a photo.
      */
-    delete(params: Params.PhotosDeleteParams): Promise<Responses.OkResponse>;
+    delete(params: Params.PhotosDeleteParams): Promise<Responses.BaseOkResponse>;
     /**
      * Deletes a photo album belonging to the current user.
      */
-    deleteAlbum(params: Params.PhotosDeleteAlbumParams): Promise<Responses.OkResponse>;
+    deleteAlbum(params: Params.PhotosDeleteAlbumParams): Promise<Responses.BaseOkResponse>;
     /**
      * Deletes a comment on the photo.
      */
@@ -1226,15 +1236,15 @@ export interface APIPhotos {
     /**
      * Edits the caption of a photo.
      */
-    edit(params: Params.PhotosEditParams): Promise<Responses.OkResponse>;
+    edit(params: Params.PhotosEditParams): Promise<Responses.BaseOkResponse>;
     /**
      * Edits information about a photo album.
      */
-    editAlbum(params: Params.PhotosEditAlbumParams): Promise<Responses.OkResponse>;
+    editAlbum(params: Params.PhotosEditAlbumParams): Promise<Responses.BaseOkResponse>;
     /**
      * Edits a comment on a photo.
      */
-    editComment(params: Params.PhotosEditCommentParams): Promise<Responses.OkResponse>;
+    editComment(params: Params.PhotosEditCommentParams): Promise<Responses.BaseOkResponse>;
     /**
      * Returns a list of a user's or community's photos.
      */
@@ -1310,11 +1320,11 @@ export interface APIPhotos {
     /**
      * Makes a photo into an album cover.
      */
-    makeCover(params: Params.PhotosMakeCoverParams): Promise<Responses.OkResponse>;
+    makeCover(params: Params.PhotosMakeCoverParams): Promise<Responses.BaseOkResponse>;
     /**
      * Moves a photo from one album to another.
      */
-    move(params: Params.PhotosMoveParams): Promise<Responses.OkResponse>;
+    move(params: Params.PhotosMoveParams): Promise<Responses.BaseOkResponse>;
     /**
      * Adds a tag on the photo.
      */
@@ -1322,27 +1332,27 @@ export interface APIPhotos {
     /**
      * Removes a tag from a photo.
      */
-    removeTag(params: Params.PhotosRemoveTagParams): Promise<Responses.OkResponse>;
+    removeTag(params: Params.PhotosRemoveTagParams): Promise<Responses.BaseOkResponse>;
     /**
      * Reorders the album in the list of user albums.
      */
-    reorderAlbums(params: Params.PhotosReorderAlbumsParams): Promise<Responses.OkResponse>;
+    reorderAlbums(params: Params.PhotosReorderAlbumsParams): Promise<Responses.BaseOkResponse>;
     /**
      * Reorders the photo in the list of photos of the user album.
      */
-    reorderPhotos(params: Params.PhotosReorderPhotosParams): Promise<Responses.OkResponse>;
+    reorderPhotos(params: Params.PhotosReorderPhotosParams): Promise<Responses.BaseOkResponse>;
     /**
      * Reports (submits a complaint about) a photo.
      */
-    report(params: Params.PhotosReportParams): Promise<Responses.OkResponse>;
+    report(params: Params.PhotosReportParams): Promise<Responses.BaseOkResponse>;
     /**
      * Reports (submits a complaint about) a comment on a photo.
      */
-    reportComment(params: Params.PhotosReportCommentParams): Promise<Responses.OkResponse>;
+    reportComment(params: Params.PhotosReportCommentParams): Promise<Responses.BaseOkResponse>;
     /**
      * Restores a deleted photo.
      */
-    restore(params: Params.PhotosRestoreParams): Promise<Responses.OkResponse>;
+    restore(params: Params.PhotosRestoreParams): Promise<Responses.BaseOkResponse>;
     /**
      * Restores a deleted comment on a photo.
      */
@@ -1400,7 +1410,7 @@ export interface APIPolls {
     /**
      * Edits created polls
      */
-    edit(params: Params.PollsEditParams): Promise<Responses.OkResponse>;
+    edit(params: Params.PollsEditParams): Promise<Responses.BaseOkResponse>;
     /**
      * Returns detailed information about a poll by its ID.
      */
@@ -1440,7 +1450,7 @@ export interface APISecure {
     /**
      * Adds user activity information to an application
      */
-    addAppEvent(params: Params.SecureAddAppEventParams): Promise<Responses.OkResponse>;
+    addAppEvent(params: Params.SecureAddAppEventParams): Promise<Responses.BaseOkResponse>;
     /**
      * Checks the user authentication in 'IFrame' and 'Flash' apps using the 'access_token' parameter.
      */
@@ -1472,11 +1482,11 @@ export interface APISecure {
     /**
      * Sends 'SMS' notification to a user's mobile device.
      */
-    sendSMSNotification(params: Params.SecureSendSMSNotificationParams): Promise<Responses.OkResponse>;
+    sendSMSNotification(params: Params.SecureSendSMSNotificationParams): Promise<Responses.BaseOkResponse>;
     /**
      * Sets a counter which is shown to the user in bold in the left menu.
      */
-    setCounter(params: Params.SecureSetCounterParams): Promise<Responses.OkResponse>;
+    setCounter(params: Params.SecureSetCounterParams): Promise<Responses.BaseOkResponse>;
 }
 
 /**
@@ -1491,7 +1501,7 @@ export interface APIStats {
      * Returns stats for a wall post.
      */
     getPostReach(params: Params.StatsGetPostReachParams): Promise<Responses.StatsGetPostReachResponse>;
-    trackVisitor(params: Params.StatsTrackVisitorParams): Promise<Responses.OkResponse>;
+    trackVisitor(params: Params.StatsTrackVisitorParams): Promise<Responses.BaseOkResponse>;
 }
 
 /**
@@ -1505,7 +1515,7 @@ export interface APIStatus {
     /**
      * Sets a new status for the current user.
      */
-    set(params: Params.StatusSetParams): Promise<Responses.OkResponse>;
+    set(params: Params.StatusSetParams): Promise<Responses.BaseOkResponse>;
 }
 
 /**
@@ -1523,7 +1533,7 @@ export interface APIStorage {
     /**
      * Saves a value of variable with the name set by 'key' parameter.
      */
-    set(params: Params.StorageSetParams): Promise<Responses.OkResponse>;
+    set(params: Params.StorageSetParams): Promise<Responses.BaseOkResponse>;
 }
 
 /**
@@ -1533,11 +1543,11 @@ export interface APIStories {
     /**
      * Allows to hide stories from chosen sources from current user's feed.
      */
-    banOwner(params: Params.StoriesBanOwnerParams): Promise<Responses.OkResponse>;
+    banOwner(params: Params.StoriesBanOwnerParams): Promise<Responses.BaseOkResponse>;
     /**
      * Allows to delete story.
      */
-    delete(params: Params.StoriesDeleteParams): Promise<Responses.OkResponse>;
+    delete(params: Params.StoriesDeleteParams): Promise<Responses.BaseOkResponse>;
     /**
      * Returns stories available for current user.
      */
@@ -1573,16 +1583,16 @@ export interface APIStories {
     /**
      * Hides all replies in the last 24 hours from the user to current user's stories.
      */
-    hideAllReplies(params: Params.StoriesHideAllRepliesParams): Promise<Responses.OkResponse>;
+    hideAllReplies(params: Params.StoriesHideAllRepliesParams): Promise<Responses.BaseOkResponse>;
     /**
      * Hides the reply to the current user's story.
      */
-    hideReply(params: Params.StoriesHideReplyParams): Promise<Responses.OkResponse>;
+    hideReply(params: Params.StoriesHideReplyParams): Promise<Responses.BaseOkResponse>;
     search(params: Params.StoriesSearchParams): Promise<Responses.StoriesGetV5113Response>;
     /**
      * Allows to show stories from hidden sources in current user's feed.
      */
-    unbanOwner(params: Params.StoriesUnbanOwnerParams): Promise<Responses.OkResponse>;
+    unbanOwner(params: Params.StoriesUnbanOwnerParams): Promise<Responses.BaseOkResponse>;
 }
 
 /**
@@ -1593,7 +1603,7 @@ export interface APIStreaming {
      * Allows to receive data for the connection to Streaming API.
      */
     getServerUrl(params: Params.StreamingGetServerUrlParams): Promise<Responses.StreamingGetServerUrlResponse>;
-    setSettings(params: Params.StreamingSetSettingsParams): Promise<Responses.OkResponse>;
+    setSettings(params: Params.StreamingSetSettingsParams): Promise<Responses.BaseOkResponse>;
 }
 
 /**
@@ -1615,7 +1625,7 @@ export interface APIUsers {
     /**
      * Reports (submits a complain about) a user.
      */
-    report(params: Params.UsersReportParams): Promise<Responses.OkResponse>;
+    report(params: Params.UsersReportParams): Promise<Responses.BaseOkResponse>;
     /**
      * Returns a list of users matching the search criteria.
      */
@@ -1633,7 +1643,7 @@ export interface APIUtils {
     /**
      * Deletes shortened link from user's list.
      */
-    deleteFromLastShortened(params: Params.UtilsDeleteFromLastShortenedParams): Promise<Responses.OkResponse>;
+    deleteFromLastShortened(params: Params.UtilsDeleteFromLastShortenedParams): Promise<Responses.BaseOkResponse>;
     /**
      * Returns a list of user's shortened links.
      */
@@ -1663,12 +1673,12 @@ export interface APIVideo {
     /**
      * Adds a video to a user or community page.
      */
-    add(params: Params.VideoAddParams): Promise<Responses.OkResponse>;
+    add(params: Params.VideoAddParams): Promise<Responses.BaseOkResponse>;
     /**
      * Creates an empty album for videos.
      */
     addAlbum(params: Params.VideoAddAlbumParams): Promise<Responses.VideoAddAlbumResponse>;
-    addToAlbum(params: Params.VideoAddToAlbumParams): Promise<Responses.OkResponse>;
+    addToAlbum(params: Params.VideoAddToAlbumParams): Promise<Responses.BaseOkResponse>;
     /**
      * Adds a new comment on a video.
      */
@@ -1676,27 +1686,27 @@ export interface APIVideo {
     /**
      * Deletes a video from a user or community page.
      */
-    delete(params: Params.VideoDeleteParams): Promise<Responses.OkResponse>;
+    delete(params: Params.VideoDeleteParams): Promise<Responses.BaseOkResponse>;
     /**
      * Deletes a video album.
      */
-    deleteAlbum(params: Params.VideoDeleteAlbumParams): Promise<Responses.OkResponse>;
+    deleteAlbum(params: Params.VideoDeleteAlbumParams): Promise<Responses.BaseOkResponse>;
     /**
      * Deletes a comment on a video.
      */
-    deleteComment(params: Params.VideoDeleteCommentParams): Promise<Responses.OkResponse>;
+    deleteComment(params: Params.VideoDeleteCommentParams): Promise<Responses.BaseOkResponse>;
     /**
      * Edits information about a video on a user or community page.
      */
-    edit(params: Params.VideoEditParams): Promise<Responses.OkResponse>;
+    edit(params: Params.VideoEditParams): Promise<Responses.BaseOkResponse>;
     /**
      * Edits the title of a video album.
      */
-    editAlbum(params: Params.VideoEditAlbumParams): Promise<Responses.OkResponse>;
+    editAlbum(params: Params.VideoEditAlbumParams): Promise<Responses.BaseOkResponse>;
     /**
      * Edits the text of a comment on a video.
      */
-    editComment(params: Params.VideoEditCommentParams): Promise<Responses.OkResponse>;
+    editComment(params: Params.VideoEditCommentParams): Promise<Responses.BaseOkResponse>;
     /**
      * Returns detailed information about videos.
      */
@@ -1714,27 +1724,27 @@ export interface APIVideo {
      * Returns a list of comments on a video.
      */
     getComments(params: Params.VideoGetCommentsParams): Promise<Responses.VideoGetCommentsResponse>;
-    removeFromAlbum(params: Params.VideoRemoveFromAlbumParams): Promise<Responses.OkResponse>;
+    removeFromAlbum(params: Params.VideoRemoveFromAlbumParams): Promise<Responses.BaseOkResponse>;
     /**
      * Reorders the album in the list of user video albums.
      */
-    reorderAlbums(params: Params.VideoReorderAlbumsParams): Promise<Responses.OkResponse>;
+    reorderAlbums(params: Params.VideoReorderAlbumsParams): Promise<Responses.BaseOkResponse>;
     /**
      * Reorders the video in the video album.
      */
-    reorderVideos(params: Params.VideoReorderVideosParams): Promise<Responses.OkResponse>;
+    reorderVideos(params: Params.VideoReorderVideosParams): Promise<Responses.BaseOkResponse>;
     /**
      * Reports (submits a complaint about) a video.
      */
-    report(params: Params.VideoReportParams): Promise<Responses.OkResponse>;
+    report(params: Params.VideoReportParams): Promise<Responses.BaseOkResponse>;
     /**
      * Reports (submits a complaint about) a comment on a video.
      */
-    reportComment(params: Params.VideoReportCommentParams): Promise<Responses.OkResponse>;
+    reportComment(params: Params.VideoReportCommentParams): Promise<Responses.BaseOkResponse>;
     /**
      * Restores a previously deleted video.
      */
-    restore(params: Params.VideoRestoreParams): Promise<Responses.OkResponse>;
+    restore(params: Params.VideoRestoreParams): Promise<Responses.BaseOkResponse>;
     /**
      * Restores a previously deleted comment on a video.
      */
@@ -1761,11 +1771,11 @@ export interface APIWall {
     /**
      * Deletes a post from a user wall or community wall.
      */
-    delete(params: Params.WallDeleteParams): Promise<Responses.OkResponse>;
+    delete(params: Params.WallDeleteParams): Promise<Responses.BaseOkResponse>;
     /**
      * Deletes a comment on a post on a user wall or community wall.
      */
-    deleteComment(params: Params.WallDeleteCommentParams): Promise<Responses.OkResponse>;
+    deleteComment(params: Params.WallDeleteCommentParams): Promise<Responses.BaseOkResponse>;
     /**
      * Edits a post on a user wall or community wall.
      */
@@ -1773,11 +1783,11 @@ export interface APIWall {
     /**
      * Allows to edit hidden post.
      */
-    editAdsStealth(params: Params.WallEditAdsStealthParams): Promise<Responses.OkResponse>;
+    editAdsStealth(params: Params.WallEditAdsStealthParams): Promise<Responses.BaseOkResponse>;
     /**
      * Edits a comment on a user wall or community wall.
      */
-    editComment(params: Params.WallEditCommentParams): Promise<Responses.OkResponse>;
+    editComment(params: Params.WallEditCommentParams): Promise<Responses.BaseOkResponse>;
     /**
      * Returns a list of posts on a user wall or community wall.
      */
@@ -1802,7 +1812,7 @@ export interface APIWall {
     /**
      * Pins the post on wall.
      */
-    pin(params: Params.WallPinParams): Promise<Responses.OkResponse>;
+    pin(params: Params.WallPinParams): Promise<Responses.BaseOkResponse>;
     /**
      * Adds a new post on a user wall or community wall. Can also be used to publish suggested or scheduled posts.
      */
@@ -1814,11 +1824,11 @@ export interface APIWall {
     /**
      * Reports (submits a complaint about) a comment on a post on a user wall or community wall.
      */
-    reportComment(params: Params.WallReportCommentParams): Promise<Responses.OkResponse>;
+    reportComment(params: Params.WallReportCommentParams): Promise<Responses.BaseOkResponse>;
     /**
      * Reports (submits a complaint about) a post on a user wall or community wall.
      */
-    reportPost(params: Params.WallReportPostParams): Promise<Responses.OkResponse>;
+    reportPost(params: Params.WallReportPostParams): Promise<Responses.BaseOkResponse>;
     /**
      * Reposts (copies) an object to a user wall or community wall.
      */
@@ -1826,11 +1836,11 @@ export interface APIWall {
     /**
      * Restores a post deleted from a user wall or community wall.
      */
-    restore(params: Params.WallRestoreParams): Promise<Responses.OkResponse>;
+    restore(params: Params.WallRestoreParams): Promise<Responses.BaseOkResponse>;
     /**
      * Restores a comment deleted from a user wall or community wall.
      */
-    restoreComment(params: Params.WallRestoreCommentParams): Promise<Responses.OkResponse>;
+    restoreComment(params: Params.WallRestoreCommentParams): Promise<Responses.BaseOkResponse>;
     /**
      * Allows to search posts on user or community walls.
      */
@@ -1838,7 +1848,7 @@ export interface APIWall {
     /**
      * Unpins the post on wall.
      */
-    unpin(params: Params.WallUnpinParams): Promise<Responses.OkResponse>;
+    unpin(params: Params.WallUnpinParams): Promise<Responses.BaseOkResponse>;
 }
 
 /**
@@ -1888,6 +1898,10 @@ export interface APIMethods {
      * The API docs group
      */
     docs: APIDocs;
+    /**
+     * The API downloadedGames group
+     */
+    downloadedGames: APIDownloadedGames;
     /**
      * The API fave group
      */

@@ -99,6 +99,20 @@ export type AdsGetDemographicsResponse = Objects.AdsDemoStats[];
 
 export type AdsGetFloodStatsResponse = Objects.AdsFloodStats;
 
+export interface AdsGetLookalikeRequestsResponse {
+    /**
+     * Total count of found lookalike requests
+     */
+    count: number;
+    [key: string]: any;
+    items: Objects.AdsLookalikeRequest[];
+}
+
+export interface AdsGetMusiciansResponse {
+    [key: string]: any;
+    items: Objects.AdsMusician[];
+}
+
 export type AdsGetOfficeUsersResponse = Objects.AdsUsers[];
 
 export type AdsGetPostsReachResponse = Objects.AdsPromotedPostReach[];
@@ -183,7 +197,7 @@ export type AppsGetScoreResponse = number;
 
 export interface AppsGetResponse {
     /**
-     * Total number
+     * Total number of applications
      */
     count?: number;
     [key: string]: any;
@@ -207,6 +221,8 @@ export interface AuthRestoreResponse {
 export type BaseBoolResponse = Objects.BaseBoolInt;
 
 export type BaseGetUploadServerResponse = Objects.BaseUploadServer;
+
+export type BaseOkResponse = 1;
 
 export type BoardAddTopicResponse = number;
 
@@ -374,6 +390,14 @@ export interface DocsSearchResponse {
     items: Objects.DocsDoc[];
 }
 
+export interface DownloadedGamesPaidStatusResponse {
+    /**
+     * Game has been paid
+     */
+    is_paid: boolean | number;
+    [key: string]: any;
+}
+
 export type FaveAddTagResponse = Objects.FaveTag;
 
 export interface FaveGetPagesResponse {
@@ -418,6 +442,8 @@ export interface FriendsAddListResponse {
 
 export type FriendsAddResponse = 1 | 2 | 4;
 
+export type FriendsAreFriendsExtendedResponse = Objects.FriendsFriendExtendedStatus[];
+
 export type FriendsAreFriendsResponse = Objects.FriendsFriendStatus[];
 
 export interface FriendsDeleteResponse {
@@ -438,6 +464,7 @@ export interface FriendsDeleteResponse {
      */
     suggestion_deleted?: 1;
     [key: string]: any;
+    success: number;
 }
 
 export type FriendsGetAppUsersResponse = number[];
@@ -1417,8 +1444,6 @@ export type NotificationsMarkAsViewedResponse = Objects.BaseBoolInt;
 
 export type NotificationsSendMessageResponse = Objects.NotificationsSendMessageItem[];
 
-export type OkResponse = Objects.BaseOkResponse;
-
 export type OrdersCancelSubscriptionResponse = Objects.BaseBoolInt;
 
 export type OrdersChangeStateResponse = string;
@@ -1795,14 +1820,6 @@ export interface StoriesGetPhotoUploadServerResponse {
     user_ids: number[];
 }
 
-export interface StoriesGetStatsV5200Response {
-    [key: string]: any;
-    preview?: string;
-    achievement?: string;
-    achievement_subtitle?: string;
-    categories?: Objects.StoriesStatCategory[];
-}
-
 export type StoriesGetStatsResponse = Objects.StoriesStoryStats;
 
 export interface StoriesGetVideoUploadServerResponse {
@@ -1855,6 +1872,10 @@ export interface StoriesGetResponse {
 }
 
 export interface StoriesUploadResponse {
+    /**
+     * A string hash that is used in the stories.save method
+     */
+    upload_result?: string;
     [key: string]: any;
 }
 
@@ -2180,6 +2201,7 @@ export interface WallRepostResponse {
      */
     likes_count: number;
     [key: string]: any;
+    success: number;
 }
 
 export interface WallSearchExtendedResponse {

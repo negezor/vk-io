@@ -337,7 +337,7 @@ export interface AdsCreateTargetGroupParams {
     /**
      * 'For groups with auditory created with pixel code only.', , Number of days after that users will be automatically removed from the group.
      */
-    lifetime?: number;
+    lifetime: number;
     target_pixel_id?: number;
     target_pixel_rules?: string;
     [key: string]: any;
@@ -420,6 +420,10 @@ export interface AdsGetAdsParams {
      * Flag that specifies whether archived ads shall be shown: *0 — show only active ads,, *1 — show all ads.
      */
     include_deleted?: boolean | number;
+    /**
+     * Flag that specifies whether to show only archived ads: *0 — show all ads,, *1 — show only archived ads. Available when include_deleted flag is *1
+     */
+    only_deleted?: boolean | number;
     /**
      * Limit of number of returned ads. Used only if ad_ids parameter is null, and 'campaign_ids' parameter contains ID of only one campaign.
      */
@@ -576,6 +580,21 @@ export interface AdsGetFloodStatsParams {
     [key: string]: any;
 }
 
+export interface AdsGetLookalikeRequestsParams {
+    account_id: number;
+    client_id?: number;
+    requests_ids?: string;
+    offset?: number;
+    limit?: number;
+    sort_by?: string;
+    [key: string]: any;
+}
+
+export interface AdsGetMusiciansParams {
+    artist_name: string;
+    [key: string]: any;
+}
+
 export interface AdsGetOfficeUsersParams {
     /**
      * Advertising account ID.
@@ -714,6 +733,10 @@ export interface AdsGetTargetingStatsParams {
      * Domain of the advertised object.
      */
     link_domain?: string;
+    /**
+     * Additionally return recommended cpc and cpm to reach 5,10..95 percents of audience.
+     */
+    need_precise?: boolean | number;
     client_id?: number;
     ad_platform_no_wall?: string;
     ad_platform_no_ad_network?: string;
@@ -823,9 +846,9 @@ export interface AdsUpdateTargetGroupParams {
      */
     domain?: string;
     /**
-     * 'Only for the groups that get audience from sites with user accounting code.', Time in days when users added to a retarget group will be automatically excluded from it. '0' – automatic exclusion is off.
+     * 'Only for the groups that get audience from sites with user accounting code.', Time in days when users added to a retarget group will be automatically excluded from it. '0' - automatic exclusion is off.
      */
-    lifetime?: number;
+    lifetime: number;
     target_pixel_id?: number;
     target_pixel_rules?: string;
     [key: string]: any;
@@ -1561,6 +1584,11 @@ export interface DocsSearchParams {
     [key: string]: any;
 }
 
+export interface DownloadedGamesGetPaidStatusParams {
+    user_id?: number;
+    [key: string]: any;
+}
+
 export interface FaveAddArticleParams {
     url: string;
     [key: string]: any;
@@ -1630,7 +1658,7 @@ export interface FaveGetParams {
      * Number of users to return.
      */
     count?: number;
-    item_type?: "article" | "link" | "narrative" | "page" | "podcast" | "post" | "product" | "video";
+    item_type?: "article" | "clip" | "link" | "narrative" | "page" | "podcast" | "post" | "product" | "video";
     fields?: string;
     is_from_snackbar?: boolean | number;
     [key: string]: any;
@@ -1707,7 +1735,7 @@ export interface FaveSetPageTagsParams {
 }
 
 export interface FaveSetTagsParams {
-    item_type?: "article" | "link" | "narrative" | "page" | "podcast" | "post" | "product" | "video";
+    item_type?: "article" | "clip" | "link" | "narrative" | "page" | "podcast" | "post" | "product" | "video";
     item_owner_id?: number;
     item_id?: number;
     tag_ids?: number[] | number;
@@ -1752,6 +1780,10 @@ export interface FriendsAreFriendsParams {
      * '1' — to return 'sign' field. 'sign' is md5("{id}_{user_id}_{friends_status}_{application_secret}"), where id is current user ID. This field allows to check that data has not been modified by the client. By default: '0'.
      */
     need_sign?: boolean | number;
+    /**
+     * Return friend request read_state field
+     */
+    extended?: boolean | number;
     user_ids?: number[] | number;
     [key: string]: any;
 }
@@ -2829,6 +2861,9 @@ export interface GroupsSetCallbackSettingsParams {
     group_change_settings?: boolean | number;
     group_change_photo?: boolean | number;
     group_officers_edit?: boolean | number;
+    like_add?: boolean | number;
+    like_remove?: boolean | number;
+    message_event?: boolean | number;
     [key: string]: any;
 }
 
@@ -2986,6 +3021,9 @@ export interface GroupsSetLongPollSettingsParams {
     group_change_settings?: boolean | number;
     group_change_photo?: boolean | number;
     group_officers_edit?: boolean | number;
+    like_add?: boolean | number;
+    like_remove?: boolean | number;
+    message_event?: boolean | number;
     [key: string]: any;
 }
 
@@ -3229,6 +3267,10 @@ export interface MarketAddParams {
     url?: string;
     old_price?: number;
     photo_ids?: number[] | number;
+    dimension_width?: number;
+    dimension_height?: number;
+    dimension_length?: number;
+    weight?: number;
     [key: string]: any;
 }
 
@@ -3664,7 +3706,6 @@ export interface MarketSearchParams {
      */
     extended?: boolean | number;
     album_id?: number;
-    tags?: number[] | number;
     sort?: 0 | 1 | 2 | 3;
     status?: 0 | 2;
     [key: string]: any;
@@ -3787,6 +3828,9 @@ export interface MessagesEditParams {
     group_id?: number;
     dont_parse_links?: boolean | number;
     message_id?: number;
+    conversation_message_id?: number;
+    template?: string;
+    keyboard?: string;
     [key: string]: any;
 }
 
@@ -3798,7 +3842,7 @@ export interface MessagesEditChatParams {
     /**
      * New title of the chat.
      */
-    title: string;
+    title?: string;
     [key: string]: any;
 }
 
@@ -4124,6 +4168,7 @@ export interface MessagesMarkAsReadParams {
      */
     group_id?: number;
     message_ids?: number[] | number;
+    mark_conversation_as_read?: boolean | number;
     [key: string]: any;
 }
 
@@ -4268,7 +4313,16 @@ export interface MessagesSendParams {
     payload?: string;
     dont_parse_links?: boolean | number;
     disable_mentions?: boolean | number;
-    intent?: "bot_ad_invite" | "bot_ad_promo" | "promo_newsletter";
+    intent?: "account_update" | "bot_ad_invite" | "bot_ad_promo" | "confirmed_notification" | "customer_support" | "default" | "game_notification" | "moderated_newsletter" | "non_promo_newsletter" | "promo_newsletter" | "purchase_update";
+    subscribe_id?: number;
+    [key: string]: any;
+}
+
+export interface MessagesSendMessageEventAnswerParams {
+    event_id: string;
+    user_id: number;
+    peer_id: number;
+    event_data?: string;
     [key: string]: any;
 }
 
@@ -4546,6 +4600,10 @@ export interface NewsfeedUnignoreItemParams {
      * Item identifier
      */
     item_id: number;
+    /**
+     * Track code of unignored item
+     */
+    track_code?: string;
     type?: Objects.NewsfeedIgnoreItemType;
     [key: string]: any;
 }
@@ -4740,6 +4798,7 @@ export interface NotificationsSendMessageParams {
     message: string;
     fragment?: string;
     group_id?: number;
+    random_id?: number;
     [key: string]: any;
 }
 
@@ -5854,6 +5913,7 @@ export interface PollsCreateParams {
     end_date?: number;
     photo_id?: number;
     background_id?: "1" | "2" | "3" | "4" | "6" | "8" | "9";
+    disable_unvote?: boolean | number;
     [key: string]: any;
 }
 
@@ -6135,7 +6195,7 @@ export interface StatsGetParams {
     app_id?: number;
     timestamp_from?: number;
     timestamp_to?: number;
-    interval?: string;
+    interval?: "all" | "day" | "month" | "week" | "year";
     intervals_count?: number;
     filters?: string[] | string;
     stats_groups?: string[] | string;
