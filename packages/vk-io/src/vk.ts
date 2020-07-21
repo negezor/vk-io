@@ -7,7 +7,6 @@ import { API } from './api';
 import { Upload } from './upload';
 import { Collect } from './collect';
 import { Updates } from './updates';
-import { Snippets } from './snippets';
 import { CallbackService } from './utils/callback-service';
 
 import { IVKOptions } from './types';
@@ -37,8 +36,6 @@ export class VK {
 	public collect = new Collect(this);
 
 	public updates = new Updates(this);
-
-	public snippets = new Snippets(this);
 
 	public callbackService = new CallbackService(this);
 
