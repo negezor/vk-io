@@ -140,7 +140,7 @@ export const resolveResource = async ({
 	const pathname = rawPathname.substring(1);
 
 	if (parseOwnerResourceRe.test(search)) {
-		return resolveOwnerResource(pathname);
+		return resolveOwnerResource(search);
 	}
 
 	if (parseOwnerResourceRe.test(pathname)) {
