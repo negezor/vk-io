@@ -5,6 +5,7 @@ import { Middleware, compose, noopNext } from 'middleware-io';
 import {
 	Context,
 	VoteContext,
+	LikeContext,
 	TypingContext,
 	MessageContext,
 	WallPostContext,
@@ -38,6 +39,7 @@ import {
 	VKAppPayloadContextType,
 	VKPayTransactionContextType,
 	VoteContextType,
+	LikeContextType,
 	WallPostContextType,
 
 	CommentActionContextSubType,
@@ -56,6 +58,7 @@ import {
 	VKAppPayloadContextSubType,
 	VKPayTransactionContextSubType,
 	VoteContextSubType,
+	LikeContextSubType,
 	WallPostContextSubType
 } from '../structures/contexts';
 
@@ -141,6 +144,10 @@ const webhookContextsEvents: [string[], Constructor<any>][] = [
 	[
 		['vkpay_transaction'],
 		VKPayTransactionContext
+	],
+	[
+		['like_add', 'like_remove'],
+		LikeContext
 	]
 ];
 
@@ -217,6 +224,7 @@ CommentActionContextType
 | VKAppPayloadContextType
 | VKPayTransactionContextType
 | VoteContextType
+| LikeContextType
 | WallPostContextType;
 
 export type ContextSubTypes =
@@ -236,6 +244,7 @@ CommentActionContextSubType
 | VKAppPayloadContextSubType
 | VKPayTransactionContextSubType
 | VoteContextSubType
+| LikeContextSubType
 | WallPostContextSubType;
 
 export type ContextPossibleTypes = ContextTypes | ContextSubTypes | string;

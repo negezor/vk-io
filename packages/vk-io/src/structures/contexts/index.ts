@@ -1,6 +1,7 @@
 export * from './context';
 
 export * from './vote';
+export * from './like';
 export * from './typing';
 export * from './message';
 export * from './wall-post';
