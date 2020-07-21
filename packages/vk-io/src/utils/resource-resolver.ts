@@ -16,7 +16,7 @@ export interface IResolvedTargetResource {
 export interface IResolvedOwnerResource {
 	id: number;
 	ownerId: number;
-	type: 'photo' | 'audio' | 'video' | 'doc' | 'wall' | 'topic';
+	type: 'photo' | 'audio' | 'video' | 'doc' | 'wall' | 'topic' | 'album';
 }
 
 const onlyNumberRe = /^-?\d+$/;
