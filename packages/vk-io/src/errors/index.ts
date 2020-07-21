@@ -8,7 +8,6 @@ export * from './execute';
 export * from './resource';
 
 export {
-	APIErrorCode,
 	SharedErrorCode,
 	UploadErrorCode,
 	UpdatesErrorCode,
