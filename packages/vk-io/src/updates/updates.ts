@@ -17,6 +17,7 @@ import {
 	MessageAllowContext,
 	ReadMessagesContext,
 	MessageFlagsContext,
+	MessageEventContext,
 	VKAppPayloadContext,
 	CommentActionContext,
 	NewAttachmentsContext,
@@ -29,6 +30,7 @@ import {
 	GroupUpdateContextType,
 	GroupUserContextType,
 	MessageAllowContextType,
+	MessageEventContextType,
 	MessageFlagsContextType,
 	MessageContextType,
 	NewAttachmentsContextType,
@@ -48,6 +50,7 @@ import {
 	GroupUpdateContextSubType,
 	GroupUserContextSubType,
 	MessageAllowContextSubType,
+	MessageEventContextSubType,
 	MessageFlagsContextSubType,
 	MessageContextSubType,
 	NewAttachmentsContextSubType,
@@ -83,6 +86,10 @@ const webhookContextsEvents: [string[], Constructor<any>][] = [
 	[
 		['message_allow', 'message_deny'],
 		MessageAllowContext
+	],
+	[
+		['message_event'],
+		MessageEventContext
 	],
 	[
 		['photo_new', 'audio_new', 'video_new'],
@@ -214,6 +221,7 @@ CommentActionContextType
 | GroupUpdateContextType
 | GroupUserContextType
 | MessageAllowContextType
+| MessageEventContextType
 | MessageFlagsContextType
 | MessageContextType
 | NewAttachmentsContextType
@@ -234,6 +242,7 @@ CommentActionContextSubType
 | GroupUpdateContextSubType
 | GroupUserContextSubType
 | MessageAllowContextSubType
+| MessageEventContextSubType
 | MessageFlagsContextSubType
 | MessageContextSubType
 | NewAttachmentsContextSubType

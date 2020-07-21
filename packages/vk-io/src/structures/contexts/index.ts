@@ -10,6 +10,7 @@ export * from './user-online';
 export * from './dialog-flags';
 export * from './group-update';
 export * from './group-member';
+export * from './message-event';
 export * from './message-allow';
 export * from './read-messages';
 export * from './message-flags';
