@@ -29,6 +29,7 @@ const METHODS_FILE = 'methods.ts';
 const PARAMS_FILE = 'params.ts';
 const OBJECTS_FILE = 'objects.ts';
 const RESPONSES_FILE = 'responses.ts';
+const CONSTANTS_FILE = 'constants.ts';
 
 const typeingsDir = '../../packages/vk-io/src/api/schemas';
 
@@ -36,17 +37,20 @@ async function generate() {
 	const [
 		{ methods },
 		{ definitions: responses },
-		{ definitions: objects }
+		{ definitions: objects },
+		{ errors }
 	] = await Promise.all([
 		readJSONFile('./schemas/methods.json'),
 		readJSONFile('./schemas/responses.json'),
-		readJSONFile('./schemas/objects.json')
+		readJSONFile('./schemas/objects.json'),
+		readJSONFile('./schemas/errors.json')
 	]);
 
 	const { writeNode: writeMethodsNode } = createPrinter(`${typeingsDir}/${METHODS_FILE}`);
 	const { writeNode: writeParamsNode } = createPrinter(`${typeingsDir}/${PARAMS_FILE}`);
 	const { writeNode: writeResponsesNode } = createPrinter(`${typeingsDir}/${RESPONSES_FILE}`);
 	const { writeNode: writeObjectsNode } = createPrinter(`${typeingsDir}/${OBJECTS_FILE}`);
+	const { writeNode: writeConstantsNode } = createPrinter(`${typeingsDir}/${CONSTANTS_FILE}`);
 
 	const paramsIdentifier = ts.createIdentifier('Params');
 	const objectsIdentifier = ts.createIdentifier('Objects');
@@ -224,6 +228,25 @@ async function generate() {
 				)
 		);
 	}
+
+	writeConstantsNode(
+		TypesGenerator.declarationExport(
+			ts.createEnumDeclaration(
+				undefined,
+				undefined,
+				'APIErrorCode',
+				Object.entries(errors)
+					.map(([name, info]) => (
+						ts.createEnumMember(
+							name.substring(10).toUpperCase(),
+							ts.createNumericLiteral(
+								String(info.code)
+							)
+						)
+					))
+			)
+		)
+	);
 
 	const apiMethodsInterface = new InterfaceGenerator({
 		name: 'APIMethods'
