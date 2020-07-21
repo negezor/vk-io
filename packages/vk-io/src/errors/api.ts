@@ -1,7 +1,7 @@
 import { VKError } from './error';
-import { APIErrorCode } from '../utils/constants';
+import { APIErrorCode } from '../api/schemas/constants';
 
-const { CAPTCHA_REQUIRED, USER_VALIDATION_REQUIRED, CONFIRMATION_REQUIRED } = APIErrorCode;
+const { CAPTCHA, AUTH_VALIDATION, NEED_CONFIRMATION } = APIErrorCode;
 
 export interface IAPIErrorParam {
 	key: string;
@@ -56,13 +56,15 @@ export class APIError extends VKError {
 
 		this.params = payload.request_params;
 
-		if (code === CAPTCHA_REQUIRED) {
+		if (code === CAPTCHA) {
 			this.captchaSid = Number(payload.captcha_sid);
 			this.captchaImg = payload.captcha_img;
-		} else if (code === USER_VALIDATION_REQUIRED) {
+		} else if (code === AUTH_VALIDATION) {
 			this.redirectUri = payload.redirect_uri;
-		} else if (code === CONFIRMATION_REQUIRED) {
+		} else if (code === NEED_CONFIRMATION) {
 			this.confirmationText = payload.confirmation_text;
 		}
 	}
 }
+
+export { APIErrorCode };
