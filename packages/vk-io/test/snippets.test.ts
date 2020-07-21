@@ -1,12 +1,10 @@
-import { VK } from '..';
+import { VK, resolveResource } from '..';
 
 const { TOKEN } = process.env;
 
 const vk = new VK({ token: TOKEN });
 
 describe('Snippets', (): void => {
-	const { snippets } = vk;
-
 	describe('resolveResource', (): void => {
 		if (TOKEN === undefined) {
 			it('the test is skipped because there is no token', (): void => {});
@@ -34,7 +32,10 @@ describe('Snippets', (): void => {
 			];
 
 			const payloads = await Promise.all(resources.map((resource): object => (
-				snippets.resolveResource(resource)
+				resolveResource({
+					resource,
+					api: vk.api
+				})
 			)));
 
 			expect(payloads).toContainEqual(expect.objectContaining({
@@ -56,7 +57,10 @@ describe('Snippets', (): void => {
 			];
 
 			const payloads = await Promise.all(resources.map((resource): object => (
-				snippets.resolveResource(resource)
+				resolveResource({
+					resource,
+					api: vk.api
+				})
 			)));
 
 			expect(payloads).toContainEqual(expect.objectContaining({
@@ -84,7 +88,10 @@ describe('Snippets', (): void => {
 			];
 
 			const payloads = await Promise.all(resources.map((resource): object => (
-				snippets.resolveResource(resource)
+				resolveResource({
+					resource,
+					api: vk.api
+				})
 			)));
 
 			const result = [
