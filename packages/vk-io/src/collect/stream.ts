@@ -12,8 +12,6 @@ import { getExecuteCode } from './execute-code';
 
 const debug = createDebug('vk-io:collect:stream');
 
-const { APP_TOKEN_NOT_VALID, RESPONSE_SIZE_TOO_BIG } = APIErrorCode;
-
 const { EXECUTE_ERROR } = CollectErrorCode;
 
 export interface ICollectStreamOptions {
@@ -235,7 +233,7 @@ export class CollectStream<T> extends Readable {
 					received: this.received
 				});
 			} catch (error) {
-				if (error.code === APP_TOKEN_NOT_VALID) {
+				if (error.code === APIErrorCode.APP_AUTH) {
 					this.supportExecute = false;
 
 					debug('execute not supported in token');
@@ -246,7 +244,7 @@ export class CollectStream<T> extends Readable {
 					return;
 				}
 
-				if (error.code === RESPONSE_SIZE_TOO_BIG) {
+				if (error.code === APIErrorCode.RUNTIME) {
 					this.parallelCount -= 1;
 
 					this.code = getExecuteCode({

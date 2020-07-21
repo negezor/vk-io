@@ -534,7 +534,7 @@ export class Updates {
 
 				this.vk.options.pollingGroupId = group.id!;
 			} catch (error) {
-				if (error.code !== APIErrorCode.WRONG_PARAMETER) {
+				if (error.code !== APIErrorCode.PARAM) {
 					throw error;
 				}
 

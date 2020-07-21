@@ -4,15 +4,16 @@ import { APIWorker } from './worker';
 
 import { APIRequest } from '../request';
 import { delay } from '../../utils/helpers';
-import { APIError, ExecuteError, IExecuteErrorOptions } from '../../errors';
+import {
+	IExecuteErrorOptions,
 
-import { APIErrorCode, CaptchaType, MINIMUM_TIME_INTERVAL_API } from '../../utils/constants';
+	APIError,
+	ExecuteError,
 
-const {
-	CAPTCHA_REQUIRED,
-	TOO_MANY_REQUESTS,
-	USER_VALIDATION_REQUIRED
-} = APIErrorCode;
+	APIErrorCode
+} from '../../errors';
+
+import { CaptchaType, MINIMUM_TIME_INTERVAL_API } from '../../utils/constants';
 
 const debug = createDebug('vk-io:api');
 
@@ -83,7 +84,7 @@ export class SequentialWorker extends APIWorker {
 	public async handleError(request: APIRequest, error: APIError): Promise<void> {
 		const { code } = error;
 
-		if (code === TOO_MANY_REQUESTS) {
+		if (code === APIErrorCode.TOO_MANY) {
 			if (this.paused) {
 				this.requeue(request);
 
@@ -103,7 +104,7 @@ export class SequentialWorker extends APIWorker {
 
 		request.captchaValidate?.reject(error);
 
-		if (code === USER_VALIDATION_REQUIRED) {
+		if (code === APIErrorCode.AUTH_VALIDATION) {
 			if (this.paused) {
 				this.requeue(request);
 			}
@@ -146,7 +147,7 @@ export class SequentialWorker extends APIWorker {
 			return;
 		}
 
-		if (code !== CAPTCHA_REQUIRED || !this.vk.callbackService.hasCaptchaHandler) {
+		if (code !== APIErrorCode.CAPTCHA || !this.vk.callbackService.hasCaptchaHandler) {
 			request.reject(error);
 
 			return;
