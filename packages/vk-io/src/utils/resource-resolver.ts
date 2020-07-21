@@ -116,6 +116,10 @@ export const resolveResource = async ({
 		);
 	}
 
+	if (parseOwnerResourceRe.test(resource)) {
+		return resolveOwnerResource(resource);
+	}
+
 	if (parseTargetResourceRe.test(resource)) {
 		return resolveTargetResouce(resource);
 	}
