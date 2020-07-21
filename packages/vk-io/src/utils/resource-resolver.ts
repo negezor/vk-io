@@ -19,7 +19,7 @@ export interface IResolvedOwnerResource {
 	type: 'photo' | 'audio' | 'video' | 'doc' | 'wall' | 'topic';
 }
 
-const onlyNumberRe = /^-?d+$/;
+const onlyNumberRe = /^-?\d+$/;
 const systemMentionRe = /\[([^|]+)\|[^\]]+\]/;
 
 const isVKUrlRe = /^(?:https:\/\/)?(?:m\.)?vk.com\//;
