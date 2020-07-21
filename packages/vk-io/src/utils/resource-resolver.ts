@@ -145,5 +145,5 @@ export const resolveResource = async ({
 		return resolveTargetResouce(pathname);
 	}
 
-	return resolveSlugResource(resource, api);
+	return resolveSlugResource(pathname, api);
 };
