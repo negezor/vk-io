@@ -1,9 +1,33 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "API",
-  "description": "API declaration",
+  "description": "VK API declaration",
   "type": "object",
   "definitions": {
+    "deprecated_from_version": {
+      "type": "string",
+      "description": "Property deprecated from version",
+      "pattern": "^[0-9]+.[0-9]+$"
+    },
+    "from_version": {
+      "type": "string",
+      "description": "Property implemented from version",
+      "pattern": "^[0-9]+.[0-9]+$"
+    },
+    "enum": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "enumNames": {
+      "type": "array",
+      "description": "Enum values text representations",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
     "jsonReference": {
       "type": "object",
       "required": [
@@ -70,11 +94,17 @@
           "type": "string",
           "description": "Parameter name"
         },
+        "nodoc": {
+          "$ref": "#/definitions/nodoc"
+        },
         "format": {
           "type": "string",
           "enum": [
             "json"
           ]
+        },
+        "ignore_sdk": {
+          "$ref": "#/definitions/ignore_sdk"
         },
         "type": {
           "$ref": "#/definitions/parameterTypes",
@@ -96,18 +126,14 @@
             "minimum": {
               "type": "number"
             },
-            "enum": {
-              "type": "array",
-              "minItems": 1,
-              "uniqueItems": true
-            },
+            "enum": [
+              "#/definitions/enum"
+            ],
             "enumNames": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              },
-              "minItems": 1,
-              "uniqueItems": true
+              "$ref": "#/definitions/enumNames"
+            },
+            "ignore_sdk": {
+              "$ref": "#/definitions/ignore_sdk"
             }
           },
           "oneOf": [
@@ -143,18 +169,11 @@
           "type": "string",
           "format": "uri-reference"
         },
-        "enum": {
-          "type": "array",
-          "minItems": 1,
-          "uniqueItems": true
-        },
+        "enum": [
+          "#/definitions/enum"
+        ],
         "enumNames": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "minItems": 1,
-          "uniqueItems": true
+          "$ref": "#/definitions/enumNames"
         },
         "default": [],
         "required": {
@@ -175,12 +194,10 @@
           "description": "Parameter description"
         },
         "deprecated_from_version": {
-          "type": "string",
-          "description": "Property deprecated from version"
+          "$ref": "#/definitions/deprecated_from_version"
         },
         "from_version": {
-          "type": "string",
-          "description": "Property implemented from version"
+          "$ref": "#/definitions/from_version"
         }
       },
       "required": [
@@ -218,11 +235,23 @@
         "type": {
           "type": "string"
         },
-        "deprecated_from_version": {
+        "description": {
           "type": "string"
         },
+        "nodoc": {
+          "$ref": "#/definitions/nodoc"
+        },
+        "deprecated_from_version": {
+          "$ref": "#/definitions/deprecated_from_version"
+        },
         "from_version": {
-          "type": "string"
+          "$ref": "#/definitions/from_version"
+        },
+        "allOf": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/response"
+          }
         },
         "items": {
           "oneOf": [
@@ -260,6 +289,12 @@
             }
           },
           "additionalProperties": false
+        },
+        "ignore_sdk": {
+          "$ref": "#/definitions/ignore_sdk"
+        },
+        "additional_properties": {
+          "type": "boolean"
         }
       },
       "additionalProperties": false
@@ -267,10 +302,6 @@
     "error": {
       "type": "object",
       "properties": {
-        "name": {
-          "type": "string",
-          "description": "Error name"
-        },
         "code": {
           "type": "integer",
           "description": "Error code",
@@ -280,26 +311,45 @@
           "type": "string",
           "description": "Error description"
         },
+        "global": {
+          "type": "boolean",
+          "default": false
+        },
+        "disabled": {
+          "type": "boolean",
+          "default": false
+        },
+        "nodoc": {
+          "$ref": "#/definitions/nodoc"
+        },
         "deprecated_from_version": {
-          "type": "string"
+          "$ref": "#/definitions/deprecated_from_version"
         },
         "from_version": {
-          "type": "string"
+          "$ref": "#/definitions/from_version"
         }
       },
       "required": [
-        "name",
         "code",
         "description"
       ],
       "additionalProperties": false
     },
-    "errors": {
+    "methodErrors": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/error"
+        "type": "object",
+        "properties": {
+          "$ref": {
+            "type": "string",
+            "format": "uri-reference"
+          },
+          "nodoc": {
+            "$ref": "#/definitions/nodoc"
+          }
+        }
       },
-      "description": "Possible errors"
+      "description": "Possible custom errors"
     },
     "method": {
       "type": "object",
@@ -312,11 +362,14 @@
           "type": "string",
           "description": "Method description"
         },
+        "nodoc": {
+          "$ref": "#/definitions/nodoc"
+        },
         "deprecated_from_version": {
-          "type": "string"
+          "$ref": "#/definitions/deprecated_from_version"
         },
         "from_version": {
-          "type": "string"
+          "$ref": "#/definitions/from_version"
         },
         "access_token_type": {
           "type": "array",
@@ -354,7 +407,10 @@
           "default": false
         },
         "errors": {
-          "$ref": "#/definitions/errors"
+          "$ref": "#/definitions/methodErrors"
+        },
+        "ignore_sdk": {
+          "$ref": "#/definitions/ignore_sdk"
         }
       },
       "required": [
@@ -367,7 +423,10 @@
   },
   "properties": {
     "errors": {
-      "$ref": "#/definitions/errors"
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/definitions/error"
+      }
     },
     "methods": {
       "type": "array",

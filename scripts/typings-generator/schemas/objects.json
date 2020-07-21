@@ -91,9 +91,6 @@
           "description": "Two factor authentication is enabled",
           "$ref": "objects.json#/definitions/base_bool_int"
         },
-        "audio_ads": {
-          "$ref": "objects.json#/definitions/audio_ads_config"
-        },
         "country": {
           "type": "string",
           "description": "Country code"
@@ -183,7 +180,9 @@
         "declined",
         "was_accepted",
         "was_declined",
-        "declined_with_link"
+        "declined_with_link",
+        "response",
+        "response_with_link"
       ]
     },
     "account_offer": {
@@ -464,6 +463,10 @@
               "type": "string",
               "format": "uri",
               "description": "URL of square photo of the user with 200 pixels in width"
+            },
+            "is_service_account": {
+              "type": "boolean",
+              "description": "flag about service account"
             }
           }
         }
@@ -1174,6 +1177,109 @@
       ],
       "additionalProperties": false
     },
+    "ads_lookalike_request": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "Lookalike request ID",
+          "minimum": 1
+        },
+        "create_time": {
+          "type": "integer",
+          "description": "Lookalike request create time, as Unixtime"
+        },
+        "update_time": {
+          "type": "integer",
+          "description": "Lookalike request update time, as Unixtime"
+        },
+        "scheduled_delete_time": {
+          "type": "integer",
+          "description": "Time by which lookalike request would be deleted, as Unixtime"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "search_in_progress",
+            "search_failed",
+            "search_done",
+            "save_in_progress",
+            "save_failed",
+            "save_done"
+          ],
+          "description": "Lookalike request status"
+        },
+        "source_type": {
+          "type": "string",
+          "enum": [
+            "retargeting_group"
+          ],
+          "description": "Lookalike request source type"
+        },
+        "source_retargeting_group_id": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Retargeting group id, which was used as lookalike seed"
+        },
+        "source_name": {
+          "type": "string",
+          "description": "Lookalike request seed name (retargeting group name)"
+        },
+        "audience_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Lookalike request seed audience size"
+        },
+        "save_audience_levels": {
+          "type": "array",
+          "items": {
+            "$ref": "objects.json#/definitions/ads_lookalike_request_save_audience_level"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "create_time",
+        "update_time",
+        "status",
+        "source_type"
+      ],
+      "additionalProperties": false
+    },
+    "ads_lookalike_request_save_audience_level": {
+      "type": "object",
+      "properties": {
+        "level": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Save audience level id, which is used in save audience queries"
+        },
+        "audience_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Saved audience audience size for according level"
+        }
+      }
+    },
+    "ads_musician": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "Targeting music artist ID",
+          "minimum": 1
+        },
+        "name": {
+          "type": "string",
+          "description": "Music artist name"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ],
+      "additionalProperties": false
+    },
     "ads_object_type": {
       "type": "string",
       "description": "Object type",
@@ -1849,6 +1955,14 @@
           "format": "uri",
           "description": "URL of the app icon with 576 px in width"
         },
+        "background_loader_color": {
+          "type": "string",
+          "description": "Hex color code without hash sign"
+        },
+        "loader_icon": {
+          "type": "string",
+          "description": "SVG data"
+        },
         "icon_75": {
           "type": "string",
           "format": "uri",
@@ -1905,7 +2019,20 @@
       "properties": {
         "name": {
           "type": "string",
-          "description": "Scope name"
+          "description": "Scope name",
+          "enum": [
+            "friends",
+            "photos",
+            "video",
+            "pages",
+            "status",
+            "notes",
+            "wall",
+            "docs",
+            "groups",
+            "stats",
+            "market"
+          ]
         },
         "title": {
           "type": "string",
@@ -2093,6 +2220,26 @@
       ],
       "additionalProperties": false
     },
+    "base_gradient_point": {
+      "type": "object",
+      "properties": {
+        "color": {
+          "type": "string",
+          "description": "Hex color code without #"
+        },
+        "position": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Point position"
+        }
+      },
+      "required": [
+        "position",
+        "color"
+      ],
+      "additionalProperties": false
+    },
     "base_image": {
       "type": "object",
       "properties": {
@@ -2223,17 +2370,9 @@
           "type": "boolean",
           "description": "Information whether the current link is external"
         },
-        "preview_article": {
-          "$ref": "objects.json#/definitions/articles_article",
-          "description": "Preview article"
-        },
         "video": {
           "$ref": "objects.json#/definitions/video_video",
           "description": "Video from link"
-        },
-        "amp": {
-          "$ref": "objects.json#/definitions/snippets_amp",
-          "description": "Amp for link"
         }
       },
       "required": [
@@ -2425,16 +2564,6 @@
         "name"
       ],
       "additionalProperties": false
-    },
-    "base_ok_response": {
-      "type": "integer",
-      "description": "Returns 1 if request has been processed successfully",
-      "enum": [
-        1
-      ],
-      "enumNames": [
-        "ok"
-      ]
     },
     "base_place": {
       "type": "object",
@@ -3096,6 +3225,51 @@
       },
       "withoutRefs": true
     },
+    "callback_like_add_remove": {
+      "type": "object",
+      "properties": {
+        "liker_id": {
+          "type": "integer"
+        },
+        "object_type": {
+          "type": "string",
+          "enum": [
+            "video",
+            "photo",
+            "post",
+            "comment",
+            "note",
+            "topic_comment",
+            "photo_comment",
+            "video_comment",
+            "market",
+            "market_comment"
+          ]
+        },
+        "object_owner_id": {
+          "type": "integer"
+        },
+        "object_id": {
+          "type": "integer"
+        },
+        "post_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "thread_reply_id": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "liker_id",
+        "object_id",
+        "post_id",
+        "object_type",
+        "object_owner_id"
+      ],
+      "withoutRefs": true
+    },
     "callback_market_comment": {
       "type": "object",
       "properties": {
@@ -3627,51 +3801,51 @@
     "docs_doc": {
       "type": "object",
       "properties": {
-        "access_key": {
-          "type": "string",
-          "description": "Access key for the document"
-        },
-        "date": {
-          "type": "integer",
-          "description": "Date when file has been uploaded in Unixtime",
-          "minimum": 0
-        },
-        "ext": {
-          "type": "string",
-          "description": "File extension"
-        },
         "id": {
           "type": "integer",
           "description": "Document ID",
           "minimum": 0
         },
-        "is_licensed": {
-          "$ref": "objects.json#/definitions/base_bool_int"
-        },
         "owner_id": {
           "type": "integer",
           "description": "Document owner ID"
         },
-        "preview": {
-          "$ref": "objects.json#/definitions/docs_doc_preview"
+        "title": {
+          "type": "string",
+          "description": "Document title"
         },
         "size": {
           "type": "integer",
           "description": "File size in bites",
           "minimum": 0
         },
-        "title": {
+        "ext": {
           "type": "string",
-          "description": "Document title"
-        },
-        "type": {
-          "type": "integer",
-          "description": "Document type"
+          "description": "File extension"
         },
         "url": {
           "type": "string",
           "format": "uri",
           "description": "File URL"
+        },
+        "date": {
+          "type": "integer",
+          "description": "Date when file has been uploaded in Unixtime",
+          "minimum": 0
+        },
+        "type": {
+          "type": "integer",
+          "description": "Document type"
+        },
+        "preview": {
+          "$ref": "objects.json#/definitions/docs_doc_preview"
+        },
+        "is_licensed": {
+          "$ref": "objects.json#/definitions/base_bool_int"
+        },
+        "access_key": {
+          "type": "string",
+          "description": "Access key for the document"
         },
         "tags": {
           "type": "array",
@@ -3704,6 +3878,12 @@
     "docs_doc_preview": {
       "type": "object",
       "properties": {
+        "audio_msg": {
+          "$ref": "objects.json#/definitions/docs_doc_preview_audio_msg"
+        },
+        "graffiti": {
+          "$ref": "objects.json#/definitions/docs_doc_preview_graffiti"
+        },
         "photo": {
           "$ref": "objects.json#/definitions/docs_doc_preview_photo"
         },
@@ -3712,30 +3892,111 @@
         }
       }
     },
+    "docs_doc_preview_audio_msg": {
+      "type": "object",
+      "properties": {
+        "duration": {
+          "type": "integer",
+          "description": "Audio message duration in seconds",
+          "minimum": 0
+        },
+        "link_mp3": {
+          "type": "string",
+          "format": "uri",
+          "description": "MP3 file URL"
+        },
+        "link_ogg": {
+          "type": "string",
+          "format": "uri",
+          "description": "OGG file URL"
+        },
+        "waveform": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "description": "Sound visualisation",
+            "minimum": 0
+          }
+        }
+      },
+      "required": [
+        "duration",
+        "link_mp3",
+        "link_ogg",
+        "waveform"
+      ],
+      "additionalProperties": false
+    },
+    "docs_doc_preview_graffiti": {
+      "type": "object",
+      "properties": {
+        "src": {
+          "type": "string",
+          "format": "uri",
+          "description": "Graffiti file URL"
+        },
+        "width": {
+          "type": "integer",
+          "description": "Graffiti width",
+          "minimum": 0
+        },
+        "height": {
+          "type": "integer",
+          "description": "Graffiti height",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "src",
+        "width",
+        "height"
+      ],
+      "additionalProperties": false
+    },
     "docs_doc_preview_photo": {
       "type": "object",
       "properties": {
         "sizes": {
           "type": "array",
           "items": {
-            "$ref": "objects.json#/definitions/photos_photo_sizes"
+            "$ref": "objects.json#/definitions/docs_doc_preview_photo_sizes"
           }
         }
       }
     },
-    "docs_doc_preview_video": {
+    "docs_doc_preview_photo_sizes": {
       "type": "object",
       "properties": {
-        "filesize": {
+        "src": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL of the image"
+        },
+        "width": {
           "type": "integer",
-          "description": "Video file size in bites",
+          "description": "Width in px",
           "minimum": 0
         },
         "height": {
           "type": "integer",
-          "description": "Video's height in pixels",
+          "description": "Height in px",
           "minimum": 0
         },
+        "type": {
+          "$ref": "objects.json#/definitions/photos_photo_sizes_type"
+        }
+      },
+      "required": [
+        "src",
+        "width",
+        "height",
+        "type"
+      ],
+      "additionalProperties": false
+    },
+    "docs_doc_preview_video": {
+      "type": "object",
+      "properties": {
         "src": {
           "type": "string",
           "format": "uri",
@@ -3745,24 +4006,29 @@
           "type": "integer",
           "description": "Video's width in pixels",
           "minimum": 0
+        },
+        "height": {
+          "type": "integer",
+          "description": "Video's height in pixels",
+          "minimum": 0
+        },
+        "file_size": {
+          "type": "integer",
+          "description": "Video file size in bites",
+          "minimum": 0
         }
       },
       "required": [
         "src",
         "width",
         "height",
-        "filesize"
+        "file_size"
       ],
       "additionalProperties": false
     },
     "docs_doc_types": {
       "type": "object",
       "properties": {
-        "count": {
-          "type": "integer",
-          "minimum": 0,
-          "description": "Number of docs"
-        },
         "id": {
           "type": "integer",
           "description": "Doc type ID"
@@ -3770,8 +4036,18 @@
         "name": {
           "type": "string",
           "description": "Doc type title"
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of docs"
         }
-      }
+      },
+      "required": [
+        "id",
+        "name",
+        "count"
+      ]
     },
     "docs_doc_upload_response": {
       "type": "object",
@@ -3941,6 +4217,22 @@
           "description": "Tag name"
         }
       }
+    },
+    "friends_friend_extended_status": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "objects.json#/definitions/friends_friend_status"
+        },
+        {
+          "properties": {
+            "is_request_unread": {
+              "type": "boolean",
+              "description": "Is friend request from other user unread"
+            }
+          }
+        }
+      ]
     },
     "friends_friend_status": {
       "type": "object",
@@ -4410,12 +4702,7 @@
       ]
     },
     "groups_banned_item": {
-      "type": "object",
-      "oneOf": [
-        {
-          "$ref": "objects.json#/definitions/groups_owner_xtr_ban_info"
-        }
-      ]
+      "$ref": "objects.json#/definitions/groups_owner_xtr_ban_info"
     },
     "groups_callback_server": {
       "type": "object",
@@ -4598,7 +4885,10 @@
         "can_subscribe_posts",
         "warning_notification",
         "msg_push_allowed",
-        "stories_archive_count"
+        "stories_archive_count",
+        "video_live_level",
+        "video_live_count",
+        "clips_count"
       ]
     },
     "groups_filter": {
@@ -4607,6 +4897,7 @@
         "admin",
         "editor",
         "moder",
+        "advertiser",
         "groups",
         "publics",
         "events",
@@ -4929,6 +5220,16 @@
             "members_count": {
               "type": "integer",
               "description": "Community members number"
+            },
+            "video_live_level": {
+              "type": "integer",
+              "description": "Community level live streams achievements",
+              "minimum": 0
+            },
+            "video_live_count": {
+              "type": "integer",
+              "description": "Number of community's live streams",
+              "minimum": 0
             },
             "counters": {
               "$ref": "objects.json#/definitions/groups_counters_group"
@@ -5586,7 +5887,7 @@
         "message_typing_state": {
           "$ref": "objects.json#/definitions/base_bool_int"
         },
-        "messages_edit": {
+        "message_edit": {
           "$ref": "objects.json#/definitions/base_bool_int"
         },
         "photo_comment_delete": {
@@ -5686,7 +5987,7 @@
         "wall_repost",
         "user_block",
         "user_unblock",
-        "messages_edit",
+        "message_edit",
         "message_typing_state",
         "message_read"
       ]
@@ -6029,7 +6330,8 @@
           "description": "Amount of spent votes"
         },
         "success": {
-          "$ref": "objects.json#/definitions/base_ok_response"
+          "type": "integer",
+          "default": 1
         },
         "test_mode": {
           "description": "Information whether test mode is enabled",
@@ -6742,6 +7044,10 @@
           "minimum": 0,
           "description": "Unread messages number"
         },
+        "is_marked_unread": {
+          "type": "boolean",
+          "description": "Is this conversation uread"
+        },
         "important": {
           "type": "boolean"
         },
@@ -7279,6 +7585,10 @@
         "was_listened": {
           "type": "boolean",
           "description": "Was the audio message inside already listened by you"
+        },
+        "pinned_at": {
+          "type": "integer",
+          "description": "Date when the message has been pinned in Unixtime"
         }
       },
       "required": [
@@ -7599,9 +7909,12 @@
         "photo_tag",
         "wall_photo",
         "friend",
+        "recommended_groups",
         "note",
         "audio",
-        "video"
+        "video",
+        "audio_playlist",
+        "clip"
       ]
     },
     "newsfeed_ignore_item_type": {
@@ -7813,6 +8126,9 @@
       "type": "object",
       "allOf": [
         {
+          "$ref": "objects.json#/definitions/wall_carousel_base"
+        },
+        {
           "$ref": "objects.json#/definitions/newsfeed_item_base"
         },
         {
@@ -7847,6 +8163,9 @@
     "newsfeed_item_photo_tag": {
       "type": "object",
       "allOf": [
+        {
+          "$ref": "objects.json#/definitions/wall_carousel_base"
+        },
         {
           "$ref": "objects.json#/definitions/newsfeed_item_base"
         },
@@ -7971,6 +8290,9 @@
       "type": "object",
       "allOf": [
         {
+          "$ref": "objects.json#/definitions/wall_carousel_base"
+        },
+        {
           "$ref": "objects.json#/definitions/newsfeed_item_base"
         },
         {
@@ -8001,6 +8323,9 @@
     "newsfeed_item_wallpost": {
       "type": "object",
       "allOf": [
+        {
+          "$ref": "objects.json#/definitions/wall_carousel_base"
+        },
         {
           "$ref": "objects.json#/definitions/newsfeed_item_base"
         },
@@ -8065,6 +8390,12 @@
             "views": {
               "$ref": "objects.json#/definitions/wall_views",
               "description": "Count of views"
+            },
+            "short_text_rate": {
+              "type": "number",
+              "description": "Preview length control parameter",
+              "minimum": 0,
+              "maximum": 1
             }
           }
         }
@@ -8230,7 +8561,8 @@
         "video",
         "topic",
         "digest",
-        "stories"
+        "stories",
+        "tags_suggestions"
       ]
     },
     "newsfeed_newsfeed_note": {
@@ -8267,10 +8599,6 @@
             },
             "comments": {
               "$ref": "objects.json#/definitions/base_object_count"
-            },
-            "can_comment": {
-              "description": "Information whether current user can comment the photo",
-              "$ref": "objects.json#/definitions/base_bool_int"
             },
             "can_repost": {
               "description": "Information whether current user can repost the photo",
@@ -9160,6 +9488,18 @@
           "type": "integer",
           "description": "Photo owner's ID"
         },
+        "photo_256": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL of image with 2560 px width"
+        },
+        "can_comment": {
+          "description": "Information whether current user can comment the photo",
+          "$ref": "objects.json#/definitions/base_bool_int"
+        },
+        "place": {
+          "type": "string"
+        },
         "post_id": {
           "type": "integer",
           "description": "Post ID",
@@ -9188,13 +9528,17 @@
         "has_tags": {
           "type": "boolean",
           "description": "Whether photo has attached tag links"
+        },
+        "restrictions": {
+          "$ref": "objects.json#/definitions/media_restriction"
         }
       },
       "required": [
         "id",
         "album_id",
         "owner_id",
-        "date"
+        "date",
+        "has_tags"
       ],
       "additionalProperties": false
     },
@@ -9545,6 +9889,11 @@
           "minimum": 0
         },
         "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL of the image"
+        },
+        "src": {
           "type": "string",
           "format": "uri",
           "description": "URL of the image"
@@ -9924,6 +10273,57 @@
       ],
       "additionalProperties": false
     },
+    "photos_tags_suggestion_item": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "buttons": {
+          "type": "array",
+          "items": {
+            "$ref": "objects.json#/definitions/photos_tags_suggestion_item_button"
+          }
+        },
+        "photo": {
+          "$ref": "objects.json#/definitions/photos_photo"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "$ref": "objects.json#/definitions/photos_photo_tag"
+          }
+        }
+      },
+      "withoutRefs": true
+    },
+    "photos_tags_suggestion_item_button": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "action": {
+          "type": "string",
+          "enum": [
+            "confirm",
+            "decline",
+            "show_tags"
+          ]
+        },
+        "style": {
+          "type": "string",
+          "enum": [
+            "primary",
+            "secondary"
+          ]
+        }
+      },
+      "withoutRefs": true
+    },
     "photos_wall_upload_response": {
       "type": "object",
       "properties": {
@@ -9973,17 +10373,123 @@
       ],
       "additionalProperties": false
     },
+    "polls_background": {
+      "type": "object",
+      "properties": {
+        "angle": {
+          "description": "Gradient angle with 0 on positive X axis",
+          "type": "integer"
+        },
+        "color": {
+          "type": "string",
+          "description": "Hex color code without #"
+        },
+        "height": {
+          "description": "Original height of pattern tile",
+          "type": "integer",
+          "minimum": 0
+        },
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "images": {
+          "description": "Pattern tiles",
+          "type": "array",
+          "items": {
+            "$ref": "objects.json#/definitions/base_image"
+          }
+        },
+        "points": {
+          "description": "Gradient points",
+          "type": "array",
+          "items": {
+            "$ref": "objects.json#/definitions/base_gradient_point"
+          }
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "gradient",
+            "tile"
+          ]
+        },
+        "width": {
+          "description": "Original with of pattern tile",
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false,
+      "withoutRefs": true
+    },
+    "polls_friend": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "id"
+      ]
+    },
     "polls_poll": {
       "type": "object",
       "properties": {
         "anonymous": {
-          "description": "Information whether the field is anonymous",
+          "$ref": "objects.json#/definitions/polls_poll_anonymous"
+        },
+        "friends": {
+          "type": "array",
+          "items": {
+            "$ref": "objects.json#/definitions/polls_friend"
+          }
+        },
+        "multiple": {
+          "description": "Information whether the poll with multiple choices",
           "type": "boolean"
         },
         "answer_id": {
           "type": "integer",
           "description": "Current user's answer ID",
           "minimum": 0
+        },
+        "end_date": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "answer_ids": {
+          "type": "array",
+          "description": "Current user's answer IDs",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "closed": {
+          "type": "boolean"
+        },
+        "is_board": {
+          "type": "boolean"
+        },
+        "can_edit": {
+          "type": "boolean"
+        },
+        "can_vote": {
+          "type": "boolean"
+        },
+        "can_report": {
+          "type": "boolean"
+        },
+        "can_share": {
+          "type": "boolean"
+        },
+        "photo": {
+          "$ref": "objects.json#/definitions/polls_background"
         },
         "answers": {
           "type": "array",
@@ -10005,14 +10511,24 @@
           "type": "integer",
           "description": "Poll owner's ID"
         },
+        "author_id": {
+          "type": "integer",
+          "description": "Poll author's ID"
+        },
         "question": {
           "type": "string",
           "description": "Poll question"
         },
+        "background": {
+          "$ref": "objects.json#/definitions/polls_background"
+        },
         "votes": {
-          "type": "string",
+          "type": "integer",
           "description": "Votes number",
           "minimum": 0
+        },
+        "disable_unvote": {
+          "type": "boolean"
         }
       },
       "required": [
@@ -10021,11 +10537,23 @@
         "created",
         "question",
         "votes",
-        "answer_id",
         "answers",
-        "anonymous"
+        "anonymous",
+        "disable_unvote",
+        "is_board",
+        "multiple",
+        "can_edit",
+        "can_vote",
+        "can_report",
+        "can_share",
+        "closed",
+        "end_date"
       ],
       "additionalProperties": false
+    },
+    "polls_poll_anonymous": {
+      "type": "boolean",
+      "description": "Information whether the field is anonymous"
     },
     "polls_voters": {
       "type": "object",
@@ -10157,7 +10685,9 @@
       "enum": [
         "group",
         "profile",
-        "vk_app"
+        "vk_app",
+        "app",
+        "html5_game"
       ]
     },
     "secure_level": {
@@ -10211,7 +10741,8 @@
         },
         "success": {
           "description": "Returns if successfully processed",
-          "$ref": "objects.json#/definitions/base_ok_response"
+          "type": "integer",
+          "default": 1
         },
         "user_id": {
           "type": "integer",
@@ -10555,6 +11086,21 @@
         "value"
       ]
     },
+    "stories_clickable_area": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "type": "integer"
+        },
+        "y": {
+          "type": "integer"
+        }
+      },
+      "requried": [
+        "x",
+        "y"
+      ]
+    },
     "stories_clickable_sticker": {
       "type": "object",
       "properties": {
@@ -10722,7 +11268,8 @@
             "live_active",
             "live_finished",
             "community_grouped_stories",
-            "app_grouped_stories"
+            "app_grouped_stories",
+            "birthday"
           ],
           "description": "Type of Feed Item"
         },
@@ -10929,6 +11476,9 @@
         },
         "first_narrative_title": {
           "type": "string"
+        },
+        "birthday_wish_user_id": {
+          "type": "integer"
         }
       },
       "required": [
@@ -11256,7 +11806,10 @@
         "mutual",
         "friendship_weeks",
         "can_invite_to_chats",
-        "stories_archive_count"
+        "stories_archive_count",
+        "video_live_level",
+        "video_live_count",
+        "clips_count"
       ]
     },
     "users_last_seen": {
@@ -11856,6 +12409,16 @@
               "description": "Number of user's followers",
               "minimum": 0
             },
+            "video_live_level": {
+              "type": "integer",
+              "description": "User level in live streams achievements",
+              "minimum": 0
+            },
+            "video_live_count": {
+              "type": "integer",
+              "description": "Number of user's live streams",
+              "minimum": 0
+            },
             "blacklisted": {
               "description": "Information whether current user is in the requested user's blacklist.",
               "$ref": "objects.json#/definitions/base_bool_int"
@@ -11965,6 +12528,9 @@
               "type": "boolean"
             }
           },
+          "required": [
+            "can_invite_to_chats"
+          ],
           "additionalProperties": false
         }
       ]
@@ -12785,10 +13351,6 @@
             "live_settings": {
               "description": "Settings for live stream",
               "$ref": "objects.json#/definitions/video_live_settings"
-            },
-            "action_button": {
-              "$ref": "objects.json#/definitions/actionLinks_action",
-              "description": "Action button"
             }
           }
         }
@@ -12880,6 +13442,16 @@
         "view_url"
       ],
       "additionalProperties": false
+    },
+    "wall_carousel_base": {
+      "type": "object",
+      "properties": {
+        "carousel_offset": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Index of current carousel element"
+        }
+      }
     },
     "wall_comment_attachment": {
       "type": "object",
@@ -13324,6 +13896,9 @@
       "type": "object",
       "allOf": [
         {
+          "$ref": "objects.json#/definitions/wall_carousel_base"
+        },
+        {
           "$ref": "objects.json#/definitions/wall_wallpost"
         },
         {
@@ -13360,6 +13935,12 @@
             "marked_as_ads": {
               "$ref": "objects.json#/definitions/base_bool_int",
               "description": "Information whether the post is marked as ads"
+            },
+            "short_text_rate": {
+              "type": "number",
+              "description": "Preview length control parameter",
+              "minimum": 0,
+              "maximum": 1
             }
           }
         }

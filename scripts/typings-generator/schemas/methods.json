@@ -14,7 +14,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -273,7 +273,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -409,9 +409,7 @@
       },
       "errors": [
         {
-          "code": 1260,
-          "name": "API_ERROR_INVALID_ADDRESS",
-          "description": "Invalid screen name"
+          "$ref": "errors.json#/errors/api_error_invalid_address"
         }
       ]
     },
@@ -435,7 +433,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -461,14 +459,12 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 148,
-          "name": "API_ERROR_ACCESS_MENU",
-          "description": "Access to the menu of the user denied"
+          "$ref": "errors.json#/errors/api_error_access_menu"
         }
       ]
     },
@@ -480,7 +476,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -499,7 +495,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -537,7 +533,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -571,7 +567,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -588,7 +584,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -612,7 +608,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -643,9 +639,7 @@
       },
       "errors": [
         {
-          "code": 601,
-          "name": "API_ERROR_WEIGHTED_FLOOD",
-          "description": "Permission denied. You have requested too many actions this day. Try later."
+          "$ref": "errors.json#/errors/api_error_weighted_flood"
         }
       ]
     },
@@ -720,14 +714,10 @@
       },
       "errors": [
         {
-          "code": 602,
-          "name": "API_ERROR_ADS_PARTIAL_SUCCESS",
-          "description": "Some part of the request has not been completed"
+          "$ref": "errors.json#/errors/api_error_ads_partial_success"
         },
         {
-          "code": 601,
-          "name": "API_ERROR_WEIGHTED_FLOOD",
-          "description": "Permission denied. You have requested too many actions this day. Try later."
+          "$ref": "errors.json#/errors/api_error_weighted_flood"
         }
       ]
     },
@@ -758,14 +748,10 @@
       },
       "errors": [
         {
-          "code": 602,
-          "name": "API_ERROR_ADS_PARTIAL_SUCCESS",
-          "description": "Some part of the request has not been completed"
+          "$ref": "errors.json#/errors/api_error_ads_partial_success"
         },
         {
-          "code": 601,
-          "name": "API_ERROR_WEIGHTED_FLOOD",
-          "description": "Permission denied. You have requested too many actions this day. Try later."
+          "$ref": "errors.json#/errors/api_error_weighted_flood"
         }
       ]
     },
@@ -796,14 +782,10 @@
       },
       "errors": [
         {
-          "code": 602,
-          "name": "API_ERROR_ADS_PARTIAL_SUCCESS",
-          "description": "Some part of the request has not been completed"
+          "$ref": "errors.json#/errors/api_error_ads_partial_success"
         },
         {
-          "code": 601,
-          "name": "API_ERROR_WEIGHTED_FLOOD",
-          "description": "Permission denied. You have requested too many actions this day. Try later."
+          "$ref": "errors.json#/errors/api_error_weighted_flood"
         }
       ]
     },
@@ -835,8 +817,8 @@
           "name": "lifetime",
           "description": "'For groups with auditory created with pixel code only.', , Number of days after that users will be automatically removed from the group.",
           "type": "integer",
-          "default": 720,
-          "minimum": 0,
+          "required": true,
+          "minimum": 1,
           "maximum": 720
         },
         {
@@ -855,9 +837,7 @@
       },
       "errors": [
         {
-          "code": 601,
-          "name": "API_ERROR_WEIGHTED_FLOOD",
-          "description": "Permission denied. You have requested too many actions this day. Try later."
+          "$ref": "errors.json#/errors/api_error_weighted_flood"
         }
       ]
     },
@@ -888,19 +868,13 @@
       },
       "errors": [
         {
-          "code": 629,
-          "name": "API_ERROR_ADS_OBJECT_DELETED",
-          "description": "Object deleted"
+          "$ref": "errors.json#/errors/api_error_ads_object_deleted"
         },
         {
-          "code": 602,
-          "name": "API_ERROR_ADS_PARTIAL_SUCCESS",
-          "description": "Some part of the request has not been completed"
+          "$ref": "errors.json#/errors/api_error_ads_partial_success"
         },
         {
-          "code": 601,
-          "name": "API_ERROR_WEIGHTED_FLOOD",
-          "description": "Permission denied. You have requested too many actions this day. Try later."
+          "$ref": "errors.json#/errors/api_error_weighted_flood"
         }
       ]
     },
@@ -931,19 +905,13 @@
       },
       "errors": [
         {
-          "code": 629,
-          "name": "API_ERROR_ADS_OBJECT_DELETED",
-          "description": "Object deleted"
+          "$ref": "errors.json#/errors/api_error_ads_object_deleted"
         },
         {
-          "code": 602,
-          "name": "API_ERROR_ADS_PARTIAL_SUCCESS",
-          "description": "Some part of the request has not been completed"
+          "$ref": "errors.json#/errors/api_error_ads_partial_success"
         },
         {
-          "code": 601,
-          "name": "API_ERROR_WEIGHTED_FLOOD",
-          "description": "Permission denied. You have requested too many actions this day. Try later."
+          "$ref": "errors.json#/errors/api_error_weighted_flood"
         }
       ]
     },
@@ -974,19 +942,13 @@
       },
       "errors": [
         {
-          "code": 629,
-          "name": "API_ERROR_ADS_OBJECT_DELETED",
-          "description": "Object deleted"
+          "$ref": "errors.json#/errors/api_error_ads_object_deleted"
         },
         {
-          "code": 602,
-          "name": "API_ERROR_ADS_PARTIAL_SUCCESS",
-          "description": "Some part of the request has not been completed"
+          "$ref": "errors.json#/errors/api_error_ads_partial_success"
         },
         {
-          "code": 601,
-          "name": "API_ERROR_WEIGHTED_FLOOD",
-          "description": "Permission denied. You have requested too many actions this day. Try later."
+          "$ref": "errors.json#/errors/api_error_weighted_flood"
         }
       ]
     },
@@ -1017,14 +979,12 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 601,
-          "name": "API_ERROR_WEIGHTED_FLOOD",
-          "description": "Permission denied. You have requested too many actions this day. Try later."
+          "$ref": "errors.json#/errors/api_error_weighted_flood"
         }
       ]
     },
@@ -1074,6 +1034,11 @@
           "type": "boolean"
         },
         {
+          "name": "only_deleted",
+          "description": "Flag that specifies whether to show only archived ads: *0 — show all ads,, *1 — show only archived ads. Available when include_deleted flag is *1",
+          "type": "boolean"
+        },
+        {
           "name": "limit",
           "description": "Limit of number of returned ads. Used only if ad_ids parameter is null, and 'campaign_ids' parameter contains ID of only one campaign.",
           "type": "integer"
@@ -1091,9 +1056,7 @@
       },
       "errors": [
         {
-          "code": 601,
-          "name": "API_ERROR_WEIGHTED_FLOOD",
-          "description": "Permission denied. You have requested too many actions this day. Try later."
+          "$ref": "errors.json#/errors/api_error_weighted_flood"
         }
       ]
     },
@@ -1148,9 +1111,7 @@
       },
       "errors": [
         {
-          "code": 601,
-          "name": "API_ERROR_WEIGHTED_FLOOD",
-          "description": "Permission denied. You have requested too many actions this day. Try later."
+          "$ref": "errors.json#/errors/api_error_weighted_flood"
         }
       ]
     },
@@ -1205,9 +1166,7 @@
       },
       "errors": [
         {
-          "code": 601,
-          "name": "API_ERROR_WEIGHTED_FLOOD",
-          "description": "Permission denied. You have requested too many actions this day. Try later."
+          "$ref": "errors.json#/errors/api_error_weighted_flood"
         }
       ]
     },
@@ -1232,9 +1191,7 @@
       },
       "errors": [
         {
-          "code": 601,
-          "name": "API_ERROR_WEIGHTED_FLOOD",
-          "description": "Permission denied. You have requested too many actions this day. Try later."
+          "$ref": "errors.json#/errors/api_error_weighted_flood"
         }
       ]
     },
@@ -1284,9 +1241,7 @@
       },
       "errors": [
         {
-          "code": 601,
-          "name": "API_ERROR_WEIGHTED_FLOOD",
-          "description": "Permission denied. You have requested too many actions this day. Try later."
+          "$ref": "errors.json#/errors/api_error_weighted_flood"
         }
       ]
     },
@@ -1330,9 +1285,7 @@
       },
       "errors": [
         {
-          "code": 601,
-          "name": "API_ERROR_WEIGHTED_FLOOD",
-          "description": "Permission denied. You have requested too many actions this day. Try later."
+          "$ref": "errors.json#/errors/api_error_weighted_flood"
         }
       ]
     },
@@ -1396,9 +1349,7 @@
       },
       "errors": [
         {
-          "code": 601,
-          "name": "API_ERROR_WEIGHTED_FLOOD",
-          "description": "Permission denied. You have requested too many actions this day. Try later."
+          "$ref": "errors.json#/errors/api_error_weighted_flood"
         }
       ]
     },
@@ -1423,6 +1374,82 @@
       }
     },
     {
+      "name": "ads.getLookalikeRequests",
+      "access_token_type": [
+        "user"
+      ],
+      "parameters": [
+        {
+          "name": "account_id",
+          "type": "integer",
+          "required": true
+        },
+        {
+          "name": "client_id",
+          "type": "integer"
+        },
+        {
+          "name": "requests_ids",
+          "type": "string"
+        },
+        {
+          "name": "offset",
+          "type": "integer",
+          "default": 0,
+          "minimum": 0
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "default": 10,
+          "minimum": 0,
+          "maximum": 200
+        },
+        {
+          "name": "sort_by",
+          "type": "string",
+          "default": "id"
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/ads_getLookalikeRequests_response"
+        }
+      },
+      "errors": [
+        {
+          "$ref": "errors.json#/errors/api_error_weighted_flood"
+        }
+      ]
+    },
+    {
+      "name": "ads.getMusicians",
+      "access_token_type": [
+        "user"
+      ],
+      "parameters": [
+        {
+          "name": "artist_name",
+          "type": "string",
+          "required": true,
+          "minLength": 3
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/ads_getMusicians_response"
+        }
+      },
+      "errors": [
+        {
+          "$ref": "errors.json#/errors/api_error_weighted_flood"
+        },
+        {
+          "$ref": "errors.json#/errors/api_error_not_found"
+        }
+      ]
+    },
+    {
       "name": "ads.getOfficeUsers",
       "description": "Returns a list of managers and supervisors of advertising account.",
       "access_token_type": [
@@ -1443,9 +1470,7 @@
       },
       "errors": [
         {
-          "code": 601,
-          "name": "API_ERROR_WEIGHTED_FLOOD",
-          "description": "Permission denied. You have requested too many actions this day. Try later."
+          "$ref": "errors.json#/errors/api_error_weighted_flood"
         }
       ]
     },
@@ -1486,9 +1511,7 @@
       },
       "errors": [
         {
-          "code": 601,
-          "name": "API_ERROR_WEIGHTED_FLOOD",
-          "description": "Permission denied. You have requested too many actions this day. Try later."
+          "$ref": "errors.json#/errors/api_error_weighted_flood"
         }
       ]
     },
@@ -1519,9 +1542,7 @@
       },
       "errors": [
         {
-          "code": 601,
-          "name": "API_ERROR_WEIGHTED_FLOOD",
-          "description": "Permission denied. You have requested too many actions this day. Try later."
+          "$ref": "errors.json#/errors/api_error_weighted_flood"
         }
       ]
     },
@@ -1598,9 +1619,7 @@
       },
       "errors": [
         {
-          "code": 601,
-          "name": "API_ERROR_WEIGHTED_FLOOD",
-          "description": "Permission denied. You have requested too many actions this day. Try later."
+          "$ref": "errors.json#/errors/api_error_weighted_flood"
         }
       ]
     },
@@ -1713,9 +1732,7 @@
       },
       "errors": [
         {
-          "code": 601,
-          "name": "API_ERROR_WEIGHTED_FLOOD",
-          "description": "Permission denied. You have requested too many actions this day. Try later."
+          "$ref": "errors.json#/errors/api_error_weighted_flood"
         }
       ]
     },
@@ -1794,6 +1811,11 @@
           "name": "link_domain",
           "description": "Domain of the advertised object.",
           "type": "string"
+        },
+        {
+          "name": "need_precise",
+          "description": "Additionally return recommended cpc and cpm to reach 5,10..95 percents of audience.",
+          "type": "boolean"
         }
       ],
       "responses": {
@@ -1803,9 +1825,7 @@
       },
       "errors": [
         {
-          "code": 601,
-          "name": "API_ERROR_WEIGHTED_FLOOD",
-          "description": "Permission denied. You have requested too many actions this day. Try later."
+          "$ref": "errors.json#/errors/api_error_weighted_flood"
         }
       ]
     },
@@ -1897,9 +1917,7 @@
       },
       "errors": [
         {
-          "code": 601,
-          "name": "API_ERROR_WEIGHTED_FLOOD",
-          "description": "Permission denied. You have requested too many actions this day. Try later."
+          "$ref": "errors.json#/errors/api_error_weighted_flood"
         }
       ]
     },
@@ -1930,9 +1948,7 @@
       },
       "errors": [
         {
-          "code": 601,
-          "name": "API_ERROR_WEIGHTED_FLOOD",
-          "description": "Permission denied. You have requested too many actions this day. Try later."
+          "$ref": "errors.json#/errors/api_error_weighted_flood"
         }
       ]
     },
@@ -1963,9 +1979,7 @@
       },
       "errors": [
         {
-          "code": 601,
-          "name": "API_ERROR_WEIGHTED_FLOOD",
-          "description": "Permission denied. You have requested too many actions this day. Try later."
+          "$ref": "errors.json#/errors/api_error_weighted_flood"
         }
       ]
     },
@@ -1996,14 +2010,10 @@
       },
       "errors": [
         {
-          "code": 602,
-          "name": "API_ERROR_ADS_PARTIAL_SUCCESS",
-          "description": "Some part of the request has not been completed"
+          "$ref": "errors.json#/errors/api_error_ads_partial_success"
         },
         {
-          "code": 601,
-          "name": "API_ERROR_WEIGHTED_FLOOD",
-          "description": "Permission denied. You have requested too many actions this day. Try later."
+          "$ref": "errors.json#/errors/api_error_weighted_flood"
         }
       ]
     },
@@ -2034,9 +2044,7 @@
       },
       "errors": [
         {
-          "code": 601,
-          "name": "API_ERROR_WEIGHTED_FLOOD",
-          "description": "Permission denied. You have requested too many actions this day. Try later."
+          "$ref": "errors.json#/errors/api_error_weighted_flood"
         }
       ]
     },
@@ -2077,10 +2085,10 @@
         },
         {
           "name": "lifetime",
-          "description": "'Only for the groups that get audience from sites with user accounting code.', Time in days when users added to a retarget group will be automatically excluded from it. '0' – automatic exclusion is off.",
+          "description": "'Only for the groups that get audience from sites with user accounting code.', Time in days when users added to a retarget group will be automatically excluded from it. '0' - automatic exclusion is off.",
           "type": "integer",
-          "default": 720,
-          "minimum": 0,
+          "required": true,
+          "minimum": 1,
           "maximum": 720
         },
         {
@@ -2094,14 +2102,12 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 601,
-          "name": "API_ERROR_WEIGHTED_FLOOD",
-          "description": "Permission denied. You have requested too many actions this day. Try later."
+          "$ref": "errors.json#/errors/api_error_weighted_flood"
         }
       ]
     },
@@ -2137,39 +2143,27 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 12,
-          "name": "API_ERROR_COMPILE",
-          "description": "Unable to compile code"
+          "$ref": "errors.json#/errors/api_error_compile"
         },
         {
-          "code": 13,
-          "name": "API_ERROR_RUNTIME",
-          "description": "Runtime error occurred during code invocation"
+          "$ref": "errors.json#/errors/api_error_runtime"
         },
         {
-          "code": 19,
-          "name": "API_ERROR_BLOCKED",
-          "description": "Content blocked"
+          "$ref": "errors.json#/errors/api_error_blocked"
         },
         {
-          "code": 210,
-          "name": "API_ERROR_WALL_ACCESS_POST",
-          "description": "Access to wall's post denied"
+          "$ref": "errors.json#/errors/api_error_wall_access_post"
         },
         {
-          "code": 212,
-          "name": "API_ERROR_WALL_ACCESS_REPLIES",
-          "description": "Access to post comments denied"
+          "$ref": "errors.json#/errors/api_error_wall_access_replies"
         },
         {
-          "code": 125,
-          "name": "API_ERROR_PARAM_GROUP_ID",
-          "description": "Invalid group id"
+          "$ref": "errors.json#/errors/api_error_param_group_id"
         }
       ]
     },
@@ -2181,7 +2175,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -2512,9 +2506,7 @@
       },
       "errors": [
         {
-          "code": 106,
-          "name": "API_ERROR_ACTION_FAILED",
-          "description": "Unable to process action"
+          "$ref": "errors.json#/errors/api_error_action_failed"
         }
       ]
     },
@@ -2544,9 +2536,7 @@
       },
       "errors": [
         {
-          "code": 106,
-          "name": "API_ERROR_ACTION_FAILED",
-          "description": "Unable to process action"
+          "$ref": "errors.json#/errors/api_error_action_failed"
         }
       ]
     },
@@ -2598,14 +2588,7 @@
         "response": {
           "$ref": "responses.json#/definitions/apps_sendRequest_response"
         }
-      },
-      "errors": [
-        {
-          "name": "API_ERROR_FLOOD",
-          "code": 9,
-          "description": "Flood control"
-        }
-      ]
+      }
     },
     {
       "name": "auth.checkPhone",
@@ -2637,24 +2620,18 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 1004,
-          "name": "API_ERROR_PHONE_ALREADY_USED",
-          "description": "This phone number is used by another user"
+          "$ref": "errors.json#/errors/api_error_phone_already_used"
         },
         {
-          "code": 1112,
-          "name": "API_ERROR_AUTH_DELAY",
-          "description": "Processing.. Try later"
+          "$ref": "errors.json#/errors/api_error_auth_delay"
         },
         {
-          "code": 1000,
-          "name": "API_ERROR_PARAM_PHONE",
-          "description": "Invalid phone number"
+          "$ref": "errors.json#/errors/api_error_param_phone"
         }
       ]
     },
@@ -2686,9 +2663,7 @@
       },
       "errors": [
         {
-          "code": 1105,
-          "name": "API_ERROR_AUTH_FLOOD_ERROR",
-          "description": "Too many auth attempts, try again later"
+          "$ref": "errors.json#/errors/api_error_auth_flood_error"
         }
       ]
     },
@@ -2761,7 +2736,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -2854,7 +2829,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -2882,7 +2857,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -2930,7 +2905,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -2964,7 +2939,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -2992,7 +2967,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -3186,7 +3161,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -3222,7 +3197,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -3250,7 +3225,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -3731,19 +3706,15 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 1151,
-          "name": "API_ERROR_PARAM_DOC_DELETE_ACCESS",
-          "description": "Access to document deleting is denied"
+          "$ref": "errors.json#/errors/api_error_param_doc_delete_access"
         },
         {
-          "code": 1150,
-          "name": "API_ERROR_PARAM_DOC_ID",
-          "description": "Invalid document id"
+          "$ref": "errors.json#/errors/api_error_param_doc_id"
         }
       ]
     },
@@ -3784,24 +3755,18 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 1153,
-          "name": "API_ERROR_PARAM_DOC_ACCESS",
-          "description": "Access to document is denied"
+          "$ref": "errors.json#/errors/api_error_param_doc_access"
         },
         {
-          "code": 1150,
-          "name": "API_ERROR_PARAM_DOC_ID",
-          "description": "Invalid document id"
+          "$ref": "errors.json#/errors/api_error_param_doc_id"
         },
         {
-          "code": 1152,
-          "name": "API_ERROR_PARAM_DOC_TITLE",
-          "description": "Invalid document title"
+          "$ref": "errors.json#/errors/api_error_param_doc_title"
         }
       ]
     },
@@ -3918,9 +3883,7 @@
       },
       "errors": [
         {
-          "code": 901,
-          "name": "API_ERROR_MESSAGES_DENY_SEND",
-          "description": "Can't send messages for users without permission"
+          "$ref": "errors.json#/errors/api_error_messages_deny_send"
         }
       ]
     },
@@ -4022,9 +3985,7 @@
       },
       "errors": [
         {
-          "code": 105,
-          "name": "API_ERROR_SAVE_FILE",
-          "description": "Couldn't save file"
+          "$ref": "errors.json#/errors/api_error_save_file"
         }
       ]
     },
@@ -4072,6 +4033,32 @@
       }
     },
     {
+      "name": "downloadedGames.getPaidStatus",
+      "access_token_type": [
+        "user"
+      ],
+      "parameters": [
+        {
+          "name": "user_id",
+          "type": "integer",
+          "minimum": 0
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/downloadedGames_paid_status_response"
+        }
+      },
+      "errors": [
+        {
+          "$ref": "errors.json#/errors/api_error_action_failed"
+        },
+        {
+          "$ref": "errors.json#/errors/api_error_not_found"
+        }
+      ]
+    },
+    {
       "name": "fave.addArticle",
       "access_token_type": [
         "user"
@@ -4085,14 +4072,12 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 104,
-          "name": "API_ERROR_NOT_FOUND",
-          "description": "Not found"
+          "$ref": "errors.json#/errors/api_error_not_found"
         }
       ]
     },
@@ -4112,7 +4097,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -4135,7 +4120,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -4162,7 +4147,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -4189,7 +4174,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -4221,9 +4206,7 @@
       },
       "errors": [
         {
-          "code": 103,
-          "name": "API_ERROR_LIMITS",
-          "description": "Out of limits"
+          "$ref": "errors.json#/errors/api_error_limits"
         }
       ]
     },
@@ -4250,7 +4233,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -4274,7 +4257,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -4295,6 +4278,7 @@
           "type": "string",
           "enum": [
             "article",
+            "clip",
             "link",
             "narrative",
             "page",
@@ -4456,7 +4440,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -4477,7 +4461,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -4500,7 +4484,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -4523,7 +4507,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -4541,7 +4525,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -4562,7 +4546,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -4592,14 +4576,12 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 104,
-          "name": "API_ERROR_NOT_FOUND",
-          "description": "Not found"
+          "$ref": "errors.json#/errors/api_error_not_found"
         }
       ]
     },
@@ -4614,6 +4596,7 @@
           "type": "string",
           "enum": [
             "article",
+            "clip",
             "link",
             "narrative",
             "page",
@@ -4649,14 +4632,15 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 104,
-          "name": "API_ERROR_NOT_FOUND",
-          "description": "Not found"
+          "$ref": "errors.json#/errors/api_error_not_found"
+        },
+        {
+          "$ref": "errors.json#/errors/api_error_fave_aliexpress_tag"
         }
       ]
     },
@@ -4679,7 +4663,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -4714,24 +4698,16 @@
       },
       "errors": [
         {
-          "code": 175,
-          "name": "API_ERROR_FRIENDS_ADD_IN_ENEMY",
-          "description": "Cannot add this user to friends as they have put you on their blacklist"
+          "$ref": "errors.json#/errors/api_error_friends_add_in_enemy"
         },
         {
-          "code": 176,
-          "name": "API_ERROR_FRIENDS_ADD_ENEMY",
-          "description": "Cannot add this user to friends as you put him on blacklist"
+          "$ref": "errors.json#/errors/api_error_friends_add_enemy"
         },
         {
-          "code": 174,
-          "name": "API_ERROR_FRIENDS_ADD_YOURSELF",
-          "description": "Cannot add user himself as friend"
+          "$ref": "errors.json#/errors/api_error_friends_add_yourself"
         },
         {
-          "code": 177,
-          "name": "API_ERROR_FRIENDS_ADD_NOT_FOUND",
-          "description": "Cannot add this user to friends as user not found"
+          "$ref": "errors.json#/errors/api_error_friends_add_not_found"
         }
       ]
     },
@@ -4765,9 +4741,7 @@
       },
       "errors": [
         {
-          "code": 173,
-          "name": "API_ERROR_FRIENDS_LIST_LIMIT",
-          "description": "Reached the maximum number of lists"
+          "$ref": "errors.json#/errors/api_error_friends_list_limit"
         }
       ]
     },
@@ -4791,11 +4765,19 @@
           "name": "need_sign",
           "description": "'1' — to return 'sign' field. 'sign' is md5(\"{id}_{user_id}_{friends_status}_{application_secret}\"), where id is current user ID. This field allows to check that data has not been modified by the client. By default: '0'.",
           "type": "boolean"
+        },
+        {
+          "name": "extended",
+          "description": "Return friend request read_state field",
+          "type": "boolean"
         }
       ],
       "responses": {
         "response": {
           "$ref": "responses.json#/definitions/friends_areFriends_response"
+        },
+        "extendedResponse": {
+          "$ref": "responses.json#/definitions/friends_areFriends_extended_response"
         }
       }
     },
@@ -4827,7 +4809,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -4849,14 +4831,12 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 171,
-          "name": "API_ERROR_FRIENDS_LIST_ID",
-          "description": "Invalid list id"
+          "$ref": "errors.json#/errors/api_error_friends_list_id"
         }
       ]
     },
@@ -4886,7 +4866,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -4939,14 +4919,12 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 171,
-          "name": "API_ERROR_FRIENDS_LIST_ID",
-          "description": "Invalid list id"
+          "$ref": "errors.json#/errors/api_error_friends_list_id"
         }
       ]
     },
@@ -5582,19 +5560,13 @@
       },
       "errors": [
         {
-          "code": 260,
-          "name": "API_ERROR_ACCESS_GROUPS",
-          "description": "Access to the groups list is denied due to the user's privacy settings"
+          "$ref": "errors.json#/errors/api_error_access_groups"
         },
         {
-          "code": 104,
-          "name": "API_ERROR_NOT_FOUND",
-          "description": "Not found"
+          "$ref": "errors.json#/errors/api_error_not_found"
         },
         {
-          "code": 706,
-          "name": "API_ERROR_GROUP_TOO_MANY_ADDRESSES",
-          "description": "Too many addresses in club"
+          "$ref": "errors.json#/errors/api_error_group_too_many_addresses"
         }
       ]
     },
@@ -5635,12 +5607,9 @@
       },
       "errors": [
         {
-          "code": 2000,
-          "name": "API_ERROR_CALLBACK_API_SERVERS_LIMIT",
-          "description": "Servers number limit is reached"
+          "$ref": "errors.json#/errors/api_error_callback_api_servers_limit"
         }
-      ],
-      "emptyResponse": true
+      ]
     },
     {
       "name": "groups.addLink",
@@ -5698,14 +5667,12 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 103,
-          "name": "API_ERROR_LIMITS",
-          "description": "Out of limits"
+          "$ref": "errors.json#/errors/api_error_limits"
         }
       ]
     },
@@ -5746,7 +5713,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -5811,9 +5778,7 @@
       },
       "errors": [
         {
-          "code": 103,
-          "name": "API_ERROR_LIMITS",
-          "description": "Out of limits"
+          "$ref": "errors.json#/errors/api_error_limits"
         }
       ]
     },
@@ -5839,14 +5804,12 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 104,
-          "name": "API_ERROR_NOT_FOUND",
-          "description": "Not found"
+          "$ref": "errors.json#/errors/api_error_not_found"
         }
       ]
     },
@@ -5874,7 +5837,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -5894,7 +5857,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -6181,14 +6144,12 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 1260,
-          "name": "API_ERROR_INVALID_ADDRESS",
-          "description": "Invalid screen name"
+          "$ref": "errors.json#/errors/api_error_invalid_address"
         }
       ]
     },
@@ -6285,19 +6246,13 @@
       },
       "errors": [
         {
-          "code": 260,
-          "name": "API_ERROR_ACCESS_GROUPS",
-          "description": "Access to the groups list is denied due to the user's privacy settings"
+          "$ref": "errors.json#/errors/api_error_access_groups"
         },
         {
-          "code": 104,
-          "name": "API_ERROR_NOT_FOUND",
-          "description": "Not found"
+          "$ref": "errors.json#/errors/api_error_not_found"
         },
         {
-          "code": 706,
-          "name": "API_ERROR_GROUP_TOO_MANY_ADDRESSES",
-          "description": "Too many addresses in club"
+          "$ref": "errors.json#/errors/api_error_group_too_many_addresses"
         }
       ]
     },
@@ -6339,14 +6294,12 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 104,
-          "name": "API_ERROR_NOT_FOUND",
-          "description": "Not found"
+          "$ref": "errors.json#/errors/api_error_not_found"
         }
       ]
     },
@@ -6379,7 +6332,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -6433,34 +6386,24 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 700,
-          "name": "API_ERROR_GROUP_CHANGE_CREATOR",
-          "description": "Cannot edit creator role"
+          "$ref": "errors.json#/errors/api_error_group_change_creator"
         },
         {
-          "code": 701,
-          "name": "API_ERROR_GROUP_NOT_IN_CLUB",
-          "description": "User should be in club"
+          "$ref": "errors.json#/errors/api_error_group_not_in_club"
         },
         {
-          "code": 702,
-          "name": "API_ERROR_GROUP_TOO_MANY_OFFICERS",
-          "description": "Too many officers in club"
+          "$ref": "errors.json#/errors/api_error_group_too_many_officers"
         },
         {
-          "code": 703,
-          "name": "API_ERROR_GROUP_NEED_2FA",
-          "description": "You need to enable 2FA for this action"
+          "$ref": "errors.json#/errors/api_error_group_need_2fa"
         },
         {
-          "code": 704,
-          "name": "API_ERROR_GROUP_HOST_NEED_2FA",
-          "description": "User needs to enable 2FA for this action"
+          "$ref": "errors.json#/errors/api_error_group_host_need_2fa"
         }
       ]
     },
@@ -6480,7 +6423,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -6542,9 +6485,7 @@
       },
       "errors": [
         {
-          "code": 260,
-          "name": "API_ERROR_ACCESS_GROUPS",
-          "description": "Access to the groups list is denied due to the user's privacy settings"
+          "$ref": "errors.json#/errors/api_error_access_groups"
         }
       ]
     },
@@ -6615,14 +6556,10 @@
       },
       "errors": [
         {
-          "code": 125,
-          "name": "API_ERROR_PARAM_GROUP_ID",
-          "description": "Invalid group id"
+          "$ref": "errors.json#/errors/api_error_param_group_id"
         },
         {
-          "code": 260,
-          "name": "API_ERROR_ACCESS_GROUPS",
-          "description": "Access to the groups list is denied due to the user's privacy settings"
+          "$ref": "errors.json#/errors/api_error_access_groups"
         }
       ]
     },
@@ -6674,9 +6611,7 @@
       },
       "errors": [
         {
-          "code": 104,
-          "name": "API_ERROR_NOT_FOUND",
-          "description": "Not found"
+          "$ref": "errors.json#/errors/api_error_not_found"
         }
       ]
     },
@@ -6796,9 +6731,7 @@
       },
       "errors": [
         {
-          "code": 104,
-          "name": "API_ERROR_NOT_FOUND",
-          "description": "Not found"
+          "$ref": "errors.json#/errors/api_error_not_found"
         }
       ]
     },
@@ -6830,14 +6763,10 @@
       },
       "errors": [
         {
-          "code": 1310,
-          "name": "API_ERROR_COMMUNITIES_CATALOG_DISABLED",
-          "description": "Catalog is not available for this user"
+          "$ref": "errors.json#/errors/api_error_communities_catalog_disabled"
         },
         {
-          "code": 1311,
-          "name": "API_ERROR_COMMUNITIES_CATEGORIES_DISABLED",
-          "description": "Catalog categories are not available for this user"
+          "$ref": "errors.json#/errors/api_error_communities_categories_disabled"
         }
       ]
     },
@@ -7082,9 +7011,7 @@
       },
       "errors": [
         {
-          "code": 125,
-          "name": "API_ERROR_PARAM_GROUP_ID",
-          "description": "Invalid group id"
+          "$ref": "errors.json#/errors/api_error_param_group_id"
         }
       ]
     },
@@ -7190,14 +7117,12 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 103,
-          "name": "API_ERROR_LIMITS",
-          "description": "Out of limits"
+          "$ref": "errors.json#/errors/api_error_limits"
         }
       ]
     },
@@ -7273,14 +7198,15 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 103,
-          "name": "API_ERROR_LIMITS",
-          "description": "Out of limits"
+          "$ref": "errors.json#/errors/api_error_limits"
+        },
+        {
+          "$ref": "errors.json#/errors/api_error_group_invite_links_not_valid"
         }
       ]
     },
@@ -7301,9 +7227,14 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
-      }
+      },
+      "errors": [
+        {
+          "$ref": "errors.json#/errors/api_error_client_update_needed"
+        }
+      ]
     },
     {
       "name": "groups.removeUser",
@@ -7329,7 +7260,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -7363,7 +7294,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -7673,18 +7604,28 @@
           "name": "lead_forms_new",
           "description": "New form in lead forms",
           "type": "boolean"
+        },
+        {
+          "name": "like_add",
+          "type": "boolean"
+        },
+        {
+          "name": "like_remove",
+          "type": "boolean"
+        },
+        {
+          "name": "message_event",
+          "type": "boolean"
         }
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 104,
-          "name": "API_ERROR_NOT_FOUND",
-          "description": "Not found"
+          "$ref": "errors.json#/errors/api_error_not_found"
         }
       ]
     },
@@ -7902,11 +7843,23 @@
           "name": "user_unblock",
           "description": "User removed from community blacklist",
           "type": "boolean"
+        },
+        {
+          "name": "like_add",
+          "type": "boolean"
+        },
+        {
+          "name": "like_remove",
+          "type": "boolean"
+        },
+        {
+          "name": "message_event",
+          "type": "boolean"
         }
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -7929,7 +7882,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -7982,9 +7935,7 @@
       },
       "errors": [
         {
-          "code": 106,
-          "name": "API_ERROR_ACTION_FAILED",
-          "description": "Unable to process action"
+          "$ref": "errors.json#/errors/api_error_action_failed"
         }
       ]
     },
@@ -8021,14 +7972,10 @@
       },
       "errors": [
         {
-          "code": 103,
-          "name": "API_ERROR_LIMITS",
-          "description": "Out of limits"
+          "$ref": "errors.json#/errors/api_error_limits"
         },
         {
-          "code": 503,
-          "name": "API_ERROR_VOTES",
-          "description": "Not enough votes"
+          "$ref": "errors.json#/errors/api_error_votes"
         }
       ]
     },
@@ -8206,14 +8153,10 @@
       },
       "errors": [
         {
-          "code": 103,
-          "name": "API_ERROR_LIMITS",
-          "description": "Out of limits"
+          "$ref": "errors.json#/errors/api_error_limits"
         },
         {
-          "code": 106,
-          "name": "API_ERROR_ACTION_FAILED",
-          "description": "Unable to process action"
+          "$ref": "errors.json#/errors/api_error_action_failed"
         }
       ]
     },
@@ -8488,6 +8431,30 @@
           "type": "string",
           "minLength": 0,
           "maxLength": 320
+        },
+        {
+          "name": "dimension_width",
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100000
+        },
+        {
+          "name": "dimension_height",
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100000
+        },
+        {
+          "name": "dimension_length",
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100000
+        },
+        {
+          "name": "weight",
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100000000
         }
       ],
       "responses": {
@@ -8497,19 +8464,13 @@
       },
       "errors": [
         {
-          "code": 205,
-          "name": "API_ERROR_ACCESS_MARKET",
-          "description": "Access denied"
+          "$ref": "errors.json#/errors/api_error_access_market"
         },
         {
-          "code": 1405,
-          "name": "API_ERROR_MARKET_TOO_MANY_ITEMS",
-          "description": "Too many items"
+          "$ref": "errors.json#/errors/api_error_market_too_many_items"
         },
         {
-          "code": 1408,
-          "name": "API_ERROR_MARKET_ITEM_HAS_BAD_LINKS",
-          "description": "Item has bad links in description"
+          "$ref": "errors.json#/errors/api_error_market_item_has_bad_links"
         }
       ]
     },
@@ -8552,9 +8513,7 @@
       },
       "errors": [
         {
-          "code": 1407,
-          "name": "API_ERROR_MARKET_TOO_MANY_ALBUMS",
-          "description": "Too many albums"
+          "$ref": "errors.json#/errors/api_error_market_too_many_albums"
         }
       ]
     },
@@ -8591,29 +8550,21 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 1402,
-          "name": "API_ERROR_MARKET_ALBUM_NOT_FOUND",
-          "description": "Album not found"
+          "$ref": "errors.json#/errors/api_error_market_album_not_found"
         },
         {
-          "code": 1403,
-          "name": "API_ERROR_MARKET_ITEM_NOT_FOUND",
-          "description": "Item not found"
+          "$ref": "errors.json#/errors/api_error_market_item_not_found"
         },
         {
-          "code": 1406,
-          "name": "API_ERROR_MARKET_TOO_MANY_ITEMS_IN_ALBUM",
-          "description": "Too many items in album"
+          "$ref": "errors.json#/errors/api_error_market_too_many_items_in_album"
         },
         {
-          "code": 1404,
-          "name": "API_ERROR_MARKET_ITEM_ALREADY_ADDED",
-          "description": "Item already added to album"
+          "$ref": "errors.json#/errors/api_error_market_item_already_added"
         }
       ]
     },
@@ -8702,14 +8653,12 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 205,
-          "name": "API_ERROR_ACCESS_MARKET",
-          "description": "Access denied"
+          "$ref": "errors.json#/errors/api_error_access_market"
         }
       ]
     },
@@ -8736,14 +8685,12 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 1402,
-          "name": "API_ERROR_MARKET_ALBUM_NOT_FOUND",
-          "description": "Album not found"
+          "$ref": "errors.json#/errors/api_error_market_album_not_found"
         }
       ]
     },
@@ -8855,24 +8802,18 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 205,
-          "name": "API_ERROR_ACCESS_MARKET",
-          "description": "Access denied"
+          "$ref": "errors.json#/errors/api_error_access_market"
         },
         {
-          "code": 1403,
-          "name": "API_ERROR_MARKET_ITEM_NOT_FOUND",
-          "description": "Item not found"
+          "$ref": "errors.json#/errors/api_error_market_item_not_found"
         },
         {
-          "code": 1408,
-          "name": "API_ERROR_MARKET_ITEM_HAS_BAD_LINKS",
-          "description": "Item has bad links in description"
+          "$ref": "errors.json#/errors/api_error_market_item_has_bad_links"
         }
       ]
     },
@@ -8917,14 +8858,12 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 1402,
-          "name": "API_ERROR_MARKET_ALBUM_NOT_FOUND",
-          "description": "Album not found"
+          "$ref": "errors.json#/errors/api_error_market_album_not_found"
         }
       ]
     },
@@ -8964,7 +8903,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -9220,9 +9159,7 @@
       },
       "errors": [
         {
-          "code": 1401,
-          "name": "API_ERROR_MARKET_COMMENTS_CLOSED",
-          "description": "Comments for this market are closed"
+          "$ref": "errors.json#/errors/api_error_market_comments_closed"
         }
       ]
     },
@@ -9259,19 +9196,15 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 1402,
-          "name": "API_ERROR_MARKET_ALBUM_NOT_FOUND",
-          "description": "Album not found"
+          "$ref": "errors.json#/errors/api_error_market_album_not_found"
         },
         {
-          "code": 1403,
-          "name": "API_ERROR_MARKET_ITEM_NOT_FOUND",
-          "description": "Item not found"
+          "$ref": "errors.json#/errors/api_error_market_item_not_found"
         }
       ]
     },
@@ -9309,19 +9242,15 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 205,
-          "name": "API_ERROR_ACCESS_MARKET",
-          "description": "Access denied"
+          "$ref": "errors.json#/errors/api_error_access_market"
         },
         {
-          "code": 1402,
-          "name": "API_ERROR_MARKET_ALBUM_NOT_FOUND",
-          "description": "Album not found"
+          "$ref": "errors.json#/errors/api_error_market_album_not_found"
         }
       ]
     },
@@ -9365,24 +9294,18 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 205,
-          "name": "API_ERROR_ACCESS_MARKET",
-          "description": "Access denied"
+          "$ref": "errors.json#/errors/api_error_access_market"
         },
         {
-          "code": 1402,
-          "name": "API_ERROR_MARKET_ALBUM_NOT_FOUND",
-          "description": "Album not found"
+          "$ref": "errors.json#/errors/api_error_market_album_not_found"
         },
         {
-          "code": 1403,
-          "name": "API_ERROR_MARKET_ITEM_NOT_FOUND",
-          "description": "Item not found"
+          "$ref": "errors.json#/errors/api_error_market_item_not_found"
         }
       ]
     },
@@ -9434,7 +9357,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -9486,7 +9409,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -9513,19 +9436,15 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 205,
-          "name": "API_ERROR_ACCESS_MARKET",
-          "description": "Access denied"
+          "$ref": "errors.json#/errors/api_error_access_market"
         },
         {
-          "code": 1400,
-          "name": "API_ERROR_MARKET_RESTORE_TOO_LATE",
-          "description": "Too late for restore"
+          "$ref": "errors.json#/errors/api_error_market_restore_too_late"
         }
       ]
     },
@@ -9591,14 +9510,6 @@
           "description": "Maximum item price value.",
           "type": "integer",
           "minimum": 0
-        },
-        {
-          "name": "tags",
-          "description": "Comma-separated tag IDs list.",
-          "type": "array",
-          "items": {
-            "type": "integer"
-          }
         },
         {
           "name": "sort",
@@ -9696,44 +9607,30 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 103,
-          "name": "API_ERROR_LIMITS",
-          "description": "Out of limits"
+          "$ref": "errors.json#/errors/api_error_limits"
         },
         {
-          "code": 925,
-          "name": "API_ERROR_MESSAGES_CHAT_NOT_ADMIN",
-          "description": "You are not admin of this chat"
+          "$ref": "errors.json#/errors/api_error_messages_chat_not_admin"
         },
         {
-          "code": 939,
-          "name": "API_ERROR_MESSAGES_MESSAGE_REQUEST_ALREADY_SENT",
-          "description": "Message request already sent"
+          "$ref": "errors.json#/errors/api_error_messages_message_request_already_sent"
         },
         {
-          "code": 936,
-          "name": "API_ERROR_MESSAGES_CONTACT_NOT_FOUND",
-          "description": "Contact not found"
+          "$ref": "errors.json#/errors/api_error_messages_contact_not_found"
         },
         {
-          "code": 945,
-          "name": "API_ERROR_MESSAGES_CHAT_DISABLED",
-          "description": "Chat was disabled"
+          "$ref": "errors.json#/errors/api_error_messages_chat_disabled"
         },
         {
-          "code": 947,
-          "name": "API_ERROR_MESSAGES_MEMBER_ACCESS_TO_GROUP_DENIED",
-          "description": "Can't add user to chat, because user has no access to group"
+          "$ref": "errors.json#/errors/api_error_messages_member_access_to_group_denied"
         },
         {
-          "code": 946,
-          "name": "API_ERROR_MESSAGES_CHAT_UNSUPPORTED",
-          "description": "Chat not supported"
+          "$ref": "errors.json#/errors/api_error_messages_chat_unsupported"
         }
       ]
     },
@@ -9758,7 +9655,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -9797,9 +9694,7 @@
       },
       "errors": [
         {
-          "code": 936,
-          "name": "API_ERROR_MESSAGES_CONTACT_NOT_FOUND",
-          "description": "Contact not found"
+          "$ref": "errors.json#/errors/api_error_messages_contact_not_found"
         }
       ]
     },
@@ -9845,9 +9740,7 @@
       },
       "errors": [
         {
-          "code": 924,
-          "name": "API_ERROR_MESSAGES_CANT_DELETE_FOR_ALL",
-          "description": "Can't delete this message for everybody"
+          "$ref": "errors.json#/errors/api_error_messages_cant_delete_for_all"
         }
       ]
     },
@@ -9880,14 +9773,10 @@
       },
       "errors": [
         {
-          "code": 925,
-          "name": "API_ERROR_MESSAGES_CHAT_NOT_ADMIN",
-          "description": "You are not admin of this chat"
+          "$ref": "errors.json#/errors/api_error_messages_chat_not_admin"
         },
         {
-          "code": 945,
-          "name": "API_ERROR_MESSAGES_CHAT_DISABLED",
-          "description": "Chat was disabled"
+          "$ref": "errors.json#/errors/api_error_messages_chat_disabled"
         }
       ]
     },
@@ -9923,9 +9812,7 @@
       },
       "errors": [
         {
-          "code": 936,
-          "name": "API_ERROR_MESSAGES_CONTACT_NOT_FOUND",
-          "description": "Contact not found"
+          "$ref": "errors.json#/errors/api_error_messages_contact_not_found"
         }
       ]
     },
@@ -9946,7 +9833,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -10009,6 +9896,19 @@
           "name": "message_id",
           "type": "integer",
           "minimum": 0
+        },
+        {
+          "name": "conversation_message_id",
+          "type": "integer",
+          "minimum": 0
+        },
+        {
+          "name": "template",
+          "type": "string"
+        },
+        {
+          "name": "keyboard",
+          "type": "string"
         }
       ],
       "responses": {
@@ -10018,49 +9918,37 @@
       },
       "errors": [
         {
-          "code": 901,
-          "name": "API_ERROR_MESSAGES_DENY_SEND",
-          "description": "Can't send messages for users without permission"
+          "$ref": "errors.json#/errors/api_error_messages_deny_send"
         },
         {
-          "code": 909,
-          "name": "API_ERROR_MESSAGES_EDIT_EXPIRED",
-          "description": "Can't edit this message, because it's too old"
+          "$ref": "errors.json#/errors/api_error_messages_edit_expired"
         },
         {
-          "code": 910,
-          "name": "API_ERROR_MESSAGES_TOO_BIG",
-          "description": "Can't sent this message, because it's too big"
+          "$ref": "errors.json#/errors/api_error_messages_too_big"
         },
         {
-          "code": 920,
-          "name": "API_ERROR_MESSAGES_EDIT_KIND_DISALLOWED",
-          "description": "Can't edit this kind of message"
+          "$ref": "errors.json#/errors/api_error_messages_edit_kind_disallowed"
         },
         {
-          "code": 914,
-          "name": "API_ERROR_MESSAGES_TOO_LONG_MESSAGE",
-          "description": "Message is too long"
+          "$ref": "errors.json#/errors/api_error_messages_too_long_message"
         },
         {
-          "code": 917,
-          "name": "API_ERROR_MESSAGES_CHAT_USER_NO_ACCESS",
-          "description": "You don't have access to this chat"
+          "$ref": "errors.json#/errors/api_error_messages_chat_user_no_access"
         },
         {
-          "code": 911,
-          "name": "API_ERROR_MESSAGES_KEYBOARD_INVALID",
-          "description": "Keyboard format is invalid"
+          "$ref": "errors.json#/errors/api_error_messages_keyboard_invalid"
         },
         {
-          "code": 940,
-          "name": "API_ERROR_MESSAGES_TOO_MANY_POSTS",
-          "description": "Too many posts in messages"
+          "$ref": "errors.json#/errors/api_error_messages_too_many_posts"
         },
         {
-          "code": 946,
-          "name": "API_ERROR_MESSAGES_CHAT_UNSUPPORTED",
-          "description": "Chat not supported"
+          "$ref": "errors.json#/errors/api_error_messages_chat_unsupported"
+        },
+        {
+          "$ref": "errors.json#/errors/api_error_messages_chat_bot_feature"
+        },
+        {
+          "$ref": "errors.json#/errors/api_error_messages_cant_edit_pinned_yet"
         }
       ]
     },
@@ -10083,30 +9971,23 @@
         {
           "name": "title",
           "description": "New title of the chat.",
-          "type": "string",
-          "required": true
+          "type": "string"
         }
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 925,
-          "name": "API_ERROR_MESSAGES_CHAT_NOT_ADMIN",
-          "description": "You are not admin of this chat"
+          "$ref": "errors.json#/errors/api_error_messages_chat_not_admin"
         },
         {
-          "code": 945,
-          "name": "API_ERROR_MESSAGES_CHAT_DISABLED",
-          "description": "Chat was disabled"
+          "$ref": "errors.json#/errors/api_error_messages_chat_disabled"
         },
         {
-          "code": 946,
-          "name": "API_ERROR_MESSAGES_CHAT_UNSUPPORTED",
-          "description": "Chat not supported"
+          "$ref": "errors.json#/errors/api_error_messages_chat_unsupported"
         }
       ]
     },
@@ -10248,9 +10129,7 @@
       },
       "errors": [
         {
-          "code": 917,
-          "name": "API_ERROR_MESSAGES_CHAT_USER_NO_ACCESS",
-          "description": "You don't have access to this chat"
+          "$ref": "errors.json#/errors/api_error_messages_chat_user_no_access"
         }
       ]
     },
@@ -10290,9 +10169,7 @@
       },
       "errors": [
         {
-          "code": 917,
-          "name": "API_ERROR_MESSAGES_CHAT_USER_NO_ACCESS",
-          "description": "You don't have access to this chat"
+          "$ref": "errors.json#/errors/api_error_messages_chat_user_no_access"
         }
       ]
     },
@@ -10364,19 +10241,13 @@
       },
       "errors": [
         {
-          "code": 927,
-          "name": "API_ERROR_MESSAGES_CHAT_NOT_EXIST",
-          "description": "Chat does not exist"
+          "$ref": "errors.json#/errors/api_error_messages_chat_not_exist"
         },
         {
-          "code": 936,
-          "name": "API_ERROR_MESSAGES_CONTACT_NOT_FOUND",
-          "description": "Contact not found"
+          "$ref": "errors.json#/errors/api_error_messages_contact_not_found"
         },
         {
-          "code": 917,
-          "name": "API_ERROR_MESSAGES_CHAT_USER_NO_ACCESS",
-          "description": "You don't have access to this chat"
+          "$ref": "errors.json#/errors/api_error_messages_chat_user_no_access"
         }
       ]
     },
@@ -10428,19 +10299,13 @@
       },
       "errors": [
         {
-          "code": 927,
-          "name": "API_ERROR_MESSAGES_CHAT_NOT_EXIST",
-          "description": "Chat does not exist"
+          "$ref": "errors.json#/errors/api_error_messages_chat_not_exist"
         },
         {
-          "code": 917,
-          "name": "API_ERROR_MESSAGES_CHAT_USER_NO_ACCESS",
-          "description": "You don't have access to this chat"
+          "$ref": "errors.json#/errors/api_error_messages_chat_user_no_access"
         },
         {
-          "code": 936,
-          "name": "API_ERROR_MESSAGES_CONTACT_NOT_FOUND",
-          "description": "Contact not found"
+          "$ref": "errors.json#/errors/api_error_messages_contact_not_found"
         }
       ]
     },
@@ -10520,9 +10385,7 @@
       },
       "errors": [
         {
-          "code": 936,
-          "name": "API_ERROR_MESSAGES_CONTACT_NOT_FOUND",
-          "description": "Contact not found"
+          "$ref": "errors.json#/errors/api_error_messages_contact_not_found"
         }
       ]
     },
@@ -10642,14 +10505,10 @@
       },
       "errors": [
         {
-          "code": 919,
-          "name": "API_ERROR_MESSAGES_CANT_SEE_INVITE_LINK",
-          "description": "You can't see invite link for this chat"
+          "$ref": "errors.json#/errors/api_error_messages_cant_see_invite_link"
         },
         {
-          "code": 931,
-          "name": "API_ERROR_MESSAGES_CANT_CHANGE_INVITE_LINK",
-          "description": "You can't change invite link for this chat"
+          "$ref": "errors.json#/errors/api_error_messages_cant_change_invite_link"
         }
       ]
     },
@@ -10763,14 +10622,10 @@
       },
       "errors": [
         {
-          "code": 907,
-          "name": "API_ERROR_MESSAGES_TOO_OLD_PTS",
-          "description": "Value of ts or pts is too old"
+          "$ref": "errors.json#/errors/api_error_messages_too_old_pts"
         },
         {
-          "code": 908,
-          "name": "API_ERROR_MESSAGES_TOO_NEW_PTS",
-          "description": "Value of ts or pts is too new"
+          "$ref": "errors.json#/errors/api_error_messages_too_new_pts"
         }
       ]
     },
@@ -10856,14 +10711,10 @@
       },
       "errors": [
         {
-          "code": 917,
-          "name": "API_ERROR_MESSAGES_CHAT_USER_NO_ACCESS",
-          "description": "You don't have access to this chat"
+          "$ref": "errors.json#/errors/api_error_messages_chat_user_no_access"
         },
         {
-          "code": 103,
-          "name": "API_ERROR_LIMITS",
-          "description": "Out of limits"
+          "$ref": "errors.json#/errors/api_error_limits"
         }
       ]
     },
@@ -10896,7 +10747,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -10959,7 +10810,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -10997,11 +10848,15 @@
           "description": "Group ID (for group messages with user access token)",
           "type": "integer",
           "minimum": 0
+        },
+        {
+          "name": "mark_conversation_as_read",
+          "type": "boolean"
         }
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -11032,14 +10887,10 @@
       },
       "errors": [
         {
-          "code": 925,
-          "name": "API_ERROR_MESSAGES_CHAT_NOT_ADMIN",
-          "description": "You are not admin of this chat"
+          "$ref": "errors.json#/errors/api_error_messages_chat_not_admin"
         },
         {
-          "code": 942,
-          "name": "API_ERROR_MESSAGES_CANT_PIN_ONE_TIME_STORY",
-          "description": "Cannot pin one-time story"
+          "$ref": "errors.json#/errors/api_error_messages_cant_pin_one_time_story"
         }
       ]
     },
@@ -11071,34 +10922,24 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 925,
-          "name": "API_ERROR_MESSAGES_CHAT_NOT_ADMIN",
-          "description": "You are not admin of this chat"
+          "$ref": "errors.json#/errors/api_error_messages_chat_not_admin"
         },
         {
-          "code": 935,
-          "name": "API_ERROR_MESSAGES_CHAT_USER_NOT_IN_CHAT",
-          "description": "User not found in chat"
+          "$ref": "errors.json#/errors/api_error_messages_chat_user_not_in_chat"
         },
         {
-          "code": 936,
-          "name": "API_ERROR_MESSAGES_CONTACT_NOT_FOUND",
-          "description": "Contact not found"
+          "$ref": "errors.json#/errors/api_error_messages_contact_not_found"
         },
         {
-          "code": 945,
-          "name": "API_ERROR_MESSAGES_CHAT_DISABLED",
-          "description": "Chat was disabled"
+          "$ref": "errors.json#/errors/api_error_messages_chat_disabled"
         },
         {
-          "code": 946,
-          "name": "API_ERROR_MESSAGES_CHAT_UNSUPPORTED",
-          "description": "Chat not supported"
+          "$ref": "errors.json#/errors/api_error_messages_chat_unsupported"
         }
       ]
     },
@@ -11126,7 +10967,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -11356,11 +11197,26 @@
         {
           "name": "intent",
           "type": "string",
+          "default": "default",
           "enum": [
+            "account_update",
             "bot_ad_invite",
             "bot_ad_promo",
-            "promo_newsletter"
+            "confirmed_notification",
+            "customer_support",
+            "default",
+            "game_notification",
+            "moderated_newsletter",
+            "non_promo_newsletter",
+            "promo_newsletter",
+            "purchase_update"
           ]
+        },
+        {
+          "name": "subscribe_id",
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
         }
       ],
       "responses": {
@@ -11373,86 +11229,90 @@
       },
       "errors": [
         {
-          "code": 900,
-          "name": "API_ERROR_MESSAGES_USER_BLOCKED",
-          "description": "Can't send messages for users from blacklist"
+          "$ref": "errors.json#/errors/api_error_messages_user_blocked"
         },
         {
-          "code": 901,
-          "name": "API_ERROR_MESSAGES_DENY_SEND",
-          "description": "Can't send messages for users without permission"
+          "$ref": "errors.json#/errors/api_error_messages_deny_send"
         },
         {
-          "code": 902,
-          "name": "API_ERROR_MESSAGES_PRIVACY",
-          "description": "Can't send messages to this user due to their privacy settings"
+          "$ref": "errors.json#/errors/api_error_messages_privacy"
         },
         {
-          "code": 914,
-          "name": "API_ERROR_MESSAGES_TOO_LONG_MESSAGE",
-          "description": "Message is too long"
+          "$ref": "errors.json#/errors/api_error_messages_too_long_message"
         },
         {
-          "code": 913,
-          "name": "API_ERROR_MESSAGES_TOO_LONG_FORWARDS",
-          "description": "Too many forwarded messages"
+          "$ref": "errors.json#/errors/api_error_messages_too_long_forwards"
         },
         {
-          "code": 921,
-          "name": "API_ERROR_MESSAGES_CANT_FWD",
-          "description": "Can't forward these messages"
+          "$ref": "errors.json#/errors/api_error_messages_cant_fwd"
         },
         {
-          "code": 917,
-          "name": "API_ERROR_MESSAGES_CHAT_USER_NO_ACCESS",
-          "description": "You don't have access to this chat"
+          "$ref": "errors.json#/errors/api_error_messages_chat_user_no_access"
         },
         {
-          "code": 911,
-          "name": "API_ERROR_MESSAGES_KEYBOARD_INVALID",
-          "description": "Keyboard format is invalid"
+          "$ref": "errors.json#/errors/api_error_messages_keyboard_invalid"
         },
         {
-          "code": 912,
-          "name": "API_ERROR_MESSAGES_CHAT_BOT_FEATURE",
-          "description": "This is a chat bot feature, change this status in settings"
+          "$ref": "errors.json#/errors/api_error_messages_chat_bot_feature"
         },
         {
-          "code": 936,
-          "name": "API_ERROR_MESSAGES_CONTACT_NOT_FOUND",
-          "description": "Contact not found"
+          "$ref": "errors.json#/errors/api_error_messages_contact_not_found"
         },
         {
-          "code": 940,
-          "name": "API_ERROR_MESSAGES_TOO_MANY_POSTS",
-          "description": "Too many posts in messages"
+          "$ref": "errors.json#/errors/api_error_messages_too_many_posts"
         },
         {
-          "code": 943,
-          "name": "API_ERROR_MESSAGES_INTENT_CANT_USE",
-          "description": "Cannot use this intent"
+          "$ref": "errors.json#/errors/api_error_messages_intent_cant_use"
         },
         {
-          "code": 944,
-          "name": "API_ERROR_MESSAGES_INTENT_LIMIT_OVERFLOW",
-          "description": "Limits overflow for this intent"
+          "$ref": "errors.json#/errors/api_error_messages_intent_limit_overflow"
         },
         {
-          "code": 946,
-          "name": "API_ERROR_MESSAGES_CHAT_UNSUPPORTED",
-          "description": "Chat not supported"
+          "$ref": "errors.json#/errors/api_error_messages_chat_unsupported"
         },
         {
-          "code": 945,
-          "name": "API_ERROR_MESSAGES_CHAT_DISABLED",
-          "description": "Chat was disabled"
+          "$ref": "errors.json#/errors/api_error_messages_chat_disabled"
         },
         {
-          "code": 925,
-          "name": "API_ERROR_MESSAGES_CHAT_NOT_ADMIN",
-          "description": "You are not admin of this chat"
+          "$ref": "errors.json#/errors/api_error_messages_chat_not_admin"
+        },
+        {
+          "$ref": "errors.json#/errors/api_error_messages_peer_blocked_reason_by_time"
         }
       ]
+    },
+    {
+      "name": "messages.sendMessageEventAnswer",
+      "access_token_type": [
+        "group"
+      ],
+      "parameters": [
+        {
+          "name": "event_id",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "user_id",
+          "type": "integer",
+          "required": true
+        },
+        {
+          "name": "peer_id",
+          "type": "integer",
+          "required": true
+        },
+        {
+          "name": "event_data",
+          "type": "string",
+          "maxLength": 1000
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/base_ok_response"
+        }
+      }
     },
     {
       "name": "messages.setActivity",
@@ -11486,24 +11346,18 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 932,
-          "name": "API_ERROR_MESSAGES_GROUP_PEER_ACCESS",
-          "description": "Your community can't interact with this peer"
+          "$ref": "errors.json#/errors/api_error_messages_group_peer_access"
         },
         {
-          "code": 917,
-          "name": "API_ERROR_MESSAGES_CHAT_USER_NO_ACCESS",
-          "description": "You don't have access to this chat"
+          "$ref": "errors.json#/errors/api_error_messages_chat_user_no_access"
         },
         {
-          "code": 936,
-          "name": "API_ERROR_MESSAGES_CONTACT_NOT_FOUND",
-          "description": "Contact not found"
+          "$ref": "errors.json#/errors/api_error_messages_contact_not_found"
         }
       ]
     },
@@ -11529,19 +11383,13 @@
       },
       "errors": [
         {
-          "code": 22,
-          "name": "API_ERROR_UPLOAD",
-          "description": "Upload error"
+          "$ref": "errors.json#/errors/api_error_upload"
         },
         {
-          "code": 1160,
-          "name": "API_ERROR_PHOTO_CHANGED",
-          "description": "Original photo was changed"
+          "$ref": "errors.json#/errors/api_error_photo_changed"
         },
         {
-          "code": 925,
-          "name": "API_ERROR_MESSAGES_CHAT_NOT_ADMIN",
-          "description": "You are not admin of this chat"
+          "$ref": "errors.json#/errors/api_error_messages_chat_not_admin"
         }
       ]
     },
@@ -11565,14 +11413,12 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 925,
-          "name": "API_ERROR_MESSAGES_CHAT_NOT_ADMIN",
-          "description": "You are not admin of this chat"
+          "$ref": "errors.json#/errors/api_error_messages_chat_not_admin"
         }
       ]
     },
@@ -11600,7 +11446,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -11630,7 +11476,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -11649,7 +11495,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -12043,7 +11889,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -12087,9 +11933,7 @@
       },
       "errors": [
         {
-          "code": 1170,
-          "name": "API_ERROR_TOO_MANY_LISTS",
-          "description": "Too many feed lists"
+          "$ref": "errors.json#/errors/api_error_too_many_lists"
         }
       ]
     },
@@ -12189,11 +12033,16 @@
           "type": "integer",
           "required": true,
           "minimum": 0
+        },
+        {
+          "name": "track_code",
+          "description": "Track code of unignored item",
+          "type": "string"
         }
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -12232,7 +12081,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -12322,14 +12171,10 @@
       },
       "errors": [
         {
-          "code": 181,
-          "name": "API_ERROR_ACCESS_NOTE",
-          "description": "Access to note denied"
+          "$ref": "errors.json#/errors/api_error_access_note"
         },
         {
-          "code": 182,
-          "name": "API_ERROR_ACCESS_NOTE_COMMENT",
-          "description": "You can't comment this note"
+          "$ref": "errors.json#/errors/api_error_access_note_comment"
         }
       ]
     },
@@ -12350,14 +12195,12 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 180,
-          "name": "API_ERROR_PARAM_NOTE_ID",
-          "description": "Note not found"
+          "$ref": "errors.json#/errors/api_error_param_note_id"
         }
       ]
     },
@@ -12384,19 +12227,15 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 181,
-          "name": "API_ERROR_ACCESS_NOTE",
-          "description": "Access to note denied"
+          "$ref": "errors.json#/errors/api_error_access_note"
         },
         {
-          "code": 183,
-          "name": "API_ERROR_ACCESS_COMMENT",
-          "description": "Access to comment denied"
+          "$ref": "errors.json#/errors/api_error_access_comment"
         }
       ]
     },
@@ -12445,14 +12284,12 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 180,
-          "name": "API_ERROR_PARAM_NOTE_ID",
-          "description": "Note not found"
+          "$ref": "errors.json#/errors/api_error_param_note_id"
         }
       ]
     },
@@ -12486,14 +12323,12 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 183,
-          "name": "API_ERROR_ACCESS_COMMENT",
-          "description": "Access to comment denied"
+          "$ref": "errors.json#/errors/api_error_access_comment"
         }
       ]
     },
@@ -12551,9 +12386,7 @@
       },
       "errors": [
         {
-          "code": 180,
-          "name": "API_ERROR_PARAM_NOTE_ID",
-          "description": "Note not found"
+          "$ref": "errors.json#/errors/api_error_param_note_id"
         }
       ]
     },
@@ -12590,14 +12423,10 @@
       },
       "errors": [
         {
-          "code": 181,
-          "name": "API_ERROR_ACCESS_NOTE",
-          "description": "Access to note denied"
+          "$ref": "errors.json#/errors/api_error_access_note"
         },
         {
-          "code": 180,
-          "name": "API_ERROR_PARAM_NOTE_ID",
-          "description": "Note not found"
+          "$ref": "errors.json#/errors/api_error_param_note_id"
         }
       ]
     },
@@ -12653,9 +12482,7 @@
       },
       "errors": [
         {
-          "code": 181,
-          "name": "API_ERROR_ACCESS_NOTE",
-          "description": "Access to note denied"
+          "$ref": "errors.json#/errors/api_error_access_note"
         }
       ]
     },
@@ -12682,14 +12509,12 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 183,
-          "name": "API_ERROR_ACCESS_COMMENT",
-          "description": "Access to comment denied"
+          "$ref": "errors.json#/errors/api_error_access_comment"
         }
       ]
     },
@@ -12792,6 +12617,10 @@
           "name": "group_id",
           "type": "integer",
           "minimum": 0
+        },
+        {
+          "name": "random_id",
+          "type": "integer"
         }
       ],
       "responses": {
@@ -12801,9 +12630,7 @@
       },
       "errors": [
         {
-          "code": 711,
-          "name": "API_ERROR_GROUP_APP_IS_NOT_INSTALLED_IN_COMMUNITY",
-          "description": "Application is not installed in community"
+          "$ref": "errors.json#/errors/api_error_group_app_is_not_installed_in_community"
         }
       ]
     },
@@ -12839,17 +12666,12 @@
       },
       "errors": [
         {
-          "code": 1256,
-          "name": "API_ERROR_APPS_SUBSCRIPTION_NOT_FOUND",
-          "description": "Subscription not found"
+          "$ref": "errors.json#/errors/api_error_apps_subscription_not_found"
         },
         {
-          "code": 1257,
-          "name": "API_ERROR_APPS_SUBSCRIPTION_INVALID_STATUS",
-          "description": "Subscription is in invalid status"
+          "$ref": "errors.json#/errors/api_error_apps_subscription_invalid_status"
         }
-      ],
-      "emptyResponse": true
+      ]
     },
     {
       "name": "orders.changeState",
@@ -12896,14 +12718,10 @@
       },
       "errors": [
         {
-          "code": 103,
-          "name": "API_ERROR_LIMITS",
-          "description": "Out of limits"
+          "$ref": "errors.json#/errors/api_error_limits"
         },
         {
-          "code": 106,
-          "name": "API_ERROR_ACTION_FAILED",
-          "description": "Unable to process action"
+          "$ref": "errors.json#/errors/api_error_action_failed"
         }
       ]
     },
@@ -13030,12 +12848,9 @@
       },
       "errors": [
         {
-          "code": 1256,
-          "name": "API_ERROR_APPS_SUBSCRIPTION_NOT_FOUND",
-          "description": "Subscription not found"
+          "$ref": "errors.json#/errors/api_error_apps_subscription_not_found"
         }
-      ],
-      "emptyResponse": true
+      ]
     },
     {
       "name": "orders.getUserSubscriptions",
@@ -13055,8 +12870,7 @@
         "response": {
           "$ref": "responses.json#/definitions/orders_getUserSubscriptions_response"
         }
-      },
-      "emptyResponse": true
+      }
     },
     {
       "name": "orders.updateSubscription",
@@ -13091,17 +12905,12 @@
       },
       "errors": [
         {
-          "code": 1256,
-          "name": "API_ERROR_APPS_SUBSCRIPTION_NOT_FOUND",
-          "description": "Subscription not found"
+          "$ref": "errors.json#/errors/api_error_apps_subscription_not_found"
         },
         {
-          "code": 1257,
-          "name": "API_ERROR_APPS_SUBSCRIPTION_INVALID_STATUS",
-          "description": "Subscription is in invalid status"
+          "$ref": "errors.json#/errors/api_error_apps_subscription_invalid_status"
         }
-      ],
-      "emptyResponse": true
+      ]
     },
     {
       "name": "pages.clearCache",
@@ -13120,7 +12929,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -13202,14 +13011,10 @@
       },
       "errors": [
         {
-          "code": 141,
-          "name": "API_ERROR_ACCESS_PAGE",
-          "description": "Access to page denied"
+          "$ref": "errors.json#/errors/api_error_access_page"
         },
         {
-          "code": 140,
-          "name": "API_ERROR_PARAM_PAGE_ID",
-          "description": "Page not found"
+          "$ref": "errors.json#/errors/api_error_param_page_id"
         }
       ]
     },
@@ -13233,9 +13038,7 @@
       },
       "errors": [
         {
-          "code": 141,
-          "name": "API_ERROR_ACCESS_PAGE",
-          "description": "Access to page denied"
+          "$ref": "errors.json#/errors/api_error_access_page"
         }
       ]
     },
@@ -13273,9 +13076,7 @@
       },
       "errors": [
         {
-          "code": 141,
-          "name": "API_ERROR_ACCESS_PAGE",
-          "description": "Access to page denied"
+          "$ref": "errors.json#/errors/api_error_access_page"
         }
       ]
     },
@@ -13345,19 +13146,13 @@
       },
       "errors": [
         {
-          "code": 141,
-          "name": "API_ERROR_ACCESS_PAGE",
-          "description": "Access to page denied"
+          "$ref": "errors.json#/errors/api_error_access_page"
         },
         {
-          "code": 140,
-          "name": "API_ERROR_PARAM_PAGE_ID",
-          "description": "Page not found"
+          "$ref": "errors.json#/errors/api_error_param_page_id"
         },
         {
-          "code": 119,
-          "name": "API_ERROR_PARAM_TITLE",
-          "description": "Invalid title"
+          "$ref": "errors.json#/errors/api_error_param_title"
         }
       ]
     },
@@ -13421,14 +13216,10 @@
       },
       "errors": [
         {
-          "code": 141,
-          "name": "API_ERROR_ACCESS_PAGE",
-          "description": "Access to page denied"
+          "$ref": "errors.json#/errors/api_error_access_page"
         },
         {
-          "code": 140,
-          "name": "API_ERROR_PARAM_PAGE_ID",
-          "description": "Page not found"
+          "$ref": "errors.json#/errors/api_error_param_page_id"
         }
       ]
     },
@@ -13459,7 +13250,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -13551,9 +13342,7 @@
       },
       "errors": [
         {
-          "code": 302,
-          "name": "API_ERROR_ALBUMS_LIMIT",
-          "description": "Albums number limit is reached"
+          "$ref": "errors.json#/errors/api_error_albums_limit"
         }
       ]
     },
@@ -13639,7 +13428,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -13666,14 +13455,12 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 114,
-          "name": "API_ERROR_PARAM_ALBUM_ID",
-          "description": "Invalid album id"
+          "$ref": "errors.json#/errors/api_error_param_album_id"
         }
       ]
     },
@@ -13749,7 +13536,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -13807,14 +13594,12 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 114,
-          "name": "API_ERROR_PARAM_ALBUM_ID",
-          "description": "Invalid album id"
+          "$ref": "errors.json#/errors/api_error_param_album_id"
         }
       ]
     },
@@ -13852,7 +13637,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -14070,9 +13855,7 @@
       },
       "errors": [
         {
-          "code": 19,
-          "name": "API_ERROR_BLOCKED",
-          "description": "Content blocked"
+          "$ref": "errors.json#/errors/api_error_blocked"
         }
       ]
     },
@@ -14119,9 +13902,7 @@
       },
       "errors": [
         {
-          "code": 114,
-          "name": "API_ERROR_PARAM_ALBUM_ID",
-          "description": "Invalid album id"
+          "$ref": "errors.json#/errors/api_error_param_album_id"
         }
       ]
     },
@@ -14364,9 +14145,7 @@
       },
       "errors": [
         {
-          "code": 901,
-          "name": "API_ERROR_MESSAGES_DENY_SEND",
-          "description": "Can't send messages for users without permission"
+          "$ref": "errors.json#/errors/api_error_messages_deny_send"
         }
       ]
     },
@@ -14610,7 +14389,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -14641,7 +14420,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -14725,7 +14504,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -14760,7 +14539,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -14795,14 +14574,12 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 122,
-          "name": "API_ERROR_PARAM_PHOTOS",
-          "description": "Invalid photos"
+          "$ref": "errors.json#/errors/api_error_param_photos"
         }
       ]
     },
@@ -14853,7 +14630,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -14904,7 +14681,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -14930,7 +14707,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -15014,19 +14791,13 @@
       },
       "errors": [
         {
-          "code": 114,
-          "name": "API_ERROR_PARAM_ALBUM_ID",
-          "description": "Invalid album id"
+          "$ref": "errors.json#/errors/api_error_param_album_id"
         },
         {
-          "code": 118,
-          "name": "API_ERROR_PARAM_SERVER",
-          "description": "Invalid server"
+          "$ref": "errors.json#/errors/api_error_param_server"
         },
         {
-          "code": 121,
-          "name": "API_ERROR_PARAM_HASH",
-          "description": "Invalid hash"
+          "$ref": "errors.json#/errors/api_error_param_hash"
         }
       ]
     },
@@ -15071,14 +14842,10 @@
       },
       "errors": [
         {
-          "code": 121,
-          "name": "API_ERROR_PARAM_HASH",
-          "description": "Invalid hash"
+          "$ref": "errors.json#/errors/api_error_param_hash"
         },
         {
-          "code": 129,
-          "name": "API_ERROR_PARAM_PHOTO",
-          "description": "Invalid photo"
+          "$ref": "errors.json#/errors/api_error_param_photo"
         }
       ]
     },
@@ -15131,14 +14898,10 @@
       },
       "errors": [
         {
-          "code": 121,
-          "name": "API_ERROR_PARAM_HASH",
-          "description": "Invalid hash"
+          "$ref": "errors.json#/errors/api_error_param_hash"
         },
         {
-          "code": 129,
-          "name": "API_ERROR_PARAM_PHOTO",
-          "description": "Invalid photo"
+          "$ref": "errors.json#/errors/api_error_param_photo"
         }
       ]
     },
@@ -15172,19 +14935,13 @@
       },
       "errors": [
         {
-          "code": 114,
-          "name": "API_ERROR_PARAM_ALBUM_ID",
-          "description": "Invalid album id"
+          "$ref": "errors.json#/errors/api_error_param_album_id"
         },
         {
-          "code": 118,
-          "name": "API_ERROR_PARAM_SERVER",
-          "description": "Invalid server"
+          "$ref": "errors.json#/errors/api_error_param_server"
         },
         {
-          "code": 121,
-          "name": "API_ERROR_PARAM_HASH",
-          "description": "Invalid hash"
+          "$ref": "errors.json#/errors/api_error_param_hash"
         }
       ]
     },
@@ -15216,9 +14973,7 @@
       },
       "errors": [
         {
-          "code": 129,
-          "name": "API_ERROR_PARAM_PHOTO",
-          "description": "Invalid photo"
+          "$ref": "errors.json#/errors/api_error_param_photo"
         }
       ]
     },
@@ -15252,9 +15007,7 @@
       },
       "errors": [
         {
-          "code": 129,
-          "name": "API_ERROR_PARAM_PHOTO",
-          "description": "Invalid photo"
+          "$ref": "errors.json#/errors/api_error_param_photo"
         }
       ]
     },
@@ -15314,19 +15067,13 @@
       },
       "errors": [
         {
-          "code": 114,
-          "name": "API_ERROR_PARAM_ALBUM_ID",
-          "description": "Invalid album id"
+          "$ref": "errors.json#/errors/api_error_param_album_id"
         },
         {
-          "code": 118,
-          "name": "API_ERROR_PARAM_SERVER",
-          "description": "Invalid server"
+          "$ref": "errors.json#/errors/api_error_param_server"
         },
         {
-          "code": 121,
-          "name": "API_ERROR_PARAM_HASH",
-          "description": "Invalid hash"
+          "$ref": "errors.json#/errors/api_error_param_hash"
         }
       ]
     },
@@ -15437,19 +15184,13 @@
       },
       "errors": [
         {
-          "code": 250,
-          "name": "API_ERROR_POLLS_ACCESS",
-          "description": "Access to poll denied"
+          "$ref": "errors.json#/errors/api_error_polls_access"
         },
         {
-          "code": 252,
-          "name": "API_ERROR_POLLS_ANSWER_ID",
-          "description": "Invalid answer id"
+          "$ref": "errors.json#/errors/api_error_polls_answer_id"
         },
         {
-          "code": 251,
-          "name": "API_ERROR_POLLS_POLL_ID",
-          "description": "Invalid poll id"
+          "$ref": "errors.json#/errors/api_error_polls_poll_id"
         }
       ]
     },
@@ -15506,6 +15247,10 @@
             8,
             9
           ]
+        },
+        {
+          "name": "disable_unvote",
+          "type": "boolean"
         }
       ],
       "responses": {
@@ -15552,19 +15297,13 @@
       },
       "errors": [
         {
-          "code": 250,
-          "name": "API_ERROR_POLLS_ACCESS",
-          "description": "Access to poll denied"
+          "$ref": "errors.json#/errors/api_error_polls_access"
         },
         {
-          "code": 252,
-          "name": "API_ERROR_POLLS_ANSWER_ID",
-          "description": "Invalid answer id"
+          "$ref": "errors.json#/errors/api_error_polls_answer_id"
         },
         {
-          "code": 251,
-          "name": "API_ERROR_POLLS_POLL_ID",
-          "description": "Invalid poll id"
+          "$ref": "errors.json#/errors/api_error_polls_poll_id"
         }
       ]
     },
@@ -15634,7 +15373,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -15701,9 +15440,7 @@
       },
       "errors": [
         {
-          "code": 250,
-          "name": "API_ERROR_POLLS_ACCESS",
-          "description": "Access to poll denied"
+          "$ref": "errors.json#/errors/api_error_polls_access"
         }
       ]
     },
@@ -15794,24 +15531,16 @@
       },
       "errors": [
         {
-          "code": 250,
-          "name": "API_ERROR_POLLS_ACCESS",
-          "description": "Access to poll denied"
+          "$ref": "errors.json#/errors/api_error_polls_access"
         },
         {
-          "code": 252,
-          "name": "API_ERROR_POLLS_ANSWER_ID",
-          "description": "Invalid answer id"
+          "$ref": "errors.json#/errors/api_error_polls_answer_id"
         },
         {
-          "code": 251,
-          "name": "API_ERROR_POLLS_POLL_ID",
-          "description": "Invalid poll id"
+          "$ref": "errors.json#/errors/api_error_polls_poll_id"
         },
         {
-          "code": 253,
-          "name": "API_ERROR_POLLS_ACCESS_WITHOUT_VOTE",
-          "description": "Access denied, please vote first"
+          "$ref": "errors.json#/errors/api_error_polls_access_without_vote"
         }
       ]
     },
@@ -15865,9 +15594,7 @@
       },
       "errors": [
         {
-          "code": 1901,
-          "name": "API_ERROR_PRETTY_CARDS_TOO_MANY_CARDS",
-          "description": "Too many cards"
+          "$ref": "errors.json#/errors/api_error_pretty_cards_too_many_cards"
         }
       ]
     },
@@ -15895,14 +15622,10 @@
       },
       "errors": [
         {
-          "code": 1900,
-          "name": "API_ERROR_PRETTY_CARDS_CARD_NOT_FOUND",
-          "description": "Card not found"
+          "$ref": "errors.json#/errors/api_error_pretty_cards_card_not_found"
         },
         {
-          "code": 1902,
-          "name": "API_ERROR_PRETTY_CARDS_CARD_IS_CONNECTED_TO_POST",
-          "description": "Card is connected to post"
+          "$ref": "errors.json#/errors/api_error_pretty_cards_card_is_connected_to_post"
         }
       ]
     },
@@ -15958,9 +15681,7 @@
       },
       "errors": [
         {
-          "code": 1900,
-          "name": "API_ERROR_PRETTY_CARDS_CARD_NOT_FOUND",
-          "description": "Card not found"
+          "$ref": "errors.json#/errors/api_error_pretty_cards_card_not_found"
         }
       ]
     },
@@ -16116,14 +15837,12 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 1251,
-          "name": "API_ERROR_APPS_ALREADY_UNLOCKED",
-          "description": "This achievement is already unlocked"
+          "$ref": "errors.json#/errors/api_error_apps_already_unlocked"
         }
       ]
     },
@@ -16354,19 +16073,15 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 147,
-          "name": "API_ERROR_INSUFFICIENT_FUNDS",
-          "description": "Application has insufficient funds"
+          "$ref": "errors.json#/errors/api_error_insufficient_funds"
         },
         {
-          "code": 146,
-          "name": "API_ERROR_MOBILE_NOT_ACTIVATED",
-          "description": "The mobile number of the user is unknown"
+          "$ref": "errors.json#/errors/api_error_mobile_not_activated"
         }
       ]
     },
@@ -16401,14 +16116,12 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 148,
-          "name": "API_ERROR_ACCESS_MENU",
-          "description": "Access to the menu of the user denied"
+          "$ref": "errors.json#/errors/api_error_access_menu"
         }
       ]
     },
@@ -16444,7 +16157,14 @@
         {
           "name": "interval",
           "type": "string",
-          "default": "day"
+          "default": "day",
+          "enum": [
+            "all",
+            "day",
+            "month",
+            "week",
+            "year"
+          ]
         },
         {
           "name": "intervals_count",
@@ -16509,9 +16229,7 @@
       },
       "errors": [
         {
-          "code": 210,
-          "name": "API_ERROR_WALL_ACCESS_POST",
-          "description": "Access to wall's post denied"
+          "$ref": "errors.json#/errors/api_error_wall_access_post"
         }
       ]
     },
@@ -16529,7 +16247,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -16578,14 +16296,12 @@
       ],
       "errors": [
         {
-          "name": "API_ERROR_STATUS_NO_AUDIO",
-          "code": 221,
-          "description": "User disabled track name broadcast"
+          "$ref": "errors.json#/errors/api_error_status_no_audio"
         }
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -16689,14 +16405,12 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 103,
-          "name": "API_ERROR_LIMITS",
-          "description": "Out of limits"
+          "$ref": "errors.json#/errors/api_error_limits"
         }
       ]
     },
@@ -16720,7 +16434,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -16748,7 +16462,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -16830,7 +16544,8 @@
           "required": true,
           "items": {
             "type": "string"
-          }
+          },
+          "maxItems": 100
         },
         {
           "name": "extended",
@@ -16857,9 +16572,7 @@
       },
       "errors": [
         {
-          "code": 1600,
-          "name": "API_ERROR_STORY_EXPIRED",
-          "description": "Story has already expired"
+          "$ref": "errors.json#/errors/api_error_story_expired"
         }
       ]
     },
@@ -16920,19 +16633,13 @@
       },
       "errors": [
         {
-          "code": 900,
-          "name": "API_ERROR_MESSAGES_USER_BLOCKED",
-          "description": "Can't send messages for users from blacklist"
+          "$ref": "errors.json#/errors/api_error_messages_user_blocked"
         },
         {
-          "code": 1602,
-          "name": "API_ERROR_STORY_INCORRECT_REPLY_PRIVACY",
-          "description": "Incorrect reply privacy"
+          "$ref": "errors.json#/errors/api_error_story_incorrect_reply_privacy"
         },
         {
-          "code": 19,
-          "name": "API_ERROR_BLOCKED",
-          "description": "Content blocked"
+          "$ref": "errors.json#/errors/api_error_blocked"
         }
       ]
     },
@@ -17068,19 +16775,13 @@
       },
       "errors": [
         {
-          "code": 900,
-          "name": "API_ERROR_MESSAGES_USER_BLOCKED",
-          "description": "Can't send messages for users from blacklist"
+          "$ref": "errors.json#/errors/api_error_messages_user_blocked"
         },
         {
-          "code": 1602,
-          "name": "API_ERROR_STORY_INCORRECT_REPLY_PRIVACY",
-          "description": "Incorrect reply privacy"
+          "$ref": "errors.json#/errors/api_error_story_incorrect_reply_privacy"
         },
         {
-          "code": 19,
-          "name": "API_ERROR_BLOCKED",
-          "description": "Content blocked"
+          "$ref": "errors.json#/errors/api_error_blocked"
         }
       ]
     },
@@ -17136,9 +16837,7 @@
       },
       "errors": [
         {
-          "code": 1600,
-          "name": "API_ERROR_STORY_EXPIRED",
-          "description": "Story has already expired"
+          "$ref": "errors.json#/errors/api_error_story_expired"
         }
       ]
     },
@@ -17164,7 +16863,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -17192,7 +16891,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -17274,7 +16973,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -17314,7 +17013,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -17523,7 +17222,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -17806,7 +17505,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -17906,9 +17605,7 @@
       },
       "errors": [
         {
-          "code": 104,
-          "name": "API_ERROR_NOT_FOUND",
-          "description": "Not found"
+          "$ref": "errors.json#/errors/api_error_not_found"
         }
       ]
     },
@@ -18004,19 +17701,15 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 204,
-          "name": "API_ERROR_ACCESS_VIDEO",
-          "description": "Access denied"
+          "$ref": "errors.json#/errors/api_error_access_video"
         },
         {
-          "code": 800,
-          "name": "API_ERROR_VIDEO_ALREADY_ADDED",
-          "description": "This video is already added"
+          "$ref": "errors.json#/errors/api_error_video_already_added"
         }
       ]
     },
@@ -18066,14 +17759,10 @@
       },
       "errors": [
         {
-          "code": 204,
-          "name": "API_ERROR_ACCESS_VIDEO",
-          "description": "Access denied"
+          "$ref": "errors.json#/errors/api_error_access_video"
         },
         {
-          "code": 302,
-          "name": "API_ERROR_ALBUMS_LIMIT",
-          "description": "Albums number limit is reached"
+          "$ref": "errors.json#/errors/api_error_albums_limit"
         }
       ]
     },
@@ -18112,19 +17801,15 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 204,
-          "name": "API_ERROR_ACCESS_VIDEO",
-          "description": "Access denied"
+          "$ref": "errors.json#/errors/api_error_access_video"
         },
         {
-          "code": 800,
-          "name": "API_ERROR_VIDEO_ALREADY_ADDED",
-          "description": "This video is already added"
+          "$ref": "errors.json#/errors/api_error_video_already_added"
         }
       ]
     },
@@ -18186,9 +17871,7 @@
       },
       "errors": [
         {
-          "code": 801,
-          "name": "API_ERROR_VIDEO_COMMENTS_CLOSED",
-          "description": "Comments for this video are closed"
+          "$ref": "errors.json#/errors/api_error_video_comments_closed"
         }
       ]
     },
@@ -18218,7 +17901,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -18245,14 +17928,12 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 204,
-          "name": "API_ERROR_ACCESS_VIDEO",
-          "description": "Access denied"
+          "$ref": "errors.json#/errors/api_error_access_video"
         }
       ]
     },
@@ -18277,7 +17958,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -18338,7 +18019,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -18391,14 +18072,12 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 204,
-          "name": "API_ERROR_ACCESS_VIDEO",
-          "description": "Access denied"
+          "$ref": "errors.json#/errors/api_error_access_video"
         }
       ]
     },
@@ -18436,7 +18115,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -18495,9 +18174,7 @@
       },
       "errors": [
         {
-          "code": 204,
-          "name": "API_ERROR_ACCESS_VIDEO",
-          "description": "Access denied"
+          "$ref": "errors.json#/errors/api_error_access_video"
         }
       ]
     },
@@ -18527,9 +18204,7 @@
       },
       "errors": [
         {
-          "code": 204,
-          "name": "API_ERROR_ACCESS_VIDEO",
-          "description": "Access denied"
+          "$ref": "errors.json#/errors/api_error_access_video"
         }
       ]
     },
@@ -18580,9 +18255,7 @@
       },
       "errors": [
         {
-          "code": 204,
-          "name": "API_ERROR_ACCESS_VIDEO",
-          "description": "Access denied"
+          "$ref": "errors.json#/errors/api_error_access_video"
         }
       ]
     },
@@ -18623,9 +18296,7 @@
       },
       "errors": [
         {
-          "code": 204,
-          "name": "API_ERROR_ACCESS_VIDEO",
-          "description": "Access denied"
+          "$ref": "errors.json#/errors/api_error_access_video"
         }
       ]
     },
@@ -18706,9 +18377,7 @@
       },
       "errors": [
         {
-          "code": 801,
-          "name": "API_ERROR_VIDEO_COMMENTS_CLOSED",
-          "description": "Comments for this video are closed"
+          "$ref": "errors.json#/errors/api_error_video_comments_closed"
         }
       ]
     },
@@ -18747,14 +18416,12 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 204,
-          "name": "API_ERROR_ACCESS_VIDEO",
-          "description": "Access denied"
+          "$ref": "errors.json#/errors/api_error_access_video"
         }
       ]
     },
@@ -18792,19 +18459,15 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 204,
-          "name": "API_ERROR_ACCESS_VIDEO",
-          "description": "Access denied"
+          "$ref": "errors.json#/errors/api_error_access_video"
         },
         {
-          "code": 104,
-          "name": "API_ERROR_NOT_FOUND",
-          "description": "Not found"
+          "$ref": "errors.json#/errors/api_error_not_found"
         }
       ]
     },
@@ -18863,14 +18526,12 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 204,
-          "name": "API_ERROR_ACCESS_VIDEO",
-          "description": "Access denied"
+          "$ref": "errors.json#/errors/api_error_access_video"
         }
       ]
     },
@@ -18931,7 +18592,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -18982,7 +18643,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -19008,7 +18669,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -19116,19 +18777,13 @@
       },
       "errors": [
         {
-          "code": 204,
-          "name": "API_ERROR_ACCESS_VIDEO",
-          "description": "Access denied"
+          "$ref": "errors.json#/errors/api_error_access_video"
         },
         {
-          "code": 214,
-          "name": "API_ERROR_WALL_ADD_POST",
-          "description": "Access to adding post denied"
+          "$ref": "errors.json#/errors/api_error_wall_add_post"
         },
         {
-          "code": 219,
-          "name": "API_ERROR_WALL_ADS_PUBLISHED",
-          "description": "Advertisement post was recently added"
+          "$ref": "errors.json#/errors/api_error_wall_ads_published"
         }
       ]
     },
@@ -19315,24 +18970,16 @@
       },
       "errors": [
         {
-          "code": 213,
-          "name": "API_ERROR_WALL_ACCESS_ADD_REPLY",
-          "description": "Access to status replies denied"
+          "$ref": "errors.json#/errors/api_error_wall_access_add_reply"
         },
         {
-          "code": 223,
-          "name": "API_ERROR_WALL_REPLY_OWNER_FLOOD",
-          "description": "Too many replies"
+          "$ref": "errors.json#/errors/api_error_wall_reply_owner_flood"
         },
         {
-          "code": 222,
-          "name": "API_ERROR_WALL_LINKS_FORBIDDEN",
-          "description": "Hyperlinks are forbidden"
+          "$ref": "errors.json#/errors/api_error_wall_links_forbidden"
         },
         {
-          "code": 212,
-          "name": "API_ERROR_WALL_ACCESS_REPLIES",
-          "description": "Access to post comments denied"
+          "$ref": "errors.json#/errors/api_error_wall_access_replies"
         }
       ]
     },
@@ -19357,14 +19004,12 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 210,
-          "name": "API_ERROR_WALL_ACCESS_POST",
-          "description": "Access to wall's post denied"
+          "$ref": "errors.json#/errors/api_error_wall_access_post"
         }
       ]
     },
@@ -19390,14 +19035,12 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 211,
-          "name": "API_ERROR_WALL_ACCESS_COMMENT",
-          "description": "Access to wall's comment denied"
+          "$ref": "errors.json#/errors/api_error_wall_access_comment"
         }
       ]
     },
@@ -19495,9 +19138,7 @@
       },
       "errors": [
         {
-          "code": 224,
-          "name": "API_ERROR_WALL_ADS_POST_LIMIT_REACHED",
-          "description": "Too many ads posts"
+          "$ref": "errors.json#/errors/api_error_wall_ads_post_limit_reached"
         }
       ]
     },
@@ -19577,14 +19218,12 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 224,
-          "name": "API_ERROR_WALL_ADS_POST_LIMIT_REACHED",
-          "description": "Too many ads posts"
+          "$ref": "errors.json#/errors/api_error_wall_ads_post_limit_reached"
         }
       ]
     },
@@ -19623,7 +19262,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -19692,9 +19331,7 @@
       },
       "errors": [
         {
-          "code": 19,
-          "name": "API_ERROR_BLOCKED",
-          "description": "Content blocked"
+          "$ref": "errors.json#/errors/api_error_blocked"
         }
       ]
     },
@@ -19784,9 +19421,7 @@
       },
       "errors": [
         {
-          "code": 212,
-          "name": "API_ERROR_WALL_ACCESS_REPLIES",
-          "description": "Access to post comments denied"
+          "$ref": "errors.json#/errors/api_error_wall_access_replies"
         }
       ]
     },
@@ -19885,9 +19520,7 @@
       },
       "errors": [
         {
-          "code": 212,
-          "name": "API_ERROR_WALL_ACCESS_REPLIES",
-          "description": "Access to post comments denied"
+          "$ref": "errors.json#/errors/api_error_wall_access_replies"
         }
       ]
     },
@@ -19978,7 +19611,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -20084,29 +19717,19 @@
       },
       "errors": [
         {
-          "code": 219,
-          "name": "API_ERROR_WALL_ADS_PUBLISHED",
-          "description": "Advertisement post was recently added"
+          "$ref": "errors.json#/errors/api_error_wall_ads_published"
         },
         {
-          "code": 214,
-          "name": "API_ERROR_WALL_ADD_POST",
-          "description": "Access to adding post denied"
+          "$ref": "errors.json#/errors/api_error_wall_add_post"
         },
         {
-          "code": 220,
-          "name": "API_ERROR_WALL_TOO_MANY_RECIPIENTS",
-          "description": "Too many recipients"
+          "$ref": "errors.json#/errors/api_error_wall_too_many_recipients"
         },
         {
-          "code": 222,
-          "name": "API_ERROR_WALL_LINKS_FORBIDDEN",
-          "description": "Hyperlinks are forbidden"
+          "$ref": "errors.json#/errors/api_error_wall_links_forbidden"
         },
         {
-          "code": 224,
-          "name": "API_ERROR_WALL_ADS_POST_LIMIT_REACHED",
-          "description": "Too many ads posts"
+          "$ref": "errors.json#/errors/api_error_wall_ads_post_limit_reached"
         }
       ]
     },
@@ -20190,24 +19813,16 @@
       },
       "errors": [
         {
-          "code": 219,
-          "name": "API_ERROR_WALL_ADS_PUBLISHED",
-          "description": "Advertisement post was recently added"
+          "$ref": "errors.json#/errors/api_error_wall_ads_published"
         },
         {
-          "code": 214,
-          "name": "API_ERROR_WALL_ADD_POST",
-          "description": "Access to adding post denied"
+          "$ref": "errors.json#/errors/api_error_wall_add_post"
         },
         {
-          "code": 220,
-          "name": "API_ERROR_WALL_TOO_MANY_RECIPIENTS",
-          "description": "Too many recipients"
+          "$ref": "errors.json#/errors/api_error_wall_too_many_recipients"
         },
         {
-          "code": 222,
-          "name": "API_ERROR_WALL_LINKS_FORBIDDEN",
-          "description": "Hyperlinks are forbidden"
+          "$ref": "errors.json#/errors/api_error_wall_links_forbidden"
         }
       ]
     },
@@ -20258,7 +19873,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -20309,7 +19924,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -20354,19 +19969,13 @@
       },
       "errors": [
         {
-          "code": 219,
-          "name": "API_ERROR_WALL_ADS_PUBLISHED",
-          "description": "Advertisement post was recently added"
+          "$ref": "errors.json#/errors/api_error_wall_ads_published"
         },
         {
-          "code": 214,
-          "name": "API_ERROR_WALL_ADD_POST",
-          "description": "Access to adding post denied"
+          "$ref": "errors.json#/errors/api_error_wall_add_post"
         },
         {
-          "code": 224,
-          "name": "API_ERROR_WALL_ADS_POST_LIMIT_REACHED",
-          "description": "Too many ads posts"
+          "$ref": "errors.json#/errors/api_error_wall_ads_post_limit_reached"
         }
       ]
     },
@@ -20391,19 +20000,15 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 210,
-          "name": "API_ERROR_WALL_ACCESS_POST",
-          "description": "Access to wall's post denied"
+          "$ref": "errors.json#/errors/api_error_wall_access_post"
         },
         {
-          "code": 214,
-          "name": "API_ERROR_WALL_ADD_POST",
-          "description": "Access to adding post denied"
+          "$ref": "errors.json#/errors/api_error_wall_add_post"
         }
       ]
     },
@@ -20428,14 +20033,12 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       },
       "errors": [
         {
-          "code": 211,
-          "name": "API_ERROR_WALL_ACCESS_COMMENT",
-          "description": "Access to wall's comment denied"
+          "$ref": "errors.json#/errors/api_error_wall_access_comment"
         }
       ]
     },
@@ -20505,9 +20108,7 @@
       },
       "errors": [
         {
-          "code": 210,
-          "name": "API_ERROR_WALL_ACCESS_POST",
-          "description": "Access to wall's post denied"
+          "$ref": "errors.json#/errors/api_error_wall_access_post"
         }
       ]
     },
@@ -20533,7 +20134,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/ok_response"
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -20630,188 +20231,6 @@
           "$ref": "responses.json#/definitions/widgets_getPages_response"
         }
       }
-    }
-  ],
-  "errors": [
-    {
-      "name": "API_ERROR_UNKNOWN",
-      "code": 1,
-      "description": "Unknown error occurred"
-    },
-    {
-      "name": "API_ERROR_DISABLED",
-      "code": 2,
-      "description": "Application is disabled. Enable your application or use test mode"
-    },
-    {
-      "name": "API_ERROR_METHOD",
-      "code": 3,
-      "description": "Unknown method passed"
-    },
-    {
-      "name": "API_ERROR_SIGNATURE",
-      "code": 4,
-      "description": "Incorrect signature"
-    },
-    {
-      "name": "API_ERROR_AUTH",
-      "code": 5,
-      "description": "User authorization failed"
-    },
-    {
-      "name": "API_ERROR_TOO_MANY",
-      "code": 6,
-      "description": "Too many requests per second"
-    },
-    {
-      "name": "API_ERROR_PERMISSION",
-      "code": 7,
-      "description": "Permission to perform this action is denied"
-    },
-    {
-      "name": "API_ERROR_REQUEST",
-      "code": 8,
-      "description": "Invalid request"
-    },
-    {
-      "name": "API_ERROR_FLOOD",
-      "code": 9,
-      "description": "Flood control"
-    },
-    {
-      "name": "API_ERROR_SERVER",
-      "code": 10,
-      "description": "Internal server error"
-    },
-    {
-      "name": "API_ERROR_ENABLED_IN_TEST",
-      "code": 11,
-      "description": "In test mode application should be disabled or user should be authorized"
-    },
-    {
-      "name": "API_ERROR_CAPTCHA",
-      "code": 14,
-      "description": "Captcha needed"
-    },
-    {
-      "name": "API_ERROR_ACCESS",
-      "code": 15,
-      "description": "Access denied"
-    },
-    {
-      "name": "API_ERROR_AUTH_HTTPS",
-      "code": 16,
-      "description": "HTTP authorization failed"
-    },
-    {
-      "name": "API_ERROR_AUTH_VALIDATION",
-      "code": 17,
-      "description": "Validation required"
-    },
-    {
-      "name": "API_ERROR_USER_DELETED",
-      "code": 18,
-      "description": "User was deleted or banned"
-    },
-    {
-      "name": "API_ERROR_METHOD_PERMISSION",
-      "code": 20,
-      "description": "Permission to perform this action is denied for non-standalone applications"
-    },
-    {
-      "name": "API_ERROR_METHOD_ADS",
-      "code": 21,
-      "description": "Permission to perform this action is allowed only for standalone and OpenAPI applications"
-    },
-    {
-      "name": "API_ERROR_METHOD_DISABLED",
-      "code": 23,
-      "description": "This method was disabled"
-    },
-    {
-      "name": "API_ERROR_NEED_CONFIRMATION",
-      "code": 24,
-      "description": "Confirmation required"
-    },
-    {
-      "name": "API_ERROR_NEED_TOKEN_CONFIRMATION",
-      "code": 25,
-      "description": "Token confirmation required"
-    },
-    {
-      "name": "API_ERROR_GROUP_AUTH",
-      "code": 27,
-      "description": "Group authorization failed"
-    },
-    {
-      "name": "API_ERROR_APP_AUTH",
-      "code": 28,
-      "description": "Application authorization failed"
-    },
-    {
-      "name": "API_ERROR_RATE_LIMIT",
-      "code": 29,
-      "description": "Rate limit reached"
-    },
-    {
-      "name": "API_ERROR_PRIVATE_PROFILE",
-      "code": 30,
-      "description": "This profile is private"
-    },
-    {
-      "name": "API_ERROR_PARAM",
-      "code": 100,
-      "description": "One of the parameters specified was missing or invalid"
-    },
-    {
-      "name": "API_ERROR_PARAM_API_ID",
-      "code": 101,
-      "description": "Invalid application API ID"
-    },
-    {
-      "name": "API_ERROR_PARAM_USER_ID",
-      "code": 113,
-      "description": "Invalid user id"
-    },
-    {
-      "name": "API_ERROR_PARAM_TIMESTAMP",
-      "code": 150,
-      "description": "Invalid timestamp"
-    },
-    {
-      "name": "API_ERROR_ACCESS_ALBUM",
-      "code": 200,
-      "description": "Access denied"
-    },
-    {
-      "name": "API_ERROR_ACCESS_AUDIO",
-      "code": 201,
-      "description": "Access denied"
-    },
-    {
-      "name": "API_ERROR_ACCESS_GROUP",
-      "code": 203,
-      "description": "Access to group denied"
-    },
-    {
-      "name": "API_ERROR_ALBUM_FULL",
-      "code": 300,
-      "description": "This album is full"
-    },
-    {
-      "name": "API_ERROR_VOTES_PERMISSION",
-      "code": 500,
-      "description": "Permission denied. You must enable votes processing in application settings"
-    },
-    {
-      "name": "API_ERROR_ADS_PERMISSION",
-      "code": 600,
-      "description": "Permission denied. You have no access to operations specified with given object(s)"
-    },
-    {
-      "name": "API_ERROR_ADS_SPECIFIC",
-      "code": 603,
-      "description": "Some ads error occured"
     }
   ]
 }

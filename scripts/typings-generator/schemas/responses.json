@@ -360,6 +360,52 @@
         }
       }
     },
+    "ads_getLookalikeRequests_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": "integer",
+              "description": "Total count of found lookalike requests",
+              "minimum": 0
+            },
+            "items": {
+              "type": "array",
+              "description": "found lookalike requests",
+              "items": {
+                "$ref": "objects.json#/definitions/ads_lookalike_request"
+              }
+            }
+          },
+          "required": [
+            "count",
+            "items"
+          ]
+        }
+      }
+    },
+    "ads_getMusicians_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/ads_musician"
+              },
+              "description": "Musicians"
+            }
+          },
+          "required": [
+            "items"
+          ]
+        }
+      }
+    },
     "ads_getOfficeUsers_response": {
       "type": "object",
       "properties": {
@@ -657,10 +703,12 @@
           "properties": {
             "count": {
               "type": "integer",
-              "description": "Total number"
+              "description": "Total number of applications",
+              "minimum": 0
             },
             "items": {
               "type": "array",
+              "description": "List of applications",
               "items": {
                 "$ref": "objects.json#/definitions/apps_app"
               }
@@ -715,6 +763,21 @@
       "properties": {
         "response": {
           "$ref": "objects.json#/definitions/base_upload_server"
+        }
+      }
+    },
+    "base_ok_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "integer",
+          "default": 1,
+          "enum": [
+            1
+          ],
+          "enumNames": [
+            "ok"
+          ]
         }
       }
     },
@@ -1214,6 +1277,23 @@
         }
       }
     },
+    "downloadedGames_paid_status_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "is_paid": {
+              "type": "boolean",
+              "description": "Game has been paid"
+            }
+          },
+          "required": [
+            "is_paid"
+          ]
+        }
+      }
+    },
     "fave_addTag_response": {
       "type": "object",
       "properties": {
@@ -1349,6 +1429,17 @@
         }
       }
     },
+    "friends_areFriends_extended_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "array",
+          "items": {
+            "$ref": "objects.json#/definitions/friends_friend_extended_status"
+          }
+        }
+      }
+    },
     "friends_areFriends_response": {
       "type": "object",
       "properties": {
@@ -1367,7 +1458,8 @@
           "type": "object",
           "properties": {
             "success": {
-              "$ref": "objects.json#/definitions/base_ok_response"
+              "type": "integer",
+              "default": 1
             },
             "friend_deleted": {
               "type": "integer",
@@ -4110,14 +4202,6 @@
         }
       }
     },
-    "ok_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "$ref": "objects.json#/definitions/base_ok_response"
-        }
-      }
-    },
     "orders_cancelSubscription_response": {
       "type": "object",
       "properties": {
@@ -4816,7 +4900,10 @@
         "response": {
           "$ref": "objects.json#/definitions/polls_poll"
         }
-      }
+      },
+      "required": [
+        "response"
+      ]
     },
     "polls_deleteVote_response": {
       "type": "object",
@@ -5296,35 +5383,6 @@
         }
       }
     },
-    "stories_getStats_V5200_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "type": "object",
-          "properties": {
-            "preview": {
-              "type": "string"
-            },
-            "achievement": {
-              "type": "string"
-            },
-            "achievement_subtitle": {
-              "type": "string"
-            },
-            "categories": {
-              "type": "array",
-              "items": {
-                "$ref": "objects.json#/definitions/stories_stat_category"
-              }
-            }
-          }
-        }
-      },
-      "required": [
-        "preview",
-        "categories"
-      ]
-    },
     "stories_getStats_response": {
       "type": "object",
       "properties": {
@@ -5500,13 +5558,11 @@
         "response": {
           "type": "object",
           "properties": {
-            "story": {
-              "$ref": "objects.json#/definitions/stories_story"
+            "upload_result": {
+              "type": "string",
+              "description": "A string hash that is used in the stories.save method"
             }
-          },
-          "required": [
-            "story"
-          ]
+          }
         }
       }
     },
@@ -6399,7 +6455,8 @@
           "type": "object",
           "properties": {
             "success": {
-              "$ref": "objects.json#/definitions/base_ok_response"
+              "type": "integer",
+              "default": 1
             },
             "post_id": {
               "type": "integer",
