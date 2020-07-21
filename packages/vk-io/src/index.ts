@@ -30,5 +30,7 @@ export { ICallbackServiceValidate } from './utils/callback-service';
 export { getRandomId, applyMixins } from './utils/helpers';
 export { Attachmentable, IAllAttachmentable } from './structures/shared/attachmentable';
 
+export { resolveResource } from './utils/resource-resolver';
+
 // eslint-disable-next-line import/no-default-export
 export { VK, VK as default } from './vk';
