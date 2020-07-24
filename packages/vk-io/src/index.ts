@@ -29,5 +29,4 @@ export {
 	kSerializeData
 } from './utils/constants';
 
-// eslint-disable-next-line import/no-default-export
-export { VK, VK as default } from './vk';
+export { VK } from './vk';
