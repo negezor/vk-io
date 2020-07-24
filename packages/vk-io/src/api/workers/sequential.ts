@@ -111,6 +111,8 @@ export class SequentialWorker extends APIWorker {
 
 			let AccountVerification;
 			try {
+				// eslint-disable-next-line max-len, @typescript-eslint/ban-ts-comment
+				// @ts-ignore "Cannot find module '@vk-io/authorization' or its corresponding type declarations."
 				AccountVerification = (await import('@vk-io/authorization')).AccountVerification;
 			} catch (importError) {
 				request.reject(error);
