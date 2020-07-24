@@ -1,0 +1,38 @@
+{
+	"name": "@vk-io/hear",
+	"version": "0.0.0-alpha.1",
+	"description": "Hear for the library vk-io",
+	"license": "MIT",
+	"author": {
+		"name": "Vladlen (Negezor)",
+		"email": "negezor@gmail.com"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/negezor/vk-io.git",
+		"directory": "packages/hear"
+	},
+	"homepage": "https://github.com/negezor/vk-io#readme",
+	"bugs": "https://github.com/negezor/vk-io/issues",
+	"keywords": [
+		"vk",
+		"io",
+		"hear"
+	],
+	"files": [
+		"lib",
+		"typings"
+	],
+	"main": "lib/index",
+	"module": "lib/index.mjs",
+	"types": "./lib/index.d.ts",
+	"engines": {
+		"node": ">=12.0.0"
+	},
+	"dependencies": {
+		"middleware-io": "^2.5.0"
+	},
+	"peerDependencies": {
+		"vk-io": "^4.0.0-rc.19"
+	}
+}

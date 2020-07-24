@@ -10,6 +10,7 @@ import { join as pathJoin } from 'path';
 
 const MODULES = [
 	'vk-io',
+	'hear',
 	'scenes',
 	'session',
 	'streaming',
