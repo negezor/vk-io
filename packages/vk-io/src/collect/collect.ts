@@ -3,7 +3,7 @@ import { inspectable } from 'inspectable';
 import { CollectStream, ICollectStreamOptions } from './stream';
 import { LIMITS_METHODS } from './limits';
 
-import { VK } from '../vk';
+import { API } from '../api';
 import { Chain } from './chain';
 import { ExecuteError } from '../errors';
 
@@ -12,6 +12,10 @@ import { getChainReturn, getExecuteMethod } from '../utils/helpers';
 export interface ICollectStreamGroup {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	[key: string]: <T = Record<string, any>>(options: ICollectStreamOptions['options']) => CollectStream<T>;
+}
+
+export interface ICollectOptions {
+	api: API;
 }
 
 export class Collect {
@@ -67,13 +71,13 @@ export class Collect {
 
 	public widgets!: ICollectStreamGroup;
 
-	private vk: VK;
+	private api: API;
 
 	/**
 	 * constructor
 	 */
-	public constructor(vk: VK) {
-		this.vk = vk;
+	public constructor({ api }: ICollectOptions) {
+		this.api = api;
 
 		for (const [method, limit, max] of LIMITS_METHODS) {
 			const [group, name] = method.split('.');
@@ -85,7 +89,8 @@ export class Collect {
 
 			// @ts-expect-error
 			this[group][name] = (options = {}): CollectStream => (
-				new CollectStream(this.vk, {
+				new CollectStream({
+					api,
 					options,
 					method,
 					limit,
@@ -106,7 +111,9 @@ export class Collect {
 	 * Returns new Chain instance
 	 */
 	public chain(): Chain {
-		return new Chain(this.vk);
+		return new Chain({
+			api: this.api
+		});
 	}
 
 	/**
@@ -129,7 +136,7 @@ export class Collect {
 		while (queueMethods.length !== 0) {
 			const code = getChainReturn(queueMethods.splice(0, 25));
 
-			promises.push(this.vk.api.execute({ code }));
+			promises.push(this.api.execute({ code }));
 		}
 
 		const out: {

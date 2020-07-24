@@ -3,24 +3,26 @@ import { inspectable } from 'inspectable';
 
 import { Readable } from 'stream';
 
-import { VK } from '../vk';
+import { API } from '../api';
 import { UsersUserFull, GroupsGroupFull } from '../api/schemas/objects';
 import { CollectError, APIErrorCode, CollectErrorCode } from '../errors';
 
 import { APIRequest } from '../api/request';
 import { getExecuteCode } from './execute-code';
 
-const debug = createDebug('vk-io:collect:stream');
+const debug = createDebug('api-io:collect:stream');
 
 const { EXECUTE_ERROR } = CollectErrorCode;
 
 export interface ICollectStreamOptions {
+	api: API;
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	options: Record<string, any> & {
 		parallelCount?: number;
 		count?: number;
 		offset?: number;
 	};
+	collectRetryLimit?: number;
 	method: string;
 	limit: number;
 	max?: number;
@@ -42,7 +44,7 @@ export interface ICollectChunkData<T> {
 }
 
 export class CollectStream<T> extends Readable {
-	protected vk: VK;
+	protected api: API;
 
 	protected method: string;
 
@@ -62,6 +64,8 @@ export class CollectStream<T> extends Readable {
 
 	protected supportExecute: boolean;
 
+	protected collectRetryLimit: number;
+
 	protected promise?: Promise<ICollectStreamResult<T>>;
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -70,7 +74,9 @@ export class CollectStream<T> extends Readable {
 	/**
 	 * Constructor
 	 */
-	public constructor(vk: VK, {
+	public constructor({
+		api,
+		collectRetryLimit = 3,
 		options,
 		method,
 		limit,
@@ -80,7 +86,7 @@ export class CollectStream<T> extends Readable {
 			objectMode: true
 		});
 
-		this.vk = vk;
+		this.api = api;
 
 		const {
 			parallelCount = 25,
@@ -120,6 +126,8 @@ export class CollectStream<T> extends Readable {
 		this.retries = 0;
 		this.promise = undefined;
 		this.supportExecute = true;
+
+		this.collectRetryLimit = collectRetryLimit;
 
 		this.code = getExecuteCode({
 			params: this.params,
@@ -187,7 +195,7 @@ export class CollectStream<T> extends Readable {
 
 		if (!this.supportExecute || this.parallelCount === 1) {
 			const request = new APIRequest({
-				api: this.vk.api,
+				api: this.api,
 				method: this.method,
 				params: {
 					...this.params,
@@ -198,9 +206,9 @@ export class CollectStream<T> extends Readable {
 
 			let result;
 			try {
-				result = await this.vk.api.callWithRequest(request);
+				result = await this.api.callWithRequest(request);
 			} catch (error) {
-				if (this.retries === this.vk.options.collectRetryLimit) {
+				if (this.retries === this.collectRetryLimit) {
 					this.emit('error', error);
 
 					return;
@@ -226,7 +234,7 @@ export class CollectStream<T> extends Readable {
 		} else {
 			let result;
 			try {
-				result = await this.vk.api.execute({
+				result = await this.api.execute({
 					code: this.code,
 					total: this.total,
 					offset: this.offset,
@@ -259,7 +267,7 @@ export class CollectStream<T> extends Readable {
 					return;
 				}
 
-				if (this.retries === this.vk.options.collectRetryLimit) {
+				if (this.retries === this.collectRetryLimit) {
 					this.emit('error', error);
 
 					return;

@@ -30,7 +30,7 @@ export class VK {
 
 	public upload: Upload;
 
-	public collect = new Collect(this);
+	public collect: Collect;
 
 	public updates = new Updates(this);
 
@@ -44,6 +44,10 @@ export class VK {
 
 		this.api = new API({
 			...options
+		});
+
+		this.collect = new Collect({
+			api: this.api
 		});
 
 		this.upload = new Upload({

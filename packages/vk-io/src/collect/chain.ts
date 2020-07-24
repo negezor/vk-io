@@ -2,22 +2,26 @@ import { inspectable } from 'inspectable';
 
 import { VKError, ExecuteError } from '../errors';
 
-import { VK } from '../vk';
+import { API } from '../api';
 import { APIRequest } from '../api/request';
 import { getChainReturn, resolveExecuteTask } from '../utils/helpers';
+
+export interface IChainOptions {
+	api: API;
+}
 
 export class Chain {
 	public started = false;
 
-	protected vk: VK;
+	protected api: API;
 
 	protected queue: APIRequest[] = [];
 
 	/**
 	 * Constructor
 	 */
-	public constructor(vk: VK) {
-		this.vk = vk;
+	public constructor({ api }: IChainOptions) {
+		this.api = api;
 	}
 
 	/**
@@ -40,7 +44,7 @@ export class Chain {
 		}
 
 		const request = new APIRequest({
-			api: this.vk.api,
+			api: this.api,
 			method,
 			params
 		});
@@ -93,7 +97,7 @@ export class Chain {
 			const code = getChainReturn(tasks.map(String));
 
 			try {
-				const response = await this.vk.api.execute({ code });
+				const response = await this.api.execute({ code });
 
 				resolveExecuteTask(tasks, response);
 
