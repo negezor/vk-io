@@ -43,15 +43,6 @@ export class CallbackService {
 
 	private twoFactorHandler?: TwoFactorHandler;
 
-	private vk: VK;
-
-	/**
-	 * Constructor
-	 */
-	public constructor(vk: VK) {
-		this.vk = vk;
-	}
-
 	/**
 	 * Checks if there is a captcha handler
 	 */

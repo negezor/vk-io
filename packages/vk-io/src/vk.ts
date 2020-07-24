@@ -37,7 +37,7 @@ export class VK {
 
 	public updates = new Updates(this);
 
-	public callbackService = new CallbackService(this);
+	public callbackService = new CallbackService();
 
 	/**
 	 * Constructor
