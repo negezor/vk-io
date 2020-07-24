@@ -15,34 +15,31 @@ const debug = createDebug('vk-io:authorization:implicit-flow-user');
 
 const { AUTHORIZATION_FAILED } = AuthErrorCode;
 
+export interface IImplicitFlowGroupsOptions extends IImplicitFlowOptions {
+	groupIds: number[];
+}
+
 export class ImplicitFlowGroups extends ImplicitFlow {
-	groups: number[];
+	groupIds: number[];
 
 	/**
 	 * Constructor
 	 */
-	constructor(options: IImplicitFlowOptions & { groups: number[] }) {
+	constructor(options: IImplicitFlowGroupsOptions) {
 		super(options);
 
-		let { groups } = options;
+		let { groupIds } = options;
 
-		if (groups === undefined) {
-			throw new VKError({
-				message: 'Groups list must have',
-				code: 'GROUPS_NOT_SET'
-			});
+		if (!Array.isArray(groupIds)) {
+			groupIds = [groupIds];
 		}
 
-		if (!Array.isArray(groups)) {
-			groups = [groups];
-		}
+		this.groupIds = groupIds.map((rawGroupId) => {
+			const groupId = Number(rawGroupId);
 
-		this.groups = groups.map((rawGroup) => {
-			const group = Number(rawGroup);
-
-			return group < 0
-				? -group
-				: group;
+			return groupId < 0
+				? -groupId
+				: groupId;
 		});
 	}
 
@@ -62,7 +59,7 @@ export class ImplicitFlowGroups extends ImplicitFlow {
 		debug('auth scope %s', scope);
 
 		const params = new URLSearchParams({
-			group_ids: this.groups.join(','),
+			group_ids: this.groupIds.join(','),
 			redirect_uri: CALLBACK_BLANK,
 			response_type: 'token',
 			display: 'page',

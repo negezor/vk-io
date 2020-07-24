@@ -10,7 +10,8 @@ import {
 	ImplicitFlowUser,
 
 	IDirectAuthOptions,
-	IImplicitFlowOptions
+	IImplicitFlowOptions,
+	IImplicitFlowGroupsOptions
 } from './providers';
 
 const openAPIProperties = [
@@ -82,14 +83,11 @@ export class Authorization {
 	/**
 	 * Standalone authorization with login & password for group
 	 */
-	public implicitFlowGroups(groups: number[], options = {}): ImplicitFlowGroups {
-		// @ts-expect-error
+	public implicitFlowGroups(options: IImplicitFlowGroupsOptions): ImplicitFlowGroups {
 		return new ImplicitFlowGroups({
 			...this.options,
 
-			...options,
-
-			groups
+			...options
 		});
 	}
 
