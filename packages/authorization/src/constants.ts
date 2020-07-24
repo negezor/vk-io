@@ -55,3 +55,30 @@ export const groupScopes = new Map<string, number>([
 	['docs', 131072],
 	['manage', 262144]
 ]);
+
+export const officialAppCredentials = {
+	android: {
+		clientId: 2274003,
+		clientSecret: 'hHbZxrka2uZ6jB1inYsH'
+	},
+	windows: {
+		clientId: 3697615,
+		clientSecret: 'AlVXZFMUqyrnABp8ncuU'
+	},
+	windowsPhone: {
+		clientId: 3502557,
+		clientSecret: 'PEObAuQi6KloPM4T30DV'
+	},
+	iphone: {
+		clientId: 3140623,
+		clientSecret: 'VeWdmVclDCtn6ihuP1nt'
+	},
+	ipad: {
+		clientId: 3682744,
+		clientSecret: 'mY6CDUswIVdJLCD3j15n'
+	},
+	vkMe: {
+		clientId: 6146827,
+		clientSecret: 'qVxWRF1CwHERuIrKBnqe'
+	}
+};
