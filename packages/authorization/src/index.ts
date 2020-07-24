@@ -8,5 +8,4 @@ export {
 	groupScopes
 } from './constants';
 
-// eslint-disable-next-line import/no-default-export
-export { Authorization, Authorization as default } from './authorization';
+export { Authorization } from './authorization';
