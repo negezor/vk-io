@@ -27,7 +27,7 @@ export class VK {
 		})
 	};
 
-	public api = new API(this);
+	public api: API;
 
 	public upload: Upload;
 
@@ -42,6 +42,10 @@ export class VK {
 	 */
 	public constructor(options: Partial<IVKOptions> = {}) {
 		Object.assign(this.options, options);
+
+		this.api = new API({
+			...options
+		});
 
 		this.upload = new Upload({
 			api: this.api,
