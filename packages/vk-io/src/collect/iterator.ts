@@ -83,7 +83,7 @@ export async function* createCollectIterator<T>({
 	while (true) {
 		const firstTime = received === 0;
 
-		if (!firstTime && (total! - ignoredOffset) <= received) {
+		if (!firstTime && total! <= received) {
 			break;
 		}
 
