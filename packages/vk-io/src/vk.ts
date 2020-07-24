@@ -1,31 +1,17 @@
 import { inspectable } from 'inspectable';
 
-import { Agent } from 'https';
-
 import { API } from './api';
 import { Upload } from './upload';
 import { Collect } from './collect';
 import { Updates } from './updates';
 import { CallbackService } from './utils/callback-service';
 
-import { IVKOptions } from './types';
-
-import { defaultOptions } from './utils/constants';
+import { VKOptions } from './types';
 
 /**
  * Main class
  */
 export class VK {
-	public options: IVKOptions = {
-		...defaultOptions,
-
-		agent: new Agent({
-			keepAlive: true,
-
-			keepAliveMsecs: 10000
-		})
-	};
-
 	public api: API;
 
 	public upload: Upload;
@@ -39,9 +25,7 @@ export class VK {
 	/**
 	 * Constructor
 	 */
-	public constructor(options: Partial<IVKOptions> & { token: string }) {
-		Object.assign(this.options, options);
-
+	public constructor(options: Partial<VKOptions> & { token: string }) {
 		this.api = new API({
 			...options,
 
@@ -53,16 +37,16 @@ export class VK {
 		});
 
 		this.upload = new Upload({
-			api: this.api,
+			...options,
 
-			...this.options
+			api: this.api
 		});
 
 		this.updates = new Updates({
-			api: this.api,
-			upload: this.upload,
+			...options,
 
-			...this.options
+			api: this.api,
+			upload: this.upload
 		});
 	}
 

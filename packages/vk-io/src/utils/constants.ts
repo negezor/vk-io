@@ -1,10 +1,3 @@
-import { globalAgent } from 'https';
-
-import { IVKOptions } from '../types';
-
-// @ts-expect-error
-import { version } from '../../package.json';
-
 /**
  * Chat peer ID
  */
@@ -14,51 +7,6 @@ export const CHAT_PEER = 2e9;
  * Minimum time interval api with error
  */
 export const MINIMUM_TIME_INTERVAL_API = 1133;
-
-/**
- * Default options
- */
-export const defaultOptions: IVKOptions = {
-	agent: globalAgent,
-	token: undefined,
-	language: undefined,
-
-	appId: undefined,
-	appSecret: undefined,
-
-	login: undefined,
-	phone: undefined,
-	password: undefined,
-
-	authScope: undefined,
-	authTimeout: 10e3,
-
-	apiMode: 'sequential',
-	apiRequestMode: 'sequential',
-	apiWait: 3e3,
-	apiLimit: 3,
-	apiVersion: '5.120',
-	apiBaseUrl: 'https://api.vk.com/method',
-	apiRetryLimit: 3,
-	apiTimeout: 10e3,
-	apiHeaders: {
-		// eslint-disable-next-line @typescript-eslint/naming-convention
-		'User-Agent': `vk-io/${version} (+https://github.com/negezor/vk-io)`
-	},
-	apiExecuteCount: 25,
-	apiExecuteMethods: ['messages.send'],
-
-	uploadTimeout: 20e3,
-
-	pollingWait: 3e3,
-	pollingRetryLimit: 3,
-	pollingGroupId: undefined,
-
-	webhookSecret: undefined,
-	webhookConfirmation: undefined,
-
-	collectRetryLimit: 3
-};
 
 /**
  * The attachment types
