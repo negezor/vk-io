@@ -1,8 +1,6 @@
 import { CallbackService } from 'vk-io';
 import { inspectable } from 'inspectable';
 
-import { createHash } from 'crypto';
-
 import {
 	DirectAuthorization,
 
@@ -13,13 +11,6 @@ import {
 	IImplicitFlowOptions,
 	IImplicitFlowGroupsOptions
 } from './providers';
-
-const openAPIProperties = [
-	'expire',
-	'secret',
-	'mid',
-	'sid'
-];
 
 export interface IAuthorizationOptions {
 	callbackService: CallbackService;
@@ -172,30 +163,6 @@ export class Authorization {
 			clientId: 6146827,
 			clientSecret: 'qVxWRF1CwHERuIrKBnqe'
 		});
-	}
-
-	/**
-	 * Verifies that the user is authorized through the Open API
-	 */
-	public async userAuthorizedThroughOpenAPI(
-		params: Record<'expire' | 'mid' | 'secret' | 'sid' | 'sig', string>
-	): Promise<{ authorized: boolean }> {
-		let sign = ([...openAPIProperties] as (keyof typeof params)[])
-			.sort()
-			.map(key => `${key}=${params[key]}`)
-			.join('');
-
-		sign += this.options.clientSecret;
-		sign = createHash('md5')
-			.update(sign)
-			.digest('hex');
-
-		const expire = Number(params.expire);
-
-		const isExpired = Number.isNaN(expire) || expire < (Date.now() / 1000);
-		const authorized = params.sig === sign && !isExpired;
-
-		return { authorized };
 	}
 }
 
