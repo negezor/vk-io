@@ -13,7 +13,7 @@ import {
 
 import { APIRequest } from './request';
 import { Constructor } from '../types';
-import { VKError } from '../errors';
+import { VKError, ExecuteError } from '../errors';
 import { CallbackService } from '../utils/callback-service';
 import { MINIMUM_TIME_INTERVAL_API } from '../utils/constants';
 
@@ -176,6 +176,11 @@ export interface IAPIOptions {
 	callbackService?: CallbackService;
 }
 
+export interface IExecuteResponse<T> {
+	response: T;
+	errors: ExecuteError[];
+}
+
 /**
  * Working with API methods
  */
@@ -238,7 +243,9 @@ class API {
 	 * Call execute method
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	public execute(params: Record<string, unknown> & { code: string }): Promise<any> {
+	public execute<T = any>(
+		params: Record<string, unknown> & { code: string }
+	): Promise<IExecuteResponse<T>> {
 		return this.call('execute', params);
 	}
 
@@ -246,7 +253,7 @@ class API {
 	 * Call execute procedure
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	public procedure(name: string, params: object): Promise<any> {
+	public procedure<T = any>(name: string, params: object): Promise<IExecuteResponse<T>> {
 		return this.call(`execute.${name}`, params);
 	}
 
@@ -254,7 +261,7 @@ class API {
 	 * Call raw method
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	public call(method: string, params: object): Promise<any> {
+	public call<T = any>(method: string, params: object): Promise<T> {
 		return this.callWithRequest(new APIRequest({
 			method,
 			params,
@@ -267,7 +274,7 @@ class API {
 	 * Adds request for queue
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	public callWithRequest(request: APIRequest): Promise<any> {
+	public callWithRequest<T = any>(request: APIRequest): Promise<T> {
 		this.worker.enqueue(request);
 
 		return request.promise;
