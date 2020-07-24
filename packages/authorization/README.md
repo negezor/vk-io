@@ -22,11 +22,14 @@ npm i @vk-io/authorization
 
 ## Example usage
 ```js
-import { VK } from 'vk-io';
+import { CallbackService } from 'vk-io';
+import { DirectAuthorization } from '@vk-io/authorization';
 
-import { Authorization } from '@vk-io/authorization';
+const callbackService = new CallbackService();
 
-const vk = new VK({
+const direct = new DirectAuthorization({
+	callbackService,
+
 	clientId: process.env.CLIENT_ID,
 	clientSecret: process.env.CLIENT_SECRET,
 
@@ -34,12 +37,9 @@ const vk = new VK({
 	password: process.env.PASSWORD
 });
 
-const authorization = new Authorization(vk);
-
 async function run() {
-	const direct = authorization.direct();
 	const response = await direct.run();
-	
+
 	console.log('Token:', response.token);
 	console.log('Expires:', response.expires);
 
