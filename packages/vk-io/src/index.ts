@@ -19,6 +19,7 @@ export {
 } from './utils/constants';
 
 export * from './api';
+export * from './upload';
 
 export { Composer } from './structures/shared/composer';
 export { ICallbackServiceValidate } from './utils/callback-service';
