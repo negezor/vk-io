@@ -4,8 +4,7 @@ import { VKError } from '../errors';
 
 import { API } from '../api';
 import { APIRequest } from '../api/request';
-import { IExecutesPayload } from './types';
-import { getChainReturn, resolveExecuteTask } from '../utils/helpers';
+import { IExecutesPayload, executeRequests } from './executes';
 
 export interface IChainOptions {
 	api: API;
@@ -77,38 +76,7 @@ export class Chain {
 
 		this.started = true;
 
-		const { queue } = this;
-
-		const out: IExecutesPayload = {
-			response: [],
-			errors: []
-		};
-
-		if (queue.length === 0) {
-			return out;
-		}
-
-		while (queue.length > 0) {
-			const tasks = queue.splice(0, 25);
-			const code = getChainReturn(tasks.map(String));
-
-			try {
-				const response = await this.api.execute({ code });
-
-				resolveExecuteTask(tasks, response);
-
-				out.response.push(...response.response);
-				out.errors.push(...response.errors);
-			} catch (error) {
-				for (const task of tasks) {
-					task.reject(error);
-				}
-
-				throw error;
-			}
-		}
-
-		return out;
+		return executeRequests(this.api, this.queue);
 	}
 }
 
