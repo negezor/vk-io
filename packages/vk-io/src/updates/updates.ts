@@ -66,7 +66,6 @@ import {
 } from '../structures/contexts';
 
 import { VK } from '../vk';
-import { HearManager, HearConditions } from './hear-manager';
 import { Composer } from '../structures/shared/composer';
 import { PollingTransport, WebhookTransport } from './transports';
 
@@ -271,8 +270,6 @@ export class Updates {
 			console.error(error);
 		});
 
-	private hearManager = new HearManager();
-
 	private composed!: Middleware<Context>;
 
 	/**
@@ -447,31 +444,6 @@ export class Updates {
 	}
 
 	/**
-	 * Listen by context condition
-	 */
-	public hear<T = {}>(
-		hearConditions: HearConditions<T>,
-		handler: Middleware<MessageContext & T>
-	): this {
-		this.hearManager.hear(hearConditions, handler);
-
-		this.recompose();
-
-		return this;
-	}
-
-	/**
-	 * A handler that is called when handlers are not found
-	 */
-	public onHearFallback<T = {}>(handler: Middleware<MessageContext & T>): this {
-		this.hearManager.onFallback(handler);
-
-		this.recompose();
-
-		return this;
-	}
-
-	/**
 	 * Handles longpoll event
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -608,18 +580,7 @@ export class Updates {
 	 * Reloads middleware
 	 */
 	protected recompose(): void {
-		const composer = this.composer.clone();
-
-		if (this.hearManager.length !== 0) {
-			composer.optional(
-				(context: MessageContext): boolean => (
-					context.is('message_new') && !context.isEvent
-				),
-				this.hearManager.middleware
-			);
-		}
-
-		this.composed = composer.compose();
+		this.composed = this.composer.compose();
 	}
 }
 
