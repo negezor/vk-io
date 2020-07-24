@@ -9,5 +9,3 @@ export {
 	userScopes,
 	groupScopes
 } from './constants';
-
-export { Authorization } from './authorization';
