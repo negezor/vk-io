@@ -1,11 +1,6 @@
 import { MessageSource, CHAT_PEER } from './constants';
 
 /**
- * Parse attachments
- */
-export const parseAttachmentRe = /(photo|video|audio|doc|audio_message|graffiti|wall|market|poll|gift)(-?\d+)_(\d+)_?(\w+)?/;
-
-/**
  * Returns params for execute
  */
 export const getExecuteParams = (params: Record<string, object | string>): string => (

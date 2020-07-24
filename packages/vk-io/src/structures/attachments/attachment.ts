@@ -1,8 +1,12 @@
 import { inspectable } from 'inspectable';
 
 import { API } from '../../api';
-import { parseAttachmentRe } from '../../utils/helpers';
 import { kSerializeData, AttachmentType } from '../../utils/constants';
+
+/**
+ * Parse attachments
+ */
+export const parseAttachmentRe = /^([a-z]+)(-?\d+)_(\d+)_?(\w+)?$/;
 
 export class Attachment<P = {}> {
 	public type: AttachmentType | string;
