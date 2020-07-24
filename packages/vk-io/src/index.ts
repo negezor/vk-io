@@ -1,6 +1,4 @@
-export * as Params from './api/schemas/params';
-export * as Objects from './api/schemas/objects';
-export * as Responses from './api/schemas/responses';
+export * from './api/schemas';
 
 export * from './errors';
 export * from './structures/keyboard';
