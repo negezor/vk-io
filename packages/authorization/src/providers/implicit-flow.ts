@@ -1,7 +1,7 @@
 import createDebug from 'debug';
 import { load as cheerioLoad } from 'cheerio';
 
-import { VK, CaptchaType, ICallbackServiceValidate } from 'vk-io';
+import { CaptchaType, ICallbackServiceValidate, CallbackService } from 'vk-io';
 
 import { Agent } from 'https';
 import { URL, URLSearchParams } from 'url';
@@ -66,12 +66,14 @@ const REPLACE_PREFIX_RE = /^[+|0]+/;
 const FIND_LOCATION_HREF_RE = /location\.href\s+=\s+"([^"]+)"/i;
 
 export interface IImplicitFlowOptions {
-	appId?: number;
-	appSecret?: string;
+	callbackService: CallbackService;
+
+	appId: number;
+	appSecret: string;
 
 	login?: string;
 	phone?: string | number;
-	password?: string;
+	password: string;
 
 	agent: Agent;
 	scope?: string | number | string[];
@@ -81,8 +83,6 @@ export interface IImplicitFlowOptions {
 }
 
 export abstract class ImplicitFlow {
-	protected vk: VK;
-
 	protected options: IImplicitFlowOptions;
 
 	public started: boolean;
@@ -102,37 +102,9 @@ export abstract class ImplicitFlow {
 	/**
 	 * Constructor
 	 */
-	public constructor(vk: VK, options: Partial<IImplicitFlowOptions> = {}) {
-		this.vk = vk;
-
-		const {
-			appId = vk.options.appId,
-			appSecret = vk.options.appSecret,
-
-			login = vk.options.login,
-			phone = vk.options.phone,
-			password = vk.options.password,
-
-			scope = vk.options.authScope,
-			agent = vk.options.agent,
-			timeout = vk.options.authTimeout,
-
-			apiVersion = vk.options.apiVersion
-		} = options;
-
+	public constructor(options: IImplicitFlowOptions) {
 		this.options = {
-			appId,
-			appSecret,
-
-			login,
-			phone,
-			password,
-
-			agent,
-			scope,
-			timeout,
-
-			apiVersion
+			...options
 		};
 
 		this.jar = new CookieJar();
@@ -371,7 +343,7 @@ export abstract class ImplicitFlow {
 				});
 			}
 
-			const { key, validate } = await this.vk.callbackService.processingCaptcha({
+			const { key, validate } = await this.options.callbackService.processingCaptcha({
 				type: CaptchaType.IMPLICIT_FLOW_AUTH,
 				sid: fields.captcha_sid,
 				src
@@ -421,7 +393,7 @@ export abstract class ImplicitFlow {
 
 		const { action, fields } = parseFormField($);
 
-		const { code, validate } = await this.vk.callbackService.processingTwoFactor({});
+		const { code, validate } = await this.options.callbackService.processingTwoFactor({});
 
 		fields.code = code;
 

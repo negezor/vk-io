@@ -1,4 +1,4 @@
-import { VK } from 'vk-io';
+import { CallbackService } from 'vk-io';
 import { inspectable } from 'inspectable';
 
 import { createHash } from 'crypto';
@@ -7,7 +7,10 @@ import {
 	DirectAuthorization,
 
 	ImplicitFlowGroups,
-	ImplicitFlowUser
+	ImplicitFlowUser,
+
+	IDirectAuthOptions,
+	IImplicitFlowOptions
 } from './providers';
 
 const openAPIProperties = [
@@ -17,14 +20,45 @@ const openAPIProperties = [
 	'sid'
 ];
 
+export interface IAuthorizationOptions {
+	callbackService: CallbackService;
+
+	/**
+	 * Application ID
+	 */
+	appId?: number;
+
+	/**
+	 * Secret application key
+	 */
+	appSecret?: string;
+
+	/**
+	 * User login (phone number or email)
+	 */
+	login?: string;
+
+	/**
+	 * User phone number
+	 */
+	phone?: string | number;
+
+	/**
+	 * User password
+	 */
+	password?: string;
+}
+
 export class Authorization {
-	protected vk: VK;
+	protected options: IAuthorizationOptions;
 
 	/**
 	 * Constructor
 	 */
-	public constructor(vk: VK) {
-		this.vk = vk;
+	public constructor(options: IAuthorizationOptions) {
+		this.options = {
+			...options
+		};
 	}
 
 	/**
@@ -37,8 +71,12 @@ export class Authorization {
 	/**
 	 * Standalone authorization with login & password
 	 */
-	public implicitFlowUser(options = {}): ImplicitFlowUser {
-		return new ImplicitFlowUser(this.vk, options);
+	public implicitFlowUser(options: IImplicitFlowOptions): ImplicitFlowUser {
+		return new ImplicitFlowUser({
+			...this.options,
+
+			...options
+		});
 	}
 
 	/**
@@ -46,23 +84,33 @@ export class Authorization {
 	 */
 	public implicitFlowGroups(groups: number[], options = {}): ImplicitFlowGroups {
 		// @ts-expect-error
-		return new ImplicitFlowGroups(this.vk, { ...options, groups });
+		return new ImplicitFlowGroups({
+			...this.options,
+
+			...options,
+
+			groups
+		});
 	}
 
 	/**
 	 * Direct authorization with login & login in user application
 	 */
-	public direct(): DirectAuthorization {
-		const { appId, appSecret } = this.vk.options;
+	public direct(options: IDirectAuthOptions): DirectAuthorization {
+		return new DirectAuthorization({
+			...this.options,
 
-		return new DirectAuthorization(this.vk, { appId, appSecret });
+			...options
+		});
 	}
 
 	/**
 	 * Direct authorization with login & login in android application
 	 */
-	public androidApp(): DirectAuthorization {
-		return new DirectAuthorization(this.vk, {
+	public androidApp(options: IDirectAuthOptions): DirectAuthorization {
+		return this.direct({
+			...options,
+
 			appId: 2274003,
 			appSecret: 'hHbZxrka2uZ6jB1inYsH'
 		});
@@ -71,8 +119,10 @@ export class Authorization {
 	/**
 	 * Direct authorization with login & login in windows application
 	 */
-	public windowsApp(): DirectAuthorization {
-		return new DirectAuthorization(this.vk, {
+	public windowsApp(options: IDirectAuthOptions): DirectAuthorization {
+		return this.direct({
+			...options,
+
 			appId: 3697615,
 			appSecret: 'AlVXZFMUqyrnABp8ncuU'
 		});
@@ -81,8 +131,10 @@ export class Authorization {
 	/**
 	 * Direct authorization with login & login in windows phone application
 	 */
-	public windowsPhoneApp(): DirectAuthorization {
-		return new DirectAuthorization(this.vk, {
+	public windowsPhoneApp(options: IDirectAuthOptions): DirectAuthorization {
+		return this.direct({
+			...options,
+
 			appId: 3502557,
 			appSecret: 'PEObAuQi6KloPM4T30DV'
 		});
@@ -91,8 +143,10 @@ export class Authorization {
 	/**
 	 * Direct authorization with login & login in iphone application
 	 */
-	public iphoneApp(): DirectAuthorization {
-		return new DirectAuthorization(this.vk, {
+	public iphoneApp(options: IDirectAuthOptions): DirectAuthorization {
+		return this.direct({
+			...options,
+
 			appId: 3140623,
 			appSecret: 'VeWdmVclDCtn6ihuP1nt'
 		});
@@ -101,8 +155,10 @@ export class Authorization {
 	/**
 	 * Direct authorization with login & login in ipad application
 	 */
-	public ipadApp(): DirectAuthorization {
-		return new DirectAuthorization(this.vk, {
+	public ipadApp(options: IDirectAuthOptions): DirectAuthorization {
+		return this.direct({
+			...options,
+
 			appId: 3682744,
 			appSecret: 'mY6CDUswIVdJLCD3j15n'
 		});
@@ -111,8 +167,10 @@ export class Authorization {
 	/**
 	 * Direct authorization with login & login in VK Me application
 	 */
-	public vkMeApp(): DirectAuthorization {
-		return new DirectAuthorization(this.vk, {
+	public vkMeApp(options: IDirectAuthOptions): DirectAuthorization {
+		return this.direct({
+			...options,
+
 			appId: 6146827,
 			appSecret: 'qVxWRF1CwHERuIrKBnqe'
 		});
@@ -129,7 +187,7 @@ export class Authorization {
 			.map(key => `${key}=${params[key]}`)
 			.join('');
 
-		sign += this.vk.options.appSecret;
+		sign += this.options.appSecret;
 		sign = createHash('md5')
 			.update(sign)
 			.digest('hex');

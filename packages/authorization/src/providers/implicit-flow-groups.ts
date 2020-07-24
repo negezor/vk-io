@@ -1,6 +1,6 @@
 import createDebug from 'debug';
 
-import { VK, VKError } from 'vk-io';
+import { VKError } from 'vk-io';
 
 import { URL, URLSearchParams } from 'url';
 
@@ -21,8 +21,8 @@ export class ImplicitFlowGroups extends ImplicitFlow {
 	/**
 	 * Constructor
 	 */
-	constructor(vk: VK, options: IImplicitFlowOptions & { groups: number[] }) {
-		super(vk, options);
+	constructor(options: IImplicitFlowOptions & { groups: number[] }) {
+		super(options);
 
 		let { groups } = options;
 

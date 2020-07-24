@@ -1,7 +1,7 @@
 import createDebug from 'debug';
 import { load as cheerioLoad } from 'cheerio';
 
-import { VK, CaptchaType, ICallbackServiceValidate } from 'vk-io';
+import { CaptchaType, ICallbackServiceValidate, CallbackService } from 'vk-io';
 
 import { Agent } from 'https';
 import { URL, URLSearchParams } from 'url';
@@ -51,8 +51,10 @@ const CAPTCHA_ATTEMPTS = 3;
 const ACTION_SECURITY_CODE = 'act=security';
 
 export interface IDirectAuthOptions {
-	appId?: number;
-	appSecret?: string;
+	callbackService: CallbackService;
+
+	appId: number;
+	appSecret: string;
 
 	login?: string;
 	phone?: string | number;
@@ -66,8 +68,6 @@ export interface IDirectAuthOptions {
 }
 
 export class DirectAuthorization {
-	protected vk: VK;
-
 	protected options: IDirectAuthOptions;
 
 	public started: boolean;
@@ -87,37 +87,9 @@ export class DirectAuthorization {
 	/**
 	 * Constructor
 	 */
-	public constructor(vk: VK, options: Partial<IDirectAuthOptions> = {}) {
-		this.vk = vk;
-
-		const {
-			appId = vk.options.appId,
-			appSecret = vk.options.appSecret,
-
-			login = vk.options.login,
-			phone = vk.options.phone,
-			password = vk.options.password,
-
-			scope = vk.options.authScope,
-			agent = vk.options.agent,
-			timeout = vk.options.authTimeout,
-
-			apiVersion = vk.options.apiVersion
-		} = options;
-
+	public constructor(options: IDirectAuthOptions) {
 		this.options = {
-			appId,
-			appSecret,
-
-			login,
-			phone,
-			password,
-
-			agent,
-			scope,
-			timeout,
-
-			apiVersion
+			...options
 		};
 
 		this.started = false;
@@ -191,7 +163,7 @@ export class DirectAuthorization {
 			username: String(login || phone),
 			grant_type: 'password',
 			client_secret: appSecret,
-			'2fa_supported': String(this.vk.callbackService.hasTwoFactorHandler
+			'2fa_supported': String(this.options.callbackService.hasTwoFactorHandler
 				? 1
 				: 0),
 			v: apiVersion,
@@ -337,7 +309,7 @@ export class DirectAuthorization {
 			});
 		}
 
-		const { key, validate } = await this.vk.callbackService.processingCaptcha({
+		const { key, validate } = await this.options.callbackService.processingCaptcha({
 			type: CaptchaType.DIRECT_AUTH,
 			sid,
 			src
@@ -382,7 +354,7 @@ export class DirectAuthorization {
 			});
 		}
 
-		const { code, validate } = await this.vk.callbackService.processingTwoFactor({
+		const { code, validate } = await this.options.callbackService.processingTwoFactor({
 			phoneMask,
 			type: validationType === '2fa_app'
 				? 'app'

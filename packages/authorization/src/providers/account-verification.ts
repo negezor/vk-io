@@ -1,7 +1,7 @@
 import createDebug from 'debug';
 import { load as cheerioLoad } from 'cheerio';
 
-import { VK, CaptchaType, ICallbackServiceValidate } from 'vk-io';
+import { CaptchaType, ICallbackServiceValidate, CallbackService } from 'vk-io';
 
 import { Agent } from 'https';
 import { URL, URLSearchParams } from 'url';
@@ -55,6 +55,8 @@ const ACTION_CAPTCHA = 'act=captcha';
 const TWO_FACTOR_ATTEMPTS = 3;
 
 interface IAccountVerificationOptions {
+	callbackService: CallbackService;
+
 	agent: Agent;
 
 	login?: string;
@@ -62,8 +64,6 @@ interface IAccountVerificationOptions {
 }
 
 export class AccountVerification {
-	protected vk: VK;
-
 	protected options: IAccountVerificationOptions;
 
 	public jar: CookieJar;
@@ -81,15 +81,9 @@ export class AccountVerification {
 	/**
 	 * Constructor
 	 */
-	public constructor(vk: VK) {
-		this.vk = vk;
-
-		const { agent, login, phone } = vk.options;
-
+	public constructor(options: IAccountVerificationOptions) {
 		this.options = {
-			login,
-			phone,
-			agent
+			...options
 		};
 
 		this.jar = new CookieJar();
@@ -121,7 +115,8 @@ export class AccountVerification {
 			...options,
 
 			agent,
-			timeout: this.vk.options.authTimeout,
+			// TODO: Use authTimeout
+			timeout: 10_000,
 			compress: false,
 
 			headers: {
@@ -230,7 +225,7 @@ export class AccountVerification {
 
 		const { action, fields } = parseFormField($);
 
-		const { code, validate } = await this.vk.callbackService.processingTwoFactor({});
+		const { code, validate } = await this.options.callbackService.processingTwoFactor({});
 
 		fields.code = code;
 
@@ -340,7 +335,7 @@ export class AccountVerification {
 			});
 		}
 
-		const { key, validate } = await this.vk.callbackService.processingCaptcha({
+		const { key, validate } = await this.options.callbackService.processingCaptcha({
 			type: CaptchaType.ACCOUNT_VERIFICATION,
 			sid: fields.captcha_sid,
 			src
