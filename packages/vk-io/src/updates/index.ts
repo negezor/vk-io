@@ -1,1 +1,3 @@
-export { Updates } from './updates';
+export * from './transports';
+
+export * from './updates';

@@ -20,6 +20,7 @@ export {
 
 export * from './api';
 export * from './upload';
+export * from './updates';
 
 export { Composer } from './structures/shared/composer';
 export { ICallbackServiceValidate } from './utils/callback-service';
