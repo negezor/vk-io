@@ -6,6 +6,7 @@ import { LIMITS_METHODS } from './limits';
 import { API } from '../api';
 import { Chain } from './chain';
 import { ExecuteError } from '../errors';
+import { IExecutesPayload } from './types';
 
 import { getChainReturn, getExecuteMethod } from '../utils/helpers';
 
@@ -120,12 +121,7 @@ export class Collect {
 	 * Call multiple executors
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	public async executes(method: string, queue: Record<string, any>[]): Promise<{
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		response: any[];
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		errors: any[];
-	}> {
+	public async executes(method: string, queue: Record<string, any>[]): Promise<IExecutesPayload> {
 		const queueMethods = queue.map(params => (
 			getExecuteMethod(method, params)
 		));
@@ -139,11 +135,7 @@ export class Collect {
 			promises.push(this.api.execute({ code }));
 		}
 
-		const out: {
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			response: any[];
-			errors: ExecuteError[];
-		} = {
+		const out: IExecutesPayload = {
 			response: [],
 			errors: []
 		};

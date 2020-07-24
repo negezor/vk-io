@@ -1,9 +1,10 @@
 import { inspectable } from 'inspectable';
 
-import { VKError, ExecuteError } from '../errors';
+import { VKError } from '../errors';
 
 import { API } from '../api';
 import { APIRequest } from '../api/request';
+import { IExecutesPayload } from './types';
 import { getChainReturn, resolveExecuteTask } from '../utils/helpers';
 
 export interface IChainOptions {
@@ -66,8 +67,7 @@ export class Chain {
 	/**
 	 * Starts the chain
 	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	public async run(): Promise<{ response: any[]; errors: any[] }> {
+	public async run(): Promise<IExecutesPayload> {
 		if (this.started) {
 			throw new VKError({
 				message: 'Chain already started',
@@ -79,11 +79,7 @@ export class Chain {
 
 		const { queue } = this;
 
-		const out: {
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			response: any[];
-			errors: ExecuteError[];
-		} = {
+		const out: IExecutesPayload = {
 			response: [],
 			errors: []
 		};
