@@ -40,7 +40,7 @@ export class VK {
 	/**
 	 * Constructor
 	 */
-	public constructor(options: Partial<IVKOptions> = {}) {
+	public constructor(options: Partial<IVKOptions> & { token: string }) {
 		Object.assign(this.options, options);
 
 		this.api = new API({
