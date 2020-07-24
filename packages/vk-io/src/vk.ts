@@ -1,7 +1,6 @@
 import { inspectable } from 'inspectable';
 
 import { Agent } from 'https';
-import { EventEmitter } from 'events';
 
 import { API } from './api';
 import { Upload } from './upload';
