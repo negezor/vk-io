@@ -8,7 +8,6 @@ import { Agent, globalAgent } from 'https';
 import { randomBytes } from 'crypto';
 import { createReadStream } from 'fs';
 
-import { VK } from '../vk';
 import { API } from '../api';
 import { MultipartStream } from './multipart-stream';
 import { UploadError, UploadErrorCode } from '../errors';
@@ -154,17 +153,15 @@ export class Upload {
 	/**
 	 * Constructor
 	 */
-	constructor(vk: VK) {
-		this.api = vk.api;
+	constructor({ api, ...options }: IUploadOptions) {
+		this.api = api;
 
 		this.options = {
 			// 20 ms
-			// @ts-expect-error
 			agent: globalAgent,
-			// @ts-expect-error
 			uploadTimeout: 20_000,
 
-			...vk.options
+			...options
 		};
 	}
 

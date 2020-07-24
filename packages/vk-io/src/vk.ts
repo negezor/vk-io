@@ -31,7 +31,7 @@ export class VK {
 
 	public api = new API(this);
 
-	public upload = new Upload(this);
+	public upload: Upload;
 
 	public collect = new Collect(this);
 
@@ -44,6 +44,12 @@ export class VK {
 	 */
 	public constructor(options: Partial<IVKOptions> = {}) {
 		this.setOptions(options);
+
+		this.upload = new Upload({
+			api: this.api,
+
+			...this.options
+		});
 	}
 
 	/**
