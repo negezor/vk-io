@@ -65,9 +65,8 @@ class API {
 	 */
 	public constructor(vk: VK) {
 		this.vk = vk;
-		this.manager = new APIManager(this);
-
 		this.options = vk.options;
+		this.manager = new APIManager(this);
 
 		this.vk.internalHooks.on('update_options', ({ keys }: { keys: string[] }) => {
 			if (!keys.includes('apiMode')) {
