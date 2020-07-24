@@ -1,16 +1,6 @@
 import { MessageSource, CHAT_PEER } from './constants';
 
 /**
- * All main pages of the site
- */
-export const parseResourceRe = /(id|club|public|albums|videos|gifts|audios|tag|app(?:lication))(-?\d+)/;
-
-/**
- * Parse owner resource
- */
-export const parseOwnerResourceRe = /(album|topic|wall|page|videos)(-?\d+)_(\d+)/;
-
-/**
  * Parse attachments
  */
 export const parseAttachmentRe = /(photo|video|audio|doc|audio_message|graffiti|wall|market|poll|gift)(-?\d+)_(\d+)_?(\w+)?/;
