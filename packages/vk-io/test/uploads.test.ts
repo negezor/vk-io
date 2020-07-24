@@ -11,7 +11,7 @@ import {
 
 const { TOKEN } = process.env;
 
-const vk = new VK({ token: TOKEN });
+const vk = new VK({ token: TOKEN! });
 
 const IMAGE_URL = 'https://picsum.photos/200/300/?image=1';
 

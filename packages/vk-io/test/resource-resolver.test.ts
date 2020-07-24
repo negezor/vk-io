@@ -9,7 +9,7 @@ import {
 
 const { TOKEN } = process.env;
 
-const vk = new VK({ token: TOKEN });
+const vk = new VK({ token: TOKEN! });
 
 const durovUser: IResolvedTargetResource = {
 	id: 1,
