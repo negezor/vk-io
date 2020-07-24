@@ -38,7 +38,7 @@ export class WallPostContext<S = ContextDefaultState>
 			]
 		});
 
-		this.wall = new WallAttachment(this.payload, this.vk.api);
+		this.wall = new WallAttachment(this.payload, this.api);
 	}
 
 	/**
@@ -54,7 +54,7 @@ export class WallPostContext<S = ContextDefaultState>
 	public deletePost(): Promise<number> {
 		const { wall } = this;
 
-		return this.vk.api.wall.delete({
+		return this.api.wall.delete({
 			post_id: wall.id,
 			owner_id: wall.ownerId
 		});

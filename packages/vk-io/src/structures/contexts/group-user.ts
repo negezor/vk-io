@@ -130,7 +130,7 @@ export class GroupUserContext<S = ContextDefaultState>
 			}));
 		}
 
-		return this.vk.api.groups.ban({
+		return this.api.groups.ban({
 			...params,
 
 			group_id: this.$groupId!,
@@ -149,7 +149,7 @@ export class GroupUserContext<S = ContextDefaultState>
 			}));
 		}
 
-		return this.vk.api.groups.unban({
+		return this.api.groups.unban({
 			group_id: this.$groupId!,
 			user_id: this.userId
 		});

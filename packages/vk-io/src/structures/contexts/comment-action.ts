@@ -287,7 +287,7 @@ class CommentActionContext<S = ContextDefaultState>
 		}
 
 		if (this.isBoardComment) {
-			return this.vk.api.board.editComment({
+			return this.api.board.editComment({
 				...options,
 
 				comment_id: this.id,
@@ -304,19 +304,19 @@ class CommentActionContext<S = ContextDefaultState>
 		};
 
 		if (this.isPhotoComment) {
-			return this.vk.api.photos.editComment(params);
+			return this.api.photos.editComment(params);
 		}
 
 		if (this.isVideoComment) {
-			return this.vk.api.video.editComment(params);
+			return this.api.video.editComment(params);
 		}
 
 		if (this.isWallComment) {
-			return this.vk.api.wall.editComment(params);
+			return this.api.wall.editComment(params);
 		}
 
 		if (this.isMarketComment) {
-			return this.vk.api.market.editComment(params);
+			return this.api.market.editComment(params);
 		}
 
 		return Promise.reject(new VKError({
@@ -337,7 +337,7 @@ class CommentActionContext<S = ContextDefaultState>
 		}
 
 		if (this.isBoardComment) {
-			return this.vk.api.board.deleteComment({
+			return this.api.board.deleteComment({
 				comment_id: this.id,
 				topic_id: this.objectId,
 				group_id: this.$groupId!
@@ -350,19 +350,19 @@ class CommentActionContext<S = ContextDefaultState>
 		};
 
 		if (this.isPhotoComment) {
-			return this.vk.api.photos.deleteComment(params);
+			return this.api.photos.deleteComment(params);
 		}
 
 		if (this.isVideoComment) {
-			return this.vk.api.video.deleteComment(params);
+			return this.api.video.deleteComment(params);
 		}
 
 		if (this.isWallComment) {
-			return this.vk.api.wall.deleteComment(params);
+			return this.api.wall.deleteComment(params);
 		}
 
 		if (this.isMarketComment) {
-			return this.vk.api.market.deleteComment(params);
+			return this.api.market.deleteComment(params);
 		}
 
 		return Promise.reject(new VKError({

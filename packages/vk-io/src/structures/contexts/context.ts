@@ -1,6 +1,7 @@
 import { inspectable } from 'inspectable';
 
-import { VK } from '../../vk';
+import { API } from '../../api';
+import { Upload } from '../../upload';
 import { kSerializeData, UpdateSource } from '../../utils/constants';
 
 import { AllowArray } from '../../types';
@@ -14,7 +15,8 @@ export interface IContextOptions<
 	Type extends string = string,
 	SubType extends string = string
 > {
-	vk: VK;
+	api: API;
+	upload: Upload;
 
 	type: Type;
 	subTypes: SubType[];
@@ -43,7 +45,9 @@ export class Context<
 
 	public state: S;
 
-	public vk: VK;
+	protected api: API;
+
+	protected upload: Upload;
 
 	public $groupId?: number;
 
@@ -56,7 +60,8 @@ export class Context<
 	 * Constructor
 	 */
 	public constructor(options: IContextOptions<P, S, Type, SubType>) {
-		this.vk = options.vk;
+		this.api = options.api;
+		this.upload = options.upload;
 
 		this.type = options.type;
 		this.subTypes = options.subTypes;

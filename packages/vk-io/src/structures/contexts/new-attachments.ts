@@ -87,7 +87,7 @@ class NewAttachmentsContext<S = ContextDefaultState>
 		if (this.isPhoto) {
 			const [photo] = this.getAttachments(AttachmentType.PHOTO);
 
-			return this.vk.api.photos.delete({
+			return this.api.photos.delete({
 				owner_id: photo.ownerId,
 				photo_id: photo.id
 			});
@@ -96,7 +96,7 @@ class NewAttachmentsContext<S = ContextDefaultState>
 		if (this.isVideo) {
 			const [video] = this.getAttachments(AttachmentType.VIDEO);
 
-			return this.vk.api.video.delete({
+			return this.api.video.delete({
 				owner_id: video.ownerId,
 				video_id: video.id
 			});
@@ -106,7 +106,7 @@ class NewAttachmentsContext<S = ContextDefaultState>
 			const [audio] = this.getAttachments(AttachmentType.AUDIO);
 
 			// @ts-expect-error
-			return this.vk.api.audio.delete({
+			return this.api.audio.delete({
 				owner_id: audio.ownerId,
 				audio_id: audio.id
 			});

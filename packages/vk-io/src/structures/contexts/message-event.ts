@@ -99,7 +99,7 @@ export class MessageEventContext<S = ContextDefaultState>
 	 * Dispatches an event with an action that will occur when the callback button is pressed
 	 */
 	public answer(eventData: MessageEventAction): Promise<1> {
-		return this.vk.api.messages.sendMessageEventAnswer({
+		return this.api.messages.sendMessageEventAnswer({
 			event_id: this.eventId,
 			peer_id: this.peerId,
 			user_id: this.userId,

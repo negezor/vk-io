@@ -186,10 +186,10 @@ class MessageContext<S = ContextDefaultState>
 		}
 
 		const { items } = this.id !== 0
-			? await this.vk.api.messages.getById({
+			? await this.api.messages.getById({
 				message_ids: this.id
 			})
-			: await this.vk.api.messages.getByConversationMessageId({
+			: await this.api.messages.getByConversationMessageId({
 				peer_id: this.peerId,
 				conversation_message_ids: this.conversationMessageId!
 			});
@@ -466,7 +466,7 @@ class MessageContext<S = ContextDefaultState>
 	 * Edits a message
 	 */
 	editMessage(params: object): Promise<number> {
-		return this.vk.api.messages.edit({
+		return this.api.messages.edit({
 			attachment: String(
 				this.attachments.filter(attachment => (
 					attachment.canBeAttached
@@ -498,7 +498,7 @@ class MessageContext<S = ContextDefaultState>
 	 * Sends a message to the current dialog
 	 */
 	send(text: string | object, params?: object): Promise<number> {
-		return this.vk.api.messages.send({
+		return this.api.messages.send({
 			peer_id: this.peerId,
 			// @ts-expect-error
 			random_id: getRandomId(),
@@ -555,7 +555,7 @@ class MessageContext<S = ContextDefaultState>
 			: rawSources;
 
 		const attachment = await Promise.all(sources.map(source => (
-			this.vk.upload.messagePhoto({
+			this.upload.messagePhoto({
 				source,
 
 				peer_id: this.peerId
@@ -583,7 +583,7 @@ class MessageContext<S = ContextDefaultState>
 			: rawSources;
 
 		const attachment = await Promise.all(sources.map(source => (
-			this.vk.upload.messageDocument({
+			this.upload.messageDocument({
 				source,
 
 				peer_id: this.peerId
@@ -606,7 +606,7 @@ class MessageContext<S = ContextDefaultState>
 		source: UploadSource,
 		params: object = {}
 	): Promise<number> {
-		const attachment = await this.vk.upload.audioMessage({
+		const attachment = await this.upload.audioMessage({
 			source,
 
 			peer_id: this.peerId
@@ -625,7 +625,7 @@ class MessageContext<S = ContextDefaultState>
 	 * Changes the status of typing in the dialog
 	 */
 	async setActivity(): Promise<boolean> {
-		const isActivited = await this.vk.api.messages.setActivity({
+		const isActivited = await this.api.messages.setActivity({
 			peer_id: this.peerId,
 			type: 'typing'
 		});
@@ -640,7 +640,7 @@ class MessageContext<S = ContextDefaultState>
 		ids = [this.id],
 		options = { important: Number(!this.isImportant) }
 	): Promise<number[]> {
-		const messageIds = await this.vk.api.messages.markAsImportant({
+		const messageIds = await this.api.messages.markAsImportant({
 			...options,
 
 			message_ids: ids
@@ -657,7 +657,7 @@ class MessageContext<S = ContextDefaultState>
 	 * Deletes the message
 	 */
 	async deleteMessage(ids: number[] = [this.id], options = { spam: 0 }): Promise<number> {
-		const messageIds = await this.vk.api.messages.delete({
+		const messageIds = await this.api.messages.delete({
 			...options,
 
 			message_ids: ids
@@ -670,7 +670,7 @@ class MessageContext<S = ContextDefaultState>
 	 * Restores the message
 	 */
 	async restoreMessage(): Promise<boolean> {
-		const isRestored = await this.vk.api.messages.restore({
+		const isRestored = await this.api.messages.restore({
 			message_id: this.id
 		});
 
@@ -683,7 +683,7 @@ class MessageContext<S = ContextDefaultState>
 	public async renameChat(title: string): Promise<boolean> {
 		this.assertIsChat();
 
-		const isRenamed = await this.vk.api.messages.editChat({
+		const isRenamed = await this.api.messages.editChat({
 			chat_id: this.chatId!,
 			title
 		});
@@ -697,7 +697,7 @@ class MessageContext<S = ContextDefaultState>
 	public async newChatPhoto(source: UploadSourceValue, params: object = {}): Promise<object> {
 		this.assertIsChat();
 
-		const response = await this.vk.upload.chatPhoto({
+		const response = await this.upload.chatPhoto({
 			...params,
 
 			chat_id: this.chatId!,
@@ -713,7 +713,7 @@ class MessageContext<S = ContextDefaultState>
 	public async deleteChatPhoto(): Promise<boolean> {
 		this.assertIsChat();
 
-		await this.vk.api.messages.deleteChatPhoto({
+		await this.api.messages.deleteChatPhoto({
 			chat_id: this.chatId!
 		});
 
@@ -726,7 +726,7 @@ class MessageContext<S = ContextDefaultState>
 	public async inviteUser(id: number = this.eventMemberId!): Promise<boolean> {
 		this.assertIsChat();
 
-		const isInvited = await this.vk.api.messages.addChatUser({
+		const isInvited = await this.api.messages.addChatUser({
 			chat_id: this.chatId!,
 			user_id: id
 		});
@@ -740,7 +740,7 @@ class MessageContext<S = ContextDefaultState>
 	public async kickUser(id: number = this.eventMemberId!): Promise<boolean> {
 		this.assertIsChat();
 
-		const isKicked = await this.vk.api.messages.removeChatUser({
+		const isKicked = await this.api.messages.removeChatUser({
 			chat_id: this.chatId!,
 			member_id: id
 		});
@@ -754,7 +754,7 @@ class MessageContext<S = ContextDefaultState>
 	public async pinMessage(): Promise<boolean> {
 		this.assertIsChat();
 
-		const isPinned = await this.vk.api.messages.pin({
+		const isPinned = await this.api.messages.pin({
 			peer_id: this.peerId,
 			message_id: this.id
 		});
@@ -768,7 +768,7 @@ class MessageContext<S = ContextDefaultState>
 	public async unpinMessage(): Promise<boolean> {
 		this.assertIsChat();
 
-		const isUnpinned = await this.vk.api.messages.unpin({
+		const isUnpinned = await this.api.messages.unpin({
 			peer_id: this.peerId,
 			message_id: this.id
 		});

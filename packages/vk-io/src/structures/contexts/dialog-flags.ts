@@ -83,7 +83,7 @@ export class DialogFlagsContext<S = ContextDefaultState>
 	 * Marks the conversation as answered or unchecked
 	 */
 	public markAsAnsweredConversation(params: object): Promise<number> {
-		return this.vk.api.messages.markAsAnsweredConversation({
+		return this.api.messages.markAsAnsweredConversation({
 			...params,
 
 			peer_id: this.peerId
@@ -94,7 +94,7 @@ export class DialogFlagsContext<S = ContextDefaultState>
 	 * Marks the conversation as important or removes the mark
 	 */
 	public markAsImportantConversation(params: object): Promise<number> {
-		return this.vk.api.messages.markAsImportantConversation({
+		return this.api.messages.markAsImportantConversation({
 			...params,
 
 			peer_id: this.peerId
