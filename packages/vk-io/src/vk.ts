@@ -43,7 +43,7 @@ export class VK {
 	 * Constructor
 	 */
 	public constructor(options: Partial<IVKOptions> = {}) {
-		this.setOptions(options);
+		Object.assign(this.options, options);
 
 		this.upload = new Upload({
 			api: this.api,
@@ -57,19 +57,6 @@ export class VK {
 	 */
 	public get [Symbol.toStringTag](): string {
 		return this.constructor.name;
-	}
-
-	/**
-	 * Sets options
-	 */
-	public setOptions(options: Partial<IVKOptions>): this {
-		Object.assign(this.options, options);
-
-		this.internalHooks.emit('update_options', {
-			keys: Object.keys(options)
-		});
-
-		return this;
 	}
 }
 
