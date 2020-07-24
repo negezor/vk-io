@@ -29,7 +29,8 @@ export enum AttachmentType {
 	STORY = 'story'
 }
 
-export type AttachmentTypeString = 'audio'
+export type AttachmentTypeString =
+'audio'
 | 'audio_message'
 | 'graffiti'
 | 'doc'
