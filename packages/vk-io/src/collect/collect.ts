@@ -1,13 +1,13 @@
 import { inspectable } from 'inspectable';
 
-import { CollectStream, ICollectStreamOptions } from './stream';
+import { ICollectIteratorOptions, ICollectIteratorData, createCollectIterator } from './iterator';
 import { LIMITS_METHODS } from './limits';
 
 import { API } from '../api';
 
 export interface ICollectStreamGroup {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	[key: string]: <T = Record<string, any>>(options: ICollectStreamOptions['options']) => CollectStream<T>;
+	[key: string]: <T = Record<string, any>>(options: ICollectIteratorOptions['params']) => AsyncGenerator<ICollectIteratorData<T>>;
 }
 
 export interface ICollectOptions {
@@ -84,13 +84,15 @@ export class Collect {
 			}
 
 			// @ts-expect-error
-			this[group][name] = (options = {}): CollectStream => (
-				new CollectStream({
+			this[group][name] = (params = {}): AsyncGenerator<ICollectIteratorData<T>> => (
+				createCollectIterator({
 					api,
-					options,
+
 					method,
-					limit,
-					max
+					params,
+
+					countPerRequest: limit,
+					maxCount: max
 				})
 			);
 		}

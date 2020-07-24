@@ -4,10 +4,9 @@ export interface IExecuteCodeOptions {
 	method: string;
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	params: Record<string, any>;
-	parallelCount: number;
 }
 
-export const getExecuteCode = ({ method, params, parallelCount }: IExecuteCodeOptions): string => (
+export const getExecuteCode = ({ method, params }: IExecuteCodeOptions): string => (
 	`
 		var params = ${getExecuteParams(params)};
 
@@ -16,11 +15,13 @@ export const getExecuteCode = ({ method, params, parallelCount }: IExecuteCodeOp
 		var total = parseInt(Args.total);
 		var received = parseInt(Args.received);
 
+		var parallelRequests = parseInt(Args.parallelRequests);
+
 		var proceed = total == 0 || received < total;
 
 		var i = 0, items = [], profiles = [], groups = [], result, length;
 
-		while (i < ${parallelCount} && proceed) {
+		while (i < parallelRequests && proceed) {
 			result = API.${method}(params);
 			length = result.items.length;
 
@@ -42,7 +43,7 @@ export const getExecuteCode = ({ method, params, parallelCount }: IExecuteCodeOp
 		}
 
 		return {
-			total: total,
+			count: total,
 			items: items.splice(0, total),
 			profiles: profiles.splice(0, total),
 			groups: groups.splice(0, total)
