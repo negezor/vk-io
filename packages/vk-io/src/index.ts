@@ -1,10 +1,4 @@
 export * from './errors';
-export * from './structures/keyboard';
-export * from './structures/contexts';
-export * from './structures/attachments';
-
-export * from './structures/shared/message-reply';
-export * from './structures/shared/message-forward';
 
 export {
 	CaptchaType,
@@ -21,12 +15,11 @@ export {
 export * from './api';
 export * from './upload';
 export * from './updates';
+export * from './structures';
 
-export { Composer } from './structures/shared/composer';
 export { ICallbackServiceValidate } from './utils/callback-service';
 
 export { getRandomId, applyMixins } from './utils/helpers';
-export { Attachmentable, IAllAttachmentable } from './structures/shared/attachmentable';
 
 export {
 	IResolveResourceOptions,
