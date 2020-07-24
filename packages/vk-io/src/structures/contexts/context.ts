@@ -110,7 +110,7 @@ export class Context<
 	 */
 	public [kSerializeData](): object {
 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		const { vk, ...payload } = this;
+		const { api, upload, ...payload } = this;
 
 		return payload;
 	}
