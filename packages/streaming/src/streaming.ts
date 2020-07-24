@@ -139,7 +139,10 @@ export class StreamingAPI {
 	 */
 	private async handleEvent(event: IStreamingContextPayload): Promise<void> {
 		const context = new StreamingContext({
-			vk: this.vk,
+			// @ts-expect-error
+			api: {},
+			// @ts-expect-error
+			upload: {},
 			payload: event,
 
 			state: {},

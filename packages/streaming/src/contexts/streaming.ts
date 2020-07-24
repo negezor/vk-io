@@ -68,7 +68,7 @@ class StreamingContext<S = ContextDefaultState>
 			]
 		});
 
-		this.attachments = transformAttachments(this.payload.attachments, this.vk);
+		this.attachments = transformAttachments(this.payload.attachments, this.api);
 	}
 
 	/**
