@@ -4,10 +4,12 @@ import { AbortController } from 'abort-controller';
 import { inspectable } from 'inspectable';
 
 import { URL } from 'url';
+import { Agent, globalAgent } from 'https';
 import { randomBytes } from 'crypto';
 import { createReadStream } from 'fs';
 
 import { VK } from '../vk';
+import { API } from '../api';
 import { MultipartStream } from './multipart-stream';
 import { UploadError, UploadErrorCode } from '../errors';
 import { DefaultExtension, DefaultContentType } from '../utils/constants';
@@ -137,14 +139,33 @@ const DocumentTypes: Record<string, typeof DocumentAttachment
 	audio_message: AudioMessageAttachment
 };
 
+export interface IUploadOptions {
+	api: API;
+
+	agent?: Agent;
+	uploadTimeout?: number;
+}
+
 export class Upload {
-	private vk: VK;
+	private api: API;
+
+	protected options: Required<Omit<IUploadOptions, 'api'>>;
 
 	/**
 	 * Constructor
 	 */
 	constructor(vk: VK) {
-		this.vk = vk;
+		this.api = vk.api;
+
+		this.options = {
+			// 20 ms
+			// @ts-expect-error
+			agent: globalAgent,
+			// @ts-expect-error
+			uploadTimeout: 20_000,
+
+			...vk.options
+		};
 	}
 
 	/**
@@ -172,10 +193,10 @@ export class Upload {
 			params,
 
 			// @ts-expect-error
-			getServer: this.vk.api.photos.getUploadServer,
+			getServer: this.api.photos.getUploadServer,
 			serverParams: ['album_id', 'group_id'],
 
-			saveFiles: this.vk.api.photos.save,
+			saveFiles: this.api.photos.save,
 			saveParams: ['album_id', 'group_id', 'latitude', 'longitude', 'caption'],
 
 			maxFiles: 5,
@@ -184,7 +205,7 @@ export class Upload {
 
 		// @ts-expect-error
 		return photos.map(photo => (
-			new PhotoAttachment(photo, this.vk)
+			new PhotoAttachment(photo, this.api)
 		));
 	}
 
@@ -206,18 +227,18 @@ export class Upload {
 			params,
 
 			// @ts-expect-error
-			getServer: this.vk.api.photos.getWallUploadServer,
+			getServer: this.api.photos.getWallUploadServer,
 			serverParams: ['group_id'],
 
 			// @ts-expect-error
-			saveFiles: this.vk.api.photos.saveWallPhoto,
+			saveFiles: this.api.photos.saveWallPhoto,
 			saveParams: ['user_id', 'group_id', 'latitude', 'longitude', 'caption'],
 
 			maxFiles: 1,
 			attachmentType: 'photo'
 		});
 
-		return new PhotoAttachment(photo, this.vk);
+		return new PhotoAttachment(photo, this.api);
 	}
 
 	/**
@@ -240,10 +261,10 @@ export class Upload {
 			params,
 
 			// @ts-expect-error
-			getServer: this.vk.api.photos.getOwnerPhotoUploadServer,
+			getServer: this.api.photos.getOwnerPhotoUploadServer,
 			serverParams: ['owner_id'],
 
-			saveFiles: this.vk.api.photos.saveOwnerPhoto,
+			saveFiles: this.api.photos.saveOwnerPhoto,
 
 			maxFiles: 1,
 			attachmentType: 'photo'
@@ -272,17 +293,17 @@ export class Upload {
 			params,
 
 			// @ts-expect-error
-			getServer: this.vk.api.photos.getMessagesUploadServer,
+			getServer: this.api.photos.getMessagesUploadServer,
 			serverParams: ['peer_id'],
 
 			// @ts-expect-error
-			saveFiles: this.vk.api.photos.saveMessagesPhoto,
+			saveFiles: this.api.photos.saveMessagesPhoto,
 
 			maxFiles: 1,
 			attachmentType: 'photo'
 		});
 
-		return new PhotoAttachment(photo, this.vk);
+		return new PhotoAttachment(photo, this.api);
 	}
 
 	/**
@@ -305,12 +326,12 @@ export class Upload {
 			params,
 
 			// @ts-expect-error
-			getServer: this.vk.api.photos.getChatUploadServer,
+			getServer: this.api.photos.getChatUploadServer,
 			serverParams: ['chat_id', 'crop_x', 'crop_y', 'crop_width'],
 
 			saveFiles: file => (
 				// @ts-expect-error
-				this.vk.api.messages.setChatPhoto({ file })
+				this.api.messages.setChatPhoto({ file })
 			),
 
 			maxFiles: 1,
@@ -389,18 +410,18 @@ export class Upload {
 			params,
 
 			// @ts-expect-error
-			getServer: this.vk.api.photos.getMarketUploadServer,
+			getServer: this.api.photos.getMarketUploadServer,
 			serverParams: ['group_id', 'main_photo', 'crop_x', 'crop_y', 'crop_width'],
 
 			// @ts-expect-error
-			saveFiles: this.vk.api.photos.saveMarketPhoto,
+			saveFiles: this.api.photos.saveMarketPhoto,
 			saveParams: ['group_id'],
 
 			maxFiles: 1,
 			attachmentType: 'photo'
 		});
 
-		return new PhotoAttachment(photo, this.vk);
+		return new PhotoAttachment(photo, this.api);
 	}
 
 	/**
@@ -416,18 +437,18 @@ export class Upload {
 			params,
 
 			// @ts-expect-error
-			getServer: this.vk.api.photos.getMarketAlbumUploadServer,
+			getServer: this.api.photos.getMarketAlbumUploadServer,
 			serverParams: ['group_id'],
 
 			// @ts-expect-error
-			saveFiles: this.vk.api.photos.saveMarketAlbumPhoto,
+			saveFiles: this.api.photos.saveMarketAlbumPhoto,
 			saveParams: ['group_id'],
 
 			maxFiles: 1,
 			attachmentType: 'photo'
 		});
 
-		return new PhotoAttachment(photo, this.vk);
+		return new PhotoAttachment(photo, this.api);
 	}
 
 	/**
@@ -444,17 +465,17 @@ export class Upload {
 			params,
 
 			// @ts-expect-error
-			getServer: this.vk.api.audio.getUploadServer,
+			getServer: this.api.audio.getUploadServer,
 
 			// @ts-expect-error
-			saveFiles: this.vk.api.audio.save,
+			saveFiles: this.api.audio.save,
 			saveParams: ['title', 'artist'],
 
 			maxFiles: 1,
 			attachmentType: 'audio'
 		});
 
-		return new AudioAttachment(audio, this.vk);
+		return new AudioAttachment(audio, this.api);
 	}
 
 	/**
@@ -477,7 +498,7 @@ export class Upload {
 			compression?: number;
 		}
 	): Promise<VideoAttachment> {
-		const save = await this.vk.api.video.save(pickExistingProperties(params, [
+		const save = await this.api.video.save(pickExistingProperties(params, [
 			'group_id',
 			'album_id',
 			'link',
@@ -496,13 +517,13 @@ export class Upload {
 
 		if (params.link !== undefined) {
 			const response = await fetch(save.upload_url!, {
-				agent: this.vk.options.agent
+				agent: this.options.agent
 			});
 
 			await response.json();
 
 			// @ts-expect-error
-			return new VideoAttachment(save, this.vk);
+			return new VideoAttachment(save, this.api);
 		}
 
 		const { source: rawSource } = params;
@@ -532,7 +553,7 @@ export class Upload {
 			timeout: source.timeout
 		});
 
-		return new VideoAttachment({ ...save, ...video }, this.vk);
+		return new VideoAttachment({ ...save, ...video }, this.api);
 	}
 
 	/**
@@ -545,11 +566,11 @@ export class Upload {
 			params,
 
 			// @ts-expect-error
-			getServer: this.vk.api.docs.getUploadServer,
+			getServer: this.api.docs.getUploadServer,
 			serverParams: ['type', 'group_id'],
 
 			// @ts-expect-error
-			saveFiles: this.vk.api.docs.save,
+			saveFiles: this.api.docs.save,
 			saveParams: ['title', 'tags'],
 
 			maxFiles: 1,
@@ -558,7 +579,7 @@ export class Upload {
 
 		const ConductAttachment = DocumentTypes[response.type] || DocumentTypes.doc;
 
-		return new ConductAttachment(response[response.type], this.vk);
+		return new ConductAttachment(response[response.type], this.api);
 	}
 
 	/**
@@ -587,11 +608,11 @@ export class Upload {
 			params,
 
 			// @ts-expect-error
-			getServer: this.vk.api.docs.getWallUploadServer,
+			getServer: this.api.docs.getWallUploadServer,
 			serverParams: ['type', 'group_id'],
 
 			// @ts-expect-error
-			saveFiles: this.vk.api.docs.save,
+			saveFiles: this.api.docs.save,
 			saveParams: ['title', 'tags'],
 
 			maxFiles: 1,
@@ -600,7 +621,7 @@ export class Upload {
 
 		const ConductAttachment = DocumentTypes[response.type] || DocumentTypes.doc;
 
-		return new ConductAttachment(response[response.type], this.vk);
+		return new ConductAttachment(response[response.type], this.api);
 	}
 
 	/**
@@ -630,11 +651,11 @@ export class Upload {
 			params,
 
 			// @ts-expect-error
-			getServer: this.vk.api.docs.getMessagesUploadServer,
+			getServer: this.api.docs.getMessagesUploadServer,
 			serverParams: ['type', 'peer_id'],
 
 			// @ts-expect-error
-			saveFiles: this.vk.api.docs.save,
+			saveFiles: this.api.docs.save,
 			saveParams: ['title', 'tags'],
 
 			maxFiles: 1,
@@ -643,7 +664,7 @@ export class Upload {
 
 		const ConductAttachment = DocumentTypes[response.type] || DocumentTypes.doc;
 
-		return new ConductAttachment(response[response.type], this.vk);
+		return new ConductAttachment(response[response.type], this.api);
 	}
 
 	/**
@@ -764,11 +785,11 @@ export class Upload {
 			params,
 
 			// @ts-expect-error
-			getServer: this.vk.api.photos.getOwnerCoverPhotoUploadServer,
+			getServer: this.api.photos.getOwnerCoverPhotoUploadServer,
 			serverParams: ['group_id', 'crop_x', 'crop_y', 'crop_x2', 'crop_y2'],
 
 			// @ts-expect-error
-			saveFiles: this.vk.api.photos.saveOwnerCoverPhoto,
+			saveFiles: this.api.photos.saveOwnerCoverPhoto,
 
 			maxFiles: 1,
 			attachmentType: 'photo'
@@ -823,7 +844,7 @@ export class Upload {
 			params,
 
 			// @ts-expect-error
-			getServer: this.vk.api.stories.getPhotoUploadServer,
+			getServer: this.api.stories.getPhotoUploadServer,
 			serverParams: [
 				'add_to_news',
 				'user_ids',
@@ -835,7 +856,7 @@ export class Upload {
 			],
 
 			// @ts-expect-error
-			saveFiles: this.vk.api.stories.save,
+			saveFiles: this.api.stories.save,
 
 			maxFiles: 1,
 			attachmentType: 'photo'
@@ -860,7 +881,7 @@ export class Upload {
 			params,
 
 			// @ts-expect-error
-			getServer: this.vk.api.stories.getVideoUploadServer,
+			getServer: this.api.stories.getVideoUploadServer,
 			serverParams: [
 				'add_to_news',
 				'user_ids',
@@ -871,7 +892,7 @@ export class Upload {
 			],
 
 			// @ts-expect-error
-			saveFiles: this.vk.api.stories.save,
+			saveFiles: this.api.stories.save,
 
 			maxFiles: 1,
 			attachmentType: 'video',
@@ -894,11 +915,11 @@ export class Upload {
 			params,
 
 			// @ts-expect-error
-			getServer: this.vk.api.polls.getPhotoUploadServer,
+			getServer: this.api.polls.getPhotoUploadServer,
 			serverParams: ['owner_id'],
 
 			// @ts-expect-error
-			saveFiles: this.vk.api.polls.savePhoto,
+			saveFiles: this.api.polls.savePhoto,
 
 			maxFiles: 1,
 			attachmentType: 'photo'
@@ -1083,7 +1104,7 @@ export class Upload {
 	// eslint-disable-next-line max-len
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 	async upload(url: URL | string, { formData, timeout, forceBuffer }: any): Promise<any> {
-		const { agent, uploadTimeout } = this.vk.options;
+		const { agent, uploadTimeout } = this.options;
 
 		const body = forceBuffer
 			? await streamToBuffer(formData)
