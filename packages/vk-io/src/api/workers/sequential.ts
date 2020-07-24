@@ -104,50 +104,6 @@ export class SequentialWorker extends APIWorker {
 
 		request.captchaValidate?.reject(error);
 
-		if (code === APIErrorCode.AUTH_VALIDATION) {
-			if (this.paused) {
-				this.requeue(request);
-			}
-
-			let AccountVerification;
-			try {
-				// eslint-disable-next-line max-len, @typescript-eslint/ban-ts-comment
-				// @ts-ignore "Cannot find module '@vk-io/authorization' or its corresponding type declarations."
-				AccountVerification = (await import('@vk-io/authorization')).AccountVerification;
-			} catch (importError) {
-				request.reject(error);
-
-				return;
-			}
-
-			this.pause();
-
-			try {
-				// @ts-expect-error
-				const verification = new AccountVerification(this.vk);
-
-				const { token } = await verification.run(error.redirectUri!);
-
-				debug('Account verification passed');
-
-				this.vk.setOptions({ token });
-
-				this.resume();
-
-				this.requeue(request);
-			} catch (verificationError) {
-				debug('Account verification error', verificationError);
-
-				request.reject(error);
-
-				await delay(15e3);
-
-				this.resume();
-			}
-
-			return;
-		}
-
 		if (code !== APIErrorCode.CAPTCHA || !this.vk.callbackService.hasCaptchaHandler) {
 			request.reject(error);
 
