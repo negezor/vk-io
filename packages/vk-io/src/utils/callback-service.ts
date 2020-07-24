@@ -1,4 +1,3 @@
-import { VK } from '../vk';
 import { APIRequest } from '../api/request';
 
 import { VKError, SharedErrorCode } from '../errors';
