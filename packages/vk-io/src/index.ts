@@ -2,6 +2,7 @@ export * from './errors';
 
 export * from './api';
 export * from './upload';
+export * from './collect';
 export * from './updates';
 export * from './structures';
 
