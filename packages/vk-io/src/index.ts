@@ -1,5 +1,3 @@
-export * from './api/schemas';
-
 export * from './errors';
 export * from './structures/keyboard';
 export * from './structures/contexts';
@@ -20,7 +18,7 @@ export {
 	kSerializeData
 } from './utils/constants';
 
-export { API, APIRequest } from './api';
+export * from './api';
 
 export { Composer } from './structures/shared/composer';
 export { ICallbackServiceValidate } from './utils/callback-service';
