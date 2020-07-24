@@ -22,7 +22,7 @@ export {
 	kSerializeData
 } from './utils/constants';
 
-export { APIRequest } from './api/request';
+export { API, APIRequest } from './api';
 
 export { Composer } from './structures/shared/composer';
 export { ICallbackServiceValidate } from './utils/callback-service';
