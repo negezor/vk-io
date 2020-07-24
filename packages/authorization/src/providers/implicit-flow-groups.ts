@@ -1,14 +1,12 @@
 import createDebug from 'debug';
 
-import { VKError } from 'vk-io';
-
 import { URL, URLSearchParams } from 'url';
 
 import { ImplicitFlow, IImplicitFlowOptions } from './implicit-flow';
 
 import { Response } from '../fetch-cookie';
 import { AuthorizationError } from '../errors';
-import { getGroupsPermissionsByName } from '../helpers';
+import { getGroupsPermissionsByName, getAllGroupPermissions } from '../helpers';
 import { CALLBACK_BLANK, AuthErrorCode } from '../constants';
 
 const debug = createDebug('vk-io:authorization:implicit-flow-user');
@@ -50,8 +48,12 @@ export class ImplicitFlowGroups extends ImplicitFlow {
 		const { appId } = this.options;
 		let { scope } = this.options;
 
-		if (scope === 'all' || scope === undefined) {
-			throw new Error('Required option authScope not set');
+		if (scope === undefined) {
+			throw new Error('Required option "scope" not set');
+		}
+
+		if (scope === 'all') {
+			scope = getAllGroupPermissions();
 		} else if (typeof scope !== 'number') {
 			scope = getGroupsPermissionsByName(scope);
 		}

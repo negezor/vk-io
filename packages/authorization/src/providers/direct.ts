@@ -23,7 +23,8 @@ import {
 
 	getFullURL,
 	parseFormField,
-	getUsersPermissionsByName
+	getUsersPermissionsByName,
+	getAllUserPermissions
 } from '../helpers';
 
 const debug = createDebug('vk-io:authorization:direct');
@@ -141,8 +142,12 @@ export class DirectAuthorization {
 	protected getPermissionsPage(query = {}): Promise<Response> {
 		let { scope } = this.options;
 
-		if (scope === 'all' || scope === undefined) {
-			throw new Error('Required option authScope not set');
+		if (scope === undefined) {
+			throw new Error('Required option "scope" not set');
+		}
+
+		if (scope === 'all') {
+			scope = getAllUserPermissions();
 		} else if (typeof scope !== 'number') {
 			scope = getUsersPermissionsByName(scope);
 		}

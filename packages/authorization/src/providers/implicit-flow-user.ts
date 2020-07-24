@@ -6,7 +6,7 @@ import { ImplicitFlow } from './implicit-flow';
 import { AuthorizationError } from '../errors';
 
 import { Response } from '../fetch-cookie';
-import { getUsersPermissionsByName } from '../helpers';
+import { getUsersPermissionsByName, getAllUserPermissions } from '../helpers';
 import { CALLBACK_BLANK, AuthErrorCode } from '../constants';
 
 const debug = createDebug('vk-io:authorization:implicit-flow-user');
@@ -21,8 +21,12 @@ export class ImplicitFlowUser extends ImplicitFlow {
 		const { appId } = this.options;
 		let { scope } = this.options;
 
-		if (scope === 'all' || scope === undefined) {
-			throw new Error('Required option authScope not set');
+		if (scope === undefined) {
+			throw new Error('Required option "scope" not set');
+		}
+
+		if (scope === 'all') {
+			scope = getAllUserPermissions();
 		} else if (typeof scope !== 'number') {
 			scope = getUsersPermissionsByName(scope);
 		}

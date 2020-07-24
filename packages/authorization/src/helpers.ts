@@ -49,6 +49,14 @@ export const getGroupsPermissionsByName = (rawScope: string | string[]): number 
 	return bitMask;
 };
 
+export const getAllUserPermissions = (): number => (
+	getUsersPermissionsByName([...userScopes.keys()])
+);
+
+export const getAllGroupPermissions = (): number => (
+	getGroupsPermissionsByName([...groupScopes.keys()])
+);
+
 /**
  * Parse form
  */
