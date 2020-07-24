@@ -2,9 +2,18 @@ import { inspectable } from 'inspectable';
 
 import { APIMethods } from './schemas/methods';
 
+import {
+	APIWorker,
+	SequentialWorker,
+	ParallelWorker,
+	ParallelSelectedWorker
+} from './workers';
+
 import { VK } from '../vk';
-import { APIManager } from './manager';
 import { APIRequest } from './request';
+import { Constructor } from '../types';
+import { VKError } from '../errors';
+import { MINIMUM_TIME_INTERVAL_API } from '../utils/constants';
 
 const groupMethods = [
 	'account',
@@ -50,15 +59,21 @@ const groupMethods = [
 	'junction'
 ];
 
+const workers: Record<string, Constructor<APIWorker>> = {
+	sequential: SequentialWorker,
+	parallel: ParallelWorker,
+	parallel_selected: ParallelSelectedWorker
+};
+
 /**
  * Working with API methods
  */
 class API {
 	private vk: VK;
 
-	private manager: APIManager;
-
 	public options: VK['options'];
+
+	private worker!: APIWorker;
 
 	/**
 	 * Constructor
@@ -66,14 +81,13 @@ class API {
 	public constructor(vk: VK) {
 		this.vk = vk;
 		this.options = vk.options;
-		this.manager = new APIManager(this);
 
 		this.vk.internalHooks.on('update_options', ({ keys }: { keys: string[] }) => {
 			if (!keys.includes('apiMode')) {
 				return;
 			}
 
-			this.manager.updateWorker();
+			this.updateWorker();
 		});
 
 		for (const group of groupMethods) {
@@ -81,7 +95,7 @@ class API {
 			this[group] = new Proxy(Object.create(null), {
 				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				get: (obj, prop: string) => (params: object): Promise<any> => (
-					this.manager.callWithRequest(new APIRequest({
+					this.callWithRequest(new APIRequest({
 						api: this,
 						method: `${group}.${prop}`,
 						params
@@ -119,7 +133,7 @@ class API {
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public call(method: string, params: object): Promise<any> {
-		return this.manager.callWithRequest(new APIRequest({
+		return this.callWithRequest(new APIRequest({
 			method,
 			params,
 
@@ -132,7 +146,45 @@ class API {
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public callWithRequest(request: APIRequest): Promise<any> {
-		return this.manager.callWithRequest(request);
+		this.worker.enqueue(request);
+
+		return request.promise;
+	}
+
+	private getWorker(): APIWorker {
+		const Worker = workers[this.options.apiMode];
+
+		if (!Worker) {
+			throw new VKError({
+				message: 'Unsuported api mode',
+				code: 'UNSUPPORTED_MODE'
+			});
+		}
+
+		return new Worker(this);
+	}
+
+	public updateWorker(): void {
+		const newWorker = this.getWorker();
+
+		if (this.worker.constructor === newWorker.constructor) {
+			return;
+		}
+
+		if (this.worker.busy) {
+			this.worker.pause();
+			newWorker.pause();
+
+			// @ts-expect-error
+			newWorker.queue = [...this.worker.queue];
+
+			setTimeout(
+				() => newWorker.resume(),
+				MINIMUM_TIME_INTERVAL_API
+			);
+		}
+
+		this.worker = newWorker;
 	}
 }
 
