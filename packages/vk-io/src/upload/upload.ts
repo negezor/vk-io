@@ -953,7 +953,6 @@ export class Upload {
 			});
 		}
 
-		// @ts-expect-error
 		const { length: valuesLength } = source.values;
 
 		if (valuesLength === 0) {

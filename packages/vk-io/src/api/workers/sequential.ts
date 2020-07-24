@@ -111,7 +111,6 @@ export class SequentialWorker extends APIWorker {
 
 			let AccountVerification;
 			try {
-				// @ts-expect-error
 				AccountVerification = (await import('@vk-io/authorization')).AccountVerification;
 			} catch (importError) {
 				request.reject(error);

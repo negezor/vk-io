@@ -35,7 +35,6 @@ class MessageForwardsCollection extends Array<MessageForward> {
 	}
 }
 
-// @ts-expect-error
 // eslint-disable-next-line
 interface MessageForwardsCollection extends Attachmentable {}
 applyMixins(MessageForwardsCollection, [

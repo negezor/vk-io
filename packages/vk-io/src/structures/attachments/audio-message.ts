@@ -44,7 +44,6 @@ export class AudioMessageAttachment extends Attachment<IAudioMessageAttachmentPa
 			docs: `${this.ownerId}_${this.id}`
 		});
 
-		// @ts-expect-error
 		this.payload = document;
 
 		if (this.payload.access_key) {

@@ -43,7 +43,6 @@ export class GraffitiAttachment extends Attachment<IGraffitiAttachmentPayload> {
 			docs: `${this.ownerId}_${this.id}`
 		});
 
-		// @ts-expect-error
 		this.payload = document;
 
 		if (this.payload.access_key) {
