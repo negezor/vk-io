@@ -35,7 +35,7 @@ export class Chain {
 	 * Adds method to queue
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	public append(method: string, params: object): Promise<any> {
+	public append<T = any>(method: string, params: object): Promise<T> {
 		if (this.started) {
 			return Promise.reject(new VKError({
 				message: 'Chain already started',
