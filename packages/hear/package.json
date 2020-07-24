@@ -33,6 +33,6 @@
 		"middleware-io": "^2.5.0"
 	},
 	"peerDependencies": {
-		"vk-io": "^4.0.0-rc.19"
+		"vk-io": "^4.0.0-rc.30"
 	}
 }
