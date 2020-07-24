@@ -6,7 +6,7 @@ export * from './collect';
 export * from './updates';
 export * from './structures';
 
-export { ICallbackServiceValidate } from './utils/callback-service';
+export * from './utils/callback-service';
 
 export { getRandomId, applyMixins } from './utils/helpers';
 
