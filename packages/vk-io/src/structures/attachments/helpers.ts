@@ -17,7 +17,7 @@ import {
 	AudioMessageAttachment
 } from '.';
 
-import { VK } from '../../vk';
+import { API } from '../../api';
 import { AttachmentType } from '../../utils/constants';
 
 const attachmentsTypes = {

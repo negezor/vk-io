@@ -1,4 +1,4 @@
-import { VK } from '../../vk';
+import { API } from '../../api';
 
 import { ExternalAttachment } from './external';
 
@@ -10,10 +10,10 @@ export class WallReplyAttachment extends ExternalAttachment {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: object, vk?: VK) {
+	public constructor(payload: object, api?: API) {
 		super(WALL_REPLY, payload);
 
 		// @ts-expect-error
-		this.vk = vk;
+		this.api = api;
 	}
 }

@@ -1,4 +1,4 @@
-import { VK } from '../../vk';
+import { API } from '../../api';
 
 import { ExternalAttachment } from './external';
 
@@ -24,11 +24,11 @@ export class StickerAttachment extends ExternalAttachment<IStickerAttachmentPayl
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: IStickerAttachmentPayload, vk?: VK) {
+	public constructor(payload: IStickerAttachmentPayload, api?: API) {
 		super(STICKER, payload);
 
 		// @ts-expect-error
-		this.vk = vk;
+		this.api = api;
 	}
 
 	/**

@@ -1,4 +1,4 @@
-import { VK } from '../../vk';
+import { API } from '../../api';
 
 import { Attachment } from './attachment';
 
@@ -40,11 +40,11 @@ export class DocumentAttachment extends Attachment<IDocumentAttachmentPayload> {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: IDocumentAttachmentPayload, vk?: VK) {
+	public constructor(payload: IDocumentAttachmentPayload, api?: API) {
 		super(DOCUMENT, payload.owner_id, payload.id, payload.access_key);
 
 		// @ts-expect-error
-		this.vk = vk;
+		this.api = api;
 		this.payload = payload;
 
 		this.$filled = payload.ext !== undefined && payload.date !== undefined;
@@ -58,7 +58,7 @@ export class DocumentAttachment extends Attachment<IDocumentAttachmentPayload> {
 			return;
 		}
 
-		const [document] = await this.vk.api.docs.getById({
+		const [document] = await this.api.docs.getById({
 			docs: `${this.ownerId}_${this.id}`
 		});
 

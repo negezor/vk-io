@@ -1,4 +1,4 @@
-import { VK } from '../../vk';
+import { API } from '../../api';
 
 import { Attachment } from './attachment';
 
@@ -79,11 +79,11 @@ export class StoryAttachment extends Attachment<IStoryAttachmentPayload> {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: IStoryAttachmentPayload, vk?: VK) {
+	public constructor(payload: IStoryAttachmentPayload, api?: API) {
 		super(STORY, payload.owner_id, payload.id, payload.access_key);
 
 		// @ts-expect-error
-		this.vk = vk;
+		this.api = api;
 		this.payload = payload;
 
 		this.$filled = payload.is_deleted !== undefined || payload.is_expired !== undefined;
@@ -100,7 +100,7 @@ export class StoryAttachment extends Attachment<IStoryAttachmentPayload> {
 		}
 
 		// @ts-expect-error
-		const [story] = await this.vk.api.stories.getById({
+		const [story] = await this.api.stories.getById({
 			stories: `${this.ownerId}_${this.id}`,
 			extended: 0
 		});
@@ -264,19 +264,19 @@ export class StoryAttachment extends Attachment<IStoryAttachmentPayload> {
 	private applyPayload(payload: IStoryAttachmentPayload): void {
 		this[kPhoto] = useLazyLoad(() => (
 			payload.photo
-				? new PhotoAttachment(payload.photo, this.vk)
+				? new PhotoAttachment(payload.photo, this.api)
 				: undefined
 		));
 
 		this[kVideo] = useLazyLoad(() => (
 			payload.video
-				? new VideoAttachment(payload.video, this.vk)
+				? new VideoAttachment(payload.video, this.api)
 				: undefined
 		));
 
 		this[kParentStory] = useLazyLoad(() => (
 			payload.parent_story
-				? new StoryAttachment(payload.parent_story, this.vk)
+				? new StoryAttachment(payload.parent_story, this.api)
 				: undefined
 		));
 	}

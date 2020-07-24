@@ -1,4 +1,4 @@
-import { VK } from '../../vk';
+import { API } from '../../api';
 
 import { Attachment } from './attachment';
 
@@ -34,11 +34,11 @@ export class VideoAttachment extends Attachment<IVideoAttachmentPayload> {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: IVideoAttachmentPayload, vk?: VK) {
+	public constructor(payload: IVideoAttachmentPayload, api?: API) {
 		super(VIDEO, payload.owner_id, payload.id, payload.access_key);
 
 		// @ts-expect-error
-		this.vk = vk;
+		this.api = api;
 		this.payload = payload;
 
 		this.$filled = payload.date !== undefined;
@@ -52,7 +52,7 @@ export class VideoAttachment extends Attachment<IVideoAttachmentPayload> {
 			return;
 		}
 
-		const { items } = await this.vk.api.video.get({
+		const { items } = await this.api.video.get({
 			videos: `${this.ownerId}_${this.id}`,
 			extended: 0
 		});

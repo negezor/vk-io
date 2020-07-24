@@ -1,6 +1,6 @@
 import { inspectable } from 'inspectable';
 
-import { VK } from '../../vk';
+import { API } from '../../api';
 import { parseAttachmentRe } from '../../utils/helpers';
 import { kSerializeData, AttachmentType } from '../../utils/constants';
 
@@ -15,7 +15,7 @@ export class Attachment<P = {}> {
 
 	protected $filled: boolean;
 
-	protected vk!: VK;
+	protected api!: API;
 
 	protected payload!: P;
 

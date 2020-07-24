@@ -1,4 +1,4 @@
-import { VK } from '../../vk';
+import { API } from '../../api';
 
 import { ExternalAttachment } from './external';
 
@@ -34,14 +34,14 @@ export class LinkAttachment extends ExternalAttachment<ILinkAttachmentPayload> {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: ILinkAttachmentPayload, vk?: VK) {
+	public constructor(payload: ILinkAttachmentPayload, api?: API) {
 		super(LINK, payload);
 
 		// @ts-expect-error
-		this.vk = vk;
+		this.api = api;
 
 		this[kPhoto] = payload.photo
-			? new PhotoAttachment(payload.photo, this.vk)
+			? new PhotoAttachment(payload.photo, this.api)
 			: undefined;
 	}
 

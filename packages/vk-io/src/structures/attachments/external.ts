@@ -1,6 +1,6 @@
 import { inspectable } from 'inspectable';
 
-import { VK } from '../../vk';
+import { API } from '../../api';
 import { kSerializeData } from '../../utils/constants';
 
 export class ExternalAttachment<P = {}> {
@@ -8,7 +8,7 @@ export class ExternalAttachment<P = {}> {
 
 	protected $filled: boolean;
 
-	protected vk!: VK;
+	protected api!: API;
 
 	protected payload: P;
 

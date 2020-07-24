@@ -1,4 +1,4 @@
-import { VK } from '../../vk';
+import { API } from '../../api';
 
 import { Attachment } from './attachment';
 
@@ -36,11 +36,11 @@ export class PhotoAttachment extends Attachment<IPhotoAttachmentPayload> {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: IPhotoAttachmentPayload, vk?: VK) {
+	public constructor(payload: IPhotoAttachmentPayload, api?: API) {
 		super(PHOTO, payload.owner_id, payload.id, payload.access_key);
 
 		// @ts-expect-error
-		this.vk = vk;
+		this.api = api;
 		this.payload = payload;
 
 		this.$filled = payload.album_id !== undefined && payload.date !== undefined;
@@ -54,7 +54,7 @@ export class PhotoAttachment extends Attachment<IPhotoAttachmentPayload> {
 			return;
 		}
 
-		const [photo] = await this.vk.api.photos.getById({
+		const [photo] = await this.api.photos.getById({
 			photos: `${this.ownerId}_${this.id}`,
 			extended: 0
 		});

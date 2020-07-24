@@ -1,4 +1,4 @@
-import { VK } from '../../vk';
+import { API } from '../../api';
 
 import { ExternalAttachment } from './external';
 
@@ -14,11 +14,11 @@ export class GiftAttachment extends ExternalAttachment<IGiftAttachmentPayload> {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: IGiftAttachmentPayload, vk?: VK) {
+	public constructor(payload: IGiftAttachmentPayload, api?: API) {
 		super(GIFT, payload);
 
 		// @ts-expect-error
-		this.vk = vk;
+		this.api = api;
 	}
 
 	/**

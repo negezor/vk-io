@@ -44,7 +44,7 @@ class GroupUpdateContext<S = ContextDefaultState>
 		});
 
 		this.attachments = options.updateType === 'group_change_photo'
-			? [new PhotoAttachment(this.payload.photo!, this.vk)]
+			? [new PhotoAttachment(this.payload.photo!, this.vk.api)]
 			: [];
 	}
 

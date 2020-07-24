@@ -38,7 +38,7 @@ export class WallPostContext<S = ContextDefaultState>
 			]
 		});
 
-		this.wall = new WallAttachment(this.payload, this.vk);
+		this.wall = new WallAttachment(this.payload, this.vk.api);
 	}
 
 	/**

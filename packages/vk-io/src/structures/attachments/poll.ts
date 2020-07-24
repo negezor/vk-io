@@ -1,4 +1,4 @@
-import { VK } from '../../vk';
+import { API } from '../../api';
 
 import { Attachment } from './attachment';
 
@@ -41,11 +41,11 @@ export class PollAttachment extends Attachment<IPollAttachmentPayload> {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: IPollAttachmentPayload, vk?: VK) {
+	public constructor(payload: IPollAttachmentPayload, api?: API) {
 		super(POLL, payload.owner_id, payload.id, payload.access_key);
 
 		// @ts-expect-error
-		this.vk = vk;
+		this.api = api;
 		this.payload = payload;
 
 		this.$filled = payload.answers !== undefined;
@@ -60,7 +60,7 @@ export class PollAttachment extends Attachment<IPollAttachmentPayload> {
 		}
 
 		// @ts-expect-error
-		const [poll] = await this.vk.api.polls.getById({
+		const [poll] = await this.api.polls.getById({
 			poll_id: this.id,
 			owner_id: this.ownerId
 		});

@@ -1,4 +1,4 @@
-import { VK } from '../../vk';
+import { API } from '../../api';
 
 import { Attachment } from './attachment';
 
@@ -21,11 +21,11 @@ export class GraffitiAttachment extends Attachment<IGraffitiAttachmentPayload> {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: IGraffitiAttachmentPayload, vk?: VK) {
+	public constructor(payload: IGraffitiAttachmentPayload, api?: API) {
 		super(GRAFFITI, payload.owner_id, payload.id, payload.access_key);
 
 		// @ts-expect-error
-		this.vk = vk;
+		this.api = api;
 		this.payload = payload;
 
 		this.$filled = payload.url !== undefined;
@@ -39,7 +39,7 @@ export class GraffitiAttachment extends Attachment<IGraffitiAttachmentPayload> {
 			return;
 		}
 
-		const [document] = await this.vk.api.docs.getById({
+		const [document] = await this.api.docs.getById({
 			docs: `${this.ownerId}_${this.id}`
 		});
 

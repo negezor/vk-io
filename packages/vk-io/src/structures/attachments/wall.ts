@@ -1,4 +1,4 @@
-import { VK } from '../../vk';
+import { API } from '../../api';
 
 import { Attachment } from './attachment';
 import { ExternalAttachment } from './external';
@@ -74,11 +74,11 @@ class WallAttachment extends Attachment<IWallAttachmentPayload> {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: IWallAttachmentPayload, vk?: VK) {
+	public constructor(payload: IWallAttachmentPayload, api?: API) {
 		super(WALL, payload.owner_id || payload.to_id!, payload.id, payload.access_key);
 
 		// @ts-expect-error
-		this.vk = vk;
+		this.api = api;
 		this.payload = payload;
 
 		this.$filled = payload.date !== undefined;
@@ -94,7 +94,7 @@ class WallAttachment extends Attachment<IWallAttachmentPayload> {
 			return;
 		}
 
-		const [post] = await this.vk.api.wall.getById({
+		const [post] = await this.api.wall.getById({
 			posts: `${this.ownerId}_${this.id}`,
 			extended: 0
 		});
@@ -419,13 +419,13 @@ class WallAttachment extends Attachment<IWallAttachmentPayload> {
 	 */
 	private applyPayload(payload: IWallAttachmentPayload): void {
 		this[kAttachments] = useLazyLoad(() => (
-			transformAttachments(payload.attachments || [], this.vk)
+			transformAttachments(payload.attachments || [], this.api)
 		));
 
 		this[kCopyHistoryAttachments] = useLazyLoad(() => (
 			payload.copy_history
 				? payload.copy_history.map((history): WallAttachment => (
-					new WallAttachment(history, this.vk)
+					new WallAttachment(history, this.api)
 				))
 				: []
 		));

@@ -1,4 +1,4 @@
-import { VK } from '../../vk';
+import { API } from '../../api';
 
 import { Attachment } from './attachment';
 
@@ -47,11 +47,11 @@ export class MarketAttachment extends Attachment<IMarketAttachmentPayload> {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: IMarketAttachmentPayload, vk?: VK) {
+	public constructor(payload: IMarketAttachmentPayload, api?: API) {
 		super(MARKET, payload.owner_id, payload.id, payload.access_key);
 
 		// @ts-expect-error
-		this.vk = vk;
+		this.api = api;
 		this.payload = payload;
 
 		this.$filled = payload.title !== undefined && payload.date !== undefined;
@@ -66,7 +66,7 @@ export class MarketAttachment extends Attachment<IMarketAttachmentPayload> {
 		}
 
 		// @ts-expect-error
-		const [market] = await this.vk.api.market.getById({
+		const [market] = await this.api.market.getById({
 			item_ids: `${this.ownerId}_${this.id}`,
 			extended: 0
 		});

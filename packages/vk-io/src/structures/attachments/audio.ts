@@ -1,4 +1,4 @@
-import { VK } from '../../vk';
+import { API } from '../../api';
 
 import { Attachment } from './attachment';
 
@@ -27,11 +27,11 @@ export class AudioAttachment extends Attachment<IAudioAttachmentPayload> {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: IAudioAttachmentPayload, vk?: VK) {
+	public constructor(payload: IAudioAttachmentPayload, api?: API) {
 		super(AUDIO, payload.owner_id, payload.id, payload.access_key);
 
 		// @ts-expect-error
-		this.vk = vk;
+		this.api = api;
 		this.payload = payload;
 
 		this.$filled = payload.duration !== undefined && payload.date !== undefined;
@@ -46,7 +46,7 @@ export class AudioAttachment extends Attachment<IAudioAttachmentPayload> {
 		}
 
 		// @ts-expect-error
-		const [audio] = await this.vk.api.audio.getById({
+		const [audio] = await this.api.audio.getById({
 			audios: `${this.ownerId}_${this.id}`
 		});
 
