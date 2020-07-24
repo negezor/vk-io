@@ -3,8 +3,9 @@ import createDebug from 'debug';
 import * as WebSocket from 'ws';
 import { inspectable } from 'inspectable';
 
-import { VK, UpdateSource } from 'vk-io';
+import { API, Updates, UpdateSource } from 'vk-io';
 
+import { Agent, globalAgent } from 'https';
 import { URL, URLSearchParams } from 'url';
 
 import { StreamingRuleError } from './errors';
@@ -17,6 +18,14 @@ export interface IStreamingRule {
 	tag: string;
 }
 
+export interface IStreamingAPI {
+	api: API;
+
+	updates: Updates;
+
+	agent: Agent;
+}
+
 export class StreamingAPI {
 	protected socket?: WebSocket;
 
@@ -26,13 +35,29 @@ export class StreamingAPI {
 
 	protected started = false;
 
-	private vk: VK;
+	private api: API;
+
+	private updates: Updates;
+
+	private options: Omit<IStreamingAPI, 'api' | 'updates'>;
 
 	/**
 	 * Constructor
 	 */
-	public constructor(vk: VK) {
-		this.vk = vk;
+	public constructor({
+		api,
+		updates,
+		...options
+	}: Partial<IStreamingAPI> & { api: API; updates: Updates }) {
+		this.api = api;
+
+		this.updates = updates;
+
+		this.options = {
+			agent: globalAgent,
+
+			...options
+		};
 	}
 
 	/**
@@ -49,14 +74,14 @@ export class StreamingAPI {
 		this.started = true;
 
 		try {
-			const { key, endpoint } = await this.vk.api.streaming.getServerUrl({});
+			const { key, endpoint } = await this.api.streaming.getServerUrl({});
 
 			this.key = key!;
 			this.endpoint = new URL(`https://${endpoint}`);
 
 			const search = new URLSearchParams({ key });
 
-			const { agent } = this.vk.options;
+			const { agent } = this.options;
 
 			this.socket = new WebSocket(`wss://${endpoint}/stream?${search}`, { agent });
 		} catch (error) {
@@ -139,10 +164,9 @@ export class StreamingAPI {
 	 */
 	private async handleEvent(event: IStreamingContextPayload): Promise<void> {
 		const context = new StreamingContext({
+			api: this.api,
 			// @ts-expect-error
-			api: {},
-			// @ts-expect-error
-			upload: {},
+			upload: this.updates.upload,
 			payload: event,
 
 			state: {},
@@ -151,14 +175,14 @@ export class StreamingAPI {
 			source: UpdateSource.WEBSOCKET
 		});
 
-		await this.vk.updates.dispatchMiddleware(context);
+		await this.updates.dispatchMiddleware(context);
 	}
 
 	/**
 	 * Executes the HTTP request for rules
 	 */
 	private async fetchRules<T = never>(method: string, payload: object = {}): Promise<T> {
-		const { agent } = this.vk.options;
+		const { agent } = this.options;
 
 		const url = new URL('/rules', this.endpoint!);
 		url.searchParams.set('key', this.key!);
