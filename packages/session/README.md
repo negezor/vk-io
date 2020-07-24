@@ -7,7 +7,7 @@
 VK-IO Session - Simple implementation of the sessions ⚙️
 
 ## Installation
-> **[Node.js](https://nodejs.org/) 10.0.0 or newer is required**  
+> **[Node.js](https://nodejs.org/) 12.0.0 or newer is required**  
 
 ### Yarn
 Recommended
