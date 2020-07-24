@@ -103,15 +103,6 @@ export class Collect {
 	public get [Symbol.toStringTag](): string {
 		return this.constructor.name;
 	}
-
-	/**
-	 * Returns new Chain instance
-	 */
-	public chain(): Chain {
-		return new Chain({
-			api: this.api
-		});
-	}
 }
 
 inspectable(Collect);
