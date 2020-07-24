@@ -32,7 +32,7 @@ export class VK {
 
 	public collect: Collect;
 
-	public updates = new Updates(this);
+	public updates: Updates;
 
 	public callbackService = new CallbackService();
 
@@ -43,7 +43,9 @@ export class VK {
 		Object.assign(this.options, options);
 
 		this.api = new API({
-			...options
+			...options,
+
+			callbackService: this.callbackService
 		});
 
 		this.collect = new Collect({
@@ -52,6 +54,13 @@ export class VK {
 
 		this.upload = new Upload({
 			api: this.api,
+
+			...this.options
+		});
+
+		this.updates = new Updates({
+			api: this.api,
+			upload: this.upload,
 
 			...this.options
 		});

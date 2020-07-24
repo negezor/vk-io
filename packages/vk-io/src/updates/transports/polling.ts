@@ -4,9 +4,10 @@ import { AbortController } from 'abort-controller';
 
 import { URL, URLSearchParams } from 'url';
 
-import { VK } from '../../vk';
+import { API } from '../../api';
 import { delay } from '../../utils/helpers';
 import { UpdatesError, UpdatesErrorCode } from '../../errors';
+import { IUpdatesOptions } from '../updates';
 
 const { NEED_RESTART, POLLING_REQUEST_FAILED } = UpdatesErrorCode;
 
@@ -30,7 +31,7 @@ export class PollingTransport {
 
 	public pollingHandler!: Function;
 
-	protected vk: VK;
+	protected api: API;
 
 	protected ts: string | number = 0;
 
@@ -40,8 +41,12 @@ export class PollingTransport {
 
 	protected url!: URL;
 
-	public constructor(vk: VK) {
-		this.vk = vk;
+	private options: Omit<IUpdatesOptions, 'api' | 'upload'>;
+
+	public constructor({ api, ...options }: Omit<IUpdatesOptions, 'upload'>) {
+		this.api = api;
+
+		this.options = options;
 	}
 
 	public async start(): Promise<void> {
@@ -56,15 +61,15 @@ export class PollingTransport {
 		this.started = true;
 
 		try {
-			const { pollingGroupId } = this.vk.options;
+			const { pollingGroupId } = this.options;
 
 			const isGroup = pollingGroupId !== undefined;
 
 			const { server, key, ts } = isGroup
-				? await this.vk.api.groups.getLongPollServer({
+				? await this.api.groups.getLongPollServer({
 					group_id: pollingGroupId!
 				})
-				: await this.vk.api.messages.getLongPollServer({
+				: await this.api.messages.getLongPollServer({
 					lp_version: POLLING_VERSION
 				});
 
@@ -115,7 +120,7 @@ export class PollingTransport {
 		} catch (error) {
 			debug('longpoll error', error);
 
-			const { pollingWait, pollingRetryLimit } = this.vk.options;
+			const { pollingWait, pollingRetryLimit } = this.options;
 
 			if (error.code !== NEED_RESTART && this.restarted !== pollingRetryLimit) {
 				this.restarted += 1;
@@ -161,7 +166,7 @@ export class PollingTransport {
 		let result;
 		try {
 			const response = await fetch(this.url, {
-				agent: this.vk.options.agent,
+				agent: this.options.agent,
 				method: 'GET',
 				compress: false,
 				signal: controller.signal,

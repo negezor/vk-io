@@ -11,8 +11,9 @@ import {
 import { ListenOptions } from 'net';
 import { promisify } from 'util';
 
-import { VK } from '../../vk';
+import { API } from '../../api';
 import { parseRequestJSON } from '../helpers';
+import { IUpdatesOptions } from '../updates';
 
 const debug = createDebug('vk-io:updates');
 
@@ -23,10 +24,14 @@ export class WebhookTransport {
 
 	protected webhookServer?: HTTPServer | HTTPSServer;
 
-	protected vk: VK;
+	protected api: API;
 
-	public constructor(vk: VK) {
-		this.vk = vk;
+	private options: Omit<IUpdatesOptions, 'api' | 'upload'>;
+
+	public constructor({ api, ...options }: Omit<IUpdatesOptions, 'upload'>) {
+		this.api = api;
+
+		this.options = options;
 	}
 
 	/**
@@ -141,7 +146,7 @@ export class WebhookTransport {
 			}
 
 			try {
-				const { webhookSecret, webhookConfirmation } = this.vk.options;
+				const { webhookSecret, webhookConfirmation } = this.options;
 
 				if (webhookSecret !== undefined && update.secret !== webhookSecret) {
 					res.writeHead(403);
@@ -192,7 +197,7 @@ export class WebhookTransport {
 		return async (context: any): Promise<void> => {
 			const update = context.request.body;
 
-			const { webhookSecret, webhookConfirmation } = this.vk.options;
+			const { webhookSecret, webhookConfirmation } = this.options;
 
 			if (webhookSecret !== undefined && update.secret !== webhookSecret) {
 				context.status = 403;

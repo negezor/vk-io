@@ -2,6 +2,8 @@ import createDebug from 'debug';
 import { inspectable } from 'inspectable';
 import { Middleware, compose, noopNext } from 'middleware-io';
 
+import { Agent, globalAgent } from 'https';
+
 import {
 	Context,
 	VoteContext,
@@ -65,7 +67,8 @@ import {
 	WallPostContextSubType
 } from '../structures/contexts';
 
-import { VK } from '../vk';
+import { API } from '../api';
+import { Upload } from '../upload';
 import { Composer } from '../structures/shared/composer';
 import { PollingTransport, WebhookTransport } from './transports';
 
@@ -257,9 +260,44 @@ CommentActionContextSubType
 
 export type ContextPossibleTypes = ContextTypes | ContextSubTypes | string;
 
-export class Updates {
-	private vk: VK;
+export interface IUpdatesOptions {
+	api: API;
 
+	upload: Upload;
+
+	agent?: Agent;
+
+	/**
+	 * Time to wait before re-querying
+	 *
+	 * @defaultValue `3000`
+	 */
+	pollingWait: number;
+
+	/**
+	 * The number of retries at calling
+	 *
+	 * @defaultValue `3`
+	 */
+	pollingRetryLimit: number;
+
+	/**
+	 * Group ID for polling
+	 */
+	pollingGroupId?: number;
+
+	/**
+	 * Webhook secret key
+	 */
+	webhookSecret?: string;
+
+	/**
+	 * Webhook confirmation key
+	 */
+	webhookConfirmation?: string;
+}
+
+export class Updates {
 	private pollingTransport: PollingTransport;
 
 	private webhookTransport: WebhookTransport;
@@ -272,16 +310,49 @@ export class Updates {
 
 	private composed!: Middleware<Context>;
 
+	private api: API;
+
+	private upload: Upload;
+
+	private options: Omit<IUpdatesOptions, 'api' | 'upload'>;
+
 	/**
 	 * Constructor
 	 */
-	public constructor(vk: VK) {
-		this.vk = vk;
+	public constructor({
+		api,
+		upload,
+
+		...options
+	}: Partial<IUpdatesOptions> & { api: API; upload: Upload }) {
+		this.api = api;
+		this.upload = upload;
+
+		this.options = {
+			agent: globalAgent,
+
+			pollingWait: 3e3,
+			pollingRetryLimit: 3,
+			pollingGroupId: undefined,
+
+			webhookSecret: undefined,
+			webhookConfirmation: undefined,
+
+			...options
+		};
 
 		this.recompose();
 
-		this.pollingTransport = new PollingTransport(vk);
-		this.webhookTransport = new WebhookTransport(vk);
+		this.pollingTransport = new PollingTransport({
+			api,
+
+			...this.options
+		});
+		this.webhookTransport = new WebhookTransport({
+			api,
+
+			...this.options
+		});
 
 		this.webhookTransport.subscribe(this.handleWebhookUpdate.bind(this));
 	}
@@ -461,7 +532,9 @@ export class Updates {
 		}
 
 		return this.dispatchMiddleware(new UpdateContext({
-			vk: this.vk,
+			api: this.api,
+			upload: this.upload,
+
 			payload: update,
 			updateType: type,
 			source: UpdateSource.POLLING
@@ -486,7 +559,9 @@ export class Updates {
 		}
 
 		return this.dispatchMiddleware(new UpdateContext({
-			vk: this.vk,
+			api: this.api,
+			upload: this.upload,
+
 			payload,
 			groupId,
 			updateType: type,
@@ -498,7 +573,7 @@ export class Updates {
 	 * Starts to poll server
 	 */
 	public startPolling(): Promise<void> {
-		const { pollingGroupId } = this.vk.options;
+		const { pollingGroupId } = this.options;
 
 		const isGroup = pollingGroupId !== undefined;
 
@@ -528,11 +603,11 @@ export class Updates {
 			return;
 		}
 
-		if (!this.vk.options.pollingGroupId) {
+		if (!this.options.pollingGroupId) {
 			try {
-				const [group] = await this.vk.api.groups.getById({});
+				const [group] = await this.api.groups.getById({});
 
-				this.vk.options.pollingGroupId = group.id!;
+				this.options.pollingGroupId = group.id!;
 			} catch (error) {
 				if (error.code !== APIErrorCode.PARAM) {
 					throw error;
