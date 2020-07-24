@@ -834,7 +834,8 @@ export class Upload {
 				'attach_access_key'
 			],
 
-			saveFiles: save => save,
+			// @ts-expect-error
+			saveFiles: this.vk.api.stories.save,
 
 			maxFiles: 1,
 			attachmentType: 'photo'
@@ -869,7 +870,8 @@ export class Upload {
 				'group_id'
 			],
 
-			saveFiles: save => save,
+			// @ts-expect-error
+			saveFiles: this.vk.api.stories.save,
 
 			maxFiles: 1,
 			attachmentType: 'video',
