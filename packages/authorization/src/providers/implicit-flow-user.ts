@@ -6,7 +6,7 @@ import { ImplicitFlow } from './implicit-flow';
 import { AuthorizationError } from '../errors';
 
 import { Response } from '../fetch-cookie';
-import { getUsersPermissionsByName, getAllUserPermissions } from '../helpers';
+import { getUserPermissionsByName, getAllUserPermissions } from '../helpers';
 import { CALLBACK_BLANK, AuthErrorCode } from '../constants';
 
 const debug = createDebug('vk-io:authorization:implicit-flow-user');
@@ -28,7 +28,7 @@ export class ImplicitFlowUser extends ImplicitFlow {
 		if (scope === 'all') {
 			scope = getAllUserPermissions();
 		} else if (typeof scope !== 'number') {
-			scope = getUsersPermissionsByName(scope);
+			scope = getUserPermissionsByName(scope);
 		}
 
 		debug('auth scope %s', scope);

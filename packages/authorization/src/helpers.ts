@@ -10,7 +10,7 @@ export type CheerioStatic = ReturnType<typeof cheerioLoad>;
 /**
  * Returns the bit mask of the user permission by name
  */
-export const getUsersPermissionsByName = (rawScope: string | string[]): number => {
+export const getUserPermissionsByName = (rawScope: string | string[]): number => {
 	const scope = !Array.isArray(rawScope)
 		? rawScope.split(/,\s{0,}/)
 		: rawScope;
@@ -31,7 +31,7 @@ export const getUsersPermissionsByName = (rawScope: string | string[]): number =
 /**
  * Returns the bit mask of the group permission by name
  */
-export const getGroupsPermissionsByName = (rawScope: string | string[]): number => {
+export const getGroupPermissionsByName = (rawScope: string | string[]): number => {
 	const scope = !Array.isArray(rawScope)
 		? rawScope.split(/,\s{0,}/)
 		: rawScope;
@@ -50,11 +50,11 @@ export const getGroupsPermissionsByName = (rawScope: string | string[]): number 
 };
 
 export const getAllUserPermissions = (): number => (
-	getUsersPermissionsByName([...userScopes.keys()])
+	getUserPermissionsByName([...userScopes.keys()])
 );
 
 export const getAllGroupPermissions = (): number => (
-	getGroupsPermissionsByName([...groupScopes.keys()])
+	getGroupPermissionsByName([...groupScopes.keys()])
 );
 
 /**

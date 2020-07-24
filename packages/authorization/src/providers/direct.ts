@@ -23,7 +23,7 @@ import {
 
 	getFullURL,
 	parseFormField,
-	getUsersPermissionsByName,
+	getUserPermissionsByName,
 	getAllUserPermissions
 } from '../helpers';
 
@@ -149,7 +149,7 @@ export class DirectAuthorization {
 		if (scope === 'all') {
 			scope = getAllUserPermissions();
 		} else if (typeof scope !== 'number') {
-			scope = getUsersPermissionsByName(scope);
+			scope = getUserPermissionsByName(scope);
 		}
 
 		debug('auth scope %s', scope);

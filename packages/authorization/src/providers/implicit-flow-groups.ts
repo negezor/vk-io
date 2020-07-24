@@ -6,7 +6,7 @@ import { ImplicitFlow, IImplicitFlowOptions } from './implicit-flow';
 
 import { Response } from '../fetch-cookie';
 import { AuthorizationError } from '../errors';
-import { getGroupsPermissionsByName, getAllGroupPermissions } from '../helpers';
+import { getGroupPermissionsByName, getAllGroupPermissions } from '../helpers';
 import { CALLBACK_BLANK, AuthErrorCode } from '../constants';
 
 const debug = createDebug('vk-io:authorization:implicit-flow-user');
@@ -55,7 +55,7 @@ export class ImplicitFlowGroups extends ImplicitFlow {
 		if (scope === 'all') {
 			scope = getAllGroupPermissions();
 		} else if (typeof scope !== 'number') {
-			scope = getGroupsPermissionsByName(scope);
+			scope = getGroupPermissionsByName(scope);
 		}
 
 		debug('auth scope %s', scope);
