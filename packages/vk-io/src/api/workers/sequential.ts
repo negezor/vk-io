@@ -104,8 +104,11 @@ export class SequentialWorker extends APIWorker {
 
 		request.captchaValidate?.reject(error);
 
-		// @ts-expect-error
-		if (code !== APIErrorCode.CAPTCHA || !this.api.vk.callbackService.hasCaptchaHandler) {
+		if (
+			code !== APIErrorCode.CAPTCHA
+			|| !this.api.options.callbackService
+			|| !this.api.options.callbackService.hasCaptchaHandler
+		) {
 			request.reject(error);
 
 			return;
@@ -114,8 +117,7 @@ export class SequentialWorker extends APIWorker {
 		try {
 			const { captchaSid } = error;
 
-			// @ts-expect-error
-			const { key, validate } = await this.api.vk.callbackService.processingCaptcha({
+			const { key, validate } = await this.api.options.callbackService.processingCaptcha({
 				type: CaptchaType.API,
 				src: error.captchaImg!,
 				sid: captchaSid!,

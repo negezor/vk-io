@@ -14,6 +14,7 @@ import {
 import { APIRequest } from './request';
 import { Constructor } from '../types';
 import { VKError } from '../errors';
+import { CallbackService } from '../utils/callback-service';
 import { MINIMUM_TIME_INTERVAL_API } from '../utils/constants';
 
 // @ts-expect-error
@@ -171,6 +172,8 @@ export interface IAPIOptions {
 	 * @defaultValue `['messages.send']`
 	 */
 	apiExecuteMethods: string[];
+
+	callbackService?: CallbackService;
 }
 
 /**
