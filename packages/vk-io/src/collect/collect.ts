@@ -4,7 +4,6 @@ import { CollectStream, ICollectStreamOptions } from './stream';
 import { LIMITS_METHODS } from './limits';
 
 import { API } from '../api';
-import { Chain } from './chain';
 
 export interface ICollectStreamGroup {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
