@@ -75,18 +75,5 @@ export class VK {
 }
 
 inspectable(VK, {
-	serialize: ({
-		api,
-		updates,
-		options
-	}) => ({
-		options: {
-			appId: options.appId,
-			token: options.token
-				? '[set]'
-				: '[none]'
-		},
-		api,
-		updates
-	})
+	serialize: ({ api, updates }) => ({ api, updates })
 });

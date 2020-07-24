@@ -307,8 +307,15 @@ class API {
 		this.worker = newWorker;
 	}
 }
-
-inspectable(API);
+inspectable(API, {
+	serialize: ({ options }) => ({
+		options: {
+			token: options.token
+				? '[set]'
+				: '[none]'
+		}
+	})
+});
 
 // eslint-disable-next-line
 interface API extends APIMethods {}
