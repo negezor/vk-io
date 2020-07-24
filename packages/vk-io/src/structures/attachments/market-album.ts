@@ -24,7 +24,7 @@ export class MarketAlbumAttachment extends Attachment<IMarketAlbumAttachmentPayl
 	public constructor(payload: IMarketAlbumAttachmentPayload, vk?: VK) {
 		super(MARKET_ALBUM, payload.owner_id, payload.id, payload.access_key);
 
-		// @ts-ignore
+		// @ts-expect-error
 		this.vk = vk;
 		this.payload = payload;
 
@@ -39,7 +39,7 @@ export class MarketAlbumAttachment extends Attachment<IMarketAlbumAttachmentPayl
 			return;
 		}
 
-		// @ts-ignore
+		// @ts-expect-error
 		const [album] = await this.vk.api.market.getAlbumById({
 			owner_id: this.ownerId,
 			album_ids: this.id

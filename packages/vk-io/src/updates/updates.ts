@@ -437,7 +437,7 @@ export class Updates {
 
 		return this.use((context, next): unknown => (
 			context.is(events)
-				// @ts-ignore
+				// @ts-expect-error
 				? handler(context, next)
 				: next()
 		));
@@ -585,7 +585,7 @@ export class Updates {
 }
 
 inspectable(Updates, {
-	// @ts-ignore
+	// @ts-expect-error
 	serialize: ({ isStarted, composer }) => ({
 		isStarted,
 		composer

@@ -66,7 +66,7 @@ class API {
 		this.manager = new APIManager(vk);
 
 		for (const group of groupMethods) {
-			// @ts-ignore
+			// @ts-expect-error
 			this[group] = new Proxy(Object.create(null), {
 				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				get: (obj, prop: string) => (params: object): Promise<any> => (

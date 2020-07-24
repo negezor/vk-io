@@ -160,7 +160,7 @@ class MessageContext<S = ContextDefaultState>
 		let { payload } = options;
 		if (options.source === UpdateSource.POLLING) {
 			// eslint-disable-next-line no-param-reassign
-			// @ts-ignore
+			// @ts-expect-error
 			payload = transformMessage(payload);
 
 			this.$filled = false;
@@ -500,7 +500,7 @@ class MessageContext<S = ContextDefaultState>
 	send(text: string | object, params?: object): Promise<number> {
 		return this.vk.api.messages.send({
 			peer_id: this.peerId,
-			// @ts-ignore
+			// @ts-expect-error
 			random_id: getRandomId(),
 
 			...(
@@ -933,11 +933,11 @@ applyMixins(MessageContext, [
 			type: AttachmentType | AttachmentTypeString
 		): (Attachment | ExternalAttachment)[] {
 			return [
-				// @ts-ignore
+				// @ts-expect-error
 				...this.getAttachments(type),
-				// @ts-ignore
+				// @ts-expect-error
 				...((this.replyMessage?.getAttachments(type)) ?? []),
-				// @ts-ignore
+				// @ts-expect-error
 				...this.forwards.getAttachments(type)
 			];
 		}

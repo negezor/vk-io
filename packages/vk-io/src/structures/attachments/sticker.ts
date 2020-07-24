@@ -27,7 +27,7 @@ export class StickerAttachment extends ExternalAttachment<IStickerAttachmentPayl
 	public constructor(payload: IStickerAttachmentPayload, vk?: VK) {
 		super(STICKER, payload);
 
-		// @ts-ignore
+		// @ts-expect-error
 		this.vk = vk;
 	}
 

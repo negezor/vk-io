@@ -44,7 +44,7 @@ export class PollAttachment extends Attachment<IPollAttachmentPayload> {
 	public constructor(payload: IPollAttachmentPayload, vk?: VK) {
 		super(POLL, payload.owner_id, payload.id, payload.access_key);
 
-		// @ts-ignore
+		// @ts-expect-error
 		this.vk = vk;
 		this.payload = payload;
 
@@ -59,7 +59,7 @@ export class PollAttachment extends Attachment<IPollAttachmentPayload> {
 			return;
 		}
 
-		// @ts-ignore
+		// @ts-expect-error
 		const [poll] = await this.vk.api.polls.getById({
 			poll_id: this.id,
 			owner_id: this.ownerId

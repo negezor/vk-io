@@ -37,7 +37,7 @@ export class LinkAttachment extends ExternalAttachment<ILinkAttachmentPayload> {
 	public constructor(payload: ILinkAttachmentPayload, vk?: VK) {
 		super(LINK, payload);
 
-		// @ts-ignore
+		// @ts-expect-error
 		this.vk = vk;
 
 		this[kPhoto] = payload.photo

@@ -37,7 +37,7 @@ export class VideoAttachment extends Attachment<IVideoAttachmentPayload> {
 	public constructor(payload: IVideoAttachmentPayload, vk?: VK) {
 		super(VIDEO, payload.owner_id, payload.id, payload.access_key);
 
-		// @ts-ignore
+		// @ts-expect-error
 		this.vk = vk;
 		this.payload = payload;
 
@@ -59,7 +59,7 @@ export class VideoAttachment extends Attachment<IVideoAttachmentPayload> {
 
 		const [video] = items;
 
-		// @ts-ignore
+		// @ts-expect-error
 		this.payload = video;
 
 		if (this.payload.access_key) {
@@ -191,7 +191,7 @@ export class VideoAttachment extends Attachment<IVideoAttachmentPayload> {
 	 * Checks for a boolean value in the property
 	 */
 	protected checkBooleanInProperty(name: string): boolean | undefined {
-		// @ts-ignore
+		// @ts-expect-error
 		const property = this.payload[name];
 
 		if (typeof property !== 'number') {

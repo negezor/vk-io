@@ -33,7 +33,7 @@ class MessageReply {
 	 * Constructor
 	 */
 	public constructor(payload: IMessageReplyPayload, vk?: VK) {
-		// @ts-ignore
+		// @ts-expect-error
 		this.vk = vk;
 
 		this.payload = payload;

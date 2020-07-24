@@ -79,11 +79,11 @@ export class Collect {
 			const [group, name] = method.split('.');
 
 			if (this[group as keyof this] === undefined) {
-				// @ts-ignore
+				// @ts-expect-error
 				this[group] = {} as ICollectStreamGroup;
 			}
 
-			// @ts-ignore
+			// @ts-expect-error
 			this[group][name] = (options = {}): CollectStream => (
 				new CollectStream(this.vk, {
 					options,

@@ -45,7 +45,7 @@ export class Authorization {
 	 * Standalone authorization with login & password for group
 	 */
 	public implicitFlowGroups(groups: number[], options = {}): ImplicitFlowGroups {
-		// @ts-ignore
+		// @ts-expect-error
 		return new ImplicitFlowGroups(this.vk, { ...options, groups });
 	}
 

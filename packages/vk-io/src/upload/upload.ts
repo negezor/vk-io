@@ -171,7 +171,7 @@ export class Upload {
 			field: 'file',
 			params,
 
-			// @ts-ignore
+			// @ts-expect-error
 			getServer: this.vk.api.photos.getUploadServer,
 			serverParams: ['album_id', 'group_id'],
 
@@ -182,7 +182,7 @@ export class Upload {
 			attachmentType: 'photo'
 		});
 
-		// @ts-ignore
+		// @ts-expect-error
 		return photos.map(photo => (
 			new PhotoAttachment(photo, this.vk)
 		));
@@ -205,11 +205,11 @@ export class Upload {
 			field: 'photo',
 			params,
 
-			// @ts-ignore
+			// @ts-expect-error
 			getServer: this.vk.api.photos.getWallUploadServer,
 			serverParams: ['group_id'],
 
-			// @ts-ignore
+			// @ts-expect-error
 			saveFiles: this.vk.api.photos.saveWallPhoto,
 			saveParams: ['user_id', 'group_id', 'latitude', 'longitude', 'caption'],
 
@@ -239,7 +239,7 @@ export class Upload {
 			field: 'photo',
 			params,
 
-			// @ts-ignore
+			// @ts-expect-error
 			getServer: this.vk.api.photos.getOwnerPhotoUploadServer,
 			serverParams: ['owner_id'],
 
@@ -271,11 +271,11 @@ export class Upload {
 			field: 'photo',
 			params,
 
-			// @ts-ignore
+			// @ts-expect-error
 			getServer: this.vk.api.photos.getMessagesUploadServer,
 			serverParams: ['peer_id'],
 
-			// @ts-ignore
+			// @ts-expect-error
 			saveFiles: this.vk.api.photos.saveMessagesPhoto,
 
 			maxFiles: 1,
@@ -304,12 +304,12 @@ export class Upload {
 			field: 'file',
 			params,
 
-			// @ts-ignore
+			// @ts-expect-error
 			getServer: this.vk.api.photos.getChatUploadServer,
 			serverParams: ['chat_id', 'crop_x', 'crop_y', 'crop_width'],
 
 			saveFiles: file => (
-				// @ts-ignore
+				// @ts-expect-error
 				this.vk.api.messages.setChatPhoto({ file })
 			),
 
@@ -388,11 +388,11 @@ export class Upload {
 			field: 'file',
 			params,
 
-			// @ts-ignore
+			// @ts-expect-error
 			getServer: this.vk.api.photos.getMarketUploadServer,
 			serverParams: ['group_id', 'main_photo', 'crop_x', 'crop_y', 'crop_width'],
 
-			// @ts-ignore
+			// @ts-expect-error
 			saveFiles: this.vk.api.photos.saveMarketPhoto,
 			saveParams: ['group_id'],
 
@@ -415,11 +415,11 @@ export class Upload {
 			field: 'file',
 			params,
 
-			// @ts-ignore
+			// @ts-expect-error
 			getServer: this.vk.api.photos.getMarketAlbumUploadServer,
 			serverParams: ['group_id'],
 
-			// @ts-ignore
+			// @ts-expect-error
 			saveFiles: this.vk.api.photos.saveMarketAlbumPhoto,
 			saveParams: ['group_id'],
 
@@ -443,10 +443,10 @@ export class Upload {
 			field: 'file',
 			params,
 
-			// @ts-ignore
+			// @ts-expect-error
 			getServer: this.vk.api.audio.getUploadServer,
 
-			// @ts-ignore
+			// @ts-expect-error
 			saveFiles: this.vk.api.audio.save,
 			saveParams: ['title', 'artist'],
 
@@ -501,7 +501,7 @@ export class Upload {
 
 			await response.json();
 
-			// @ts-ignore
+			// @ts-expect-error
 			return new VideoAttachment(save, this.vk);
 		}
 
@@ -544,11 +544,11 @@ export class Upload {
 			field: 'file',
 			params,
 
-			// @ts-ignore
+			// @ts-expect-error
 			getServer: this.vk.api.docs.getUploadServer,
 			serverParams: ['type', 'group_id'],
 
-			// @ts-ignore
+			// @ts-expect-error
 			saveFiles: this.vk.api.docs.save,
 			saveParams: ['title', 'tags'],
 
@@ -586,11 +586,11 @@ export class Upload {
 			field: 'file',
 			params,
 
-			// @ts-ignore
+			// @ts-expect-error
 			getServer: this.vk.api.docs.getWallUploadServer,
 			serverParams: ['type', 'group_id'],
 
-			// @ts-ignore
+			// @ts-expect-error
 			saveFiles: this.vk.api.docs.save,
 			saveParams: ['title', 'tags'],
 
@@ -629,11 +629,11 @@ export class Upload {
 			field: 'file',
 			params,
 
-			// @ts-ignore
+			// @ts-expect-error
 			getServer: this.vk.api.docs.getMessagesUploadServer,
 			serverParams: ['type', 'peer_id'],
 
-			// @ts-ignore
+			// @ts-expect-error
 			saveFiles: this.vk.api.docs.save,
 			saveParams: ['title', 'tags'],
 
@@ -763,11 +763,11 @@ export class Upload {
 			field: 'photo',
 			params,
 
-			// @ts-ignore
+			// @ts-expect-error
 			getServer: this.vk.api.photos.getOwnerCoverPhotoUploadServer,
 			serverParams: ['group_id', 'crop_x', 'crop_y', 'crop_x2', 'crop_y2'],
 
-			// @ts-ignore
+			// @ts-expect-error
 			saveFiles: this.vk.api.photos.saveOwnerCoverPhoto,
 
 			maxFiles: 1,
@@ -822,7 +822,7 @@ export class Upload {
 			field: 'file',
 			params,
 
-			// @ts-ignore
+			// @ts-expect-error
 			getServer: this.vk.api.stories.getPhotoUploadServer,
 			serverParams: [
 				'add_to_news',
@@ -859,7 +859,7 @@ export class Upload {
 			field: 'video_file',
 			params,
 
-			// @ts-ignore
+			// @ts-expect-error
 			getServer: this.vk.api.stories.getVideoUploadServer,
 			serverParams: [
 				'add_to_news',
@@ -893,11 +893,11 @@ export class Upload {
 			field: 'file',
 			params,
 
-			// @ts-ignore
+			// @ts-expect-error
 			getServer: this.vk.api.polls.getPhotoUploadServer,
 			serverParams: ['owner_id'],
 
-			// @ts-ignore
+			// @ts-expect-error
 			saveFiles: this.vk.api.polls.savePhoto,
 
 			maxFiles: 1,
@@ -948,12 +948,12 @@ export class Upload {
 		if (source.uploadUrl !== undefined) {
 			// eslint-disable-next-line no-param-reassign
 			getServer = (): ReturnType<IUploadConduct['getServer']> => ({
-				// @ts-ignore
+				// @ts-expect-error
 				upload_url: source.uploadUrl
 			});
 		}
 
-		// @ts-ignore
+		// @ts-expect-error
 		const { length: valuesLength } = source.values;
 
 		if (valuesLength === 0) {

@@ -41,14 +41,14 @@ const attachmentsTypes = {
 /**
  * Transform raw attachments to wrapper
  */
-// @ts-ignore
+// @ts-expect-error
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const transformAttachments = (attachments: any[] = [], vk: VK): Attachment[] => (
 	attachments
 		.map((item): Attachment | boolean => {
 			const { type } = item;
 
-			// @ts-ignore
+			// @ts-expect-error
 			const attachment = attachmentsTypes[type];
 
 			return attachment

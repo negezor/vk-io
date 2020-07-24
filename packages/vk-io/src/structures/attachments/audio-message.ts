@@ -25,7 +25,7 @@ export class AudioMessageAttachment extends Attachment<IAudioMessageAttachmentPa
 	public constructor(payload: IAudioMessageAttachmentPayload, vk?: VK) {
 		super(AUDIO_MESSAGE, payload.owner_id, payload.id, payload.access_key);
 
-		// @ts-ignore
+		// @ts-expect-error
 		this.vk = vk;
 		this.payload = payload;
 
@@ -44,7 +44,7 @@ export class AudioMessageAttachment extends Attachment<IAudioMessageAttachmentPa
 			docs: `${this.ownerId}_${this.id}`
 		});
 
-		// @ts-ignore
+		// @ts-expect-error
 		this.payload = document;
 
 		if (this.payload.access_key) {
@@ -102,7 +102,7 @@ export class AudioMessageAttachment extends Attachment<IAudioMessageAttachmentPa
 		]);
 
 		if (this.waveform !== undefined) {
-			// @ts-ignore
+			// @ts-expect-error
 			payload.waveform = `[...${this.waveform.length} elements]`;
 		}
 

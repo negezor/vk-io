@@ -24,7 +24,7 @@ export class GraffitiAttachment extends Attachment<IGraffitiAttachmentPayload> {
 	public constructor(payload: IGraffitiAttachmentPayload, vk?: VK) {
 		super(GRAFFITI, payload.owner_id, payload.id, payload.access_key);
 
-		// @ts-ignore
+		// @ts-expect-error
 		this.vk = vk;
 		this.payload = payload;
 
@@ -43,7 +43,7 @@ export class GraffitiAttachment extends Attachment<IGraffitiAttachmentPayload> {
 			docs: `${this.ownerId}_${this.id}`
 		});
 
-		// @ts-ignore
+		// @ts-expect-error
 		this.payload = document;
 
 		if (this.payload.access_key) {

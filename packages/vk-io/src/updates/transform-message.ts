@@ -148,7 +148,7 @@ export function transformMessage({
 	for (let i = 1, key = 'attach1'; attachments[key] !== undefined; i += 1, key = `attach${i}`) {
 		const type = attachments[`${key}_type`];
 
-		// @ts-ignore
+		// @ts-expect-error
 		const handler = attachmentHandlers[type] || attachmentHandlers.default;
 
 		message.attachments.push(

@@ -53,18 +53,18 @@ describe('Attachments', (): void => {
 		it('should be throw an exception if wrong', (): void => {
 			const attachment = new Attachment('photo', 1234, 5678);
 
-			// @ts-ignore
+			// @ts-expect-error
 			expect((): boolean => attachment.equals('ascbas_baasd')).toThrow();
-			// @ts-ignore
+			// @ts-expect-error
 			expect((): boolean => attachment.equals('inccorect')).toThrow();
-			// @ts-ignore
+			// @ts-expect-error
 			expect((): boolean => attachment.equals('1234_')).toThrow();
 		});
 
 		it('should be return false', (): void => {
 			const attachment = new Attachment('photo', 1234, 5678);
 
-			// @ts-ignore
+			// @ts-expect-error
 			expect(attachment.equals('photo1234_1234')).toBe(false);
 			expect(attachment.equals(new Attachment('photo', 1234, 1234))).toBe(false);
 			expect(attachment.equals(new Attachment('photo', 1234, 1234, 'ACCESS_KEY'))).toBe(false);
@@ -73,7 +73,7 @@ describe('Attachments', (): void => {
 		it('should be return true', (): void => {
 			const attachment = new Attachment('photo', 1234, 5678);
 
-			// @ts-ignore
+			// @ts-expect-error
 			expect(attachment.equals('photo1234_5678')).toBe(true);
 			expect(attachment.equals(new Attachment('photo', 1234, 5678))).toBe(true);
 			expect(attachment.equals(new Attachment('photo', 1234, 5678, 'ACCESS_KEY'))).toBe(true);

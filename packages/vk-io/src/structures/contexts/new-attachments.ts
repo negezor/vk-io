@@ -105,7 +105,7 @@ class NewAttachmentsContext<S = ContextDefaultState>
 		if (this.isAudio) {
 			const [audio] = this.getAttachments(AttachmentType.AUDIO);
 
-			// @ts-ignore
+			// @ts-expect-error
 			return this.vk.api.audio.delete({
 				owner_id: audio.ownerId,
 				audio_id: audio.id

@@ -55,7 +55,7 @@ export class Chain {
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public then(thenFn: Function, catchFn: Function): Promise<any[]> {
-		// @ts-ignore
+		// @ts-expect-error
 		return this.run().then(thenFn, catchFn);
 	}
 
@@ -113,7 +113,7 @@ export class Chain {
 }
 
 inspectable(Chain, {
-	// @ts-ignore
+	// @ts-expect-error
 	serialize: ({ started, queue }) => ({
 		started,
 		queue

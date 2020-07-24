@@ -50,7 +50,7 @@ export class MarketAttachment extends Attachment<IMarketAttachmentPayload> {
 	public constructor(payload: IMarketAttachmentPayload, vk?: VK) {
 		super(MARKET, payload.owner_id, payload.id, payload.access_key);
 
-		// @ts-ignore
+		// @ts-expect-error
 		this.vk = vk;
 		this.payload = payload;
 
@@ -65,7 +65,7 @@ export class MarketAttachment extends Attachment<IMarketAttachmentPayload> {
 			return;
 		}
 
-		// @ts-ignore
+		// @ts-expect-error
 		const [market] = await this.vk.api.market.getById({
 			item_ids: `${this.ownerId}_${this.id}`,
 			extended: 0

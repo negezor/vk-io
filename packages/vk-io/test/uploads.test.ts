@@ -22,7 +22,7 @@ describe('Uploads', (): void => {
 
 	it('should throw an error if there are no parameters', async (): Promise<void> => {
 		try {
-			// @ts-ignore
+			// @ts-expect-error
 			await upload.messagePhoto();
 		} catch (error) {
 			expect(error).toBeInstanceOf(UploadError);
@@ -30,7 +30,7 @@ describe('Uploads', (): void => {
 		}
 
 		try {
-			// @ts-ignore
+			// @ts-expect-error
 			await upload.messagePhoto({});
 		} catch (error) {
 			expect(error).toBeInstanceOf(UploadError);

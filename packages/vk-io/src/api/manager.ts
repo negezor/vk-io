@@ -44,7 +44,7 @@ export class APIManager {
 				this.worker.pause();
 				newWorker.pause();
 
-				// @ts-ignore
+				// @ts-expect-error
 				newWorker.queue = [...this.worker.queue];
 
 				setTimeout(

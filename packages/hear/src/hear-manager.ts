@@ -107,7 +107,7 @@ export class HearManager<C extends Context> {
 			));
 
 			return hasSome
-				// @ts-ignore
+				// @ts-expect-error
 				? handler(context, next)
 				: next();
 		});
@@ -121,7 +121,7 @@ export class HearManager<C extends Context> {
 	 * A handler that is called when handlers are not found
 	 */
 	public onFallback<T = {}>(handler: Middleware<C & T>): this {
-		// @ts-ignore
+		// @ts-expect-error
 		this.fallbackHandler = handler;
 
 		this.recompose();

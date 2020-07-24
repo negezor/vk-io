@@ -30,7 +30,7 @@ export class AudioAttachment extends Attachment<IAudioAttachmentPayload> {
 	public constructor(payload: IAudioAttachmentPayload, vk?: VK) {
 		super(AUDIO, payload.owner_id, payload.id, payload.access_key);
 
-		// @ts-ignore
+		// @ts-expect-error
 		this.vk = vk;
 		this.payload = payload;
 
@@ -45,7 +45,7 @@ export class AudioAttachment extends Attachment<IAudioAttachmentPayload> {
 			return;
 		}
 
-		// @ts-ignore
+		// @ts-expect-error
 		const [audio] = await this.vk.api.audio.getById({
 			audios: `${this.ownerId}_${this.id}`
 		});

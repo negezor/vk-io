@@ -77,7 +77,7 @@ class WallAttachment extends Attachment<IWallAttachmentPayload> {
 	public constructor(payload: IWallAttachmentPayload, vk?: VK) {
 		super(WALL, payload.owner_id || payload.to_id!, payload.id, payload.access_key);
 
-		// @ts-ignore
+		// @ts-expect-error
 		this.vk = vk;
 		this.payload = payload;
 
@@ -99,7 +99,7 @@ class WallAttachment extends Attachment<IWallAttachmentPayload> {
 			extended: 0
 		});
 
-		// @ts-ignore
+		// @ts-expect-error
 		this.payload = post;
 
 		if (this.payload.access_key) {

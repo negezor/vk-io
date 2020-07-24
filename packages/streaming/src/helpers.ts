@@ -5,7 +5,7 @@ export const copyParams = <
 	T,
 	K extends keyof T
 >(params: T, properties: K[]): Pick<T, K> => {
-	// @ts-ignore
+	// @ts-expect-error
 	const copies: Pick<T, K> = {};
 
 	for (const property of properties) {

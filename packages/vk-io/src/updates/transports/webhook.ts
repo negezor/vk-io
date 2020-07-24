@@ -129,10 +129,10 @@ export class WebhookTransport {
 
 			let update;
 			try {
-				// @ts-ignore
+				// @ts-expect-error
 				update = typeof req.body !== 'object'
 					? await parseRequestJSON(req)
-					// @ts-ignore
+					// @ts-expect-error
 					: req.body;
 			} catch (e) {
 				debug(e);

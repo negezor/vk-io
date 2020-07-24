@@ -39,7 +39,7 @@ export class PhotoAttachment extends Attachment<IPhotoAttachmentPayload> {
 	public constructor(payload: IPhotoAttachmentPayload, vk?: VK) {
 		super(PHOTO, payload.owner_id, payload.id, payload.access_key);
 
-		// @ts-ignore
+		// @ts-expect-error
 		this.vk = vk;
 		this.payload = payload;
 
@@ -59,7 +59,7 @@ export class PhotoAttachment extends Attachment<IPhotoAttachmentPayload> {
 			extended: 0
 		});
 
-		// @ts-ignore
+		// @ts-expect-error
 		this.payload = photo;
 
 		if (this.payload.access_key) {

@@ -82,7 +82,7 @@ export class StoryAttachment extends Attachment<IStoryAttachmentPayload> {
 	public constructor(payload: IStoryAttachmentPayload, vk?: VK) {
 		super(STORY, payload.owner_id, payload.id, payload.access_key);
 
-		// @ts-ignore
+		// @ts-expect-error
 		this.vk = vk;
 		this.payload = payload;
 
@@ -99,7 +99,7 @@ export class StoryAttachment extends Attachment<IStoryAttachmentPayload> {
 			return;
 		}
 
-		// @ts-ignore
+		// @ts-expect-error
 		const [story] = await this.vk.api.stories.getById({
 			stories: `${this.ownerId}_${this.id}`,
 			extended: 0

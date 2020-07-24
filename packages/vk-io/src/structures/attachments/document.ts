@@ -43,7 +43,7 @@ export class DocumentAttachment extends Attachment<IDocumentAttachmentPayload> {
 	public constructor(payload: IDocumentAttachmentPayload, vk?: VK) {
 		super(DOCUMENT, payload.owner_id, payload.id, payload.access_key);
 
-		// @ts-ignore
+		// @ts-expect-error
 		this.vk = vk;
 		this.payload = payload;
 
@@ -62,7 +62,7 @@ export class DocumentAttachment extends Attachment<IDocumentAttachmentPayload> {
 			docs: `${this.ownerId}_${this.id}`
 		});
 
-		// @ts-ignore
+		// @ts-expect-error
 		this.payload = document;
 
 		if (this.payload.access_key) {

@@ -52,7 +52,7 @@ export class TypingContext<S = ContextDefaultState>
 			],
 
 			payload: options.source === UpdateSource.POLLING
-				// @ts-ignore
+				// @ts-expect-error
 				? transformPolling(options.payload as [number, number, number], options.updateType)
 				: options.payload
 		});

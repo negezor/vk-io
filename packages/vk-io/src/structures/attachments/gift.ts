@@ -17,7 +17,7 @@ export class GiftAttachment extends ExternalAttachment<IGiftAttachmentPayload> {
 	public constructor(payload: IGiftAttachmentPayload, vk?: VK) {
 		super(GIFT, payload);
 
-		// @ts-ignore
+		// @ts-expect-error
 		this.vk = vk;
 	}
 

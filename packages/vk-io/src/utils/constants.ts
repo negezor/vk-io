@@ -2,7 +2,7 @@ import { globalAgent } from 'https';
 
 import { IVKOptions } from '../types';
 
-// @ts-ignore
+// @ts-expect-error
 import { version } from '../../package.json';
 
 /**

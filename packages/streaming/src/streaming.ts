@@ -228,7 +228,7 @@ export class StreamingAPI {
 }
 
 inspectable(StreamingAPI, {
-	// @ts-ignore
+	// @ts-expect-error
 	serialize: ({ started }) => ({
 		started
 	})

@@ -35,7 +35,7 @@ class MessageForwardsCollection extends Array<MessageForward> {
 	}
 }
 
-// @ts-ignore
+// @ts-expect-error
 // eslint-disable-next-line
 interface MessageForwardsCollection extends Attachmentable {}
 applyMixins(MessageForwardsCollection, [
@@ -52,11 +52,11 @@ applyMixins(MessageForwardsCollection, [
 			type?: AttachmentTypeString
 		): (Attachment | ExternalAttachment)[] {
 			const attachments = this.flatten.map(forward => (
-				// @ts-ignore
+				// @ts-expect-error
 				forward.getAttachments(type)
 			));
 
-			// @ts-ignore
+			// @ts-expect-error
 			return [].concat(...attachments);
 		}
 	}

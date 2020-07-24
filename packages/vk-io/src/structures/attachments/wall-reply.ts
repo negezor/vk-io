@@ -13,7 +13,7 @@ export class WallReplyAttachment extends ExternalAttachment {
 	public constructor(payload: object, vk?: VK) {
 		super(WALL_REPLY, payload);
 
-		// @ts-ignore
+		// @ts-expect-error
 		this.vk = vk;
 	}
 }

@@ -105,7 +105,7 @@ export class CollectStream<T> extends Readable {
 		const hasMax = max !== undefined;
 		const hasCount = count !== undefined;
 
-		// @ts-ignore
+		// @ts-expect-error
 		if ((hasCount && hasMax && count > max) || (hasMax && !hasCount)) {
 			this.total = max;
 		} else {
@@ -342,7 +342,7 @@ export class CollectStream<T> extends Readable {
 }
 
 inspectable(CollectStream, {
-	// @ts-ignore
+	// @ts-expect-error
 	serialize: ({ total, offset, received }) => ({
 		total,
 		offset,
