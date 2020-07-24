@@ -7,16 +7,9 @@ export * from './updates';
 export * from './structures';
 
 export * from './utils/callback-service';
+export * from './utils/resource-resolver';
 
 export { getRandomId, applyMixins } from './utils/helpers';
-
-export {
-	IResolveResourceOptions,
-	IResolvedOwnerResource,
-	IResolvedTargetResource,
-
-	resolveResource
-} from './utils/resource-resolver';
 
 export {
 	CaptchaType,
