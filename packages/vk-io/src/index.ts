@@ -1,17 +1,5 @@
 export * from './errors';
 
-export {
-	CaptchaType,
-	UpdateSource,
-	ResourceType,
-	MessageSource,
-	AttachmentType,
-	AttachmentTypeString,
-
-	platforms,
-	kSerializeData
-} from './utils/constants';
-
 export * from './api';
 export * from './upload';
 export * from './updates';
@@ -28,6 +16,18 @@ export {
 
 	resolveResource
 } from './utils/resource-resolver';
+
+export {
+	CaptchaType,
+	UpdateSource,
+	ResourceType,
+	MessageSource,
+	AttachmentType,
+	AttachmentTypeString,
+
+	platforms,
+	kSerializeData
+} from './utils/constants';
 
 // eslint-disable-next-line import/no-default-export
 export { VK, VK as default } from './vk';
