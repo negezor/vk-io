@@ -54,8 +54,8 @@ const ACTION_SECURITY_CODE = 'act=security';
 export interface IDirectAuthOptions {
 	callbackService: CallbackService;
 
-	appId: number;
-	appSecret: string;
+	clientId: number;
+	clientSecret: string;
 
 	login?: string;
 	phone?: string | number;
@@ -155,8 +155,8 @@ export class DirectAuthorization {
 		debug('auth scope %s', scope);
 
 		const {
-			appId,
-			appSecret,
+			clientId,
+			clientSecret,
 			login,
 			phone,
 			password,
@@ -167,12 +167,12 @@ export class DirectAuthorization {
 			...query,
 			username: String(login || phone),
 			grant_type: 'password',
-			client_secret: appSecret,
+			client_secret: clientSecret,
 			'2fa_supported': String(this.options.callbackService.hasTwoFactorHandler
 				? 1
 				: 0),
 			v: apiVersion,
-			client_id: String(appId),
+			client_id: String(clientId),
 			password,
 			scope: String(scope)
 		});

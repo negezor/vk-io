@@ -45,7 +45,7 @@ export class ImplicitFlowGroups extends ImplicitFlow {
 	 * Returns permission page
 	 */
 	protected getPermissionsPage(): Promise<Response> {
-		const { appId } = this.options;
+		const { clientId } = this.options;
 		let { scope } = this.options;
 
 		if (scope === undefined) {
@@ -66,7 +66,7 @@ export class ImplicitFlowGroups extends ImplicitFlow {
 			response_type: 'token',
 			display: 'page',
 			v: this.options.apiVersion,
-			client_id: String(appId),
+			client_id: String(clientId),
 			scope: String(scope)
 		});
 

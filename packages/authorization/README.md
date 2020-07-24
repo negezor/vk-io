@@ -27,8 +27,8 @@ import { VK } from 'vk-io';
 import { Authorization } from '@vk-io/authorization';
 
 const vk = new VK({
-	appId: process.env.APP_ID,
-	appSecret: process.env.APP_SECRET,
+	clientId: process.env.CLIENT_ID,
+	clientSecret: process.env.CLIENT_SECRET,
 
 	login: process.env.LOGIN,
 	password: process.env.PASSWORD

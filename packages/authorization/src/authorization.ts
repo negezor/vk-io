@@ -27,12 +27,12 @@ export interface IAuthorizationOptions {
 	/**
 	 * Application ID
 	 */
-	appId?: number;
+	clientId?: number;
 
 	/**
 	 * Secret application key
 	 */
-	appSecret?: string;
+	clientSecret?: string;
 
 	/**
 	 * User login (phone number or email)
@@ -109,8 +109,8 @@ export class Authorization {
 		return this.direct({
 			...options,
 
-			appId: 2274003,
-			appSecret: 'hHbZxrka2uZ6jB1inYsH'
+			clientId: 2274003,
+			clientSecret: 'hHbZxrka2uZ6jB1inYsH'
 		});
 	}
 
@@ -121,8 +121,8 @@ export class Authorization {
 		return this.direct({
 			...options,
 
-			appId: 3697615,
-			appSecret: 'AlVXZFMUqyrnABp8ncuU'
+			clientId: 3697615,
+			clientSecret: 'AlVXZFMUqyrnABp8ncuU'
 		});
 	}
 
@@ -133,8 +133,8 @@ export class Authorization {
 		return this.direct({
 			...options,
 
-			appId: 3502557,
-			appSecret: 'PEObAuQi6KloPM4T30DV'
+			clientId: 3502557,
+			clientSecret: 'PEObAuQi6KloPM4T30DV'
 		});
 	}
 
@@ -145,8 +145,8 @@ export class Authorization {
 		return this.direct({
 			...options,
 
-			appId: 3140623,
-			appSecret: 'VeWdmVclDCtn6ihuP1nt'
+			clientId: 3140623,
+			clientSecret: 'VeWdmVclDCtn6ihuP1nt'
 		});
 	}
 
@@ -157,8 +157,8 @@ export class Authorization {
 		return this.direct({
 			...options,
 
-			appId: 3682744,
-			appSecret: 'mY6CDUswIVdJLCD3j15n'
+			clientId: 3682744,
+			clientSecret: 'mY6CDUswIVdJLCD3j15n'
 		});
 	}
 
@@ -169,8 +169,8 @@ export class Authorization {
 		return this.direct({
 			...options,
 
-			appId: 6146827,
-			appSecret: 'qVxWRF1CwHERuIrKBnqe'
+			clientId: 6146827,
+			clientSecret: 'qVxWRF1CwHERuIrKBnqe'
 		});
 	}
 
@@ -185,7 +185,7 @@ export class Authorization {
 			.map(key => `${key}=${params[key]}`)
 			.join('');
 
-		sign += this.options.appSecret;
+		sign += this.options.clientSecret;
 		sign = createHash('md5')
 			.update(sign)
 			.digest('hex');
