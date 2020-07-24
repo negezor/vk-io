@@ -6,7 +6,7 @@ export const CALLBACK_BLANK = 'https://oauth.vk.com/blank.html';
 /**
  * User-Agent for standalone auth
  */
-export const DESKTOP_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.70 Safari/537.36';
+export const DESKTOP_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36';
 
 /**
  * Auth error codes
