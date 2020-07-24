@@ -110,6 +110,7 @@ export const fetchCookieFollowRedirectsDecorator = (jar?: CookieJar): FetchWrapp
 			const userAgent = findUserAgent(options.headers as Headers);
 
 			const headers: Headers = userAgent !== undefined
+				// eslint-disable-next-line @typescript-eslint/naming-convention
 				? { 'User-Agent': userAgent }
 				: {};
 
