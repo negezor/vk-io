@@ -223,6 +223,8 @@ class API {
 				)
 			});
 		}
+
+		this.worker = this.getWorker();
 	}
 
 	/**
