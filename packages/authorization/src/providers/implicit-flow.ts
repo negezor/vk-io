@@ -68,7 +68,7 @@ const FIND_LOCATION_HREF_RE = /location\.href\s+=\s+"([^"]+)"/i;
 export interface IImplicitFlowOptions {
 	callbackService: CallbackService;
 
-	clientId: number;
+	clientId: string;
 	clientSecret: string;
 
 	login?: string;

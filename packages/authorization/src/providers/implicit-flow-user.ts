@@ -38,7 +38,7 @@ export class ImplicitFlowUser extends ImplicitFlow {
 			response_type: 'token',
 			display: 'page',
 			v: this.options.apiVersion,
-			client_id: String(clientId),
+			client_id: clientId,
 			scope: String(scope)
 		});
 

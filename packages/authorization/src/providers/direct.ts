@@ -54,7 +54,7 @@ const ACTION_SECURITY_CODE = 'act=security';
 export interface IDirectAuthOptions {
 	callbackService: CallbackService;
 
-	clientId: number;
+	clientId: string;
 	clientSecret: string;
 
 	login?: string;
@@ -172,7 +172,7 @@ export class DirectAuthorization {
 				? 1
 				: 0),
 			v: apiVersion,
-			client_id: String(clientId),
+			client_id: clientId,
 			password,
 			scope: String(scope)
 		});
