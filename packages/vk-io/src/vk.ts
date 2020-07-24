@@ -27,8 +27,6 @@ export class VK {
 		})
 	};
 
-	public internalHooks = new EventEmitter();
-
 	public api = new API(this);
 
 	public upload: Upload;

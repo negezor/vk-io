@@ -82,14 +82,6 @@ class API {
 		this.vk = vk;
 		this.options = vk.options;
 
-		this.vk.internalHooks.on('update_options', ({ keys }: { keys: string[] }) => {
-			if (!keys.includes('apiMode')) {
-				return;
-			}
-
-			this.updateWorker();
-		});
-
 		for (const group of groupMethods) {
 			// @ts-expect-error
 			this[group] = new Proxy(Object.create(null), {
