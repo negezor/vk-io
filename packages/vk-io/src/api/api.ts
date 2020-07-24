@@ -58,12 +58,24 @@ class API {
 
 	private manager: APIManager;
 
+	public options: VK['options'];
+
 	/**
 	 * Constructor
 	 */
 	public constructor(vk: VK) {
 		this.vk = vk;
-		this.manager = new APIManager(vk);
+		this.manager = new APIManager(this);
+
+		this.options = vk.options;
+
+		this.vk.internalHooks.on('update_options', ({ keys }: { keys: string[] }) => {
+			if (!keys.includes('apiMode')) {
+				return;
+			}
+
+			this.manager.updateWorker();
+		});
 
 		for (const group of groupMethods) {
 			// @ts-expect-error
@@ -71,7 +83,7 @@ class API {
 				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				get: (obj, prop: string) => (params: object): Promise<any> => (
 					this.manager.callWithRequest(new APIRequest({
-						vk: this.vk,
+						api: this,
 						method: `${group}.${prop}`,
 						params
 					}))
@@ -112,7 +124,7 @@ class API {
 			method,
 			params,
 
-			vk: this.vk
+			api: this
 		}));
 	}
 

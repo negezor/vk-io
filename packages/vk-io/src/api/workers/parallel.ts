@@ -13,7 +13,7 @@ export class ParallelWorker extends SequentialWorker {
 			return;
 		}
 
-		const { apiExecuteCount } = this.vk.options;
+		const { apiExecuteCount } = this.api.options;
 
 		const tasks: APIRequest[] = [];
 
@@ -38,7 +38,7 @@ export class ParallelWorker extends SequentialWorker {
 		}
 
 		const request = new APIRequest({
-			vk: this.vk,
+			api: this.api,
 			method: 'execute',
 			params: {
 				code: getChainReturn(tasks.map(String))

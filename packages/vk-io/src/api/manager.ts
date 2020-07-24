@@ -1,5 +1,3 @@
-import { VK } from '../vk';
-
 import { APIRequest } from './request';
 
 import {
@@ -11,8 +9,9 @@ import {
 	ParallelSelectedWorker
 } from './workers';
 
-import { Constructor } from '../types';
+import { API } from './api';
 import { VKError } from '../errors';
+import { Constructor } from '../types';
 import { MINIMUM_TIME_INTERVAL_API } from '../utils/constants';
 
 const workers: Record<string, Constructor<APIWorker>> = {
@@ -22,39 +21,12 @@ const workers: Record<string, Constructor<APIWorker>> = {
 };
 
 export class APIManager {
-	private vk: VK;
+	private api: API;
 
 	private worker!: APIWorker;
 
-	public constructor(vk: VK) {
-		this.vk = vk;
-
-		this.vk.internalHooks.on('update_options', ({ keys }: { keys: string[] }) => {
-			if (!keys.includes('apiMode')) {
-				return;
-			}
-
-			const newWorker = this.getWorker();
-
-			if (this.worker.constructor === newWorker.constructor) {
-				return;
-			}
-
-			if (this.worker.busy) {
-				this.worker.pause();
-				newWorker.pause();
-
-				// @ts-expect-error
-				newWorker.queue = [...this.worker.queue];
-
-				setTimeout(
-					() => newWorker.resume(),
-					MINIMUM_TIME_INTERVAL_API
-				);
-			}
-
-			this.worker = newWorker;
-		});
+	public constructor(api: API) {
+		this.api = api;
 
 		this.worker = this.getWorker();
 	}
@@ -66,8 +38,31 @@ export class APIManager {
 		return request.promise;
 	}
 
+	public updateWorker(): void {
+		const newWorker = this.getWorker();
+
+		if (this.worker.constructor === newWorker.constructor) {
+			return;
+		}
+
+		if (this.worker.busy) {
+			this.worker.pause();
+			newWorker.pause();
+
+			// @ts-expect-error
+			newWorker.queue = [...this.worker.queue];
+
+			setTimeout(
+				() => newWorker.resume(),
+				MINIMUM_TIME_INTERVAL_API
+			);
+		}
+
+		this.worker = newWorker;
+	}
+
 	private getWorker(): APIWorker {
-		const Worker = workers[this.vk.options.apiMode];
+		const Worker = workers[this.api.options.apiMode];
 
 		if (!Worker) {
 			throw new VKError({
@@ -76,6 +71,6 @@ export class APIManager {
 			});
 		}
 
-		return new Worker(this.vk);
+		return new Worker(this.api);
 	}
 }

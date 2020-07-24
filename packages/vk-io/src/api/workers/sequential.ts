@@ -31,7 +31,7 @@ export class SequentialWorker extends APIWorker {
 		try {
 			response = await request.make();
 		} catch (error) {
-			const { options } = this.vk;
+			const { options } = this.api;
 
 			if (request.retries === options.apiRetryLimit) {
 				debug(`${method} <X-`);
@@ -104,7 +104,8 @@ export class SequentialWorker extends APIWorker {
 
 		request.captchaValidate?.reject(error);
 
-		if (code !== APIErrorCode.CAPTCHA || !this.vk.callbackService.hasCaptchaHandler) {
+		// @ts-expect-error
+		if (code !== APIErrorCode.CAPTCHA || !this.api.vk.callbackService.hasCaptchaHandler) {
 			request.reject(error);
 
 			return;
@@ -113,7 +114,8 @@ export class SequentialWorker extends APIWorker {
 		try {
 			const { captchaSid } = error;
 
-			const { key, validate } = await this.vk.callbackService.processingCaptcha({
+			// @ts-expect-error
+			const { key, validate } = await this.api.vk.callbackService.processingCaptcha({
 				type: CaptchaType.API,
 				src: error.captchaImg!,
 				sid: captchaSid!,

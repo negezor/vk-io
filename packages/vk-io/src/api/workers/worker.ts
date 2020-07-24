@@ -1,4 +1,4 @@
-import { VK } from '../../vk';
+import { API } from '../api';
 import { APIRequest } from '../request';
 import { MINIMUM_TIME_INTERVAL_API } from '../../utils/constants';
 
@@ -9,17 +9,17 @@ export abstract class APIWorker {
 
 	protected queue: APIRequest[] = [];
 
-	protected vk: VK;
+	protected api: API;
 
 	protected intervalPerRequests: number;
 
 	/**
 	 * Constructor
 	 */
-	public constructor(vk: VK) {
-		this.vk = vk;
+	public constructor(api: API) {
+		this.api = api;
 
-		this.intervalPerRequests = Math.ceil(MINIMUM_TIME_INTERVAL_API / this.vk.options.apiLimit);
+		this.intervalPerRequests = Math.ceil(MINIMUM_TIME_INTERVAL_API / this.api.options.apiLimit);
 	}
 
 	public enqueue(request: APIRequest): void {
@@ -51,7 +51,7 @@ export abstract class APIWorker {
 
 		this.busy = true;
 
-		if (this.vk.options.apiRequestMode === 'sequential') {
+		if (this.api.options.apiRequestMode === 'sequential') {
 			this.execute();
 
 			setTimeout(
@@ -68,7 +68,7 @@ export abstract class APIWorker {
 
 		// Burst mode
 
-		const limit = Math.min(this.vk.options.apiLimit, this.queue.length);
+		const limit = Math.min(this.api.options.apiLimit, this.queue.length);
 
 		for (let i = 0; i < limit && this.queue.length !== 0; i += 1) {
 			this.execute();

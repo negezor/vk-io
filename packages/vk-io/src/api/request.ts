@@ -3,12 +3,12 @@ import { AbortController } from 'abort-controller';
 
 import { inspectable } from 'inspectable';
 
-import { VK } from '../vk';
+import { API } from './api';
 import { getExecuteMethod } from '../utils/helpers';
 import { ICallbackServiceValidate } from '../utils/callback-service';
 
 export interface IAPIRequestOptions {
-	vk: VK;
+	api: API;
 
 	method: string;
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -32,13 +32,13 @@ export class APIRequest {
 
 	public captchaValidate?: ICallbackServiceValidate;
 
-	protected vk: VK;
+	protected api: API;
 
 	/**
 	 * Constructor
 	 */
-	public constructor({ vk, method, params = {} }: IAPIRequestOptions) {
-		this.vk = vk;
+	public constructor({ api, method, params = {} }: IAPIRequestOptions) {
+		this.api = api;
 
 		this.method = method;
 		this.params = { ...params };
@@ -68,7 +68,7 @@ export class APIRequest {
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public async make(): Promise<any> {
-		const { options } = this.vk;
+		const { options } = this.api;
 
 		const params: APIRequest['params'] = {
 			access_token: options.token,
