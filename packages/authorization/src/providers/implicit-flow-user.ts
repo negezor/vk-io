@@ -54,7 +54,7 @@ export class ImplicitFlowUser extends ImplicitFlow {
 	 */
 	public async run(): Promise<{
 		email: string | undefined;
-		user: number | undefined;
+		userId: number | undefined;
 		token: string;
 		expires: number | undefined;
 	}> {
@@ -75,13 +75,13 @@ export class ImplicitFlowUser extends ImplicitFlow {
 			});
 		}
 
-		const user = params.get('user_id');
+		const userId = params.get('user_id');
 		const expires = params.get('expires_in');
 
 		return {
 			email: params.get('email') || undefined,
-			user: user !== null
-				? Number(user)
+			userId: userId !== null
+				? Number(userId)
 				: undefined,
 
 			token: params.get('access_token')!,

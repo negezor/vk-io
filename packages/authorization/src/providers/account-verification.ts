@@ -131,7 +131,7 @@ export class AccountVerification {
 	/**
 	 * Runs authorization
 	 */
-	public async run(redirectUri: RequestInfo): Promise<{ user: number; token: string }> {
+	public async run(redirectUri: RequestInfo): Promise<{ userId: number; token: string }> {
 		let response = await this.fetch(redirectUri, {
 			method: 'GET'
 		});
@@ -157,10 +157,10 @@ export class AccountVerification {
 					});
 				}
 
-				const user = params.get('user_id')!;
+				const userId = params.get('user_id')!;
 
 				return {
-					user: Number(user),
+					userId: Number(userId),
 					token: params.get('access_token')!
 				};
 			}
