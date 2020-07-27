@@ -81,7 +81,7 @@ export class ImplicitFlowGroups extends ImplicitFlow {
 	 * Starts authorization
 	 */
 	public async run(): Promise<{
-		group: number;
+		groupId: number;
 		token: string;
 		expires: number;
 	}[]> {
@@ -109,7 +109,7 @@ export class ImplicitFlowGroups extends ImplicitFlow {
 		}
 
 		const tokens: {
-			group: number;
+			groupId: number;
 			token: string;
 			expires: number;
 		}[] = [];
@@ -120,10 +120,10 @@ export class ImplicitFlowGroups extends ImplicitFlow {
 			}
 
 			/* Example group access_token_XXXXX */
-			const { 2: group } = name.split('_');
+			const { 2: groupId } = name.split('_');
 
 			tokens.push({
-				group: Number(group),
+				groupId: Number(groupId),
 				token: value,
 				expires: expires as number
 			});
