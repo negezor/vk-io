@@ -8,11 +8,17 @@ import { kSerializeData, AttachmentType } from '../../utils/constants';
  */
 export const parseAttachmentRe = /^([a-z]+)(-?\d+)_(\d+)_?(\w+)?$/;
 
+export interface ISharedAttachmentPayload {
+	id: number;
+	owner_id: number;
+	access_key?: string;
+}
+
 export interface IAttachmentOptions<P, Type extends string = string> {
 	api: API;
 
 	type: Type;
-	payload: P;
+	payload: Partial<ISharedAttachmentPayload> & P;
 }
 
 export type AttachmentFactoryOptions<P> =
@@ -25,11 +31,7 @@ export class Attachment<P = {}, Type extends string = string> {
 
 	protected api!: API;
 
-	protected payload!: P & {
-		id: number;
-		owner_id: number;
-		access_key?: string;
-	};
+	protected payload!: ISharedAttachmentPayload & P;
 
 	/**
 	 * Constructor
