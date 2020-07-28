@@ -22,7 +22,7 @@ export interface IAudioAttachmentPayload {
 export type AudioAttachmentOptions =
 	AttachmentFactoryOptions<IAudioAttachmentPayload>;
 
-export class AudioAttachment extends Attachment<IAudioAttachmentPayload, AttachmentType.AUDIO> {
+export class AudioAttachment extends Attachment<IAudioAttachmentPayload, AttachmentType.AUDIO | 'audio'> {
 	/**
 	 * Constructor
 	 */

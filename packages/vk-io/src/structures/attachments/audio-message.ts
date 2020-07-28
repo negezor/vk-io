@@ -18,7 +18,7 @@ export type AudioMessageAttachmentOptions =
 	AttachmentFactoryOptions<IAudioMessageAttachmentPayload>;
 
 export class AudioMessageAttachment
-	extends Attachment<IAudioMessageAttachmentPayload, AttachmentType.AUDIO_MESSAGE> {
+	extends Attachment<IAudioMessageAttachmentPayload, AttachmentType.AUDIO_MESSAGE | 'audio_message'> {
 	/**
 	 * Constructor
 	 */

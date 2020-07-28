@@ -43,7 +43,7 @@ export type MarketAttachmentOptions =
 	AttachmentFactoryOptions<IMarketAttachmentPayload>;
 
 export class MarketAttachment
-	extends Attachment<IMarketAttachmentPayload, AttachmentType.MARKET> {
+	extends Attachment<IMarketAttachmentPayload, AttachmentType.MARKET | 'market'> {
 	/**
 	 * Constructor
 	 */

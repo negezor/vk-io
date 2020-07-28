@@ -68,7 +68,7 @@ const kParentStory = Symbol('parentStory');
 export type StoryAttachmentOptions =
 	AttachmentFactoryOptions<IStoryAttachmentPayload>;
 
-export class StoryAttachment extends Attachment<IStoryAttachmentPayload, AttachmentType.STORY> {
+export class StoryAttachment extends Attachment<IStoryAttachmentPayload, AttachmentType.STORY | 'story'> {
 	protected [kPhoto]: PhotoAttachment | undefined;
 
 	protected [kVideo]: VideoAttachment | undefined;

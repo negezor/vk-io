@@ -10,7 +10,7 @@ export type GiftAttachmentOptions =
 	ExternalAttachmentFactoryOptions<IGiftAttachmentPayload>;
 
 export class GiftAttachment
-	extends ExternalAttachment<IGiftAttachmentPayload, AttachmentType.GIFT> {
+	extends ExternalAttachment<IGiftAttachmentPayload, AttachmentType.GIFT | 'gift'> {
 	/**
 	 * Constructor
 	 */

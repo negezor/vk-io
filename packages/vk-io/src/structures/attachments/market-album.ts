@@ -16,7 +16,7 @@ export type MarketAlbumAttachmentOptions =
 	AttachmentFactoryOptions<IMarketAlbumAttachmentPayload>;
 
 export class MarketAlbumAttachment
-	extends Attachment<IMarketAlbumAttachmentPayload, AttachmentType.MARKET_ALBUM> {
+	extends Attachment<IMarketAlbumAttachmentPayload, AttachmentType.MARKET_ALBUM | 'market_album'> {
 	/**
 	 * Constructor
 	 */

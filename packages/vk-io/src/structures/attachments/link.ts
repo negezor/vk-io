@@ -28,7 +28,7 @@ export type LinkAttachmentOptions =
 	ExternalAttachmentFactoryOptions<ILinkAttachmentPayload>;
 
 export class LinkAttachment
-	extends ExternalAttachment<ILinkAttachmentPayload, AttachmentType.LINK> {
+	extends ExternalAttachment<ILinkAttachmentPayload, AttachmentType.LINK | 'link'> {
 	protected [kPhoto]: PhotoAttachment | undefined;
 
 	/**

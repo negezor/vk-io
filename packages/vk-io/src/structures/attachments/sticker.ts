@@ -20,7 +20,7 @@ export type StickerAttachmentOptions =
 	ExternalAttachmentFactoryOptions<IStickerAttachmentPayload>;
 
 export class StickerAttachment
-	extends ExternalAttachment<IStickerAttachmentPayload, AttachmentType.STICKER> {
+	extends ExternalAttachment<IStickerAttachmentPayload, AttachmentType.STICKER | 'sticker'> {
 	/**
 	 * Constructor
 	 */

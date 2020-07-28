@@ -36,7 +36,7 @@ export type DocumentAttachmentOptions =
 	AttachmentFactoryOptions<IDocumentAttachmentPayload>;
 
 export class DocumentAttachment
-	extends Attachment<IDocumentAttachmentPayload, AttachmentType.DOCUMENT> {
+	extends Attachment<IDocumentAttachmentPayload, AttachmentType.DOCUMENT | 'doc'> {
 	/**
 	 * Constructor
 	 */

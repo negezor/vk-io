@@ -65,7 +65,7 @@ export interface IWallAttachmentPayload {
 export type WallAttachmentOptions =
 	AttachmentFactoryOptions<IWallAttachmentPayload>;
 
-class WallAttachment extends Attachment<IWallAttachmentPayload, AttachmentType.WALL> {
+class WallAttachment extends Attachment<IWallAttachmentPayload, AttachmentType.WALL | 'wall'> {
 	protected [kAttachments]: (Attachment | ExternalAttachment)[];
 
 	protected [kCopyHistoryAttachments]: WallAttachment[];

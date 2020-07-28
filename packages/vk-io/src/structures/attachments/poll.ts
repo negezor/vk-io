@@ -36,7 +36,7 @@ export interface IPollAttachmentPayload {
 export type PollAttachmentOptions =
 	AttachmentFactoryOptions<IPollAttachmentPayload>;
 
-export class PollAttachment extends Attachment<IPollAttachmentPayload, AttachmentType.POLL> {
+export class PollAttachment extends Attachment<IPollAttachmentPayload, AttachmentType.POLL | 'poll'> {
 	/**
 	 * Constructor
 	 */

@@ -31,7 +31,7 @@ export interface IPhotoAttachmentPayload {
 export type PhotoAttachmentOptions =
 	AttachmentFactoryOptions<IPhotoAttachmentPayload>;
 
-export class PhotoAttachment extends Attachment<IPhotoAttachmentPayload, AttachmentType.PHOTO> {
+export class PhotoAttachment extends Attachment<IPhotoAttachmentPayload, AttachmentType.PHOTO | 'photo'> {
 	/**
 	 * Constructor
 	 */

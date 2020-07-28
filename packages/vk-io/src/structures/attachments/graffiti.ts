@@ -17,7 +17,7 @@ export type GraffitiAttachmentOptions =
 	AttachmentFactoryOptions<IGraffitiAttachmentPayload>;
 
 export class GraffitiAttachment
-	extends Attachment<IGraffitiAttachmentPayload, AttachmentType.GRAFFITI> {
+	extends Attachment<IGraffitiAttachmentPayload, AttachmentType.GRAFFITI | 'graffiti'> {
 	/**
 	 * Constructor
 	 */

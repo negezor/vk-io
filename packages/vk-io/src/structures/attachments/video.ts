@@ -29,7 +29,7 @@ export interface IVideoAttachmentPayload {
 export type VideoAttachmentOptions =
 	AttachmentFactoryOptions<IVideoAttachmentPayload>;
 
-export class VideoAttachment extends Attachment<IVideoAttachmentPayload, AttachmentType.VIDEO> {
+export class VideoAttachment extends Attachment<IVideoAttachmentPayload, AttachmentType.VIDEO | 'video'> {
 	/**
 	 * Constructor
 	 */
