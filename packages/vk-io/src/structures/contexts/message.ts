@@ -815,15 +815,18 @@ class MessageContext<S = ContextDefaultState>
 
 		const { message } = this;
 
-		this[kAttachments] = transformAttachments(message.attachments, this.vk);
+		this[kAttachments] = transformAttachments(message.attachments, this.api);
 
 		if (message.reply_message) {
-			this[kReplyMessage] = new MessageReply(message.reply_message, this.vk);
+			this[kReplyMessage] = new MessageReply({
+				api: this.api,
+				payload: message.reply_message
+			});
 		}
 
 		this[kForwards] = new MessageForwardsCollection(...(message.fwd_messages || []).map(forward => (
 			new MessageForward({
-				vk: this.vk,
+				api: this.api,
 				payload: forward
 			})
 		)));

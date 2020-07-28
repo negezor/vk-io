@@ -56,7 +56,7 @@ class NewAttachmentsContext<S = ContextDefaultState>
 			]
 		});
 
-		this.attachments = [new PayloadAttachment(this.payload, this.vk)];
+		this.attachments = [new PayloadAttachment(this.payload, this.api)];
 	}
 
 	/**

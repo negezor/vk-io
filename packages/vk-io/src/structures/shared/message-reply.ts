@@ -1,6 +1,6 @@
 import { inspectable } from 'inspectable';
 
-import { VK } from '../../vk';
+import { API } from '../../api';
 
 import { Attachmentable } from './attachmentable';
 import { Attachment, ExternalAttachment } from '../attachments';
@@ -13,17 +13,22 @@ const kAttachments = Symbol('attachments');
 export interface IMessageReplyPayload {
 	id: number;
 	conversation_message_id: number;
+	from_id: number;
 	peer_id: number;
 	text?: string;
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	attachments: any[];
-	from_id: number;
 	date: number;
 	update_time?: number;
 }
 
+export interface IMessageForwardOptions {
+	api: API;
+	payload: IMessageReplyPayload;
+}
+
 class MessageReply {
-	protected vk: VK;
+	protected api: API;
 
 	protected payload: IMessageReplyPayload;
 
@@ -32,13 +37,13 @@ class MessageReply {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: IMessageReplyPayload, vk?: VK) {
+	public constructor(options: IMessageForwardOptions) {
 		// @ts-expect-error
-		this.vk = vk;
+		this.api = api;
 
-		this.payload = payload;
+		this.payload = options.payload;
 
-		this[kAttachments] = transformAttachments(payload.attachments, this.vk);
+		this[kAttachments] = transformAttachments(this.payload.attachments, this.api);
 	}
 
 	/**

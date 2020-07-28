@@ -1,6 +1,6 @@
 import { inspectable } from 'inspectable';
 
-import { VK } from '../../vk';
+import { API } from '../../api';
 import { Attachmentable } from './attachmentable';
 import { Attachment, ExternalAttachment } from '../attachments';
 
@@ -11,22 +11,22 @@ const kForwards = Symbol('forwards');
 const kAttachments = Symbol('attachments');
 
 export interface IMessageForwardPayload {
+	from_id: number;
 	text?: string;
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	attachments: any[];
 	fwd_messages: IMessageForwardPayload[];
-	from_id: number;
 	date: number;
 	update_time: number;
 }
 
 export interface IMessageForwardOptions {
-	vk: VK;
+	api: API;
 	payload: IMessageForwardPayload;
 }
 
 class MessageForward {
-	protected vk: VK;
+	protected api: API;
 
 	protected payload: IMessageForwardPayload;
 
@@ -38,15 +38,15 @@ class MessageForward {
 	 * Constructor
 	 */
 	public constructor(options: IMessageForwardOptions) {
-		this.vk = options.vk;
+		this.api = options.api;
 
 		this.payload = options.payload;
 
-		this[kAttachments] = transformAttachments(this.payload.attachments, this.vk);
+		this[kAttachments] = transformAttachments(this.payload.attachments, this.api);
 
 		this[kForwards] = (this.payload.fwd_messages || []).map(forward => (
 			new MessageForward({
-				vk: this.vk,
+				api: this.api,
 				payload: forward
 			})
 		));
