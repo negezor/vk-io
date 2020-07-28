@@ -52,7 +52,7 @@ export class Attachment<P = {}> {
 	/**
 	 * Parse attachment with string
 	 */
-	public static fromString(attachment: string): Attachment {
+	public static fromString(attachment: string, api: API): Attachment {
 		if (!parseAttachmentRe.test(attachment)) {
 			throw new TypeError('Incorrect attachment');
 		}
@@ -82,7 +82,7 @@ export class Attachment<P = {}> {
 	 */
 	public equals(attachment: Attachment | string): boolean {
 		const target = typeof attachment === 'string'
-			? Attachment.fromString(attachment)
+			? Attachment.fromString(attachment, this.api)
 			: attachment;
 
 		return (
