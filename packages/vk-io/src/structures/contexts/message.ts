@@ -17,8 +17,7 @@ import {
 	pickProperties,
 	getPeerType,
 	applyMixins,
-	getRandomId,
-	useLazyLoad
+	getRandomId
 } from '../../utils/helpers';
 import {
 	UpdateSource,
@@ -140,14 +139,14 @@ class MessageContext<S = ContextDefaultState>
 
 	protected $filled: boolean;
 
-	protected [kForwards]: () => MessageForwardsCollection;
+	protected [kForwards]: MessageForwardsCollection;
 
-	protected [kReplyMessage]: () => MessageReply | undefined;
+	protected [kReplyMessage]: MessageReply | undefined;
 
-	protected [kAttachments]: () => (Attachment | ExternalAttachment)[];
+	protected [kAttachments]: (Attachment | ExternalAttachment)[];
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	protected [kMessagePayload]: () => any | undefined;
+	protected [kMessagePayload]: any | undefined;
 
 	public constructor(options: MessageContextOptions<S>) {
 		super({
@@ -438,21 +437,21 @@ class MessageContext<S = ContextDefaultState>
 	 * Returns the forwards
 	 */
 	public get forwards(): MessageForwardsCollection {
-		return this[kForwards]();
+		return this[kForwards];
 	}
 
 	/**
 	 * Returns the reply message
 	 */
 	public get replyMessage(): MessageReply | undefined {
-		return this[kReplyMessage]();
+		return this[kReplyMessage];
 	}
 
 	/**
 	 * Returns the attachments
 	 */
 	public get attachments(): (Attachment | ExternalAttachment)[] {
-		return this[kAttachments]();
+		return this[kAttachments];
 	}
 
 	/**
@@ -814,38 +813,24 @@ class MessageContext<S = ContextDefaultState>
 			? unescapeHTML(text)
 			: undefined;
 
-		this[kReplyMessage] = useLazyLoad(() => {
-			const { reply_message: replyMessage } = this.message;
+		const { message } = this;
 
-			return replyMessage
-				? new MessageReply(replyMessage, this.vk)
-				: undefined;
-		});
+		this[kAttachments] = transformAttachments(message.attachments, this.vk);
 
-		this[kForwards] = useLazyLoad(() => {
-			const { fwd_messages: fwdMessages } = this.message;
+		if (message.reply_message) {
+			this[kReplyMessage] = new MessageReply(message.reply_message, this.vk);
+		}
 
-			return fwdMessages
-				? new MessageForwardsCollection(...fwdMessages.map(forward => (
-					new MessageForward({
-						vk: this.vk,
-						payload: forward
-					})
-				)))
-				: new MessageForwardsCollection();
-		});
+		this[kForwards] = new MessageForwardsCollection(...(message.fwd_messages || []).map(forward => (
+			new MessageForward({
+				vk: this.vk,
+				payload: forward
+			})
+		)));
 
-		this[kAttachments] = useLazyLoad(() => (
-			transformAttachments(this.message.attachments, this.vk)
-		));
-
-		this[kMessagePayload] = useLazyLoad(() => {
-			const { payload: messagePayload } = this.message;
-
-			return messagePayload
-				? JSON.parse(messagePayload)
-				: undefined;
-		});
+		if (message.payload) {
+			this[kMessagePayload] = JSON.parse(message.payload);
+		}
 	}
 
 	/**

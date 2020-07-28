@@ -146,19 +146,3 @@ export const applyMixins = (derivedCtor: any, baseCtors: any[]): void => {
 		}
 	}
 };
-
-export const useLazyLoad = <T>(fn: () => T): () => T => {
-	let called = false;
-	let value: T;
-
-	return (): T => {
-		if (called) {
-			return value;
-		}
-
-		value = fn();
-		called = true;
-
-		return value;
-	};
-};

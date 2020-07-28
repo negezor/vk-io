@@ -37,6 +37,8 @@ class MessageReply {
 		this.vk = vk;
 
 		this.payload = payload;
+
+		this[kAttachments] = transformAttachments(payload.attachments, this.vk);
 	}
 
 	/**
@@ -106,10 +108,6 @@ class MessageReply {
 	 * Returns the attachments
 	 */
 	public get attachments(): (Attachment | ExternalAttachment)[] {
-		if (!this[kAttachments]) {
-			this[kAttachments] = transformAttachments(this.payload.attachments, this.vk);
-		}
-
 		return this[kAttachments];
 	}
 

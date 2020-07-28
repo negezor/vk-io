@@ -41,6 +41,15 @@ class MessageForward {
 		this.vk = options.vk;
 
 		this.payload = options.payload;
+
+		this[kAttachments] = transformAttachments(this.payload.attachments, this.vk);
+
+		this[kForwards] = (this.payload.fwd_messages || []).map(forward => (
+			new MessageForward({
+				vk: this.vk,
+				payload: forward
+			})
+		));
 	}
 
 	/**
@@ -89,17 +98,6 @@ class MessageForward {
 	 * Returns the forwards
 	 */
 	public get forwards(): MessageForward[] {
-		if (!this[kForwards]) {
-			this[kForwards] = this.payload.fwd_messages
-				? this.payload.fwd_messages.map(forward => (
-					new MessageForward({
-						vk: this.vk,
-						payload: forward
-					})
-				))
-				: [];
-		}
-
 		return this[kForwards];
 	}
 
@@ -107,10 +105,6 @@ class MessageForward {
 	 * Returns the attachments
 	 */
 	public get attachments(): (Attachment | ExternalAttachment)[] {
-		if (!this[kAttachments]) {
-			this[kAttachments] = transformAttachments(this.payload.attachments, this.vk);
-		}
-
 		return this[kAttachments];
 	}
 

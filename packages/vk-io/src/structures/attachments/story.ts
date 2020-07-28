@@ -2,7 +2,7 @@ import { API } from '../../api';
 
 import { Attachment } from './attachment';
 
-import { pickProperties, useLazyLoad } from '../../utils/helpers';
+import { pickProperties } from '../../utils/helpers';
 import { AttachmentType, kSerializeData } from '../../utils/constants';
 import { PhotoAttachment, IPhotoAttachmentPayload } from './photo';
 import { VideoAttachment, IVideoAttachmentPayload } from './video';
@@ -70,11 +70,11 @@ const kPhoto = Symbol('photo');
 const kParentStory = Symbol('parentStory');
 
 export class StoryAttachment extends Attachment<IStoryAttachmentPayload> {
-	protected [kPhoto]: () => PhotoAttachment | undefined;
+	protected [kPhoto]: PhotoAttachment | undefined;
 
-	protected [kVideo]: () => VideoAttachment | undefined;
+	protected [kVideo]: VideoAttachment | undefined;
 
-	protected [kParentStory]: () => StoryAttachment | undefined;
+	protected [kParentStory]: StoryAttachment | undefined;
 
 	/**
 	 * Constructor
@@ -185,14 +185,14 @@ export class StoryAttachment extends Attachment<IStoryAttachmentPayload> {
 	 * Returns the story photo
 	 */
 	public get photo(): PhotoAttachment | undefined {
-		return this[kPhoto]();
+		return this[kPhoto];
 	}
 
 	/**
 	 * Returns the story video
 	 */
 	public get video(): VideoAttachment | undefined {
-		return this[kVideo]();
+		return this[kVideo];
 	}
 
 	/**
@@ -248,7 +248,7 @@ export class StoryAttachment extends Attachment<IStoryAttachmentPayload> {
 	 * Returns the parent story
 	 */
 	public get parentStory(): StoryAttachment | undefined {
-		return this[kParentStory]();
+		return this[kParentStory];
 	}
 
 	/**
@@ -262,23 +262,17 @@ export class StoryAttachment extends Attachment<IStoryAttachmentPayload> {
 	 * Applies the payload
 	 */
 	private applyPayload(payload: IStoryAttachmentPayload): void {
-		this[kPhoto] = useLazyLoad(() => (
-			payload.photo
-				? new PhotoAttachment(payload.photo, this.api)
-				: undefined
-		));
+		if (payload.photo) {
+			this[kPhoto] = new PhotoAttachment(payload.photo, this.api);
+		}
 
-		this[kVideo] = useLazyLoad(() => (
-			payload.video
-				? new VideoAttachment(payload.video, this.api)
-				: undefined
-		));
+		if (payload.video) {
+			this[kVideo] = new VideoAttachment(payload.video, this.api);
+		}
 
-		this[kParentStory] = useLazyLoad(() => (
-			payload.parent_story
-				? new StoryAttachment(payload.parent_story, this.api)
-				: undefined
-		));
+		if (payload.parent_story) {
+			this[kParentStory] = new StoryAttachment(payload.parent_story, this.api);
+		}
 	}
 
 	/**

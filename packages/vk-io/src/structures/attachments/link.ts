@@ -40,9 +40,9 @@ export class LinkAttachment extends ExternalAttachment<ILinkAttachmentPayload> {
 		// @ts-expect-error
 		this.api = api;
 
-		this[kPhoto] = payload.photo
-			? new PhotoAttachment(payload.photo, this.api)
-			: undefined;
+		if (payload.photo) {
+			this[kPhoto] = new PhotoAttachment(payload.photo, this.api);
+		}
 	}
 
 	/**

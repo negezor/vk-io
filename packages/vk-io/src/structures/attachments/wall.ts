@@ -7,7 +7,7 @@ import { Attachmentable } from '../shared/attachmentable';
 // eslint-disable-next-line import/no-cycle
 import { transformAttachments } from './helpers';
 import { AttachmentType, kSerializeData } from '../../utils/constants';
-import { pickProperties, applyMixins, useLazyLoad } from '../../utils/helpers';
+import { pickProperties, applyMixins } from '../../utils/helpers';
 
 const { WALL } = AttachmentType;
 
@@ -67,9 +67,9 @@ export interface IWallAttachmentPayload {
 }
 
 class WallAttachment extends Attachment<IWallAttachmentPayload> {
-	protected [kAttachments]: () => (Attachment | ExternalAttachment)[];
+	protected [kAttachments]: (Attachment | ExternalAttachment)[];
 
-	protected [kCopyHistoryAttachments]: () => WallAttachment[];
+	protected [kCopyHistoryAttachments]: WallAttachment[];
 
 	/**
 	 * Constructor
@@ -404,33 +404,26 @@ class WallAttachment extends Attachment<IWallAttachmentPayload> {
 	 * Returns the attachments
 	 */
 	public get attachments(): (Attachment | ExternalAttachment)[] {
-		return this[kAttachments]();
+		return this[kAttachments];
 	}
 
 	/**
 	 * Returns the history of reposts for post
 	 */
 	public get copyHistory(): WallAttachment[] | undefined {
-		return this[kCopyHistoryAttachments]();
+		return this[kCopyHistoryAttachments];
 	}
 
 	/**
 	 * Applies the payload
 	 */
 	private applyPayload(payload: IWallAttachmentPayload): void {
-		this[kAttachments] = useLazyLoad(() => (
-			transformAttachments(payload.attachments || [], this.api)
-		));
+		this[kAttachments] = transformAttachments(payload.attachments || [], this.api);
 
-		this[kCopyHistoryAttachments] = useLazyLoad(() => (
-			payload.copy_history
-				? payload.copy_history.map((history): WallAttachment => (
-					new WallAttachment(history, this.api)
-				))
-				: []
+		this[kCopyHistoryAttachments] = (payload.copy_history || []).map((history): WallAttachment => (
+			new WallAttachment(history, this.api)
 		));
 	}
-
 
 	/**
 	 * Returns the custom data
