@@ -22,7 +22,7 @@ export interface IMessageReplyPayload {
 	update_time?: number;
 }
 
-export interface IMessageForwardOptions {
+export interface IMessageReplyOptions {
 	api: API;
 	payload: IMessageReplyPayload;
 }
@@ -37,7 +37,7 @@ class MessageReply {
 	/**
 	 * Constructor
 	 */
-	public constructor(options: IMessageForwardOptions) {
+	public constructor(options: IMessageReplyOptions) {
 		// @ts-expect-error
 		this.api = api;
 
