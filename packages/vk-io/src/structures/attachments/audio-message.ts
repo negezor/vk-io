@@ -14,7 +14,7 @@ export interface IAudioMessageAttachmentPayload {
 	link_mp3?: string;
 }
 
-export type AudioAttachmentOptions =
+export type AudioMessageAttachmentOptions =
 	AttachmentFactoryOptions<IAudioMessageAttachmentPayload>;
 
 export class AudioMessageAttachment
@@ -22,7 +22,7 @@ export class AudioMessageAttachment
 	/**
 	 * Constructor
 	 */
-	public constructor(options: AudioAttachmentOptions) {
+	public constructor(options: AudioMessageAttachmentOptions) {
 		super({
 			...options,
 

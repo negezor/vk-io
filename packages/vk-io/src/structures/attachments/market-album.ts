@@ -12,7 +12,7 @@ export interface IMarketAlbumAttachmentPayload {
 	count?: number;
 	updated_time?: number;
 }
-export type MarketAttachmentOptions =
+export type MarketAlbumAttachmentOptions =
 	AttachmentFactoryOptions<IMarketAlbumAttachmentPayload>;
 
 export class MarketAlbumAttachment
@@ -20,7 +20,7 @@ export class MarketAlbumAttachment
 	/**
 	 * Constructor
 	 */
-	public constructor(options: MarketAttachmentOptions) {
+	public constructor(options: MarketAlbumAttachmentOptions) {
 		super({
 			...options,
 

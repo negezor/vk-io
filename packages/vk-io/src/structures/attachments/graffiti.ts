@@ -13,7 +13,7 @@ export interface IGraffitiAttachmentPayload {
 	url?: string;
 }
 
-export type AudioAttachmentOptions =
+export type GraffitiAttachmentOptions =
 	AttachmentFactoryOptions<IGraffitiAttachmentPayload>;
 
 export class GraffitiAttachment
@@ -21,7 +21,7 @@ export class GraffitiAttachment
 	/**
 	 * Constructor
 	 */
-	public constructor(options: AudioAttachmentOptions) {
+	public constructor(options: GraffitiAttachmentOptions) {
 		super({
 			...options,
 
