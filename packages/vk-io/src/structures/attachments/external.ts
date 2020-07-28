@@ -3,15 +3,15 @@ import { inspectable } from 'inspectable';
 import { API } from '../../api';
 import { IAttachmentOptions, AttachmentFactoryOptions } from './attachment';
 
-import { kSerializeData } from '../../utils/constants';
+import { kSerializeData, AttachmentType } from '../../utils/constants';
 
 export type IExternalAttachmentOptions<P, Type extends string = string> =
 IAttachmentOptions<P, Type>;
 
 export type ExternalAttachmentFactoryOptions<P> = AttachmentFactoryOptions<P>;
 
-export class ExternalAttachment<P = {}, Type extends string = string> {
-	public type: string;
+export class ExternalAttachment<P = {}, Type extends string | AttachmentType = string> {
+	public type: Type;
 
 	protected $filled: boolean;
 

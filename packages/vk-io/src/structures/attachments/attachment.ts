@@ -24,8 +24,8 @@ export interface IAttachmentOptions<P, Type extends string = string> {
 export type AttachmentFactoryOptions<P> =
 	Omit<IAttachmentOptions<P>, 'type'>;
 
-export class Attachment<P = {}, Type extends string = string> {
-	public type: AttachmentType | string;
+export class Attachment<P = {}, Type extends string | AttachmentType = string> {
+	public type: Type;
 
 	protected $filled: boolean;
 
