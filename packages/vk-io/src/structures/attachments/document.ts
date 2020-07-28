@@ -1,11 +1,7 @@
-import { API } from '../../api';
-
-import { Attachment } from './attachment';
+import { Attachment, AttachmentFactoryOptions } from './attachment';
 
 import { pickProperties } from '../../utils/helpers';
 import { AttachmentType, kSerializeData } from '../../utils/constants';
-
-const { DOCUMENT } = AttachmentType;
 
 /**
  * Types of documents
@@ -36,18 +32,22 @@ export interface IDocumentAttachmentPayload {
 	preview?: Record<string, any>;
 }
 
-export class DocumentAttachment extends Attachment<IDocumentAttachmentPayload> {
+export type DocumentAttachmentOptions =
+	AttachmentFactoryOptions<IDocumentAttachmentPayload>;
+
+export class DocumentAttachment
+	extends Attachment<IDocumentAttachmentPayload, AttachmentType.DOCUMENT> {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: IDocumentAttachmentPayload, api?: API) {
-		super(DOCUMENT, payload.owner_id, payload.id, payload.access_key);
+	public constructor(options: DocumentAttachmentOptions) {
+		super({
+			...options,
 
-		// @ts-expect-error
-		this.api = api;
-		this.payload = payload;
+			type: AttachmentType.DOCUMENT
+		});
 
-		this.$filled = payload.ext !== undefined && payload.date !== undefined;
+		this.$filled = this.payload.ext !== undefined && this.payload.date !== undefined;
 	}
 
 	/**
@@ -63,10 +63,6 @@ export class DocumentAttachment extends Attachment<IDocumentAttachmentPayload> {
 		});
 
 		this.payload = document;
-
-		if (this.payload.access_key) {
-			this.accessKey = this.payload.access_key;
-		}
 
 		this.$filled = true;
 	}

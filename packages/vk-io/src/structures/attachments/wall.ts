@@ -1,6 +1,4 @@
-import { API } from '../../api';
-
-import { Attachment } from './attachment';
+import { Attachment, AttachmentFactoryOptions } from './attachment';
 import { ExternalAttachment } from './external';
 import { Attachmentable } from '../shared/attachmentable';
 
@@ -8,8 +6,6 @@ import { Attachmentable } from '../shared/attachmentable';
 import { transformAttachments } from './helpers';
 import { AttachmentType, kSerializeData } from '../../utils/constants';
 import { pickProperties, applyMixins } from '../../utils/helpers';
-
-const { WALL } = AttachmentType;
 
 const kAttachments = Symbol('attachments');
 const kCopyHistoryAttachments = Symbol('copyHistoryAttachments');
@@ -66,7 +62,10 @@ export interface IWallAttachmentPayload {
 	is_favorite?: number;
 }
 
-class WallAttachment extends Attachment<IWallAttachmentPayload> {
+export type WallAttachmentOptions =
+	AttachmentFactoryOptions<IWallAttachmentPayload>;
+
+class WallAttachment extends Attachment<IWallAttachmentPayload, AttachmentType.WALL> {
 	protected [kAttachments]: (Attachment | ExternalAttachment)[];
 
 	protected [kCopyHistoryAttachments]: WallAttachment[];
@@ -74,16 +73,16 @@ class WallAttachment extends Attachment<IWallAttachmentPayload> {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: IWallAttachmentPayload, api?: API) {
-		super(WALL, payload.owner_id || payload.to_id!, payload.id, payload.access_key);
+	public constructor(options: WallAttachmentOptions) {
+		super({
+			...options,
 
-		// @ts-expect-error
-		this.api = api;
-		this.payload = payload;
+			type: AttachmentType.WALL
+		});
 
-		this.$filled = payload.date !== undefined;
+		this.$filled = this.payload.date !== undefined;
 
-		this.applyPayload(payload);
+		this.applyPayload(options.payload);
 	}
 
 	/**
@@ -101,10 +100,6 @@ class WallAttachment extends Attachment<IWallAttachmentPayload> {
 
 		// @ts-expect-error
 		this.payload = post;
-
-		if (this.payload.access_key) {
-			this.accessKey = this.payload.access_key;
-		}
 
 		this.applyPayload(post as IWallAttachmentPayload);
 
@@ -294,6 +289,10 @@ class WallAttachment extends Attachment<IWallAttachmentPayload> {
 		return Boolean(this.payload.is_favorite);
 	}
 
+	public get ownerId(): number {
+		return this.payload.owner_id || this.payload.to_id!;
+	}
+
 	/**
 	 * Returns the identifier author
 	 */
@@ -421,7 +420,10 @@ class WallAttachment extends Attachment<IWallAttachmentPayload> {
 		this[kAttachments] = transformAttachments(payload.attachments || [], this.api);
 
 		this[kCopyHistoryAttachments] = (payload.copy_history || []).map((history): WallAttachment => (
-			new WallAttachment(history, this.api)
+			new WallAttachment({
+				api: this.api,
+				payload: history
+			})
 		));
 	}
 
@@ -450,7 +452,6 @@ class WallAttachment extends Attachment<IWallAttachmentPayload> {
 		]);
 	}
 }
-
 
 // eslint-disable-next-line
 interface WallAttachment extends Attachmentable {}

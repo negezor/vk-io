@@ -1,11 +1,7 @@
-import { API } from '../../api';
-
-import { Attachment } from './attachment';
+import { Attachment, AttachmentFactoryOptions } from './attachment';
 
 import { pickProperties } from '../../utils/helpers';
 import { AttachmentType, kSerializeData } from '../../utils/constants';
-
-const { AUDIO } = AttachmentType;
 
 export interface IAudioAttachmentPayload {
 	id: number;
@@ -23,18 +19,21 @@ export interface IAudioAttachmentPayload {
 	url?: string;
 }
 
-export class AudioAttachment extends Attachment<IAudioAttachmentPayload> {
+export type AudioAttachmentOptions =
+	AttachmentFactoryOptions<IAudioAttachmentPayload>;
+
+export class AudioAttachment extends Attachment<IAudioAttachmentPayload, AttachmentType.AUDIO> {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: IAudioAttachmentPayload, api?: API) {
-		super(AUDIO, payload.owner_id, payload.id, payload.access_key);
+	public constructor(options: AudioAttachmentOptions) {
+		super({
+			...options,
 
-		// @ts-expect-error
-		this.api = api;
-		this.payload = payload;
+			type: AttachmentType.AUDIO
+		});
 
-		this.$filled = payload.duration !== undefined && payload.date !== undefined;
+		this.$filled = this.payload.duration !== undefined && this.payload.date !== undefined;
 	}
 
 	/**
@@ -51,10 +50,6 @@ export class AudioAttachment extends Attachment<IAudioAttachmentPayload> {
 		});
 
 		this.payload = audio;
-
-		if (this.payload.access_key) {
-			this.accessKey = this.payload.access_key;
-		}
 
 		this.$filled = true;
 	}

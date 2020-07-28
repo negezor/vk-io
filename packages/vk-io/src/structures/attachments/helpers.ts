@@ -43,7 +43,7 @@ const attachmentsTypes = {
  */
 // @ts-expect-error
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const transformAttachments = (attachments: any[] = [], api?: API): Attachment[] => (
+export const transformAttachments = (attachments: any[] = [], api: API): Attachment[] => (
 	attachments
 		.map((item): Attachment | boolean => {
 			const { type } = item;
@@ -52,7 +52,10 @@ export const transformAttachments = (attachments: any[] = [], api?: API): Attach
 			const attachment = attachmentsTypes[type];
 
 			return attachment
-				? new (attachment())(item[type], api)
+				? new (attachment())({
+					api,
+					payload: item[type]
+				})
 				: false;
 		})
 		.filter(Boolean)

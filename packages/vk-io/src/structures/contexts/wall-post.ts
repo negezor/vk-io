@@ -38,7 +38,10 @@ export class WallPostContext<S = ContextDefaultState>
 			]
 		});
 
-		this.wall = new WallAttachment(this.payload, this.api);
+		this.wall = new WallAttachment({
+			api: this.api,
+			payload: this.payload
+		});
 	}
 
 	/**

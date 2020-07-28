@@ -8,38 +8,53 @@ import { kSerializeData, AttachmentType } from '../../utils/constants';
  */
 export const parseAttachmentRe = /^([a-z]+)(-?\d+)_(\d+)_?(\w+)?$/;
 
-export class Attachment<P = {}> {
+export interface IAttachmentOptions<P, Type extends string = string> {
+	api: API;
+
+	type: Type;
+	payload: P;
+}
+
+export type AttachmentFactoryOptions<P> =
+	Omit<IAttachmentOptions<P>, 'type'>;
+
+export class Attachment<P = {}, Type extends string = string> {
 	public type: AttachmentType | string;
-
-	public ownerId: number;
-
-	public id: number;
-
-	public accessKey?: string;
 
 	protected $filled: boolean;
 
 	protected api!: API;
 
-	protected payload!: P;
+	protected payload!: P & {
+		id: number;
+		owner_id: number;
+		access_key?: string;
+	};
 
 	/**
 	 * Constructor
 	 */
-	public constructor(
-		type: AttachmentType | string,
-		ownerId: number | string,
-		id: number | string,
-		accessKey?: string
-	) {
-		this.type = type;
+	public constructor(options: IAttachmentOptions<P, Type>) {
+		this.api = options.api;
 
-		this.ownerId = Number(ownerId);
-		this.id = Number(id);
+		this.type = options.type;
 
-		this.accessKey = accessKey;
+		// @ts-expect-error
+		this.payload = options.payload;
 
 		this.$filled = false;
+	}
+
+	public get id(): number {
+		return this.payload.id;
+	}
+
+	public get ownerId(): number {
+		return this.payload.owner_id;
+	}
+
+	public get accessKey(): string | undefined {
+		return this.payload.access_key;
 	}
 
 	/**
@@ -59,7 +74,15 @@ export class Attachment<P = {}> {
 
 		const [, type, ownerId, id, accessKey] = attachment.match(parseAttachmentRe)!;
 
-		return new Attachment(type, ownerId, id, accessKey);
+		return new Attachment({
+			api,
+			type,
+			payload: {
+				id,
+				owner_id: ownerId,
+				access_key: accessKey
+			}
+		});
 	}
 
 	/**

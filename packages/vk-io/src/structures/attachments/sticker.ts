@@ -1,11 +1,7 @@
-import { API } from '../../api';
-
-import { ExternalAttachment } from './external';
+import { ExternalAttachment, ExternalAttachmentFactoryOptions } from './external';
 
 import { pickProperties } from '../../utils/helpers';
 import { AttachmentType, kSerializeData } from '../../utils/constants';
-
-const { STICKER } = AttachmentType;
 
 export interface IStickerImage {
 	url: string;
@@ -20,15 +16,20 @@ export interface IStickerAttachmentPayload {
 	images_with_background: IStickerImage[];
 }
 
-export class StickerAttachment extends ExternalAttachment<IStickerAttachmentPayload> {
+export type StickerAttachmentOptions =
+	ExternalAttachmentFactoryOptions<IStickerAttachmentPayload>;
+
+export class StickerAttachment
+	extends ExternalAttachment<IStickerAttachmentPayload, AttachmentType.STICKER> {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: IStickerAttachmentPayload, api?: API) {
-		super(STICKER, payload);
+	public constructor(options: StickerAttachmentOptions) {
+		super({
+			...options,
 
-		// @ts-expect-error
-		this.api = api;
+			type: AttachmentType.STICKER
+		});
 	}
 
 	/**

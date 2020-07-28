@@ -1,12 +1,8 @@
-import { API } from '../../api';
-
-import { ExternalAttachment } from './external';
+import { ExternalAttachment, ExternalAttachmentFactoryOptions } from './external';
 
 import { pickProperties } from '../../utils/helpers';
 import { PhotoAttachment, IPhotoAttachmentPayload } from './photo';
 import { AttachmentType, kSerializeData } from '../../utils/constants';
-
-const { LINK } = AttachmentType;
 
 const kPhoto = Symbol('kPhoto');
 
@@ -28,20 +24,28 @@ export interface ILinkAttachmentPayload {
 	photo?: IPhotoAttachmentPayload;
 }
 
-export class LinkAttachment extends ExternalAttachment<ILinkAttachmentPayload> {
+export type LinkAttachmentOptions =
+	ExternalAttachmentFactoryOptions<ILinkAttachmentPayload>;
+
+export class LinkAttachment
+	extends ExternalAttachment<ILinkAttachmentPayload, AttachmentType.LINK> {
 	protected [kPhoto]: PhotoAttachment | undefined;
 
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: ILinkAttachmentPayload, api?: API) {
-		super(LINK, payload);
+	public constructor(options: LinkAttachmentOptions) {
+		super({
+			...options,
 
-		// @ts-expect-error
-		this.api = api;
+			type: AttachmentType.LINK
+		});
 
-		if (payload.photo) {
-			this[kPhoto] = new PhotoAttachment(payload.photo, this.api);
+		if (this.payload.photo) {
+			this[kPhoto] = new PhotoAttachment({
+				api: this.api,
+				payload: this.payload.photo
+			});
 		}
 	}
 

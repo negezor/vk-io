@@ -1,11 +1,7 @@
-import { API } from '../../api';
-
-import { Attachment } from './attachment';
+import { Attachment, AttachmentFactoryOptions } from './attachment';
 
 import { pickProperties } from '../../utils/helpers';
 import { AttachmentType, kSerializeData } from '../../utils/constants';
-
-const { VIDEO } = AttachmentType;
 
 export interface IVideoAttachmentPayload {
 	id: number;
@@ -30,18 +26,21 @@ export interface IVideoAttachmentPayload {
 	platform?: string;
 }
 
-export class VideoAttachment extends Attachment<IVideoAttachmentPayload> {
+export type VideoAttachmentOptions =
+	AttachmentFactoryOptions<IVideoAttachmentPayload>;
+
+export class VideoAttachment extends Attachment<IVideoAttachmentPayload, AttachmentType.VIDEO> {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: IVideoAttachmentPayload, api?: API) {
-		super(VIDEO, payload.owner_id, payload.id, payload.access_key);
+	public constructor(options: VideoAttachmentOptions) {
+		super({
+			...options,
 
-		// @ts-expect-error
-		this.api = api;
-		this.payload = payload;
+			type: AttachmentType.VIDEO
+		});
 
-		this.$filled = payload.date !== undefined;
+		this.$filled = this.payload.date !== undefined;
 	}
 
 	/**
@@ -61,10 +60,6 @@ export class VideoAttachment extends Attachment<IVideoAttachmentPayload> {
 
 		// @ts-expect-error
 		this.payload = video;
-
-		if (this.payload.access_key) {
-			this.accessKey = this.payload.access_key;
-		}
 
 		this.$filled = true;
 	}
@@ -122,7 +117,6 @@ export class VideoAttachment extends Attachment<IVideoAttachmentPayload> {
 		return Boolean(this.payload.is_favorite);
 	}
 
-
 	/**
 	 * Returns the title
 	 */
@@ -178,7 +172,6 @@ export class VideoAttachment extends Attachment<IVideoAttachmentPayload> {
 	public get player(): string | undefined {
 		return this.payload.player;
 	}
-
 
 	/**
 	 * Returns the name of the platform (for video recordings added from external sites)

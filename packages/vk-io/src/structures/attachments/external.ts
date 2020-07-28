@@ -1,9 +1,16 @@
 import { inspectable } from 'inspectable';
 
 import { API } from '../../api';
+import { IAttachmentOptions, AttachmentFactoryOptions } from './attachment';
+
 import { kSerializeData } from '../../utils/constants';
 
-export class ExternalAttachment<P = {}> {
+export type IExternalAttachmentOptions<P, Type extends string = string> =
+IAttachmentOptions<P, Type>;
+
+export type ExternalAttachmentFactoryOptions<P> = AttachmentFactoryOptions<P>;
+
+export class ExternalAttachment<P = {}, Type extends string = string> {
 	public type: string;
 
 	protected $filled: boolean;
@@ -15,9 +22,12 @@ export class ExternalAttachment<P = {}> {
 	/**
 	 * Constructor
 	 */
-	public constructor(type: string, payload: P) {
-		this.type = type;
-		this.payload = payload;
+	public constructor(options: IExternalAttachmentOptions<P, Type>) {
+		this.api = options.api;
+
+		this.type = options.type;
+
+		this.payload = options.payload;
 
 		this.$filled = false;
 	}

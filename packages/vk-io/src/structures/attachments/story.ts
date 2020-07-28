@@ -1,13 +1,9 @@
-import { API } from '../../api';
-
-import { Attachment } from './attachment';
+import { Attachment, AttachmentFactoryOptions } from './attachment';
 
 import { pickProperties } from '../../utils/helpers';
 import { AttachmentType, kSerializeData } from '../../utils/constants';
 import { PhotoAttachment, IPhotoAttachmentPayload } from './photo';
 import { VideoAttachment, IVideoAttachmentPayload } from './video';
-
-const { STORY } = AttachmentType;
 
 export interface IStoryAttachmentPayload {
 	id: number;
@@ -69,7 +65,10 @@ const kPhoto = Symbol('photo');
 
 const kParentStory = Symbol('parentStory');
 
-export class StoryAttachment extends Attachment<IStoryAttachmentPayload> {
+export type StoryAttachmentOptions =
+	AttachmentFactoryOptions<IStoryAttachmentPayload>;
+
+export class StoryAttachment extends Attachment<IStoryAttachmentPayload, AttachmentType.STORY> {
 	protected [kPhoto]: PhotoAttachment | undefined;
 
 	protected [kVideo]: VideoAttachment | undefined;
@@ -79,16 +78,16 @@ export class StoryAttachment extends Attachment<IStoryAttachmentPayload> {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: IStoryAttachmentPayload, api?: API) {
-		super(STORY, payload.owner_id, payload.id, payload.access_key);
+	public constructor(options: StoryAttachmentOptions) {
+		super({
+			...options,
 
-		// @ts-expect-error
-		this.api = api;
-		this.payload = payload;
+			type: AttachmentType.STORY
+		});
 
-		this.$filled = payload.is_deleted !== undefined || payload.is_expired !== undefined;
+		this.applyPayload(options.payload);
 
-		this.applyPayload(payload);
+		this.$filled = this.payload.is_deleted !== undefined || this.payload.is_expired !== undefined;
 	}
 
 	/**
@@ -106,10 +105,6 @@ export class StoryAttachment extends Attachment<IStoryAttachmentPayload> {
 		});
 
 		this.payload = story;
-
-		if (this.payload.access_key) {
-			this.accessKey = this.payload.access_key;
-		}
 
 		this.applyPayload(story as IStoryAttachmentPayload);
 
@@ -263,15 +258,24 @@ export class StoryAttachment extends Attachment<IStoryAttachmentPayload> {
 	 */
 	private applyPayload(payload: IStoryAttachmentPayload): void {
 		if (payload.photo) {
-			this[kPhoto] = new PhotoAttachment(payload.photo, this.api);
+			this[kPhoto] = new PhotoAttachment({
+				api: this.api,
+				payload: payload.photo
+			});
 		}
 
 		if (payload.video) {
-			this[kVideo] = new VideoAttachment(payload.video, this.api);
+			this[kVideo] = new VideoAttachment({
+				api: this.api,
+				payload: payload.video
+			});
 		}
 
 		if (payload.parent_story) {
-			this[kParentStory] = new StoryAttachment(payload.parent_story, this.api);
+			this[kParentStory] = new StoryAttachment({
+				api: this.api,
+				payload: payload.parent_story
+			});
 		}
 	}
 

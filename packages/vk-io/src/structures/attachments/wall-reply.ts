@@ -1,19 +1,19 @@
-import { API } from '../../api';
-
-import { ExternalAttachment } from './external';
+import { ExternalAttachment, ExternalAttachmentFactoryOptions } from './external';
 
 import { AttachmentType } from '../../utils/constants';
 
-const { WALL_REPLY } = AttachmentType;
+export type WallReplyAttachmentOptions =
+	ExternalAttachmentFactoryOptions<object>;
 
-export class WallReplyAttachment extends ExternalAttachment {
+export class WallReplyAttachment extends ExternalAttachment<object, AttachmentType.WALL_REPLY> {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: object, api?: API) {
-		super(WALL_REPLY, payload);
+	public constructor(options: WallReplyAttachmentOptions) {
+		super({
+			...options,
 
-		// @ts-expect-error
-		this.api = api;
+			type: AttachmentType.WALL_REPLY
+		});
 	}
 }

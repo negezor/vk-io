@@ -1,11 +1,7 @@
-import { API } from '../../api';
-
-import { Attachment } from './attachment';
+import { Attachment, AttachmentFactoryOptions } from './attachment';
 
 import { pickProperties } from '../../utils/helpers';
 import { AttachmentType, kSerializeData } from '../../utils/constants';
-
-const { POLL } = AttachmentType;
 
 export interface IPollAttachmentPayload {
 	id: number;
@@ -37,18 +33,21 @@ export interface IPollAttachmentPayload {
 	photo?: object;
 }
 
-export class PollAttachment extends Attachment<IPollAttachmentPayload> {
+export type PollAttachmentOptions =
+	AttachmentFactoryOptions<IPollAttachmentPayload>;
+
+export class PollAttachment extends Attachment<IPollAttachmentPayload, AttachmentType.POLL> {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: IPollAttachmentPayload, api?: API) {
-		super(POLL, payload.owner_id, payload.id, payload.access_key);
+	public constructor(options: PollAttachmentOptions) {
+		super({
+			...options,
 
-		// @ts-expect-error
-		this.api = api;
-		this.payload = payload;
+			type: AttachmentType.POLL
+		});
 
-		this.$filled = payload.answers !== undefined;
+		this.$filled = this.payload.answers !== undefined;
 	}
 
 	/**
@@ -66,10 +65,6 @@ export class PollAttachment extends Attachment<IPollAttachmentPayload> {
 		});
 
 		this.payload = poll;
-
-		if (this.payload.access_key) {
-			this.accessKey = this.payload.access_key;
-		}
 
 		this.$filled = true;
 	}

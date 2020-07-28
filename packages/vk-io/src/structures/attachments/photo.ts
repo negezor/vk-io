@@ -1,11 +1,7 @@
-import { API } from '../../api';
-
-import { Attachment } from './attachment';
+import { Attachment, AttachmentFactoryOptions } from './attachment';
 
 import { pickProperties } from '../../utils/helpers';
 import { AttachmentType, kSerializeData } from '../../utils/constants';
-
-const { PHOTO } = AttachmentType;
 
 const SMALL_SIZES = ['m', 's'];
 const MEDIUM_SIZES = ['y', 'r', 'q', 'p', ...SMALL_SIZES];
@@ -32,18 +28,21 @@ export interface IPhotoAttachmentPayload {
 	height?: number;
 }
 
-export class PhotoAttachment extends Attachment<IPhotoAttachmentPayload> {
+export type PhotoAttachmentOptions =
+	AttachmentFactoryOptions<IPhotoAttachmentPayload>;
+
+export class PhotoAttachment extends Attachment<IPhotoAttachmentPayload, AttachmentType.PHOTO> {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: IPhotoAttachmentPayload, api?: API) {
-		super(PHOTO, payload.owner_id, payload.id, payload.access_key);
+	public constructor(options: PhotoAttachmentOptions) {
+		super({
+			...options,
 
-		// @ts-expect-error
-		this.api = api;
-		this.payload = payload;
+			type: AttachmentType.PHOTO
+		});
 
-		this.$filled = payload.album_id !== undefined && payload.date !== undefined;
+		this.$filled = this.payload.album_id !== undefined && this.payload.date !== undefined;
 	}
 
 	/**
@@ -61,10 +60,6 @@ export class PhotoAttachment extends Attachment<IPhotoAttachmentPayload> {
 
 		// @ts-expect-error
 		this.payload = photo;
-
-		if (this.payload.access_key) {
-			this.accessKey = this.payload.access_key;
-		}
 
 		this.$filled = true;
 	}

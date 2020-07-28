@@ -202,7 +202,10 @@ export class Upload {
 
 		// @ts-expect-error
 		return photos.map(photo => (
-			new PhotoAttachment(photo, this.api)
+			new PhotoAttachment({
+				api: this.api,
+				payload: photo
+			})
 		));
 	}
 
@@ -235,7 +238,10 @@ export class Upload {
 			attachmentType: 'photo'
 		});
 
-		return new PhotoAttachment(photo, this.api);
+		return new PhotoAttachment({
+			api: this.api,
+			payload: photo
+		});
 	}
 
 	/**
@@ -300,7 +306,10 @@ export class Upload {
 			attachmentType: 'photo'
 		});
 
-		return new PhotoAttachment(photo, this.api);
+		return new PhotoAttachment({
+			api: this.api,
+			payload: photo
+		});
 	}
 
 	/**
@@ -418,7 +427,10 @@ export class Upload {
 			attachmentType: 'photo'
 		});
 
-		return new PhotoAttachment(photo, this.api);
+		return new PhotoAttachment({
+			api: this.api,
+			payload: photo
+		});
 	}
 
 	/**
@@ -445,7 +457,10 @@ export class Upload {
 			attachmentType: 'photo'
 		});
 
-		return new PhotoAttachment(photo, this.api);
+		return new PhotoAttachment({
+			api: this.api,
+			payload: photo
+		});
 	}
 
 	/**
@@ -472,7 +487,10 @@ export class Upload {
 			attachmentType: 'audio'
 		});
 
-		return new AudioAttachment(audio, this.api);
+		return new AudioAttachment({
+			api: this.api,
+			payload: audio
+		});
 	}
 
 	/**
@@ -550,7 +568,10 @@ export class Upload {
 			timeout: source.timeout
 		});
 
-		return new VideoAttachment({ ...save, ...video }, this.api);
+		return new VideoAttachment({
+			api: this.api,
+			payload: { ...save, ...video }
+		});
 	}
 
 	/**
@@ -576,7 +597,10 @@ export class Upload {
 
 		const ConductAttachment = DocumentTypes[response.type] || DocumentTypes.doc;
 
-		return new ConductAttachment(response[response.type], this.api);
+		return new ConductAttachment({
+			api: this.api,
+			payload: response[response.type]
+		});
 	}
 
 	/**
@@ -618,7 +642,10 @@ export class Upload {
 
 		const ConductAttachment = DocumentTypes[response.type] || DocumentTypes.doc;
 
-		return new ConductAttachment(response[response.type], this.api);
+		return new ConductAttachment({
+			api: this.api,
+			payload: response[response.type]
+		});
 	}
 
 	/**
@@ -661,7 +688,10 @@ export class Upload {
 
 		const ConductAttachment = DocumentTypes[response.type] || DocumentTypes.doc;
 
-		return new ConductAttachment(response[response.type], this.api);
+		return new ConductAttachment({
+			api: this.api,
+			payload: response[response.type]
+		});
 	}
 
 	/**

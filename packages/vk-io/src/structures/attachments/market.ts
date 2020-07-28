@@ -1,10 +1,6 @@
-import { API } from '../../api';
-
-import { Attachment } from './attachment';
+import { Attachment, AttachmentFactoryOptions } from './attachment';
 
 import { AttachmentType } from '../../utils/constants';
-
-const { MARKET } = AttachmentType;
 
 export interface IMarketAttachmentPayload {
 	id: number;
@@ -43,18 +39,22 @@ export interface IMarketAttachmentPayload {
 	button_title?: string;
 }
 
-export class MarketAttachment extends Attachment<IMarketAttachmentPayload> {
+export type MarketAttachmentOptions =
+	AttachmentFactoryOptions<IMarketAttachmentPayload>;
+
+export class MarketAttachment
+	extends Attachment<IMarketAttachmentPayload, AttachmentType.MARKET> {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: IMarketAttachmentPayload, api?: API) {
-		super(MARKET, payload.owner_id, payload.id, payload.access_key);
+	public constructor(options: MarketAttachmentOptions) {
+		super({
+			...options,
 
-		// @ts-expect-error
-		this.api = api;
-		this.payload = payload;
+			type: AttachmentType.MARKET
+		});
 
-		this.$filled = payload.title !== undefined && payload.date !== undefined;
+		this.$filled = this.payload.title !== undefined && this.payload.date !== undefined;
 	}
 
 	/**
@@ -72,10 +72,6 @@ export class MarketAttachment extends Attachment<IMarketAttachmentPayload> {
 		});
 
 		this.payload = market;
-
-		if (this.payload.access_key) {
-			this.accessKey = this.payload.access_key;
-		}
 
 		this.$filled = true;
 	}

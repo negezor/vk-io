@@ -1,24 +1,25 @@
-import { API } from '../../api';
-
-import { ExternalAttachment } from './external';
+import { ExternalAttachment, ExternalAttachmentFactoryOptions } from './external';
 
 import { AttachmentType, kSerializeData } from '../../utils/constants';
-
-const { GIFT } = AttachmentType;
 
 export interface IGiftAttachmentPayload {
 	id: number;
 }
 
-export class GiftAttachment extends ExternalAttachment<IGiftAttachmentPayload> {
+export type GiftAttachmentOptions =
+	ExternalAttachmentFactoryOptions<IGiftAttachmentPayload>;
+
+export class GiftAttachment
+	extends ExternalAttachment<IGiftAttachmentPayload, AttachmentType.GIFT> {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: IGiftAttachmentPayload, api?: API) {
-		super(GIFT, payload);
+	public constructor(options: GiftAttachmentOptions) {
+		super({
+			...options,
 
-		// @ts-expect-error
-		this.api = api;
+			type: AttachmentType.GIFT
+		});
 	}
 
 	/**

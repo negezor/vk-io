@@ -1,11 +1,7 @@
-import { API } from '../../api';
-
-import { Attachment } from './attachment';
+import { Attachment, AttachmentFactoryOptions } from './attachment';
 
 import { pickProperties } from '../../utils/helpers';
 import { AttachmentType, kSerializeData } from '../../utils/constants';
-
-const { GRAFFITI } = AttachmentType;
 
 export interface IGraffitiAttachmentPayload {
 	id: number;
@@ -17,18 +13,22 @@ export interface IGraffitiAttachmentPayload {
 	url?: string;
 }
 
-export class GraffitiAttachment extends Attachment<IGraffitiAttachmentPayload> {
+export type AudioAttachmentOptions =
+	AttachmentFactoryOptions<IGraffitiAttachmentPayload>;
+
+export class GraffitiAttachment
+	extends Attachment<IGraffitiAttachmentPayload, AttachmentType.GRAFFITI> {
 	/**
 	 * Constructor
 	 */
-	public constructor(payload: IGraffitiAttachmentPayload, api?: API) {
-		super(GRAFFITI, payload.owner_id, payload.id, payload.access_key);
+	public constructor(options: AudioAttachmentOptions) {
+		super({
+			...options,
 
-		// @ts-expect-error
-		this.api = api;
-		this.payload = payload;
+			type: AttachmentType.GRAFFITI
+		});
 
-		this.$filled = payload.url !== undefined;
+		this.$filled = this.payload.url !== undefined;
 	}
 
 	/**
@@ -44,10 +44,6 @@ export class GraffitiAttachment extends Attachment<IGraffitiAttachmentPayload> {
 		});
 
 		this.payload = document;
-
-		if (this.payload.access_key) {
-			this.accessKey = this.payload.access_key;
-		}
 
 		this.$filled = true;
 	}
