@@ -221,7 +221,8 @@ export class KeyboardBuilder {
 	 */
 	public callbackButton({
 		label,
-		payload: rawPayload = {}
+		payload: rawPayload = {},
+		color = ButtonColor.SECONDARY
 	}: IKeyboardCallbackButtonOptions): this {
 		if (label.length > 40) {
 			throw new RangeError('Maximum length of label 40 characters');
@@ -230,6 +231,7 @@ export class KeyboardBuilder {
 		const payload = serializePayload(rawPayload);
 
 		return this.addButton({
+			color,
 			action: {
 				label,
 				payload,

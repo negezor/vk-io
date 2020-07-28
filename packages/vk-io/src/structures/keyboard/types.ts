@@ -148,6 +148,11 @@ export interface IVKApplicationButton extends IButton {
 }
 
 export interface ICallbackButton extends IButton {
+	/**
+	 * Button color, default is secondary
+	 */
+	color: ButtonColor | ButtonColorUnion;
+
 	action: {
 		type: 'callback';
 
@@ -349,6 +354,11 @@ export interface IKeyboardApplicationButtonOptions {
 }
 
 export interface IKeyboardCallbackButtonOptions {
+	/**
+	 * Button color, default is secondary
+	 */
+	color?: ButtonColor | ButtonColorUnion;
+
 	/**
 	 * Button label, no more than 40 characters
 	 */
