@@ -78,8 +78,8 @@ export class Attachment<P = {}, Type extends string = string> {
 			api,
 			type,
 			payload: {
-				id,
-				owner_id: ownerId,
+				id: Number(id),
+				owner_id: Number(ownerId),
 				access_key: accessKey
 			}
 		});
