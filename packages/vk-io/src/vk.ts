@@ -2,7 +2,6 @@ import { inspectable } from 'inspectable';
 
 import { API } from './api';
 import { Upload } from './upload';
-import { Collect } from './collect';
 import { Updates } from './updates';
 import { CallbackService } from './utils/callback-service';
 
@@ -16,8 +15,6 @@ export class VK {
 
 	public upload: Upload;
 
-	public collect: Collect;
-
 	public updates: Updates;
 
 	public callbackService = new CallbackService();
@@ -30,10 +27,6 @@ export class VK {
 			...options,
 
 			callbackService: this.callbackService
-		});
-
-		this.collect = new Collect({
-			api: this.api
 		});
 
 		this.upload = new Upload({
