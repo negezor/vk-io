@@ -430,7 +430,7 @@ class MessageContext<S = ContextDefaultState>
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public get messagePayload(): any | undefined {
-		return this[kMessagePayload]();
+		return this[kMessagePayload];
 	}
 
 	/**
