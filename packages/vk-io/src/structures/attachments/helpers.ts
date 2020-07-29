@@ -1,5 +1,7 @@
 import {
 	Attachment,
+	ExternalAttachment,
+
 	PollAttachment,
 	GiftAttachment,
 	WallAttachment,
@@ -41,22 +43,32 @@ const attachmentsTypes = {
 /**
  * Transform raw attachments to wrapper
  */
-// @ts-expect-error
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const transformAttachments = (attachments: any[] = [], api: API): Attachment[] => (
-	attachments
-		.map((item): Attachment | boolean => {
-			const { type } = item;
+export const transformAttachments = (
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	rawAttachments: any[],
+	api: API
+// eslint-disable-next-line function-paren-newline
+): (Attachment | ExternalAttachment)[] => {
+	const attachments: (Attachment | ExternalAttachment)[] = [];
 
-			// @ts-expect-error
-			const attachment = attachmentsTypes[type];
+	for (const rawAttachment of rawAttachments) {
+		const type = rawAttachment.type as AttachmentType;
 
-			return attachment
-				? new (attachment())({
-					api,
-					payload: item[type]
-				})
-				: false;
-		})
-		.filter(Boolean)
-);
+		const attachmentFactory = attachmentsTypes[type];
+
+		if (attachmentFactory === undefined) {
+			continue;
+		}
+
+		const AttachmentConstructor = attachmentFactory();
+
+		attachments.push(
+			new AttachmentConstructor({
+				api,
+				payload: rawAttachment[type]
+			})
+		);
+	}
+
+	return attachments;
+};
