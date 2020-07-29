@@ -2,7 +2,6 @@ import {
 	Context,
 	ContextFactoryOptions,
 
-	Attachment,
 	Attachmentable,
 
 	transformAttachments,
@@ -52,8 +51,6 @@ export type StreamingContextOptions<S> =
 
 class StreamingContext<S = ContextDefaultState>
 	extends Context<IStreamingContextPayload, S> {
-	public attachments: Attachment[];
-
 	public constructor(options: StreamingContextOptions<S>) {
 		const { action, event_type: type } = options.payload;
 

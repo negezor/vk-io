@@ -1,7 +1,7 @@
 import { Context, ContextFactoryOptions, ContextDefaultState } from './context';
 
 import { Attachmentable } from '../shared/attachmentable';
-import { Attachment, PhotoAttachment, IPhotoAttachmentPayload } from '../attachments';
+import { PhotoAttachment, IPhotoAttachmentPayload } from '../attachments';
 
 import { kSerializeData } from '../../utils/constants';
 import { pickProperties, applyMixins } from '../../utils/helpers';
@@ -31,8 +31,6 @@ class GroupUpdateContext<S = ContextDefaultState>
 	S,
 	GroupUpdateContextType,
 	GroupUpdateContextSubType> {
-	public attachments: Attachment[];
-
 	public constructor(options: GroupUpdateContextOptions<S>) {
 		super({
 			...options,

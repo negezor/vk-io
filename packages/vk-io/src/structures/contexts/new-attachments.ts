@@ -3,8 +3,6 @@ import { Context, ContextFactoryOptions, ContextDefaultState } from './context';
 import { VKError } from '../../errors';
 
 import {
-	Attachment,
-
 	AudioAttachment,
 	PhotoAttachment,
 	VideoAttachment
@@ -42,8 +40,6 @@ class NewAttachmentsContext<S = ContextDefaultState>
 	NewAttachmentsContextType,
 	NewAttachmentsContextSubType
 	> {
-	public attachments: Attachment[];
-
 	public constructor(options: NewAttachmentsContextOptions<S>) {
 		const PayloadAttachment = subAttachmentTypes[options.updateType];
 

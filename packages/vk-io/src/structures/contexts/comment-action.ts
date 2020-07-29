@@ -2,7 +2,6 @@ import { Context, ContextFactoryOptions, ContextDefaultState } from './context';
 
 import { VKError } from '../../errors';
 
-import { Attachment } from '../attachments';
 import { Attachmentable } from '../shared/attachmentable';
 
 import { kSerializeData } from '../../utils/constants';
@@ -72,8 +71,6 @@ class CommentActionContext<S = ContextDefaultState>
 	CommentActionContextType,
 	CommentActionContextSubType
 	> {
-	public attachments: Attachment[];
-
 	public constructor(options: CommentActionContextOptions<S>) {
 		const initiator = (options.updateType as string).substring(
 			0,
