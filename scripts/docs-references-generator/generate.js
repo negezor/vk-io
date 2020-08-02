@@ -12,6 +12,7 @@ const API_REFERENCES = pathJoin(DOCS_DIR, 'references');
 
 const MODULES = [
 	'vk-io',
+	'hear',
 	'scenes',
 	'session',
 	'streaming',
