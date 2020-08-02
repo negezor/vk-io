@@ -9,12 +9,17 @@ import { randomBytes } from 'crypto';
 import { createReadStream } from 'fs';
 
 import { API } from '../api';
+import { IUploadParams, IUploadSourceMedia } from './types';
 import { MultipartStream } from './multipart-stream';
 import { UploadError, UploadErrorCode } from '../errors';
 import { DefaultExtension, DefaultContentType } from '../utils/constants';
-import { isStream, pickExistingProperties, streamToBuffer } from './helpers';
+import {
+	isStream,
+	streamToBuffer,
 
-import { AllowArray } from '../types';
+	normalizeSource,
+	pickExistingProperties
+} from './helpers';
 
 import {
 	PhotoAttachment,
@@ -33,33 +38,6 @@ const {
 } = UploadErrorCode;
 
 const isURL = /^https?:\/\//i;
-
-/**
- * Stream, buffer, url or file path
- */
-export type UploadSourceType = NodeJS.ReadableStream | Buffer | string;
-
-export type UploadSourceValue = UploadSourceType | {
-	value: UploadSourceType;
-
-	contentType?: string;
-	filename?: string;
-};
-
-export interface IUploadSourceParams {
-	values: AllowArray<UploadSourceValue>;
-
-	uploadUrl?: string;
-	timeout?: number;
-}
-
-export type UploadSource = IUploadSourceParams
-| AllowArray<UploadSourceValue>
-| AllowArray<UploadSourceType>;
-
-export interface IUploadParams {
-	source: UploadSource;
-}
 
 export interface IUploadConduct {
 	/**
@@ -541,19 +519,7 @@ export class Upload {
 			return new VideoAttachment(save, this.api);
 		}
 
-		const { source: rawSource } = params;
-
-		const source = typeof rawSource !== 'object'
-			|| rawSource.constructor !== Object
-			|| 'value' in rawSource
-			? {
-				values: rawSource
-			} as IUploadSourceParams
-			: rawSource as IUploadSourceParams;
-
-		if (!Array.isArray(source.values)) {
-			source.values = [source.values];
-		}
+		const source = normalizeSource(params.source);
 
 		const formData = await this.buildPayload({
 			maxFiles: 1,
@@ -979,19 +945,7 @@ export class Upload {
 			});
 		}
 
-		const { source: rawSource } = params;
-
-		const source = typeof rawSource !== 'object'
-			|| rawSource.constructor !== Object
-			|| 'value' in rawSource
-			? {
-				values: rawSource
-			} as IUploadSourceParams
-			: rawSource as IUploadSourceParams;
-
-		if (!Array.isArray(source.values)) {
-			source.values = [source.values];
-		}
+		const source = normalizeSource(params.source);
 
 		if (source.uploadUrl !== undefined) {
 			// eslint-disable-next-line no-param-reassign
@@ -1058,7 +1012,7 @@ export class Upload {
 		attachmentType
 	}: {
 		field: string;
-		values: (UploadSourceValue | UploadSourceType)[];
+		values: IUploadSourceMedia[];
 		maxFiles: number;
 		attachmentType?: string;
 	}): Promise<MultipartStream> {
@@ -1068,18 +1022,12 @@ export class Upload {
 		const isMultipart = maxFiles > 1;
 
 		const tasks = values
-			.map((value: UploadSourceValue | UploadSourceType) => (
-				typeof value === 'object' && value.constructor === Object
-					? value
-					: { value }
-			))
 			.map(async (
 				{
 					value,
 					filename,
 					contentType
-					// eslint-disable-next-line @typescript-eslint/no-explicit-any
-				}: any,
+				}: IUploadSourceMedia,
 				i
 			) => {
 				if (typeof value === 'string') {

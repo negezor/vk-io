@@ -1,9 +1,10 @@
 import { Stream, Readable } from 'stream';
+import { UploadNormalizedSourceOptions, UploadAllowedSource } from './types';
 
 /**
  * Check object is stream
  */
-export const isStream = (source: Readable | Buffer | string): boolean => (
+export const isStream = (source: NodeJS.ReadableStream | Buffer | string): boolean => (
 	typeof source === 'object' && source instanceof Stream
 );
 
@@ -43,3 +44,19 @@ export const streamToBuffer = (stream: Readable): Promise<Buffer> => (
 		});
 	})
 );
+
+export const normalizeSource = (rawSource: UploadAllowedSource): UploadNormalizedSourceOptions => {
+	if ('value' in rawSource) {
+		return {
+			values: [rawSource]
+		};
+	}
+
+	return {
+		...rawSource,
+
+		values: Array.isArray(rawSource.values)
+			? rawSource.values
+			: [rawSource.values]
+	};
+};

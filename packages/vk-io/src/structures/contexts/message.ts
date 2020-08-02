@@ -28,7 +28,7 @@ import {
 	AttachmentTypeString
 } from '../../utils/constants';
 import { AllowArray } from '../../types';
-import { UploadSource, UploadSourceValue } from '../../upload/upload';
+import { IUploadSourceMedia } from '../../upload';
 
 export type MessageContextType = 'message';
 
@@ -546,7 +546,7 @@ class MessageContext<S = ContextDefaultState>
 	 * Sends a photos to the current dialog
 	 */
 	async sendPhotos(
-		rawSources: AllowArray<UploadSource>,
+		rawSources: AllowArray<IUploadSourceMedia>,
 		params: object = {}
 	): Promise<number> {
 		const sources = !Array.isArray(rawSources)
@@ -574,7 +574,7 @@ class MessageContext<S = ContextDefaultState>
 	 * Sends a documents to the current dialog
 	 */
 	async sendDocuments(
-		rawSources: AllowArray<UploadSource>,
+		rawSources: AllowArray<IUploadSourceMedia>,
 		params: object = {}
 	): Promise<number> {
 		const sources = !Array.isArray(rawSources)
@@ -602,7 +602,7 @@ class MessageContext<S = ContextDefaultState>
 	 * Sends a audio message to the current dialog
 	 */
 	async sendAudioMessage(
-		source: UploadSource,
+		source: IUploadSourceMedia,
 		params: object = {}
 	): Promise<number> {
 		const attachment = await this.upload.audioMessage({
@@ -693,7 +693,7 @@ class MessageContext<S = ContextDefaultState>
 	/**
 	 * Sets a new image for the chat
 	 */
-	public async newChatPhoto(source: UploadSourceValue, params: object = {}): Promise<object> {
+	public async newChatPhoto(source: IUploadSourceMedia, params: object = {}): Promise<object> {
 		this.assertIsChat();
 
 		const response = await this.upload.chatPhoto({

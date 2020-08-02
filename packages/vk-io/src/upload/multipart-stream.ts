@@ -5,7 +5,7 @@ import { isStream } from './helpers';
 
 const CRNL = '\r\n';
 
-export type MultipartStreamBody = Readable | Buffer | string;
+export type MultipartStreamBody = NodeJS.ReadableStream | Buffer | string;
 
 export interface IMultipartStreamAddPartOptions {
 	headers?: Record<string, string>;
