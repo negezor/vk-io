@@ -33,6 +33,7 @@
 		"vk-io": "^4.0.0-rc.30"
 	},
 	"dependencies": {
+		"abort-controller": "^3.0.0",
 		"cheerio": "^1.0.0-rc.3",
 		"debug": "^4.1.1",
 		"inspectable": "^1.0.0",
