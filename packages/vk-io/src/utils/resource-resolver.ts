@@ -47,7 +47,11 @@ const transformMentionResourceToTarget = (resource: string): string => {
 };
 
 const resolveTargetResouce = (resource: string): IResolvedTargetResource => {
-	const { 1: rawType, 2: rawId } = resource.match(parseTargetResourceRe)!;
+	const { 1: rawType, 2: rawId } = resource.match(parseTargetResourceRe)! as [
+		never,
+		IResolvedTargetResource['type'],
+		number
+	];
 
 	return {
 		id: Number(rawId),
