@@ -32,9 +32,13 @@ const vk = new VK({
 
 const sessionManager = new SessionManager();
 
-vk.updates.on('message', sessionManager.middleware);
+vk.updates.on('message_new', sessionManager.middleware);
 
-vk.updates.hear('/counter', async (context) => {
+vk.updates.on('message_new', async (context, next) => {
+	if (context.text !== '/counter') {
+		return next();
+	}
+	
 	const { session } = context;
 
 	if (!session.counter) {
