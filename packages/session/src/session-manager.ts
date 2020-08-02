@@ -38,7 +38,7 @@ export class SessionManager<T = {}> {
 
 			let changed = false;
 			const wrapSession = (targetRaw: object): ISessionContext => (
-				// eslint-disable-next-line @typescript-eslint/no-use-before-define
+				// eslint-disable-next-line no-use-before-define
 				new Proxy<ISessionContext>({ ...targetRaw, $forceUpdate }, {
 					set: (target, prop: string, value): boolean => {
 						changed = true;
@@ -58,11 +58,11 @@ export class SessionManager<T = {}> {
 			);
 
 			const $forceUpdate = (): Promise<boolean> => {
-				// eslint-disable-next-line @typescript-eslint/no-use-before-define
+				// eslint-disable-next-line no-use-before-define
 				if (Object.keys(session).length > 1) {
 					changed = false;
 
-					// eslint-disable-next-line @typescript-eslint/no-use-before-define
+					// eslint-disable-next-line no-use-before-define
 					return storage.set(storageKey, session);
 				}
 
