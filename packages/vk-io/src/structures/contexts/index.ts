@@ -8,6 +8,7 @@ export * from './wall-post';
 export * from './group-user';
 export * from './user-online';
 export * from './dialog-flags';
+export * from './market-order';
 export * from './group-update';
 export * from './group-member';
 export * from './message-event';

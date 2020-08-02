@@ -16,6 +16,7 @@ import {
 	GroupUpdateContext,
 	DialogFlagsContext,
 	GroupMemberContext,
+	MarketOrderContext,
 	MessageAllowContext,
 	ReadMessagesContext,
 	MessageFlagsContext,
@@ -45,6 +46,7 @@ import {
 	VoteContextType,
 	LikeContextType,
 	WallPostContextType,
+	MarketOrderContextType,
 
 	CommentActionContextSubType,
 	DialogFlagsContextSubType,
@@ -64,7 +66,8 @@ import {
 	VKPayTransactionContextSubType,
 	VoteContextSubType,
 	LikeContextSubType,
-	WallPostContextSubType
+	WallPostContextSubType,
+	MarketOrderContextSubType
 } from '../structures/contexts';
 
 import { API } from '../api';
@@ -157,6 +160,10 @@ const webhookContextsEvents: [string[], Constructor<any>][] = [
 	[
 		['like_add', 'like_remove'],
 		LikeContext
+	],
+	[
+		['market_order_new', 'market_order_edit'],
+		MarketOrderContext
 	]
 ];
 
@@ -482,6 +489,11 @@ export class Updates {
 	public on<T = {}>(
 		events: AllowArray<LikeContextType | LikeContextSubType>,
 		handler: AllowArray<Middleware<LikeContext & T>>
+	): this;
+
+	public on<T = {}>(
+		events: AllowArray<MarketOrderContextType | MarketOrderContextSubType>,
+		handler: AllowArray<Middleware<MarketOrderContext & T>>
 	): this;
 
 	public on<T = {}>(
