@@ -1,5 +1,6 @@
 import createDebug from 'debug';
 import { load as cheerioLoad } from 'cheerio';
+import { AbortController } from 'abort-controller';
 
 import { CaptchaType, ICallbackServiceValidate, CallbackService } from 'vk-io';
 
@@ -111,15 +112,19 @@ export class AccountVerification {
 	 * Executes the HTTP request
 	 */
 	protected fetch(url: RequestInfo, options: RequestInit = {}): Promise<Response> {
-		const { agent } = this.options;
+		const { agent, timeout } = this.options;
 
 		const { headers = {} } = options;
+
+		const controller = new AbortController();
+
+		const interval = setTimeout(() => controller.abort(), timeout);
 
 		return this.fetchCookie(url, {
 			...options,
 
 			agent,
-			timeout: this.options.timeout,
+			signal: controller.signal,
 			compress: false,
 
 			headers: {
@@ -128,7 +133,7 @@ export class AccountVerification {
 				// eslint-disable-next-line @typescript-eslint/naming-convention
 				'User-Agent': DESKTOP_USER_AGENT
 			}
-		});
+		}).finally(() => clearTimeout(interval));
 	}
 
 	/**
