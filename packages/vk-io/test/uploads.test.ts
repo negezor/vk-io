@@ -110,7 +110,9 @@ describe('Uploads', (): void => {
 
 		const photo = await upload.messagePhoto({
 			source: {
-				value: response.body
+				value: response.body,
+				// @ts-expect-error
+				contentLength: response.headers.get('content-length')
 			}
 		});
 

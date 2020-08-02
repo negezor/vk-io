@@ -10,6 +10,7 @@ export interface IUploadSourceMedia {
 
 	filename?: string;
 	contentType?: string;
+	contentLength?: number;
 }
 
 export interface IUploadSourceOptions {

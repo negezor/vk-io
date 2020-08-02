@@ -1,4 +1,4 @@
-import { Stream, Readable } from 'stream';
+import { Stream } from 'stream';
 import { UploadNormalizedSourceOptions, UploadAllowedSource } from './types';
 
 /**
@@ -25,25 +25,6 @@ export const pickExistingProperties = <
 
 	return copies;
 };
-
-/**
- * Returns buffer from stream in Promise
- */
-export const streamToBuffer = (stream: Readable): Promise<Buffer> => (
-	new Promise((resolve, reject): void => {
-		const accum: Buffer[] = [];
-
-		stream.on('error', reject);
-
-		stream.on('end', (): void => {
-			resolve(Buffer.concat(accum));
-		});
-
-		stream.on('data', (chunk): void => {
-			accum.push(chunk);
-		});
-	})
-);
 
 export const normalizeSource = (rawSource: UploadAllowedSource): UploadNormalizedSourceOptions => {
 	if ('value' in rawSource) {

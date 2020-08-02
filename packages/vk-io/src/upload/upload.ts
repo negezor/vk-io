@@ -1,21 +1,20 @@
 import fetch from 'node-fetch';
+import * as FormData from 'form-data';
 import { AbortController } from 'abort-controller';
 
 import { inspectable } from 'inspectable';
 
 import { URL } from 'url';
-import { Agent, globalAgent } from 'https';
-import { randomBytes } from 'crypto';
+import { promisify } from 'util';
 import { createReadStream } from 'fs';
+import { Agent, globalAgent } from 'https';
 
 import { API } from '../api';
 import { IUploadParams, IUploadSourceMedia } from './types';
-import { MultipartStream } from './multipart-stream';
 import { UploadError, UploadErrorCode } from '../errors';
 import { DefaultExtension, DefaultContentType } from '../utils/constants';
 import {
 	isStream,
-	streamToBuffer,
 
 	normalizeSource,
 	pickExistingProperties
@@ -530,8 +529,7 @@ export class Upload {
 
 		const video = await this.upload(save.upload_url!, {
 			formData,
-			forceBuffer: true,
-			timeout: source.timeout
+			timeout: source.timeout!
 		});
 
 		return new VideoAttachment({
@@ -933,9 +931,7 @@ export class Upload {
 		saveParams = [],
 
 		maxFiles = 1,
-		attachmentType,
-
-		forceBuffer = false
+		attachmentType
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	}: IUploadConduct): Promise<any> {
 		if (!params || !params.source) {
@@ -983,8 +979,7 @@ export class Upload {
 
 		const uploaded = await this.upload(url, {
 			formData,
-			forceBuffer,
-			timeout: source.timeout
+			timeout: source.timeout!
 		});
 
 		if (typeof uploaded !== 'object') {
@@ -1015,9 +1010,8 @@ export class Upload {
 		values: IUploadSourceMedia[];
 		maxFiles: number;
 		attachmentType?: string;
-	}): Promise<MultipartStream> {
-		const boundary = randomBytes(32).toString('hex');
-		const formData = new MultipartStream(boundary);
+	}): Promise<FormData> {
+		const formData = new FormData();
 
 		const isMultipart = maxFiles > 1;
 
@@ -1026,16 +1020,25 @@ export class Upload {
 				{
 					value,
 					filename,
-					contentType
+					contentType,
+					contentLength: rawContentLength
 				}: IUploadSourceMedia,
 				i
 			) => {
+				let contentLength: number | undefined = rawContentLength;
+
 				if (typeof value === 'string') {
 					if (isURL.test(value)) {
 						const response = await fetch(value);
 
 						// eslint-disable-next-line no-param-reassign
 						value = response.body;
+
+						const length = response.headers.get('content-length');
+
+						if (length !== null) {
+							contentLength = Number(length);
+						}
 					} else {
 						// eslint-disable-next-line no-param-reassign
 						value = createReadStream(value);
@@ -1059,7 +1062,11 @@ export class Upload {
 							: contentType
 					};
 
-					return formData.append(name, value, { filename, headers });
+					return formData.append(name, value, {
+						filename,
+						header: headers,
+						knownLength: contentLength
+					});
 				}
 
 				throw new UploadError({
@@ -1076,14 +1083,14 @@ export class Upload {
 	/**
 	 * Upload form data
 	 */
-	// eslint-disable-next-line max-len
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
-	async upload(url: URL | string, { formData, timeout, forceBuffer }: any): Promise<any> {
+	async upload(url: URL | string, { formData, timeout }: {
+		formData: FormData;
+		timeout: number;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	}): Promise<any> {
 		const { agent, uploadTimeout } = this.options;
 
-		const body = forceBuffer
-			? await streamToBuffer(formData)
-			: formData;
+		const length = await promisify(formData.getLength).call(formData);
 
 		const controller = new AbortController();
 
@@ -1096,12 +1103,14 @@ export class Upload {
 				method: 'POST',
 				signal: controller.signal,
 				headers: {
+					...formData.getHeaders(),
+
 					// eslint-disable-next-line @typescript-eslint/naming-convention
 					Connection: 'keep-alive',
 					// eslint-disable-next-line @typescript-eslint/naming-convention
-					'Content-Type': `multipart/form-data; boundary=${formData.boundary}`
+					'Content-Length': String(length)
 				},
-				body
+				body: formData
 			});
 
 			if (!response.ok) {
