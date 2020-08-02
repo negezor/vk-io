@@ -41,8 +41,9 @@ describe('Uploads', (): void => {
 	it('should throw in the absence of source', async (): Promise<void> => {
 		try {
 			await upload.messagePhoto({
-				// @ts-expect-error
-				source: {}
+				source: {
+					values: []
+				}
 			});
 		} catch (error) {
 			expect(error).toBeInstanceOf(UploadError);
