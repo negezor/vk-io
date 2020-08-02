@@ -32,8 +32,8 @@ describe('Contexts', (): void => {
 			it('should return true when the required types are present', (): void => {
 				const context = getContext();
 
-				expect(context.is('message')).toBe(true);
-				expect(context.is('edit_message')).toBe(true);
+				expect(context.is(['message'])).toBe(true);
+				expect(context.is(['edit_message'])).toBe(true);
 
 				expect(context.is(['new_message', 'text'])).toBe(true);
 				expect(context.is(['message', 'edit_message'])).toBe(true);
@@ -42,8 +42,8 @@ describe('Contexts', (): void => {
 			it('should return false if the required types are not present', (): void => {
 				const context = getContext();
 
-				expect(context.is('test')).toBe(false);
-				expect(context.is('sub_test')).toBe(false);
+				expect(context.is(['test'])).toBe(false);
+				expect(context.is(['sub_test'])).toBe(false);
 
 				expect(context.is(['test', 'sub_test'])).toBe(false);
 			});

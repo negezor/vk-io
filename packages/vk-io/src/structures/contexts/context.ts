@@ -4,8 +4,6 @@ import { API } from '../../api';
 import { Upload } from '../../upload';
 import { kSerializeData, UpdateSource } from '../../utils/constants';
 
-import { AllowArray } from '../../types';
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ContextDefaultState = Record<string, any>;
 
@@ -82,7 +80,7 @@ export class Context<
 	/**
 	 * Checks whether the context of some of these types
 	 */
-	public is(rawTypes: AllowArray<Type | SubType>): boolean {
+	public is(rawTypes: (Type | SubType)[]): boolean {
 		const types = !Array.isArray(rawTypes)
 			? [rawTypes]
 			: rawTypes;
