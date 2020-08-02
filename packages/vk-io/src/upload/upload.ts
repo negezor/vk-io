@@ -955,65 +955,55 @@ export class Upload {
 
 		const isMultipart = maxFiles > 1;
 
-		const tasks = values
-			.map(async (
-				{
-					value,
-					filename,
-					contentType,
-					contentLength: rawContentLength
-				}: IUploadSourceMedia,
-				i
-			) => {
-				let contentLength: number | undefined = rawContentLength;
+		const tasks = values.map(async (media, i) => {
+			let { value, filename, contentLength } = media;
 
-				if (typeof value === 'string') {
-					if (isURL.test(value)) {
-						const response = await fetch(value);
+			if (typeof value === 'string') {
+				if (isURL.test(value)) {
+					const response = await fetch(value);
 
-						// eslint-disable-next-line no-param-reassign
-						value = response.body;
+					value = response.body;
 
-						const length = response.headers.get('content-length');
+					const length = response.headers.get('content-length');
 
-						if (length !== null) {
-							contentLength = Number(length);
-						}
-					} else {
-						// eslint-disable-next-line no-param-reassign
-						value = createReadStream(value);
+					if (length !== null) {
+						contentLength = Number(length);
 					}
+				} else {
+					value = createReadStream(value);
 				}
+			}
 
-				if (!filename) {
-					// eslint-disable-next-line no-param-reassign
-					filename = `file${i}.${DefaultExtension[attachmentType as keyof typeof DefaultExtension] || 'dat'}`;
-				}
+			if (filename === undefined) {
+				filename = `file${i}.${DefaultExtension[attachmentType as keyof typeof DefaultExtension] || 'dat'}`;
+			}
 
-				if (isStream(value) || Buffer.isBuffer(value)) {
-					const name = isMultipart
-						? field + (i + 1)
-						: field;
+			if (isStream(value) || Buffer.isBuffer(value)) {
+				const name = isMultipart
+					? field + (i + 1)
+					: field;
 
-					const headers = {
-						// eslint-disable-next-line @typescript-eslint/naming-convention
-						'Content-Type': contentType === undefined
-							? DefaultContentType[attachmentType as keyof typeof DefaultContentType]
-							: contentType
-					};
+				const { contentType } = media;
 
-					return formData.append(name, value, {
-						filename,
-						header: headers,
-						knownLength: contentLength
-					});
-				}
+				const headers = {
+					// eslint-disable-next-line @typescript-eslint/naming-convention
+					'Content-Type': contentType === undefined
+						? DefaultContentType[attachmentType as keyof typeof DefaultContentType]
+						: contentType
+				};
 
-				throw new UploadError({
-					message: 'Unsupported source type',
-					code: UNSUPPORTED_SOURCE_TYPE
+				return formData.append(name, value, {
+					filename,
+					header: headers,
+					knownLength: contentLength
 				});
+			}
+
+			throw new UploadError({
+				message: 'Unsupported source type',
+				code: UNSUPPORTED_SOURCE_TYPE
 			});
+		});
 
 		await Promise.all(tasks);
 
