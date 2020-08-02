@@ -21,6 +21,7 @@ import {
 } from './helpers';
 
 import {
+	StoryAttachment,
 	PhotoAttachment,
 	AudioAttachment,
 	VideoAttachment,
@@ -82,29 +83,6 @@ export interface IUploadConduct {
 	 * Download exclusively in Buffer
 	 */
 	forceBuffer?: boolean;
-}
-
-export interface IStoryObject {
-	id: number;
-	owner_id: number;
-	date: number;
-	is_expired: boolean;
-	is_deleted: boolean;
-	can_see: number;
-	seen: number;
-	type: number;
-	photo: object;
-	video: object;
-	link: object;
-	parent_story_owner_id: number;
-	parent_story_id: number;
-	parent_story: IStoryObject;
-	replies: object;
-	can_reply: number;
-	can_share: number;
-	can_comment: number;
-	views: number;
-	access_key: string;
 }
 
 const DocumentTypes: Record<string, typeof DocumentAttachment
@@ -820,7 +798,7 @@ export class Upload {
 	/**
 	 * Uploads photo stories
 	 */
-	storiesPhoto(
+	async storiesPhoto(
 		params: IUploadParams & {
 			group_id?: number;
 			add_to_news?: number;
@@ -829,8 +807,8 @@ export class Upload {
 			link_text: string;
 			link_url: string;
 		}
-	): Promise<IStoryObject> {
-		return this.conduct({
+	): Promise<StoryAttachment> {
+		const story = await this.conduct({
 			field: 'file',
 			params,
 
@@ -852,12 +830,17 @@ export class Upload {
 			maxFiles: 1,
 			attachmentType: 'photo'
 		});
+
+		return new StoryAttachment({
+			api: this.api,
+			payload: story
+		});
 	}
 
 	/**
 	 * Uploads video stories
 	 */
-	storiesVideo(
+	async storiesVideo(
 		params: IUploadParams & {
 			group_id?: number;
 			add_to_news?: number;
@@ -866,8 +849,8 @@ export class Upload {
 			link_text: string;
 			link_url: string;
 		}
-	): Promise<IStoryObject> {
-		return this.conduct({
+	): Promise<StoryAttachment> {
+		const story = await this.conduct({
 			field: 'video_file',
 			params,
 
@@ -889,6 +872,11 @@ export class Upload {
 			attachmentType: 'video',
 
 			forceBuffer: true
+		});
+
+		return new StoryAttachment({
+			api: this.api,
+			payload: story
 		});
 	}
 
