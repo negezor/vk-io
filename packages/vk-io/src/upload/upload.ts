@@ -7,12 +7,17 @@ import { inspectable } from 'inspectable';
 import { URL } from 'url';
 import { promisify } from 'util';
 import { createReadStream } from 'fs';
-import { Agent, globalAgent } from 'https';
+import { globalAgent } from 'https';
 
 import { API } from '../api';
-import { IUploadParams, IUploadSourceMedia } from './types';
 import { UploadError, UploadErrorCode } from '../errors';
 import { DefaultExtension, DefaultContentType } from '../utils/constants';
+import {
+	IUploadOptions,
+	IUploadParams,
+	IUploadSourceMedia,
+	IUploadConduct
+} from './types';
 import {
 	isStream,
 
@@ -39,52 +44,6 @@ const {
 
 const isURL = /^https?:\/\//i;
 
-export interface IUploadConduct {
-	/**
-	 * Field name
-	 */
-	field: string;
-	/**
-	 * Upload params
-	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	params: IUploadParams & Record<string, any>;
-
-	/**
-	 * Get server functions
-	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	getServer: (params: Record<string, any>) => { upload_url: string };
-	/**
-	 * Copies server params
-	 */
-	serverParams?: string[];
-
-	/**
-	 * Save files functions
-	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	saveFiles: (params: Record<string, any>) => Record<string, any>;
-	/**
-	 * Copies save params
-	 */
-	saveParams?: string[];
-
-	/**
-	 * Max uploaded files for one request
-	 */
-	maxFiles: number;
-	/**
-	 * Attachment type
-	 */
-	attachmentType?: string;
-
-	/**
-	 * Download exclusively in Buffer
-	 */
-	forceBuffer?: boolean;
-}
-
 const DocumentTypes: Record<string, typeof DocumentAttachment
 | typeof GraffitiAttachment
 | typeof AudioMessageAttachment> = {
@@ -92,13 +51,6 @@ const DocumentTypes: Record<string, typeof DocumentAttachment
 	graffiti: GraffitiAttachment,
 	audio_message: AudioMessageAttachment
 };
-
-export interface IUploadOptions {
-	api: API;
-
-	agent?: Agent;
-	uploadTimeout?: number;
-}
 
 export class Upload {
 	private api: API;

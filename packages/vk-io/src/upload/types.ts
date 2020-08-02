@@ -1,4 +1,7 @@
+import { Agent } from 'https';
+
 import { AllowArray } from '../types';
+import { API } from '../api';
 
 /**
  * Stream, buffer, url or file path
@@ -28,4 +31,57 @@ export type UploadAllowedSource = IUploadSourceOptions | IUploadSourceMedia;
 
 export interface IUploadParams {
 	source: UploadAllowedSource;
+}
+
+export interface IUploadConduct {
+	/**
+	 * Field name
+	 */
+	field: string;
+	/**
+	 * Upload params
+	 */
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	params: IUploadParams & Record<string, any>;
+
+	/**
+	 * Get server functions
+	 */
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	getServer: (params: Record<string, any>) => { upload_url: string };
+	/**
+	 * Copies server params
+	 */
+	serverParams?: string[];
+
+	/**
+	 * Save files functions
+	 */
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	saveFiles: (params: Record<string, any>) => Record<string, any>;
+	/**
+	 * Copies save params
+	 */
+	saveParams?: string[];
+
+	/**
+	 * Max uploaded files for one request
+	 */
+	maxFiles: number;
+	/**
+	 * Attachment type
+	 */
+	attachmentType?: string;
+
+	/**
+	 * Download exclusively in Buffer
+	 */
+	forceBuffer?: boolean;
+}
+
+export interface IUploadOptions {
+	api: API;
+
+	agent?: Agent;
+	uploadTimeout?: number;
 }
