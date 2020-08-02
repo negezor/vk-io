@@ -1,10 +1,7 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import jsonPlugin from '@rollup/plugin-json';
 import typescriptPlugin from 'rollup-plugin-typescript2';
-/* eslint-enable import/no-extraneous-dependencies */
 
 import { tmpdir } from 'os';
-// @ts-ignore
 import { builtinModules } from 'module';
 import { join as pathJoin } from 'path';
 
@@ -28,8 +25,8 @@ const getModulePath = path => (
 );
 
 // eslint-disable-next-line import/no-default-export
-export default async function () {
-	return Promise.all(
+export default async () => (
+	Promise.all(
 		MODULES
 			.map(getModulePath)
 			.map(async (modulePath) => {
@@ -76,5 +73,5 @@ export default async function () {
 					]
 				};
 			})
-	);
-}
+	)
+);
