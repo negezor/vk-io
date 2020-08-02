@@ -61,6 +61,8 @@ interface IAccountVerificationOptions {
 
 	login?: string;
 	phone?: string | number;
+
+	timeout?: number;
 }
 
 export class AccountVerification {
@@ -83,6 +85,8 @@ export class AccountVerification {
 	 */
 	public constructor(options: IAccountVerificationOptions) {
 		this.options = {
+			timeout: 10_000,
+
 			...options
 		};
 
@@ -115,8 +119,7 @@ export class AccountVerification {
 			...options,
 
 			agent,
-			// TODO: Use authTimeout
-			timeout: 10_000,
+			timeout: this.options.timeout,
 			compress: false,
 
 			headers: {
