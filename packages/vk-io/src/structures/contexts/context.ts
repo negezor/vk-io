@@ -87,7 +87,11 @@ export class Context<
 			? [rawTypes]
 			: rawTypes;
 
-		return [this.type, ...this.subTypes].some((type): boolean => (
+		if (types.includes(this.type)) {
+			return true;
+		}
+
+		return this.subTypes.some((type): boolean => (
 			types.includes(type)
 		));
 	}
