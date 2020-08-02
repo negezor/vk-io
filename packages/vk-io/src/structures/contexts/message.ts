@@ -499,7 +499,6 @@ class MessageContext<S = ContextDefaultState>
 	send(text: string | object, params?: object): Promise<number> {
 		return this.api.messages.send({
 			peer_id: this.peerId,
-			// @ts-expect-error
 			random_id: getRandomId(),
 
 			...(

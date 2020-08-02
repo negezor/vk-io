@@ -59,8 +59,8 @@ export const resolveExecuteTask = (
 /**
  * Returns random ID
  */
-export const getRandomId = (): string => (
-	`${Math.floor(Math.random() * 1e4)}${Date.now()}`
+export const getRandomId = (): number => (
+	Math.floor(Math.random() * 10_000) * Date.now()
 );
 
 /**
