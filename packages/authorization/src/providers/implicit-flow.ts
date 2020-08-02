@@ -75,9 +75,9 @@ export interface IImplicitFlowOptions {
 	phone?: string | number;
 	password: string;
 
-	agent: Agent;
+	agent?: Agent;
 	scope?: string | number | string[];
-	timeout: number;
+	timeout?: number;
 
 	apiVersion: string;
 }
@@ -104,6 +104,8 @@ export abstract class ImplicitFlow {
 	 */
 	public constructor(options: IImplicitFlowOptions) {
 		this.options = {
+			timeout: 10_000,
+
 			...options
 		};
 

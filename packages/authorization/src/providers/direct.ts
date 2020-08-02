@@ -61,9 +61,9 @@ export interface IDirectAuthOptions {
 	phone?: string | number;
 	password?: string;
 
-	agent: Agent;
+	agent?: Agent;
 	scope?: string | number | string[];
-	timeout: number;
+	timeout?: number;
 
 	apiVersion: string;
 }
@@ -90,6 +90,8 @@ export class DirectAuthorization {
 	 */
 	public constructor(options: IDirectAuthOptions) {
 		this.options = {
+			timeout: 10_000,
+
 			...options
 		};
 
