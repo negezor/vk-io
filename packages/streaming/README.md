@@ -30,7 +30,10 @@ const vk = new VK({
 	token: process.env.TOKEN
 });
 
-const streaming = new StreamingAPI(vk);
+const streaming = new StreamingAPI({
+	api: vk.api,
+	updates: vk.updates
+});
 
 vk.updates.on('publication', (context) => {
 	console.log('Streaming context', context);
