@@ -124,8 +124,7 @@ export class HearManager<C extends Context> {
 	/**
 	 * A handler that is called when handlers are not found
 	 */
-	public onFallback<T = {}>(handler: Middleware<C & T>): this {
-		// @ts-expect-error
+	public onFallback(handler: Middleware<C>): this {
 		this.fallbackHandler = handler;
 
 		this.recompose();
