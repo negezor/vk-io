@@ -1,6 +1,7 @@
 /* eslint-disable max-classes-per-file */
 import { Context, ContextFactoryOptions, ContextDefaultState } from './context';
 
+import { Params } from '../../api';
 import { VKError } from '../../errors';
 
 import { MessageReply, IMessageReplyPayload } from '../shared/message-reply';
@@ -28,6 +29,7 @@ import {
 	AttachmentTypeString
 } from '../../utils/constants';
 import { AllowArray } from '../../types';
+import { KeyboardBuilder } from '../keyboard';
 import { IUploadSourceMedia } from '../../upload';
 
 export type MessageContextType = 'message';
@@ -59,6 +61,11 @@ const kReplyMessage = Symbol('replyMessage');
 const kMessagePayload = Symbol('messagePayload');
 
 const kAttachments = Symbol('attachments');
+
+export type MessageContextSendOptions = Params.MessagesSendParams & {
+	attachment?: AllowArray<Attachment | string>;
+	keyboard?: KeyboardBuilder | string;
+};
 
 export interface IMessageContextPayload {
 	message: {
@@ -463,7 +470,7 @@ class MessageContext<S = ContextDefaultState>
 	/**
 	 * Edits a message
 	 */
-	editMessage(params: object): Promise<number> {
+	editMessage(params: MessageContextSendOptions): Promise<number> {
 		const target = this.id !== 0
 			? { id: this.id }
 			: { conversation_message_id: this.conversationMessageId };
@@ -501,10 +508,15 @@ class MessageContext<S = ContextDefaultState>
 	/**
 	 * Sends a message to the current dialog
 	 */
-	send(text: string | object, params?: object): Promise<number> {
-		return this.api.messages.send({
+	async send(
+		text: string | MessageContextSendOptions,
+		params?: MessageContextSendOptions
+	): Promise<MessageContext> {
+		const randomId = getRandomId();
+
+		const options = {
 			peer_id: this.peerId,
-			random_id: getRandomId(),
+			random_id: randomId,
 
 			...(
 				typeof text !== 'object'
@@ -515,13 +527,54 @@ class MessageContext<S = ContextDefaultState>
 					}
 					: text
 			)
+		} as MessageContextSendOptions;
+
+		const id = await this.api.messages.send(options);
+
+		const { message } = this;
+
+		const messageContext = new MessageContext({
+			api: this.api,
+			upload: this.upload,
+			source: UpdateSource.WEBHOOK,
+			groupId: this.$groupId,
+			updateType: 'message_new',
+			state: this.state,
+			payload: {
+				client_info: this.clientInfo,
+				message: {
+					id,
+					conversation_message_id: 0,
+
+					// TODO: This must be the bot identifier
+					from_id: message.from_id,
+					peer_id: message.peer_id,
+
+					out: 1,
+					important: false,
+					random_id: randomId,
+
+					text: options.text,
+
+					date: Date.now() / 1000,
+
+					attachments: []
+				}
+			}
 		});
+
+		messageContext.$filled = false;
+
+		return messageContext;
 	}
 
 	/**
 	 * Responds to the current message
 	 */
-	reply(text: string | object, params?: object): Promise<number> {
+	reply(
+		text: string | MessageContextSendOptions,
+		params?: MessageContextSendOptions
+	): Promise<MessageContext> {
 		return this.send({
 			reply_to: this.id,
 
@@ -540,7 +593,7 @@ class MessageContext<S = ContextDefaultState>
 	/**
 	 * Sends a sticker to the current dialog
 	 */
-	sendSticker(id: number): Promise<number> {
+	sendSticker(id: number): Promise<MessageContext> {
 		return this.send({
 			sticker_id: id
 		});
@@ -551,8 +604,8 @@ class MessageContext<S = ContextDefaultState>
 	 */
 	async sendPhotos(
 		rawSources: AllowArray<IUploadSourceMedia>,
-		params: object = {}
-	): Promise<number> {
+		params: MessageContextSendOptions = {}
+	): Promise<MessageContext> {
 		const sources = !Array.isArray(rawSources)
 			? [rawSources]
 			: rawSources;
@@ -565,13 +618,11 @@ class MessageContext<S = ContextDefaultState>
 			})
 		)));
 
-		const response = await this.send({
+		return this.send({
 			...params,
 
 			attachment
 		});
-
-		return response;
 	}
 
 	/**
@@ -579,8 +630,8 @@ class MessageContext<S = ContextDefaultState>
 	 */
 	async sendDocuments(
 		rawSources: AllowArray<IUploadSourceMedia>,
-		params: object = {}
-	): Promise<number> {
+		params: MessageContextSendOptions = {}
+	): Promise<MessageContext> {
 		const sources = !Array.isArray(rawSources)
 			? [rawSources]
 			: rawSources;
@@ -593,13 +644,11 @@ class MessageContext<S = ContextDefaultState>
 			})
 		)));
 
-		const response = await this.send({
+		return this.send({
 			...params,
 
 			attachment
 		});
-
-		return response;
 	}
 
 	/**
@@ -607,21 +656,19 @@ class MessageContext<S = ContextDefaultState>
 	 */
 	async sendAudioMessage(
 		source: IUploadSourceMedia,
-		params: object = {}
-	): Promise<number> {
+		params: MessageContextSendOptions = {}
+	): Promise<MessageContext> {
 		const attachment = await this.upload.audioMessage({
 			source,
 
 			peer_id: this.peerId
 		});
 
-		const response = await this.send({
+		return this.send({
 			...params,
 
 			attachment
 		});
-
-		return response;
 	}
 
 	/**
