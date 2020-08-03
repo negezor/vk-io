@@ -30,7 +30,7 @@
 			},
 			{
 				"selector": "property",
-				"format": ["camelCase", "snake_case", "UPPER_CASE"]
+				"format": ["camelCase", "snake_case", "UPPER_CASE", "PascalCase"]
 			}
 		],
 		"@typescript-eslint/ban-ts-comment": ["error", {
