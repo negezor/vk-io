@@ -35,7 +35,8 @@ export class StepScene<T = MessageContext> implements IScene {
 		context.scene.step = new StepSceneContext({
 			context,
 
-			// @ts-expect-error
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore
 			steps: this.steps
 		});
 
