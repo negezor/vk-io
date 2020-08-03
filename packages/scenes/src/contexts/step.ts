@@ -105,7 +105,7 @@ export class StepSceneContext {
 	 * });
 	 * ```
 	 */
-	public next(options: IStepContextGoOptions): Promise<void> {
+	public next(options?: IStepContextGoOptions): Promise<void> {
 		return this.go(this.stepId + 1, options);
 	}
 
@@ -119,7 +119,7 @@ export class StepSceneContext {
 	 * });
 	 * ```
 	 */
-	public previous(options: IStepContextGoOptions): Promise<void> {
+	public previous(options?: IStepContextGoOptions): Promise<void> {
 		return this.go(this.stepId - 1, options);
 	}
 }
