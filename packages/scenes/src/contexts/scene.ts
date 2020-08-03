@@ -49,10 +49,14 @@ export class SceneContext {
 	 */
 	public leaving = false;
 
+	private sessionKey: string;
+
 	public constructor(options: ISceneContextOptions) {
 		this.context = options.context;
 
 		this.repository = options.repository;
+
+		this.sessionKey = options.sessionKey;
 
 		this.updateSession();
 	}
@@ -175,12 +179,12 @@ export class SceneContext {
 	 */
 	private updateSession(): void {
 		// eslint-disable-next-line no-underscore-dangle
-		this.session = new Proxy(this.context.session.__scene || {}, {
+		this.session = new Proxy(this.context[this.sessionKey].__scene || {}, {
 			set: (target, prop, value): boolean => {
 				target[prop] = value;
 
 				// eslint-disable-next-line no-underscore-dangle
-				this.context.session.__scene = target;
+				this.context[this.sessionKey].__scene = target;
 
 				return true;
 			}

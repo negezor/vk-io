@@ -4,6 +4,8 @@ import { SceneRepository } from '../scene-manager.types';
 export interface ISceneContextOptions {
 	context: IContext;
 
+	sessionKey: string;
+
 	repository: SceneRepository;
 }
 

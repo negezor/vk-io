@@ -8,4 +8,6 @@ export interface ISceneManagerOptions {
 	 * Scenes on the interface IScene
 	 */
 	scenes?: IScene[];
+
+	sessionKey?: string;
 }

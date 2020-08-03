@@ -8,6 +8,8 @@ import { SceneRepository, ISceneManagerOptions } from './scene-manager.types';
 export class SceneManager {
 	private repository: SceneRepository = new CacheRepository();
 
+	private sessionKey: string;
+
 	public constructor(rawOptions: ISceneManagerOptions | IScene[] = {}) {
 		const options = Array.isArray(rawOptions)
 			? {
@@ -18,6 +20,8 @@ export class SceneManager {
 		if (options.scenes) {
 			this.addScenes(options.scenes);
 		}
+
+		this.sessionKey = options.sessionKey ?? 'session';
 	}
 
 	/**
@@ -45,6 +49,7 @@ export class SceneManager {
 		return (context: IContext, next: Function): Promise<void> => {
 			context.scene = new SceneContext({
 				context,
+				sessionKey: this.sessionKey,
 				repository: this.repository
 			});
 
