@@ -1,6 +1,7 @@
 import { IncomingMessage } from 'http';
 
-export const parseRequestJSON = async (req: IncomingMessage): Promise<object> => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const parseRequestJSON = async (req: IncomingMessage): Promise<Record<string, any>> => {
 	const chunks = [];
 	let totalSize = 0;
 

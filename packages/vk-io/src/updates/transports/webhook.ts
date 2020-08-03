@@ -132,13 +132,14 @@ export class WebhookTransport {
 				return;
 			}
 
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			const reqBody = (req as typeof req & { body: string | Record<string, any>; }).body;
+
 			let update;
 			try {
-				// @ts-expect-error
-				update = typeof req.body !== 'object'
+				update = typeof reqBody !== 'object'
 					? await parseRequestJSON(req)
-					// @ts-expect-error
-					: req.body;
+					: reqBody;
 			} catch (e) {
 				debug(e);
 
