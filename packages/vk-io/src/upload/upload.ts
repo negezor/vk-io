@@ -96,7 +96,6 @@ export class Upload {
 			field: 'file',
 			params,
 
-			// @ts-expect-error
 			getServer: this.api.photos.getUploadServer,
 			serverParams: ['album_id', 'group_id'],
 
@@ -132,7 +131,6 @@ export class Upload {
 			field: 'photo',
 			params,
 
-			// @ts-expect-error
 			getServer: this.api.photos.getWallUploadServer,
 			serverParams: ['group_id'],
 
@@ -169,7 +167,6 @@ export class Upload {
 			field: 'photo',
 			params,
 
-			// @ts-expect-error
 			getServer: this.api.photos.getOwnerPhotoUploadServer,
 			serverParams: ['owner_id'],
 
@@ -201,7 +198,6 @@ export class Upload {
 			field: 'photo',
 			params,
 
-			// @ts-expect-error
 			getServer: this.api.photos.getMessagesUploadServer,
 			serverParams: ['peer_id'],
 
@@ -237,7 +233,6 @@ export class Upload {
 			field: 'file',
 			params,
 
-			// @ts-expect-error
 			getServer: this.api.photos.getChatUploadServer,
 			serverParams: ['chat_id', 'crop_x', 'crop_y', 'crop_width'],
 
@@ -321,7 +316,6 @@ export class Upload {
 			field: 'file',
 			params,
 
-			// @ts-expect-error
 			getServer: this.api.photos.getMarketUploadServer,
 			serverParams: ['group_id', 'main_photo', 'crop_x', 'crop_y', 'crop_width'],
 
@@ -351,7 +345,6 @@ export class Upload {
 			field: 'file',
 			params,
 
-			// @ts-expect-error
 			getServer: this.api.photos.getMarketAlbumUploadServer,
 			serverParams: ['group_id'],
 
@@ -476,7 +469,6 @@ export class Upload {
 			field: 'file',
 			params,
 
-			// @ts-expect-error
 			getServer: this.api.docs.getUploadServer,
 			serverParams: ['type', 'group_id'],
 
@@ -521,7 +513,6 @@ export class Upload {
 			field: 'file',
 			params,
 
-			// @ts-expect-error
 			getServer: this.api.docs.getWallUploadServer,
 			serverParams: ['type', 'group_id'],
 
@@ -567,7 +558,6 @@ export class Upload {
 			field: 'file',
 			params,
 
-			// @ts-expect-error
 			getServer: this.api.docs.getMessagesUploadServer,
 			serverParams: ['type', 'peer_id'],
 
@@ -704,7 +694,6 @@ export class Upload {
 			field: 'photo',
 			params,
 
-			// @ts-expect-error
 			getServer: this.api.photos.getOwnerCoverPhotoUploadServer,
 			serverParams: ['group_id', 'crop_x', 'crop_y', 'crop_x2', 'crop_y2'],
 
@@ -763,7 +752,6 @@ export class Upload {
 			field: 'file',
 			params,
 
-			// @ts-expect-error
 			getServer: this.api.stories.getPhotoUploadServer,
 			serverParams: [
 				'add_to_news',
@@ -805,7 +793,6 @@ export class Upload {
 			field: 'video_file',
 			params,
 
-			// @ts-expect-error
 			getServer: this.api.stories.getVideoUploadServer,
 			serverParams: [
 				'add_to_news',

@@ -48,7 +48,7 @@ export interface IUploadConduct {
 	 * Get server functions
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	getServer: (params: Record<string, any>) => { upload_url: string };
+	getServer: (params: any) => Promise<{ upload_url: string }>;
 	/**
 	 * Copies server params
 	 */
