@@ -965,9 +965,8 @@ export class Upload {
 
 				const headers = {
 					// eslint-disable-next-line @typescript-eslint/naming-convention
-					'Content-Type': contentType === undefined
-						? DefaultContentType[attachmentType as keyof typeof DefaultContentType]
-						: contentType
+					'Content-Type': contentType
+						|| DefaultContentType[attachmentType as keyof typeof DefaultContentType]
 				};
 
 				return formData.append(name, value, {
