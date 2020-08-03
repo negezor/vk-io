@@ -10,18 +10,12 @@ export class SceneManager {
 
 	private sessionKey: string;
 
-	public constructor(rawOptions: ISceneManagerOptions | IScene[] = {}) {
-		const options = Array.isArray(rawOptions)
-			? {
-				scenes: rawOptions
-			}
-			: rawOptions;
+	public constructor({ scenes, sessionKey = 'session' }: ISceneManagerOptions = {}) {
+		this.sessionKey = sessionKey;
 
-		if (options.scenes) {
-			this.addScenes(options.scenes);
+		if (scenes) {
+			this.addScenes(scenes);
 		}
-
-		this.sessionKey = options.sessionKey ?? 'session';
 	}
 
 	/**
