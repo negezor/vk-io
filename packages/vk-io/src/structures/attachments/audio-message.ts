@@ -90,16 +90,10 @@ export class AudioMessageAttachment
 	public [kSerializeData](): object {
 		const payload = pickProperties(this, [
 			'duration',
-			'waveform',
 			'oggUrl',
 			'mp3Url',
 			'url'
 		]);
-
-		if (this.waveform !== undefined) {
-			// @ts-expect-error
-			payload.waveform = `[...${this.waveform.length} elements]`;
-		}
 
 		return payload;
 	}
