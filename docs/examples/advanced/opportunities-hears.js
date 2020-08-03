@@ -1,21 +1,26 @@
 const { VK } = require('vk-io');
+const { HearManager } = require('@vk-io/hear');
 
 const vk = new VK({
 	token: process.env.TOKEN
 });
 
+const hearManager = new HearManager();
+
+vk.updates.on('message_new', hearManager.middleware);
+
 // Strict string compare
-vk.updates.hear('/stirct-string', async (context) => {
+hearManager.hear('/stirct-string', async (context) => {
 	await context.send('You written /stirct-string');
 });
 
 // Regex match
-vk.updates.hear(/^\/text (.+)/i, (context) => {
+hearManager.hear(/^\/text (.+)/i, (context) => {
 	context.send(`You written ${context.$match[1]}`);
 });
 
 // Callback validation
-vk.updates.hear(
+hearManager.hear(
 	value => (
 		value && value.includes('cat')
 	),
@@ -25,7 +30,7 @@ vk.updates.hear(
 );
 
 // Callback validation with context
-vk.updates.hear(
+hearManager.hear(
 	(value, context) => {
 		const messagePayload = context.messagePayload || {};
 
@@ -36,7 +41,7 @@ vk.updates.hear(
 	}
 );
 
-vk.updates.setHearFallbackHandler(async (context) => {
+hearManager.onFallback(async (context) => {
 	await context.send('Action not found, write /help');
 });
 

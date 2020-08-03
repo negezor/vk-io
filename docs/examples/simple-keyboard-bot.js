@@ -1,10 +1,15 @@
 const { VK, Keyboard } = require('vk-io');
+const { HearManager } = require('@vk-io/hear');
 
 const vk = new VK({
 	token: process.env.TOKEN
 });
 
-vk.updates.on('message', (context, next) => {
+const hearManager = new HearManager();
+
+vk.updates.on('message_new', hearManager.middleware);
+
+vk.updates.on('message_new', (context, next) => {
 	const { messagePayload } = context;
 
 	context.state.command = messagePayload && messagePayload.command
@@ -25,7 +30,7 @@ const hearCommand = (name, conditions, handle) => {
 		conditions = [conditions];
 	}
 
-	vk.updates.hear(
+	hearManager.hear(
 		[
 			(text, { state }) => (
 				state.command === name

@@ -1,13 +1,18 @@
 const { VK } = require('vk-io');
+const { HearManager } = require('@vk-io/hear');
 
 const vk = new VK({
 	token: process.env.TOKEN
 });
 
+const hearManager = new HearManager();
+
+vk.updates.on('message_new', hearManager.middleware);
+
 // Some users "database"
 const users = new Map([]);
 
-vk.updates.on('message', (context, next) => {
+vk.updates.on('message_new', (context, next) => {
 	let user = users.get(context.senderId);
 
 	if (!user) {
@@ -29,11 +34,11 @@ vk.updates.on('message', (context, next) => {
 	return next();
 });
 
-vk.updates.hear(/hello/i, async (context) => {
+hearManager.hear(/hello/i, async (context) => {
 	await context.answer('hello!'); // Will send "User 1234, hello!"
 });
 
-vk.updates.hear(/set username (.+)/i, async (context) => {
+hearManager.hear(/set username (.+)/i, async (context) => {
 	const [, displayName] = context.$match;
 
 	// Set new display name

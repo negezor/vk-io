@@ -1,8 +1,13 @@
 const { VK, APIError } = require('vk-io');
+const { HearManager } = require('@vk-io/hear');
 
 const vk = new VK({
 	token: process.env.TOKEN
 });
+
+const hearManager = new HearManager();
+
+vk.updates.on('message_new', hearManager.middleware);
 
 const logger = console;
 
@@ -45,7 +50,7 @@ vk.updates.use(async (context, next) => {
 	}
 });
 
-vk.updates.hear(/get chat/i, async (context) => {
+hearManager.hear(/get chat/i, async (context) => {
 	if (!context.isChat) {
 		return context.send('We are not in chat!');
 	}
@@ -60,7 +65,7 @@ vk.updates.hear(/get chat/i, async (context) => {
 	return context.send(`Chat: ${JSON.stringify(conversation, null, '　')}`);
 });
 
-vk.updates.hear(/throw network error/i, async () => {
+hearManager.hear(/throw network error/i, async () => {
 	throw new MyNetworkError();
 });
 

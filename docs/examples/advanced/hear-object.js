@@ -1,11 +1,16 @@
 const { VK } = require('vk-io');
+const { HearManager } = require('@vk-io/hear');
 
 const vk = new VK({
 	token: process.env.TOKEN
 });
 
+const hearManager = new HearManager();
+
+vk.updates.on('message_new', hearManager.middleware);
+
 // Basic object
-vk.updates.hear(
+hearManager.hear(
 	{
 		text: 'test',
 		senderType: 'user',
@@ -17,7 +22,7 @@ vk.updates.hear(
 );
 
 // Array allow values with callback
-vk.updates.hear(
+hearManager.hear(
 	{
 		text: 'test',
 		senderId: [1, 2, id => id === 3]
@@ -28,7 +33,7 @@ vk.updates.hear(
 );
 
 // RegExp
-vk.updates.hear(
+hearManager.hear(
 	{
 		text: /^test$/,
 		senderId: [1, 2, 3, /4$/]
@@ -40,7 +45,7 @@ vk.updates.hear(
 
 // Nested properties
 // context.session = { action: 'test' };
-vk.updates.hear(
+hearManager.hear(
 	{
 		'session.action': 'test'
 	},
