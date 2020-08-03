@@ -10,7 +10,7 @@ import {
 
 const transformPolling = (
 	{ 1: fromId, 2: toId }: number[],
-	updateType: number
+	updateType: number | string
 ): ITypingContextPayload => ({
 	from_id: fromId,
 	to_id: updateType === 62
@@ -52,8 +52,10 @@ export class TypingContext<S = ContextDefaultState>
 			],
 
 			payload: options.source === UpdateSource.POLLING
-				// @ts-expect-error
-				? transformPolling(options.payload as [number, number, number], options.updateType)
+				? transformPolling(
+					(options.payload as unknown) as [number, number, number],
+					options.updateType
+				)
 				: options.payload
 		});
 	}

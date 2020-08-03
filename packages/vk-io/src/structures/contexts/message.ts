@@ -156,18 +156,17 @@ class MessageContext<S = ContextDefaultState>
 			subTypes: []
 		});
 
-		let { payload } = options;
 		if (options.source === UpdateSource.POLLING) {
-			// eslint-disable-next-line no-param-reassign
-			// @ts-expect-error
-			payload = transformMessage(payload);
-
 			this.$filled = false;
+
+			this.applyPayload(
+				transformMessage((options.payload as unknown) as Parameters<typeof transformMessage>[0])
+			);
 		} else {
 			this.$filled = true;
-		}
 
-		this.applyPayload(payload);
+			this.applyPayload(options.payload);
+		}
 
 		this.subTypes = [
 			this.eventType
