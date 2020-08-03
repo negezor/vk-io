@@ -55,8 +55,7 @@ applyMixins(MessageForwardsCollection, [
 				forward.getAttachments(type)
 			));
 
-			// @ts-expect-error
-			return [].concat(...attachments);
+			return ([] as (Attachment | ExternalAttachment)[]).concat(...attachments);
 		}
 	}
 ]);

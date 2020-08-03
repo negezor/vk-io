@@ -184,8 +184,7 @@ export class VideoAttachment extends Attachment<IVideoAttachmentPayload, Attachm
 	 * Checks for a boolean value in the property
 	 */
 	protected checkBooleanInProperty(name: string): boolean | undefined {
-		// @ts-expect-error
-		const property = this.payload[name];
+		const property = this.payload[name as keyof IVideoAttachmentPayload];
 
 		if (typeof property !== 'number') {
 			return undefined;

@@ -105,9 +105,8 @@ export class Upload {
 
 			maxFiles: 5,
 			attachmentType: 'photo'
-		});
+		}) as PhotoAttachment['payload'][];
 
-		// @ts-expect-error
 		return photos.map(photo => (
 			new PhotoAttachment({
 				api: this.api,
