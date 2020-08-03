@@ -241,13 +241,6 @@ class API {
 	}
 
 	/**
-	 * Updates the token in options
-	 */
-	public set token(token: string) {
-		this.options.token = token;
-	}
-
-	/**
 	 * Call execute method
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
