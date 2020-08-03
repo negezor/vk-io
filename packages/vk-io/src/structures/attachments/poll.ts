@@ -63,7 +63,7 @@ export class PollAttachment extends Attachment<IPollAttachmentPayload, Attachmen
 			owner_id: this.ownerId
 		});
 
-		this.payload = poll as IPollAttachmentPayload;
+		this.payload = (poll as unknown) as IPollAttachmentPayload;
 
 		this.$filled = true;
 	}

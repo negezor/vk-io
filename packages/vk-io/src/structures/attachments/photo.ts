@@ -58,7 +58,7 @@ export class PhotoAttachment extends Attachment<IPhotoAttachmentPayload, Attachm
 			extended: 0
 		});
 
-		this.payload = photo as IPhotoAttachmentPayload;
+		this.payload = (photo as unknown) as IPhotoAttachmentPayload;
 
 		this.$filled = true;
 	}
