@@ -98,9 +98,6 @@ class WallAttachment extends Attachment<IWallAttachmentPayload, AttachmentType.W
 			extended: 0
 		});
 
-		// @ts-expect-error
-		this.payload = post;
-
 		this.applyPayload(post as IWallAttachmentPayload);
 
 		this.$filled = true;
@@ -417,6 +414,8 @@ class WallAttachment extends Attachment<IWallAttachmentPayload, AttachmentType.W
 	 * Applies the payload
 	 */
 	private applyPayload(payload: IWallAttachmentPayload): void {
+		this.payload = payload;
+
 		this[kAttachments] = transformAttachments(payload.attachments || [], this.api);
 
 		this[kCopyHistoryAttachments] = (payload.copy_history || []).map((history): WallAttachment => (

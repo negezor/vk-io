@@ -98,13 +98,10 @@ export class StoryAttachment extends Attachment<IStoryAttachmentPayload, Attachm
 			return;
 		}
 
-		// @ts-expect-error
-		const [story] = await this.api.stories.getById({
+		const { items: [story] } = await this.api.stories.getById({
 			stories: `${this.ownerId}_${this.id}`,
 			extended: 0
 		});
-
-		this.payload = story;
 
 		this.applyPayload(story as IStoryAttachmentPayload);
 
@@ -257,6 +254,8 @@ export class StoryAttachment extends Attachment<IStoryAttachmentPayload, Attachm
 	 * Applies the payload
 	 */
 	private applyPayload(payload: IStoryAttachmentPayload): void {
+		this.payload = payload;
+
 		if (payload.photo) {
 			this[kPhoto] = new PhotoAttachment({
 				api: this.api,

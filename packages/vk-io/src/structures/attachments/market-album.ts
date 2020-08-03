@@ -38,13 +38,12 @@ export class MarketAlbumAttachment
 			return;
 		}
 
-		// @ts-expect-error
-		const [album] = await this.api.market.getAlbumById({
+		const { items } = await this.api.market.getAlbumById({
 			owner_id: this.ownerId,
 			album_ids: this.id
 		});
 
-		this.payload = album;
+		this.payload = items![0] as IMarketAlbumAttachmentPayload;
 
 		this.$filled = true;
 	}

@@ -45,11 +45,11 @@ export class AudioAttachment extends Attachment<IAudioAttachmentPayload, Attachm
 		}
 
 		// @ts-expect-error
-		const [audio] = await this.api.audio.getById({
+		const { items: [audio] } = await this.api.audio.getById({
 			audios: `${this.ownerId}_${this.id}`
 		});
 
-		this.payload = audio;
+		this.payload = audio as IAudioAttachmentPayload;
 
 		this.$filled = true;
 	}

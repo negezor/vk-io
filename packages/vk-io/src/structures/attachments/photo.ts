@@ -58,8 +58,7 @@ export class PhotoAttachment extends Attachment<IPhotoAttachmentPayload, Attachm
 			extended: 0
 		});
 
-		// @ts-expect-error
-		this.payload = photo;
+		this.payload = photo as IPhotoAttachmentPayload;
 
 		this.$filled = true;
 	}

@@ -65,13 +65,12 @@ export class MarketAttachment
 			return;
 		}
 
-		// @ts-expect-error
-		const [market] = await this.api.market.getById({
+		const { items } = await this.api.market.getById({
 			item_ids: `${this.ownerId}_${this.id}`,
 			extended: 0
 		});
 
-		this.payload = market;
+		this.payload = items![0] as IMarketAttachmentPayload;
 
 		this.$filled = true;
 	}

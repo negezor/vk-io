@@ -58,13 +58,12 @@ export class PollAttachment extends Attachment<IPollAttachmentPayload, Attachmen
 			return;
 		}
 
-		// @ts-expect-error
-		const [poll] = await this.api.polls.getById({
+		const poll = await this.api.polls.getById({
 			poll_id: this.id,
 			owner_id: this.ownerId
 		});
 
-		this.payload = poll;
+		this.payload = poll as IPollAttachmentPayload;
 
 		this.$filled = true;
 	}

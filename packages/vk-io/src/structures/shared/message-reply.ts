@@ -38,8 +38,7 @@ class MessageReply {
 	 * Constructor
 	 */
 	public constructor(options: IMessageReplyOptions) {
-		// @ts-expect-error
-		this.api = api;
+		this.api = options.api;
 
 		this.payload = options.payload;
 

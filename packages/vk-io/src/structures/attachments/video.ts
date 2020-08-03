@@ -58,8 +58,7 @@ export class VideoAttachment extends Attachment<IVideoAttachmentPayload, Attachm
 
 		const [video] = items;
 
-		// @ts-expect-error
-		this.payload = video;
+		this.payload = video as IVideoAttachmentPayload;
 
 		this.$filled = true;
 	}
