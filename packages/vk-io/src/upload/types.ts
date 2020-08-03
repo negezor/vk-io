@@ -58,7 +58,7 @@ export interface IUploadConduct {
 	 * Save files functions
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	saveFiles: (params: Record<string, any>) => Record<string, any>;
+	saveFiles: (params: any) => Promise<any>;
 	/**
 	 * Copies save params
 	 */

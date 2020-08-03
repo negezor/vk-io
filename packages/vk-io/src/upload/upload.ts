@@ -134,7 +134,6 @@ export class Upload {
 			getServer: this.api.photos.getWallUploadServer,
 			serverParams: ['group_id'],
 
-			// @ts-expect-error
 			saveFiles: this.api.photos.saveWallPhoto,
 			saveParams: ['user_id', 'group_id', 'latitude', 'longitude', 'caption'],
 
@@ -201,7 +200,6 @@ export class Upload {
 			getServer: this.api.photos.getMessagesUploadServer,
 			serverParams: ['peer_id'],
 
-			// @ts-expect-error
 			saveFiles: this.api.photos.saveMessagesPhoto,
 
 			maxFiles: 1,
@@ -237,7 +235,6 @@ export class Upload {
 			serverParams: ['chat_id', 'crop_x', 'crop_y', 'crop_width'],
 
 			saveFiles: file => (
-				// @ts-expect-error
 				this.api.messages.setChatPhoto({ file })
 			),
 
@@ -319,7 +316,6 @@ export class Upload {
 			getServer: this.api.photos.getMarketUploadServer,
 			serverParams: ['group_id', 'main_photo', 'crop_x', 'crop_y', 'crop_width'],
 
-			// @ts-expect-error
 			saveFiles: this.api.photos.saveMarketPhoto,
 			saveParams: ['group_id'],
 
@@ -348,7 +344,6 @@ export class Upload {
 			getServer: this.api.photos.getMarketAlbumUploadServer,
 			serverParams: ['group_id'],
 
-			// @ts-expect-error
 			saveFiles: this.api.photos.saveMarketAlbumPhoto,
 			saveParams: ['group_id'],
 
@@ -472,7 +467,6 @@ export class Upload {
 			getServer: this.api.docs.getUploadServer,
 			serverParams: ['type', 'group_id'],
 
-			// @ts-expect-error
 			saveFiles: this.api.docs.save,
 			saveParams: ['title', 'tags'],
 
@@ -516,7 +510,6 @@ export class Upload {
 			getServer: this.api.docs.getWallUploadServer,
 			serverParams: ['type', 'group_id'],
 
-			// @ts-expect-error
 			saveFiles: this.api.docs.save,
 			saveParams: ['title', 'tags'],
 
@@ -561,7 +554,6 @@ export class Upload {
 			getServer: this.api.docs.getMessagesUploadServer,
 			serverParams: ['type', 'peer_id'],
 
-			// @ts-expect-error
 			saveFiles: this.api.docs.save,
 			saveParams: ['title', 'tags'],
 
@@ -697,7 +689,6 @@ export class Upload {
 			getServer: this.api.photos.getOwnerCoverPhotoUploadServer,
 			serverParams: ['group_id', 'crop_x', 'crop_y', 'crop_x2', 'crop_y2'],
 
-			// @ts-expect-error
 			saveFiles: this.api.photos.saveOwnerCoverPhoto,
 
 			maxFiles: 1,
@@ -871,9 +862,8 @@ export class Upload {
 
 		if (source.uploadUrl !== undefined) {
 			// eslint-disable-next-line no-param-reassign
-			getServer = (): ReturnType<IUploadConduct['getServer']> => ({
-				// @ts-expect-error
-				upload_url: source.uploadUrl
+			getServer = (): Promise<{ upload_url: string }> => Promise.resolve({
+				upload_url: source.uploadUrl!
 			});
 		}
 
