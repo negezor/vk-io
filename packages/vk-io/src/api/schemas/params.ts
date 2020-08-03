@@ -4297,7 +4297,7 @@ export interface MessagesSendParams {
     /**
      * (Required if 'message' is not set.) List of objects attached to the message, separated by commas, in the following format: "<owner_id>_<media_id>", '' — Type of media attachment: 'photo' — photo, 'video' — video, 'audio' — audio, 'doc' — document, 'wall' — wall post, '<owner_id>' — ID of the media attachment owner. '<media_id>' — media attachment ID. Example: "photo100172_166443618"
      */
-    attachment?: string;
+    attachment?: any;
     /**
      * Sticker id.
      */
