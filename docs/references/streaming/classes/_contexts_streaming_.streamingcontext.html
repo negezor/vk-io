@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>StreamingContext | @vk-io/streaming</title>
-	<meta name="description" content="">
+	<meta name="description" content="Documentation for @vk-io/streaming">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
 </head>
@@ -13,7 +13,7 @@
 	<div class="tsd-page-toolbar">
 		<div class="container">
 			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.js" data-base="..">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
 					<div class="field">
 						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
 						<input id="tsd-search-field" type="text" />
@@ -60,7 +60,7 @@
 					<a href="_contexts_streaming_.streamingcontext.html">StreamingContext</a>
 				</li>
 			</ul>
-			<h1>Class StreamingContext&lt;S&gt;</h1>
+			<h1>Class StreamingContext&lt;S, Type, SubType&gt;</h1>
 		</div>
 	</div>
 </header>
@@ -72,6 +72,12 @@
 				<ul class="tsd-type-parameters">
 					<li>
 						<h4>S</h4>
+					</li>
+					<li>
+						<h4>Type<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h4>
+					</li>
+					<li>
+						<h4>SubType<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h4>
 					</li>
 				</ul>
 			</section>
@@ -91,7 +97,7 @@
 					</li>
 				</ul>
 			</section>
-			<section class="tsd-panel tsd-kind-class tsd-parent-kind-external-module tsd-has-type-parameter">
+			<section class="tsd-panel tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
 				<h3 class="tsd-before-signature">Indexable</h3>
 				<div class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">[</span>key: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><span class="tsd-signature-type">any</span></div>
 			</section>
@@ -105,16 +111,17 @@
 								<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite"><a href="_contexts_streaming_.streamingcontext.html#constructor" class="tsd-kind-icon">constructor</a></li>
 							</ul>
 						</section>
-						<section class="tsd-index-section ">
+						<section class="tsd-index-section tsd-is-inherited">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_contexts_streaming_.streamingcontext.html#_groupid" class="tsd-kind-icon">$group<wbr>Id</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-overwrite"><a href="_contexts_streaming_.streamingcontext.html#attachments" class="tsd-kind-icon">attachments</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="_contexts_streaming_.streamingcontext.html#api" class="tsd-kind-icon">api</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_contexts_streaming_.streamingcontext.html#attachments" class="tsd-kind-icon">attachments</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="_contexts_streaming_.streamingcontext.html#payload" class="tsd-kind-icon">payload</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_contexts_streaming_.streamingcontext.html#state" class="tsd-kind-icon">state</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_contexts_streaming_.streamingcontext.html#subtypes" class="tsd-kind-icon">sub<wbr>Types</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_contexts_streaming_.streamingcontext.html#type" class="tsd-kind-icon">type</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><a href="_contexts_streaming_.streamingcontext.html#vk" class="tsd-kind-icon">vk</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected"><a href="_contexts_streaming_.streamingcontext.html#upload" class="tsd-kind-icon">upload</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -150,8 +157,7 @@
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_contexts_streaming_.streamingcontext.html#_inspect_custom_" class="tsd-kind-icon">[inspect.custom]</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="_contexts_streaming_.streamingcontext.html#_inspectcustomdata_" class="tsd-kind-icon">[inspect<wbr>Custom<wbr>Data]</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-overwrite"><a href="_contexts_streaming_.streamingcontext.html#_kserializedata_" class="tsd-kind-icon">[k<wbr>Serialize<wbr>Data]</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_contexts_streaming_.streamingcontext.html#getattachments" class="tsd-kind-icon">get<wbr>Attachments</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_contexts_streaming_.streamingcontext.html#hasattachments" class="tsd-kind-icon">has<wbr>Attachments</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><a href="_contexts_streaming_.streamingcontext.html#is" class="tsd-kind-icon">is</a></li>
@@ -174,7 +180,7 @@
 							<aside class="tsd-sources">
 								<p>Overrides Context.__constructor</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/streaming/src/contexts/streaming.ts#L55">packages/streaming/src/contexts/streaming.ts:55</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/streaming/src/contexts/streaming.ts#L53">packages/streaming/src/contexts/streaming.ts:53</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -188,7 +194,7 @@
 					</ul>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group ">
+			<section class="tsd-panel-group tsd-member-group tsd-is-inherited">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 					<a name="_groupid" class="tsd-anchor"></a>
@@ -197,18 +203,29 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_contexts_streaming_.streamingcontext.html">StreamingContext</a>.<a href="_contexts_streaming_.streamingcontext.html#_groupid">$groupId</a></p>
 						<ul>
+							<li>Defined in packages/vk-io/lib/structures/contexts/context.d.ts:23</li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+					<a name="api" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> api</h3>
+					<div class="tsd-signature tsd-kind-icon">api<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">API</span></div>
+					<aside class="tsd-sources">
+						<p>Inherited from <a href="_contexts_streaming_.streamingcontext.html">StreamingContext</a>.<a href="_contexts_streaming_.streamingcontext.html#api">api</a></p>
+						<ul>
 							<li>Defined in packages/vk-io/lib/structures/contexts/context.d.ts:21</li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-overwrite">
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 					<a name="attachments" class="tsd-anchor"></a>
 					<h3>attachments</h3>
-					<div class="tsd-signature tsd-kind-icon">attachments<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Attachment</span><span class="tsd-signature-symbol">[]</span></div>
+					<div class="tsd-signature tsd-kind-icon">attachments<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">Attachment</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">ExternalAttachment</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{}</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
-						<p>Overrides Attachmentable.attachments</p>
+						<p>Inherited from <a href="_contexts_streaming_.streamingcontext.html">StreamingContext</a>.<a href="_contexts_streaming_.streamingcontext.html#attachments">attachments</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/streaming/src/contexts/streaming.ts#L55">packages/streaming/src/contexts/streaming.ts:55</a></li>
+							<li>Defined in packages/vk-io/lib/structures/shared/attachmentable.d.ts:4</li>
 						</ul>
 					</aside>
 				</section>
@@ -219,7 +236,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_contexts_streaming_.streamingcontext.html">StreamingContext</a>.<a href="_contexts_streaming_.streamingcontext.html#payload">payload</a></p>
 						<ul>
-							<li>Defined in packages/vk-io/lib/structures/contexts/context.d.ts:22</li>
+							<li>Defined in packages/vk-io/lib/structures/contexts/context.d.ts:24</li>
 						</ul>
 					</aside>
 				</section>
@@ -230,40 +247,40 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_contexts_streaming_.streamingcontext.html">StreamingContext</a>.<a href="_contexts_streaming_.streamingcontext.html#state">state</a></p>
 						<ul>
-							<li>Defined in packages/vk-io/lib/structures/contexts/context.d.ts:19</li>
+							<li>Defined in packages/vk-io/lib/structures/contexts/context.d.ts:20</li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 					<a name="subtypes" class="tsd-anchor"></a>
 					<h3>sub<wbr>Types</h3>
-					<div class="tsd-signature tsd-kind-icon">sub<wbr>Types<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></div>
+					<div class="tsd-signature tsd-kind-icon">sub<wbr>Types<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">SubType</span><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_contexts_streaming_.streamingcontext.html">StreamingContext</a>.<a href="_contexts_streaming_.streamingcontext.html#subtypes">subTypes</a></p>
 						<ul>
-							<li>Defined in packages/vk-io/lib/structures/contexts/context.d.ts:18</li>
+							<li>Defined in packages/vk-io/lib/structures/contexts/context.d.ts:19</li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 					<a name="type" class="tsd-anchor"></a>
 					<h3>type</h3>
-					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Type</span></div>
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_contexts_streaming_.streamingcontext.html">StreamingContext</a>.<a href="_contexts_streaming_.streamingcontext.html#type">type</a></p>
 						<ul>
-							<li>Defined in packages/vk-io/lib/structures/contexts/context.d.ts:17</li>
+							<li>Defined in packages/vk-io/lib/structures/contexts/context.d.ts:18</li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-					<a name="vk" class="tsd-anchor"></a>
-					<h3>vk</h3>
-					<div class="tsd-signature tsd-kind-icon">vk<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">VK</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+					<a name="upload" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> upload</h3>
+					<div class="tsd-signature tsd-kind-icon">upload<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Upload</span></div>
 					<aside class="tsd-sources">
-						<p>Inherited from <a href="_contexts_streaming_.streamingcontext.html">StreamingContext</a>.<a href="_contexts_streaming_.streamingcontext.html#vk">vk</a></p>
+						<p>Inherited from <a href="_contexts_streaming_.streamingcontext.html">StreamingContext</a>.<a href="_contexts_streaming_.streamingcontext.html#upload">upload</a></p>
 						<ul>
-							<li>Defined in packages/vk-io/lib/structures/contexts/context.d.ts:20</li>
+							<li>Defined in packages/vk-io/lib/structures/contexts/context.d.ts:22</li>
 						</ul>
 					</aside>
 				</section>
@@ -281,7 +298,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_contexts_streaming_.streamingcontext.html">StreamingContext</a>.<a href="_contexts_streaming_.streamingcontext.html#_symbol_tostringtag_">[Symbol.toStringTag]</a></p>
 								<ul>
-									<li>Defined in packages/vk-io/lib/structures/contexts/context.d.ts:31</li>
+									<li>Defined in packages/vk-io/lib/structures/contexts/context.d.ts:33</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -303,7 +320,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/streaming/src/contexts/streaming.ts#L175">packages/streaming/src/contexts/streaming.ts:175</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/streaming/src/contexts/streaming.ts#L172">packages/streaming/src/contexts/streaming.ts:172</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -325,7 +342,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/streaming/src/contexts/streaming.ts#L161">packages/streaming/src/contexts/streaming.ts:161</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/streaming/src/contexts/streaming.ts#L158">packages/streaming/src/contexts/streaming.ts:158</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -341,13 +358,13 @@
 					<a name="author" class="tsd-anchor"></a>
 					<h3>author</h3>
 					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> author<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> author<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IStreamingContextPayload</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">"author"</span><span class="tsd-signature-symbol">]</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/streaming/src/contexts/streaming.ts#L204">packages/streaming/src/contexts/streaming.ts:204</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/streaming/src/contexts/streaming.ts#L200">packages/streaming/src/contexts/streaming.ts:200</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -355,7 +372,7 @@
 									<p>Returns the information of author</p>
 								</div>
 							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">IStreamingContextPayload</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">"author"</span><span class="tsd-signature-symbol">]</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -369,7 +386,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/streaming/src/contexts/streaming.ts#L211">packages/streaming/src/contexts/streaming.ts:211</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/streaming/src/contexts/streaming.ts#L207">packages/streaming/src/contexts/streaming.ts:207</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -391,7 +408,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/streaming/src/contexts/streaming.ts#L239">packages/streaming/src/contexts/streaming.ts:239</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/streaming/src/contexts/streaming.ts#L235">packages/streaming/src/contexts/streaming.ts:235</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -413,7 +430,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/streaming/src/contexts/streaming.ts#L218">packages/streaming/src/contexts/streaming.ts:218</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/streaming/src/contexts/streaming.ts#L214">packages/streaming/src/contexts/streaming.ts:214</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -435,7 +452,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/streaming/src/contexts/streaming.ts#L133">packages/streaming/src/contexts/streaming.ts:133</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/streaming/src/contexts/streaming.ts#L130">packages/streaming/src/contexts/streaming.ts:130</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -457,7 +474,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/streaming/src/contexts/streaming.ts#L168">packages/streaming/src/contexts/streaming.ts:168</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/streaming/src/contexts/streaming.ts#L165">packages/streaming/src/contexts/streaming.ts:165</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -479,7 +496,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/streaming/src/contexts/streaming.ts#L182">packages/streaming/src/contexts/streaming.ts:182</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/streaming/src/contexts/streaming.ts#L179">packages/streaming/src/contexts/streaming.ts:179</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -501,7 +518,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/streaming/src/contexts/streaming.ts#L119">packages/streaming/src/contexts/streaming.ts:119</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/streaming/src/contexts/streaming.ts#L116">packages/streaming/src/contexts/streaming.ts:116</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -523,7 +540,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/streaming/src/contexts/streaming.ts#L91">packages/streaming/src/contexts/streaming.ts:91</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/streaming/src/contexts/streaming.ts#L88">packages/streaming/src/contexts/streaming.ts:88</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -545,7 +562,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/streaming/src/contexts/streaming.ts#L77">packages/streaming/src/contexts/streaming.ts:77</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/streaming/src/contexts/streaming.ts#L74">packages/streaming/src/contexts/streaming.ts:74</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -567,7 +584,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/streaming/src/contexts/streaming.ts#L105">packages/streaming/src/contexts/streaming.ts:105</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/streaming/src/contexts/streaming.ts#L102">packages/streaming/src/contexts/streaming.ts:102</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -589,7 +606,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/streaming/src/contexts/streaming.ts#L98">packages/streaming/src/contexts/streaming.ts:98</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/streaming/src/contexts/streaming.ts#L95">packages/streaming/src/contexts/streaming.ts:95</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -611,7 +628,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/streaming/src/contexts/streaming.ts#L112">packages/streaming/src/contexts/streaming.ts:112</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/streaming/src/contexts/streaming.ts#L109">packages/streaming/src/contexts/streaming.ts:109</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -633,7 +650,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/streaming/src/contexts/streaming.ts#L84">packages/streaming/src/contexts/streaming.ts:84</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/streaming/src/contexts/streaming.ts#L81">packages/streaming/src/contexts/streaming.ts:81</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -655,7 +672,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/streaming/src/contexts/streaming.ts#L154">packages/streaming/src/contexts/streaming.ts:154</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/streaming/src/contexts/streaming.ts#L151">packages/streaming/src/contexts/streaming.ts:151</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -677,7 +694,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/streaming/src/contexts/streaming.ts#L225">packages/streaming/src/contexts/streaming.ts:225</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/streaming/src/contexts/streaming.ts#L221">packages/streaming/src/contexts/streaming.ts:221</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -699,7 +716,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/streaming/src/contexts/streaming.ts#L232">packages/streaming/src/contexts/streaming.ts:232</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/streaming/src/contexts/streaming.ts#L228">packages/streaming/src/contexts/streaming.ts:228</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -721,7 +738,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/streaming/src/contexts/streaming.ts#L147">packages/streaming/src/contexts/streaming.ts:147</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/streaming/src/contexts/streaming.ts#L144">packages/streaming/src/contexts/streaming.ts:144</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -743,7 +760,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/streaming/src/contexts/streaming.ts#L196">packages/streaming/src/contexts/streaming.ts:196</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/streaming/src/contexts/streaming.ts#L193">packages/streaming/src/contexts/streaming.ts:193</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -765,7 +782,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/streaming/src/contexts/streaming.ts#L189">packages/streaming/src/contexts/streaming.ts:189</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/streaming/src/contexts/streaming.ts#L186">packages/streaming/src/contexts/streaming.ts:186</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -787,7 +804,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/streaming/src/contexts/streaming.ts#L140">packages/streaming/src/contexts/streaming.ts:140</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/streaming/src/contexts/streaming.ts#L137">packages/streaming/src/contexts/streaming.ts:137</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -809,7 +826,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/streaming/src/contexts/streaming.ts#L126">packages/streaming/src/contexts/streaming.ts:126</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/streaming/src/contexts/streaming.ts#L123">packages/streaming/src/contexts/streaming.ts:123</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -824,50 +841,18 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-					<a name="_inspect_custom_" class="tsd-anchor"></a>
-					<h3>[inspect.custom]</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">[inspect.custom]<span class="tsd-signature-symbol">(</span>depth<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, options<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<p>Inherited from <a href="_contexts_streaming_.streamingcontext.html">StreamingContext</a>.<a href="_contexts_streaming_.streamingcontext.html#_inspect_custom_">[inspect.custom]</a></p>
-								<ul>
-									<li>Defined in packages/vk-io/lib/structures/contexts/context.d.ts:47</li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Custom inspect object</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>depth: <span class="tsd-signature-type">number</span></h5>
-								</li>
-								<li>
-									<h5>options: <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
-						</li>
-					</ul>
-				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
-					<a name="_inspectcustomdata_" class="tsd-anchor"></a>
-					<h3>[inspect<wbr>Custom<wbr>Data]</h3>
+					<a name="_kserializedata_" class="tsd-anchor"></a>
+					<h3>[k<wbr>Serialize<wbr>Data]</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
-						<li class="tsd-signature tsd-kind-icon">[inspect<wbr>Custom<wbr>Data]<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></li>
+						<li class="tsd-signature tsd-kind-icon">[k<wbr>Serialize<wbr>Data]<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Overrides Context.[inspectCustomData]</p>
+								<p>Overrides Context.[kSerializeData]</p>
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/streaming/src/contexts/streaming.ts#L246">packages/streaming/src/contexts/streaming.ts:246</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/streaming/src/contexts/streaming.ts#L242">packages/streaming/src/contexts/streaming.ts:242</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1165,14 +1150,14 @@
 					<a name="is" class="tsd-anchor"></a>
 					<h3>is</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">is<span class="tsd-signature-symbol">(</span>rawTypes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">AllowArray</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						<li class="tsd-signature tsd-kind-icon">is<span class="tsd-signature-symbol">(</span>rawTypes<span class="tsd-signature-symbol">: </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">Type</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">SubType</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_contexts_streaming_.streamingcontext.html">StreamingContext</a>.<a href="_contexts_streaming_.streamingcontext.html#is">is</a></p>
 								<ul>
-									<li>Defined in packages/vk-io/lib/structures/contexts/context.d.ts:35</li>
+									<li>Defined in packages/vk-io/lib/structures/contexts/context.d.ts:37</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1183,7 +1168,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>rawTypes: <span class="tsd-signature-type">AllowArray</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>rawTypes: <span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">Type</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">SubType</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">[]</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
@@ -1201,7 +1186,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_contexts_streaming_.streamingcontext.html">StreamingContext</a>.<a href="_contexts_streaming_.streamingcontext.html#tojson">toJSON</a></p>
 								<ul>
-									<li>Defined in packages/vk-io/lib/structures/contexts/context.d.ts:39</li>
+									<li>Defined in packages/vk-io/lib/structures/contexts/context.d.ts:41</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1221,25 +1206,25 @@
 					<li class="globals  ">
 						<a href="../index.html"><em>Globals</em></a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-module">
 						<a href="../modules/_contexts_index_.html">&quot;contexts/index&quot;</a>
 					</li>
-					<li class="current tsd-kind-external-module">
+					<li class="current tsd-kind-module">
 						<a href="../modules/_contexts_streaming_.html">&quot;contexts/streaming&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-module">
 						<a href="../modules/_errors_index_.html">&quot;errors/index&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-module">
 						<a href="../modules/_errors_streaming_rule_.html">&quot;errors/streaming-<wbr>rule&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-module">
 						<a href="../modules/_helpers_.html">&quot;helpers&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-module">
 						<a href="../modules/_index_.html">&quot;index&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-module">
 						<a href="../modules/_streaming_.html">&quot;streaming&quot;</a>
 					</li>
 				</ul>
@@ -1248,7 +1233,7 @@
 				<ul class="before-current">
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-class tsd-parent-kind-external-module tsd-has-type-parameter">
+					<li class="current tsd-kind-class tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="_contexts_streaming_.streamingcontext.html" class="tsd-kind-icon">Streaming<wbr>Context</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class tsd-is-overwrite">
@@ -1257,7 +1242,10 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 								<a href="_contexts_streaming_.streamingcontext.html#_groupid" class="tsd-kind-icon">$group<wbr>Id</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-overwrite">
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+								<a href="_contexts_streaming_.streamingcontext.html#api" class="tsd-kind-icon">api</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 								<a href="_contexts_streaming_.streamingcontext.html#attachments" class="tsd-kind-icon">attachments</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
@@ -1272,8 +1260,8 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
 								<a href="_contexts_streaming_.streamingcontext.html#type" class="tsd-kind-icon">type</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited">
-								<a href="_contexts_streaming_.streamingcontext.html#vk" class="tsd-kind-icon">vk</a>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-protected">
+								<a href="_contexts_streaming_.streamingcontext.html#upload" class="tsd-kind-icon">upload</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-inherited">
 								<a href="_contexts_streaming_.streamingcontext.html#_symbol_tostringtag_" class="tsd-kind-icon">[<wbr>Symbol.to<wbr>String<wbr>Tag]</a>
@@ -1350,11 +1338,8 @@
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
 								<a href="_contexts_streaming_.streamingcontext.html#url" class="tsd-kind-icon">url</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
-								<a href="_contexts_streaming_.streamingcontext.html#_inspect_custom_" class="tsd-kind-icon">[inspect.custom]</a>
-							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-overwrite">
-								<a href="_contexts_streaming_.streamingcontext.html#_inspectcustomdata_" class="tsd-kind-icon">[inspect<wbr>Custom<wbr>Data]</a>
+								<a href="_contexts_streaming_.streamingcontext.html#_kserializedata_" class="tsd-kind-icon">[k<wbr>Serialize<wbr>Data]</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited">
 								<a href="_contexts_streaming_.streamingcontext.html#getattachments" class="tsd-kind-icon">get<wbr>Attachments</a>
@@ -1372,10 +1357,10 @@
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
 						<a href="../interfaces/_contexts_streaming_.istreamingcontextpayload.html" class="tsd-kind-icon">IStreaming<wbr>Context<wbr>Payload</a>
 					</li>
-					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module tsd-has-type-parameter">
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="../modules/_contexts_streaming_.html#streamingcontextoptions" class="tsd-kind-icon">Streaming<wbr>Context<wbr>Options</a>
 					</li>
 				</ul>
@@ -1388,57 +1373,21 @@
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
-				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
-				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
-				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
-				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
-				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
-				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
-				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
-				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
-				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
-				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
-				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
-				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
-			</ul>
-			<ul class="tsd-legend">
 				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
 				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
 				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
-				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
+			</ul>
+			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
-				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
 			</ul>
 		</div>
 	</div>
@@ -1448,6 +1397,5 @@
 </div>
 <div class="overlay"></div>
 <script src="../assets/js/main.js"></script>
-<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
 </body>
 </html>

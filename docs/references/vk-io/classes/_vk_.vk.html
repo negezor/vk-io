@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>VK | vk-io</title>
-	<meta name="description" content="">
+	<meta name="description" content="Documentation for vk-io">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
 </head>
@@ -13,7 +13,7 @@
 	<div class="tsd-page-toolbar">
 		<div class="container">
 			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.js" data-base="..">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
 					<div class="field">
 						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
 						<input id="tsd-search-field" type="text" />
@@ -95,12 +95,8 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="_vk_.vk.html#_kauth_" class="tsd-kind-icon">[k<wbr>Auth]</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="_vk_.vk.html#_kstreaming_" class="tsd-kind-icon">[k<wbr>Streaming]</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_vk_.vk.html#api" class="tsd-kind-icon">api</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_vk_.vk.html#callbackservice" class="tsd-kind-icon">callback<wbr>Service</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_vk_.vk.html#collect" class="tsd-kind-icon">collect</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_vk_.vk.html#snippets" class="tsd-kind-icon">snippets</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_vk_.vk.html#updates" class="tsd-kind-icon">updates</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class"><a href="_vk_.vk.html#upload" class="tsd-kind-icon">upload</a></li>
 							</ul>
@@ -109,24 +105,6 @@
 							<h3>Accessors</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="_vk_.vk.html#_symbol_tostringtag_" class="tsd-kind-icon">[<wbr>Symbol.to<wbr>String<wbr>Tag]</a></li>
-								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="_vk_.vk.html#auth" class="tsd-kind-icon">auth</a></li>
-								<li class="tsd-kind-set-signature tsd-parent-kind-class"><a href="_vk_.vk.html#captchahandler" class="tsd-kind-icon">captcha<wbr>Handler</a></li>
-								<li class="tsd-kind-get-signature tsd-parent-kind-class"><a href="_vk_.vk.html#streaming" class="tsd-kind-icon">streaming</a></li>
-								<li class="tsd-kind-accessor tsd-parent-kind-class"><a href="_vk_.vk.html#token" class="tsd-kind-icon">token</a></li>
-								<li class="tsd-kind-set-signature tsd-parent-kind-class"><a href="_vk_.vk.html#twofactorhandler" class="tsd-kind-icon">two<wbr>Factor<wbr>Handler</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
-							<h3>Methods</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_vk_.vk.html#_inspect_custom_" class="tsd-kind-icon">[inspect.custom]</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class"><a href="_vk_.vk.html#setoptions" class="tsd-kind-icon">set<wbr>Options</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
-							<h3>Object literals</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-object-literal tsd-parent-kind-class"><a href="_vk_.vk.html#options" class="tsd-kind-icon">options</a></li>
 							</ul>
 						</section>
 					</div>
@@ -138,13 +116,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new VK<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_types_.ivkoptions.html" class="tsd-signature-type">IVKOptions</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_vk_.vk.html" class="tsd-signature-type">VK</a></li>
+						<li class="tsd-signature tsd-kind-icon">new VK<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/_types_.html#vkoptions" class="tsd-signature-type">VKOptions</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{ </span>token<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_vk_.vk.html" class="tsd-signature-type">VK</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/vk.ts#L49">packages/vk-io/src/vk.ts:49</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/vk-io/src/vk.ts#L20">packages/vk-io/src/vk.ts:20</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -155,7 +133,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> options: <span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_types_.ivkoptions.html" class="tsd-signature-type">IVKOptions</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = {}</span></h5>
+									<h5>options: <span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/_types_.html#vkoptions" class="tsd-signature-type">VKOptions</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{ </span>token<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_vk_.vk.html" class="tsd-signature-type">VK</a></h4>
@@ -165,83 +143,43 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
-					<a name="_kauth_" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagProtected">Protected</span> [k<wbr>Auth]</h3>
-					<div class="tsd-signature tsd-kind-icon">[k<wbr>Auth]<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/vk.ts#L46">packages/vk-io/src/vk.ts:46</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
-					<a name="_kstreaming_" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagProtected">Protected</span> [k<wbr>Streaming]</h3>
-					<div class="tsd-signature tsd-kind-icon">[k<wbr>Streaming]<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/vk.ts#L49">packages/vk-io/src/vk.ts:49</a></li>
-						</ul>
-					</aside>
-				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="api" class="tsd-anchor"></a>
 					<h3>api</h3>
-					<div class="tsd-signature tsd-kind-icon">api<span class="tsd-signature-symbol">:</span> <a href="_api_api_.api.html" class="tsd-signature-type">API</a><span class="tsd-signature-symbol"> = new API(this)</span></div>
+					<div class="tsd-signature tsd-kind-icon">api<span class="tsd-signature-symbol">:</span> <a href="_api_api_.api.html" class="tsd-signature-type">API</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/vk.ts#L33">packages/vk-io/src/vk.ts:33</a></li>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/vk-io/src/vk.ts#L14">packages/vk-io/src/vk.ts:14</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="callbackservice" class="tsd-anchor"></a>
 					<h3>callback<wbr>Service</h3>
-					<div class="tsd-signature tsd-kind-icon">callback<wbr>Service<span class="tsd-signature-symbol">:</span> <a href="_utils_callback_service_.callbackservice.html" class="tsd-signature-type">CallbackService</a><span class="tsd-signature-symbol"> = new CallbackService(this)</span></div>
+					<div class="tsd-signature tsd-kind-icon">callback<wbr>Service<span class="tsd-signature-symbol">:</span> <a href="_utils_callback_service_.callbackservice.html" class="tsd-signature-type">CallbackService</a><span class="tsd-signature-symbol"> = new CallbackService()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/vk.ts#L43">packages/vk-io/src/vk.ts:43</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="collect" class="tsd-anchor"></a>
-					<h3>collect</h3>
-					<div class="tsd-signature tsd-kind-icon">collect<span class="tsd-signature-symbol">:</span> <a href="_collect_collect_.collect.html" class="tsd-signature-type">Collect</a><span class="tsd-signature-symbol"> = new Collect(this)</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/vk.ts#L37">packages/vk-io/src/vk.ts:37</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
-					<a name="snippets" class="tsd-anchor"></a>
-					<h3>snippets</h3>
-					<div class="tsd-signature tsd-kind-icon">snippets<span class="tsd-signature-symbol">:</span> <a href="_snippets_snippets_.snippets.html" class="tsd-signature-type">Snippets</a><span class="tsd-signature-symbol"> = new Snippets(this)</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/vk.ts#L41">packages/vk-io/src/vk.ts:41</a></li>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/vk-io/src/vk.ts#L20">packages/vk-io/src/vk.ts:20</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="updates" class="tsd-anchor"></a>
 					<h3>updates</h3>
-					<div class="tsd-signature tsd-kind-icon">updates<span class="tsd-signature-symbol">:</span> <a href="_updates_updates_.updates.html" class="tsd-signature-type">Updates</a><span class="tsd-signature-symbol"> = new Updates(this)</span></div>
+					<div class="tsd-signature tsd-kind-icon">updates<span class="tsd-signature-symbol">:</span> <a href="_updates_updates_.updates.html" class="tsd-signature-type">Updates</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/vk.ts#L39">packages/vk-io/src/vk.ts:39</a></li>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/vk-io/src/vk.ts#L18">packages/vk-io/src/vk.ts:18</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="upload" class="tsd-anchor"></a>
 					<h3>upload</h3>
-					<div class="tsd-signature tsd-kind-icon">upload<span class="tsd-signature-symbol">:</span> <a href="_upload_upload_.upload.html" class="tsd-signature-type">Upload</a><span class="tsd-signature-symbol"> = new Upload(this)</span></div>
+					<div class="tsd-signature tsd-kind-icon">upload<span class="tsd-signature-symbol">:</span> <a href="_upload_upload_.upload.html" class="tsd-signature-type">Upload</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/vk.ts#L35">packages/vk-io/src/vk.ts:35</a></li>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/vk-io/src/vk.ts#L16">packages/vk-io/src/vk.ts:16</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -258,7 +196,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/vk.ts#L61">packages/vk-io/src/vk.ts:61</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/vk-io/src/vk.ts#L49">packages/vk-io/src/vk.ts:49</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -270,225 +208,6 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
-					<a name="auth" class="tsd-anchor"></a>
-					<h3>auth</h3>
-					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> auth<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/vk.ts#L66">packages/vk-io/src/vk.ts:66</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-set-signature tsd-parent-kind-class">
-					<a name="captchahandler" class="tsd-anchor"></a>
-					<h3>captcha<wbr>Handler</h3>
-					<ul class="tsd-signatures tsd-kind-set-signature tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">set</span> captchaHandler<span class="tsd-signature-symbol">(</span>handler<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/vk.ts#L119">packages/vk-io/src/vk.ts:119</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Sets captcha handler</p>
-								</div>
-								<pre><code class="language-ts">vk.captchaHandler = <span class="hljs-function">(<span class="hljs-params">payload, retry</span>) =&gt;</span> {...};</code></pre>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>handler: <span class="tsd-signature-type">Function</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class">
-					<a name="streaming" class="tsd-anchor"></a>
-					<h3>streaming</h3>
-					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> streaming<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/vk.ts#L78">packages/vk-io/src/vk.ts:78</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-accessor tsd-parent-kind-class">
-					<a name="token" class="tsd-anchor"></a>
-					<h3>token</h3>
-					<ul class="tsd-signatures tsd-kind-accessor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> token<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></li>
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">set</span> token<span class="tsd-signature-symbol">(</span>token<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/vk.ts#L108">packages/vk-io/src/vk.ts:108</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Returns token</p>
-								</div>
-							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></h4>
-						</li>
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/vk.ts#L101">packages/vk-io/src/vk.ts:101</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Sets token</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>token: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">undefined</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-set-signature tsd-parent-kind-class">
-					<a name="twofactorhandler" class="tsd-anchor"></a>
-					<h3>two<wbr>Factor<wbr>Handler</h3>
-					<ul class="tsd-signatures tsd-kind-set-signature tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">set</span> twoFactorHandler<span class="tsd-signature-symbol">(</span>handler<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/vk.ts#L130">packages/vk-io/src/vk.ts:130</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Sets two-factor handler</p>
-								</div>
-								<pre><code class="language-ts">vk.twoFactorHandler = <span class="hljs-function">(<span class="hljs-params">payload, retry</span>) =&gt;</span> {...};</code></pre>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>handler: <span class="tsd-signature-type">Function</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
-						</li>
-					</ul>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="_inspect_custom_" class="tsd-anchor"></a>
-					<h3>[inspect.custom]</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">[inspect.custom]<span class="tsd-signature-symbol">(</span>depth<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span>, options<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/vk.ts#L138">packages/vk-io/src/vk.ts:138</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Custom inspect object</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>depth: <span class="tsd-signature-type">number</span></h5>
-								</li>
-								<li>
-									<h5>options: <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
-					<a name="setoptions" class="tsd-anchor"></a>
-					<h3>set<wbr>Options</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">set<wbr>Options<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_types_.ivkoptions.html" class="tsd-signature-type">IVKOptions</a><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">this</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/vk.ts#L92">packages/vk-io/src/vk.ts:92</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Sets options</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>options: <span class="tsd-signature-type">Partial</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/_types_.ivkoptions.html" class="tsd-signature-type">IVKOptions</a><span class="tsd-signature-symbol">&gt;</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">this</span></h4>
-						</li>
-					</ul>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Object literals</h2>
-				<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-class">
-					<a name="options" class="tsd-anchor"></a>
-					<h3>options</h3>
-					<div class="tsd-signature tsd-kind-icon">options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/vk.ts#L23">packages/vk-io/src/vk.ts:23</a></li>
-						</ul>
-					</aside>
-					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal">
-						<a name="options.agent" class="tsd-anchor"></a>
-						<h3>agent</h3>
-						<div class="tsd-signature tsd-kind-icon">agent<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Agent</span><span class="tsd-signature-symbol"> = new Agent({keepAlive: true,keepAliveMsecs: 10000})</span></div>
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/vk.ts#L26">packages/vk-io/src/vk.ts:26</a></li>
-							</ul>
-						</aside>
-					</section>
-				</section>
 			</section>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -497,7 +216,7 @@
 					<li class="globals  ">
 						<a href="../index.html"><em>Globals</em></a>
 					</li>
-					<li class="current tsd-kind-external-module">
+					<li class="current tsd-kind-module">
 						<a href="../modules/_vk_.html">&quot;vk&quot;</a>
 					</li>
 				</ul>
@@ -506,29 +225,17 @@
 				<ul class="before-current">
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-class tsd-parent-kind-external-module">
+					<li class="current tsd-kind-class tsd-parent-kind-module">
 						<a href="_vk_.vk.html" class="tsd-kind-icon">VK</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
 								<a href="_vk_.vk.html#constructor" class="tsd-kind-icon">constructor</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
-								<a href="_vk_.vk.html#_kauth_" class="tsd-kind-icon">[k<wbr>Auth]</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
-								<a href="_vk_.vk.html#_kstreaming_" class="tsd-kind-icon">[k<wbr>Streaming]</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="_vk_.vk.html#api" class="tsd-kind-icon">api</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="_vk_.vk.html#callbackservice" class="tsd-kind-icon">callback<wbr>Service</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_vk_.vk.html#collect" class="tsd-kind-icon">collect</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class">
-								<a href="_vk_.vk.html#snippets" class="tsd-kind-icon">snippets</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class">
 								<a href="_vk_.vk.html#updates" class="tsd-kind-icon">updates</a>
@@ -538,30 +245,6 @@
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
 								<a href="_vk_.vk.html#_symbol_tostringtag_" class="tsd-kind-icon">[<wbr>Symbol.to<wbr>String<wbr>Tag]</a>
-							</li>
-							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
-								<a href="_vk_.vk.html#auth" class="tsd-kind-icon">auth</a>
-							</li>
-							<li class=" tsd-kind-set-signature tsd-parent-kind-class">
-								<a href="_vk_.vk.html#captchahandler" class="tsd-kind-icon">captcha<wbr>Handler</a>
-							</li>
-							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
-								<a href="_vk_.vk.html#streaming" class="tsd-kind-icon">streaming</a>
-							</li>
-							<li class=" tsd-kind-accessor tsd-parent-kind-class">
-								<a href="_vk_.vk.html#token" class="tsd-kind-icon">token</a>
-							</li>
-							<li class=" tsd-kind-set-signature tsd-parent-kind-class">
-								<a href="_vk_.vk.html#twofactorhandler" class="tsd-kind-icon">two<wbr>Factor<wbr>Handler</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_vk_.vk.html#_inspect_custom_" class="tsd-kind-icon">[inspect.custom]</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class">
-								<a href="_vk_.vk.html#setoptions" class="tsd-kind-icon">set<wbr>Options</a>
-							</li>
-							<li class=" tsd-kind-object-literal tsd-parent-kind-class">
-								<a href="_vk_.vk.html#options" class="tsd-kind-icon">options</a>
 							</li>
 						</ul>
 					</li>
@@ -577,57 +260,24 @@
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
-				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
-				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
 				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
 				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
 				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
-				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
 				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
 				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
-				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
-				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
-				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
-				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
 				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
 				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
 				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
-				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
-				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
 			</ul>
 		</div>
 	</div>
@@ -637,6 +287,5 @@
 </div>
 <div class="overlay"></div>
 <script src="../assets/js/main.js"></script>
-<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
 </body>
 </html>

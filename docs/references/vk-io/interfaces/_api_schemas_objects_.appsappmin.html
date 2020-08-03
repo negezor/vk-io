@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>AppsAppMin | vk-io</title>
-	<meta name="description" content="">
+	<meta name="description" content="Documentation for vk-io">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
 </head>
@@ -13,7 +13,7 @@
 	<div class="tsd-page-toolbar">
 		<div class="container">
 			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.js" data-base="..">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
 					<div class="field">
 						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
 						<input id="tsd-search-field" type="text" />
@@ -75,7 +75,7 @@
 					</li>
 				</ul>
 			</section>
-			<section class="tsd-panel tsd-kind-interface tsd-parent-kind-external-module">
+			<section class="tsd-panel tsd-kind-interface tsd-parent-kind-module">
 				<h3 class="tsd-before-signature">Indexable</h3>
 				<div class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">[</span>key: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">]: </span><span class="tsd-signature-type">any</span></div>
 			</section>
@@ -86,12 +86,16 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_api_schemas_objects_.appsappmin.html#author_id" class="tsd-kind-icon">author_<wbr>id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_api_schemas_objects_.appsappmin.html#author_owner_id" class="tsd-kind-icon">author_<wbr>owner_<wbr>id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_api_schemas_objects_.appsappmin.html#background_loader_color" class="tsd-kind-icon">background_<wbr>loader_<wbr>color</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_api_schemas_objects_.appsappmin.html#icon_139" class="tsd-kind-icon">icon_<wbr>139</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_api_schemas_objects_.appsappmin.html#icon_150" class="tsd-kind-icon">icon_<wbr>150</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_api_schemas_objects_.appsappmin.html#icon_278" class="tsd-kind-icon">icon_<wbr>278</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_api_schemas_objects_.appsappmin.html#icon_576" class="tsd-kind-icon">icon_<wbr>576</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_api_schemas_objects_.appsappmin.html#icon_75" class="tsd-kind-icon">icon_<wbr>75</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_api_schemas_objects_.appsappmin.html#id" class="tsd-kind-icon">id</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_api_schemas_objects_.appsappmin.html#is_installed" class="tsd-kind-icon">is_<wbr>installed</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_api_schemas_objects_.appsappmin.html#loader_icon" class="tsd-kind-icon">loader_<wbr>icon</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_api_schemas_objects_.appsappmin.html#title" class="tsd-kind-icon">title</a></li>
 							</ul>
 						</section>
@@ -101,12 +105,12 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="author_id" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> author_<wbr>id</h3>
-					<div class="tsd-signature tsd-kind-icon">author_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
+					<a name="author_owner_id" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> author_<wbr>owner_<wbr>id</h3>
+					<div class="tsd-signature tsd-kind-icon">author_<wbr>owner_<wbr>id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/api/schemas/objects.ts#L970">packages/vk-io/src/api/schemas/objects.ts:970</a></li>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/vk-io/src/api/schemas/objects.ts#L1145">packages/vk-io/src/api/schemas/objects.ts:1145</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -116,12 +120,27 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="background_loader_color" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> background_<wbr>loader_<wbr>color</h3>
+					<div class="tsd-signature tsd-kind-icon">background_<wbr>loader_<wbr>color<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/vk-io/src/api/schemas/objects.ts#L1169">packages/vk-io/src/api/schemas/objects.ts:1169</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Hex color code without hash sign</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="icon_139" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> icon_<wbr>139</h3>
 					<div class="tsd-signature tsd-kind-icon">icon_<wbr>139<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/api/schemas/objects.ts#L974">packages/vk-io/src/api/schemas/objects.ts:974</a></li>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/vk-io/src/api/schemas/objects.ts#L1153">packages/vk-io/src/api/schemas/objects.ts:1153</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -136,7 +155,7 @@
 					<div class="tsd-signature tsd-kind-icon">icon_<wbr>150<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/api/schemas/objects.ts#L978">packages/vk-io/src/api/schemas/objects.ts:978</a></li>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/vk-io/src/api/schemas/objects.ts#L1157">packages/vk-io/src/api/schemas/objects.ts:1157</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -151,7 +170,7 @@
 					<div class="tsd-signature tsd-kind-icon">icon_<wbr>278<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/api/schemas/objects.ts#L982">packages/vk-io/src/api/schemas/objects.ts:982</a></li>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/vk-io/src/api/schemas/objects.ts#L1161">packages/vk-io/src/api/schemas/objects.ts:1161</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -161,12 +180,27 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="icon_576" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> icon_<wbr>576</h3>
+					<div class="tsd-signature tsd-kind-icon">icon_<wbr>576<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/vk-io/src/api/schemas/objects.ts#L1165">packages/vk-io/src/api/schemas/objects.ts:1165</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>URL of the app icon with 576 px in width</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="icon_75" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> icon_<wbr>75</h3>
 					<div class="tsd-signature tsd-kind-icon">icon_<wbr>75<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/api/schemas/objects.ts#L986">packages/vk-io/src/api/schemas/objects.ts:986</a></li>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/vk-io/src/api/schemas/objects.ts#L1177">packages/vk-io/src/api/schemas/objects.ts:1177</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -181,7 +215,7 @@
 					<div class="tsd-signature tsd-kind-icon">id<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/api/schemas/objects.ts#L962">packages/vk-io/src/api/schemas/objects.ts:962</a></li>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/vk-io/src/api/schemas/objects.ts#L1137">packages/vk-io/src/api/schemas/objects.ts:1137</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -191,12 +225,42 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="is_installed" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> is_<wbr>installed</h3>
+					<div class="tsd-signature tsd-kind-icon">is_<wbr>installed<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/vk-io/src/api/schemas/objects.ts#L1149">packages/vk-io/src/api/schemas/objects.ts:1149</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Is application installed</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="loader_icon" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> loader_<wbr>icon</h3>
+					<div class="tsd-signature tsd-kind-icon">loader_<wbr>icon<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/vk-io/src/api/schemas/objects.ts#L1173">packages/vk-io/src/api/schemas/objects.ts:1173</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>SVG data</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="title" class="tsd-anchor"></a>
 					<h3>title</h3>
 					<div class="tsd-signature tsd-kind-icon">title<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/vk-io/src/api/schemas/objects.ts#L966">packages/vk-io/src/api/schemas/objects.ts:966</a></li>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/vk-io/src/api/schemas/objects.ts#L1141">packages/vk-io/src/api/schemas/objects.ts:1141</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -213,7 +277,7 @@
 					<li class="globals  ">
 						<a href="../index.html"><em>Globals</em></a>
 					</li>
-					<li class="current tsd-kind-external-module">
+					<li class="current tsd-kind-module">
 						<a href="../modules/_api_schemas_objects_.html">&quot;api/schemas/objects&quot;</a>
 					</li>
 				</ul>
@@ -222,11 +286,14 @@
 				<ul class="before-current">
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-interface tsd-parent-kind-external-module">
+					<li class="current tsd-kind-interface tsd-parent-kind-module">
 						<a href="_api_schemas_objects_.appsappmin.html" class="tsd-kind-icon">Apps<wbr>App<wbr>Min</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_api_schemas_objects_.appsappmin.html#author_id" class="tsd-kind-icon">author_<wbr>id</a>
+								<a href="_api_schemas_objects_.appsappmin.html#author_owner_id" class="tsd-kind-icon">author_<wbr>owner_<wbr>id</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_api_schemas_objects_.appsappmin.html#background_loader_color" class="tsd-kind-icon">background_<wbr>loader_<wbr>color</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="_api_schemas_objects_.appsappmin.html#icon_139" class="tsd-kind-icon">icon_<wbr>139</a>
@@ -238,10 +305,19 @@
 								<a href="_api_schemas_objects_.appsappmin.html#icon_278" class="tsd-kind-icon">icon_<wbr>278</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_api_schemas_objects_.appsappmin.html#icon_576" class="tsd-kind-icon">icon_<wbr>576</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="_api_schemas_objects_.appsappmin.html#icon_75" class="tsd-kind-icon">icon_<wbr>75</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="_api_schemas_objects_.appsappmin.html#id" class="tsd-kind-icon">id</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_api_schemas_objects_.appsappmin.html#is_installed" class="tsd-kind-icon">is_<wbr>installed</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_api_schemas_objects_.appsappmin.html#loader_icon" class="tsd-kind-icon">loader_<wbr>icon</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="_api_schemas_objects_.appsappmin.html#title" class="tsd-kind-icon">title</a>
@@ -260,57 +336,23 @@
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
-				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
-				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
 				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
 				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
 				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
-				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
 				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
 				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
-				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
-			</ul>
-			<ul class="tsd-legend">
 				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
 				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
-				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
 				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
-				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
 				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
-				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
-				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
-				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
 			</ul>
 		</div>
 	</div>
@@ -320,6 +362,5 @@
 </div>
 <div class="overlay"></div>
 <script src="../assets/js/main.js"></script>
-<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
 </body>
 </html>

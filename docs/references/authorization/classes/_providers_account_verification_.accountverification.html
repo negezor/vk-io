@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>AccountVerification | @vk-io/authorization</title>
-	<meta name="description" content="">
+	<meta name="description" content="Documentation for @vk-io/authorization">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
 </head>
@@ -13,7 +13,7 @@
 	<div class="tsd-page-toolbar">
 		<div class="container">
 			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.js" data-base="..">
+				<div class="table-cell" id="tsd-search" data-index="../assets/js/search.json" data-base="..">
 					<div class="field">
 						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
 						<input id="tsd-search-field" type="text" />
@@ -95,7 +95,6 @@
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="_providers_account_verification_.accountverification.html#options" class="tsd-kind-icon">options</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="_providers_account_verification_.accountverification.html#twofactorattempts" class="tsd-kind-icon">two<wbr>Factor<wbr>Attempts</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="_providers_account_verification_.accountverification.html#twofactorvalidate" class="tsd-kind-icon">two<wbr>Factor<wbr>Validate</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="_providers_account_verification_.accountverification.html#vk" class="tsd-kind-icon">vk</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -124,13 +123,13 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Account<wbr>Verification<span class="tsd-signature-symbol">(</span>vk<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">VK</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_providers_account_verification_.accountverification.html" class="tsd-signature-type">AccountVerification</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Account<wbr>Verification<span class="tsd-signature-symbol">(</span>options<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">IAccountVerificationOptions</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_providers_account_verification_.accountverification.html" class="tsd-signature-type">AccountVerification</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/authorization/src/providers/account-verification.ts#L70">packages/authorization/src/providers/account-verification.ts:70</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/authorization/src/providers/account-verification.ts#L82">packages/authorization/src/providers/account-verification.ts:82</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -141,7 +140,7 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>vk: <span class="tsd-signature-type">VK</span></h5>
+									<h5>options: <span class="tsd-signature-type">IAccountVerificationOptions</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_providers_account_verification_.accountverification.html" class="tsd-signature-type">AccountVerification</a></h4>
@@ -157,7 +156,7 @@
 					<div class="tsd-signature tsd-kind-icon">captcha<wbr>Attempts<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 0</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/authorization/src/providers/account-verification.ts#L66">packages/authorization/src/providers/account-verification.ts:66</a></li>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/authorization/src/providers/account-verification.ts#L78">packages/authorization/src/providers/account-verification.ts:78</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -167,17 +166,17 @@
 					<div class="tsd-signature tsd-kind-icon">captcha<wbr>Validate<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ICallbackServiceValidate</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/authorization/src/providers/account-verification.ts#L64">packages/authorization/src/providers/account-verification.ts:64</a></li>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/authorization/src/providers/account-verification.ts#L76">packages/authorization/src/providers/account-verification.ts:76</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
 					<a name="fetchcookie" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> fetch<wbr>Cookie</h3>
-					<div class="tsd-signature tsd-kind-icon">fetch<wbr>Cookie<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Function</span></div>
+					<div class="tsd-signature tsd-kind-icon">fetch<wbr>Cookie<span class="tsd-signature-symbol">:</span> <a href="../modules/_fetch_cookie_.html#fetchwrapper" class="tsd-signature-type">FetchWrapper</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/authorization/src/providers/account-verification.ts#L62">packages/authorization/src/providers/account-verification.ts:62</a></li>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/authorization/src/providers/account-verification.ts#L74">packages/authorization/src/providers/account-verification.ts:74</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -187,7 +186,7 @@
 					<div class="tsd-signature tsd-kind-icon">jar<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">CookieJar</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/authorization/src/providers/account-verification.ts#L60">packages/authorization/src/providers/account-verification.ts:60</a></li>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/authorization/src/providers/account-verification.ts#L72">packages/authorization/src/providers/account-verification.ts:72</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -197,7 +196,7 @@
 					<div class="tsd-signature tsd-kind-icon">options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">IAccountVerificationOptions</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/authorization/src/providers/account-verification.ts#L58">packages/authorization/src/providers/account-verification.ts:58</a></li>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/authorization/src/providers/account-verification.ts#L70">packages/authorization/src/providers/account-verification.ts:70</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -207,7 +206,7 @@
 					<div class="tsd-signature tsd-kind-icon">two<wbr>Factor<wbr>Attempts<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> = 0</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/authorization/src/providers/account-verification.ts#L70">packages/authorization/src/providers/account-verification.ts:70</a></li>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/authorization/src/providers/account-verification.ts#L82">packages/authorization/src/providers/account-verification.ts:82</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -217,17 +216,7 @@
 					<div class="tsd-signature tsd-kind-icon">two<wbr>Factor<wbr>Validate<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ICallbackServiceValidate</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/authorization/src/providers/account-verification.ts#L68">packages/authorization/src/providers/account-verification.ts:68</a></li>
-						</ul>
-					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
-					<a name="vk" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagProtected">Protected</span> vk</h3>
-					<div class="tsd-signature tsd-kind-icon">vk<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">VK</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/authorization/src/providers/account-verification.ts#L56">packages/authorization/src/providers/account-verification.ts:56</a></li>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/authorization/src/providers/account-verification.ts#L80">packages/authorization/src/providers/account-verification.ts:80</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -244,7 +233,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/authorization/src/providers/account-verification.ts#L99">packages/authorization/src/providers/account-verification.ts:99</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/authorization/src/providers/account-verification.ts#L107">packages/authorization/src/providers/account-verification.ts:107</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -263,13 +252,13 @@
 					<a name="fetch" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> fetch</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
-						<li class="tsd-signature tsd-kind-icon">fetch<span class="tsd-signature-symbol">(</span>url<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">URL</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span>, options<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">fetch<span class="tsd-signature-symbol">(</span>url<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">RequestInfo</span>, options<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">RequestInit</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Response</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/authorization/src/providers/account-verification.ts#L107">packages/authorization/src/providers/account-verification.ts:107</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/authorization/src/providers/account-verification.ts#L114">packages/authorization/src/providers/account-verification.ts:114</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -280,13 +269,13 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>url: <span class="tsd-signature-type">URL</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
+									<h5>url: <span class="tsd-signature-type">RequestInfo</span></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> options: <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> = {}</span></h5>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> options: <span class="tsd-signature-type">RequestInit</span><span class="tsd-signature-symbol"> = {}</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Response</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -294,13 +283,13 @@
 					<a name="processcaptchaform" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> process<wbr>Captcha<wbr>Form</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
-						<li class="tsd-signature tsd-kind-icon">process<wbr>Captcha<wbr>Form<span class="tsd-signature-symbol">(</span>response<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, $<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">process<wbr>Captcha<wbr>Form<span class="tsd-signature-symbol">(</span>response<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Response</span>, $<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">CheerioStatic</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Response</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/authorization/src/providers/account-verification.ts#L318">packages/authorization/src/providers/account-verification.ts:318</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/authorization/src/providers/account-verification.ts#L323">packages/authorization/src/providers/account-verification.ts:323</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -311,13 +300,13 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>response: <span class="tsd-signature-type">any</span></h5>
+									<h5>response: <span class="tsd-signature-type">Response</span></h5>
 								</li>
 								<li>
-									<h5>$: <span class="tsd-signature-type">any</span></h5>
+									<h5>$: <span class="tsd-signature-type">CheerioStatic</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Response</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -325,13 +314,13 @@
 					<a name="processsecurityform" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> process<wbr>Security<wbr>Form</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
-						<li class="tsd-signature tsd-kind-icon">process<wbr>Security<wbr>Form<span class="tsd-signature-symbol">(</span>response<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, $<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">process<wbr>Security<wbr>Form<span class="tsd-signature-symbol">(</span>response<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Response</span>, $<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">CheerioStatic</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Response</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/authorization/src/providers/account-verification.ts#L252">packages/authorization/src/providers/account-verification.ts:252</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/authorization/src/providers/account-verification.ts#L259">packages/authorization/src/providers/account-verification.ts:259</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -342,13 +331,13 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>response: <span class="tsd-signature-type">any</span></h5>
+									<h5>response: <span class="tsd-signature-type">Response</span></h5>
 								</li>
 								<li>
-									<h5>$: <span class="tsd-signature-type">any</span></h5>
+									<h5>$: <span class="tsd-signature-type">CheerioStatic</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Response</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -356,13 +345,13 @@
 					<a name="processtwofactorform" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> process<wbr>Two<wbr>Factor<wbr>Form</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
-						<li class="tsd-signature tsd-kind-icon">process<wbr>Two<wbr>Factor<wbr>Form<span class="tsd-signature-symbol">(</span>response<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, $<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">process<wbr>Two<wbr>Factor<wbr>Form<span class="tsd-signature-symbol">(</span>response<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Response</span>, $<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">CheerioStatic</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Response</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/authorization/src/providers/account-verification.ts#L206">packages/authorization/src/providers/account-verification.ts:206</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/authorization/src/providers/account-verification.ts#L214">packages/authorization/src/providers/account-verification.ts:214</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -373,13 +362,13 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>response: <span class="tsd-signature-type">any</span></h5>
+									<h5>response: <span class="tsd-signature-type">Response</span></h5>
 								</li>
 								<li>
-									<h5>$: <span class="tsd-signature-type">any</span></h5>
+									<h5>$: <span class="tsd-signature-type">CheerioStatic</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Response</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -387,13 +376,13 @@
 					<a name="processvalidateform" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagProtected">Protected</span> process<wbr>Validate<wbr>Form</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-protected">
-						<li class="tsd-signature tsd-kind-icon">process<wbr>Validate<wbr>Form<span class="tsd-signature-symbol">(</span>response<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, $<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">process<wbr>Validate<wbr>Form<span class="tsd-signature-symbol">(</span>response<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Response</span>, $<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">CheerioStatic</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Response</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/authorization/src/providers/account-verification.ts#L305">packages/authorization/src/providers/account-verification.ts:305</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/authorization/src/providers/account-verification.ts#L311">packages/authorization/src/providers/account-verification.ts:311</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -404,13 +393,13 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>response: <span class="tsd-signature-type">any</span></h5>
+									<h5>response: <span class="tsd-signature-type">Response</span></h5>
 								</li>
 								<li>
-									<h5>$: <span class="tsd-signature-type">any</span></h5>
+									<h5>$: <span class="tsd-signature-type">CheerioStatic</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Response</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -418,13 +407,13 @@
 					<a name="run" class="tsd-anchor"></a>
 					<h3>run</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">run<span class="tsd-signature-symbol">(</span>redirectUri<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">run<span class="tsd-signature-symbol">(</span>redirectUri<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">RequestInfo</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span>token<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>userId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/dbd2255/packages/authorization/src/providers/account-verification.ts#L132">packages/authorization/src/providers/account-verification.ts:132</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/authorization/src/providers/account-verification.ts#L142">packages/authorization/src/providers/account-verification.ts:142</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -435,10 +424,10 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>redirectUri: <span class="tsd-signature-type">string</span></h5>
+									<h5>redirectUri: <span class="tsd-signature-type">RequestInfo</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">{ </span>token<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>userId<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -450,43 +439,43 @@
 					<li class="globals  ">
 						<a href="../index.html"><em>Globals</em></a>
 					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_authorization_.html">&quot;authorization&quot;</a>
-					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-module">
 						<a href="../modules/_constants_.html">&quot;constants&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-module">
 						<a href="../modules/_errors_authorization_.html">&quot;errors/authorization&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-module">
 						<a href="../modules/_errors_index_.html">&quot;errors/index&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-module">
 						<a href="../modules/_fetch_cookie_.html">&quot;fetch-<wbr>cookie&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-module">
 						<a href="../modules/_helpers_.html">&quot;helpers&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-module">
 						<a href="../modules/_index_.html">&quot;index&quot;</a>
 					</li>
-					<li class="current tsd-kind-external-module">
+					<li class=" tsd-kind-module">
+						<a href="../modules/_open_api_.html">&quot;open-<wbr>api&quot;</a>
+					</li>
+					<li class="current tsd-kind-module">
 						<a href="../modules/_providers_account_verification_.html">&quot;providers/account-<wbr>verification&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-module">
 						<a href="../modules/_providers_direct_.html">&quot;providers/direct&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-module">
 						<a href="../modules/_providers_implicit_flow_.html">&quot;providers/implicit-<wbr>flow&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-module">
 						<a href="../modules/_providers_implicit_flow_groups_.html">&quot;providers/implicit-<wbr>flow-<wbr>groups&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-module">
 						<a href="../modules/_providers_implicit_flow_user_.html">&quot;providers/implicit-<wbr>flow-<wbr>user&quot;</a>
 					</li>
-					<li class=" tsd-kind-external-module">
+					<li class=" tsd-kind-module">
 						<a href="../modules/_providers_index_.html">&quot;providers/index&quot;</a>
 					</li>
 				</ul>
@@ -495,7 +484,7 @@
 				<ul class="before-current">
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-class tsd-parent-kind-external-module">
+					<li class="current tsd-kind-class tsd-parent-kind-module">
 						<a href="_providers_account_verification_.accountverification.html" class="tsd-kind-icon">Account<wbr>Verification</a>
 						<ul>
 							<li class=" tsd-kind-constructor tsd-parent-kind-class">
@@ -521,9 +510,6 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
 								<a href="_providers_account_verification_.accountverification.html#twofactorvalidate" class="tsd-kind-icon">two<wbr>Factor<wbr>Validate</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
-								<a href="_providers_account_verification_.accountverification.html#vk" class="tsd-kind-icon">vk</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
 								<a href="_providers_account_verification_.accountverification.html#_symbol_tostringtag_" class="tsd-kind-icon">[<wbr>Symbol.to<wbr>String<wbr>Tag]</a>
@@ -560,57 +546,26 @@
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
-				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
 				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
 				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
 				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
-				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
-				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
 				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
-				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
-				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
-				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
-				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
-				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
-				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
 				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
 				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
-				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
 				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
-				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
-				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
 			</ul>
 			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
-				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
 			</ul>
 		</div>
 	</div>
@@ -620,6 +575,5 @@
 </div>
 <div class="overlay"></div>
 <script src="../assets/js/main.js"></script>
-<script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
 </body>
 </html>
