@@ -431,8 +431,10 @@ export class Upload {
 
 			await response.json();
 
-			// @ts-expect-error
-			return new VideoAttachment(save, this.api);
+			return new VideoAttachment({
+				api: this.api,
+				payload: save as VideoAttachment['payload']
+			});
 		}
 
 		const source = normalizeSource(params.source);
