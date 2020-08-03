@@ -620,6 +620,7 @@ export class Updates {
 				const [group] = await this.api.groups.getById({});
 
 				this.options.pollingGroupId = group.id!;
+				this.pollingTransport.groupId = group.id!;
 			} catch (error) {
 				if (error.code !== APIErrorCode.PARAM) {
 					throw error;
