@@ -464,7 +464,13 @@ class MessageContext<S = ContextDefaultState>
 	 * Edits a message
 	 */
 	editMessage(params: object): Promise<number> {
+		const target = this.id !== 0
+			? { id: this.id }
+			: { conversation_message_id: this.conversationMessageId };
+
 		return this.api.messages.edit({
+			...target,
+
 			attachment: String(
 				this.attachments.filter(attachment => (
 					attachment.canBeAttached
