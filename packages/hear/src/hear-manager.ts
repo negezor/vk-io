@@ -1,5 +1,10 @@
 import { Context, Composer } from 'vk-io';
-import { Middleware, NextMiddleware, skipMiddleware } from 'middleware-io';
+import {
+	Middleware,
+	MiddlewareReturn,
+	NextMiddleware,
+	skipMiddleware
+} from 'middleware-io';
 
 import { HearConditions } from './types';
 
@@ -95,7 +100,7 @@ export class HearManager<C extends Context> {
 
 		const needText = textCondition && functionCondtion === false;
 
-		this.composer.use((context: C, next: Function): Promise<void> => {
+		this.composer.use((context: C & T, next: NextMiddleware): MiddlewareReturn => {
 			const { text } = context;
 
 			if (needText && text === undefined) {
@@ -107,7 +112,6 @@ export class HearManager<C extends Context> {
 			));
 
 			return hasSome
-				// @ts-expect-error
 				? handler(context, next)
 				: next();
 		});
