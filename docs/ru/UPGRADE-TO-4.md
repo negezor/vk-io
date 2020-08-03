@@ -258,7 +258,7 @@ updates.startWebhook({
 	}
 })
 ```
-И
+
 - Переименование опции **pollingAttempts** в **pollingRetryLimit**
 
 ### Upload
