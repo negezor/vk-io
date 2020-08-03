@@ -216,7 +216,8 @@ class API {
 		};
 
 		for (const group of groupMethods) {
-			// @ts-expect-error
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore
 			this[group] = new Proxy(Object.create(null), {
 				// eslint-disable-next-line @typescript-eslint/no-explicit-any
 				get: (obj, prop: string) => (params: object): Promise<any> => (
