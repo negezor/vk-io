@@ -62,10 +62,10 @@ const kMessagePayload = Symbol('messagePayload');
 
 const kAttachments = Symbol('attachments');
 
-export type MessageContextSendOptions = Params.MessagesSendParams & {
+export interface IMessageContextSendOptions extends Params.MessagesSendParams {
 	attachment?: AllowArray<Attachment | string>;
 	keyboard?: KeyboardBuilder | string;
-};
+}
 
 export interface IMessageContextPayload {
 	message: {
@@ -470,7 +470,7 @@ class MessageContext<S = ContextDefaultState>
 	/**
 	 * Edits a message
 	 */
-	editMessage(params: MessageContextSendOptions): Promise<number> {
+	editMessage(params: IMessageContextSendOptions): Promise<number> {
 		const target = this.id !== 0
 			? { id: this.id }
 			: { conversation_message_id: this.conversationMessageId };
@@ -509,8 +509,8 @@ class MessageContext<S = ContextDefaultState>
 	 * Sends a message to the current dialog
 	 */
 	async send(
-		text: string | MessageContextSendOptions,
-		params?: MessageContextSendOptions
+		text: string | IMessageContextSendOptions,
+		params?: IMessageContextSendOptions
 	): Promise<MessageContext> {
 		const randomId = getRandomId();
 
@@ -527,7 +527,7 @@ class MessageContext<S = ContextDefaultState>
 					}
 					: text
 			)
-		} as MessageContextSendOptions;
+		} as IMessageContextSendOptions;
 
 		const id = await this.api.messages.send(options);
 
@@ -572,8 +572,8 @@ class MessageContext<S = ContextDefaultState>
 	 * Responds to the current message
 	 */
 	reply(
-		text: string | MessageContextSendOptions,
-		params?: MessageContextSendOptions
+		text: string | IMessageContextSendOptions,
+		params?: IMessageContextSendOptions
 	): Promise<MessageContext> {
 		return this.send({
 			reply_to: this.id,
@@ -604,7 +604,7 @@ class MessageContext<S = ContextDefaultState>
 	 */
 	async sendPhotos(
 		rawSources: AllowArray<IUploadSourceMedia>,
-		params: MessageContextSendOptions = {}
+		params: IMessageContextSendOptions = {}
 	): Promise<MessageContext> {
 		const sources = !Array.isArray(rawSources)
 			? [rawSources]
@@ -630,7 +630,7 @@ class MessageContext<S = ContextDefaultState>
 	 */
 	async sendDocuments(
 		rawSources: AllowArray<IUploadSourceMedia>,
-		params: MessageContextSendOptions = {}
+		params: IMessageContextSendOptions = {}
 	): Promise<MessageContext> {
 		const sources = !Array.isArray(rawSources)
 			? [rawSources]
@@ -656,7 +656,7 @@ class MessageContext<S = ContextDefaultState>
 	 */
 	async sendAudioMessage(
 		source: IUploadSourceMedia,
-		params: MessageContextSendOptions = {}
+		params: IMessageContextSendOptions = {}
 	): Promise<MessageContext> {
 		const attachment = await this.upload.audioMessage({
 			source,
