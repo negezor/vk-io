@@ -491,7 +491,7 @@ class MessageContext<S = ContextDefaultState>
 
 			peer_id: this.peerId,
 			message_id: this.id
-		});
+		} as Params.MessagesEditParams);
 	}
 
 	/**
