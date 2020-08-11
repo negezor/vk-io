@@ -208,7 +208,7 @@ class CommentContext<S = ContextDefaultState>
 	/**
 	 * Returns the identifier of the user who deleted the comment
 	 */
-	public get removerUserId(): number | undefined {
+	public get deleterUserId(): number | undefined {
 		return this.payload.deleter_id;
 	}
 
@@ -377,7 +377,7 @@ class CommentContext<S = ContextDefaultState>
 			'replyId',
 			'userId',
 			'replyUserId',
-			'removerUserId',
+			'deleterUserId',
 			'objectId',
 			'ownerId',
 			'createdAt',
