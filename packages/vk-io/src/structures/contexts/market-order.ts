@@ -2,6 +2,7 @@ import { Context, ContextFactoryOptions, ContextDefaultState } from './context';
 
 import { pickProperties } from '../../utils/helpers';
 import { kSerializeData } from '../../utils/constants';
+import { IMarketAttachmentPayload } from '../attachments';
 
 export type MarketOrderContextType = 'market_order';
 
@@ -33,42 +34,7 @@ export interface IMarketOrderContextPayload {
 		text: string;
 	};
 	comment: string;
-	preview_order_items: {
-		id: number;
-		owner_id: number;
-
-		title: string;
-		price: {
-			amount: string;
-			currency: {
-				id: number;
-				name: string;
-			};
-			old_amount: string;
-			text: string;
-		};
-
-		dimensions: {
-			width: number;
-			height: number;
-			length: number;
-		};
-
-		weight: number;
-
-		category: {
-			id: number;
-			name: string;
-			section: {
-				id: number;
-				name: string;
-			}
-		};
-		thumb_photo: string;
-		availability: 1 | 2;
-		is_favorite: boolean;
-		date: number;
-	}[];
+	preview_order_items: IMarketAttachmentPayload[];
 	delivery: {
 		address: string;
 		type: string;
