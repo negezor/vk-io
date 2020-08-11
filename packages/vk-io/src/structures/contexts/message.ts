@@ -484,12 +484,10 @@ class MessageContext<S = ContextDefaultState>
 	 */
 	editMessage(params: IMessageContextSendOptions): Promise<number> {
 		const target = this.id !== 0
-			? { id: this.id }
+			? { message_id: this.id }
 			: { conversation_message_id: this.conversationMessageId };
 
 		return this.api.messages.edit({
-			...target,
-
 			attachment: String(
 				this.attachments.filter(attachment => (
 					attachment.canBeAttached
@@ -501,8 +499,9 @@ class MessageContext<S = ContextDefaultState>
 
 			...params,
 
-			peer_id: this.peerId,
-			message_id: this.id
+			...target,
+
+			peer_id: this.peerId
 		} as Params.MessagesEditParams);
 	}
 
