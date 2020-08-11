@@ -699,20 +699,6 @@ class MessageContext<S = ContextDefaultState>
 	}
 
 	/**
-	 * Invites a new user
-	 */
-	public async inviteUser(id: number = this.eventMemberId!): Promise<boolean> {
-		this.assertIsChat();
-
-		const isInvited = await this.api.messages.addChatUser({
-			chat_id: this.chatId!,
-			user_id: id
-		});
-
-		return Boolean(isInvited);
-	}
-
-	/**
 	 * Excludes user
 	 */
 	public async kickUser(id: number = this.eventMemberId!): Promise<boolean> {
