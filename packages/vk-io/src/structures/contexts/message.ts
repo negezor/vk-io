@@ -591,15 +591,6 @@ class MessageContext<S = ContextDefaultState>
 	}
 
 	/**
-	 * Sends a sticker to the current dialog
-	 */
-	sendSticker(id: number): Promise<MessageContext> {
-		return this.send({
-			sticker_id: id
-		});
-	}
-
-	/**
 	 * Sends a photos to the current dialog
 	 */
 	async sendPhotos(
