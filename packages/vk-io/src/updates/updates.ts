@@ -17,7 +17,7 @@ import {
 	DialogFlagsContext,
 	GroupMemberContext,
 	MarketOrderContext,
-	MessageAllowContext,
+	MessageSubscriptionContext,
 	ReadMessagesContext,
 	MessageFlagsContext,
 	MessageEventContext,
@@ -32,7 +32,7 @@ import {
 	GroupMemberContextType,
 	GroupUpdateContextType,
 	GroupUserContextType,
-	MessageAllowContextType,
+	MessageSubscriptionContextType,
 	MessageEventContextType,
 	MessageFlagsContextType,
 	MessageContextType,
@@ -53,7 +53,7 @@ import {
 	GroupMemberContextSubType,
 	GroupUpdateContextSubType,
 	GroupUserContextSubType,
-	MessageAllowContextSubType,
+	MessageSubscriptionContextSubType,
 	MessageEventContextSubType,
 	MessageFlagsContextSubType,
 	MessageContextSubType,
@@ -90,7 +90,7 @@ const webhookContextsEvents: [string[], Constructor<any>][] = [
 	],
 	[
 		['message_allow', 'message_deny'],
-		MessageAllowContext
+		MessageSubscriptionContext
 	],
 	[
 		['message_event'],
@@ -229,7 +229,7 @@ CommentContextType
 | GroupMemberContextType
 | GroupUpdateContextType
 | GroupUserContextType
-| MessageAllowContextType
+| MessageSubscriptionContextType
 | MessageEventContextType
 | MessageFlagsContextType
 | MessageContextType
@@ -250,7 +250,7 @@ CommentContextSubType
 | GroupMemberContextSubType
 | GroupUpdateContextSubType
 | GroupUserContextSubType
-| MessageAllowContextSubType
+| MessageSubscriptionContextSubType
 | MessageEventContextSubType
 | MessageFlagsContextSubType
 | MessageContextSubType
@@ -422,8 +422,8 @@ export class Updates {
 	): this;
 
 	public on<T = {}>(
-		events: AllowArray<MessageAllowContextType | MessageAllowContextSubType>,
-		handler: AllowArray<Middleware<MessageAllowContext & T>>
+		events: AllowArray<MessageSubscriptionContextType | MessageSubscriptionContextSubType>,
+		handler: AllowArray<Middleware<MessageSubscriptionContext & T>>
 	): this;
 
 	public on<T = {}>(

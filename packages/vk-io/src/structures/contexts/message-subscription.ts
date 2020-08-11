@@ -3,34 +3,34 @@ import { Context, ContextFactoryOptions, ContextDefaultState } from './context';
 import { pickProperties } from '../../utils/helpers';
 import { kSerializeData } from '../../utils/constants';
 
-export type MessageAllowContextType = 'message_subscribers';
+export type MessageSubscriptionContextType = 'message_subscription';
 
-export type MessageAllowContextSubType =
+export type MessageSubscriptionContextSubType =
 'message_allow'
 | 'message_deny';
 
-export interface IMessageAllowContextPayload {
+export interface IMessageSubscriptionContextPayload {
 	user_id: number;
 	key: string;
 }
 
-export type MessageAllowContextOptions<S> =
-	ContextFactoryOptions<IMessageAllowContextPayload, S>;
+export type MessageSubscriptionContextOptions<S> =
+	ContextFactoryOptions<IMessageSubscriptionContextPayload, S>;
 
-export class MessageAllowContext<S = ContextDefaultState>
+export class MessageSubscriptionContext<S = ContextDefaultState>
 	extends Context<
-	IMessageAllowContextPayload,
+	IMessageSubscriptionContextPayload,
 	S,
-	MessageAllowContextType,
-	MessageAllowContextSubType
+	MessageSubscriptionContextType,
+	MessageSubscriptionContextSubType
 	> {
-	public constructor(options: MessageAllowContextOptions<S>) {
+	public constructor(options: MessageSubscriptionContextOptions<S>) {
 		super({
 			...options,
 
-			type: 'message_subscribers',
+			type: 'message_subscription',
 			subTypes: [
-				options.updateType as MessageAllowContextSubType
+				options.updateType as MessageSubscriptionContextSubType
 			]
 		});
 	}
