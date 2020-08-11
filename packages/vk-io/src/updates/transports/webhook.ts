@@ -17,6 +17,11 @@ import { IUpdatesOptions } from '../updates';
 
 const debug = createDebug('vk-io:updates');
 
+const defaultNextHandler = (req: IncomingMessage, res: ServerResponse): void => {
+	res.writeHead(403);
+	res.end();
+};
+
 export class WebhookTransport {
 	public started = false;
 
@@ -44,10 +49,7 @@ export class WebhookTransport {
 		host,
 		port: customPort,
 
-		next = (req, res): void => {
-			res.writeHead(403);
-			res.end();
-		}
+		next = defaultNextHandler
 	}: {
 		path?: string;
 		tls?: object;
