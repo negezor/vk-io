@@ -3,20 +3,6 @@ import { Attachment, AttachmentFactoryOptions } from './attachment';
 import { pickProperties } from '../../utils/helpers';
 import { AttachmentType, kSerializeData } from '../../utils/constants';
 
-/**
- * Types of documents
- */
-const documentTypes = new Map([
-	[1, 'text'],
-	[2, 'archive'],
-	[3, 'gif'],
-	[4, 'image'],
-	[5, 'audio'],
-	[6, 'video'],
-	[7, 'book'],
-	[8, 'unknown']
-]);
-
 export interface IDocumentAttachmentPayload {
 	id: number;
 	owner_id: number;
@@ -188,17 +174,6 @@ export class DocumentAttachment
 	}
 
 	/**
-	 * Returns the type name
-	 */
-	public get typeName(): string | undefined {
-		if (!this.$filled) {
-			return undefined;
-		}
-
-		return documentTypes.get(this.typeId!)!;
-	}
-
-	/**
 	 * Returns the size in bytes
 	 */
 	public get size(): number | undefined {
@@ -240,7 +215,6 @@ export class DocumentAttachment
 		return pickProperties(this, [
 			'title',
 			'typeId',
-			'typeName',
 			'createdAt',
 			'extension',
 			'url'
