@@ -1,5 +1,7 @@
 import { Attachment, AttachmentFactoryOptions } from './attachment';
 
+import { IPhotoAttachmentPayload } from './photo';
+
 import { pickProperties } from '../../utils/helpers';
 import { AttachmentType, kSerializeData } from '../../utils/constants';
 
@@ -15,7 +17,20 @@ export interface IDocumentAttachmentPayload {
 	date?: number;
 	type?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	preview?: Record<string, any>;
+	preview?: {
+		photo?: IPhotoAttachmentPayload['sizes'];
+		graffiti?: {
+			src: string;
+			width: number;
+			height: number;
+		};
+		audio_message?: {
+			duration: number;
+			waveform: number[];
+			link_ogg: string;
+			link_mp3: string;
+		};
+	};
 }
 
 export type DocumentAttachmentOptions =
@@ -127,7 +142,7 @@ export class DocumentAttachment
 			return undefined;
 		}
 
-		return this.hasPreviewProperty('audio_msg');
+		return this.hasPreviewProperty('audio_message');
 	}
 
 	/**
@@ -220,7 +235,7 @@ export class DocumentAttachment
 	/**
 	 * Checks for a property in preview
 	 */
-	public hasPreviewProperty(name: string): boolean {
+	public hasPreviewProperty(name: 'photo' | 'graffiti' | 'audio_message'): boolean {
 		return this.preview?.[name] !== undefined;
 	}
 
