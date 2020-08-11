@@ -571,7 +571,6 @@ class MessageContext<S = ContextDefaultState>
 					text: options.text,
 
 					date: Math.floor(Date.now() / 1000),
-					update_time: undefined,
 
 					attachments: []
 				}
