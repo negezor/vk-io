@@ -11,3 +11,5 @@ packages/*/lib
 app.ts
 app.js
 app.mjs
+
+docs/.vuepress/dist

@@ -1,13 +1,16 @@
-# Languages
-* [Русский](ru/)
-* [English](en/)
-
-## Other
-* [Examples](examples/)
-
-# API References
-* [vk-io](http://negezor.github.io/vk-io/references/vk-io)
-* [@vk-io/scenes](http://negezor.github.io/vk-io/references/scenes)
-* [@vk-io/session](http://negezor.github.io/vk-io/references/session)
-* [@vk-io/streaming](http://negezor.github.io/vk-io/references/streaming)
-* [@vk-io/authorization](http://negezor.github.io/vk-io/references/authorization)
+---
+home: true
+heroImage: /logo.svg
+heroText: null
+tagline: This is a powerful Node.js module that allows you to easily interact with the VK API 🚀
+actionText: Getting Started [RU]
+actionLink: ./ru/guide/
+features:
+  - title: Approachable
+    details: The library already covers all popular tasks
+  - title: Versatile
+    details: All basic things are available in convenience abstractions
+  - title: Typings
+    details: Trust your code more with typing
+footer: Released under the MIT License. Copyright © 2016-2020 Negezor
+---

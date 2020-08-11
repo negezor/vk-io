@@ -33,8 +33,7 @@
 		"rollup:build": "rollup -c rollup.config.js",
 		"rollup:watch": "yarn run rollup:build -w",
 		"docs:watch": "vuepress dev docs",
-		"docs:test": "typedoc --out docs/new-api-references/scenes --target es6 --theme vuepress --mode file packages/scenes/src",
-		"docs:generate": "node scripts/docs-references-generator/generate.js && vuepress build docs",
+		"docs:build": "sh scripts/deploy-docs.sh",
 		"test": "yarn run test:jest && yarn run test:eslint",
 		"test:jest": "jest --config jest.config.json --no-cache",
 		"test:eslint": "eslint --ext .ts --ignore-path .gitignore packages/*/src/**/*.ts"
