@@ -853,9 +853,8 @@ class MessageContext<S = ContextDefaultState>
 		| IMessageContextPayload['message']
 	): void {
 		// Polyfill for all events except new_message
-		if (!('client_info' in payload)) {
-			// eslint-disable-next-line no-param-reassign
-			payload = {
+		this.payload = !('client_info' in payload)
+			? {
 				message: payload as IMessageContextPayload['message'],
 				client_info: {
 					button_actions: [
@@ -866,18 +865,14 @@ class MessageContext<S = ContextDefaultState>
 					carousel: false,
 					lang_id: 0
 				}
-			};
-		}
-
-		this.payload = payload;
-
-		const { text } = payload.message;
-
-		this.text = text
-			? unescapeHTML(text)
-			: undefined;
+			}
+			: payload;
 
 		const { message } = this;
+
+		this.text = message.text
+			? unescapeHTML(message.text)
+			: undefined;
 
 		this[kAttachments] = transformAttachments(message.attachments, this.api);
 
