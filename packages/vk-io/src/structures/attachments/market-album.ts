@@ -1,6 +1,7 @@
 import { Attachment, AttachmentFactoryOptions } from './attachment';
 
 import { AttachmentType } from '../../utils/constants';
+import { PhotoAttachment, IPhotoAttachmentPayload } from './photo';
 
 export interface IMarketAlbumAttachmentPayload {
 	id: number;
@@ -8,7 +9,7 @@ export interface IMarketAlbumAttachmentPayload {
 	access_key?: string;
 
 	title?: string;
-	photo?: object;
+	photo?: IPhotoAttachmentPayload;
 	count?: number;
 	updated_time?: number;
 }
@@ -17,6 +18,8 @@ export type MarketAlbumAttachmentOptions =
 
 export class MarketAlbumAttachment
 	extends Attachment<IMarketAlbumAttachmentPayload, AttachmentType.MARKET_ALBUM | 'market_album'> {
+	photo?: PhotoAttachment;
+
 	/**
 	 * Constructor
 	 */
@@ -28,6 +31,8 @@ export class MarketAlbumAttachment
 		});
 
 		this.$filled = this.payload.title !== undefined && this.payload.updated_time !== undefined;
+
+		this.applyPayload(options.payload);
 	}
 
 	/**
@@ -43,8 +48,43 @@ export class MarketAlbumAttachment
 			album_ids: this.id
 		});
 
-		this.payload = items![0] as IMarketAlbumAttachmentPayload;
-
 		this.$filled = true;
+
+		this.applyPayload(items![0] as IMarketAlbumAttachmentPayload);
+	}
+
+	/**
+	 * Returns album title
+	 */
+	get title(): string | undefined {
+		return this.payload.title;
+	}
+
+	/**
+	 * Returns count of products in the album
+	 */
+	get count(): number | undefined {
+		return this.payload.count;
+	}
+
+	/**
+	 * Returns the date when this album was updated
+	 */
+	get updatedAt(): number | undefined {
+		return this.payload.updated_time;
+	}
+
+	/**
+	 * Applies the payload
+	 */
+	private applyPayload(payload: IMarketAlbumAttachmentPayload): void {
+		this.payload = payload;
+
+		if (this.payload.photo) {
+			this.photo = new PhotoAttachment({
+				api: this.api,
+				payload: this.payload.photo
+			});
+		}
 	}
 }
