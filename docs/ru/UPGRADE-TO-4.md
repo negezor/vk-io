@@ -222,8 +222,12 @@ interface IContextOptions<
 - Метод `context.send()` теперь возвращает инстанцию `MessageContext`
 - Удалён метод `context.getInviteLink()`
 
-### CommentAction
+### CommentActionContext
+- Переименован в `CommentContext`
+
+### CommentContext
 - Удалён геттер `context.userId`, используйте `context.fromId`
+- Удалён геттер `context.removerUserId`, используйте `context.deleterUserId`
 
 ### Keyboard
 - Удалена константа `Keyboard.DEFAULT_COLOR`, используйте `Keyboard.SECONDARY_COLOR`
