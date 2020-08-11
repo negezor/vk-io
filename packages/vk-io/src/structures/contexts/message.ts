@@ -76,6 +76,7 @@ export interface IMessageContextPayload {
 		from_id: number;
 		text?: string;
 		date: number;
+		update_time?: number;
 		random_id: number;
 		ref?: string;
 		ref_source?: string;
@@ -392,6 +393,13 @@ class MessageContext<S = ContextDefaultState>
 	}
 
 	/**
+	 * Returns the date when this message was updated
+	 */
+	public get updatedAt(): number | undefined {
+		return this.message.update_time;
+	}
+
+	/**
 	 * Returns geo
 	 */
 	public get geo(): IMessageContextPayload['message']['geo'] | undefined {
@@ -563,6 +571,7 @@ class MessageContext<S = ContextDefaultState>
 					text: options.text,
 
 					date: Math.floor(Date.now() / 1000),
+					update_time: undefined,
 
 					attachments: []
 				}
@@ -949,6 +958,7 @@ class MessageContext<S = ContextDefaultState>
 			'senderId',
 			'senderType',
 			'createdAt',
+			'updatedAt',
 			'text',
 			...beforeAttachments,
 			'forwards',
