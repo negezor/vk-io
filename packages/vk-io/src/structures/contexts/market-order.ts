@@ -1,8 +1,9 @@
 import { Context, ContextFactoryOptions, ContextDefaultState } from './context';
 
+import { IMarketAttachmentPayload, MarketAttachment } from '../attachments';
+
 import { pickProperties } from '../../utils/helpers';
 import { kSerializeData } from '../../utils/constants';
-import { IMarketAttachmentPayload } from '../attachments';
 
 export type MarketOrderContextType = 'market_order';
 
@@ -60,6 +61,8 @@ export class MarketOrderContext<S = ContextDefaultState>
 	MarketOrderContextType,
 	MarketOrderContextSubType
 	> {
+	public previewOrderItems: MarketAttachment[];
+
 	public constructor(options: MarketOrderContextOptions<S>) {
 		super({
 			...options,
@@ -69,6 +72,13 @@ export class MarketOrderContext<S = ContextDefaultState>
 				options.updateType as MarketOrderContextSubType
 			]
 		});
+
+		this.previewOrderItems = this.payload.preview_order_items.map(market => (
+			new MarketAttachment({
+				api: this.api,
+				payload: market
+			})
+		));
 	}
 
 	/**
@@ -160,13 +170,6 @@ export class MarketOrderContext<S = ContextDefaultState>
 	 */
 	public get commentText(): string {
 		return this.payload.comment;
-	}
-
-	/**
-	 * Returns an array of objects describing products
-	 */
-	public get previewOrderItems(): IMarketOrderContextPayload['preview_order_items'] {
-		return this.payload.preview_order_items;
 	}
 
 	/**
