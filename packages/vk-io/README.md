@@ -51,15 +51,14 @@ async function run() {
 run().catch(console.log);
 ```
 
-
 ## Community
 ### Useful modules that may be useful to you
 
-* [@vk-io/authorization](../authorization): Authorization by login & password, and etc... 
-* [@vk-io/streaming](../streaming): Receiving data with Streaming API
-* [@vk-io/session](../session): Simple implementation of the sessions
-* [@vk-io/scenes](../scenes): Simple implementation of middleware-based scene management
-* [@vk-io/hear](../hear): Simple implementation of the hears
+* [@vk-io/authorization](https://github.com/negezor/vk-io/tree/master/packages/authorization): Authorization by login & password, and etc... 
+* [@vk-io/streaming](https://github.com/negezor/vk-io/tree/master/packages/streaming): Receiving data with Streaming API
+* [@vk-io/session](https://github.com/negezor/vk-io/tree/master/packages/session): Simple implementation of the sessions
+* [@vk-io/scenes](https://github.com/negezor/vk-io/tree/master/packages/scenes): Simple implementation of middleware-based scene management
+* [@vk-io/hear](https://github.com/negezor/vk-io/tree/master/packages/hear): Simple implementation of the hears
 * [vk-io-question](https://github.com/fakemancat/vk-io-question): Simple promise-based prompt
 
 > If you want to add your module in the list, create a [new issue](https://github.com/negezor/vk-io/issues/new) in the repository.
