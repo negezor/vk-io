@@ -4,7 +4,7 @@ import { ExternalAttachment, ExternalAttachmentFactoryOptions } from './external
 import { AttachmentType } from '../../utils/constants';
 import { transformAttachments } from './helpers';
 
-export interface IWallAttachmentPayload {
+export interface IWallReplyAttachmentPayload {
 	id: number;
 
 	owner_id: number;
@@ -20,7 +20,7 @@ export interface IWallAttachmentPayload {
 	attachments: any[];
 	thread: {
 		count: number;
-		items: IWallAttachmentPayload[];
+		items: IWallReplyAttachmentPayload[];
 		can_post: boolean;
 		show_reply_button: boolean;
 		groups_can_post: boolean;
@@ -28,9 +28,9 @@ export interface IWallAttachmentPayload {
 };
 
 export type WallReplyAttachmentOptions =
-	ExternalAttachmentFactoryOptions<IWallAttachmentPayload>;
+	ExternalAttachmentFactoryOptions<IWallReplyAttachmentPayload>;
 
-export class WallReplyAttachment extends ExternalAttachment<IWallAttachmentPayload, AttachmentType.WALL_REPLY | 'wall_reply'> {
+export class WallReplyAttachment extends ExternalAttachment<IWallReplyAttachmentPayload, AttachmentType.WALL_REPLY | 'wall_reply'> {
 	public attachments: (Attachment | ExternalAttachment)[];
 
 	/**
@@ -105,7 +105,7 @@ export class WallReplyAttachment extends ExternalAttachment<IWallAttachmentPaylo
 	/**
 	 * Returns information about a nested comment branch, an object with fields
 	 */
-	public get thread(): IWallAttachmentPayload['thread'] | undefined {
+	public get thread(): IWallReplyAttachmentPayload['thread'] | undefined {
 		return this.payload.thread;
 	}
 }
