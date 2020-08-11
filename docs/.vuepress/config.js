@@ -52,7 +52,7 @@ module.exports = {
 		nav: [
 			{
 				text: 'Guide [RU]',
-				link: '/ru/guide/',
+				link: '/ru/guide/introduction',
 			},
 			{
 				text: 'References',
@@ -63,7 +63,18 @@ module.exports = {
 				link: 'https://github.com/negezor/vk-io/tree/master/docs/examples',
 			},
 		],
-		sidebar: false,
+		sidebar: {
+			'/ru/guide/': [
+				{
+					title: 'Основы',
+					collapsable: false,
+					children: [
+						'/ru/guide/introduction',
+						'/ru/guide/installation'
+					]
+				}
+			]
+		},
 		locales: {
 			'/': {
 				label: 'English',
