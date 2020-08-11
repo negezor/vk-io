@@ -87,22 +87,14 @@ export class LinkAttachment
 	/**
 	 * Returns the product
 	 */
-	public get product(): {
-		price: object;
-	} | undefined {
+	public get product(): ILinkAttachmentPayload['product'] | undefined {
 		return this.payload.product;
 	}
 
 	/**
 	 * Returns the button
 	 */
-	public get button(): {
-		title: string;
-		action: {
-			type: string;
-			url: string;
-		};
-	} | undefined {
+	public get button(): ILinkAttachmentPayload['button'] | undefined {
 		return this.payload.button;
 	}
 
