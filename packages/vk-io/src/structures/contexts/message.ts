@@ -699,19 +699,6 @@ class MessageContext<S = ContextDefaultState>
 	}
 
 	/**
-	 * Remove the chat photo
-	 */
-	public async deleteChatPhoto(): Promise<boolean> {
-		this.assertIsChat();
-
-		await this.api.messages.deleteChatPhoto({
-			chat_id: this.chatId!
-		});
-
-		return true;
-	}
-
-	/**
 	 * Invites a new user
 	 */
 	public async inviteUser(id: number = this.eventMemberId!): Promise<boolean> {
