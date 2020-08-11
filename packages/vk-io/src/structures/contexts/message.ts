@@ -4,10 +4,8 @@ import { Context, ContextFactoryOptions, ContextDefaultState } from './context';
 import { Params } from '../../api';
 import { VKError } from '../../errors';
 
-import { MessageReply, IMessageReplyPayload } from '../shared/message-reply';
-import { MessageForward, IMessageForwardPayload } from '../shared/message-forward';
 import { transformMessage } from '../../updates/transform-message';
-import { MessageForwardsCollection } from '../shared/message-forwards-collection';
+import { MessageForwardsCollection } from '../shared/message-forward-collection';
 
 import { Attachment, ExternalAttachment } from '../attachments';
 import { Attachmentable, IAllAttachmentable } from '../shared/attachmentable';
@@ -107,8 +105,8 @@ export interface IMessageContextPayload {
 			};
 		};
 		payload?: string;
-		reply_message?: IMessageReplyPayload;
-		fwd_messages?: IMessageForwardPayload[];
+		reply_message?: IMessageContextPayload['message'];
+		fwd_messages?: IMessageContextPayload['message'][];
 		action?: {
 			type: MessageContextPayloadEventType;
 			member_id: number;
@@ -155,7 +153,7 @@ class MessageContext<S = ContextDefaultState>
 
 	protected [kForwards]: MessageForwardsCollection;
 
-	protected [kReplyMessage]: MessageReply | undefined;
+	protected [kReplyMessage]: MessageContext | undefined;
 
 	protected [kAttachments]: (Attachment | ExternalAttachment)[];
 
@@ -463,7 +461,7 @@ class MessageContext<S = ContextDefaultState>
 	/**
 	 * Returns the reply message
 	 */
-	public get replyMessage(): MessageReply | undefined {
+	public get replyMessage(): MessageContext | undefined {
 		return this[kReplyMessage];
 	}
 
@@ -884,16 +882,32 @@ class MessageContext<S = ContextDefaultState>
 		this[kAttachments] = transformAttachments(message.attachments, this.api);
 
 		if (message.reply_message) {
-			this[kReplyMessage] = new MessageReply({
+			this[kReplyMessage] = new MessageContext({
 				api: this.api,
-				payload: message.reply_message
+				upload: this.upload,
+				source: UpdateSource.WEBHOOK,
+				groupId: this.$groupId,
+				updateType: 'message_new',
+				state: this.state,
+				payload: {
+					client_info: this.clientInfo,
+					message: message.reply_message
+				}
 			});
 		}
 
 		this[kForwards] = new MessageForwardsCollection(...(message.fwd_messages || []).map(forward => (
-			new MessageForward({
+			new MessageContext({
 				api: this.api,
-				payload: forward
+				upload: this.upload,
+				source: UpdateSource.WEBHOOK,
+				groupId: this.$groupId,
+				updateType: 'message_new',
+				state: this.state,
+				payload: {
+					client_info: this.clientInfo,
+					message: forward
+				}
 			})
 		)));
 
@@ -972,7 +986,7 @@ interface MessageContext extends Attachmentable, IAllAttachmentable {}
 applyMixins(MessageContext, [
 	Attachmentable,
 	class AllAttachmentable extends Attachmentable {
-		public replyMessage?: MessageReply;
+		public replyMessage?: MessageContext;
 
 		public forwards!: MessageForwardsCollection;
 

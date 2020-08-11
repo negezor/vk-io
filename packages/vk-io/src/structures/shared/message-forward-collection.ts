@@ -1,12 +1,12 @@
 /* eslint-disable max-classes-per-file */
-import { MessageForward } from './message-forward';
+import { MessageContext } from '../contexts/message';
 import { Attachment, ExternalAttachment } from '../attachments';
 import { AttachmentTypeString } from '../../utils/constants';
 import { Attachmentable } from './attachmentable';
 import { applyMixins } from '../../utils/helpers';
 
-const getForwards = (rootForwards: MessageForward[]): MessageForward[] => {
-	const forwards: MessageForward[] = [];
+const getForwards = (rootForwards: MessageContext[]): MessageContext[] => {
+	const forwards: MessageContext[] = [];
 
 	for (const forward of rootForwards) {
 		forwards.push(
@@ -20,13 +20,13 @@ const getForwards = (rootForwards: MessageForward[]): MessageForward[] => {
 
 const kFlatten = Symbol('flatten');
 
-class MessageForwardsCollection extends Array<MessageForward> {
-	protected [kFlatten]: MessageForward[];
+class MessageForwardsCollection extends Array<MessageContext> {
+	protected [kFlatten]: MessageContext[];
 
 	/**
 	 * Returns a flat copy of forwards
 	 */
-	public get flatten(): MessageForward[] {
+	public get flatten(): MessageContext[] {
 		if (!this[kFlatten]) {
 			this[kFlatten] = getForwards(this);
 		}
@@ -39,7 +39,7 @@ class MessageForwardsCollection extends Array<MessageForward> {
 interface MessageForwardsCollection extends Attachmentable {}
 applyMixins(MessageForwardsCollection, [
 	class CustomAttachmentable {
-		public flatten!: MessageForward[];
+		public flatten!: MessageContext[];
 
 		public hasAttachments(type?: AttachmentTypeString): boolean {
 			return this.flatten.some(forward => (
