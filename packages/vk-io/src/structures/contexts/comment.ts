@@ -8,7 +8,7 @@ import { kSerializeData } from '../../utils/constants';
 import { transformAttachments } from '../attachments/helpers';
 import { pickProperties, applyMixins } from '../../utils/helpers';
 
-export interface ICommentActionContextPayload {
+export interface ICommentContextPayload {
 	id: number;
 	owner_id: number;
 	from_id?: number;
@@ -32,12 +32,12 @@ export interface ICommentActionContextPayload {
 	likes?: {};
 }
 
-export type CommentActionContextOptions<S> =
-	ContextFactoryOptions<ICommentActionContextPayload, S>;
+export type CommentContextOptions<S> =
+	ContextFactoryOptions<ICommentContextPayload, S>;
 
-export type CommentActionContextType = 'comment';
+export type CommentContextType = 'comment';
 
-export type CommentActionContextSubType =
+export type CommentContextSubType =
 'photo_comment'
 | 'video_comment'
 | 'wall_reply'
@@ -64,14 +64,14 @@ export type CommentActionContextSubType =
 | 'market_comment_delete'
 | 'market_comment_restore';
 
-class CommentActionContext<S = ContextDefaultState>
+class CommentContext<S = ContextDefaultState>
 	extends Context<
-	ICommentActionContextPayload,
+	ICommentContextPayload,
 	S,
-	CommentActionContextType,
-	CommentActionContextSubType
+	CommentContextType,
+	CommentContextSubType
 	> {
-	public constructor(options: CommentActionContextOptions<S>) {
+	public constructor(options: CommentContextOptions<S>) {
 		const initiator = (options.updateType as string).substring(
 			0,
 			(options.updateType as string).lastIndexOf('_')
@@ -82,8 +82,8 @@ class CommentActionContext<S = ContextDefaultState>
 
 			type: 'comment',
 			subTypes: [
-				initiator as CommentActionContextSubType,
-				options.updateType as CommentActionContextSubType
+				initiator as CommentContextSubType,
+				options.updateType as CommentContextSubType
 			]
 		});
 
@@ -396,7 +396,7 @@ class CommentActionContext<S = ContextDefaultState>
 }
 
 // eslint-disable-next-line
-interface CommentActionContext extends Attachmentable {}
-applyMixins(CommentActionContext, [Attachmentable]);
+interface CommentContext extends Attachmentable {}
+applyMixins(CommentContext, [Attachmentable]);
 
-export { CommentActionContext };
+export { CommentContext };

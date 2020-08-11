@@ -22,12 +22,12 @@ import {
 	MessageFlagsContext,
 	MessageEventContext,
 	VKAppPayloadContext,
-	CommentActionContext,
+	CommentContext,
 	NewAttachmentsContext,
 	RemovedMessagesContext,
 	VKPayTransactionContext,
 
-	CommentActionContextType,
+	CommentContextType,
 	DialogFlagsContextType,
 	GroupMemberContextType,
 	GroupUpdateContextType,
@@ -48,7 +48,7 @@ import {
 	WallPostContextType,
 	MarketOrderContextType,
 
-	CommentActionContextSubType,
+	CommentContextSubType,
 	DialogFlagsContextSubType,
 	GroupMemberContextSubType,
 	GroupUpdateContextSubType,
@@ -135,7 +135,7 @@ const webhookContextsEvents: [string[], Constructor<any>][] = [
 			'market_comment_delete',
 			'market_comment_restore'
 		],
-		CommentActionContext
+		CommentContext
 	],
 	[
 		['poll_vote_new'],
@@ -224,7 +224,7 @@ export interface IUpdatesStartWebhookOptions {
 }
 
 export type ContextTypes =
-CommentActionContextType
+CommentContextType
 | DialogFlagsContextType
 | GroupMemberContextType
 | GroupUpdateContextType
@@ -245,7 +245,7 @@ CommentActionContextType
 | WallPostContextType;
 
 export type ContextSubTypes =
-CommentActionContextSubType
+CommentContextSubType
 | DialogFlagsContextSubType
 | GroupMemberContextSubType
 | GroupUpdateContextSubType
@@ -397,8 +397,8 @@ export class Updates {
 	 * Subscribe to events
 	 */
 	public on<T = {}>(
-		events: AllowArray<CommentActionContextType | CommentActionContextSubType>,
-		handler: AllowArray<Middleware<CommentActionContext & T>>
+		events: AllowArray<CommentContextType | CommentContextSubType>,
+		handler: AllowArray<Middleware<CommentContext & T>>
 	): this;
 
 	public on<T = {}>(
