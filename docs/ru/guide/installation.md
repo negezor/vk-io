@@ -3,7 +3,7 @@
 ## Зависимости
 
 ### Node.js
-Требуется Node.js версии **12.0.0** и выше
+Требуется [Node.js](https://nodejs.org) версии **12.0.0** и выше
 
 ### TypeScript
 Если вы используете [TypeScript](https://www.typescriptlang.org/), требуется версия **3.9.0** и выше
