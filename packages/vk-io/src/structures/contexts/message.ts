@@ -699,20 +699,6 @@ class MessageContext<S = ContextDefaultState>
 	}
 
 	/**
-	 * Pins a message
-	 */
-	public async pinMessage(): Promise<boolean> {
-		this.assertIsChat();
-
-		const isPinned = await this.api.messages.pin({
-			peer_id: this.peerId,
-			message_id: this.id
-		});
-
-		return Boolean(isPinned);
-	}
-
-	/**
 	 * Unpins a message
 	 */
 	public async unpinMessage(): Promise<boolean> {
