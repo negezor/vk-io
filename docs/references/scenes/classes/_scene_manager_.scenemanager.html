@@ -89,6 +89,7 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_scene_manager_.scenemanager.html#repository" class="tsd-kind-icon">repository</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="_scene_manager_.scenemanager.html#sessionkey" class="tsd-kind-icon">session<wbr>Key</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -114,19 +115,27 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Scene<wbr>Manager<span class="tsd-signature-symbol">(</span>rawOptions<span class="tsd-signature-symbol">?: </span><a href="../interfaces/_scene_manager_types_.iscenemanageroptions.html" class="tsd-signature-type">ISceneManagerOptions</a><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_scenes_scene_.iscene.html" class="tsd-signature-type">IScene</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_scene_manager_.scenemanager.html" class="tsd-signature-type">SceneManager</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Scene<wbr>Manager<span class="tsd-signature-symbol">(</span>__namedParameters<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-symbol">{ </span>scenes<span class="tsd-signature-symbol">: </span><a href="../interfaces/_scenes_scene_.iscene.html" class="tsd-signature-type">IScene</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span>sessionKey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_scene_manager_.scenemanager.html" class="tsd-signature-type">SceneManager</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/scenes/src/scene-manager.ts#L9">scenes/src/scene-manager.ts:9</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/701a6a4/packages/scenes/src/scene-manager.ts#L11">scenes/src/scene-manager.ts:11</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> rawOptions: <a href="../interfaces/_scene_manager_types_.iscenemanageroptions.html" class="tsd-signature-type">ISceneManagerOptions</a><span class="tsd-signature-symbol"> | </span><a href="../interfaces/_scenes_scene_.iscene.html" class="tsd-signature-type">IScene</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> = {}</span></h5>
+									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> __namedParameters: <span class="tsd-signature-symbol">{ </span>scenes<span class="tsd-signature-symbol">: </span><a href="../interfaces/_scenes_scene_.iscene.html" class="tsd-signature-type">IScene</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span>sessionKey<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> = {}</span></h5>
+									<ul class="tsd-parameters">
+										<li class="tsd-parameter">
+											<h5>scenes<span class="tsd-signature-symbol">: </span><a href="../interfaces/_scenes_scene_.iscene.html" class="tsd-signature-type">IScene</a><span class="tsd-signature-symbol">[]</span></h5>
+										</li>
+										<li class="tsd-parameter">
+											<h5>session<wbr>Key<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></h5>
+										</li>
+									</ul>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_scene_manager_.scenemanager.html" class="tsd-signature-type">SceneManager</a></h4>
@@ -142,7 +151,17 @@
 					<div class="tsd-signature tsd-kind-icon">repository<span class="tsd-signature-symbol">:</span> <a href="../modules/_scene_manager_types_.html#scenerepository" class="tsd-signature-type">SceneRepository</a><span class="tsd-signature-symbol"> = new CacheRepository()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/scenes/src/scene-manager.ts#L9">scenes/src/scene-manager.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/701a6a4/packages/scenes/src/scene-manager.ts#L9">scenes/src/scene-manager.ts:9</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private">
+					<a name="sessionkey" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> session<wbr>Key</h3>
+					<div class="tsd-signature tsd-kind-icon">session<wbr>Key<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/negezor/vk-io/blob/701a6a4/packages/scenes/src/scene-manager.ts#L11">scenes/src/scene-manager.ts:11</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -159,7 +178,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/scenes/src/scene-manager.ts#L44">scenes/src/scene-manager.ts:44</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/701a6a4/packages/scenes/src/scene-manager.ts#L42">scenes/src/scene-manager.ts:42</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -181,7 +200,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/scenes/src/scene-manager.ts#L59">scenes/src/scene-manager.ts:59</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/701a6a4/packages/scenes/src/scene-manager.ts#L58">scenes/src/scene-manager.ts:58</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -206,7 +225,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/scenes/src/scene-manager.ts#L33">scenes/src/scene-manager.ts:33</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/701a6a4/packages/scenes/src/scene-manager.ts#L31">scenes/src/scene-manager.ts:31</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -234,7 +253,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/5ab44df/packages/scenes/src/scene-manager.ts#L26">scenes/src/scene-manager.ts:26</a></li>
+									<li>Defined in <a href="https://github.com/negezor/vk-io/blob/701a6a4/packages/scenes/src/scene-manager.ts#L24">scenes/src/scene-manager.ts:24</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -316,6 +335,9 @@
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="_scene_manager_.scenemanager.html#repository" class="tsd-kind-icon">repository</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
+								<a href="_scene_manager_.scenemanager.html#sessionkey" class="tsd-kind-icon">session<wbr>Key</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class">
 								<a href="_scene_manager_.scenemanager.html#middleware" class="tsd-kind-icon">middleware</a>
