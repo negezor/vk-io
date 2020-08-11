@@ -72,11 +72,6 @@ export interface IUploadConduct {
 	 * Attachment type
 	 */
 	attachmentType?: string;
-
-	/**
-	 * Download exclusively in Buffer
-	 */
-	forceBuffer?: boolean;
 }
 
 export interface IUploadOptions {

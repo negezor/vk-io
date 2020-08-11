@@ -800,9 +800,7 @@ export class Upload {
 			saveFiles: this.api.stories.save,
 
 			maxFiles: 1,
-			attachmentType: 'video',
-
-			forceBuffer: true
+			attachmentType: 'video'
 		});
 
 		return new StoryAttachment({
