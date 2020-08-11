@@ -1,6 +1,6 @@
 // import { MessagesMessage } from '../api/schemas/objects';
-import { IMessageContextPayload } from '../structures/contexts/message';
-import { AttachmentType } from '../utils/constants';
+import { IMessageContextPayload } from '../message';
+import { AttachmentType } from '../../../utils/constants';
 
 const DocumentKind: Record<string, AttachmentType> = {
 	audiomsg: AttachmentType.AUDIO_MESSAGE,

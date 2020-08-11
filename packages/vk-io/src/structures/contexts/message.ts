@@ -4,7 +4,7 @@ import { Context, ContextFactoryOptions, ContextDefaultState } from './context';
 import { Params } from '../../api';
 import { VKError } from '../../errors';
 
-import { transformMessage } from '../../updates/transform-message';
+import { transformMessage } from './helpers/transform-message';
 import { MessageForwardsCollection } from '../shared/message-forward-collection';
 
 import { Attachment, ExternalAttachment } from '../attachments';
