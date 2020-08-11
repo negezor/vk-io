@@ -675,26 +675,6 @@ class MessageContext<S = ContextDefaultState>
 	}
 
 	/**
-	 * Marks messages as important or removes a mark
-	 */
-	async markAsImportant(
-		ids = [this.id],
-		options = { important: Number(!this.isImportant) }
-	): Promise<number[]> {
-		const messageIds = await this.api.messages.markAsImportant({
-			...options,
-
-			message_ids: ids
-		});
-
-		if (messageIds.includes(this.id)) {
-			this.message.important = Boolean(options.important);
-		}
-
-		return messageIds;
-	}
-
-	/**
 	 * Deletes the message
 	 */
 	async deleteMessage(ids: number[] = [this.id], options = { spam: 0 }): Promise<number> {
