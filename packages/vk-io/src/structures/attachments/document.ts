@@ -13,7 +13,7 @@ export interface IDocumentAttachmentPayload {
 	ext?: string;
 	url?: string;
 	date?: number;
-	type?: number;
+	type?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	preview?: Record<string, any>;
 }
@@ -48,7 +48,7 @@ export class DocumentAttachment
 			docs: `${this.ownerId}_${this.id}`
 		});
 
-		this.payload = document;
+		this.payload = document as IDocumentAttachmentPayload;
 
 		this.$filled = true;
 	}
@@ -167,9 +167,25 @@ export class DocumentAttachment
 	}
 
 	/**
-	 * Returns the type identifier (1~8)
+	 * Returns the type identifier
+	 *
+	 * **1** - text documents
+	 *
+	 * **2** - archives
+	 *
+	 * **3** - gif
+	 *
+	 * **4** - images
+	 *
+	 * **5** - audio
+	 *
+	 * **6** - video
+	 *
+	 * **7** - e-books
+	 *
+	 * **8** - unknown
 	 */
-	public get typeId(): number | undefined {
+	public get typeId(): IDocumentAttachmentPayload['type'] | undefined {
 		return this.payload.type;
 	}
 
