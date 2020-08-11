@@ -699,20 +699,6 @@ class MessageContext<S = ContextDefaultState>
 	}
 
 	/**
-	 * Excludes user
-	 */
-	public async kickUser(id: number = this.eventMemberId!): Promise<boolean> {
-		this.assertIsChat();
-
-		const isKicked = await this.api.messages.removeChatUser({
-			chat_id: this.chatId!,
-			member_id: id
-		});
-
-		return Boolean(isKicked);
-	}
-
-	/**
 	 * Pins a message
 	 */
 	public async pinMessage(): Promise<boolean> {
