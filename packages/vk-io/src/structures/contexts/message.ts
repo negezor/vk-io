@@ -677,14 +677,14 @@ class MessageContext<S = ContextDefaultState>
 	/**
 	 * Deletes the message
 	 */
-	async deleteMessage(ids: number[] = [this.id], options = { spam: 0 }): Promise<number> {
+	async deleteMessage(options: Params.MessagesDeleteParams = {}): Promise<boolean> {
 		const messageIds = await this.api.messages.delete({
 			...options,
 
-			message_ids: ids
+			message_ids: this.id
 		});
 
-		return messageIds;
+		return Boolean(messageIds[this.id]);
 	}
 
 	/**
