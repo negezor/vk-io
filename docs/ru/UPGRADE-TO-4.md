@@ -192,6 +192,9 @@ interface IAttachmentOptions<P, Type extends string = string> {
 }
 ```
 
+### DocumentAttachment
+- Удалён геттер `document.typeName`
+
 ### Context
 - Конструктор теперь принимает опции вида:
 ```ts
@@ -220,7 +223,19 @@ interface IContextOptions<
 
 ### MessageContext
 - Метод `context.send()` теперь возвращает инстанцию `MessageContext`
+- Геттер `context.replyMessage` теперь возвращает `MessageContext` вместо `MessageReply`
+- Геттер `context.forwards` теперь возвращает массив `MessageContext` вместо `MessageForward`
 - Удалён метод `context.getInviteLink()`
+- Удалён метод `context.markAsImportant()`
+- Удалён метод `context.renameChat()`
+- Удалён метод `context.newChatPhoto()`
+- Удалён метод `context.deleteChatPhoto()`
+- Удалён метод `context.inviteUser()`
+- Удалён метод `context.kickUser()`
+- Удалён метод `context.pinMessage()`
+- Удалён метод `context.unpinMessage()`
+- Удалён метод `context.editMessageText()`
+- Удалён метод `context.sendSticker()`, используйте `context.send({ sticker_id: 123 })`
 
 ### CommentActionContext
 - Переименован в `CommentContext`
@@ -228,6 +243,13 @@ interface IContextOptions<
 ### CommentContext
 - Удалён геттер `context.userId`, используйте `context.fromId`
 - Удалён геттер `context.removerUserId`, используйте `context.deleterUserId`
+
+
+### MessageAllowContext
+- Переименован в `MessageSubscriptionContext`
+
+### MessageSubscriptionContext
+- Тип `message_subscribers` переименован в `message_subscription`
 
 ### Keyboard
 - Удалена константа `Keyboard.DEFAULT_COLOR`, используйте `Keyboard.SECONDARY_COLOR`
