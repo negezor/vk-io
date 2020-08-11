@@ -507,17 +507,6 @@ class MessageContext<S = ContextDefaultState>
 	}
 
 	/**
-	 * Edits a message text
-	 */
-	async editMessageText(message: string): Promise<number> {
-		const response = await this.editMessage({ message });
-
-		this.text = message;
-
-		return response;
-	}
-
-	/**
 	 * Sends a message to the current dialog
 	 */
 	async send(
