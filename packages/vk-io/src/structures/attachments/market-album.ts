@@ -18,7 +18,7 @@ export type MarketAlbumAttachmentOptions =
 
 export class MarketAlbumAttachment
 	extends Attachment<IMarketAlbumAttachmentPayload, AttachmentType.MARKET_ALBUM | 'market_album'> {
-	photo?: PhotoAttachment;
+	public photo?: PhotoAttachment;
 
 	/**
 	 * Constructor
