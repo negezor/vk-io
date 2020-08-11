@@ -699,22 +699,6 @@ class MessageContext<S = ContextDefaultState>
 	}
 
 	/**
-	 * Sets a new image for the chat
-	 */
-	public async newChatPhoto(source: IUploadSourceMedia, params: object = {}): Promise<object> {
-		this.assertIsChat();
-
-		const response = await this.upload.chatPhoto({
-			...params,
-
-			chat_id: this.chatId!,
-			source
-		});
-
-		return response;
-	}
-
-	/**
 	 * Remove the chat photo
 	 */
 	public async deleteChatPhoto(): Promise<boolean> {
