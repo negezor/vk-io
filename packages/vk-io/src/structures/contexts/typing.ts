@@ -24,7 +24,8 @@ export type TypingContextType = 'typing';
 
 export type TypingContextSubType =
 'typing_user'
-| 'typing_group';
+| 'typing_group'
+| 'message_typing_state';
 
 export interface ITypingContextPayload {
 	from_id: number;
@@ -48,6 +49,7 @@ export class TypingContext<S = ContextDefaultState>
 
 			type: 'typing',
 			subTypes: [
+				'message_typing_state',
 				`typing_${getPeerType(options.payload.from_id)}` as TypingContextSubType
 			],
 
