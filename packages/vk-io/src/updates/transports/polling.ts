@@ -49,10 +49,6 @@ export class PollingTransport {
 		this.options = options;
 	}
 
-	set groupId(groupId: number) {
-		this.options.pollingGroupId = groupId;
-	}
-
 	public async start(): Promise<void> {
 		if (this.started) {
 			throw new Error('Polling updates already started');
