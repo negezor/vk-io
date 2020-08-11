@@ -699,20 +699,6 @@ class MessageContext<S = ContextDefaultState>
 	}
 
 	/**
-	 * Unpins a message
-	 */
-	public async unpinMessage(): Promise<boolean> {
-		this.assertIsChat();
-
-		const isUnpinned = await this.api.messages.unpin({
-			peer_id: this.peerId,
-			message_id: this.id
-		});
-
-		return Boolean(isUnpinned);
-	}
-
-	/**
 	 * Return alias of payload.message
 	 */
 	protected get message(): IMessageContextPayload['message'] {
