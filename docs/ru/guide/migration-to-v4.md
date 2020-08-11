@@ -9,11 +9,9 @@ VK-IO v4 — это следующее мажорное обновление. Н
 - Каждые компонент теперь не зависит от основной инстанции `VK`
 - Убраны лишние компоненты в пользу простых функций (например `resolveResource()` или `createCollectIterator()`)
 
-<details>
-<summary>Если ещё короче</summary>
-
+::: details Если ещё короче
 ![cheems meme](https://user-images.githubusercontent.com/9392723/89174354-6d7cd480-d5d1-11ea-8336-9ad40152b812.png)
-</details>
+:::
 
 ## Breaking Сhanges
 ### Поддержка Node.js 12 и выше

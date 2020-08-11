@@ -72,6 +72,13 @@ module.exports = {
 						'/ru/guide/introduction',
 						'/ru/guide/installation'
 					]
+				},
+				{
+					title: 'Миграции',
+					collapsable: false,
+					children: [
+						'/ru/guide/migration-to-v4'
+					]
 				}
 			]
 		},
