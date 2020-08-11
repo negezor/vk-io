@@ -772,18 +772,6 @@ class MessageContext<S = ContextDefaultState>
 	}
 
 	/**
-	 * Checks that in a chat
-	 */
-	private assertIsChat(): void {
-		if (!this.isChat) {
-			throw new VKError({
-				message: 'This method is only available in chat',
-				code: 'IS_NOT_CHAT'
-			});
-		}
-	}
-
-	/**
 	 * Returns the custom data
 	 */
 	public [kSerializeData](): object {
