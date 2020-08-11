@@ -8,8 +8,8 @@
 
 VK-IO - This is a powerful [Node.js](https://nodejs.org) module that allows you to easily interact with the VK API 🚀
 
-| 📖 [Documentation](docs/) | 🤖 [Examples](docs/examples/) |
-|---------------------------|---------------------------|
+| 📖 [Documentation](https://negezor.github.io/vk-io/) | 🤖 [Examples](docs/examples/) |
+|------------------------------------------------------|--------------------------------|
 
 ## Features
 - 100% coverage of the VKontakte API
