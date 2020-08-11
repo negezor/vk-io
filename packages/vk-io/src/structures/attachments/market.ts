@@ -17,7 +17,15 @@ export interface IMarketAttachmentPayload {
 			id: number;
 			name: string;
 		};
+		old_amount?: string;
+		text: string;
 	};
+	dimensions?: {
+		width: number;
+		height: number;
+		length: number;
+	};
+	weight?: number;
 	category?: {
 		id: number;
 		name: string;
@@ -133,6 +141,20 @@ export class MarketAttachment
 	 */
 	get price(): IMarketAttachmentPayload['price'] | undefined {
 		return this.payload.price;
+	}
+
+	/**
+	 * Returns product dimensions
+	 */
+	get dimensions(): IMarketAttachmentPayload['dimensions'] | undefined {
+		return this.payload.dimensions;
+	}
+
+	/**
+	 * Returns product dimensions
+	 */
+	get weight(): number | undefined {
+		return this.payload.weight;
 	}
 
 	/**
