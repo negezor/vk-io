@@ -1,5 +1,7 @@
 import { Attachment, AttachmentFactoryOptions } from './attachment';
 
+import { IPhotoAttachmentPayload, PhotoAttachment } from './photo';
+
 import { AttachmentType } from '../../utils/constants';
 
 export interface IMarketAttachmentPayload {
@@ -28,7 +30,7 @@ export interface IMarketAttachmentPayload {
 	date?: number;
 	availability?: 0 | 1 | 2;
 	is_favorite?: number;
-	photos?: object[];
+	photos?: IPhotoAttachmentPayload[];
 	can_comment?: number;
 	can_repost?: number;
 	likes?: {
@@ -44,6 +46,8 @@ export type MarketAttachmentOptions =
 
 export class MarketAttachment
 	extends Attachment<IMarketAttachmentPayload, AttachmentType.MARKET | 'market'> {
+	public photos?: PhotoAttachment[];
+
 	/**
 	 * Constructor
 	 */
@@ -55,6 +59,8 @@ export class MarketAttachment
 		});
 
 		this.$filled = this.payload.title !== undefined && this.payload.date !== undefined;
+
+		this.applyPayload(options.payload);
 	}
 
 	/**
@@ -70,9 +76,9 @@ export class MarketAttachment
 			extended: 0
 		});
 
-		this.payload = items![0] as IMarketAttachmentPayload;
-
 		this.$filled = true;
+
+		this.applyPayload(items![0] as IMarketAttachmentPayload);
 	}
 
 	/**
@@ -84,5 +90,119 @@ export class MarketAttachment
 		}
 
 		return Boolean(this.payload.is_favorite);
+	}
+
+	/**
+	 * Checks is can comment for current user
+	 */
+	public get canComment(): boolean | undefined {
+		if (!this.$filled) {
+			return undefined;
+		}
+
+		return Boolean(this.payload.can_comment);
+	}
+
+	/**
+	 * Checks is can repost for current user
+	 */
+	public get canRepost(): boolean | undefined {
+		if (!this.$filled) {
+			return undefined;
+		}
+
+		return Boolean(this.payload.can_repost);
+	}
+
+	/**
+	 * Returns product title
+	 */
+	get title(): string | undefined {
+		return this.payload.title;
+	}
+
+	/**
+	 * Returns product description
+	 */
+	get description(): string | undefined {
+		return this.payload.description;
+	}
+
+	/**
+	 * Returns product price
+	 */
+	get price(): IMarketAttachmentPayload['price'] | undefined {
+		return this.payload.price;
+	}
+
+	/**
+	 * Returns product category
+	 */
+	get category(): IMarketAttachmentPayload['category'] | undefined {
+		return this.payload.category;
+	}
+
+	/**
+	 * Returns product thumbnail url
+	 */
+	get thumbnailUrl(): string | undefined {
+		return this.payload.thumb_photo;
+	}
+
+	/**
+	 * Returns the date when this product was created
+	 */
+	get createdAt(): number | undefined {
+		return this.payload.date;
+	}
+
+	/**
+	 * Returns product availability
+	 *
+	 * **0** - the product is available
+	 *
+	 * **1** - the item has been deleted
+	 *
+	 * **2** - the product is not available
+	 */
+	get availability(): IMarketAttachmentPayload['availability'] | undefined {
+		return this.payload.availability;
+	}
+
+	/**
+	 * Returns product likes
+	 */
+	get likes(): IMarketAttachmentPayload['likes'] | undefined {
+		return this.payload.likes;
+	}
+
+	/**
+	 * Returns product url
+	 */
+	get url(): string | undefined {
+		return this.payload.url;
+	}
+
+	/**
+	 * Returns product button title
+	 */
+	get buttonTitle(): string | undefined {
+		return this.payload.button_title;
+	}
+
+	/**
+	 * Applies the payload
+	 */
+	private applyPayload(payload: IMarketAttachmentPayload): void {
+		this.payload = payload;
+
+		if (this.payload.photos) {
+			this.photos = this.payload.photos.map(photo => (
+				new PhotoAttachment({
+					api: this.api,
+					payload: photo
+				})
+			));
+		}
 	}
 }
