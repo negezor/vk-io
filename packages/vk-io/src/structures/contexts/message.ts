@@ -699,20 +699,6 @@ class MessageContext<S = ContextDefaultState>
 	}
 
 	/**
-	 * Rename the chat
-	 */
-	public async renameChat(title: string): Promise<boolean> {
-		this.assertIsChat();
-
-		const isRenamed = await this.api.messages.editChat({
-			chat_id: this.chatId!,
-			title
-		});
-
-		return Boolean(isRenamed);
-	}
-
-	/**
 	 * Sets a new image for the chat
 	 */
 	public async newChatPhoto(source: IUploadSourceMedia, params: object = {}): Promise<object> {
