@@ -13,6 +13,8 @@
 		"@types/node": "^14.0.27",
 		"@typescript-eslint/eslint-plugin": "^3.7.1",
 		"@typescript-eslint/parser": "^3.7.1",
+		"@vuepress/plugin-back-to-top": "^1.5.3",
+		"@vuepress/plugin-medium-zoom": "^1.5.3",
 		"eslint": "7.6.0",
 		"eslint-config-airbnb-base": "^14.2.0",
 		"eslint-plugin-import": "^2.22.0",
@@ -21,7 +23,8 @@
 		"rollup-plugin-typescript2": "^0.27.1",
 		"ts-jest": "^26.1.4",
 		"typedoc": "^0.17.8",
-		"typescript": "^3.9.7"
+		"typescript": "^3.9.7",
+		"vuepress": "^1.5.3"
 	},
 	"scripts": {
 		"prepare": "yarn run rollup:build && yarn run test",
@@ -29,7 +32,9 @@
 		"watch": "yarn run rollup:watch",
 		"rollup:build": "rollup -c rollup.config.js",
 		"rollup:watch": "yarn run rollup:build -w",
-		"docs:generate": "node scripts/docs-references-generator/generate.js",
+		"docs:watch": "vuepress dev docs",
+		"docs:test": "typedoc --out docs/new-api-references/scenes --target es6 --theme vuepress --mode file packages/scenes/src",
+		"docs:generate": "node scripts/docs-references-generator/generate.js && vuepress build docs",
 		"test": "yarn run test:jest && yarn run test:eslint",
 		"test:jest": "jest --config jest.config.json --no-cache",
 		"test:eslint": "eslint --ext .ts --ignore-path .gitignore packages/*/src/**/*.ts"
