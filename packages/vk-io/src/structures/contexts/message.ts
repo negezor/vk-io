@@ -122,10 +122,16 @@ export interface IMessageContextPayload {
 	};
 	client_info: {
 		button_actions: (
-			'text' | 'vkpay' | 'open_app' | 'location'
+			'text'
+			| 'vkpay'
+			| 'open_app'
+			| 'location'
+			| 'open_link'
+			| 'callback'
 		)[];
 		keyboard: boolean;
 		inline_keyboard: boolean;
+		carousel: boolean;
 		lang_id: number;
 	};
 }
@@ -851,6 +857,7 @@ class MessageContext<S = ContextDefaultState>
 					],
 					inline_keyboard: false,
 					keyboard: true,
+					carousel: false,
 					lang_id: 0
 				}
 			};
