@@ -116,6 +116,8 @@ export async function* createCollectIterator<T>({
 
 				result = response;
 			}
+
+			retries = 0;
 		} catch (error) {
 			if (error instanceof CollectError) {
 				throw error;
