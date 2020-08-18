@@ -1,3 +1,5 @@
+import { Params } from '../../api';
+
 import { Context, ContextFactoryOptions, ContextDefaultState } from './context';
 
 import { pickProperties } from '../../utils/helpers';
@@ -82,7 +84,9 @@ export class DialogFlagsContext<S = ContextDefaultState>
 	/**
 	 * Marks the conversation as answered or unchecked
 	 */
-	public markAsAnsweredConversation(params: object): Promise<number> {
+	public markAsAnsweredConversation(
+		params: Params.MessagesMarkAsAnsweredConversationParams
+	): Promise<number> {
 		return this.api.messages.markAsAnsweredConversation({
 			...params,
 
@@ -93,7 +97,9 @@ export class DialogFlagsContext<S = ContextDefaultState>
 	/**
 	 * Marks the conversation as important or removes the mark
 	 */
-	public markAsImportantConversation(params: object): Promise<number> {
+	public markAsImportantConversation(
+		params: Params.MessagesMarkAsImportantConversationParams
+	): Promise<number> {
 		return this.api.messages.markAsImportantConversation({
 			...params,
 
