@@ -182,23 +182,6 @@ export function transformMessage({
 		);
 	}
 
-	if (attachments.fwd !== undefined) {
-		message.fwd_messages = [{
-			id: 0,
-			conversation_message_id: 0,
-			date: 0,
-			update_time: 0,
-			from_id: 0,
-			peer_id: 0,
-			out: 0,
-			text: '',
-			fwd_messages: [],
-			attachments: [],
-			random_id: 0,
-			important: false
-		}];
-	}
-
 	if (attachments.reply !== undefined) {
 		const reply = JSON.parse(attachments.reply);
 
@@ -216,6 +199,21 @@ export function transformMessage({
 			random_id: 0,
 			important: false
 		};
+	} else if (attachments.fwd !== undefined) {
+		message.fwd_messages = [{
+			id: 0,
+			conversation_message_id: 0,
+			date: 0,
+			update_time: 0,
+			from_id: 0,
+			peer_id: 0,
+			out: 0,
+			text: '',
+			fwd_messages: [],
+			attachments: [],
+			random_id: 0,
+			important: false
+		}];
 	}
 
 	return message;
