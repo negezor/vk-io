@@ -275,7 +275,8 @@ class CommentContext<S = ContextDefaultState>
 	/**
 	 * Edits a comment
 	 */
-	editComment(options: object): Promise<number> {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	editComment(options: { message?: string; attachments?: any }): Promise<number> {
 		if (this.isDelete) {
 			return Promise.reject(new VKError({
 				message: 'Comment is deleted',
