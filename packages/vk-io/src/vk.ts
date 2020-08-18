@@ -17,12 +17,15 @@ export class VK {
 
 	public updates: Updates;
 
-	public callbackService = new CallbackService();
+	public callbackService: CallbackService;
 
 	/**
 	 * Constructor
 	 */
 	public constructor(options: Partial<VKOptions> & { token: string }) {
+		this.callbackService = options.callbackService
+			|| new CallbackService();
+
 		this.api = new API({
 			...options,
 
