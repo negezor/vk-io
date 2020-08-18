@@ -224,7 +224,23 @@ export class MessageFlagsContext<S = ContextDefaultState>
 		return pickProperties(this, [
 			'id',
 			'peerId',
-			'flags'
+			'flags',
+			'message',
+			'isUnread',
+			'isOutbox',
+			'isImportant',
+			'isFromWebChat',
+			'isFriendMessage',
+			'isMarkSpam',
+			'isDeleted',
+			'isAudioMessageListened',
+			'isFromClientChat',
+			'isUnmarkSpam',
+			'isHidden',
+			'isDeletedForAll',
+			'isInboxFromChat',
+			'isSilent',
+			'isReplied'
 		]);
 	}
 }
