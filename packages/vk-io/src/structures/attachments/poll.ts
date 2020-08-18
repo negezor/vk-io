@@ -2,6 +2,7 @@ import { Attachment, AttachmentFactoryOptions } from './attachment';
 
 import { pickProperties } from '../../utils/helpers';
 import { AttachmentType, kSerializeData } from '../../utils/constants';
+import { PhotoAttachment, IPhotoAttachmentPayload } from './photo';
 
 export interface IPollAttachmentPayload {
 	id: number;
@@ -42,13 +43,15 @@ export interface IPollAttachmentPayload {
 			color: string;
 		}[];
 	};
-	photo?: object;
+	photo?: IPhotoAttachmentPayload;
 }
 
 export type PollAttachmentOptions =
 	AttachmentFactoryOptions<IPollAttachmentPayload>;
 
 export class PollAttachment extends Attachment<IPollAttachmentPayload, AttachmentType.POLL | 'poll'> {
+	public photo?: PhotoAttachment;
+
 	/**
 	 * Constructor
 	 */
@@ -60,6 +63,13 @@ export class PollAttachment extends Attachment<IPollAttachmentPayload, Attachmen
 		});
 
 		this.$filled = this.payload.answers !== undefined;
+
+		if (this.payload.photo) {
+			this.photo = new PhotoAttachment({
+				api: this.api,
+				payload: this.payload.photo
+			});
+		}
 	}
 
 	/**
@@ -233,13 +243,6 @@ export class PollAttachment extends Attachment<IPollAttachmentPayload, Attachmen
 	 */
 	public get background(): IPollAttachmentPayload['background'] | undefined {
 		return this.payload.background;
-	}
-
-	/**
-	 * Returns a photo - the poll snippet background
-	 */
-	public get photo(): object | undefined {
-		return this.payload.photo;
 	}
 
 	/**
