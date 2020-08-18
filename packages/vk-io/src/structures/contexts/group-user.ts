@@ -1,3 +1,4 @@
+import { Params } from '../../api';
 import { Context, ContextFactoryOptions, ContextDefaultState } from './context';
 
 import { VKError } from '../../errors';
@@ -122,7 +123,7 @@ export class GroupUserContext<S = ContextDefaultState>
 	/**
 	 * Adds a user to the community blacklist
 	 */
-	ban(params: object): Promise<number> {
+	ban(params: Partial<Params.GroupsBanParams>): Promise<number> {
 		if (this.isBlocked) {
 			return Promise.reject(new VKError({
 				message: 'User is blocked',
