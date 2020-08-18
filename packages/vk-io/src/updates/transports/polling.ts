@@ -16,7 +16,7 @@ const debug = createDebug('vk-io:updates');
 /**
  * Version polling
  */
-const POLLING_VERSION = 3;
+const POLLING_VERSION = 10;
 
 export class PollingTransport {
 	public started = false;
