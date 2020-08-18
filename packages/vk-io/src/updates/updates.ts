@@ -626,6 +626,8 @@ export class Updates {
 
 					pollingGroupId: group.id!
 				});
+
+				this.options.pollingGroupId = group.id!;
 			} catch (error) {
 				if (error.code !== APIErrorCode.PARAM) {
 					throw error;
