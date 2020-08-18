@@ -1,5 +1,6 @@
 import createDebug from 'debug';
 
+import { TlsOptions } from 'tls';
 import { Server as HTTPSServer, createServer as httpsCreateServer } from 'https';
 import {
 	Server as HTTPServer,
@@ -52,7 +53,7 @@ export class WebhookTransport {
 		next = defaultNextHandler
 	}: {
 		path?: string;
-		tls?: object;
+		tls?: TlsOptions;
 		host?: string;
 		port?: number;
 		next?: (req: IncomingMessage, res: ServerResponse) => unknown
