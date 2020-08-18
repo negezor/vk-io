@@ -24,7 +24,7 @@ import {
 	VKAppPayloadContext,
 	CommentContext,
 	NewAttachmentsContext,
-	RemovedMessagesContext,
+	DialogMessagesContext,
 	VKPayTransactionContext,
 
 	CommentContextType,
@@ -38,7 +38,7 @@ import {
 	MessageContextType,
 	NewAttachmentsContextType,
 	ReadMessagesContextType,
-	RemovedMessagesContextType,
+	DialogMessagesContextType,
 	TypingContextType,
 	FriendActivityContextType,
 	VKAppPayloadContextType,
@@ -59,7 +59,7 @@ import {
 	MessageContextSubType,
 	NewAttachmentsContextSubType,
 	ReadMessagesContextSubType,
-	RemovedMessagesContextSubType,
+	DialogMessagesContextSubType,
 	TypingContextSubType,
 	FriendActivityContextSubType,
 	VKAppPayloadContextSubType,
@@ -191,7 +191,7 @@ const pollingContextsEvents: [number[], Constructor<any>][] = [
 	],
 	[
 		[13, 14],
-		RemovedMessagesContext
+		DialogMessagesContext
 	],
 	[
 		[61, 62],
@@ -235,7 +235,7 @@ CommentContextType
 | MessageContextType
 | NewAttachmentsContextType
 | ReadMessagesContextType
-| RemovedMessagesContextType
+| DialogMessagesContextType
 | TypingContextType
 | FriendActivityContextType
 | VKAppPayloadContextType
@@ -256,7 +256,7 @@ CommentContextSubType
 | MessageContextSubType
 | NewAttachmentsContextSubType
 | ReadMessagesContextSubType
-| RemovedMessagesContextSubType
+| DialogMessagesContextSubType
 | TypingContextSubType
 | FriendActivityContextSubType
 | VKAppPayloadContextSubType
@@ -452,8 +452,8 @@ export class Updates {
 	): this;
 
 	public on<T = {}>(
-		events: AllowArray<RemovedMessagesContextType | RemovedMessagesContextSubType>,
-		handler: AllowArray<Middleware<RemovedMessagesContext & T>>
+		events: AllowArray<DialogMessagesContextType | DialogMessagesContextSubType>,
+		handler: AllowArray<Middleware<DialogMessagesContext & T>>
 	): this;
 
 	public on<T = {}>(

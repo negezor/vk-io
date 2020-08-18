@@ -17,6 +17,6 @@ export * from './message-flags';
 export * from './vk-app-payload';
 export * from './new-attachments';
 export * from './friend-activity';
-export * from './removed-messages';
+export * from './dialog-messages';
 export * from './vk-pay-transaction';
 export * from './message-subscription';
