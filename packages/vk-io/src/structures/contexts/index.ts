@@ -12,7 +12,7 @@ export * from './market-order';
 export * from './group-update';
 export * from './group-member';
 export * from './message-event';
-export * from './read-messages';
+export * from './messages-read';
 export * from './message-flags';
 export * from './vk-app-payload';
 export * from './new-attachments';

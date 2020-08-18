@@ -3,34 +3,34 @@ import { Context, ContextFactoryOptions, ContextDefaultState } from './context';
 import { pickProperties } from '../../utils/helpers';
 import { kSerializeData } from '../../utils/constants';
 
-export type ReadMessagesContextType = 'messages_read';
+export type MessagesReadContextType = 'messages_read';
 
-export type ReadMessagesContextSubType =
+export type MessagesReadContextSubType =
 'messages_read_inbox'
 | 'messages_read_outbox';
 
-const subTypes: Record<number, ReadMessagesContextSubType> = {
+const subTypes: Record<number, MessagesReadContextSubType> = {
 	6: 'messages_read_inbox',
 	7: 'messages_read_outbox'
 };
 
-export interface IReadMessagesContextPayload {
-	id: number;
+export interface IMessagesReadContextPayload {
 	peer_id: number;
+	local_id: number;
 }
 
-export type ReadMessagesContextContextOptions<S> =
+export type MessagesReadContextContextOptions<S> =
 	ContextFactoryOptions<number[], S>;
 
-export class ReadMessagesContext<S = ContextDefaultState>
+export class MessagesReadContext<S = ContextDefaultState>
 	extends Context<
-	IReadMessagesContextPayload,
+	IMessagesReadContextPayload,
 	S,
-	ReadMessagesContextType,
-	ReadMessagesContextSubType
+	MessagesReadContextType,
+	MessagesReadContextSubType
 	> {
-	public constructor(options: ReadMessagesContextContextOptions<S>) {
-		const [eventId, peerId, id] = options.payload;
+	public constructor(options: MessagesReadContextContextOptions<S>) {
+		const [eventId, peerId, localId] = options.payload;
 
 		super({
 			...options,
@@ -42,7 +42,7 @@ export class ReadMessagesContext<S = ContextDefaultState>
 
 			payload: {
 				peer_id: peerId,
-				id
+				local_id: localId
 			}
 		});
 	}
@@ -62,17 +62,17 @@ export class ReadMessagesContext<S = ContextDefaultState>
 	}
 
 	/**
-	 * Returns the ID before the message read
-	 */
-	public get id(): number {
-		return this.payload.id;
-	}
-
-	/**
 	 * Returns the peer ID
 	 */
 	public get peerId(): number {
 		return this.payload.peer_id;
+	}
+
+	/**
+	 * Returns the identifier of the local message
+	 */
+	public get localId(): number {
+		return this.payload.local_id;
 	}
 
 	/**

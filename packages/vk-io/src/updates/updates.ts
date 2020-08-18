@@ -18,7 +18,7 @@ import {
 	GroupMemberContext,
 	MarketOrderContext,
 	MessageSubscriptionContext,
-	ReadMessagesContext,
+	MessagesReadContext,
 	MessageFlagsContext,
 	MessageEventContext,
 	VKAppPayloadContext,
@@ -37,7 +37,7 @@ import {
 	MessageFlagsContextType,
 	MessageContextType,
 	NewAttachmentsContextType,
-	ReadMessagesContextType,
+	MessagesReadContextType,
 	DialogMessagesContextType,
 	TypingContextType,
 	FriendActivityContextType,
@@ -58,7 +58,7 @@ import {
 	MessageFlagsContextSubType,
 	MessageContextSubType,
 	NewAttachmentsContextSubType,
-	ReadMessagesContextSubType,
+	MessagesReadContextSubType,
 	DialogMessagesContextSubType,
 	TypingContextSubType,
 	FriendActivityContextSubType,
@@ -179,7 +179,7 @@ const pollingContextsEvents: [number[], Constructor<any>][] = [
 	],
 	[
 		[6, 7],
-		ReadMessagesContext
+		MessagesReadContext
 	],
 	[
 		[8, 9],
@@ -234,7 +234,7 @@ CommentContextType
 | MessageFlagsContextType
 | MessageContextType
 | NewAttachmentsContextType
-| ReadMessagesContextType
+| MessagesReadContextType
 | DialogMessagesContextType
 | TypingContextType
 | FriendActivityContextType
@@ -255,7 +255,7 @@ CommentContextSubType
 | MessageFlagsContextSubType
 | MessageContextSubType
 | NewAttachmentsContextSubType
-| ReadMessagesContextSubType
+| MessagesReadContextSubType
 | DialogMessagesContextSubType
 | TypingContextSubType
 | FriendActivityContextSubType
@@ -447,8 +447,8 @@ export class Updates {
 	): this;
 
 	public on<T = {}>(
-		events: AllowArray<ReadMessagesContextType | ReadMessagesContextSubType>,
-		handler: AllowArray<Middleware<ReadMessagesContext & T>>
+		events: AllowArray<MessagesReadContextType | MessagesReadContextSubType>,
+		handler: AllowArray<Middleware<MessagesReadContext & T>>
 	): this;
 
 	public on<T = {}>(
