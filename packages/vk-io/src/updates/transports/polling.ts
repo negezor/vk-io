@@ -25,9 +25,10 @@ export class PollingTransport {
 	 * 2 -  Attachments
 	 * 8 -  Extended events
 	 * 64 - Online user platform ID
+	 * 128 - Return random_id
 	 */
 	// eslint-disable-next-line no-bitwise
-	public mode = 2 | 8 | 64;
+	public mode = 2 | 8 | 64 | 128;
 
 	public pollingHandler!: Function;
 
