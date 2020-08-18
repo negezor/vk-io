@@ -3,15 +3,15 @@ import { Context, ContextFactoryOptions, ContextDefaultState } from './context';
 import { pickProperties } from '../../utils/helpers';
 import { kSerializeData } from '../../utils/constants';
 
-export type ReadMessagesContextType = 'read_messages';
+export type ReadMessagesContextType = 'messages_read';
 
 export type ReadMessagesContextSubType =
-'messages_inbox_read'
-| 'messages_outbox_read';
+'messages_read_inbox'
+| 'messages_read_outbox';
 
 const subTypes: Record<number, ReadMessagesContextSubType> = {
-	6: 'messages_inbox_read',
-	7: 'messages_outbox_read'
+	6: 'messages_read_inbox',
+	7: 'messages_read_outbox'
 };
 
 export interface IReadMessagesContextPayload {
@@ -35,7 +35,7 @@ export class ReadMessagesContext<S = ContextDefaultState>
 		super({
 			...options,
 
-			type: 'read_messages',
+			type: 'messages_read',
 			subTypes: [
 				subTypes[eventId]
 			],
@@ -51,14 +51,14 @@ export class ReadMessagesContext<S = ContextDefaultState>
 	 * Checks that inbox messages are read
 	 */
 	public get isInbox(): boolean {
-		return this.subTypes.includes('messages_inbox_read');
+		return this.subTypes.includes('messages_read_inbox');
 	}
 
 	/**
 	 * Checks that outbox messages are read
 	 */
 	public get isOutbox(): boolean {
-		return this.subTypes.includes('messages_outbox_read');
+		return this.subTypes.includes('messages_read_outbox');
 	}
 
 	/**
