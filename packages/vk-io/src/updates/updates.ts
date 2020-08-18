@@ -12,7 +12,7 @@ import {
 	MessageContext,
 	WallPostContext,
 	GroupUserContext,
-	UserOnlineContext,
+	FriendActivityContext,
 	GroupUpdateContext,
 	DialogFlagsContext,
 	GroupMemberContext,
@@ -40,7 +40,7 @@ import {
 	ReadMessagesContextType,
 	RemovedMessagesContextType,
 	TypingContextType,
-	UserOnlineContextType,
+	FriendActivityContextType,
 	VKAppPayloadContextType,
 	VKPayTransactionContextType,
 	VoteContextType,
@@ -61,7 +61,7 @@ import {
 	ReadMessagesContextSubType,
 	RemovedMessagesContextSubType,
 	TypingContextSubType,
-	UserOnlineContextSubType,
+	FriendActivityContextSubType,
 	VKAppPayloadContextSubType,
 	VKPayTransactionContextSubType,
 	VoteContextSubType,
@@ -183,7 +183,7 @@ const pollingContextsEvents: [number[], Constructor<any>][] = [
 	],
 	[
 		[8, 9],
-		UserOnlineContext
+		FriendActivityContext
 	],
 	[
 		[10, 11, 12],
@@ -237,7 +237,7 @@ CommentContextType
 | ReadMessagesContextType
 | RemovedMessagesContextType
 | TypingContextType
-| UserOnlineContextType
+| FriendActivityContextType
 | VKAppPayloadContextType
 | VKPayTransactionContextType
 | VoteContextType
@@ -258,7 +258,7 @@ CommentContextSubType
 | ReadMessagesContextSubType
 | RemovedMessagesContextSubType
 | TypingContextSubType
-| UserOnlineContextSubType
+| FriendActivityContextSubType
 | VKAppPayloadContextSubType
 | VKPayTransactionContextSubType
 | VoteContextSubType
@@ -462,8 +462,8 @@ export class Updates {
 	): this;
 
 	public on<T = {}>(
-		events: AllowArray<UserOnlineContextType | UserOnlineContextSubType>,
-		handler: AllowArray<Middleware<UserOnlineContext & T>>
+		events: AllowArray<FriendActivityContextType | FriendActivityContextSubType>,
+		handler: AllowArray<Middleware<FriendActivityContext & T>>
 	): this;
 
 	public on<T = {}>(
