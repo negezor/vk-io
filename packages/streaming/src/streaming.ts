@@ -1,6 +1,6 @@
+import WebSocket from 'ws';
 import fetch from 'node-fetch';
 import createDebug from 'debug';
-import * as WebSocket from 'ws';
 import { inspectable } from 'inspectable';
 
 import { API, Updates, UpdateSource } from 'vk-io';
