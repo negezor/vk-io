@@ -73,7 +73,7 @@ import {
 import { API } from '../api';
 import { Upload } from '../upload';
 import { Composer } from '../structures/shared/composer';
-import { PollingTransport, WebhookTransport } from './transports';
+import { PollingTransport, WebhookTransport, IWebhookTransportStartOptions } from './transports';
 
 import { APIErrorCode } from '../errors';
 
@@ -215,13 +215,6 @@ const makeContexts = (
 
 const webhookContexts = makeContexts(webhookContextsEvents);
 const pollingContexts = makeContexts(pollingContextsEvents);
-
-export interface IUpdatesStartWebhookOptions {
-	tls?: object;
-	path?: string;
-	port?: number;
-	host?: string;
-}
 
 export type ContextTypes =
 CommentContextType
@@ -601,14 +594,14 @@ export class Updates {
 	/**
 	 * Starts the webhook server
 	 */
-	public async startWebhook(options: IUpdatesStartWebhookOptions = {}): Promise<void> {
+	public async startWebhook(options: IWebhookTransportStartOptions = {}): Promise<void> {
 		return this.webhookTransport.start(options);
 	}
 
 	/**
 	 * Automatically determines the settings to run
 	 */
-	public async start({ webhook }: { webhook?: IUpdatesStartWebhookOptions } = {}): Promise<void> {
+	public async start({ webhook }: { webhook?: IWebhookTransportStartOptions } = {}): Promise<void> {
 		if (webhook) {
 			await this.startWebhook(webhook);
 

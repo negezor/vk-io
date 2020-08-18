@@ -23,6 +23,14 @@ const defaultNextHandler = (req: IncomingMessage, res: ServerResponse): void => 
 	res.end();
 };
 
+export interface IWebhookTransportStartOptions {
+	tls?: TlsOptions;
+	path?: string;
+	port?: number;
+	host?: string;
+	next?: (req: IncomingMessage, res: ServerResponse) => unknown
+}
+
 export class WebhookTransport {
 	public started = false;
 
@@ -51,13 +59,7 @@ export class WebhookTransport {
 		port: customPort,
 
 		next = defaultNextHandler
-	}: {
-		path?: string;
-		tls?: TlsOptions;
-		host?: string;
-		port?: number;
-		next?: (req: IncomingMessage, res: ServerResponse) => unknown
-	} = {}): Promise<void> {
+	}: IWebhookTransportStartOptions = {}): Promise<void> {
 		if (this.started) {
 			throw new Error('Webhook updates already started');
 		}
