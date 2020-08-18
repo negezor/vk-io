@@ -194,7 +194,7 @@ const pollingContextsEvents: [number[], Constructor<any>][] = [
 		DialogMessagesContext
 	],
 	[
-		[61, 62],
+		[63, 64],
 		TypingContext
 	]
 ];

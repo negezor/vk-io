@@ -9,15 +9,15 @@ import {
 } from '../../utils/constants';
 
 const transformPolling = (
-	{ 1: fromId, 2: toId }: number[],
+	{ 1: toId, 2: fromIds }: [number, number, number[]],
 	updateType: number | string
 ): ITypingContextPayload => ({
-	from_id: fromId,
-	to_id: updateType === 62
-		? toId + CHAT_PEER
-		: fromId,
+	from_id: fromIds[0],
+	to_id: toId,
 
-	state: 'typing'
+	state: updateType === 64
+		? 'audiomessage'
+		: 'typing'
 });
 
 export type TypingContextType = 'typing';
@@ -55,7 +55,7 @@ export class TypingContext<S = ContextDefaultState>
 
 			payload: options.source === UpdateSource.POLLING
 				? transformPolling(
-					(options.payload as unknown) as [number, number, number],
+					(options.payload as unknown) as [number, number, number[]],
 					options.updateType
 				)
 				: options.payload
