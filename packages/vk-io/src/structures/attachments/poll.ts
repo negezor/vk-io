@@ -29,7 +29,19 @@ export interface IPollAttachmentPayload {
 		votes: number;
 		rate: number;
 	}[];
-	background?: object[];
+	background?: {
+		id: number;
+		type: 'gradient' | 'tile';
+		angle: number;
+		color: string;
+		width: number;
+		height: number;
+		images: IPhotoAttachmentPayload['sizes'];
+		points: {
+			position: number;
+			color: string;
+		}[];
+	};
 	photo?: object;
 }
 
@@ -219,7 +231,7 @@ export class PollAttachment extends Attachment<IPollAttachmentPayload, Attachmen
 	/**
 	 * Returns the poll snippet background
 	 */
-	public get background(): object[] | undefined {
+	public get background(): IPollAttachmentPayload['background'] | undefined {
 		return this.payload.background;
 	}
 
