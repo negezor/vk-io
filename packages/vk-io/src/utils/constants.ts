@@ -149,20 +149,6 @@ export enum SharedErrorCode {
 }
 
 /**
- * VK Platforms
- */
-export const platforms = new Map<number, string>([
-	[1, 'mobile'],
-	[2, 'iphone'],
-	[3, 'ipad'],
-	[4, 'android'],
-	[5, 'wphone'],
-	[6, 'windows'],
-	[7, 'web'],
-	[8, 'standalone']
-]);
-
-/**
  * Symbol of data definition for serialization
  */
 export const kSerializeData = Symbol('serializeData');

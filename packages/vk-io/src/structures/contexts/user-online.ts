@@ -1,7 +1,7 @@
 import { Context, ContextFactoryOptions, ContextDefaultState } from './context';
 
 import { pickProperties } from '../../utils/helpers';
-import { platforms, kSerializeData } from '../../utils/constants';
+import { kSerializeData } from '../../utils/constants';
 
 export type UserOnlineContextType = 'user_active';
 
@@ -92,10 +92,18 @@ export class UserOnlineContext<S = ContextDefaultState>
 	}
 
 	/**
-	 * Returns the name of the platform from which the user entered
+	 * Returns the platform from which the user entered
+	 *
+	 * - `1` - m.vk.com or other unknown application
+	 * - `2` - iPhone
+	 * - `3` - iPad
+	 * - `4` - Android
+	 * - `5` - Windows Phone
+	 * - `6` - Windows
+	 * - `7` - vk.com or other unknown application
 	 */
-	public get platformName(): string {
-		return platforms.get(this.payload.extra)!;
+	public get platform(): number | undefined {
+		return this.payload.extra;
 	}
 
 	/**

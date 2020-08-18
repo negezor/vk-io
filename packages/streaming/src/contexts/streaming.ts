@@ -6,7 +6,6 @@ import {
 
 	transformAttachments,
 	kSerializeData,
-	platforms,
 
 	applyMixins,
 	ContextDefaultState
@@ -231,9 +230,17 @@ class StreamingContext<S = ContextDefaultState>
 
 	/**
 	 * Returns the author platform
+	 *
+	 * - `1` - m.vk.com or other unknown application
+	 * - `2` - iPhone
+	 * - `3` - iPad
+	 * - `4` - Android
+	 * - `5` - Windows Phone
+	 * - `6` - Windows
+	 * - `7` - vk.com or other unknown application
 	 */
-	public get authorPlatform(): string | undefined {
-		return platforms.get(this.payload.author.platform!)!;
+	public get authorPlatform(): number | undefined {
+		return this.payload.author.platform;
 	}
 
 	/**

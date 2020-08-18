@@ -19,7 +19,6 @@ export {
 	AttachmentType,
 	AttachmentTypeString,
 
-	platforms,
 	kSerializeData
 } from './utils/constants';
 
