@@ -1,2 +1,2 @@
-export { PollingTransport } from './polling';
-export { WebhookTransport } from './webhook';
+export * from './polling';
+export * from './webhook';
