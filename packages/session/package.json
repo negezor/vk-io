@@ -1,6 +1,6 @@
 {
 	"name": "@vk-io/session",
-	"version": "0.0.0-alpha.3",
+	"version": "1.0.0",
 	"description": "Session for the library vk-io",
 	"license": "MIT",
 	"author": {
