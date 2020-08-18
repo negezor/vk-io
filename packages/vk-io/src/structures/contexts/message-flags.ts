@@ -90,105 +90,105 @@ export class MessageFlagsContext<S = ContextDefaultState>
 	 * Checks if a message is unread
 	 */
 	public get isUnread(): boolean {
-		return this.isFlag(MessageFlag.UNREAD);
+		return this.hasFlag(MessageFlag.UNREAD);
 	}
 
 	/**
 	 * Checks if a message is outbox
 	 */
 	public get isOutbox(): boolean {
-		return this.isFlag(MessageFlag.OUTBOX);
+		return this.hasFlag(MessageFlag.OUTBOX);
 	}
 
 	/**
 	 * Checks if a message is important
 	 */
 	public get isImportant(): boolean {
-		return this.isFlag(MessageFlag.IMPORTANT);
+		return this.hasFlag(MessageFlag.IMPORTANT);
 	}
 
 	/**
 	 * Checks if a message was sent from a web chat
 	 */
 	public get isFromWebChat(): boolean {
-		return this.isFlag(MessageFlag.FROM_WEB_CHAT);
+		return this.hasFlag(MessageFlag.FROM_WEB_CHAT);
 	}
 
 	/**
 	 * Checks whether a message has been sent or received from a friend
 	 */
 	public get isFriendMessage(): boolean {
-		return this.isFlag(MessageFlag.FRIEND_MESSAGE);
+		return this.hasFlag(MessageFlag.FRIEND_MESSAGE);
 	}
 
 	/**
 	 * Check if a message is marked as spam
 	 */
 	public get isMarkSpam(): boolean {
-		return this.isFlag(MessageFlag.MARK_SPAM);
+		return this.hasFlag(MessageFlag.MARK_SPAM);
 	}
 
 	/**
 	 * Check if the message was deleted locally
 	 */
 	public get isDeleted(): boolean {
-		return this.isFlag(MessageFlag.DELЕTЕD);
+		return this.hasFlag(MessageFlag.DELЕTЕD);
 	}
 
 	/**
 	 * Checks if a audio message has been listened
 	 */
 	public get isAudioMessageListened(): boolean {
-		return this.isFlag(MessageFlag.AUDIO_MESSAGE_LISTENED);
+		return this.hasFlag(MessageFlag.AUDIO_MESSAGE_LISTENED);
 	}
 
 	/**
 	 * Checks if a message was sent from a client
 	 */
 	public get isFromClientChat(): boolean {
-		return this.isFlag(MessageFlag.FROM_CLIENT_CHAT);
+		return this.hasFlag(MessageFlag.FROM_CLIENT_CHAT);
 	}
 
 	/**
 	 * Check if message is unmarked as spam
 	 */
 	public get isUnmarkSpam(): boolean {
-		return this.isFlag(MessageFlag.UNMARK_SPAM);
+		return this.hasFlag(MessageFlag.UNMARK_SPAM);
 	}
 
 	/**
 	 * Checks if it's a welcome message from the group
 	 */
 	public get isHidden(): boolean {
-		return this.isFlag(MessageFlag.HIDDEN);
+		return this.hasFlag(MessageFlag.HIDDEN);
 	}
 
 	/**
 	 * Check if the message was deleted for all
 	 */
 	public get isDeletedForAll(): boolean {
-		return this.isFlag(MessageFlag.DELETED_FOR_ALL);
+		return this.hasFlag(MessageFlag.DELETED_FOR_ALL);
 	}
 
 	/**
 	 * Checks if the message is inbox from chat
 	 */
 	public get isInboxFromChat(): boolean {
-		return this.isFlag(MessageFlag.INBOX_FROM_CHAT);
+		return this.hasFlag(MessageFlag.INBOX_FROM_CHAT);
 	}
 
 	/**
 	 * Checks if the message is silent (without notifications)
 	 */
 	public get isSilent(): boolean {
-		return this.isFlag(MessageFlag.SILENT);
+		return this.hasFlag(MessageFlag.SILENT);
 	}
 
 	/**
 	 * Checks a reply has been created to the message
 	 */
 	public get isReplied(): boolean {
-		return this.isFlag(MessageFlag.REPLIED);
+		return this.hasFlag(MessageFlag.REPLIED);
 	}
 
 	/**
@@ -212,7 +212,7 @@ export class MessageFlagsContext<S = ContextDefaultState>
 		return this.payload.flags;
 	}
 
-	protected isFlag(flag: MessageFlag): boolean {
+	protected hasFlag(flag: MessageFlag): boolean {
 		// eslint-disable-next-line no-bitwise
 		return Boolean(this.flags & flag);
 	}

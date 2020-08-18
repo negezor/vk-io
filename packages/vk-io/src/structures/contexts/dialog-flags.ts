@@ -62,14 +62,14 @@ export class DialogFlagsContext<S = ContextDefaultState>
 	 * Checks if dialogue is important
 	 */
 	public get isImportant(): boolean {
-		return this.isFlag(DialogFlag.IMPORTANT);
+		return this.hasFlag(DialogFlag.IMPORTANT);
 	}
 
 	/**
 	 * Checks if the dialog is unanswered
 	 */
 	public get isUnanswered(): boolean {
-		return this.isFlag(DialogFlag.UNANSWERED);
+		return this.hasFlag(DialogFlag.UNANSWERED);
 	}
 
 	/**
@@ -112,7 +112,7 @@ export class DialogFlagsContext<S = ContextDefaultState>
 		});
 	}
 
-	protected isFlag(flag: DialogFlag): boolean {
+	protected hasFlag(flag: DialogFlag): boolean {
 		// eslint-disable-next-line no-bitwise
 		return Boolean(this.flags & flag);
 	}
