@@ -7,6 +7,7 @@
 		"noEmit": true,
 		"declaration": true,
 		"strictNullChecks": true,
+		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true
 	}
 }
