@@ -18,6 +18,13 @@ const subTypes: Record<string, DialogFlagsContextSubType> = {
 	12: 'dialog_flags_add'
 };
 
+/* eslint-disable no-bitwise */
+enum DialogFlag {
+	IMPORTANT = 1 << 0,
+	UNANSWERED = 1 << 1
+}
+/* eslint-enable no-bitwise */
+
 export interface IDialogFlagsContextPayload {
 	peer_id: number;
 	flags: number;
@@ -52,19 +59,17 @@ export class DialogFlagsContext<S = ContextDefaultState>
 	}
 
 	/**
-	 * Checks that an important dialogue
+	 * Checks if dialogue is important
 	 */
 	public get isImportant(): boolean {
-		// eslint-disable-next-line no-bitwise
-		return Boolean(this.flags & 1);
+		return this.isFlag(DialogFlag.IMPORTANT);
 	}
 
 	/**
-	 * Checks that the unanswered dialog
+	 * Checks if the dialog is unanswered
 	 */
 	public get isUnanswered(): boolean {
-		// eslint-disable-next-line no-bitwise
-		return Boolean(this.flags & 2);
+		return this.isFlag(DialogFlag.UNANSWERED);
 	}
 
 	/**
@@ -105,6 +110,11 @@ export class DialogFlagsContext<S = ContextDefaultState>
 
 			peer_id: this.peerId
 		});
+	}
+
+	protected isFlag(flag: DialogFlag): boolean {
+		// eslint-disable-next-line no-bitwise
+		return Boolean(this.flags & flag);
 	}
 
 	/**
