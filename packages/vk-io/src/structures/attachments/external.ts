@@ -72,5 +72,8 @@ export class ExternalAttachment<P = {}, Type extends string | AttachmentType = s
 }
 
 inspectable(ExternalAttachment, {
-	serialize: instance => instance.toJSON()
+	serialize: instance => instance.toJSON(),
+	stringify: (instance, payload, context): string => (
+		`${context.stylize(instance.constructor.name, 'special')} ${context.inspect(payload)}`
+	)
 });
