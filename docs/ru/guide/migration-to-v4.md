@@ -242,6 +242,50 @@ interface IContextOptions<
 - Удалён геттер `context.userId`, используйте `context.fromId`
 - Удалён геттер `context.removerUserId`, используйте `context.deleterUserId`
 
+### MessageFlagsContext
+- Переименован под тип `message_flags_update` в `message_flags_replace`
+- Переименован под тип `message_flags_set` в `message_flags_add`
+- Переименован геттер `context.isChat` в `context.isFromWebChat`
+- Переименован геттер `context.isFriends` в `context.isFriendMessage`
+- Переименован геттер `context.isSpam` в `context.isMarkSpam`
+- Переименован геттер `context.isSpam` в `context.isUnmarkSpam`
+- Удалён геттер `context.isFixed`
+- Удалён геттер `context.isMedia`
+
+### DialogFlagsContext
+- Переименован под тип `dialog_flags_update` в `dialog_flags_replace`
+- Переименован под тип `dialog_flags_set` в `dialog_flags_add`
+
+### RemovedMessagesContext
+- Переименован в `DialogMessagesContext`
+
+### DialogMessagesContext
+- Переименован под тип `messages_delete` в `dialog_messages_delete`
+- Переименован под тип `messages_restore` в `dialog_messages_restore`
+- Переименован геттер `context.id` в `context.localId`
+- Переименован геттер `context.isRemoved` в `context.isDelete`
+- Переименован геттер `context.isRecovery` в `context.isRestore`
+
+### UserOnlineContext
+- Переименован в `FriendActivityContext`
+
+### FriendActivityContext
+- Переименован под тип `user_online` в `friend_online`
+- Переименован под тип `user_offline` в `friend_offline`
+- Переименован геттер `context.isUserOnline` в `context.isOnline`
+- Переименован геттер `context.isUserOffline` в `context.isOffline`
+- Переименован геттер `context.isSelfExit` в `context.isSelfLeave`
+- Переименован геттер `context.isTimeoutExit` в `context.isTimeoutLeave`
+- Переименован геттер `context.createdAt` в `context.eventAt`
+- Геттер `context.platform` теперь возвращает ID платформы
+
+### ReadMessagesContext
+- Переименован в `MessagesReadContext`
+
+### MessagesReadContext
+- Переименован под тип `messages_inbox_read` в `messages_read_inbox`
+- Переименован под тип `messages_outbox_read` в `messages_read_outbox`
+- Переименован геттер `context.id` в `context.localId`
 
 ### MessageAllowContext
 - Переименован в `MessageSubscriptionContext`
@@ -282,7 +326,7 @@ updates.startWebhook({
 	}
 })
 ```
-
+- Версия polling'а была обновлена до `10`
 - Переименование опции **pollingAttempts** в **pollingRetryLimit**
 
 ### Upload
