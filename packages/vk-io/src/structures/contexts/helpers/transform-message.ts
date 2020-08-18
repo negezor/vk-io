@@ -1,5 +1,6 @@
 // import { MessagesMessage } from '../api/schemas/objects';
-import { IMessageContextPayload } from '../message';
+import { IMessageContextPayload, MessageContextPayloadEventType } from '../message';
+
 import { AttachmentType } from '../../../utils/constants';
 
 const DocumentKind: Record<string, AttachmentType> = {
@@ -79,13 +80,14 @@ const attachmentHandlers = {
 export function transformMessage({
 	1: id,
 	2: flags,
-	3: peer,
+	3: peer_id,
 	4: date,
 	5: text,
 	6: extra,
 	7: attachments,
 	8: random_id,
-	9: conversation_message_id
+	9: conversation_message_id,
+	10: update_time
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 }: [
 	number,
@@ -94,10 +96,27 @@ export function transformMessage({
 	number,
 	number,
 	string,
+	{
+		title?: string;
+		from?: string;
+
+		emoji?: '1';
+		has_template?: '1';
+		is_expired?: '1';
+
+		source_act?: MessageContextPayloadEventType;
+		source_mid?: string;
+		source_message?: string;
+		source_chat_local_id?: string;
+
+		payload?: string;
+	},
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	Record<string, any>,
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	Record<string, any>,
+	Record<string, any> & {
+		fwd?: string;
+		reply?: string;
+	},
+	number,
 	number,
 	number
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any,
@@ -106,7 +125,9 @@ export function transformMessage({
 	const message = {
 		id,
 		conversation_message_id,
+		peer_id,
 		date,
+		update_time,
 		text,
 		random_id,
 		geo: attachments.geo !== undefined
@@ -115,15 +136,13 @@ export function transformMessage({
 		payload: extra.payload
 	} as IMessageContextPayload['message'];
 
-	message.peer_id = peer;
-
 	if (extra.from !== undefined) {
 		message.from_id = Number(extra.from);
 	} else {
-		message.from_id = peer;
+		message.from_id = peer_id;
 	}
 
-	if (peer < 0 && message.peer_id !== message.from_id) {
+	if (peer_id < 0 && message.peer_id !== message.from_id) {
 		// eslint-disable-next-line no-bitwise
 		message.out = Number((flags & 2) === 0);
 		// eslint-disable-next-line no-bitwise
@@ -138,8 +157,11 @@ export function transformMessage({
 	if (extra.source_act !== undefined) {
 		message.action = {
 			type: extra.source_act,
-			text: extra.source_text,
+			text: extra.source_message,
+
 			member_id: extra.source_mid
+				? Number(extra.source_mid)
+				: undefined
 		};
 	}
 
@@ -160,28 +182,40 @@ export function transformMessage({
 		);
 	}
 
-	let { fwd } = attachments;
+	if (attachments.fwd !== undefined) {
+		message.fwd_messages = [{
+			id: 0,
+			conversation_message_id: 0,
+			date: 0,
+			update_time: 0,
+			from_id: 0,
+			peer_id: 0,
+			out: 0,
+			text: '',
+			fwd_messages: [],
+			attachments: [],
+			random_id: 0,
+			important: false
+		}];
+	}
 
-	// Now long poll receive such forward messages 0_0,0_0
-	// Only for checking the presence of a sent message
-	if (fwd !== undefined) {
-		const indexColon = fwd.indexOf(':');
-		if (indexColon !== -1) {
-			fwd = fwd.substring(0, indexColon);
-		}
+	if (attachments.reply !== undefined) {
+		const reply = JSON.parse(attachments.reply);
 
-		message.fwd_messages = fwd
-			.split(',')
-			.map((attachment: string): object => ({
-				date: 0,
-				from_id: Number(
-					attachment.substring(0, attachment.indexOf('_'))
-				),
-				text: '',
-				fwd_messages: [],
-				attachments: [],
-				update_time: 0
-			}));
+		message.reply_message = {
+			id: 0,
+			conversation_message_id: reply.conversation_message_id,
+			date: 0,
+			update_time: 0,
+			from_id: 0,
+			peer_id: 0,
+			out: 0,
+			text: '',
+			fwd_messages: [],
+			attachments: [],
+			random_id: 0,
+			important: false
+		};
 	}
 
 	return message;
