@@ -32,7 +32,7 @@ import { IUploadSourceMedia } from '../../upload';
 
 export type MessageContextType = 'message';
 
-type MessageContextPayloadEventType =
+export type MessageContextPayloadEventType =
 'chat_photo_update'
 | 'chat_photo_remove'
 | 'chat_create'
@@ -109,7 +109,7 @@ export interface IMessageContextPayload {
 		fwd_messages?: IMessageContextPayload['message'][];
 		action?: {
 			type: MessageContextPayloadEventType;
-			member_id: number;
+			member_id?: number;
 			text?: string;
 			email?: string;
 			photo?: {
