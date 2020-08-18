@@ -8,14 +8,14 @@ import { kSerializeData } from '../../utils/constants';
 export type DialogFlagsContextType = 'dialog_flags';
 
 export type DialogFlagsContextSubType =
-'dialog_flags_delete'
-| 'dialog_flags_update'
-| 'dialog_flags_set';
+'dialog_flags_replace'
+| 'dialog_flags_add'
+| 'dialog_flags_delete';
 
 const subTypes: Record<string, DialogFlagsContextSubType> = {
 	10: 'dialog_flags_delete',
-	11: 'dialog_flags_update',
-	12: 'dialog_flags_set'
+	11: 'dialog_flags_replace',
+	12: 'dialog_flags_add'
 };
 
 export interface IDialogFlagsContextPayload {
