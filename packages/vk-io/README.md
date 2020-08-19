@@ -6,7 +6,7 @@
 <a href="https://www.codacy.com/app/negezor/vk-io"><img src="https://img.shields.io/codacy/grade/25ee36d46e6e498981a74f8b0653aacc.svg?style=flat-square" alt="Code quality"></a>
 </p>
 
-VK-IO - This is a powerful [Node.js](https://nodejs.org) module that allows you to easily interact with the VK API 🚀
+VK-IO - This is a powerful [Node.js](https://nodejs.org) module that allows you to easily interact with the API VK 🚀
 
 | 📖 [Documentation](https://negezor.github.io/vk-io/) | 🤖 [Examples](https://github.com/negezor/vk-io/tree/master/docs/examples) |
 |------------------------------------------------------|----------------------------------------------------------------------------|

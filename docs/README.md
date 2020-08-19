@@ -2,7 +2,7 @@
 home: true
 heroImage: /logo.svg
 heroText: null
-tagline: This is a powerful Node.js module that allows you to easily interact with the VK API 🚀
+tagline: This is a powerful Node.js module that allows you to easily interact with the API VK 🚀
 actionText: Getting Started [RU]
 actionLink: ./ru/guide/introduction
 features:
