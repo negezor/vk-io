@@ -103,15 +103,15 @@ const api = new API({
 
 ### parallel
 
-Объеденяет методы в [execute](http://vk.com/dev/execute), позволяет вызывать до `25` методов включительно. Максимальное количетсво методов в `execute` контролируется опцией [apiExecuteCount](http://negezor.github.io/vk-io/references/vk-io/interfaces/iapioptions.html#apiexecutecount), [1..25] методов — 1 запрос
+объединяет методы в [execute](http://vk.com/dev/execute), позволяет вызывать до `25` методов включительно. Максимальное количество методов в `execute` контролируется опцией [apiExecuteCount](http://negezor.github.io/vk-io/references/vk-io/interfaces/iapioptions.html#apiexecutecount), [1..25] методов — 1 запрос
 
 ### parallel_selected
 
-Схож по работе как [parallel](#parallel), за исключением того, что в [execute](http://vk.com/dev/execute) будут попадать методы из опции [apiExecuteMethods](http://negezor.github.io/vk-io/references/vk-io/interfaces/iapioptions.html#apiexecutemethods), а остальные через [sequential](#sequential).
+Схож по работе с [parallel](#parallel), за исключением того, что в [execute](http://vk.com/dev/execute) будут попадать методы из опции [apiExecuteMethods](http://negezor.github.io/vk-io/references/vk-io/interfaces/iapioptions.html#apiexecutemethods), а остальные через [sequential](#sequential).
 
 ## Режим запросов
 
-Вы можете контролировать с какой переодичностью будут вызываться запросы. Установить режим работы можно через опцию [apiRequestMode](http://negezor.github.io/vk-io/references/vk-io/interfaces/iapioptions.html#apirequestmode) в конструкторе.
+Вы можете контролировать, с какой периодичностью будут вызываться запросы. Установить режим работы можно через опцию [apiRequestMode](http://negezor.github.io/vk-io/references/vk-io/interfaces/iapioptions.html#apirequestmode) в конструкторе.
 
 ```ts
 import { API } from 'vk-io';
@@ -130,15 +130,15 @@ const api = new API({
 
 ### burst
 
-Паралельно отправляет методы на API во весь доступный лимит с опции [apiLimit](http://negezor.github.io/vk-io/references/vk-io/interfaces/iapioptions.html#apilimit).
+Параллельно отправляет методы на API во весь доступный лимит с опции [apiLimit](http://negezor.github.io/vk-io/references/vk-io/interfaces/iapioptions.html#apilimit).
 
 ::: warning Внимание
-С данным режимом API ВКонтакте может работать нестабильно. И вы будете получать EAI_AGAIN ошибку.
+С данным режимом API ВКонтакте может работать нестабильно и вы будете получать EAI_AGAIN ошибку.
 :::
 
 ## Использование прокси
 
-Для того что бы использовать прокси, достаточно предать опцию [agent](http://negezor.github.io/vk-io/references/vk-io/interfaces/iapioptions.html#agent) в конструктор. Это должен быть [HTTPS Agent](https://nodejs.org/api/https.html#https_class_https_agent). На примере модуля [https-proxy-agent](https://npm.im/https-proxy-agent).
+Для того, чтобы использовать прокси, достаточно передать опцию [agent](http://negezor.github.io/vk-io/references/vk-io/interfaces/iapioptions.html#agent) в конструктор. Это должен быть [HTTPS Agent](https://nodejs.org/api/https.html#https_class_https_agent). На примере модуля [https-proxy-agent](https://npm.im/https-proxy-agent).
 
 ```ts
 import { API } from 'vk-io';
@@ -159,7 +159,7 @@ const api = new API({
 TODO: ...
 
 ## Использование APIRequest
-Возможно вам может понадобится контролировать запрос на всех стадиях, или иметь удобную оболочку для создания [execute](http://vk.com/dev/execute) методов.
+Вам может понадобится контролировать запрос на всех стадиях, или иметь удобную оболочку для создания [execute](http://vk.com/dev/execute) методов.
 
 [API Reference](http://negezor.github.io/vk-io/references/vk-io/classes/apirequest.html)
 
