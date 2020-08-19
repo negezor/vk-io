@@ -223,6 +223,35 @@ interface IContextOptions<
 - Метод `context.send()` теперь возвращает инстанцию `MessageContext`
 - Геттер `context.replyMessage` теперь возвращает `MessageContext` вместо `MessageReply`
 - Геттер `context.forwards` теперь возвращает массив `MessageContext` вместо `MessageForward`
+- Изменились входные параметры для методов `context.sendPhotos()`, `context.sendDocuments()`, `context.sendAudioMessage()` и `context.sendAudioMessage()`. Теперь они принимают объект.
+
+Было:
+```ts
+context.sendPhotos('./cat.png');
+```
+
+Стало:
+```ts
+context.sendPhotos({
+	value: './cat.png',
+	// filename: 'cat.png',
+	// contentType: 'image/png',
+	// contentLength: ...
+});
+
+// Или
+
+context.sendPhotos({
+	values: [{
+		value: './cat.png'
+		// filename: 'cat.png',
+		// contentType: 'image/png'
+		// contentLength: ...
+	}],
+	// timeout: 30_000,
+	// uploadUrl: '...'
+});
+```
 - Удалён метод `context.getInviteLink()`
 - Удалён метод `context.markAsImportant()`
 - Удалён метод `context.renameChat()`
