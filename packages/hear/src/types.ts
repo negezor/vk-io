@@ -2,7 +2,7 @@ export type AllowArray<T> = T | T[];
 
 export type HearFunctionCondition<T, V> = (value: V, context: T) => boolean;
 
-export type HearCondition<T, V> = HearFunctionCondition<T, V> | RegExp | string;
+export type HearCondition<T, V> = HearFunctionCondition<T, V> | RegExp | string | number | boolean;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type HearObjectCondition<T extends Record<string, any>> =
