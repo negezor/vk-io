@@ -30,7 +30,7 @@
 		"prepare": "yarn run rollup:build && yarn run test",
 		"build": "yarn run rollup:build",
 		"watch": "yarn run rollup:watch",
-		"rollup:build": "rollup -c rollup.config.js",
+		"rollup:build": "NODE_ENV=production rollup -c rollup.config.js",
 		"rollup:watch": "yarn run rollup:build -w",
 		"docs:watch": "vuepress dev docs",
 		"docs:build": "sh scripts/deploy-docs.sh",
