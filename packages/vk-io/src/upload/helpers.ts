@@ -1,4 +1,4 @@
-import { Stream } from 'stream';
+import { Stream, PassThrough } from 'stream';
 import { UploadNormalizedSourceOptions, UploadAllowedSource } from './types';
 
 /**
@@ -40,4 +40,21 @@ export const normalizeSource = (rawSource: UploadAllowedSource): UploadNormalize
 			? rawSource.values
 			: [rawSource.values]
 	};
+};
+
+export const streamToBuffer = async (rawStream: NodeJS.ReadableStream): Promise<Buffer> => {
+	const stream = new PassThrough();
+
+	rawStream.pipe(stream);
+
+	const chunks: Buffer[] = [];
+	let totalSize = 0;
+
+	for await (const chunk of stream) {
+		totalSize += chunk.length;
+
+		chunks.push(chunk as Buffer);
+	}
+
+	return Buffer.concat(chunks, totalSize);
 };

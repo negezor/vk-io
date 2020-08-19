@@ -22,7 +22,8 @@ import {
 	isStream,
 
 	normalizeSource,
-	pickExistingProperties
+	pickExistingProperties,
+	streamToBuffer
 } from './helpers';
 
 import {
@@ -995,7 +996,21 @@ export class Upload {
 	}): Promise<any> {
 		const { agent, uploadTimeout } = this.options;
 
-		const length = await promisify(formData.getLength).call(formData);
+		// @ts-expect-error
+		// eslint-disable-next-line no-underscore-dangle
+		const metaLength = formData._overheadLength + formData._lastBoundary().length;
+
+		const formDataLength = await promisify(formData.getLength).call(formData);
+
+		const hasKnownLength = metaLength !== formDataLength;
+
+		const body = !hasKnownLength
+			? await streamToBuffer(formData)
+			: formData;
+
+		const length = hasKnownLength
+			? formDataLength
+			: (body as Buffer).length;
 
 		const controller = new AbortController();
 
@@ -1015,7 +1030,7 @@ export class Upload {
 					// eslint-disable-next-line @typescript-eslint/naming-convention
 					'Content-Length': String(length)
 				},
-				body: formData
+				body
 			});
 
 			if (!response.ok) {
