@@ -24,7 +24,9 @@ hearManager.hear('/cat', async (context) => {
 	await Promise.all([
 		context.send('Wait for the uploads awesome 😻'),
 
-		context.sendPhotos('https://loremflickr.com/400/300/')
+		context.sendPhotos({
+			value: 'https://loremflickr.com/400/300/'
+		})
 	]);
 });
 
@@ -50,7 +52,9 @@ hearManager.hear('/purr', async (context) => {
 	await Promise.all([
 		context.send('Wait for the uploads purring 😻'),
 
-		context.sendAudioMessage(link)
+		context.sendAudioMessage({
+			value: link
+		})
 	]);
 });
 
