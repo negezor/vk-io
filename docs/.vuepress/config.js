@@ -70,7 +70,8 @@ module.exports = {
 					collapsable: false,
 					children: [
 						'/ru/guide/introduction',
-						'/ru/guide/installation'
+						'/ru/guide/installation',
+						'/ru/guide/modules',
 					]
 				},
 				{
