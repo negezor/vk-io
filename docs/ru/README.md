@@ -1,24 +1,16 @@
-# Документация
-
-* [Введение](introduction.md)
-
-* Справка API
-	* [VK](api-reference/vk.md)
-	* [API](api-reference/api.md)
-		* [Request](api-reference/request.md)
-	* [Auth](api-reference/auth.md)
-	* [Collect](api-reference/collect.md)
-		* [CollectStream](api-reference/collect-stream.md)
-	* [Upload](api-reference/upload.md)
-	* [Updates](api-reference/updates.md)
-		* [Context](api-reference/contexts/context.md)
-		* [MessageContext](api-reference/contexts/message.md)
-	* [Attachment](api-reference/attachments/attachment.md)
-		* [AudioAttachment](api-reference/attachments/audio.md)
-		* [DocumentAttachment](api-reference/attachments/document.md)
-		* [PhotoAttachment](api-reference/attachments/photo.md)
-		* [VideoAttachment](api-reference/attachments/video.md)
-		* [WallAttachment](api-reference/attachments/wall.md)
-	* [Keyboard](api-reference/buttons/keyboard.md)
-	* [Snippets](api-reference/snippets.md)
-	* ...Уже скоро
+---
+home: true
+heroImage: /logo.svg
+heroText: null
+tagline: Это мощный Node.js модуль который позволяет вам легко взаимодействовать с API ВКонтакте 🚀
+actionText: Начать
+actionLink: ./guide/introduction
+features:
+  - title: Доступная
+    details: Библиотека уже охватывает все популярные задачи
+  - title: Разносторонняя
+    details: Все базовые вещи доступны в удобных абстракциях
+  - title: Типизация
+    details: Больше доверяйте своему коду благодоря типизации
+footer: Released under the MIT License. Copyright © 2016-2020 Negezor
+---
