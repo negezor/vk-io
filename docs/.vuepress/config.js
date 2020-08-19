@@ -72,6 +72,7 @@ module.exports = {
 						'/ru/guide/introduction',
 						'/ru/guide/installation',
 						'/ru/guide/modules',
+						'/ru/guide/api'
 					]
 				},
 				{
