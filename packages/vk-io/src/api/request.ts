@@ -41,7 +41,12 @@ export class APIRequest {
 		this.api = api;
 
 		this.method = method;
-		this.params = { ...params };
+		this.params = {
+			...Object.fromEntries(
+				Object.entries(params)
+					.filter(([, value]) => value !== undefined)
+			)
+		};
 
 		this.promise = new Promise((resolve, reject): void => {
 			this.resolve = resolve;
