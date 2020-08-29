@@ -96,7 +96,12 @@ export class APIRequest {
 
 					connection: 'keep-alive'
 				},
-				body: new URLSearchParams(params)
+				body: new URLSearchParams(
+					Object.fromEntries(
+						Object.entries(params)
+							.filter(({ 1: value }) => value !== undefined)
+					)
+				)
 			});
 
 			const result = await response.json();
