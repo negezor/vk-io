@@ -96,10 +96,12 @@ export class APIRequest {
 
 					connection: 'keep-alive'
 				},
-				body: new URLSearchParams(
-					Object.fromEntries(
-						Object.entries(params)
-							.filter(({ 1: value }) => value !== undefined)
+				body: String(
+					new URLSearchParams(
+						Object.fromEntries(
+							Object.entries(params)
+								.filter(({ 1: value }) => value !== undefined)
+						)
 					)
 				)
 			});
