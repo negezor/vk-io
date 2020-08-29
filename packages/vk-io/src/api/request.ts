@@ -98,10 +98,8 @@ export class APIRequest {
 				},
 				body: String(
 					new URLSearchParams(
-						Object.fromEntries(
-							Object.entries(params)
-								.filter(({ 1: value }) => value !== undefined)
-						)
+						Object.entries(params)
+							.filter(({ 1: value }) => value !== undefined)
 					)
 				)
 			});
