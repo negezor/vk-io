@@ -96,11 +96,10 @@ export class APIRequest {
 
 					connection: 'keep-alive'
 				},
-				body: String(
-					new URLSearchParams(
-						Object.entries(params)
-							.filter(({ 1: value }) => value !== undefined)
-					)
+				// @ts-expect-error
+				body: new URLSearchParams(
+					Object.entries(params)
+						.filter(({ 1: value }) => value !== undefined)
 				)
 			});
 
