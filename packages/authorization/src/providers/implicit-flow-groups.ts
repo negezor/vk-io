@@ -35,9 +35,7 @@ export class ImplicitFlowGroups extends ImplicitFlow {
 		this.groupIds = groupIds.map((rawGroupId) => {
 			const groupId = Number(rawGroupId);
 
-			return groupId < 0
-				? -groupId
-				: groupId;
+			return Math.abs(groupId);
 		});
 	}
 
