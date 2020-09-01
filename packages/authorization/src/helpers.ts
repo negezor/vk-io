@@ -12,7 +12,7 @@ export type CheerioStatic = ReturnType<typeof cheerioLoad>;
  */
 export const getUserPermissionsByName = (rawScope: string | string[]): number => {
 	const scope = !Array.isArray(rawScope)
-		? rawScope.split(/,\s{0,}/)
+		? rawScope.split(/,\s*/)
 		: rawScope;
 
 	let bitMask = 0;
@@ -33,7 +33,7 @@ export const getUserPermissionsByName = (rawScope: string | string[]): number =>
  */
 export const getGroupPermissionsByName = (rawScope: string | string[]): number => {
 	const scope = !Array.isArray(rawScope)
-		? rawScope.split(/,\s{0,}/)
+		? rawScope.split(/,\s*/)
 		: rawScope;
 
 	let bitMask = 0;
