@@ -18,8 +18,6 @@ vk.updates.use(async (context, next) => {
 	}
 });
 
-vk.updates.on('message_new', hearManager.middleware);
-
 class MyNetworkError extends Error {}
 
 // Custom handle the errors
@@ -49,6 +47,8 @@ vk.updates.use(async (context, next) => {
 		throw error;
 	}
 });
+
+vk.updates.on('message_new', hearManager.middleware);
 
 hearManager.hear(/get chat/i, async (context) => {
 	if (!context.isChat) {
