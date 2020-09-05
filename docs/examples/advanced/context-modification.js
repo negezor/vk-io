@@ -7,8 +7,6 @@ const vk = new VK({
 
 const hearManager = new HearManager();
 
-vk.updates.on('message_new', hearManager.middleware);
-
 // Some users "database"
 const users = new Map([]);
 
@@ -33,6 +31,8 @@ vk.updates.on('message_new', (context, next) => {
 
 	return next();
 });
+
+vk.updates.on('message_new', hearManager.middleware);
 
 hearManager.hear(/hello/i, async (context) => {
 	await context.answer('hello!'); // Will send "User 1234, hello!"

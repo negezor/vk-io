@@ -7,8 +7,6 @@ const vk = new VK({
 
 const hearManager = new HearManager();
 
-vk.updates.on('message_new', hearManager.middleware);
-
 vk.updates.on('message_new', (context, next) => {
 	const { messagePayload } = context;
 
@@ -18,6 +16,8 @@ vk.updates.on('message_new', (context, next) => {
 
 	return next();
 });
+
+vk.updates.on('message_new', hearManager.middleware);
 
 // Simple wrapper for commands
 const hearCommand = (name, conditions, handle) => {

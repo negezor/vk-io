@@ -7,8 +7,6 @@ const vk = new VK({
 
 const hearManager = new HearManager();
 
-vk.updates.on('message_new', hearManager.middleware);
-
 const logger = console;
 
 // Custom catch all the errors
@@ -19,6 +17,8 @@ vk.updates.use(async (context, next) => {
 		logger.error('An error has occurred', error);
 	}
 });
+
+vk.updates.on('message_new', hearManager.middleware);
 
 class MyNetworkError extends Error {}
 
