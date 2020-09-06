@@ -40,10 +40,6 @@ vk.updates.on('message_new', sessionManager.middleware);
 vk.updates.on('message_new', sceneManager.middleware);
 vk.updates.on('message_new', sceneManager.middlewareIntercept); // Default scene entry handler
 
-vk.updates.hear('/signup', (context) => {
-	return context.scene.enter('signup');
-});
-
 vk.updates.on('message_new', (context, next) => {
 	if (context.text === '/signup') {
 		return context.scene.enter('signup');
