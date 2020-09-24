@@ -39,11 +39,11 @@
 	},
 	"dependencies": {
 		"abort-controller": "^3.0.0",
-		"debug": "^4.1.1",
+		"debug": "^4.2.0",
 		"form-data": "^3.0.0",
 		"inspectable": "^1.0.0",
 		"middleware-io": "^2.5.0",
-		"node-fetch": "^2.6.0",
+		"node-fetch": "^2.6.1",
 		"sandwich-stream": "^2.0.2"
 	}
 }
