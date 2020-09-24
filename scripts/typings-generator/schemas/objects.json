@@ -49,6 +49,9 @@
           "type": "integer",
           "description": ""
         },
+        "menu_clips_badge": {
+          "type": "integer"
+        },
         "messages": {
           "type": "integer",
           "description": "New messages number",
@@ -547,6 +550,14 @@
         "reports"
       ]
     },
+    "ads_access_role_public": {
+      "type": "string",
+      "description": "Current user's role",
+      "enum": [
+        "manager",
+        "reports"
+      ]
+    },
     "ads_accesses": {
       "type": "object",
       "properties": {
@@ -575,13 +586,18 @@
         },
         "account_type": {
           "$ref": "objects.json#/definitions/ads_account_type"
+        },
+        "account_name": {
+          "type": "string",
+          "description": "Account name"
         }
       },
       "required": [
         "account_id",
         "account_type",
         "account_status",
-        "access_role"
+        "access_role",
+        "account_name"
       ],
       "additionalProperties": false
     },
@@ -1780,6 +1796,82 @@
       },
       "additionalProperties": false
     },
+    "ads_updateOfficeUsers_result": {
+      "type": "object",
+      "properties": {
+        "user_id": {
+          "name": "user_id",
+          "type": "integer",
+          "minimum": 0
+        },
+        "is_success": {
+          "type": "boolean",
+          "default": true
+        },
+        "error": {
+          "$ref": "objects.json#/definitions/base_error"
+        }
+      },
+      "required": [
+        "user_id",
+        "is_success"
+      ]
+    },
+    "ads_user_specification": {
+      "type": "object",
+      "properties": {
+        "user_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "role": {
+          "$ref": "objects.json#/definitions/ads_access_role_public"
+        },
+        "grant_access_to_all_clients": {
+          "type": "boolean",
+          "default": false
+        },
+        "client_ids": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "view_budget": {
+          "type": "boolean",
+          "default": null
+        }
+      },
+      "required": [
+        "user_id",
+        "role"
+      ]
+    },
+    "ads_user_specification_cutted": {
+      "type": "object",
+      "properties": {
+        "user_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "role": {
+          "$ref": "objects.json#/definitions/ads_access_role_public"
+        },
+        "client_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "view_budget": {
+          "type": "boolean",
+          "default": null
+        }
+      },
+      "required": [
+        "user_id",
+        "role"
+      ]
+    },
     "ads_users": {
       "type": "object",
       "properties": {
@@ -1799,6 +1891,162 @@
         "accesses"
       ],
       "additionalProperties": false
+    },
+    "adsweb_getAdCategories_response_categories_category": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "name"
+      ]
+    },
+    "adsweb_getAdUnits_response_ad_units_ad_unit": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "site_id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "params": {
+          "$ref": "#/definitions/adsweb_getAdUnits_response_ad_units_ad_unit_params"
+        }
+      },
+      "required": [
+        "id",
+        "site_id"
+      ]
+    },
+    "adsweb_getFraudHistory_response_entries_entry": {
+      "type": "object",
+      "properties": {
+        "site_id": {
+          "type": "integer"
+        },
+        "day": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "site_id",
+        "day"
+      ]
+    },
+    "adsweb_getSites_response_sites_site": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "status_user": {
+          "type": "string"
+        },
+        "status_moder": {
+          "type": "string"
+        },
+        "domains": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    },
+    "adsweb_getStatistics_response_items_item": {
+      "type": "object",
+      "properties": {
+        "site_id": {
+          "type": "integer"
+        },
+        "ad_unit_id": {
+          "type": "integer"
+        },
+        "overall_count": {
+          "type": "integer"
+        },
+        "months_count": {
+          "type": "integer"
+        },
+        "month_min": {
+          "type": "string"
+        },
+        "month_max": {
+          "type": "string"
+        },
+        "days_count": {
+          "type": "integer"
+        },
+        "day_min": {
+          "type": "string"
+        },
+        "day_max": {
+          "type": "string"
+        },
+        "hours_count": {
+          "type": "integer"
+        },
+        "hour_min": {
+          "type": "string"
+        },
+        "hour_max": {
+          "type": "string"
+        },
+        "stats": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/adsweb_getStatistics_response_items_item_stats_period"
+          }
+        }
+      }
+    },
+    "appWidgets_photo": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Image ID"
+        },
+        "images": {
+          "type": "array",
+          "items": {
+            "$ref": "objects.json#/definitions/base_image"
+          }
+        },
+        "type": {
+          "$ref": "objects.json#/definitions/appWidgets_photo_type"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "images"
+      ]
+    },
+    "appWidgets_photos": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "objects.json#/definitions/appWidgets_photo"
+          }
+        }
+      }
     },
     "apps_app": {
       "type": "object",
@@ -2165,6 +2413,81 @@
       ],
       "additionalProperties": false
     },
+    "base_crop_photo": {
+      "type": "object",
+      "properties": {
+        "photo": {
+          "$ref": "objects.json#/definitions/photos_photo"
+        },
+        "crop": {
+          "$ref": "objects.json#/definitions/base_crop_photo_crop"
+        },
+        "rect": {
+          "$ref": "objects.json#/definitions/base_crop_photo_rect"
+        }
+      },
+      "required": [
+        "photo",
+        "crop",
+        "rect"
+      ]
+    },
+    "base_crop_photo_crop": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "type": "number",
+          "description": "Coordinate X of the left upper corner"
+        },
+        "y": {
+          "type": "number",
+          "description": "Coordinate Y of the left upper corner"
+        },
+        "x2": {
+          "type": "number",
+          "description": "Coordinate X of the right lower corner"
+        },
+        "y2": {
+          "type": "number",
+          "description": "Coordinate Y of the right lower corner"
+        }
+      },
+      "required": [
+        "x",
+        "y",
+        "x2",
+        "y2"
+      ],
+      "additionalProperties": false
+    },
+    "base_crop_photo_rect": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "type": "number",
+          "description": "Coordinate X of the left upper corner"
+        },
+        "y": {
+          "type": "number",
+          "description": "Coordinate Y of the left upper corner"
+        },
+        "x2": {
+          "type": "number",
+          "description": "Coordinate X of the right lower corner"
+        },
+        "y2": {
+          "type": "number",
+          "description": "Coordinate Y of the right lower corner"
+        }
+      },
+      "required": [
+        "x",
+        "y",
+        "x2",
+        "y2"
+      ],
+      "additionalProperties": false
+    },
     "base_error": {
       "type": "object",
       "properties": {
@@ -2172,9 +2495,17 @@
           "type": "integer",
           "description": "Error code"
         },
+        "error_subcode": {
+          "type": "integer",
+          "description": "Error subcode"
+        },
         "error_msg": {
           "type": "string",
           "description": "Error message"
+        },
+        "error_text": {
+          "type": "string",
+          "description": "Localized error message"
         },
         "request_params": {
           "type": "array",
@@ -2491,6 +2822,17 @@
       ],
       "additionalProperties": false
     },
+    "base_link_product_status": {
+      "type": "string",
+      "description": "Status representation",
+      "enum": [
+        "active",
+        "blocked",
+        "sold",
+        "deleted",
+        "archived"
+      ]
+    },
     "base_link_rating": {
       "type": "object",
       "properties": {
@@ -2626,11 +2968,22 @@
     },
     "base_reposts_info": {
       "type": "object",
+      "description": "Count of views",
       "properties": {
         "count": {
           "type": "integer",
           "minimum": 0,
-          "description": "Reposts number"
+          "description": "Total reposts counter. Sum of wall and mail reposts counters"
+        },
+        "wall_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Wall reposts counter"
+        },
+        "mail_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Mail reposts counter"
         },
         "user_reposted": {
           "type": "integer",
@@ -5273,6 +5626,10 @@
               "description": "Information whether community has photo",
               "$ref": "objects.json#/definitions/base_bool_int"
             },
+            "crop_photo": {
+              "description": "Данные о точках, по которым вырезаны профильная и миниатюрная фотографии сообщества",
+              "$ref": "objects.json#/definitions/base_crop_photo"
+            },
             "status": {
               "type": "string",
               "description": "Community status"
@@ -5363,6 +5720,10 @@
             "can_subscribe_posts": {
               "description": "Can subscribe to wall",
               "type": "boolean"
+            },
+            "live_covers": {
+              "description": "Live covers state",
+              "$ref": "objects.json#/definitions/groups_live_covers"
             }
           }
         }
@@ -5519,7 +5880,8 @@
       "enum": [
         "moderator",
         "editor",
-        "administrator"
+        "administrator",
+        "advertiser"
       ]
     },
     "groups_group_subject": {
@@ -5611,6 +5973,50 @@
         "humor",
         "society_humanities",
         "design and graphics"
+      ]
+    },
+    "groups_group_tag": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "color": {
+          "type": "string",
+          "enum": [
+            "454647",
+            "45678f",
+            "4bb34b",
+            "5181b8",
+            "539b9c",
+            "5c9ce6",
+            "63b9ba",
+            "6bc76b",
+            "76787a",
+            "792ec0",
+            "7a6c4f",
+            "7ececf",
+            "9e8d6b",
+            "a162de",
+            "aaaeb3",
+            "bbaa84",
+            "e64646",
+            "ff5c5c",
+            "ffa000",
+            "ffc107"
+          ]
+        },
+        "uses": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "id",
+        "name",
+        "color"
       ]
     },
     "groups_group_topics": {
@@ -5820,6 +6226,29 @@
           "description": "Link URL"
         }
       }
+    },
+    "groups_live_covers": {
+      "type": "object",
+      "properties": {
+        "is_enabled": {
+          "description": "Information whether live covers is enabled",
+          "type": "boolean"
+        },
+        "is_scalable": {
+          "description": "Information whether live covers photo scaling is enabled",
+          "type": "boolean"
+        },
+        "story_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "is_enabled"
+      ],
+      "additionalProperties": false
     },
     "groups_long_poll_events": {
       "type": "object",
@@ -6066,6 +6495,15 @@
           "description": "Minimum price"
         }
       }
+    },
+    "groups_market_state": {
+      "type": "string",
+      "description": "Declares state if market is enabled in group.",
+      "enum": [
+        "none",
+        "basic",
+        "advanced"
+      ]
     },
     "groups_member_role": {
       "type": "object",
@@ -6690,6 +7128,137 @@
         }
       ]
     },
+    "market_order": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "group_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "user_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "display_order_id": {
+          "type": "string"
+        },
+        "date": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "status": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "items_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "track_number": {
+          "type": "string"
+        },
+        "track_link": {
+          "type": "string"
+        },
+        "comment": {
+          "type": "string"
+        },
+        "address": {
+          "type": "string"
+        },
+        "merchant_comment": {
+          "type": "string"
+        },
+        "weight": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "$ref": "objects.json#/definitions/market_order_tag"
+          }
+        },
+        "dimensions": {
+          "$ref": "objects.json#/definitions/market_item_dimensions"
+        },
+        "total_price": {
+          "$ref": "objects.json#/definitions/market_price"
+        },
+        "preview_order_items": {
+          "type": "array",
+          "description": "Several order items for preview",
+          "items": {
+            "$ref": "objects.json#/definitions/market_order_item"
+          }
+        },
+        "delivery": {
+          "$ref": "objects.json#/definitions/market_order_delivery"
+        },
+        "recipient": {
+          "$ref": "objects.json#/definitions/market_order_recipient"
+        },
+        "price_details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/market_order_details_price"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "group_id",
+        "user_id",
+        "date",
+        "status",
+        "items_count",
+        "total_price"
+      ]
+    },
+    "market_order_item": {
+      "type": "object",
+      "properties": {
+        "owner_id": {
+          "type": "integer"
+        },
+        "item_id": {
+          "type": "integer"
+        },
+        "price": {
+          "$ref": "objects.json#/definitions/market_price"
+        },
+        "quantity": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "item": {
+          "$ref": "objects.json#/definitions/market_market_item"
+        },
+        "title": {
+          "type": "string"
+        },
+        "photo": {
+          "$ref": "objects.json#/definitions/photos_photo"
+        },
+        "variants": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "item_id",
+        "owner_id",
+        "price",
+        "quantity",
+        "item"
+      ]
+    },
     "market_price": {
       "type": "object",
       "properties": {
@@ -6776,34 +7345,6 @@
       "required": [
         "title"
       ]
-    },
-    "message_chat_preview": {
-      "type": "object",
-      "properties": {
-        "admin_id": {
-          "type": "integer",
-          "minimum": 0
-        },
-        "joined": {
-          "type": "boolean"
-        },
-        "local_id": {
-          "type": "integer"
-        },
-        "members": {
-          "type": "array",
-          "items": {
-            "type": "integer"
-          }
-        },
-        "members_count": {
-          "type": "integer",
-          "minimum": 0
-        },
-        "title": {
-          "type": "string"
-        }
-      }
     },
     "messages_audio_message": {
       "type": "object",
@@ -6979,6 +7520,34 @@
         "users"
       ],
       "additionalProperties": false
+    },
+    "messages_chat_preview": {
+      "type": "object",
+      "properties": {
+        "admin_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "joined": {
+          "type": "boolean"
+        },
+        "local_id": {
+          "type": "integer"
+        },
+        "members": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "members_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "title": {
+          "type": "string"
+        }
+      }
     },
     "messages_chat_push_settings": {
       "type": "object",
@@ -7765,6 +8334,21 @@
         }
       }
     },
+    "messages_messages_array": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "objects.json#/definitions/messages_message"
+          }
+        }
+      }
+    },
     "messages_pinned_message": {
       "type": "object",
       "properties": {
@@ -7914,6 +8498,7 @@
         "audio",
         "video",
         "audio_playlist",
+        "games_carousel",
         "clip"
       ]
     },
@@ -8090,37 +8675,6 @@
         }
       },
       "withoutRefs": true
-    },
-    "newsfeed_item_note": {
-      "type": "object",
-      "allOf": [
-        {
-          "$ref": "objects.json#/definitions/newsfeed_item_base"
-        },
-        {
-          "properties": {
-            "notes": {
-              "$ref": "objects.json#/definitions/newsfeed_item_note_notes"
-            }
-          }
-        }
-      ]
-    },
-    "newsfeed_item_note_notes": {
-      "type": "object",
-      "properties": {
-        "count": {
-          "type": "integer",
-          "minimum": 0,
-          "description": "Notes number"
-        },
-        "items": {
-          "type": "array",
-          "items": {
-            "$ref": "objects.json#/definitions/newsfeed_newsfeed_note"
-          }
-        }
-      }
     },
     "newsfeed_item_photo": {
       "type": "object",
@@ -8523,10 +9077,6 @@
         },
         {
           "invalid_one_of": true,
-          "$ref": "objects.json#/definitions/newsfeed_item_note"
-        },
-        {
-          "invalid_one_of": true,
           "$ref": "objects.json#/definitions/newsfeed_item_audio"
         },
         {
@@ -8564,27 +9114,6 @@
         "stories",
         "tags_suggestions"
       ]
-    },
-    "newsfeed_newsfeed_note": {
-      "type": "object",
-      "properties": {
-        "comments": {
-          "type": "integer",
-          "description": "Comments Number"
-        },
-        "id": {
-          "type": "integer",
-          "description": "Note ID"
-        },
-        "owner_id": {
-          "type": "integer",
-          "description": "integer"
-        },
-        "title": {
-          "type": "string",
-          "description": "Note title"
-        }
-      }
     },
     "newsfeed_newsfeed_photo": {
       "type": "object",
@@ -9954,6 +10483,10 @@
           "type": "string",
           "description": "Tag description"
         },
+        "description": {
+          "description": "Tagged description.",
+          "type": "string"
+        },
         "user_id": {
           "type": "integer",
           "description": "Tagged user ID"
@@ -10279,6 +10812,9 @@
         "title": {
           "type": "string"
         },
+        "caption": {
+          "type": "string"
+        },
         "type": {
           "type": "string"
         },
@@ -10296,6 +10832,9 @@
           "items": {
             "$ref": "objects.json#/definitions/photos_photo_tag"
           }
+        },
+        "track_code": {
+          "type": "string"
         }
       },
       "withoutRefs": true
@@ -10341,6 +10880,38 @@
         }
       },
       "withoutRefs": true
+    },
+    "podcast_podcast": {
+      "type": "object",
+      "properties": {
+        "owner_id": {
+          "type": "integer",
+          "description": "ID of the podcast's owner"
+        },
+        "podcast_title": {
+          "type": "string",
+          "description": "Podcast title"
+        }
+      },
+      "required": [
+        "owner_id",
+        "podcast_title"
+      ]
+    },
+    "podcast_popular_podcast": {
+      "type": "object",
+      "properties": {
+        "owner_id": {
+          "type": "integer"
+        },
+        "owner_title": {
+          "type": "string"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri"
+        }
+      }
     },
     "polls_answer": {
       "type": "object",
@@ -11062,14 +11633,17 @@
     "status_status": {
       "type": "object",
       "properties": {
-        "audio": {
-          "$ref": "objects.json#/definitions/audio_audio"
-        },
         "text": {
           "type": "string",
           "description": "Status text"
+        },
+        "audio": {
+          "$ref": "objects.json#/definitions/audio_audio"
         }
-      }
+      },
+      "required": [
+        "text"
+      ]
     },
     "storage_value": {
       "type": "object",
@@ -11479,6 +12053,9 @@
         },
         "birthday_wish_user_id": {
           "type": "integer"
+        },
+        "can_use_in_narrative": {
+          "type": "boolean"
         }
       },
       "required": [
@@ -11575,7 +12152,8 @@
         "photo",
         "video",
         "live_active",
-        "live_finished"
+        "live_finished",
+        "birthday_invite"
       ]
     },
     "stories_upload_link_text": {
@@ -11658,64 +12236,6 @@
         "until": {
           "type": "integer",
           "description": "Till year"
-        }
-      },
-      "additionalProperties": false
-    },
-    "users_crop_photo": {
-      "type": "object",
-      "properties": {
-        "crop": {
-          "$ref": "objects.json#/definitions/users_crop_photo_crop"
-        },
-        "photo": {
-          "$ref": "objects.json#/definitions/photos_photo"
-        },
-        "rect": {
-          "$ref": "objects.json#/definitions/users_crop_photo_rect"
-        }
-      }
-    },
-    "users_crop_photo_crop": {
-      "type": "object",
-      "properties": {
-        "x": {
-          "type": "number",
-          "description": "Coordinate X of the left upper corner"
-        },
-        "x2": {
-          "type": "number",
-          "description": "Coordinate X of the right lower corner"
-        },
-        "y": {
-          "type": "number",
-          "description": "Coordinate Y of the left upper corner"
-        },
-        "y2": {
-          "type": "number",
-          "description": "Coordinate Y of the right lower corner"
-        }
-      },
-      "additionalProperties": false
-    },
-    "users_crop_photo_rect": {
-      "type": "object",
-      "properties": {
-        "x": {
-          "type": "number",
-          "description": "Coordinate X of the left upper corner"
-        },
-        "x2": {
-          "type": "number",
-          "description": "Coordinate X of the right lower corner"
-        },
-        "y": {
-          "type": "number",
-          "description": "Coordinate Y of the left upper corner"
-        },
-        "y2": {
-          "type": "number",
-          "description": "Coordinate Y of the right lower corner"
         }
       },
       "additionalProperties": false
@@ -11879,6 +12399,47 @@
         }
       },
       "additionalProperties": false
+    },
+    "users_online_info": {
+      "type": "object",
+      "properties": {
+        "visible": {
+          "type": "boolean",
+          "description": "Whether you can see real online status of user or not"
+        },
+        "last_seen": {
+          "type": "integer",
+          "description": "Last time we saw user being active",
+          "minimum": 0
+        },
+        "is_online": {
+          "type": "boolean",
+          "description": "Whether user is currently online or not"
+        },
+        "app_id": {
+          "type": "integer",
+          "description": "Application id from which user is currently online or was last seen online",
+          "minimum": 0
+        },
+        "is_mobile": {
+          "type": "boolean",
+          "description": "Is user online from desktop app or mobile app"
+        },
+        "status": {
+          "type": "string",
+          "description": "In case user online is not visible, it indicates approximate timeframe of user online",
+          "enum": [
+            "recently",
+            "last_week",
+            "last_month",
+            "long_ago",
+            "not_show"
+          ]
+        }
+      },
+      "required": [
+        "visible"
+      ]
     },
     "users_personal": {
       "type": "object",
@@ -12092,6 +12653,9 @@
               "format": "uri",
               "description": "URL of square photo of the user with 100 pixels in width"
             },
+            "online_info": {
+              "$ref": "objects.json#/definitions/users_online_info"
+            },
             "online": {
               "description": "Information whether the user is online",
               "$ref": "objects.json#/definitions/base_bool_int"
@@ -12291,7 +12855,7 @@
               "description": "User's date of birth"
             },
             "city": {
-              "$ref": "objects.json#/definitions/base_object"
+              "$ref": "objects.json#/definitions/base_city"
             },
             "country": {
               "$ref": "objects.json#/definitions/base_country"
@@ -12402,7 +12966,7 @@
               "$ref": "objects.json#/definitions/users_exports"
             },
             "crop_photo": {
-              "$ref": "objects.json#/definitions/users_crop_photo"
+              "$ref": "objects.json#/definitions/base_crop_photo"
             },
             "followers_count": {
               "type": "integer",
@@ -12773,7 +13337,8 @@
         "user",
         "group",
         "application",
-        "page"
+        "page",
+        "vk_app"
       ]
     },
     "utils_last_shortened_link": {
@@ -13782,7 +14347,6 @@
           "$ref": "objects.json#/definitions/wall_post_type"
         },
         "reposts": {
-          "description": "Count of views",
           "$ref": "objects.json#/definitions/base_reposts_info"
         },
         "signer_id": {

@@ -92,6 +92,7 @@
       "properties": {
         "name": {
           "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9_]*$",
           "description": "Parameter name"
         },
         "nodoc": {
@@ -125,6 +126,15 @@
             },
             "minimum": {
               "type": "number"
+            },
+            "minLength": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0
+            },
+            "maxLength": {
+              "type": "integer",
+              "minimum": 0
             },
             "enum": [
               "#/definitions/enum"
@@ -311,6 +321,13 @@
           "type": "string",
           "description": "Error description"
         },
+        "subcodes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/error_subcode"
+          },
+          "description": "Array of error subcodes"
+        },
         "global": {
           "type": "boolean",
           "default": false
@@ -335,6 +352,20 @@
       ],
       "additionalProperties": false
     },
+    "error_subcode": {
+      "type": "object",
+      "properties": {
+        "subcode": {
+          "type": "integer"
+        },
+        "description": {
+          "type": "string"
+        },
+        "@comment": {
+          "type": "string"
+        }
+      }
+    },
     "methodErrors": {
       "type": "array",
       "items": {
@@ -356,6 +387,7 @@
       "properties": {
         "name": {
           "type": "string",
+          "pattern": "^[a-zA-Z][a-zA-Z0-9.]+$",
           "description": "Method name"
         },
         "description": {
@@ -424,9 +456,13 @@
   "properties": {
     "errors": {
       "type": "object",
-      "additionalProperties": {
-        "$ref": "#/definitions/error"
-      }
+      "patternProperties": {
+        "^[a-z][a-z0-9_]+$": {
+          "$ref": "#/definitions/error"
+        }
+      },
+      "additionalProperties": false,
+      "uniqueProperties": true
     },
     "methods": {
       "type": "array",
@@ -439,7 +475,8 @@
         "^([a-zA-Z0-9_]+)?[rR]esponse$": {
           "$ref": "#/definitions/response"
         }
-      }
+      },
+      "uniqueProperties": true
     },
     "$schema": {
       "type": "string",

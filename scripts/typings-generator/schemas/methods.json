@@ -628,8 +628,14 @@
         {
           "name": "data",
           "description": "Serialized JSON array of objects that describe added managers. Description of 'user_specification' objects see below.",
-          "type": "string",
-          "required": true
+          "type": "array",
+          "required": true,
+          "format": "json",
+          "items": {
+            "$ref": "objects.json#/definitions/ads_user_specification_cutted"
+          },
+          "minItems": 1,
+          "maxItems": 10
         }
       ],
       "responses": {
@@ -2049,6 +2055,44 @@
       ]
     },
     {
+      "name": "ads.updateOfficeUsers",
+      "description": "Adds managers and/or supervisors to advertising account.",
+      "access_token_type": [
+        "user"
+      ],
+      "parameters": [
+        {
+          "name": "account_id",
+          "description": "Advertising account ID.",
+          "type": "integer",
+          "required": true,
+          "minimum": 0
+        },
+        {
+          "name": "data",
+          "description": "Serialized JSON array of objects that describe added managers. Description of 'user_specification' objects see below.",
+          "type": "array",
+          "required": true,
+          "format": "json",
+          "items": {
+            "$ref": "objects.json#/definitions/ads_user_specification"
+          },
+          "minItems": 1,
+          "maxItems": 10
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/ads_updateOfficeUsers_response"
+        }
+      },
+      "errors": [
+        {
+          "$ref": "errors.json#/errors/api_error_weighted_flood"
+        }
+      ]
+    },
+    {
       "name": "ads.updateTargetGroup",
       "description": "Edits a retarget group.",
       "access_token_type": [
@@ -2108,6 +2152,428 @@
       "errors": [
         {
           "$ref": "errors.json#/errors/api_error_weighted_flood"
+        }
+      ]
+    },
+    {
+      "name": "adsweb.getAdCategories",
+      "access_token_type": [
+        "user"
+      ],
+      "parameters": [
+        {
+          "name": "office_id",
+          "type": "integer",
+          "required": true
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/adsweb_getAdCategories_response"
+        }
+      }
+    },
+    {
+      "name": "adsweb.getAdUnitCode",
+      "access_token_type": [
+        "user"
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/adsweb_getAdUnitCode_response"
+        }
+      }
+    },
+    {
+      "name": "adsweb.getAdUnits",
+      "access_token_type": [
+        "user"
+      ],
+      "parameters": [
+        {
+          "name": "office_id",
+          "type": "integer",
+          "required": true
+        },
+        {
+          "name": "sites_ids",
+          "type": "string"
+        },
+        {
+          "name": "ad_units_ids",
+          "type": "string"
+        },
+        {
+          "name": "fields",
+          "type": "string"
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "default": null,
+          "minimum": 0
+        },
+        {
+          "name": "offset",
+          "type": "integer",
+          "default": 0,
+          "minimum": 0
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/adsweb_getAdUnits_response"
+        }
+      }
+    },
+    {
+      "name": "adsweb.getFraudHistory",
+      "access_token_type": [
+        "user"
+      ],
+      "parameters": [
+        {
+          "name": "office_id",
+          "type": "integer",
+          "required": true
+        },
+        {
+          "name": "sites_ids",
+          "type": "string"
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "default": null,
+          "minimum": 0
+        },
+        {
+          "name": "offset",
+          "type": "integer",
+          "default": 0,
+          "minimum": 0
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/adsweb_getFraudHistory_response"
+        }
+      }
+    },
+    {
+      "name": "adsweb.getSites",
+      "access_token_type": [
+        "user"
+      ],
+      "parameters": [
+        {
+          "name": "office_id",
+          "type": "integer",
+          "required": true
+        },
+        {
+          "name": "sites_ids",
+          "type": "string"
+        },
+        {
+          "name": "fields",
+          "type": "string"
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "default": null,
+          "minimum": 0
+        },
+        {
+          "name": "offset",
+          "type": "integer",
+          "default": 0,
+          "minimum": 0
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/adsweb_getSites_response"
+        }
+      }
+    },
+    {
+      "name": "adsweb.getStatistics",
+      "access_token_type": [
+        "user"
+      ],
+      "parameters": [
+        {
+          "name": "office_id",
+          "type": "integer",
+          "required": true
+        },
+        {
+          "name": "ids_type",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "ids",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "period",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "date_from",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "date_to",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "fields",
+          "type": "string"
+        },
+        {
+          "name": "limit",
+          "type": "integer",
+          "default": null,
+          "minimum": 0
+        },
+        {
+          "name": "page_id",
+          "type": "string"
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/adsweb_getStatistics_response"
+        }
+      }
+    },
+    {
+      "name": "appWidgets.getAppImageUploadServer",
+      "description": "Returns a URL for uploading a photo to the community collection for community app widgets",
+      "access_token_type": [
+        "user",
+        "service"
+      ],
+      "parameters": [
+        {
+          "name": "image_type",
+          "type": "string",
+          "required": true,
+          "enum": [
+            "160x160",
+            "160x240",
+            "24x24",
+            "50x50",
+            "510x128"
+          ]
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/appWidgets_getAppImageUploadServer_response"
+        }
+      }
+    },
+    {
+      "name": "appWidgets.getAppImages",
+      "description": "Returns an app collection of images for community app widgets",
+      "access_token_type": [
+        "user",
+        "group",
+        "service"
+      ],
+      "parameters": [
+        {
+          "name": "offset",
+          "description": "Offset needed to return a specific subset of images.",
+          "type": "integer",
+          "minimum": 0
+        },
+        {
+          "name": "count",
+          "description": "Maximum count of results.",
+          "type": "integer",
+          "default": 20,
+          "minimum": 0,
+          "maximum": 100
+        },
+        {
+          "name": "image_type",
+          "type": "string",
+          "enum": [
+            "160x160",
+            "160x240",
+            "24x24",
+            "50x50",
+            "510x128"
+          ]
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/appWidgets_getAppImages_response"
+        }
+      }
+    },
+    {
+      "name": "appWidgets.getGroupImageUploadServer",
+      "description": "Returns a URL for uploading a photo to the community collection for community app widgets",
+      "access_token_type": [
+        "group"
+      ],
+      "parameters": [
+        {
+          "name": "image_type",
+          "type": "string",
+          "required": true,
+          "enum": [
+            "160x160",
+            "160x240",
+            "24x24",
+            "50x50",
+            "510x128"
+          ]
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/appWidgets_getGroupImageUploadServer_response"
+        }
+      }
+    },
+    {
+      "name": "appWidgets.getGroupImages",
+      "description": "Returns a community collection of images for community app widgets",
+      "access_token_type": [
+        "group"
+      ],
+      "parameters": [
+        {
+          "name": "offset",
+          "description": "Offset needed to return a specific subset of images.",
+          "type": "integer",
+          "minimum": 0
+        },
+        {
+          "name": "count",
+          "description": "Maximum count of results.",
+          "type": "integer",
+          "default": 20,
+          "minimum": 0,
+          "maximum": 100
+        },
+        {
+          "name": "image_type",
+          "type": "string",
+          "enum": [
+            "160x160",
+            "160x240",
+            "24x24",
+            "50x50",
+            "510x128"
+          ]
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/appWidgets_getGroupImages_response"
+        }
+      }
+    },
+    {
+      "name": "appWidgets.getImagesById",
+      "description": "Returns an image for community app widgets by its ID",
+      "access_token_type": [
+        "user",
+        "group",
+        "service"
+      ],
+      "parameters": [
+        {
+          "name": "images",
+          "description": "List of images IDs",
+          "type": "array",
+          "required": true,
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 100
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/appWidgets_getImagesById_response"
+        }
+      }
+    },
+    {
+      "name": "appWidgets.saveAppImage",
+      "description": "Allows to save image into app collection for community app widgets",
+      "access_token_type": [
+        "user",
+        "service"
+      ],
+      "parameters": [
+        {
+          "name": "hash",
+          "description": "Parameter returned when photo is uploaded to server",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "image",
+          "description": "Parameter returned when photo is uploaded to server",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/appWidgets_saveAppImage_response"
+        }
+      },
+      "errors": [
+        {
+          "$ref": "errors.json#/errors/api_error_param_photo"
+        }
+      ]
+    },
+    {
+      "name": "appWidgets.saveGroupImage",
+      "description": "Allows to save image into community collection for community app widgets",
+      "access_token_type": [
+        "group"
+      ],
+      "parameters": [
+        {
+          "name": "hash",
+          "description": "Parameter returned when photo is uploaded to server",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "image",
+          "description": "Parameter returned when photo is uploaded to server",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/appWidgets_saveGroupImage_response"
+        }
+      },
+      "errors": [
+        {
+          "$ref": "errors.json#/errors/api_error_param_photo"
         }
       ]
     },
@@ -4530,6 +4996,29 @@
       }
     },
     {
+      "name": "fave.removeVideo",
+      "access_token_type": [
+        "user"
+      ],
+      "parameters": [
+        {
+          "name": "owner_id",
+          "type": "integer",
+          "required": true
+        },
+        {
+          "name": "id",
+          "type": "integer",
+          "required": true
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/base_ok_response"
+        }
+      }
+    },
+    {
       "name": "fave.reorderTags",
       "access_token_type": [
         "user"
@@ -5783,6 +6272,40 @@
       ]
     },
     {
+      "name": "groups.deleteAddress",
+      "access_token_type": [
+        "user",
+        "group"
+      ],
+      "parameters": [
+        {
+          "name": "group_id",
+          "type": "integer",
+          "required": true,
+          "minimum": 0
+        },
+        {
+          "name": "address_id",
+          "type": "integer",
+          "required": true,
+          "minimum": 0
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/base_ok_response"
+        }
+      },
+      "errors": [
+        {
+          "$ref": "errors.json#/errors/api_error_access_groups"
+        },
+        {
+          "$ref": "errors.json#/errors/api_error_not_found"
+        }
+      ]
+    },
+    {
       "name": "groups.deleteCallbackServer",
       "access_token_type": [
         "user",
@@ -6359,7 +6882,7 @@
         },
         {
           "name": "role",
-          "description": "Manager role. Possible values: *'moderator',, *'editor',, *'administrator'.",
+          "description": "Manager role. Possible values: *'moderator',, *'editor',, *'administrator',, *'advertiser'.",
           "type": "string",
           "$ref": "objects.json#/definitions/groups_group_role"
         },
@@ -7079,6 +7602,26 @@
       "responses": {
         "response": {
           "$ref": "responses.json#/definitions/groups_getSettings_response"
+        }
+      }
+    },
+    {
+      "name": "groups.getTagList",
+      "description": "List of group's tags",
+      "access_token_type": [
+        "user"
+      ],
+      "parameters": [
+        {
+          "name": "group_id",
+          "type": "integer",
+          "required": true,
+          "minimum": 0
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/groups_getTagList_response"
         }
       }
     },
@@ -7864,6 +8407,264 @@
       }
     },
     {
+      "name": "groups.setSettings",
+      "access_token_type": [
+        "user",
+        "group"
+      ],
+      "parameters": [
+        {
+          "name": "group_id",
+          "type": "integer",
+          "required": true,
+          "minimum": 0
+        },
+        {
+          "name": "messages",
+          "type": "boolean"
+        },
+        {
+          "name": "bots_capabilities",
+          "type": "boolean"
+        },
+        {
+          "name": "bots_start_button",
+          "type": "boolean"
+        },
+        {
+          "name": "bots_add_to_chat",
+          "type": "boolean"
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/base_ok_response"
+        }
+      }
+    },
+    {
+      "name": "groups.setUserNote",
+      "description": "In order to save note about group participant",
+      "access_token_type": [
+        "user"
+      ],
+      "parameters": [
+        {
+          "name": "group_id",
+          "type": "integer",
+          "required": true,
+          "minimum": 0
+        },
+        {
+          "name": "user_id",
+          "type": "integer",
+          "required": true,
+          "minimum": 0
+        },
+        {
+          "name": "note",
+          "description": "Note body",
+          "type": "string",
+          "maxLength": 96
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/base_bool_response"
+        }
+      }
+    },
+    {
+      "name": "groups.tagAdd",
+      "description": "Add new group's tag",
+      "access_token_type": [
+        "user"
+      ],
+      "parameters": [
+        {
+          "name": "group_id",
+          "type": "integer",
+          "required": true,
+          "minimum": 0
+        },
+        {
+          "name": "tag_name",
+          "type": "string",
+          "required": true,
+          "maxLength": 20
+        },
+        {
+          "name": "tag_color",
+          "type": "string",
+          "enum": [
+            "454647",
+            "45678f",
+            "4bb34b",
+            "5181b8",
+            "539b9c",
+            "5c9ce6",
+            "63b9ba",
+            "6bc76b",
+            "76787a",
+            "792ec0",
+            "7a6c4f",
+            "7ececf",
+            "9e8d6b",
+            "a162de",
+            "aaaeb3",
+            "bbaa84",
+            "e64646",
+            "ff5c5c",
+            "ffa000",
+            "ffc107"
+          ]
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/base_bool_response"
+        }
+      }
+    },
+    {
+      "name": "groups.tagBind",
+      "description": "Bind or unbind group's tag to user",
+      "access_token_type": [
+        "user"
+      ],
+      "parameters": [
+        {
+          "name": "group_id",
+          "type": "integer",
+          "required": true,
+          "minimum": 0
+        },
+        {
+          "name": "tag_id",
+          "type": "integer",
+          "required": true,
+          "minimum": 0
+        },
+        {
+          "name": "user_id",
+          "type": "integer",
+          "required": true,
+          "minimum": 0
+        },
+        {
+          "name": "act",
+          "description": "Describe the action",
+          "type": "string",
+          "required": true,
+          "enum": [
+            "bind",
+            "unbind"
+          ]
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/base_bool_response"
+        }
+      }
+    },
+    {
+      "name": "groups.tagDelete",
+      "description": "Delete group's tag",
+      "access_token_type": [
+        "user"
+      ],
+      "parameters": [
+        {
+          "name": "group_id",
+          "type": "integer",
+          "required": true,
+          "minimum": 0
+        },
+        {
+          "name": "tag_id",
+          "type": "integer",
+          "required": true,
+          "minimum": 0
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/base_bool_response"
+        }
+      }
+    },
+    {
+      "name": "groups.tagUpdate",
+      "description": "Update group's tag",
+      "access_token_type": [
+        "user"
+      ],
+      "parameters": [
+        {
+          "name": "group_id",
+          "type": "integer",
+          "required": true,
+          "minimum": 0
+        },
+        {
+          "name": "tag_id",
+          "type": "integer",
+          "required": true,
+          "minimum": 0
+        },
+        {
+          "name": "tag_name",
+          "type": "string",
+          "required": true,
+          "maxLength": 20
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/base_bool_response"
+        }
+      }
+    },
+    {
+      "name": "groups.toggleMarket",
+      "access_token_type": [
+        "user"
+      ],
+      "parameters": [
+        {
+          "name": "group_id",
+          "type": "integer",
+          "required": true,
+          "minimum": 0
+        },
+        {
+          "name": "state",
+          "type": "string",
+          "required": true,
+          "enum": [
+            "advanced",
+            "basic",
+            "none"
+          ],
+          "$ref": "objects.json#/definitions/groups_market_state"
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/base_ok_response"
+        }
+      },
+      "errors": [
+        {
+          "$ref": "errors.json#/errors/api_error_market_shop_already_enabled"
+        },
+        {
+          "$ref": "errors.json#/errors/api_error_market_shop_already_disabled"
+        }
+      ]
+    },
+    {
       "name": "groups.unban",
       "access_token_type": [
         "user"
@@ -8412,7 +9213,6 @@
           "name": "main_photo_id",
           "description": "Cover photo ID.",
           "type": "integer",
-          "required": true,
           "minimum": 0
         },
         {
@@ -8471,6 +9271,27 @@
         },
         {
           "$ref": "errors.json#/errors/api_error_market_item_has_bad_links"
+        },
+        {
+          "$ref": "errors.json#/errors/api_error_market_variant_not_found"
+        },
+        {
+          "$ref": "errors.json#/errors/api_error_market_property_not_found"
+        },
+        {
+          "$ref": "errors.json#/errors/api_error_market_grouping_items_must_have_distinct_properties"
+        },
+        {
+          "$ref": "errors.json#/errors/api_error_market_grouping_must_contain_more_than_one_item"
+        },
+        {
+          "$ref": "errors.json#/errors/api_error_market_photos_crop_invalid_format"
+        },
+        {
+          "$ref": "errors.json#/errors/api_error_market_photos_crop_overflow"
+        },
+        {
+          "$ref": "errors.json#/errors/api_error_market_photos_crop_size_too_low"
         }
       ]
     },
@@ -8814,6 +9635,15 @@
         },
         {
           "$ref": "errors.json#/errors/api_error_market_item_has_bad_links"
+        },
+        {
+          "$ref": "errors.json#/errors/api_error_market_photos_crop_invalid_format"
+        },
+        {
+          "$ref": "errors.json#/errors/api_error_market_photos_crop_overflow"
+        },
+        {
+          "$ref": "errors.json#/errors/api_error_market_photos_crop_size_too_low"
         }
       ]
     },
@@ -8906,6 +9736,54 @@
           "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
+    },
+    {
+      "name": "market.editOrder",
+      "description": "Edit order",
+      "access_token_type": [
+        "user",
+        "group"
+      ],
+      "parameters": [
+        {
+          "name": "user_id",
+          "type": "integer",
+          "required": true,
+          "minimum": 0
+        },
+        {
+          "name": "order_id",
+          "type": "integer",
+          "required": true,
+          "minimum": 0
+        },
+        {
+          "name": "merchant_comment",
+          "type": "string",
+          "maxLength": 400
+        },
+        {
+          "name": "status",
+          "type": "integer",
+          "minimum": 0
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/base_ok_response"
+        }
+      },
+      "errors": [
+        {
+          "$ref": "errors.json#/errors/api_error_market_orders_no_cart_items"
+        },
+        {
+          "$ref": "errors.json#/errors/api_error_market_invalid_dimensions"
+        },
+        {
+          "$ref": "errors.json#/errors/api_error_market_cant_change_vkpay_status"
+        }
+      ]
     },
     {
       "name": "market.get",
@@ -9162,6 +10040,139 @@
           "$ref": "errors.json#/errors/api_error_market_comments_closed"
         }
       ]
+    },
+    {
+      "name": "market.getGroupOrders",
+      "description": "Get market orders",
+      "access_token_type": [
+        "user",
+        "group"
+      ],
+      "parameters": [
+        {
+          "name": "group_id",
+          "type": "integer",
+          "required": true,
+          "minimum": 0
+        },
+        {
+          "name": "offset",
+          "type": "integer",
+          "default": 0,
+          "minimum": 0
+        },
+        {
+          "name": "count",
+          "type": "integer",
+          "default": 10,
+          "minimum": 1,
+          "maximum": 50
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/market_getGroupOrders_response"
+        }
+      },
+      "errors": [
+        {
+          "$ref": "errors.json#/errors/api_error_market_shop_not_enabled"
+        }
+      ]
+    },
+    {
+      "name": "market.getOrderById",
+      "description": "Get order",
+      "access_token_type": [
+        "user",
+        "group"
+      ],
+      "parameters": [
+        {
+          "name": "user_id",
+          "type": "integer",
+          "minimum": 0
+        },
+        {
+          "name": "order_id",
+          "type": "integer",
+          "required": true,
+          "minimum": 0
+        },
+        {
+          "name": "extended",
+          "type": "boolean"
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/market_getOrderById_response"
+        }
+      }
+    },
+    {
+      "name": "market.getOrderItems",
+      "description": "Get market items in the order",
+      "access_token_type": [
+        "user"
+      ],
+      "parameters": [
+        {
+          "name": "order_id",
+          "type": "integer",
+          "required": true,
+          "minimum": 0
+        },
+        {
+          "name": "offset",
+          "type": "integer",
+          "minimum": 0
+        },
+        {
+          "name": "count",
+          "type": "integer",
+          "default": 50,
+          "minimum": 0
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/market_getOrderItems_response"
+        }
+      }
+    },
+    {
+      "name": "market.getOrders",
+      "access_token_type": [
+        "user"
+      ],
+      "parameters": [
+        {
+          "name": "offset",
+          "type": "integer",
+          "default": 0,
+          "minimum": 0
+        },
+        {
+          "name": "count",
+          "type": "integer",
+          "default": 10,
+          "minimum": 0,
+          "maximum": 10
+        },
+        {
+          "name": "extended",
+          "type": "boolean"
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/market_getOrders_response"
+        },
+        "extendedResponse": {
+          "$ref": "responses.json#/definitions/market_getOrders_extended_response"
+        }
+      }
     },
     {
       "name": "market.removeFromAlbum",
@@ -10472,6 +11483,67 @@
       }
     },
     {
+      "name": "messages.getImportantMessages",
+      "description": "Returns a list of user's important messages.",
+      "access_token_type": [
+        "user",
+        "group"
+      ],
+      "parameters": [
+        {
+          "name": "count",
+          "description": "Amount of needed important messages.",
+          "type": "integer",
+          "default": 20,
+          "minimum": 0,
+          "maximum": 200
+        },
+        {
+          "name": "offset",
+          "type": "integer",
+          "minimum": 0
+        },
+        {
+          "name": "start_message_id",
+          "type": "integer",
+          "minimum": 0
+        },
+        {
+          "name": "preview_length",
+          "description": "Maximum length of messages body.",
+          "type": "integer",
+          "minimum": 0
+        },
+        {
+          "name": "fields",
+          "description": "Actors fields to return.",
+          "type": "array",
+          "items": {
+            "$ref": "objects.json#/definitions/base_user_group_fields"
+          }
+        },
+        {
+          "name": "extended",
+          "description": "Return extended properties",
+          "type": "boolean"
+        },
+        {
+          "name": "group_id",
+          "description": "Group ID (for group messages with group access token)",
+          "type": "integer",
+          "minimum": 0
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/messages_getImportantMessages_response"
+        },
+        "extendedResponse": {
+          "$ref": "responses.json#/definitions/messages_getImportantMessages_extended_response"
+        }
+      }
+    },
+    {
       "name": "messages.getInviteLink",
       "access_token_type": [
         "user",
@@ -11180,6 +12252,10 @@
           "$ref": "objects.json#/definitions/messages_keyboard"
         },
         {
+          "name": "template",
+          "type": "string"
+        },
+        {
           "name": "payload",
           "type": "string",
           "maxLength": 1000
@@ -11508,7 +12584,7 @@
       "parameters": [
         {
           "name": "filters",
-          "description": "Filters to apply: 'post' — new wall posts, 'photo' — new photos, 'photo_tag' — new photo tags, 'wall_photo' — new wall photos, 'friend' — new friends, 'note' — new notes",
+          "description": "Filters to apply: 'post' — new wall posts, 'photo' — new photos, 'photo_tag' — new photo tags, 'wall_photo' — new wall photos, 'friend' — new friends",
           "type": "array",
           "items": {
             "$ref": "objects.json#/definitions/newsfeed_filters"
@@ -15145,6 +16221,65 @@
       }
     },
     {
+      "name": "podcasts.clearRecentSearches",
+      "access_token_type": [
+        "user"
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/base_ok_response"
+        }
+      }
+    },
+    {
+      "name": "podcasts.getPopular",
+      "access_token_type": [
+        "user"
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/podcasts_getPopular_response"
+        }
+      }
+    },
+    {
+      "name": "podcasts.getRecentSearchRequests",
+      "access_token_type": [
+        "user"
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/podcasts_getRecentSearchRequests_response"
+        }
+      }
+    },
+    {
+      "name": "podcasts.search",
+      "access_token_type": [
+        "user"
+      ],
+      "parameters": [
+        {
+          "name": "search_string",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "offset",
+          "type": "integer"
+        },
+        {
+          "name": "count",
+          "type": "integer"
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/podcasts_search_response"
+        }
+      }
+    },
+    {
       "name": "polls.addVote",
       "description": "Adds the current user's vote to the selected answer in the poll.",
       "access_token_type": [
@@ -16449,15 +17584,21 @@
         {
           "name": "owner_id",
           "description": "Story owner's ID. Current user id is used by default.",
-          "type": "integer",
-          "required": true
+          "type": "integer"
         },
         {
           "name": "story_id",
           "description": "Story ID.",
           "type": "integer",
-          "required": true,
           "minimum": 0
+        },
+        {
+          "name": "stories",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 100
         }
       ],
       "responses": {
@@ -16896,6 +18037,28 @@
       }
     },
     {
+      "name": "stories.save",
+      "access_token_type": [
+        "user",
+        "group"
+      ],
+      "parameters": [
+        {
+          "name": "upload_results",
+          "type": "array",
+          "required": true,
+          "items": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/stories_save_response"
+        }
+      }
+    },
+    {
       "name": "stories.search",
       "access_token_type": [
         "user"
@@ -16950,6 +18113,45 @@
       "responses": {
         "response": {
           "$ref": "responses.json#/definitions/stories_get_V5113_response"
+        }
+      }
+    },
+    {
+      "name": "stories.sendInteraction",
+      "access_token_type": [
+        "user",
+        "service"
+      ],
+      "parameters": [
+        {
+          "name": "access_key",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "message",
+          "type": "string",
+          "maxLength": 1000
+        },
+        {
+          "name": "is_broadcast",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "name": "is_anonymous",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "name": "unseen_marker",
+          "type": "boolean",
+          "default": false
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/base_ok_response"
         }
       }
     },
@@ -18883,6 +20085,29 @@
       }
     },
     {
+      "name": "wall.checkCopyrightLink",
+      "access_token_type": [
+        "user"
+      ],
+      "parameters": [
+        {
+          "name": "link",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/base_bool_response"
+        }
+      },
+      "errors": [
+        {
+          "$ref": "errors.json#/errors/api_error_wall_check_link_cant_determine_source"
+        }
+      ]
+    },
+    {
       "name": "wall.closeComments",
       "access_token_type": [
         "user",
@@ -19373,7 +20598,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/wall_getById_response"
+          "$ref": "responses.json#/definitions/wall_getById_legacy_response"
         },
         "extendedResponse": {
           "$ref": "responses.json#/definitions/wall_getById_extended_response"

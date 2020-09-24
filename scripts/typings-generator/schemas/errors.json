@@ -1,5 +1,12 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
+  "definitions": {
+    "subcodes": {
+      "too_many_communities": {
+        "subcode": 1
+      }
+    }
+  },
   "errors": {
     "api_error_unknown": {
       "code": 1,
@@ -163,7 +170,12 @@
     },
     "api_error_limits": {
       "code": 103,
-      "description": "Out of limits"
+      "description": "Out of limits",
+      "subcodes": [
+        {
+          "$ref": "#/definitions/subcodes/too_many_communities"
+        }
+      ]
     },
     "api_error_not_found": {
       "code": 104,
@@ -670,6 +682,58 @@
       "code": 1408,
       "description": "Item has bad links in description"
     },
+    "api_error_market_shop_not_enabled": {
+      "code": 1409,
+      "description": "Shop not enabled"
+    },
+    "api_error_market_variant_not_found": {
+      "code": 1416,
+      "description": "Variant not found"
+    },
+    "api_error_market_property_not_found": {
+      "code": 1417,
+      "description": "Property not found"
+    },
+    "api_error_market_grouping_must_contain_more_than_one_item": {
+      "code": 1425,
+      "description": "Grouping must have two or more items"
+    },
+    "api_error_market_grouping_items_must_have_distinct_properties": {
+      "code": 1426,
+      "description": "Item must have distinct properties"
+    },
+    "api_error_market_orders_no_cart_items": {
+      "code": 1427,
+      "description": "Cart is empty"
+    },
+    "api_error_market_invalid_dimensions": {
+      "code": 1429,
+      "description": "Specify width, length, height and weight all together"
+    },
+    "api_error_market_cant_change_vkpay_status": {
+      "code": 1430,
+      "description": "VK Pay status can not be changed"
+    },
+    "api_error_market_shop_already_enabled": {
+      "code": 1431,
+      "description": "Market was already enabled in this group"
+    },
+    "api_error_market_shop_already_disabled": {
+      "code": 1432,
+      "description": "Market was already disabled in this group"
+    },
+    "api_error_market_photos_crop_invalid_format": {
+      "code": 1433,
+      "description": "Invalid image crop format"
+    },
+    "api_error_market_photos_crop_overflow": {
+      "code": 1434,
+      "description": "Crop bottom right corner is outside of the image"
+    },
+    "api_error_market_photos_crop_size_too_low": {
+      "code": 1435,
+      "description": "Crop size is less than the minimum"
+    },
     "api_error_story_expired": {
       "code": 1600,
       "description": "Story has already expired"
@@ -693,6 +757,10 @@
     "api_error_callback_api_servers_limit": {
       "code": 2000,
       "description": "Servers number limit is reached"
+    },
+    "api_error_wall_check_link_cant_determine_source": {
+      "code": 3102,
+      "description": "Specified link is incorrect (can't find source)"
     },
     "api_error_recaptcha": {
       "code": 3300,
