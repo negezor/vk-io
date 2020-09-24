@@ -11,7 +11,7 @@ const jsonSchemaTypes = {
 	array({ type, namespace, arrayUnion = false }) {
 		const { items } = type;
 
-		if (items.type in jsonSchemaTypes) {
+		if (items && items.type in jsonSchemaTypes) {
 			const {
 				type: arrayType,
 				description,
@@ -36,7 +36,7 @@ const jsonSchemaTypes = {
 			};
 		}
 
-		if (items.$ref) {
+		if (items && items.$ref) {
 			const [, group, refName] = items.$ref.match(MATCH_REF_RE);
 
 			const refIdentifierName = ts.createIdentifier(
