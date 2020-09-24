@@ -757,7 +757,6 @@ export class Upload {
 				'attach_access_key'
 			],
 
-			// @ts-expect-error
 			saveFiles: this.api.stories.save,
 
 			maxFiles: 1,
@@ -797,7 +796,6 @@ export class Upload {
 				'group_id'
 			],
 
-			// @ts-expect-error
 			saveFiles: this.api.stories.save,
 
 			maxFiles: 1,
