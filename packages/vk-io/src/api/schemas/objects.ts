@@ -58,6 +58,7 @@ export interface AccountAccountCounters {
     sdk?: number;
     [key: string]: any;
     menu_discover_badge?: number;
+    menu_clips_badge?: number;
 }
 
 export interface AccountInfo {
@@ -246,6 +247,8 @@ export type AddressesFields = "id" | "title" | "address" | "additional_address" 
 
 export type AdsAccessRole = "admin" | "manager" | "reports";
 
+export type AdsAccessRolePublic = "manager" | "reports";
+
 export interface AdsAccesses {
     /**
      * Client ID
@@ -259,6 +262,10 @@ export interface AdsAccount {
      * Account ID
      */
     account_id: number;
+    /**
+     * Account name
+     */
+    account_name: string;
     [key: string]: any;
 }
 
@@ -1046,6 +1053,27 @@ export interface AdsTargetGroup {
     [key: string]: any;
 }
 
+export interface AdsUpdateOfficeUsersResult {
+    [key: string]: any;
+    user_id: number;
+    is_success: boolean | number;
+}
+
+export interface AdsUserSpecification {
+    [key: string]: any;
+    user_id: number;
+    grant_access_to_all_clients?: boolean | number;
+    client_ids?: number[];
+    view_budget?: boolean | number;
+}
+
+export interface AdsUserSpecificationCutted {
+    [key: string]: any;
+    user_id: number;
+    client_id?: number;
+    view_budget?: boolean | number;
+}
+
 export interface AdsUsers {
     /**
      * User ID
@@ -1053,6 +1081,65 @@ export interface AdsUsers {
     user_id: number;
     [key: string]: any;
     accesses: AdsAccesses[];
+}
+
+export interface AdswebGetAdCategoriesResponseCategoriesCategory {
+    [key: string]: any;
+    id: number;
+    name: string;
+}
+
+export interface AdswebGetAdUnitsResponseAdUnitsAdUnit {
+    [key: string]: any;
+    id: number;
+    site_id: number;
+    name?: string;
+}
+
+export interface AdswebGetFraudHistoryResponseEntriesEntry {
+    [key: string]: any;
+    site_id: number;
+    day: string;
+}
+
+export interface AdswebGetSitesResponseSitesSite {
+    [key: string]: any;
+    id: number;
+    status_user?: string;
+    status_moder?: string;
+    domains?: string;
+}
+
+export interface AdswebGetStatisticsResponseItemsItem {
+    [key: string]: any;
+    site_id?: number;
+    ad_unit_id?: number;
+    overall_count?: number;
+    months_count?: number;
+    month_min?: string;
+    month_max?: string;
+    days_count?: number;
+    day_min?: string;
+    day_max?: string;
+    hours_count?: number;
+    hour_min?: string;
+    hour_max?: string;
+    stats?: AdswebGetStatisticsResponseItemsItemStatsPeriod[];
+}
+
+export interface AppWidgetsPhoto {
+    /**
+     * Image ID
+     */
+    id: string;
+    [key: string]: any;
+    images: BaseImage[];
+}
+
+export interface AppWidgetsPhotos {
+    [key: string]: any;
+    count?: number;
+    items?: AppWidgetsPhoto[];
 }
 
 export interface AppsApp1 {
@@ -1291,15 +1378,67 @@ export interface BaseCountry {
     [key: string]: any;
 }
 
+export interface BaseCropPhoto {
+    [key: string]: any;
+}
+
+export interface BaseCropPhotoCrop {
+    /**
+     * Coordinate X of the left upper corner
+     */
+    x: number;
+    /**
+     * Coordinate Y of the left upper corner
+     */
+    y: number;
+    /**
+     * Coordinate X of the right lower corner
+     */
+    x2: number;
+    /**
+     * Coordinate Y of the right lower corner
+     */
+    y2: number;
+    [key: string]: any;
+}
+
+export interface BaseCropPhotoRect {
+    /**
+     * Coordinate X of the left upper corner
+     */
+    x: number;
+    /**
+     * Coordinate Y of the left upper corner
+     */
+    y: number;
+    /**
+     * Coordinate X of the right lower corner
+     */
+    x2: number;
+    /**
+     * Coordinate Y of the right lower corner
+     */
+    y2: number;
+    [key: string]: any;
+}
+
 export interface BaseError {
     /**
      * Error code
      */
     error_code?: number;
     /**
+     * Error subcode
+     */
+    error_subcode?: number;
+    /**
      * Error message
      */
     error_msg?: string;
+    /**
+     * Localized error message
+     */
+    error_text?: string;
     [key: string]: any;
     request_params?: BaseRequestParam[];
 }
@@ -1463,11 +1602,15 @@ export interface BaseLinkButtonAction {
 
 export type BaseLinkButtonActionType = "open_url";
 
+export type BaseLinkButtonStyle = ;
+
 export interface BaseLinkProduct {
     [key: string]: any;
     merchant?: string;
     orders_count?: number;
 }
+
+export type BaseLinkProductStatus = "active" | "blocked" | "sold" | "deleted" | "archived";
 
 export interface BaseLinkRating {
     /**
@@ -1575,11 +1718,20 @@ export interface BasePlace {
 
 export type BasePropertyExists = 1;
 
+/*Count of views*/
 export interface BaseRepostsInfo {
     /**
-     * Reposts number
+     * Total reposts counter. Sum of wall and mail reposts counters
      */
     count?: number;
+    /**
+     * Wall reposts counter
+     */
+    wall_count?: number;
+    /**
+     * Mail reposts counter
+     */
+    mail_count?: number;
     /**
      * Information whether current user has reposted the post
      */
@@ -2821,6 +2973,7 @@ export interface GroupsGroupFull1 {
     can_upload_story?: BaseBoolInt;
     can_upload_video?: BaseBoolInt;
     has_photo?: BaseBoolInt;
+    crop_photo?: BaseCropPhoto;
     links?: GroupsLinksItem[];
     contacts?: GroupsContactsItem[];
     main_section?: GroupsGroupFullMainSection;
@@ -2832,6 +2985,7 @@ export interface GroupsGroupFull1 {
     age_limits?: GroupsGroupFullAgeLimits;
     ban_info?: GroupsGroupBanInfo;
     addresses?: GroupsAddressesInfo;
+    live_covers?: GroupsLiveCovers;
 }
 
 export type GroupsGroupFull = GroupsGroup & GroupsGroupFull1;
@@ -2875,9 +3029,17 @@ export interface GroupsGroupPublicCategoryList {
     subcategories?: GroupsGroupCategoryType[];
 }
 
-export type GroupsGroupRole = "moderator" | "editor" | "administrator";
+export type GroupsGroupRole = "moderator" | "editor" | "administrator" | "advertiser";
 
 export type GroupsGroupSubject = "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "10" | "11" | "12" | "13" | "14" | "15" | "16" | "17" | "18" | "19" | "20" | "21" | "22" | "23" | "24" | "25" | "26" | "27" | "28" | "29" | "30" | "31" | "32" | "33" | "34" | "35" | "36" | "37" | "38" | "39" | "40" | "41" | "42";
+
+export interface GroupsGroupTag {
+    [key: string]: any;
+    id: number;
+    name: string;
+    color: "454647" | "45678f" | "4bb34b" | "5181b8" | "539b9c" | "5c9ce6" | "63b9ba" | "6bc76b" | "76787a" | "792ec0" | "7a6c4f" | "7ececf" | "9e8d6b" | "a162de" | "aaaeb3" | "bbaa84" | "e64646" | "ff5c5c" | "ffa000" | "ffc107";
+    uses?: number;
+}
 
 export type GroupsGroupTopics = 0 | 1 | 2;
 
@@ -2965,6 +3127,19 @@ export interface GroupsLinksItem {
     [key: string]: any;
 }
 
+export interface GroupsLiveCovers {
+    /**
+     * Information whether live covers is enabled
+     */
+    is_enabled: boolean | number;
+    /**
+     * Information whether live covers photo scaling is enabled
+     */
+    is_scalable?: boolean | number;
+    [key: string]: any;
+    story_ids?: string[];
+}
+
 export interface GroupsLongPollEvents {
     [key: string]: any;
 }
@@ -3020,6 +3195,8 @@ export interface GroupsMarketInfo {
     price_min?: string;
     [key: string]: any;
 }
+
+export type GroupsMarketState = "none" | "basic" | "advanced";
 
 export interface GroupsMemberRole {
     /**
@@ -3349,6 +3526,35 @@ export interface MarketMarketItemFull1 {
 
 export type MarketMarketItemFull = MarketMarketItem & MarketMarketItemFull1;
 
+export interface MarketOrder {
+    [key: string]: any;
+    id: number;
+    group_id: number;
+    user_id: number;
+    display_order_id?: string;
+    date: number;
+    status: number;
+    items_count: number;
+    track_number?: string;
+    track_link?: string;
+    comment?: string;
+    address?: string;
+    merchant_comment?: string;
+    weight?: number;
+    tags?: MarketOrderTag[];
+    preview_order_items?: MarketOrderItem[];
+    price_details?: MarketOrderDetailsPrice[];
+}
+
+export interface MarketOrderItem {
+    [key: string]: any;
+    owner_id: number;
+    item_id: number;
+    quantity: number;
+    title?: string;
+    variants?: string[];
+}
+
 export interface MarketPrice {
     /**
      * Amount
@@ -3382,16 +3588,6 @@ export interface MediaRestriction {
     title: string;
     card_icon?: BaseImage[];
     list_icon?: BaseImage[];
-}
-
-export interface MessageChatPreview {
-    [key: string]: any;
-    admin_id?: number;
-    joined?: boolean | number;
-    local_id?: number;
-    members?: number[];
-    members_count?: number;
-    title?: string;
 }
 
 export interface MessagesAudioMessage {
@@ -3497,6 +3693,16 @@ export interface MessagesChatFull {
     type: string;
     [key: string]: any;
     users: MessagesUserXtrInvitedBy[];
+}
+
+export interface MessagesChatPreview {
+    [key: string]: any;
+    admin_id?: number;
+    joined?: boolean | number;
+    local_id?: number;
+    members?: number[];
+    members_count?: number;
+    title?: string;
 }
 
 export interface MessagesChatPushSettings {
@@ -3898,6 +4104,12 @@ export interface MessagesMessageRequestData {
     [key: string]: any;
 }
 
+export interface MessagesMessagesArray {
+    [key: string]: any;
+    count?: number;
+    items?: MessagesMessage[];
+}
+
 export interface MessagesPinnedMessage {
     /**
      * Unique auto-incremented number for all messages with this peer
@@ -3962,7 +4174,7 @@ export interface NewsfeedEventActivity {
     friends: number[];
 }
 
-export type NewsfeedFilters = "post" | "photo" | "photo_tag" | "wall_photo" | "friend" | "recommended_groups" | "note" | "audio" | "video" | "audio_playlist" | "clip";
+export type NewsfeedFilters = "post" | "photo" | "photo_tag" | "wall_photo" | "friend" | "recommended_groups" | "note" | "audio" | "video" | "audio_playlist" | "games_carousel" | "clip";
 
 export type NewsfeedIgnoreItemType = "wall" | "tag" | "profilephoto" | "video" | "photo" | "audio";
 
@@ -4041,21 +4253,6 @@ export interface NewsfeedItemHolidayRecommendationsBlockHeader {
     subtitle?: string;
     [key: string]: any;
     image?: BaseImage[];
-}
-
-export interface NewsfeedItemNote1 {
-    notes?: NewsfeedItemNoteNotes;
-}
-
-export type NewsfeedItemNote = NewsfeedItemBase & NewsfeedItemNote1;
-
-export interface NewsfeedItemNoteNotes {
-    /**
-     * Notes number
-     */
-    count?: number;
-    [key: string]: any;
-    items?: NewsfeedNewsfeedNote[];
 }
 
 export interface NewsfeedItemPhoto1 {
@@ -4230,26 +4427,6 @@ export type NewsfeedListFull = NewsfeedList & NewsfeedListFull1;
 export type NewsfeedNewsfeedItem = any;
 
 export type NewsfeedNewsfeedItemType = "post" | "photo" | "photo_tag" | "wall_photo" | "friend" | "note" | "audio" | "video" | "topic" | "digest" | "stories" | "tags_suggestions";
-
-export interface NewsfeedNewsfeedNote {
-    /**
-     * Comments Number
-     */
-    comments?: number;
-    /**
-     * Note ID
-     */
-    id?: number;
-    /**
-     * integer
-     */
-    owner_id?: number;
-    /**
-     * Note title
-     */
-    title?: string;
-    [key: string]: any;
-}
 
 export interface NewsfeedNewsfeedPhoto1 {
     likes?: BaseLikes;
@@ -5127,6 +5304,10 @@ export interface PhotosPhotoTag {
      */
     tagged_name: string;
     /**
+     * Tagged description.
+     */
+    description?: string;
+    /**
      * Tagged user ID
      */
     user_id: number;
@@ -5366,9 +5547,11 @@ export interface PhotosPhotoXtrTagInfo {
 export interface PhotosTagsSuggestionItem {
     [key: string]: any;
     title?: string;
+    caption?: string;
     type?: string;
     buttons?: PhotosTagsSuggestionItemButton[];
     tags?: PhotosPhotoTag[];
+    track_code?: string;
 }
 
 export interface PhotosTagsSuggestionItemButton {
@@ -5392,6 +5575,25 @@ export interface PhotosWallUploadResponse {
      */
     server?: number;
     [key: string]: any;
+}
+
+export interface PodcastPodcast {
+    /**
+     * ID of the podcast's owner
+     */
+    owner_id: number;
+    /**
+     * Podcast title
+     */
+    podcast_title: string;
+    [key: string]: any;
+}
+
+export interface PodcastPopularPodcast {
+    [key: string]: any;
+    owner_id?: number;
+    owner_title?: string;
+    url?: string;
 }
 
 export interface PollsAnswer {
@@ -5824,7 +6026,7 @@ export interface StatusStatus {
     /**
      * Status text
      */
-    text?: string;
+    text: string;
     [key: string]: any;
 }
 
@@ -5997,6 +6199,7 @@ export interface StoriesStory {
     narratives_count?: number;
     first_narrative_title?: string;
     birthday_wish_user_id?: number;
+    can_use_in_narrative?: boolean | number;
 }
 
 export interface StoriesStoryLink {
@@ -6025,7 +6228,7 @@ export interface StoriesStoryStatsStat {
 
 export type StoriesStoryStatsState = "on" | "off" | "hidden";
 
-export type StoriesStoryType = "photo" | "video" | "live_active" | "live_finished";
+export type StoriesStoryType = "photo" | "video" | "live_active" | "live_finished" | "birthday_invite";
 
 export type StoriesUploadLinkText = "to_store" | "vote" | "more" | "book" | "order" | "enroll" | "fill" | "signup" | "buy" | "ticket" | "write" | "open" | "learn_more" | "view" | "go_to" | "contact" | "watch" | "play" | "install" | "read" | "calendar";
 
@@ -6074,50 +6277,6 @@ export interface UsersCareer {
      * Till year
      */
     until?: number;
-    [key: string]: any;
-}
-
-export interface UsersCropPhoto {
-    [key: string]: any;
-}
-
-export interface UsersCropPhotoCrop {
-    /**
-     * Coordinate X of the left upper corner
-     */
-    x?: number;
-    /**
-     * Coordinate X of the right lower corner
-     */
-    x2?: number;
-    /**
-     * Coordinate Y of the left upper corner
-     */
-    y?: number;
-    /**
-     * Coordinate Y of the right lower corner
-     */
-    y2?: number;
-    [key: string]: any;
-}
-
-export interface UsersCropPhotoRect {
-    /**
-     * Coordinate X of the left upper corner
-     */
-    x?: number;
-    /**
-     * Coordinate X of the right lower corner
-     */
-    x2?: number;
-    /**
-     * Coordinate Y of the left upper corner
-     */
-    y?: number;
-    /**
-     * Coordinate Y of the right lower corner
-     */
-    y2?: number;
     [key: string]: any;
 }
 
@@ -6183,6 +6342,34 @@ export interface UsersOccupation {
      * Type of occupation
      */
     type?: string;
+    [key: string]: any;
+}
+
+export interface UsersOnlineInfo {
+    /**
+     * Whether you can see real online status of user or not
+     */
+    visible: boolean | number;
+    /**
+     * Last time we saw user being active
+     */
+    last_seen?: number;
+    /**
+     * Whether user is currently online or not
+     */
+    is_online?: boolean | number;
+    /**
+     * Application id from which user is currently online or was last seen online
+     */
+    app_id?: number;
+    /**
+     * Is user online from desktop app or mobile app
+     */
+    is_mobile?: boolean | number;
+    /**
+     * In case user online is not visible, it indicates approximate timeframe of user online
+     */
+    status?: "recently" | "last_week" | "last_month" | "long_ago" | "not_show";
     [key: string]: any;
 }
 
@@ -6358,6 +6545,7 @@ export interface UsersUser1 {
      */
     online_app?: number;
     sex?: BaseSex;
+    online_info?: UsersOnlineInfo;
     online?: BaseBoolInt;
     online_mobile?: BaseBoolInt;
     verified?: BaseBoolInt;
@@ -6633,7 +6821,7 @@ export interface UsersUserFull1 {
      * Can subscribe to wall
      */
     can_subscribe_posts?: boolean | number;
-    city?: BaseObject;
+    city?: BaseCity;
     country?: BaseCountry;
     owner_state?: OwnerState;
     has_photo?: BaseBoolInt;
@@ -6648,7 +6836,7 @@ export interface UsersUserFull1 {
     status_audio?: AudioAudio;
     last_seen?: UsersLastSeen;
     exports?: UsersExports;
-    crop_photo?: UsersCropPhoto;
+    crop_photo?: BaseCropPhoto;
     blacklisted?: BaseBoolInt;
     blacklisted_by_me?: BaseBoolInt;
     is_favorite?: BaseBoolInt;
@@ -6774,7 +6962,7 @@ export interface UtilsDomainResolved {
     [key: string]: any;
 }
 
-export type UtilsDomainResolvedType = "user" | "group" | "application" | "page";
+export type UtilsDomainResolvedType = "user" | "group" | "application" | "page" | "vk_app";
 
 export interface UtilsLastShortenedLink {
     /**

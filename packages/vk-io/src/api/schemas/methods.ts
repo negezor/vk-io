@@ -222,15 +222,59 @@ export interface APIAds {
      */
     updateClients(params: Params.AdsUpdateClientsParams): Promise<Responses.AdsUpdateClientsResponse>;
     /**
+     * Adds managers and/or supervisors to advertising account.
+     */
+    updateOfficeUsers(params: Params.AdsUpdateOfficeUsersParams): Promise<Responses.AdsUpdateOfficeUsersResponse>;
+    /**
      * Edits a retarget group.
      */
     updateTargetGroup(params: Params.AdsUpdateTargetGroupParams): Promise<Responses.BaseOkResponse>;
 }
 
 /**
+ * The API adsweb group
+ */
+export interface APIAdsweb {
+    getAdCategories(params: Params.AdswebGetAdCategoriesParams): Promise<Responses.AdswebGetAdCategoriesResponse>;
+    getAdUnitCode(params: Params.AdswebGetAdUnitCodeParams): Promise<Responses.AdswebGetAdUnitCodeResponse>;
+    getAdUnits(params: Params.AdswebGetAdUnitsParams): Promise<Responses.AdswebGetAdUnitsResponse>;
+    getFraudHistory(params: Params.AdswebGetFraudHistoryParams): Promise<Responses.AdswebGetFraudHistoryResponse>;
+    getSites(params: Params.AdswebGetSitesParams): Promise<Responses.AdswebGetSitesResponse>;
+    getStatistics(params: Params.AdswebGetStatisticsParams): Promise<Responses.AdswebGetStatisticsResponse>;
+}
+
+/**
  * The API appWidgets group
  */
 export interface APIAppWidgets {
+    /**
+     * Returns a URL for uploading a photo to the community collection for community app widgets
+     */
+    getAppImageUploadServer(params: Params.AppWidgetsGetAppImageUploadServerParams): Promise<Responses.AppWidgetsGetAppImageUploadServerResponse>;
+    /**
+     * Returns an app collection of images for community app widgets
+     */
+    getAppImages(params: Params.AppWidgetsGetAppImagesParams): Promise<Responses.AppWidgetsGetAppImagesResponse>;
+    /**
+     * Returns a URL for uploading a photo to the community collection for community app widgets
+     */
+    getGroupImageUploadServer(params: Params.AppWidgetsGetGroupImageUploadServerParams): Promise<Responses.AppWidgetsGetGroupImageUploadServerResponse>;
+    /**
+     * Returns a community collection of images for community app widgets
+     */
+    getGroupImages(params: Params.AppWidgetsGetGroupImagesParams): Promise<Responses.AppWidgetsGetGroupImagesResponse>;
+    /**
+     * Returns an image for community app widgets by its ID
+     */
+    getImagesById(params: Params.AppWidgetsGetImagesByIdParams): Promise<Responses.AppWidgetsGetImagesByIdResponse>;
+    /**
+     * Allows to save image into app collection for community app widgets
+     */
+    saveAppImage(params: Params.AppWidgetsSaveAppImageParams): Promise<Responses.AppWidgetsSaveAppImageResponse>;
+    /**
+     * Allows to save image into community collection for community app widgets
+     */
+    saveGroupImage(params: Params.AppWidgetsSaveGroupImageParams): Promise<Responses.AppWidgetsSaveGroupImageResponse>;
     /**
      * Allows to update community app widget
      */
@@ -488,6 +532,7 @@ export interface APIFave {
     removePost(params: Params.FaveRemovePostParams): Promise<Responses.BaseOkResponse>;
     removeProduct(params: Params.FaveRemoveProductParams): Promise<Responses.BaseOkResponse>;
     removeTag(params: Params.FaveRemoveTagParams): Promise<Responses.BaseOkResponse>;
+    removeVideo(params: Params.FaveRemoveVideoParams): Promise<Responses.BaseOkResponse>;
     reorderTags(params: Params.FaveReorderTagsParams): Promise<Responses.BaseOkResponse>;
     setPageTags(params: Params.FaveSetPageTagsParams): Promise<Responses.BaseOkResponse>;
     setTags(params: Params.FaveSetTagsParams): Promise<Responses.BaseOkResponse>;
@@ -601,6 +646,7 @@ export interface APIGroups {
      * Creates a new community.
      */
     create(params: Params.GroupsCreateParams): Promise<Responses.GroupsCreateResponse>;
+    deleteAddress(params: Params.GroupsDeleteAddressParams): Promise<Responses.BaseOkResponse>;
     deleteCallbackServer(params: Params.GroupsDeleteCallbackServerParams): Promise<Responses.BaseOkResponse>;
     /**
      * Allows to delete a link from the community.
@@ -683,6 +729,10 @@ export interface APIGroups {
      * Returns community settings.
      */
     getSettings(params: Params.GroupsGetSettingsParams): Promise<Responses.GroupsGetSettingsResponse>;
+    /**
+     * List of group's tags
+     */
+    getTagList(params: Params.GroupsGetTagListParams): Promise<Responses.GroupsGetTagListResponse>;
     getTokenPermissions(params: Params.GroupsGetTokenPermissionsParams): Promise<Responses.GroupsGetTokenPermissionsResponse>;
     /**
      * Allows to invite friends to the community.
@@ -720,6 +770,28 @@ export interface APIGroups {
      * Sets Long Poll notification settings
      */
     setLongPollSettings(params: Params.GroupsSetLongPollSettingsParams): Promise<Responses.BaseOkResponse>;
+    setSettings(params: Params.GroupsSetSettingsParams): Promise<Responses.BaseOkResponse>;
+    /**
+     * In order to save note about group participant
+     */
+    setUserNote(params: Params.GroupsSetUserNoteParams): Promise<Responses.BaseBoolResponse>;
+    /**
+     * Add new group's tag
+     */
+    tagAdd(params: Params.GroupsTagAddParams): Promise<Responses.BaseBoolResponse>;
+    /**
+     * Bind or unbind group's tag to user
+     */
+    tagBind(params: Params.GroupsTagBindParams): Promise<Responses.BaseBoolResponse>;
+    /**
+     * Delete group's tag
+     */
+    tagDelete(params: Params.GroupsTagDeleteParams): Promise<Responses.BaseBoolResponse>;
+    /**
+     * Update group's tag
+     */
+    tagUpdate(params: Params.GroupsTagUpdateParams): Promise<Responses.BaseBoolResponse>;
+    toggleMarket(params: Params.GroupsToggleMarketParams): Promise<Responses.BaseOkResponse>;
     unban(params: Params.GroupsUnbanParams): Promise<Responses.BaseOkResponse>;
 }
 
@@ -820,6 +892,10 @@ export interface APIMarket {
      */
     editComment(params: Params.MarketEditCommentParams): Promise<Responses.BaseOkResponse>;
     /**
+     * Edit order
+     */
+    editOrder(params: Params.MarketEditOrderParams): Promise<Responses.BaseOkResponse>;
+    /**
      * Returns items list for a community.
      */
     get(params: Params.MarketGetParams): Promise<Responses.MarketGetResponse>;
@@ -843,6 +919,19 @@ export interface APIMarket {
      * Returns comments list for an item.
      */
     getComments(params: Params.MarketGetCommentsParams): Promise<Responses.MarketGetCommentsResponse>;
+    /**
+     * Get market orders
+     */
+    getGroupOrders(params: Params.MarketGetGroupOrdersParams): Promise<Responses.MarketGetGroupOrdersResponse>;
+    /**
+     * Get order
+     */
+    getOrderById(params: Params.MarketGetOrderByIdParams): Promise<Responses.MarketGetOrderByIdResponse>;
+    /**
+     * Get market items in the order
+     */
+    getOrderItems(params: Params.MarketGetOrderItemsParams): Promise<Responses.MarketGetOrderItemsResponse>;
+    getOrders(params: Params.MarketGetOrdersParams): Promise<Responses.MarketGetOrdersResponse>;
     /**
      * Removes an item from one or multiple collections.
      */
@@ -946,6 +1035,10 @@ export interface APIMessages {
      * Returns media files from the dialog or group chat.
      */
     getHistoryAttachments(params: Params.MessagesGetHistoryAttachmentsParams): Promise<Responses.MessagesGetHistoryAttachmentsResponse>;
+    /**
+     * Returns a list of user's important messages.
+     */
+    getImportantMessages(params: Params.MessagesGetImportantMessagesParams): Promise<Responses.MessagesGetImportantMessagesResponse>;
     getInviteLink(params: Params.MessagesGetInviteLinkParams): Promise<Responses.MessagesGetInviteLinkResponse>;
     /**
      * Returns a user's current status and date of last activity.
@@ -1392,6 +1485,16 @@ export interface APIPhotos {
 }
 
 /**
+ * The API podcasts group
+ */
+export interface APIPodcasts {
+    clearRecentSearches(params: Params.PodcastsClearRecentSearchesParams): Promise<Responses.BaseOkResponse>;
+    getPopular(params: Params.PodcastsGetPopularParams): Promise<Responses.PodcastsGetPopularResponse>;
+    getRecentSearchRequests(params: Params.PodcastsGetRecentSearchRequestsParams): Promise<Responses.PodcastsGetRecentSearchRequestsResponse>;
+    search(params: Params.PodcastsSearchParams): Promise<Responses.PodcastsSearchResponse>;
+}
+
+/**
  * The API polls group
  */
 export interface APIPolls {
@@ -1588,7 +1691,9 @@ export interface APIStories {
      * Hides the reply to the current user's story.
      */
     hideReply(params: Params.StoriesHideReplyParams): Promise<Responses.BaseOkResponse>;
+    save(params: Params.StoriesSaveParams): Promise<Responses.StoriesSaveResponse>;
     search(params: Params.StoriesSearchParams): Promise<Responses.StoriesGetV5113Response>;
+    sendInteraction(params: Params.StoriesSendInteractionParams): Promise<Responses.BaseOkResponse>;
     /**
      * Allows to show stories from hidden sources in current user's feed.
      */
@@ -1763,6 +1868,7 @@ export interface APIVideo {
  * The API wall group
  */
 export interface APIWall {
+    checkCopyrightLink(params: Params.WallCheckCopyrightLinkParams): Promise<Responses.BaseBoolResponse>;
     closeComments(params: Params.WallCloseCommentsParams): Promise<Responses.BaseBoolResponse>;
     /**
      * Adds a comment to a post on a user wall or community wall.
@@ -1795,7 +1901,7 @@ export interface APIWall {
     /**
      * Returns a list of posts from user or community walls by their IDs.
      */
-    getById(params: Params.WallGetByIdParams): Promise<Responses.WallGetByIdResponse>;
+    getById(params: Params.WallGetByIdParams): Promise<Responses.WallGetByIdLegacyResponse>;
     /**
      * Returns a comment on a post on a user wall or community wall.
      */
@@ -1874,6 +1980,10 @@ export interface APIMethods {
      * The API ads group
      */
     ads: APIAds;
+    /**
+     * The API adsweb group
+     */
+    adsweb: APIAdsweb;
     /**
      * The API appWidgets group
      */
@@ -1958,6 +2068,10 @@ export interface APIMethods {
      * The API photos group
      */
     photos: APIPhotos;
+    /**
+     * The API podcasts group
+     */
+    podcasts: APIPodcasts;
     /**
      * The API polls group
      */

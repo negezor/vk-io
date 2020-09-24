@@ -258,10 +258,7 @@ export interface AdsAddOfficeUsersParams {
      * Advertising account ID.
      */
     account_id: number;
-    /**
-     * Serialized JSON array of objects that describe added managers. Description of 'user_specification' objects see below.
-     */
-    data: string;
+    data?: Objects.AdsUserSpecificationCutted[];
     [key: string]: any;
 }
 
@@ -824,6 +821,15 @@ export interface AdsUpdateClientsParams {
     [key: string]: any;
 }
 
+export interface AdsUpdateOfficeUsersParams {
+    /**
+     * Advertising account ID.
+     */
+    account_id: number;
+    data?: Objects.AdsUserSpecification[];
+    [key: string]: any;
+}
+
 export interface AdsUpdateTargetGroupParams {
     /**
      * Advertising account ID.
@@ -851,6 +857,120 @@ export interface AdsUpdateTargetGroupParams {
     lifetime: number;
     target_pixel_id?: number;
     target_pixel_rules?: string;
+    [key: string]: any;
+}
+
+export interface AdswebGetAdCategoriesParams {
+    office_id: number;
+    [key: string]: any;
+}
+
+export interface AdswebGetAdUnitCodeParams {
+    [key: string]: any;
+}
+
+export interface AdswebGetAdUnitsParams {
+    office_id: number;
+    sites_ids?: string;
+    ad_units_ids?: string;
+    fields?: string;
+    limit?: number;
+    offset?: number;
+    [key: string]: any;
+}
+
+export interface AdswebGetFraudHistoryParams {
+    office_id: number;
+    sites_ids?: string;
+    limit?: number;
+    offset?: number;
+    [key: string]: any;
+}
+
+export interface AdswebGetSitesParams {
+    office_id: number;
+    sites_ids?: string;
+    fields?: string;
+    limit?: number;
+    offset?: number;
+    [key: string]: any;
+}
+
+export interface AdswebGetStatisticsParams {
+    office_id: number;
+    ids_type: string;
+    ids: string;
+    period: string;
+    date_from: string;
+    date_to: string;
+    fields?: string;
+    limit?: number;
+    page_id?: string;
+    [key: string]: any;
+}
+
+export interface AppWidgetsGetAppImageUploadServerParams {
+    image_type: "160x160" | "160x240" | "24x24" | "50x50" | "510x128";
+    [key: string]: any;
+}
+
+export interface AppWidgetsGetAppImagesParams {
+    /**
+     * Offset needed to return a specific subset of images.
+     */
+    offset?: number;
+    /**
+     * Maximum count of results.
+     */
+    count?: number;
+    image_type?: "160x160" | "160x240" | "24x24" | "50x50" | "510x128";
+    [key: string]: any;
+}
+
+export interface AppWidgetsGetGroupImageUploadServerParams {
+    image_type: "160x160" | "160x240" | "24x24" | "50x50" | "510x128";
+    [key: string]: any;
+}
+
+export interface AppWidgetsGetGroupImagesParams {
+    /**
+     * Offset needed to return a specific subset of images.
+     */
+    offset?: number;
+    /**
+     * Maximum count of results.
+     */
+    count?: number;
+    image_type?: "160x160" | "160x240" | "24x24" | "50x50" | "510x128";
+    [key: string]: any;
+}
+
+export interface AppWidgetsGetImagesByIdParams {
+    images?: string[] | string;
+    [key: string]: any;
+}
+
+export interface AppWidgetsSaveAppImageParams {
+    /**
+     * Parameter returned when photo is uploaded to server
+     */
+    hash: string;
+    /**
+     * Parameter returned when photo is uploaded to server
+     */
+    image: string;
+    [key: string]: any;
+}
+
+export interface AppWidgetsSaveGroupImageParams {
+    /**
+     * Parameter returned when photo is uploaded to server
+     */
+    hash: string;
+    /**
+     * Parameter returned when photo is uploaded to server
+     */
+    image: string;
     [key: string]: any;
 }
 
@@ -1722,6 +1842,12 @@ export interface FaveRemoveTagParams {
     [key: string]: any;
 }
 
+export interface FaveRemoveVideoParams {
+    owner_id: number;
+    id: number;
+    [key: string]: any;
+}
+
 export interface FaveReorderTagsParams {
     ids?: number[] | number;
     [key: string]: any;
@@ -2123,6 +2249,12 @@ export interface GroupsCreateParams {
      * Public page subtype. Possible values: *'1' – place or small business,, *'2' – company, organization or website,, *'3' – famous person or group of people,, *'4' – product or work of art.
      */
     subtype?: 1 | 2 | 3 | 4;
+    [key: string]: any;
+}
+
+export interface GroupsDeleteAddressParams {
+    group_id: number;
+    address_id: number;
     [key: string]: any;
 }
 
@@ -2585,6 +2717,11 @@ export interface GroupsGetSettingsParams {
     [key: string]: any;
 }
 
+export interface GroupsGetTagListParams {
+    group_id: number;
+    [key: string]: any;
+}
+
 export interface GroupsGetTokenPermissionsParams {
     [key: string]: any;
 }
@@ -3027,6 +3164,62 @@ export interface GroupsSetLongPollSettingsParams {
     [key: string]: any;
 }
 
+export interface GroupsSetSettingsParams {
+    group_id: number;
+    messages?: boolean | number;
+    bots_capabilities?: boolean | number;
+    bots_start_button?: boolean | number;
+    bots_add_to_chat?: boolean | number;
+    [key: string]: any;
+}
+
+export interface GroupsSetUserNoteParams {
+    /**
+     * Note body
+     */
+    note?: string;
+    group_id: number;
+    user_id: number;
+    [key: string]: any;
+}
+
+export interface GroupsTagAddParams {
+    group_id: number;
+    tag_name: string;
+    tag_color?: "454647" | "45678f" | "4bb34b" | "5181b8" | "539b9c" | "5c9ce6" | "63b9ba" | "6bc76b" | "76787a" | "792ec0" | "7a6c4f" | "7ececf" | "9e8d6b" | "a162de" | "aaaeb3" | "bbaa84" | "e64646" | "ff5c5c" | "ffa000" | "ffc107";
+    [key: string]: any;
+}
+
+export interface GroupsTagBindParams {
+    /**
+     * Describe the action
+     */
+    act: "bind" | "unbind";
+    group_id: number;
+    tag_id: number;
+    user_id: number;
+    [key: string]: any;
+}
+
+export interface GroupsTagDeleteParams {
+    group_id: number;
+    tag_id: number;
+    [key: string]: any;
+}
+
+export interface GroupsTagUpdateParams {
+    group_id: number;
+    tag_id: number;
+    tag_name: string;
+    [key: string]: any;
+}
+
+export interface GroupsToggleMarketParams {
+    group_id: number;
+    state?: Objects.GroupsMarketState;
+    [key: string]: any;
+}
+
 export interface GroupsUnbanParams {
     group_id: number;
     owner_id?: number;
@@ -3260,7 +3453,7 @@ export interface MarketAddParams {
     /**
      * Cover photo ID.
      */
-    main_photo_id: number;
+    main_photo_id?: number;
     /**
      * Url for button in market item.
      */
@@ -3458,6 +3651,14 @@ export interface MarketEditCommentParams {
     [key: string]: any;
 }
 
+export interface MarketEditOrderParams {
+    user_id: number;
+    order_id: number;
+    merchant_comment?: string;
+    status?: number;
+    [key: string]: any;
+}
+
 export interface MarketGetParams {
     /**
      * ID of an item owner community, "Note that community id in the 'owner_id' parameter should be negative number. For example 'owner_id'=-1 matches the [vk.com/apiclub|VK API] community "
@@ -3556,6 +3757,34 @@ export interface MarketGetCommentsParams {
     extended?: boolean | number;
     offset?: number;
     fields?: Objects.UsersFields[];
+    [key: string]: any;
+}
+
+export interface MarketGetGroupOrdersParams {
+    group_id: number;
+    offset?: number;
+    count?: number;
+    [key: string]: any;
+}
+
+export interface MarketGetOrderByIdParams {
+    user_id?: number;
+    order_id: number;
+    extended?: boolean | number;
+    [key: string]: any;
+}
+
+export interface MarketGetOrderItemsParams {
+    order_id: number;
+    offset?: number;
+    count?: number;
+    [key: string]: any;
+}
+
+export interface MarketGetOrdersParams {
+    offset?: number;
+    count?: number;
+    extended?: boolean | number;
     [key: string]: any;
 }
 
@@ -4013,6 +4242,29 @@ export interface MessagesGetHistoryAttachmentsParams {
     [key: string]: any;
 }
 
+export interface MessagesGetImportantMessagesParams {
+    /**
+     * Amount of needed important messages.
+     */
+    count?: number;
+    /**
+     * Maximum length of messages body.
+     */
+    preview_length?: number;
+    /**
+     * Return extended properties
+     */
+    extended?: boolean | number;
+    /**
+     * Group ID (for group messages with group access token)
+     */
+    group_id?: number;
+    offset?: number;
+    start_message_id?: number;
+    fields?: Objects.BaseUserGroupFields[];
+    [key: string]: any;
+}
+
 export interface MessagesGetInviteLinkParams {
     /**
      * Destination ID.
@@ -4310,6 +4562,7 @@ export interface MessagesSendParams {
     reply_to?: number;
     forward_messages?: number[] | number;
     keyboard?: any;
+    template?: any;
     payload?: string;
     dont_parse_links?: boolean | number;
     disable_mentions?: boolean | number;
@@ -5878,6 +6131,25 @@ export interface PhotosSearchParams {
     [key: string]: any;
 }
 
+export interface PodcastsClearRecentSearchesParams {
+    [key: string]: any;
+}
+
+export interface PodcastsGetPopularParams {
+    [key: string]: any;
+}
+
+export interface PodcastsGetRecentSearchRequestsParams {
+    [key: string]: any;
+}
+
+export interface PodcastsSearchParams {
+    search_string: string;
+    offset?: number;
+    count?: number;
+    [key: string]: any;
+}
+
 export interface PollsAddVoteParams {
     /**
      * ID of the user or community that owns the poll. Use a negative value to designate a community ID.
@@ -6274,11 +6546,12 @@ export interface StoriesDeleteParams {
     /**
      * Story owner's ID. Current user id is used by default.
      */
-    owner_id: number;
+    owner_id?: number;
     /**
      * Story ID.
      */
-    story_id: number;
+    story_id?: number;
+    stories?: string[] | string;
     [key: string]: any;
 }
 
@@ -6438,6 +6711,11 @@ export interface StoriesHideReplyParams {
     [key: string]: any;
 }
 
+export interface StoriesSaveParams {
+    upload_results?: string[] | string;
+    [key: string]: any;
+}
+
 export interface StoriesSearchParams {
     q?: string;
     place_id?: number;
@@ -6448,6 +6726,15 @@ export interface StoriesSearchParams {
     count?: number;
     extended?: boolean | number;
     fields?: string[] | string;
+    [key: string]: any;
+}
+
+export interface StoriesSendInteractionParams {
+    access_key: string;
+    message?: string;
+    is_broadcast?: boolean | number;
+    is_anonymous?: boolean | number;
+    unseen_marker?: boolean | number;
     [key: string]: any;
 }
 
@@ -7195,6 +7482,11 @@ export interface VideoSearchParams {
     longer?: number;
     shorter?: number;
     extended?: boolean | number;
+    [key: string]: any;
+}
+
+export interface WallCheckCopyrightLinkParams {
+    link: string;
     [key: string]: any;
 }
 

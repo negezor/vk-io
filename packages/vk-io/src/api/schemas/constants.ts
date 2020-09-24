@@ -949,6 +949,84 @@ export enum APIErrorCode {
      */
     MARKET_ITEM_HAS_BAD_LINKS = 1408,
     /**
+     * Shop not enabled
+     *
+     * Code: `1409`
+     */
+    MARKET_SHOP_NOT_ENABLED = 1409,
+    /**
+     * Variant not found
+     *
+     * Code: `1416`
+     */
+    MARKET_VARIANT_NOT_FOUND = 1416,
+    /**
+     * Property not found
+     *
+     * Code: `1417`
+     */
+    MARKET_PROPERTY_NOT_FOUND = 1417,
+    /**
+     * Grouping must have two or more items
+     *
+     * Code: `1425`
+     */
+    MARKET_GROUPING_MUST_CONTAIN_MORE_THAN_ONE_ITEM = 1425,
+    /**
+     * Item must have distinct properties
+     *
+     * Code: `1426`
+     */
+    MARKET_GROUPING_ITEMS_MUST_HAVE_DISTINCT_PROPERTIES = 1426,
+    /**
+     * Cart is empty
+     *
+     * Code: `1427`
+     */
+    MARKET_ORDERS_NO_CART_ITEMS = 1427,
+    /**
+     * Specify width, length, height and weight all together
+     *
+     * Code: `1429`
+     */
+    MARKET_INVALID_DIMENSIONS = 1429,
+    /**
+     * VK Pay status can not be changed
+     *
+     * Code: `1430`
+     */
+    MARKET_CANT_CHANGE_VKPAY_STATUS = 1430,
+    /**
+     * Market was already enabled in this group
+     *
+     * Code: `1431`
+     */
+    MARKET_SHOP_ALREADY_ENABLED = 1431,
+    /**
+     * Market was already disabled in this group
+     *
+     * Code: `1432`
+     */
+    MARKET_SHOP_ALREADY_DISABLED = 1432,
+    /**
+     * Invalid image crop format
+     *
+     * Code: `1433`
+     */
+    MARKET_PHOTOS_CROP_INVALID_FORMAT = 1433,
+    /**
+     * Crop bottom right corner is outside of the image
+     *
+     * Code: `1434`
+     */
+    MARKET_PHOTOS_CROP_OVERFLOW = 1434,
+    /**
+     * Crop size is less than the minimum
+     *
+     * Code: `1435`
+     */
+    MARKET_PHOTOS_CROP_SIZE_TOO_LOW = 1435,
+    /**
      * Story has already expired
      *
      * Code: `1600`
@@ -984,6 +1062,12 @@ export enum APIErrorCode {
      * Code: `2000`
      */
     CALLBACK_API_SERVERS_LIMIT = 2000,
+    /**
+     * Specified link is incorrect (can't find source)
+     *
+     * Code: `3102`
+     */
+    WALL_CHECK_LINK_CANT_DETERMINE_SOURCE = 3102,
     /**
      * Recaptcha needed
      *
