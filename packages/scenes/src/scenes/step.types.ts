@@ -10,10 +10,10 @@ export interface IStepContext extends IContext {
 	};
 }
 
+export type StepSceneHandler<T = {}> = (context: IStepContext & T) => unknown;
+
 export interface IStepSceneOptions<T> {
 	steps: StepSceneHandler<T>[];
 	enterHandler?: StepSceneHandler<T>;
 	leaveHandler?: StepSceneHandler<T>;
 }
-
-export type StepSceneHandler<T = {}> = (context: IStepContext & T) => unknown;
