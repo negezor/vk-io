@@ -55,6 +55,15 @@ module.exports = {
 				link: '/ru/guide/introduction',
 			},
 			{
+				text: 'Community [RU]',
+				items: [
+					{
+						text: 'Telegram [RU]',
+						link: 'https://t.me/vkio_ru',
+					}
+				]
+			},
+			{
 				text: 'References',
 				link: '/references/'
 			},
