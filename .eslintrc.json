@@ -46,6 +46,7 @@
 			"extendDefaults": true
 		}],
 		"@typescript-eslint/indent": ["error", "tab"],
+		"@typescript-eslint/no-shadow": ["error"],
 		"@typescript-eslint/semi": ["error"],
 		"import/extensions": ["error", "ignorePackages", {
 			"js": "never",
@@ -68,6 +69,7 @@
 		"no-tabs": ["error", {
 			"allowIndentationTabs": true
 		}],
+		"no-shadow": "off",
 		"camelcase": "off",
 		"indent": "off",
 		"semi": "off"
