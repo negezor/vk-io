@@ -1124,7 +1124,7 @@ export interface AdswebGetStatisticsResponseItemsItem {
     hours_count?: number;
     hour_min?: string;
     hour_max?: string;
-    stats?: AdswebGetStatisticsResponseItemsItemStatsPeriod[];
+    stats?: any;
 }
 
 export interface AppWidgetsPhoto {
@@ -1602,7 +1602,7 @@ export interface BaseLinkButtonAction {
 
 export type BaseLinkButtonActionType = "open_url";
 
-export type BaseLinkButtonStyle = ;
+export type BaseLinkButtonStyle = any;
 
 export interface BaseLinkProduct {
     [key: string]: any;
@@ -3541,9 +3541,9 @@ export interface MarketOrder {
     address?: string;
     merchant_comment?: string;
     weight?: number;
-    tags?: MarketOrderTag[];
+    tags?: any[];
     preview_order_items?: MarketOrderItem[];
-    price_details?: MarketOrderDetailsPrice[];
+    price_details?: any[];
 }
 
 export interface MarketOrderItem {
