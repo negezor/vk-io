@@ -734,7 +734,7 @@ class MessageContext<S = ContextDefaultState>
 			? unescapeHTML(message.text)
 			: undefined;
 
-		this[kAttachments] = transformAttachments(message.attachments, this.api);
+		this[kAttachments] = transformAttachments(message.attachments || [], this.api);
 
 		if (message.reply_message) {
 			this[kReplyMessage] = new MessageContext({
