@@ -45,7 +45,7 @@ const attachment = await vk.upload.messagePhoto({
 });
 ```
 
-[Более подробно](./upload)
+[Более подробно](../api-reference/upload)
 
 ## Updates
 
