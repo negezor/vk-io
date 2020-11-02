@@ -81,6 +81,39 @@ await vk.updates.start();
 
 [Более подробно](./collect)
 
+## Keyboard
+
+Базовый модуль для работы с клавиатурой, предоставляет:
+- Абстракцию над [структурой клавиатуры](https://vk.com/dev/bots_docs_3)
+- Две вариации составления клавиатуры, через сборщик или ручное составление
+
+```ts
+await api.messages.send({
+	message: 'Hey!',
+	keyboard: Keyboard.builder()
+		.urlButton({
+			label: 'View on site',
+			url: 'https://coffee.mania/view/coffee'
+		})
+		.callbackButton({
+			label: 'Buy a coffee',
+			payload: {
+				command: 'buy',
+				item: 'coffee'
+			}
+		})
+		.row()
+		.textButton({
+			label: 'Back to the menu',
+			payload: {
+				command: 'menu'
+			}
+		})
+});
+```
+
+[Более подробно](./keyboard)
+
 ## Utils
 
 [Базовые утилиты](./utils)
