@@ -24,8 +24,8 @@ const systemMentionRe = /\[([^|]+)\|[^\]]+\]/;
 
 const isVKUrlRe = /^(?:https:\/\/)?(?:m\.)?vk.com\//;
 
-const parseTargetResourceRe = /^([a-z]+)(-?\d+)$/;
-const parseOwnerResourceRe = /^([a-z]+)(-?\d+)_(\d+)/;
+const parseTargetResourceRe = /^(id|club|public|albums|tag|app)(-?\d+)$/;
+const parseOwnerResourceRe = /^(album|topic|page|photo|video|audio|doc|audio_message|graffiti|wall|market|poll|gift)(-?\d+)_(\d+)/;
 
 const enumResourceTypes: Record<string, IResolvedTargetResource['type']> = {
 	id: ResourceType.USER,
