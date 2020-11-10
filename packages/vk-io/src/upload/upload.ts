@@ -1,5 +1,5 @@
 import fetch from 'node-fetch';
-import FormData from 'form-data';
+import * as FormData from 'form-data';
 import { AbortController } from 'abort-controller';
 
 import { inspectable } from 'inspectable';
