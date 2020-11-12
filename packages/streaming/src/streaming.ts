@@ -214,9 +214,9 @@ export class StreamingAPI {
 	 * Returns a list of rules
 	 */
 	public async getRules(): Promise<IStreamingRule[]> {
-		const { rules = [] } = await this.fetchRules<{ rules?: IStreamingRule[] }>('GET');
+		const { rules } = await this.fetchRules<{ rules: IStreamingRule[] | null }>('GET');
 
-		return rules;
+		return rules || [];
 	}
 
 	/**
