@@ -187,6 +187,18 @@ export enum APIErrorCode {
      */
     CLIENT_UPDATE_NEEDED = 35,
     /**
+     * Method execution was interrupted due to timeout
+     *
+     * Code: `36`
+     */
+    TIMEOUT = 36,
+    /**
+     * User was banned
+     *
+     * Code: `37`
+     */
+    USER_BANNED = 37,
+    /**
      * One of the parameters specified was missing or invalid
      *
      * Code: `100`
@@ -462,6 +474,18 @@ export enum APIErrorCode {
      * Code: `224`
      */
     WALL_ADS_POST_LIMIT_REACHED = 224,
+    /**
+     * Donut is disabled
+     *
+     * Code: `225`
+     */
+    WALL_DONUT = 225,
+    /**
+     * Reaction can not be applied to the object
+     *
+     * Code: `232`
+     */
+    LIKES_REACTION_CAN_NOT_BE_APPLIED = 232,
     /**
      * Access to poll denied
      *

@@ -498,6 +498,19 @@ export interface APIDocs {
 }
 
 /**
+ * The API donut group
+ */
+export interface APIDonut {
+    getFriends(params: Params.DonutGetFriendsParams): Promise<Responses.GroupsGetMembersFieldsResponse>;
+    getSubscription(params: Params.DonutGetSubscriptionParams): Promise<Responses.DonutGetSubscriptionResponse>;
+    /**
+     * Returns a list of user's VK Donut subscriptions.
+     */
+    getSubscriptions(params: Params.DonutGetSubscriptionsParams): Promise<Responses.DonutGetSubscriptionsResponse>;
+    isDon(params: Params.DonutIsDonParams): Promise<Responses.BaseBoolResponse>;
+}
+
+/**
  * The API downloadedGames group
  */
 export interface APIDownloadedGames {
@@ -683,7 +696,7 @@ export interface APIGroups {
     /**
      * Returns information about communities by their IDs.
      */
-    getById(params: Params.GroupsGetByIdParams): Promise<Responses.GroupsGetByIdResponse>;
+    getById(params: Params.GroupsGetByIdParams): Promise<Responses.GroupsGetByIdLegacyResponse>;
     /**
      * Returns Callback API confirmation code for the community.
      */
@@ -914,7 +927,7 @@ export interface APIMarket {
     /**
      * Returns a list of market categories.
      */
-    getCategories(params: Params.MarketGetCategoriesParams): Promise<Responses.MarketGetCategoriesResponse>;
+    getCategories(params: Params.MarketGetCategoriesParams): Promise<Responses.MarketGetCategoriesNewResponse>;
     /**
      * Returns comments list for an item.
      */
@@ -2008,6 +2021,10 @@ export interface APIMethods {
      * The API docs group
      */
     docs: APIDocs;
+    /**
+     * The API donut group
+     */
+    donut: APIDonut;
     /**
      * The API downloadedGames group
      */

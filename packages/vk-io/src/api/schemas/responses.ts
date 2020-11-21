@@ -216,6 +216,7 @@ export interface AppsGetCatalogResponse {
     count?: number;
     [key: string]: any;
     items?: Objects.AppsApp[];
+    profiles?: Objects.UsersUserMin[];
 }
 
 export interface AppsGetFriendsListResponse {
@@ -409,13 +410,7 @@ export interface DatabaseGetUniversitiesResponse {
     items?: Objects.DatabaseUniversity[];
 }
 
-export interface DocsAddResponse {
-    /**
-     * Doc ID
-     */
-    id?: number;
-    [key: string]: any;
-}
+export type DocsAddResponse = number;
 
 export type DocsGetByIdResponse = Objects.DocsDoc[];
 
@@ -450,6 +445,16 @@ export interface DocsSearchResponse {
     count: number;
     [key: string]: any;
     items: Objects.DocsDoc[];
+}
+
+export type DonutGetSubscriptionResponse = Objects.DonutDonatorSubscriptionInfo;
+
+export interface DonutGetSubscriptionsResponse {
+    [key: string]: any;
+    subscriptions: Objects.DonutDonatorSubscriptionInfo[];
+    count?: number;
+    profiles?: Objects.UsersUserFull[];
+    groups?: Objects.GroupsGroupFull[];
 }
 
 export interface DownloadedGamesPaidStatusResponse {
@@ -648,7 +653,7 @@ export type GroupsAddAddressResponse = Objects.GroupsAddress;
 
 export interface GroupsAddCallbackServerResponse {
     [key: string]: any;
-    server_id?: number;
+    server_id: number;
 }
 
 export type GroupsAddLinkResponse = Objects.GroupsGroupLink;
@@ -675,13 +680,19 @@ export interface GroupsGetBannedResponse {
     items: Objects.GroupsBannedItem[];
 }
 
-export type GroupsGetByIdResponse = Objects.GroupsGroupFull[];
+export type GroupsGetByIdLegacyResponse = Objects.GroupsGroupFull[];
+
+export interface GroupsGetByIdResponse {
+    [key: string]: any;
+    groups?: Objects.GroupsGroupFull[];
+    profiles?: Objects.GroupsProfileItem[];
+}
 
 export interface GroupsGetCallbackConfirmationCodeResponse {
     /**
      * Confirmation code
      */
-    code?: string;
+    code: string;
     [key: string]: any;
 }
 
@@ -735,7 +746,7 @@ export interface GroupsGetInvitesExtendedResponse {
      */
     count: number;
     [key: string]: any;
-    items: Objects.GroupsGroupXtrInvitedBy[];
+    items: Objects.GroupsGroupFull[];
     profiles: Objects.UsersUserMin[];
     groups: Objects.GroupsGroupFull[];
 }
@@ -746,7 +757,7 @@ export interface GroupsGetInvitesResponse {
      */
     count: number;
     [key: string]: any;
-    items: Objects.GroupsGroupXtrInvitedBy[];
+    items: Objects.GroupsGroupFull[];
 }
 
 export type GroupsGetLongPollServerResponse = Objects.GroupsLongPollServer;
@@ -826,10 +837,6 @@ export interface GroupsGetSettingsResponse {
      */
     description: string;
     /**
-     * Photos settings
-     */
-    photos: number;
-    /**
      * Information about the group category
      */
     public_category?: number;
@@ -870,15 +877,14 @@ export interface GroupsGetSettingsResponse {
      */
     email?: string;
     [key: string]: any;
+    sections_list?: any[];
     secondary_section?: number;
-    age_limits?: number;
     obscene_words: string[];
     event_group_id?: number;
     public_category_list?: Objects.GroupsGroupPublicCategoryList[];
     public_date?: string;
     public_date_label?: string;
     subject_list?: Objects.GroupsSubjectItem[];
-    suggested_privacy?: number;
 }
 
 export type GroupsGetTagListResponse = Objects.GroupsGroupTag[];
@@ -1046,6 +1052,11 @@ export interface MarketGetByIdResponse {
     count?: number;
     [key: string]: any;
     items?: Objects.MarketMarketItem[];
+}
+
+export interface MarketGetCategoriesNewResponse {
+    [key: string]: any;
+    items: Objects.MarketMarketCategoryTree[];
 }
 
 export interface MarketGetCategoriesResponse {
@@ -1439,7 +1450,7 @@ export interface NewsfeedGetSuggestedSourcesResponse {
      */
     count?: number;
     [key: string]: any;
-    items?: any[];
+    items?: Objects.UsersSubscriptionsItem[];
 }
 
 export interface NewsfeedGetResponse {
@@ -1865,8 +1876,6 @@ export type StorageGetKeysResponse = string[];
 export type StorageGetResponse = string;
 
 export type StorageGetV5110Response = Objects.StorageValue[];
-
-export type StorageGetWithKeysResponse = Objects.StorageValue[];
 
 export interface StoriesGetBannedExtendedResponse {
     /**
@@ -2313,11 +2322,11 @@ export interface WallRepostResponse {
     /**
      * Reposts to wall number
      */
-    wall_repost_count: number;
+    wall_repost_count?: number;
     /**
      * Reposts to mail number
      */
-    mail_repost_count: number;
+    mail_repost_count?: number;
     /**
      * Reposts number
      */

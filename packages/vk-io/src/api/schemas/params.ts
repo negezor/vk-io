@@ -734,6 +734,10 @@ export interface AdsGetTargetingStatsParams {
      * Additionally return recommended cpc and cpm to reach 5,10..95 percents of audience.
      */
     need_precise?: boolean | number;
+    /**
+     * Impressions limit period in seconds, must be a multiple of 86400(day)
+     */
+    impressions_limit_period?: number;
     client_id?: number;
     ad_platform_no_wall?: string;
     ad_platform_no_ad_network?: string;
@@ -1704,6 +1708,31 @@ export interface DocsSearchParams {
     [key: string]: any;
 }
 
+export interface DonutGetFriendsParams {
+    owner_id: number;
+    offset?: number;
+    count?: number;
+    fields?: string[] | string;
+    [key: string]: any;
+}
+
+export interface DonutGetSubscriptionParams {
+    owner_id: number;
+    [key: string]: any;
+}
+
+export interface DonutGetSubscriptionsParams {
+    fields?: Objects.BaseUserGroupFields[];
+    offset?: number;
+    count?: number;
+    [key: string]: any;
+}
+
+export interface DonutIsDonParams {
+    owner_id: number;
+    [key: string]: any;
+}
+
 export interface DownloadedGamesGetPaidStatusParams {
     user_id?: number;
     [key: string]: any;
@@ -1966,7 +1995,7 @@ export interface FriendsGetParams {
     /**
      * Sort order: , 'name' — by name (enabled only if the 'fields' parameter is used), 'hints' — by rating, similar to how friends are sorted in My friends section, , This parameter is available only for [vk.com/dev/standalone|desktop applications].
      */
-    order?: "name" | "hints";
+    order?: "hints" | "random" | "mobile" | "name" | "smart";
     /**
      * ID of the friend list returned by the [vk.com/dev/friends.getLists|friends.getLists] method to be used as the source. This parameter is taken into account only when the uid parameter is set to the current user ID. This parameter is available only for [vk.com/dev/standalone|desktop applications].
      */
@@ -2095,7 +2124,7 @@ export interface FriendsGetRequestsParams {
     /**
      * Sort order: '1' — by number of mutual friends, '0' — by date
      */
-    sort?: 0 | 1;
+    sort?: 0 | 1 | 2;
     /**
      * '1' — to return a list of suggested friends, '0' — to return friend requests (default)
      */
@@ -2995,12 +3024,21 @@ export interface GroupsSetCallbackSettingsParams {
     api_version?: string;
     message_edit?: boolean | number;
     message_typing_state?: boolean | number;
+    market_order_new?: boolean | number;
+    market_order_edit?: boolean | number;
     group_change_settings?: boolean | number;
     group_change_photo?: boolean | number;
     group_officers_edit?: boolean | number;
     like_add?: boolean | number;
     like_remove?: boolean | number;
     message_event?: boolean | number;
+    donut_subscription_create?: boolean | number;
+    donut_subscription_prolonged?: boolean | number;
+    donut_subscription_cancelled?: boolean | number;
+    donut_subscription_price_changed?: boolean | number;
+    donut_subscription_expired?: boolean | number;
+    donut_money_withdraw?: boolean | number;
+    donut_money_withdraw_error?: boolean | number;
     [key: string]: any;
 }
 
@@ -3161,6 +3199,13 @@ export interface GroupsSetLongPollSettingsParams {
     like_add?: boolean | number;
     like_remove?: boolean | number;
     message_event?: boolean | number;
+    donut_subscription_create?: boolean | number;
+    donut_subscription_prolonged?: boolean | number;
+    donut_subscription_cancelled?: boolean | number;
+    donut_subscription_price_changed?: boolean | number;
+    donut_subscription_expired?: boolean | number;
+    donut_money_withdraw?: boolean | number;
+    donut_money_withdraw_error?: boolean | number;
     [key: string]: any;
 }
 
@@ -4429,7 +4474,14 @@ export interface MessagesPinParams {
      * Destination ID. "For user: 'User ID', e.g. '12345'. For chat: '2000000000' + 'Chat ID', e.g. '2000000001'. For community: '- Community ID', e.g. '-12345'. "
      */
     peer_id: number;
+    /**
+     * Message ID
+     */
     message_id?: number;
+    /**
+     * Conversation message ID
+     */
+    conversation_message_id?: number;
     [key: string]: any;
 }
 
@@ -4558,9 +4610,15 @@ export interface MessagesSendParams {
      * Group ID (for group messages with group access token)
      */
     group_id?: number;
+    /**
+     * JSON describing the content source in the message
+     */
+    content_source?: string;
+    peer_ids?: number[] | number;
     user_ids?: number[] | number;
     reply_to?: number;
     forward_messages?: number[] | number;
+    forward?: any;
     keyboard?: any;
     template?: any;
     payload?: string;
@@ -4784,11 +4842,11 @@ export interface NewsfeedIgnoreItemParams {
     /**
      * Item owner's identifier (user or community), "Note that community id must be negative. 'owner_id=1' – user , 'owner_id=-1' – community "
      */
-    owner_id: number;
+    owner_id?: number;
     /**
      * Item identifier
      */
-    item_id: number;
+    item_id?: number;
     type?: Objects.NewsfeedIgnoreItemType;
     [key: string]: any;
 }
@@ -7573,6 +7631,7 @@ export interface WallEditParams {
     place_id?: number;
     mark_as_ads?: boolean | number;
     close_comments?: boolean | number;
+    donut_paid_duration?: number;
     poster_bkg_id?: number;
     poster_bkg_owner_id?: number;
     poster_bkg_access_hash?: string;
@@ -7833,6 +7892,7 @@ export interface WallPostParams {
     guid?: string;
     mark_as_ads?: boolean | number;
     close_comments?: boolean | number;
+    donut_paid_duration?: number;
     mute_notifications?: boolean | number;
     copyright?: string;
     [key: string]: any;
