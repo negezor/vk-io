@@ -1822,6 +1822,11 @@
           "name": "need_precise",
           "description": "Additionally return recommended cpc and cpm to reach 5,10..95 percents of audience.",
           "type": "boolean"
+        },
+        {
+          "name": "impressions_limit_period",
+          "description": "Impressions limit period in seconds, must be a multiple of 86400(day)",
+          "type": "integer"
         }
       ],
       "responses": {
@@ -2359,7 +2364,6 @@
       "name": "appWidgets.getAppImageUploadServer",
       "description": "Returns a URL for uploading a photo to the community collection for community app widgets",
       "access_token_type": [
-        "user",
         "service"
       ],
       "parameters": [
@@ -2518,7 +2522,6 @@
       "name": "appWidgets.saveAppImage",
       "description": "Allows to save image into app collection for community app widgets",
       "access_token_type": [
-        "user",
         "service"
       ],
       "parameters": [
@@ -4499,6 +4502,119 @@
       }
     },
     {
+      "name": "donut.getFriends",
+      "access_token_type": [
+        "user"
+      ],
+      "parameters": [
+        {
+          "name": "owner_id",
+          "type": "integer",
+          "required": true
+        },
+        {
+          "name": "offset",
+          "type": "integer",
+          "default": 0,
+          "minimum": 0
+        },
+        {
+          "name": "count",
+          "type": "integer",
+          "default": 10,
+          "minimum": 0,
+          "maximum": 100
+        },
+        {
+          "name": "fields",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/groups_getMembers_fields_response"
+        }
+      }
+    },
+    {
+      "name": "donut.getSubscription",
+      "access_token_type": [
+        "user"
+      ],
+      "parameters": [
+        {
+          "name": "owner_id",
+          "type": "integer",
+          "required": true
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/donut_getSubscription_response"
+        }
+      },
+      "errors": [
+        {
+          "$ref": "errors.json#/errors/api_error_not_found"
+        }
+      ]
+    },
+    {
+      "name": "donut.getSubscriptions",
+      "description": "Returns a list of user's VK Donut subscriptions.",
+      "access_token_type": [
+        "user"
+      ],
+      "parameters": [
+        {
+          "name": "fields",
+          "type": "array",
+          "items": {
+            "$ref": "objects.json#/definitions/base_user_group_fields"
+          }
+        },
+        {
+          "name": "offset",
+          "type": "integer",
+          "default": 0,
+          "minimum": 0
+        },
+        {
+          "name": "count",
+          "type": "integer",
+          "default": 10,
+          "minimum": 0,
+          "maximum": 100
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/donut_getSubscriptions_response"
+        }
+      }
+    },
+    {
+      "name": "donut.isDon",
+      "access_token_type": [
+        "user"
+      ],
+      "parameters": [
+        {
+          "name": "owner_id",
+          "type": "integer",
+          "required": true
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/base_bool_response"
+        }
+      }
+    },
+    {
       "name": "downloadedGames.getPaidStatus",
       "access_token_type": [
         "user"
@@ -5435,8 +5551,11 @@
           "description": "Sort order: , 'name' — by name (enabled only if the 'fields' parameter is used), 'hints' — by rating, similar to how friends are sorted in My friends section, , This parameter is available only for [vk.com/dev/standalone|desktop applications].",
           "type": "string",
           "enum": [
+            "hints",
+            "random",
+            "mobile",
             "name",
-            "hints"
+            "smart"
           ]
         },
         {
@@ -5741,11 +5860,13 @@
           "minimum": 0,
           "enum": [
             0,
-            1
+            1,
+            2
           ],
           "enumNames": [
             "date",
-            "mutual"
+            "mutual",
+            "rotate"
           ]
         },
         {
@@ -7171,7 +7292,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/groups_getById_response"
+          "$ref": "responses.json#/definitions/groups_getById_legacy_response"
         }
       }
     },
@@ -8107,6 +8228,14 @@
           "type": "boolean"
         },
         {
+          "name": "market_order_new",
+          "type": "boolean"
+        },
+        {
+          "name": "market_order_edit",
+          "type": "boolean"
+        },
+        {
           "name": "poll_vote_new",
           "description": "A vote in a public poll has been added ('0' — disabled, '1' — enabled).",
           "type": "boolean"
@@ -8158,6 +8287,34 @@
         },
         {
           "name": "message_event",
+          "type": "boolean"
+        },
+        {
+          "name": "donut_subscription_create",
+          "type": "boolean"
+        },
+        {
+          "name": "donut_subscription_prolonged",
+          "type": "boolean"
+        },
+        {
+          "name": "donut_subscription_cancelled",
+          "type": "boolean"
+        },
+        {
+          "name": "donut_subscription_price_changed",
+          "type": "boolean"
+        },
+        {
+          "name": "donut_subscription_expired",
+          "type": "boolean"
+        },
+        {
+          "name": "donut_money_withdraw",
+          "type": "boolean"
+        },
+        {
+          "name": "donut_money_withdraw_error",
           "type": "boolean"
         }
       ],
@@ -8397,6 +8554,34 @@
         },
         {
           "name": "message_event",
+          "type": "boolean"
+        },
+        {
+          "name": "donut_subscription_create",
+          "type": "boolean"
+        },
+        {
+          "name": "donut_subscription_prolonged",
+          "type": "boolean"
+        },
+        {
+          "name": "donut_subscription_cancelled",
+          "type": "boolean"
+        },
+        {
+          "name": "donut_subscription_price_changed",
+          "type": "boolean"
+        },
+        {
+          "name": "donut_subscription_expired",
+          "type": "boolean"
+        },
+        {
+          "name": "donut_money_withdraw",
+          "type": "boolean"
+        },
+        {
+          "name": "donut_money_withdraw_error",
           "type": "boolean"
         }
       ],
@@ -8688,280 +8873,6 @@
       }
     },
     {
-      "name": "leads.checkUser",
-      "description": "Checks if the user can start the lead.",
-      "access_token_type": [
-        "user"
-      ],
-      "parameters": [
-        {
-          "name": "lead_id",
-          "description": "Lead ID.",
-          "type": "integer",
-          "required": true,
-          "minimum": 0
-        },
-        {
-          "name": "test_result",
-          "description": "Value to be return in 'result' field when test mode is used.",
-          "type": "integer",
-          "minimum": 0
-        },
-        {
-          "name": "test_mode",
-          "type": "boolean",
-          "default": 0
-        },
-        {
-          "name": "auto_start",
-          "type": "boolean",
-          "default": 0
-        },
-        {
-          "name": "age",
-          "description": "User age.",
-          "type": "integer",
-          "minimum": 0
-        },
-        {
-          "name": "country",
-          "description": "User country code.",
-          "type": "string"
-        }
-      ],
-      "responses": {
-        "response": {
-          "$ref": "responses.json#/definitions/leads_checkUser_response"
-        }
-      },
-      "errors": [
-        {
-          "$ref": "errors.json#/errors/api_error_action_failed"
-        }
-      ]
-    },
-    {
-      "name": "leads.complete",
-      "description": "Completes the lead started by user.",
-      "access_token_type": [
-        "user",
-        "service"
-      ],
-      "parameters": [
-        {
-          "name": "vk_sid",
-          "description": "Session obtained as GET parameter when session started.",
-          "type": "string",
-          "required": true
-        },
-        {
-          "name": "secret",
-          "description": "Secret key from the lead testing interface.",
-          "type": "string",
-          "required": true
-        },
-        {
-          "name": "comment",
-          "description": "Comment text.",
-          "type": "string"
-        }
-      ],
-      "responses": {
-        "response": {
-          "$ref": "responses.json#/definitions/leads_complete_response"
-        }
-      },
-      "errors": [
-        {
-          "$ref": "errors.json#/errors/api_error_limits"
-        },
-        {
-          "$ref": "errors.json#/errors/api_error_votes"
-        }
-      ]
-    },
-    {
-      "name": "leads.getStats",
-      "description": "Returns lead stats data.",
-      "access_token_type": [
-        "user"
-      ],
-      "parameters": [
-        {
-          "name": "lead_id",
-          "description": "Lead ID.",
-          "type": "integer",
-          "required": true,
-          "minimum": 0
-        },
-        {
-          "name": "secret",
-          "description": "Secret key obtained from the lead testing interface.",
-          "type": "string"
-        },
-        {
-          "name": "date_start",
-          "description": "Day to start stats from (YYYY_MM_DD, e.g.2011-09-17).",
-          "type": "string"
-        },
-        {
-          "name": "date_end",
-          "description": "Day to finish stats (YYYY_MM_DD, e.g.2011-09-17).",
-          "type": "string"
-        }
-      ],
-      "responses": {
-        "response": {
-          "$ref": "responses.json#/definitions/leads_getStats_response"
-        }
-      }
-    },
-    {
-      "name": "leads.getUsers",
-      "description": "Returns a list of last user actions for the offer.",
-      "access_token_type": [
-        "user",
-        "service"
-      ],
-      "parameters": [
-        {
-          "name": "offer_id",
-          "description": "Offer ID.",
-          "type": "integer",
-          "required": true,
-          "minimum": 0
-        },
-        {
-          "name": "secret",
-          "description": "Secret key obtained in the lead testing interface.",
-          "type": "string",
-          "required": true
-        },
-        {
-          "name": "offset",
-          "description": "Offset needed to return a specific subset of results.",
-          "type": "integer",
-          "minimum": 0
-        },
-        {
-          "name": "count",
-          "description": "Number of results to return.",
-          "type": "integer",
-          "default": 100,
-          "minimum": 0,
-          "maximum": 1000
-        },
-        {
-          "name": "status",
-          "description": "Action type. Possible values: *'0' — start,, *'1' — finish,, *'2' — blocking users,, *'3' — start in a test mode,, *'4' — finish in a test mode.",
-          "type": "integer",
-          "minimum": 0,
-          "enum": [
-            0,
-            1,
-            2,
-            3,
-            4
-          ],
-          "enumNames": [
-            "start",
-            "finish",
-            "blocking users",
-            "start in test mode",
-            "finish in test mode"
-          ]
-        },
-        {
-          "name": "reverse",
-          "description": "Sort order. Possible values: *'1' — chronological,, *'0' — reverse chronological.",
-          "type": "boolean"
-        }
-      ],
-      "responses": {
-        "response": {
-          "$ref": "responses.json#/definitions/leads_getUsers_response"
-        }
-      }
-    },
-    {
-      "name": "leads.metricHit",
-      "description": "Counts the metric event.",
-      "access_token_type": [
-        "user"
-      ],
-      "parameters": [
-        {
-          "name": "data",
-          "description": "Metric data obtained in the lead interface.",
-          "type": "string",
-          "required": true
-        }
-      ],
-      "responses": {
-        "response": {
-          "$ref": "responses.json#/definitions/leads_metricHit_response"
-        }
-      }
-    },
-    {
-      "name": "leads.start",
-      "description": "Creates new session for the user passing the offer.",
-      "access_token_type": [
-        "user",
-        "service"
-      ],
-      "parameters": [
-        {
-          "name": "lead_id",
-          "description": "Lead ID.",
-          "type": "integer",
-          "required": true,
-          "minimum": 0
-        },
-        {
-          "name": "secret",
-          "description": "Secret key from the lead testing interface.",
-          "type": "string",
-          "required": true
-        },
-        {
-          "name": "uid",
-          "type": "integer",
-          "default": 0,
-          "minimum": 0
-        },
-        {
-          "name": "aid",
-          "type": "integer",
-          "default": 0,
-          "minimum": 0
-        },
-        {
-          "name": "test_mode",
-          "type": "boolean",
-          "default": 0
-        },
-        {
-          "name": "force",
-          "type": "boolean",
-          "default": 0
-        }
-      ],
-      "responses": {
-        "response": {
-          "$ref": "responses.json#/definitions/leads_start_response"
-        }
-      },
-      "errors": [
-        {
-          "$ref": "errors.json#/errors/api_error_limits"
-        },
-        {
-          "$ref": "errors.json#/errors/api_error_action_failed"
-        }
-      ]
-    },
-    {
       "name": "likes.add",
       "description": "Adds the specified object to the 'Likes' list of the current user.",
       "access_token_type": [
@@ -8997,7 +8908,12 @@
         "response": {
           "$ref": "responses.json#/definitions/likes_add_response"
         }
-      }
+      },
+      "errors": [
+        {
+          "$ref": "errors.json#/errors/api_error_likes_reaction_can_not_be_applied"
+        }
+      ]
     },
     {
       "name": "likes.delete",
@@ -9103,7 +9019,8 @@
           "name": "count",
           "description": "Number of user IDs to return (maximum '1000'). Default is '100' if 'friends_only' is set to '0', otherwise, the default is '10' if 'friends_only' is set to '1'.",
           "type": "integer",
-          "minimum": 0
+          "minimum": 0,
+          "maximum": 1000
         },
         {
           "name": "skip_own",
@@ -9117,7 +9034,12 @@
         "extendedResponse": {
           "$ref": "responses.json#/definitions/likes_getList_extended_response"
         }
-      }
+      },
+      "errors": [
+        {
+          "$ref": "errors.json#/errors/api_error_likes_reaction_can_not_be_applied"
+        }
+      ]
     },
     {
       "name": "likes.isLiked",
@@ -9953,7 +9875,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/market_getCategories_response"
+          "$ref": "responses.json#/definitions/market_getCategories_new_response"
         }
       }
     },
@@ -10642,6 +10564,9 @@
         },
         {
           "$ref": "errors.json#/errors/api_error_messages_chat_unsupported"
+        },
+        {
+          "$ref": "errors.json#/errors/api_error_messages_group_peer_access"
         }
       ]
     },
@@ -10661,7 +10586,8 @@
         },
         {
           "name": "key",
-          "type": "string"
+          "type": "string",
+          "maxLength": 256
         }
       ],
       "responses": {
@@ -11698,8 +11624,12 @@
         },
         {
           "$ref": "errors.json#/errors/api_error_messages_too_new_pts"
+        },
+        {
+          "$ref": "errors.json#/errors/api_error_timeout"
         }
-      ]
+      ],
+      "timeout": 5
     },
     {
       "name": "messages.getLongPollServer",
@@ -11948,6 +11878,13 @@
         },
         {
           "name": "message_id",
+          "description": "Message ID",
+          "type": "integer",
+          "minimum": 0
+        },
+        {
+          "name": "conversation_message_id",
+          "description": "Conversation message ID",
           "type": "integer",
           "minimum": 0
         }
@@ -12131,7 +12068,8 @@
           "description": "Maximum number of results.",
           "type": "integer",
           "default": 20,
-          "minimum": 0
+          "minimum": 1,
+          "maximum": 255
         },
         {
           "name": "extended",
@@ -12183,6 +12121,15 @@
           "type": "integer"
         },
         {
+          "name": "peer_ids",
+          "description": "IDs of message recipients. (See peer_id)",
+          "type": "array",
+          "items": {
+            "type": "integer"
+          },
+          "maxItems": 100
+        },
+        {
           "name": "domain",
           "description": "User's short address (for example, 'illarionov').",
           "type": "string"
@@ -12200,7 +12147,8 @@
           "type": "array",
           "items": {
             "type": "integer"
-          }
+          },
+          "maxItems": 100
         },
         {
           "name": "message",
@@ -12235,6 +12183,12 @@
           }
         },
         {
+          "name": "forward",
+          "description": "JSON describing the forwarded message or reply",
+          "type": "string",
+          "$ref": "objects.json#/definitions/messages_forward"
+        },
+        {
           "name": "sticker_id",
           "description": "Sticker id.",
           "type": "integer",
@@ -12259,6 +12213,11 @@
           "name": "payload",
           "type": "string",
           "maxLength": 1000
+        },
+        {
+          "name": "content_source",
+          "description": "JSON describing the content source in the message",
+          "type": "string"
         },
         {
           "name": "dont_parse_links",
@@ -12953,13 +12912,13 @@
           "name": "owner_id",
           "description": "Item owner's identifier (user or community), \"Note that community id must be negative. 'owner_id=1' – user , 'owner_id=-1' – community \"",
           "type": "integer",
-          "required": true
+          "default": 0
         },
         {
           "name": "item_id",
           "description": "Item identifier",
           "type": "integer",
-          "required": true,
+          "default": 0,
           "minimum": 0
         }
       ],
@@ -13663,7 +13622,6 @@
     {
       "name": "notifications.sendMessage",
       "access_token_type": [
-        "user",
         "service"
       ],
       "parameters": [
@@ -13713,7 +13671,6 @@
     {
       "name": "orders.cancelSubscription",
       "access_token_type": [
-        "user",
         "service"
       ],
       "parameters": [
@@ -13753,7 +13710,6 @@
       "name": "orders.changeState",
       "description": "Changes order status.",
       "access_token_type": [
-        "user",
         "service"
       ],
       "parameters": [
@@ -13805,7 +13761,6 @@
       "name": "orders.get",
       "description": "Returns a list of orders.",
       "access_token_type": [
-        "user",
         "service"
       ],
       "parameters": [
@@ -13867,7 +13822,6 @@
       "name": "orders.getById",
       "description": "Returns information about orders by their IDs.",
       "access_token_type": [
-        "user",
         "service"
       ],
       "parameters": [
@@ -13900,7 +13854,6 @@
     {
       "name": "orders.getUserSubscriptionById",
       "access_token_type": [
-        "user",
         "service"
       ],
       "parameters": [
@@ -13931,7 +13884,6 @@
     {
       "name": "orders.getUserSubscriptions",
       "access_token_type": [
-        "user",
         "service"
       ],
       "parameters": [
@@ -13951,7 +13903,6 @@
     {
       "name": "orders.updateSubscription",
       "access_token_type": [
-        "user",
         "service"
       ],
       "parameters": [
@@ -15023,7 +14974,8 @@
       "name": "photos.getChatUploadServer",
       "description": "Returns an upload link for chat cover pictures.",
       "access_token_type": [
-        "user"
+        "user",
+        "group"
       ],
       "parameters": [
         {
@@ -15510,8 +15462,7 @@
         {
           "name": "owner_id",
           "description": "ID of the user or community that owns the photo.",
-          "type": "integer",
-          "minimum": 0
+          "type": "integer"
         },
         {
           "name": "photo_id",
@@ -16217,65 +16168,6 @@
       "responses": {
         "response": {
           "$ref": "responses.json#/definitions/photos_search_response"
-        }
-      }
-    },
-    {
-      "name": "podcasts.clearRecentSearches",
-      "access_token_type": [
-        "user"
-      ],
-      "responses": {
-        "response": {
-          "$ref": "responses.json#/definitions/base_ok_response"
-        }
-      }
-    },
-    {
-      "name": "podcasts.getPopular",
-      "access_token_type": [
-        "user"
-      ],
-      "responses": {
-        "response": {
-          "$ref": "responses.json#/definitions/podcasts_getPopular_response"
-        }
-      }
-    },
-    {
-      "name": "podcasts.getRecentSearchRequests",
-      "access_token_type": [
-        "user"
-      ],
-      "responses": {
-        "response": {
-          "$ref": "responses.json#/definitions/podcasts_getRecentSearchRequests_response"
-        }
-      }
-    },
-    {
-      "name": "podcasts.search",
-      "access_token_type": [
-        "user"
-      ],
-      "parameters": [
-        {
-          "name": "search_string",
-          "type": "string",
-          "required": true
-        },
-        {
-          "name": "offset",
-          "type": "integer"
-        },
-        {
-          "name": "count",
-          "type": "integer"
-        }
-      ],
-      "responses": {
-        "response": {
-          "$ref": "responses.json#/definitions/podcasts_search_response"
         }
       }
     },
@@ -17471,9 +17363,6 @@
       "responses": {
         "response": {
           "$ref": "responses.json#/definitions/storage_get_v5110_response"
-        },
-        "keysResponse": {
-          "$ref": "responses.json#/definitions/storage_get_with_keys_response"
         }
       }
     },
@@ -18119,7 +18008,6 @@
     {
       "name": "stories.sendInteraction",
       "access_token_type": [
-        "user",
         "service"
       ],
       "parameters": [
@@ -18183,7 +18071,6 @@
       "name": "streaming.getServerUrl",
       "description": "Allows to receive data for the connection to Streaming API.",
       "access_token_type": [
-        "user",
         "service"
       ],
       "responses": {
@@ -18195,7 +18082,6 @@
     {
       "name": "streaming.setSettings",
       "access_token_type": [
-        "user",
         "service"
       ],
       "parameters": [
@@ -20339,6 +20225,10 @@
           "type": "boolean"
         },
         {
+          "name": "donut_paid_duration",
+          "type": "integer"
+        },
+        {
           "name": "poster_bkg_id",
           "type": "integer",
           "minimum": 0
@@ -20364,6 +20254,9 @@
       "errors": [
         {
           "$ref": "errors.json#/errors/api_error_wall_ads_post_limit_reached"
+        },
+        {
+          "$ref": "errors.json#/errors/api_error_wall_donut"
         }
       ]
     },
@@ -20927,6 +20820,10 @@
           "type": "boolean"
         },
         {
+          "name": "donut_paid_duration",
+          "type": "integer"
+        },
+        {
           "name": "mute_notifications",
           "type": "boolean"
         },
@@ -20955,6 +20852,9 @@
         },
         {
           "$ref": "errors.json#/errors/api_error_wall_ads_post_limit_reached"
+        },
+        {
+          "$ref": "errors.json#/errors/api_error_wall_donut"
         }
       ]
     },

@@ -979,6 +979,12 @@
               "items": {
                 "$ref": "objects.json#/definitions/apps_app"
               }
+            },
+            "profiles": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/users_user_min"
+              }
             }
           }
         }
@@ -1633,13 +1639,8 @@
       "type": "object",
       "properties": {
         "response": {
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "integer",
-              "description": "Doc ID"
-            }
-          }
+          "type": "integer",
+          "description": "Document ID"
         }
       },
       "required": [
@@ -1769,6 +1770,55 @@
           "required": [
             "count",
             "items"
+          ]
+        }
+      },
+      "required": [
+        "response"
+      ]
+    },
+    "donut_getSubscription_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "$ref": "objects.json#/definitions/donut_donator_subscription_info"
+        }
+      },
+      "required": [
+        "response"
+      ]
+    },
+    "donut_getSubscriptions_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "subscriptions": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/donut_donator_subscription_info"
+              }
+            },
+            "count": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "profiles": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/users_user_full"
+              }
+            },
+            "groups": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/groups_group_full"
+              }
+            }
+          },
+          "required": [
+            "subscriptions"
           ]
         }
       },
@@ -2426,7 +2476,10 @@
               "type": "integer",
               "minimum": 0
             }
-          }
+          },
+          "required": [
+            "server_id"
+          ]
         }
       },
       "required": [
@@ -2523,13 +2576,38 @@
         "response"
       ]
     },
-    "groups_getById_response": {
+    "groups_getById_legacy_response": {
       "type": "object",
       "properties": {
         "response": {
           "type": "array",
           "items": {
             "$ref": "objects.json#/definitions/groups_group_full"
+          }
+        }
+      },
+      "required": [
+        "response"
+      ]
+    },
+    "groups_getById_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "groups": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/groups_group_full"
+              }
+            },
+            "profiles": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/groups_profile_item"
+              }
+            }
           }
         }
       },
@@ -2547,7 +2625,10 @@
               "type": "string",
               "description": "Confirmation code"
             }
-          }
+          },
+          "required": [
+            "code"
+          ]
         }
       },
       "required": [
@@ -2714,7 +2795,7 @@
             "items": {
               "type": "array",
               "items": {
-                "$ref": "objects.json#/definitions/groups_group_xtr_invited_by"
+                "$ref": "objects.json#/definitions/groups_group_full"
               }
             },
             "profiles": {
@@ -2756,7 +2837,7 @@
             "items": {
               "type": "array",
               "items": {
-                "$ref": "objects.json#/definitions/groups_group_xtr_invited_by"
+                "$ref": "objects.json#/definitions/groups_group_full"
               }
             }
           },
@@ -2969,7 +3050,8 @@
               "$ref": "objects.json#/definitions/base_bool_int"
             },
             "sections_list": {
-              "type": "object"
+              "type": "array",
+              "items": []
             },
             "main_section": {
               "$ref": "objects.json#/definitions/groups_group_full_main_section"
@@ -2978,7 +3060,7 @@
               "type": "integer"
             },
             "age_limits": {
-              "type": "integer"
+              "$ref": "objects.json#/definitions/groups_group_age_limits"
             },
             "country_id": {
               "type": "integer",
@@ -3014,8 +3096,8 @@
               "type": "integer"
             },
             "photos": {
-              "type": "integer",
-              "description": "Photos settings"
+              "description": "Photos settings",
+              "$ref": "objects.json#/definitions/groups_group_photos"
             },
             "public_category": {
               "type": "integer",
@@ -3062,7 +3144,7 @@
               }
             },
             "suggested_privacy": {
-              "type": "integer"
+              "$ref": "objects.json#/definitions/groups_group_suggested_privacy"
             },
             "title": {
               "type": "string",
@@ -3320,85 +3402,6 @@
             "count",
             "items"
           ]
-        }
-      },
-      "required": [
-        "response"
-      ]
-    },
-    "leads_checkUser_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "$ref": "objects.json#/definitions/leads_checked"
-        }
-      },
-      "required": [
-        "response"
-      ]
-    },
-    "leads_complete_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "$ref": "objects.json#/definitions/leads_complete"
-        }
-      },
-      "required": [
-        "response"
-      ]
-    },
-    "leads_getStats_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "$ref": "objects.json#/definitions/leads_lead"
-        }
-      },
-      "required": [
-        "response"
-      ]
-    },
-    "leads_getUsers_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "type": "array",
-          "items": {
-            "$ref": "objects.json#/definitions/leads_entry"
-          }
-        }
-      },
-      "required": [
-        "response"
-      ]
-    },
-    "leads_metricHit_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "type": "object",
-          "properties": {
-            "result": {
-              "type": "boolean",
-              "description": "Information whether request has been processed successfully"
-            },
-            "redirect_link": {
-              "type": "string",
-              "description": "Redirect link"
-            }
-          }
-        }
-      },
-      "required": [
-        "response"
-      ]
-    },
-    "leads_start_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "$ref": "objects.json#/definitions/leads_start"
         }
       },
       "required": [
@@ -3669,6 +3672,28 @@
               }
             }
           }
+        }
+      },
+      "required": [
+        "response"
+      ]
+    },
+    "market_getCategories_new_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/market_market_category_tree"
+              }
+            }
+          },
+          "required": [
+            "items"
+          ]
         }
       },
       "required": [
@@ -4730,6 +4755,10 @@
                 "type": "integer",
                 "minimum": 0
               },
+              "conversation_message_id": {
+                "type": "integer",
+                "minimum": 0
+              },
               "error": {
                 "$ref": "objects.json#/definitions/base_message_error"
               }
@@ -4990,14 +5019,7 @@
             "items": {
               "type": "array",
               "items": {
-                "allOf": [
-                  {
-                    "$ref": "objects.json#/definitions/groups_group_full"
-                  },
-                  {
-                    "$ref": "objects.json#/definitions/users_user_xtr_type"
-                  }
-                ]
+                "$ref": "objects.json#/definitions/users_subscriptions_item"
               }
             }
           }
@@ -6147,68 +6169,6 @@
         "response"
       ]
     },
-    "podcasts_getPopular_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "type": "array",
-          "items": {
-            "$ref": "objects.json#/definitions/podcast_popular_podcast"
-          }
-        }
-      },
-      "required": [
-        "response"
-      ]
-    },
-    "podcasts_getRecentSearchRequests_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        }
-      },
-      "required": [
-        "response"
-      ]
-    },
-    "podcasts_search_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "type": "object",
-          "properties": {
-            "podcasts": {
-              "type": "array",
-              "items": {
-                "$ref": "objects.json#/definitions/podcast_podcast"
-              }
-            },
-            "episodes": {
-              "type": "array",
-              "items": {
-                "$ref": "objects.json#/definitions/audio_audio"
-              }
-            },
-            "profiles": {
-              "type": "array",
-              "items": {
-                "$ref": "objects.json#/definitions/users_user"
-              }
-            },
-            "groups": {
-              "type": "array"
-            }
-          }
-        }
-      },
-      "required": [
-        "response"
-      ]
-    },
     "polls_addVote_response": {
       "type": "object",
       "properties": {
@@ -6616,20 +6576,6 @@
         "response"
       ]
     },
-    "storage_get_with_keys_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "type": "array",
-          "items": {
-            "$ref": "objects.json#/definitions/storage_value"
-          }
-        }
-      },
-      "required": [
-        "response"
-      ]
-    },
     "stories_getBanned_extended_response": {
       "type": "object",
       "properties": {
@@ -7010,7 +6956,6 @@
       ]
     },
     "stories_upload_response": {
-      "withoutRefs": true,
       "type": "object",
       "properties": {
         "response": {
@@ -8093,9 +8038,7 @@
             "success",
             "post_id",
             "reposts_count",
-            "likes_count",
-            "wall_repost_count",
-            "mail_repost_count"
+            "likes_count"
           ]
         }
       },

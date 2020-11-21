@@ -4,6 +4,12 @@
     "subcodes": {
       "too_many_communities": {
         "subcode": 1
+      },
+      "user_link_with_another_service_uuid": {
+        "subcode": 1000
+      },
+      "service_uuid_link_with_another_user": {
+        "subcode": 1001
       }
     }
   },
@@ -46,7 +52,15 @@
     "api_error_request": {
       "code": 8,
       "description": "Invalid request",
-      "global": true
+      "global": true,
+      "subcodes": [
+        {
+          "$ref": "#/definitions/subcodes/user_link_with_another_service_uuid"
+        },
+        {
+          "$ref": "#/definitions/subcodes/service_uuid_link_with_another_user"
+        }
+      ]
     },
     "api_error_flood": {
       "code": 9,
@@ -157,6 +171,15 @@
     "api_error_client_update_needed": {
       "code": 35,
       "description": "Client update needed"
+    },
+    "api_error_timeout": {
+      "code": 36,
+      "description": "Method execution was interrupted due to timeout"
+    },
+    "api_error_user_banned": {
+      "code": 37,
+      "description": "User was banned",
+      "global": true
     },
     "api_error_param": {
       "code": 100,
@@ -354,6 +377,14 @@
       "code": 224,
       "description": "Too many ads posts"
     },
+    "api_error_wall_donut": {
+      "code": 225,
+      "description": "Donut is disabled"
+    },
+    "api_error_likes_reaction_can_not_be_applied": {
+      "code": 232,
+      "description": "Reaction can not be applied to the object"
+    },
     "api_error_polls_access": {
       "code": 250,
       "description": "Access to poll denied"
@@ -387,10 +418,6 @@
       "code": 500,
       "description": "Permission denied. You must enable votes processing in application settings",
       "global": true
-    },
-    "api_error_votes": {
-      "code": 503,
-      "description": "Not enough votes"
     },
     "api_error_ads_permission": {
       "code": 600,
