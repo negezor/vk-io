@@ -62,7 +62,8 @@ const groupMethods = [
 	'wall',
 	'widgets',
 	'junction',
-	'articles'
+	'articles',
+	'donut'
 ];
 
 const workers: Record<string, Constructor<APIWorker>> = {
