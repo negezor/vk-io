@@ -9,7 +9,6 @@ import {
 
 	createServer as httpCreateServer
 } from 'http';
-import { ListenOptions } from 'net';
 import { promisify } from 'util';
 
 import { API } from '../../api';
@@ -91,7 +90,9 @@ export class WebhookTransport {
 					: 80
 			);
 
-			await promisify<ListenOptions>(webhookServer.listen)
+			await promisify(webhookServer.listen)
+				// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+				// @ts-ignore https://devblogs.microsoft.com/typescript/announcing-typescript-4-1/#unmatched-parameters-are-no-longer-related
 				.call(webhookServer, { host, port });
 
 			debug(`Webhook listening on port: ${port}`);
