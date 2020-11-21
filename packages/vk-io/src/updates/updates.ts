@@ -26,6 +26,7 @@ import {
 	NewAttachmentsContext,
 	DialogMessagesContext,
 	VKPayTransactionContext,
+	DonutSubscriptionContext,
 
 	CommentContextType,
 	DialogFlagsContextType,
@@ -47,6 +48,7 @@ import {
 	LikeContextType,
 	WallPostContextType,
 	MarketOrderContextType,
+	DonutSubscriptionContextType,
 
 	CommentContextSubType,
 	DialogFlagsContextSubType,
@@ -67,7 +69,8 @@ import {
 	VoteContextSubType,
 	LikeContextSubType,
 	WallPostContextSubType,
-	MarketOrderContextSubType
+	MarketOrderContextSubType,
+	DonutSubscriptionContextSubType
 } from '../structures/contexts';
 
 import { API } from '../api';
@@ -164,6 +167,15 @@ const webhookContextsEvents: [string[], Constructor<any>][] = [
 	[
 		['market_order_new', 'market_order_edit'],
 		MarketOrderContext
+	],
+	[
+		[
+			'donut_subscription_create',
+			'donut_subscription_prolonged',
+			'donut_subscription_expired',
+			'donut_subscription_cancelled'
+		],
+		DonutSubscriptionContext
 	]
 ];
 
@@ -487,6 +499,11 @@ export class Updates {
 	public on<T = {}>(
 		events: AllowArray<MarketOrderContextType | MarketOrderContextSubType>,
 		handler: AllowArray<Middleware<MarketOrderContext & T>>
+	): this;
+
+	public on<T = {}>(
+		events: AllowArray<DonutSubscriptionContextType | DonutSubscriptionContextSubType>,
+		handler: AllowArray<Middleware<DonutSubscriptionContext & T>>
 	): this;
 
 	public on<T = {}>(
