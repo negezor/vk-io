@@ -15,6 +15,7 @@ export * from './message-event';
 export * from './messages-read';
 export * from './message-flags';
 export * from './vk-app-payload';
+export * from './donut-withdraw';
 export * from './new-attachments';
 export * from './friend-activity';
 export * from './dialog-messages';
