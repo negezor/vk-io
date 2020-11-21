@@ -4104,7 +4104,7 @@ export interface MessagesEditParams {
     message_id?: number;
     conversation_message_id?: number;
     template?: string;
-    keyboard?: string;
+    keyboard?: any;
     [key: string]: any;
 }
 
