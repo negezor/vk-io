@@ -264,7 +264,10 @@ CommentContextType
 | VKPayTransactionContextType
 | VoteContextType
 | LikeContextType
-| WallPostContextType;
+| WallPostContextType
+| DonutSubscriptionContextType
+| DonutSubscriptionPriceContextType
+| DonutWithdrawContextType;
 
 export type ContextSubTypes =
 CommentContextSubType
@@ -285,7 +288,10 @@ CommentContextSubType
 | VKPayTransactionContextSubType
 | VoteContextSubType
 | LikeContextSubType
-| WallPostContextSubType;
+| WallPostContextSubType
+| DonutSubscriptionContextSubType
+| DonutSubscriptionPriceContextSubType
+| DonutWithdrawContextSubType;
 
 export type ContextPossibleTypes = ContextTypes | ContextSubTypes | string;
 
