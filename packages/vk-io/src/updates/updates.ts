@@ -27,6 +27,7 @@ import {
 	DialogMessagesContext,
 	VKPayTransactionContext,
 	DonutSubscriptionContext,
+	DonutSubscriptionPriceContext,
 	DonutWithdrawContext,
 
 	CommentContextType,
@@ -50,6 +51,7 @@ import {
 	WallPostContextType,
 	MarketOrderContextType,
 	DonutSubscriptionContextType,
+	DonutSubscriptionPriceContextType,
 	DonutWithdrawContextType,
 
 	CommentContextSubType,
@@ -73,6 +75,7 @@ import {
 	WallPostContextSubType,
 	MarketOrderContextSubType,
 	DonutSubscriptionContextSubType,
+	DonutSubscriptionPriceContextSubType,
 	DonutWithdrawContextSubType
 } from '../structures/contexts';
 
@@ -179,6 +182,10 @@ const webhookContextsEvents: [string[], Constructor<any>][] = [
 			'donut_subscription_cancelled'
 		],
 		DonutSubscriptionContext
+	],
+	[
+		['donut_subscription_price_changed'],
+		DonutSubscriptionPriceContext
 	],
 	[
 		[
@@ -514,6 +521,11 @@ export class Updates {
 	public on<T = {}>(
 		events: AllowArray<DonutSubscriptionContextType | DonutSubscriptionContextSubType>,
 		handler: AllowArray<Middleware<DonutSubscriptionContext & T>>
+	): this;
+
+	public on<T = {}>(
+		events: AllowArray<DonutSubscriptionPriceContextType | DonutSubscriptionPriceContextSubType>,
+		handler: AllowArray<Middleware<DonutSubscriptionPriceContext & T>>
 	): this;
 
 	public on<T = {}>(
