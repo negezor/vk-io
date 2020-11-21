@@ -93,6 +93,10 @@ export class DonutSubscriptionContext<S = ContextDefaultState>
 	 */
 	public [kSerializeData](): object {
 		return pickProperties(this, [
+			'isCreated',
+			'isProlonged',
+			'isExpired',
+			'isCancelled',
 			'userId',
 			'amount',
 			'amountWithoutFee'
