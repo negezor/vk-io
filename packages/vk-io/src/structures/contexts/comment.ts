@@ -376,16 +376,26 @@ class CommentContext<S = ContextDefaultState>
 		const properties = [
 			'id',
 			'replyId',
-			'userId',
+			'fromId',
 			'replyUserId',
 			'deleterUserId',
 			'objectId',
 			'ownerId',
 			'createdAt',
 			'text',
-			'likes',
-			'attachments',
-			'isReply'
+			'isNew',
+			'isEdit',
+			'isDelete',
+			'isRestore',
+			'isPhotoComment',
+			'isWallComment',
+			'isVideoComment',
+			'isBoardComment',
+			'isMarketComment',
+			'isReply',
+			'isUser',
+			'isGroup',
+			'likes'
 		];
 
 		const filtredEmptyProperties = properties.filter(property => (
