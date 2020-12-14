@@ -769,7 +769,7 @@
           "description": "Ad description"
         },
         "id": {
-          "type": "integer",
+          "type": "string",
           "description": "Ad ID"
         },
         "image_src": {
@@ -2993,7 +2993,10 @@
           "type": "integer",
           "description": "Information whether current user has reposted the post"
         }
-      }
+      },
+      "required": [
+        "count"
+      ]
     },
     "base_request_param": {
       "type": "object",
@@ -3079,6 +3082,12 @@
           "format": "uri",
           "description": "URL of animation script"
         }
+      }
+    },
+    "base_stickers_list": {
+      "type": "array",
+      "items": {
+        "$ref": "objects.json#/definitions/base_sticker"
       }
     },
     "base_upload_server": {
@@ -3316,16 +3325,14 @@
     "board_topic_poll": {
       "type": "object",
       "properties": {
-        "answer_id": {
+        "owner_id": {
           "type": "integer",
-          "description": "Current user's answer ID",
-          "minimum": 0
+          "description": "Poll owner's ID"
         },
-        "answers": {
-          "type": "array",
-          "items": {
-            "$ref": "objects.json#/definitions/polls_answer"
-          }
+        "poll_id": {
+          "type": "integer",
+          "description": "Poll ID",
+          "minimum": 1
         },
         "created": {
           "type": "integer",
@@ -3336,23 +3343,25 @@
           "description": "Information whether the poll is closed",
           "$ref": "objects.json#/definitions/base_bool_int"
         },
-        "owner_id": {
-          "type": "integer",
-          "description": "Poll owner's ID"
-        },
-        "poll_id": {
-          "type": "integer",
-          "description": "Poll ID",
-          "minimum": 1
-        },
         "question": {
           "type": "string",
           "description": "Poll question"
         },
         "votes": {
-          "type": "string",
+          "type": "integer",
           "description": "Votes number",
           "minimum": 0
+        },
+        "answer_id": {
+          "type": "integer",
+          "description": "Current user's answer ID",
+          "minimum": 0
+        },
+        "answers": {
+          "type": "array",
+          "items": {
+            "$ref": "objects.json#/definitions/polls_answer"
+          }
         }
       },
       "required": [
@@ -3839,29 +3848,46 @@
     "callback_message_type": {
       "type": "string",
       "enum": [
+        "audio_new",
+        "board_post_new",
+        "board_post_edit",
+        "board_post_restore",
+        "board_post_delete",
         "confirmation",
+        "group_leave",
+        "group_join",
         "group_change_photo",
         "group_change_settings",
         "group_officers_edit",
         "lead_forms_new",
+        "market_comment_new",
         "market_comment_delete",
         "market_comment_edit",
         "market_comment_restore",
         "message_allow",
+        "message_new",
         "message_deny",
         "message_read",
         "message_reply",
+        "message_edit",
         "message_typing_state",
         "messages_edit",
+        "photo_new",
+        "photo_comment_new",
         "photo_comment_delete",
         "photo_comment_edit",
         "photo_comment_restore",
         "poll_vote_new",
         "user_block",
         "user_unblock",
+        "video_new",
+        "video_comment_new",
         "video_comment_delete",
         "video_comment_edit",
         "video_comment_restore",
+        "wall_post_new",
+        "wall_reply_new",
+        "wall_reply_edit",
         "wall_reply_delete",
         "wall_reply_restore",
         "wall_repost"
@@ -4110,6 +4136,68 @@
         "user_id",
         "post_id"
       ]
+    },
+    "calls_call": {
+      "type": "object",
+      "properties": {
+        "duration": {
+          "type": "integer",
+          "description": "Call duration",
+          "minimum": 0
+        },
+        "initiator_id": {
+          "type": "integer",
+          "description": "Caller initiator",
+          "minimum": 0
+        },
+        "receiver_id": {
+          "type": "integer",
+          "description": "Caller receiver",
+          "minimum": 0
+        },
+        "state": {
+          "$ref": "objects.json#/definitions/calls_end_state"
+        },
+        "time": {
+          "type": "integer",
+          "description": "Timestamp for call"
+        },
+        "video": {
+          "type": "boolean",
+          "description": "Was this call initiated as video call"
+        }
+      },
+      "required": [
+        "initiator_id",
+        "receiver_id",
+        "state",
+        "time"
+      ]
+    },
+    "calls_end_state": {
+      "type": "string",
+      "description": "State in which call ended up",
+      "enum": [
+        "canceled_by_initiator",
+        "canceled_by_receiver",
+        "reached"
+      ]
+    },
+    "calls_participants": {
+      "type": "object",
+      "properties": {
+        "list": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Participants count"
+        }
+      }
     },
     "comment_thread": {
       "type": "object",
@@ -6655,7 +6743,10 @@
         "role": {
           "$ref": "objects.json#/definitions/groups_member_role_status"
         }
-      }
+      },
+      "required": [
+        "id"
+      ]
     },
     "groups_member_role_permission": {
       "type": "string",
@@ -6796,12 +6887,17 @@
           "type": "string",
           "format": "uri",
           "description": "Url for user photo"
+        },
+        "first_name": {
+          "type": "string",
+          "description": "User first name"
         }
       },
       "required": [
         "id",
         "photo_50",
-        "photo_100"
+        "photo_100",
+        "first_name"
       ]
     },
     "groups_role_options": {
@@ -7599,6 +7695,9 @@
         },
         "title": {
           "type": "string"
+        },
+        "is_member": {
+          "type": "boolean"
         }
       }
     },
@@ -7644,6 +7743,9 @@
       "type": "object",
       "properties": {
         "members_count": {
+          "type": "integer"
+        },
+        "friends_count": {
           "type": "integer"
         },
         "owner_id": {
@@ -8402,23 +8504,28 @@
     "messages_longpoll_params": {
       "type": "object",
       "properties": {
-        "key": {
-          "type": "string",
-          "description": "Key"
-        },
-        "pts": {
-          "type": "integer",
-          "description": "Persistent timestamp"
-        },
         "server": {
           "type": "string",
           "description": "Server URL"
         },
-        "ts": {
+        "key": {
           "type": "string",
+          "description": "Key"
+        },
+        "ts": {
+          "type": "integer",
           "description": "Timestamp"
+        },
+        "pts": {
+          "type": "integer",
+          "description": "Persistent timestamp"
         }
-      }
+      },
+      "required": [
+        "server",
+        "key",
+        "ts"
+      ]
     },
     "messages_message": {
       "type": "object",
@@ -8617,6 +8724,9 @@
         "audio_message": {
           "$ref": "objects.json#/definitions/messages_audio_message"
         },
+        "call": {
+          "$ref": "objects.json#/definitions/calls_call"
+        },
         "doc": {
           "$ref": "objects.json#/definitions/docs_doc"
         },
@@ -8655,6 +8765,9 @@
         },
         "wall_reply": {
           "$ref": "objects.json#/definitions/wall_wall_comment"
+        },
+        "poll": {
+          "$ref": "objects.json#/definitions/polls_poll"
         }
       },
       "required": [
@@ -8678,6 +8791,8 @@
         "wall",
         "wall_reply",
         "article",
+        "poll",
+        "call",
         "graffiti",
         "audio_message"
       ]
@@ -8819,7 +8934,8 @@
         "vkpay",
         "open_app",
         "open_photo",
-        "open_link"
+        "open_link",
+        "callback"
       ]
     },
     "messages_user_xtr_invited_by": {
@@ -8901,7 +9017,8 @@
         "video",
         "audio_playlist",
         "games_carousel",
-        "clip"
+        "clip",
+        "recommended_game"
       ]
     },
     "newsfeed_ignore_item_type": {
@@ -8994,7 +9111,7 @@
             "items": {
               "type": "array",
               "items": {
-                "$ref": "objects.json#/definitions/wall_wallpost"
+                "$ref": "objects.json#/definitions/newsfeed_item_digest_item"
               }
             },
             "main_post_ids": {
@@ -9025,6 +9142,23 @@
         }
       ]
     },
+    "newsfeed_item_digest_button": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "style": {
+          "type": "string",
+          "enum": [
+            "primary"
+          ]
+        }
+      },
+      "required": [
+        "title"
+      ]
+    },
     "newsfeed_item_digest_footer": {
       "type": "object",
       "properties": {
@@ -9040,7 +9174,7 @@
           "description": "text for invite to enable smart feed"
         },
         "button": {
-          "$ref": "objects.json#/definitions/newsfeed_item_digest_footer_button"
+          "$ref": "objects.json#/definitions/newsfeed_item_digest_button"
         }
       },
       "required": [
@@ -9048,23 +9182,34 @@
         "text"
       ]
     },
-    "newsfeed_item_digest_footer_button": {
+    "newsfeed_item_digest_full_item": {
       "type": "object",
       "properties": {
-        "title": {
+        "text": {
           "type": "string"
+        },
+        "source_name": {
+          "type": "string"
+        },
+        "attachment_index": {
+          "type": "integer"
+        },
+        "attachment": {
+          "$ref": "objects.json#/definitions/wall_wallpost_attachment"
         },
         "style": {
           "type": "string",
           "enum": [
-            "primary"
+            "default",
+            "inversed"
           ]
+        },
+        "post": {
+          "$ref": "objects.json#/definitions/wall_wallpost"
         }
       },
       "required": [
-        "title",
-        "style",
-        "action"
+        "post"
       ]
     },
     "newsfeed_item_digest_header": {
@@ -9084,12 +9229,18 @@
             "singleline",
             "multiline"
           ]
+        },
+        "button": {
+          "$ref": "objects.json#/definitions/newsfeed_item_digest_button"
         }
       },
       "required": [
         "style",
         "title"
       ]
+    },
+    "newsfeed_item_digest_item": {
+      "$ref": "objects.json#/definitions/wall_wallpost"
     },
     "newsfeed_item_friend": {
       "type": "object",
@@ -10683,9 +10834,6 @@
           "description": "Information whether current user can comment the photo",
           "$ref": "objects.json#/definitions/base_bool_int"
         },
-        "comments": {
-          "$ref": "objects.json#/definitions/base_object_count"
-        },
         "date": {
           "type": "integer",
           "description": "Date when uploaded",
@@ -10714,6 +10862,12 @@
         "likes": {
           "$ref": "objects.json#/definitions/base_likes"
         },
+        "reposts": {
+          "$ref": "objects.json#/definitions/base_reposts_info"
+        },
+        "comments": {
+          "$ref": "objects.json#/definitions/base_object_count"
+        },
         "long": {
           "type": "number",
           "description": "Longitude"
@@ -10726,9 +10880,6 @@
           "type": "integer",
           "description": "Post ID",
           "minimum": 1
-        },
-        "reposts": {
-          "$ref": "objects.json#/definitions/base_object_count"
         },
         "tags": {
           "$ref": "objects.json#/definitions/base_object_count"
@@ -12111,6 +12262,121 @@
         "value"
       ]
     },
+    "store_product": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "Id of the product"
+        },
+        "type": {
+          "type": "string",
+          "description": "Product type",
+          "enum": [
+            "stickers"
+          ]
+        },
+        "purchased": {
+          "$ref": "objects.json#/definitions/base_bool_int",
+          "description": "Information whether the product is purchased (1 - yes, 0 - no)"
+        },
+        "active": {
+          "$ref": "objects.json#/definitions/base_bool_int",
+          "description": "Information whether the product is active (1 - yes, 0 - no)"
+        },
+        "promoted": {
+          "$ref": "objects.json#/definitions/base_bool_int",
+          "description": "Information whether the product is promoted (1 - yes, 0 - no)"
+        },
+        "purchase_date": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Date (Unix time) when the product was purchased"
+        },
+        "title": {
+          "type": "string",
+          "description": "Title of the product"
+        },
+        "stickers": {
+          "$ref": "objects.json#/definitions/base_stickers_list"
+        },
+        "icon": {
+          "$ref": "objects.json#/definitions/store_product_icon",
+          "description": "Array of icon images or icon set object of the product (for stickers product type)"
+        },
+        "previews": {
+          "type": "array",
+          "items": {
+            "$ref": "objects.json#/definitions/base_image"
+          },
+          "description": "Array of preview images of the product (for stickers product type)"
+        },
+        "has_animation": {
+          "type": "boolean",
+          "description": "Information whether the product is an animated sticker pack (for stickers product type)"
+        },
+        "subtitle": {
+          "type": "string",
+          "description": "Subtitle of the product"
+        }
+      },
+      "required": [
+        "id",
+        "type"
+      ]
+    },
+    "store_product_icon": {
+      "type": "array",
+      "items": {
+        "$ref": "objects.json#/definitions/base_image"
+      }
+    },
+    "store_stickers_keyword": {
+      "type": "object",
+      "properties": {
+        "words": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "user_stickers": {
+          "$ref": "objects.json#/definitions/store_stickers_keyword_stickers"
+        },
+        "promoted_stickers": {
+          "$ref": "objects.json#/definitions/store_stickers_keyword_stickers"
+        },
+        "stickers": {
+          "type": "array",
+          "items": {
+            "$ref": "objects.json#/definitions/store_stickers_keyword_sticker"
+          }
+        }
+      },
+      "required": [
+        "words"
+      ]
+    },
+    "store_stickers_keyword_sticker": {
+      "type": "object",
+      "properties": {
+        "pack_id": {
+          "type": "integer",
+          "description": "Pack id"
+        },
+        "sticker_id": {
+          "type": "integer",
+          "description": "Sticker id"
+        }
+      },
+      "required": [
+        "pack_id",
+        "sticker_id"
+      ]
+    },
+    "store_stickers_keyword_stickers": {
+      "$ref": "objects.json#/definitions/base_stickers_list"
+    },
     "stories_clickable_area": {
       "type": "object",
       "properties": {
@@ -12254,6 +12520,9 @@
         },
         "situational_theme_id": {
           "type": "integer"
+        },
+        "situational_app_url": {
+          "type": "string"
         }
       },
       "required": [
@@ -12722,6 +12991,18 @@
     "users_fields": {
       "type": "string",
       "enum": [
+        "first_name_nom",
+        "first_name_gen",
+        "first_name_dat",
+        "first_name_acc",
+        "first_name_ins",
+        "first_name_abl",
+        "last_name_nom",
+        "last_name_gen",
+        "last_name_dat",
+        "last_name_acc",
+        "last_name_ins",
+        "last_name_abl",
         "photo_id",
         "verified",
         "sex",
@@ -14826,7 +15107,8 @@
         "widget",
         "api",
         "rss",
-        "sms"
+        "sms",
+        "mvk"
       ]
     },
     "wall_post_type": {
@@ -15022,6 +15304,20 @@
         "owner_id": {
           "type": "integer",
           "description": "Wall owner's ID"
+        },
+        "poster": {
+          "type": "object"
+        },
+        "post_id": {
+          "type": "integer",
+          "description": "If post type 'reply', contains original post ID"
+        },
+        "parents_stack": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          },
+          "description": "If post type 'reply', contains original parent IDs stack"
         },
         "post_source": {
           "$ref": "objects.json#/definitions/wall_post_source"

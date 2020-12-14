@@ -3039,6 +3039,10 @@
               "type": "integer",
               "description": "Articles settings"
             },
+            "recognize_photo": {
+              "type": "integer",
+              "description": "Photo suggests setting"
+            },
             "city_id": {
               "type": "integer",
               "description": "City id of group"
@@ -4399,7 +4403,7 @@
         "response"
       ]
     },
-    "messages_getHistory_response": {
+    "messages_getHistory_extended_response": {
       "type": "object",
       "properties": {
         "response": {
@@ -4425,6 +4429,39 @@
               "type": "array",
               "items": {
                 "$ref": "objects.json#/definitions/groups_group_full"
+              }
+            },
+            "conversations": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/messages_conversation"
+              }
+            }
+          },
+          "required": [
+            "count",
+            "items"
+          ]
+        }
+      },
+      "required": [
+        "response"
+      ]
+    },
+    "messages_getHistory_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": "integer",
+              "description": "Total number"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/messages_message"
               }
             }
           },
@@ -4512,6 +4549,40 @@
         "response"
       ]
     },
+    "messages_getIntentUsers_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "profiles": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/users_user_full"
+              }
+            }
+          },
+          "required": [
+            "items",
+            "count"
+          ]
+        }
+      },
+      "required": [
+        "response"
+      ]
+    },
     "messages_getInviteLink_response": {
       "type": "object",
       "properties": {
@@ -4555,19 +4626,22 @@
                 }
               }
             },
-            "groups": {
-              "type": "array",
-              "items": {
-                "$ref": "objects.json#/definitions/groups_group"
-              }
-            },
             "messages": {
               "$ref": "objects.json#/definitions/messages_longpoll_messages"
+            },
+            "credentials": {
+              "$ref": "objects.json#/definitions/messages_longpoll_params"
             },
             "profiles": {
               "type": "array",
               "items": {
                 "$ref": "objects.json#/definitions/users_user_full"
+              }
+            },
+            "groups": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/groups_group"
               }
             },
             "chats": {
@@ -4579,6 +4653,9 @@
             "new_pts": {
               "type": "integer",
               "description": "Persistence timestamp"
+            },
+            "from_pts": {
+              "type": "integer"
             },
             "more": {
               "type": "boolean",
@@ -4695,6 +4772,51 @@
               }
             }
           }
+        }
+      },
+      "required": [
+        "response"
+      ]
+    },
+    "messages_search_extended_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": "integer",
+              "description": "Total number"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/messages_message"
+              }
+            },
+            "profiles": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/users_user_full"
+              }
+            },
+            "groups": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/groups_group_full"
+              }
+            },
+            "conversations": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/messages_conversation"
+              }
+            }
+          },
+          "required": [
+            "count",
+            "items"
+          ]
         }
       },
       "required": [
@@ -4872,7 +4994,7 @@
             },
             "next_from": {
               "type": "string",
-              "description": "New from value"
+              "description": "Next from value"
             }
           },
           "required": [
@@ -4990,10 +5112,6 @@
               "items": {
                 "$ref": "objects.json#/definitions/groups_group_full"
               }
-            },
-            "new_offset": {
-              "type": "string",
-              "description": "New offset value"
             },
             "next_from": {
               "type": "string",
@@ -6204,6 +6322,20 @@
         "response"
       ]
     },
+    "polls_getBackgrounds_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "array",
+          "items": {
+            "$ref": "objects.json#/definitions/polls_background"
+          }
+        }
+      },
+      "required": [
+        "response"
+      ]
+    },
     "polls_getById_response": {
       "type": "object",
       "properties": {
@@ -6223,6 +6355,17 @@
           "items": {
             "$ref": "objects.json#/definitions/polls_voters"
           }
+        }
+      },
+      "required": [
+        "response"
+      ]
+    },
+    "polls_savePhoto_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "$ref": "objects.json#/definitions/polls_background"
         }
       },
       "required": [
@@ -6554,22 +6697,75 @@
       "type": "object",
       "properties": {
         "response": {
-          "type": "string",
-          "description": "Value of key"
+          "type": "array",
+          "items": {
+            "$ref": "objects.json#/definitions/storage_value"
+          }
         }
       },
       "required": [
         "response"
       ]
     },
-    "storage_get_v5110_response": {
+    "store_getFavoriteStickers_response": {
       "type": "object",
       "properties": {
         "response": {
           "type": "array",
           "items": {
-            "$ref": "objects.json#/definitions/storage_value"
+            "$ref": "objects.json#/definitions/base_sticker"
           }
+        }
+      },
+      "required": [
+        "response"
+      ]
+    },
+    "store_getProducts_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "array",
+          "items": {
+            "$ref": "objects.json#/definitions/store_product"
+          }
+        }
+      },
+      "required": [
+        "response"
+      ]
+    },
+    "store_getStickersKeywords_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "dictionary": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/store_stickers_keyword"
+              }
+            },
+            "chunks_count": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Total count of chunks to load"
+            },
+            "chunks_hash": {
+              "type": "string",
+              "minimum": 1,
+              "description": "Chunks version hash"
+            }
+          },
+          "required": [
+            "count",
+            "dictionary"
+          ]
         }
       },
       "required": [

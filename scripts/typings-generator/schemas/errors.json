@@ -181,6 +181,21 @@
       "description": "User was banned",
       "global": true
     },
+    "api_error_unknown_application": {
+      "code": 38,
+      "description": "Unknown application",
+      "global": true
+    },
+    "api_error_unknown_user": {
+      "code": 39,
+      "description": "Unknown user",
+      "global": true
+    },
+    "api_error_unknown_group": {
+      "code": 40,
+      "description": "Unknown group",
+      "global": true
+    },
     "api_error_param": {
       "code": 100,
       "description": "One of the parameters specified was missing or invalid",
@@ -609,21 +624,9 @@
       "code": 950,
       "description": "Can't send message, reply timed out"
     },
-    "api_error_param_phone": {
-      "code": 1000,
-      "description": "Invalid phone number"
-    },
-    "api_error_phone_already_used": {
-      "code": 1004,
-      "description": "This phone number is used by another user"
-    },
     "api_error_auth_flood_error": {
       "code": 1105,
       "description": "Too many auth attempts, try again later"
-    },
-    "api_error_auth_delay": {
-      "code": 1112,
-      "description": "Processing.. Try later"
     },
     "api_error_param_doc_id": {
       "code": 1150,
@@ -784,6 +787,18 @@
     "api_error_callback_api_servers_limit": {
       "code": 2000,
       "description": "Servers number limit is reached"
+    },
+    "api_error_stickers_not_purchased": {
+      "code": 2100,
+      "description": "Stickers are not purchased"
+    },
+    "api_error_stickers_too_many_favorites": {
+      "code": 2101,
+      "description": "Too many favorite stickers"
+    },
+    "api_error_stickers_not_favorite": {
+      "code": 2102,
+      "description": "Stickers are not favorite"
     },
     "api_error_wall_check_link_cant_determine_source": {
       "code": 3102,

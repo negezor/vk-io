@@ -3060,51 +3060,6 @@
       }
     },
     {
-      "name": "auth.checkPhone",
-      "description": "Checks a user's phone number for correctness.",
-      "access_token_type": [
-        "user",
-        "open"
-      ],
-      "parameters": [
-        {
-          "name": "phone",
-          "description": "Phone number.",
-          "type": "string",
-          "required": true
-        },
-        {
-          "name": "client_id",
-          "description": "User ID.",
-          "type": "integer"
-        },
-        {
-          "name": "client_secret",
-          "type": "string"
-        },
-        {
-          "name": "auth_by_phone",
-          "type": "boolean"
-        }
-      ],
-      "responses": {
-        "response": {
-          "$ref": "responses.json#/definitions/base_ok_response"
-        }
-      },
-      "errors": [
-        {
-          "$ref": "errors.json#/errors/api_error_phone_already_used"
-        },
-        {
-          "$ref": "errors.json#/errors/api_error_auth_delay"
-        },
-        {
-          "$ref": "errors.json#/errors/api_error_param_phone"
-        }
-      ]
-    },
-    {
       "name": "auth.restore",
       "description": "Allows to restore account access using a code received via SMS. \" This method is only available for apps with [vk.com/dev/auth_direct|Direct authorization] access. \"",
       "access_token_type": [
@@ -4273,6 +4228,17 @@
             6,
             7,
             8
+          ],
+          "enumNames": [
+            "all",
+            "text",
+            "archive",
+            "gif",
+            "image",
+            "audio",
+            "video",
+            "ebook",
+            "default"
           ]
         },
         {
@@ -6509,7 +6475,8 @@
       "name": "groups.edit",
       "description": "Edits a community.",
       "access_token_type": [
-        "user"
+        "user",
+        "group"
       ],
       "parameters": [
         {
@@ -7638,7 +7605,9 @@
           "type": "string",
           "enum": [
             "friends",
-            "unsure"
+            "unsure",
+            "managers",
+            "donut"
           ]
         }
       ],
@@ -10036,7 +10005,8 @@
       "name": "market.getOrderItems",
       "description": "Get market items in the order",
       "access_token_type": [
-        "user"
+        "user",
+        "group"
       ],
       "parameters": [
         {
@@ -10453,6 +10423,12 @@
             1,
             2,
             3
+          ],
+          "enumNames": [
+            "default",
+            "date",
+            "price",
+            "relevance"
           ]
         },
         {
@@ -10498,6 +10474,10 @@
           "enum": [
             0,
             2
+          ],
+          "enumNames": [
+            "active",
+            "disabled"
           ]
         }
       ],
@@ -11318,6 +11298,9 @@
       "responses": {
         "response": {
           "$ref": "responses.json#/definitions/messages_getHistory_response"
+        },
+        "extendedResponse": {
+          "$ref": "responses.json#/definitions/messages_getHistory_extended_response"
         }
       },
       "errors": [
@@ -11468,6 +11451,71 @@
           "$ref": "responses.json#/definitions/messages_getImportantMessages_extended_response"
         }
       }
+    },
+    {
+      "name": "messages.getIntentUsers",
+      "access_token_type": [
+        "group"
+      ],
+      "parameters": [
+        {
+          "name": "intent",
+          "type": "string",
+          "required": true,
+          "enum": [
+            "confirmed_notification",
+            "non_promo_newsletter",
+            "promo_newsletter"
+          ]
+        },
+        {
+          "name": "subscribe_id",
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100
+        },
+        {
+          "name": "offset",
+          "type": "integer",
+          "default": 0,
+          "minimum": 0
+        },
+        {
+          "name": "count",
+          "type": "integer",
+          "default": 20,
+          "minimum": 0,
+          "maximum": 200
+        },
+        {
+          "name": "extended",
+          "type": "boolean"
+        },
+        {
+          "name": "name_case",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "fields",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/messages_getIntentUsers_response"
+        }
+      },
+      "errors": [
+        {
+          "$ref": "errors.json#/errors/api_error_messages_intent_cant_use"
+        }
+      ]
     },
     {
       "name": "messages.getInviteLink",
@@ -12047,6 +12095,9 @@
       "responses": {
         "response": {
           "$ref": "responses.json#/definitions/messages_search_response"
+        },
+        "extendedResponse": {
+          "$ref": "responses.json#/definitions/messages_search_extended_response"
         }
       }
     },
@@ -16405,6 +16456,17 @@
       }
     },
     {
+      "name": "polls.getBackgrounds",
+      "access_token_type": [
+        "user"
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/polls_getBackgrounds_response"
+        }
+      }
+    },
+    {
       "name": "polls.getById",
       "description": "Returns detailed information about a poll by its ID.",
       "access_token_type": [
@@ -16470,6 +16532,23 @@
           "$ref": "errors.json#/errors/api_error_polls_access"
         }
       ]
+    },
+    {
+      "name": "polls.getPhotoUploadServer",
+      "access_token_type": [
+        "user"
+      ],
+      "parameters": [
+        {
+          "name": "owner_id",
+          "type": "integer"
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/base_getUploadServer_response"
+        }
+      }
     },
     {
       "name": "polls.getVoters",
@@ -16568,6 +16647,34 @@
         },
         {
           "$ref": "errors.json#/errors/api_error_polls_access_without_vote"
+        }
+      ]
+    },
+    {
+      "name": "polls.savePhoto",
+      "access_token_type": [
+        "user"
+      ],
+      "parameters": [
+        {
+          "name": "photo",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "hash",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/polls_savePhoto_response"
+        }
+      },
+      "errors": [
+        {
+          "$ref": "errors.json#/errors/api_error_param_photo"
         }
       ]
     },
@@ -17362,7 +17469,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/storage_get_v5110_response"
+          "$ref": "responses.json#/definitions/storage_get_response"
         }
       }
     },
@@ -17435,6 +17542,166 @@
       "errors": [
         {
           "$ref": "errors.json#/errors/api_error_limits"
+        }
+      ]
+    },
+    {
+      "name": "store.addStickersToFavorite",
+      "description": "Adds given sticker IDs to the list of user's favorite stickers",
+      "access_token_type": [
+        "user"
+      ],
+      "parameters": [
+        {
+          "name": "sticker_ids",
+          "description": "Sticker IDs to be added",
+          "type": "array",
+          "required": true,
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/base_ok_response"
+        }
+      },
+      "errors": [
+        {
+          "$ref": "errors.json#/errors/api_error_stickers_not_purchased"
+        },
+        {
+          "$ref": "errors.json#/errors/api_error_stickers_too_many_favorites"
+        }
+      ]
+    },
+    {
+      "name": "store.getFavoriteStickers",
+      "access_token_type": [
+        "user"
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/store_getFavoriteStickers_response"
+        }
+      }
+    },
+    {
+      "name": "store.getProducts",
+      "access_token_type": [
+        "user"
+      ],
+      "parameters": [
+        {
+          "name": "type",
+          "type": "string"
+        },
+        {
+          "name": "merchant",
+          "type": "string"
+        },
+        {
+          "name": "section",
+          "type": "string"
+        },
+        {
+          "name": "product_ids",
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        {
+          "name": "filters",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "extended",
+          "type": "boolean",
+          "default": 0
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/store_getProducts_response"
+        }
+      }
+    },
+    {
+      "name": "store.getStickersKeywords",
+      "access_token_type": [
+        "user"
+      ],
+      "parameters": [
+        {
+          "name": "stickers_ids",
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        {
+          "name": "products_ids",
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        {
+          "name": "aliases",
+          "type": "boolean",
+          "default": true
+        },
+        {
+          "name": "all_products",
+          "type": "boolean"
+        },
+        {
+          "name": "need_stickers",
+          "type": "boolean",
+          "default": true
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/store_getStickersKeywords_response"
+        }
+      }
+    },
+    {
+      "name": "store.removeStickersFromFavorite",
+      "description": "Removes given sticker IDs from the list of user's favorite stickers",
+      "access_token_type": [
+        "user"
+      ],
+      "parameters": [
+        {
+          "name": "sticker_ids",
+          "description": "Sticker IDs to be removed",
+          "type": "array",
+          "required": true,
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/base_ok_response"
+        }
+      },
+      "errors": [
+        {
+          "$ref": "errors.json#/errors/api_error_stickers_not_favorite"
         }
       ]
     },
