@@ -1122,20 +1122,6 @@ export interface AppsSendRequestParams {
     [key: string]: any;
 }
 
-export interface AuthCheckPhoneParams {
-    /**
-     * Phone number.
-     */
-    phone: string;
-    /**
-     * User ID.
-     */
-    client_id?: number;
-    client_secret?: string;
-    auth_by_phone?: boolean | number;
-    [key: string]: any;
-}
-
 export interface AuthRestoreParams {
     /**
      * User phone number.
@@ -2716,7 +2702,7 @@ export interface GroupsGetMembersParams {
     /**
      * *'friends' – only friends in this community will be returned,, *'unsure' – only those who pressed 'I may attend' will be returned (if it's an event).
      */
-    filter?: "friends" | "unsure";
+    filter?: "friends" | "unsure" | "managers" | "donut";
     fields?: Objects.UsersFields[];
     [key: string]: any;
 }
@@ -3268,116 +3254,6 @@ export interface GroupsToggleMarketParams {
 export interface GroupsUnbanParams {
     group_id: number;
     owner_id?: number;
-    [key: string]: any;
-}
-
-export interface LeadsCheckUserParams {
-    /**
-     * Lead ID.
-     */
-    lead_id: number;
-    /**
-     * Value to be return in 'result' field when test mode is used.
-     */
-    test_result?: number;
-    /**
-     * User age.
-     */
-    age?: number;
-    /**
-     * User country code.
-     */
-    country?: string;
-    test_mode?: boolean | number;
-    auto_start?: boolean | number;
-    [key: string]: any;
-}
-
-export interface LeadsCompleteParams {
-    /**
-     * Session obtained as GET parameter when session started.
-     */
-    vk_sid: string;
-    /**
-     * Secret key from the lead testing interface.
-     */
-    secret: string;
-    /**
-     * Comment text.
-     */
-    comment?: string;
-    [key: string]: any;
-}
-
-export interface LeadsGetStatsParams {
-    /**
-     * Lead ID.
-     */
-    lead_id: number;
-    /**
-     * Secret key obtained from the lead testing interface.
-     */
-    secret?: string;
-    /**
-     * Day to start stats from (YYYY_MM_DD, e.g.2011-09-17).
-     */
-    date_start?: string;
-    /**
-     * Day to finish stats (YYYY_MM_DD, e.g.2011-09-17).
-     */
-    date_end?: string;
-    [key: string]: any;
-}
-
-export interface LeadsGetUsersParams {
-    /**
-     * Offer ID.
-     */
-    offer_id: number;
-    /**
-     * Secret key obtained in the lead testing interface.
-     */
-    secret: string;
-    /**
-     * Offset needed to return a specific subset of results.
-     */
-    offset?: number;
-    /**
-     * Number of results to return.
-     */
-    count?: number;
-    /**
-     * Action type. Possible values: *'0' — start,, *'1' — finish,, *'2' — blocking users,, *'3' — start in a test mode,, *'4' — finish in a test mode.
-     */
-    status?: 0 | 1 | 2 | 3 | 4;
-    /**
-     * Sort order. Possible values: *'1' — chronological,, *'0' — reverse chronological.
-     */
-    reverse?: boolean | number;
-    [key: string]: any;
-}
-
-export interface LeadsMetricHitParams {
-    /**
-     * Metric data obtained in the lead interface.
-     */
-    data: string;
-    [key: string]: any;
-}
-
-export interface LeadsStartParams {
-    /**
-     * Lead ID.
-     */
-    lead_id: number;
-    /**
-     * Secret key from the lead testing interface.
-     */
-    secret: string;
-    uid?: number;
-    aid?: number;
-    test_mode?: boolean | number;
-    force?: boolean | number;
     [key: string]: any;
 }
 
@@ -4307,6 +4183,17 @@ export interface MessagesGetImportantMessagesParams {
     offset?: number;
     start_message_id?: number;
     fields?: Objects.BaseUserGroupFields[];
+    [key: string]: any;
+}
+
+export interface MessagesGetIntentUsersParams {
+    intent: "confirmed_notification" | "non_promo_newsletter" | "promo_newsletter";
+    subscribe_id?: number;
+    offset?: number;
+    count?: number;
+    extended?: boolean | number;
+    name_case?: string[] | string;
+    fields?: string[] | string;
     [key: string]: any;
 }
 
@@ -6295,6 +6182,10 @@ export interface PollsEditParams {
     [key: string]: any;
 }
 
+export interface PollsGetBackgroundsParams {
+    [key: string]: any;
+}
+
 export interface PollsGetByIdParams {
     /**
      * ID of the user or community that owns the poll. Use a negative value to designate a community ID.
@@ -6312,6 +6203,11 @@ export interface PollsGetByIdParams {
     friends_count?: number;
     fields?: string[] | string;
     name_case?: "abl" | "acc" | "dat" | "gen" | "ins" | "nom";
+    [key: string]: any;
+}
+
+export interface PollsGetPhotoUploadServerParams {
+    owner_id?: number;
     [key: string]: any;
 }
 
@@ -6343,6 +6239,12 @@ export interface PollsGetVotersParams {
     answer_ids?: number[] | number;
     is_board?: boolean | number;
     fields?: Objects.UsersFields[];
+    [key: string]: any;
+}
+
+export interface PollsSavePhotoParams {
+    photo: string;
+    hash: string;
     [key: string]: any;
 }
 
@@ -6592,6 +6494,39 @@ export interface StorageSetParams {
     key: string;
     value?: string;
     user_id?: number;
+    [key: string]: any;
+}
+
+export interface StoreAddStickersToFavoriteParams {
+    sticker_ids?: number[] | number;
+    [key: string]: any;
+}
+
+export interface StoreGetFavoriteStickersParams {
+    [key: string]: any;
+}
+
+export interface StoreGetProductsParams {
+    type?: string;
+    merchant?: string;
+    section?: string;
+    product_ids?: number[] | number;
+    filters?: string[] | string;
+    extended?: boolean | number;
+    [key: string]: any;
+}
+
+export interface StoreGetStickersKeywordsParams {
+    stickers_ids?: number[] | number;
+    products_ids?: number[] | number;
+    aliases?: boolean | number;
+    all_products?: boolean | number;
+    need_stickers?: boolean | number;
+    [key: string]: any;
+}
+
+export interface StoreRemoveStickersFromFavoriteParams {
+    sticker_ids?: number[] | number;
     [key: string]: any;
 }
 

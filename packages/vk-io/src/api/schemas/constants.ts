@@ -199,6 +199,24 @@ export enum APIErrorCode {
      */
     USER_BANNED = 37,
     /**
+     * Unknown application
+     *
+     * Code: `38`
+     */
+    UNKNOWN_APPLICATION = 38,
+    /**
+     * Unknown user
+     *
+     * Code: `39`
+     */
+    UNKNOWN_USER = 39,
+    /**
+     * Unknown group
+     *
+     * Code: `40`
+     */
+    UNKNOWN_GROUP = 40,
+    /**
      * One of the parameters specified was missing or invalid
      *
      * Code: `100`
@@ -1086,6 +1104,24 @@ export enum APIErrorCode {
      * Code: `2000`
      */
     CALLBACK_API_SERVERS_LIMIT = 2000,
+    /**
+     * Stickers are not purchased
+     *
+     * Code: `2100`
+     */
+    STICKERS_NOT_PURCHASED = 2100,
+    /**
+     * Too many favorite stickers
+     *
+     * Code: `2101`
+     */
+    STICKERS_TOO_MANY_FAVORITES = 2101,
+    /**
+     * Stickers are not favorite
+     *
+     * Code: `2102`
+     */
+    STICKERS_NOT_FAVORITE = 2102,
     /**
      * Specified link is incorrect (can't find source)
      *

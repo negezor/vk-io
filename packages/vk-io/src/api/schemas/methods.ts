@@ -326,10 +326,6 @@ export interface APIApps {
  */
 export interface APIAuth {
     /**
-     * Checks a user's phone number for correctness.
-     */
-    checkPhone(params: Params.AuthCheckPhoneParams): Promise<Responses.BaseOkResponse>;
-    /**
      * Allows to restore account access using a code received via SMS. " This method is only available for apps with [vk.com/dev/auth_direct|Direct authorization] access. "
      */
     restore(params: Params.AuthRestoreParams): Promise<Responses.AuthRestoreResponse>;
@@ -809,36 +805,6 @@ export interface APIGroups {
 }
 
 /**
- * The API leads group
- */
-export interface APILeads {
-    /**
-     * Checks if the user can start the lead.
-     */
-    checkUser(params: Params.LeadsCheckUserParams): Promise<Responses.LeadsCheckUserResponse>;
-    /**
-     * Completes the lead started by user.
-     */
-    complete(params: Params.LeadsCompleteParams): Promise<Responses.LeadsCompleteResponse>;
-    /**
-     * Returns lead stats data.
-     */
-    getStats(params: Params.LeadsGetStatsParams): Promise<Responses.LeadsGetStatsResponse>;
-    /**
-     * Returns a list of last user actions for the offer.
-     */
-    getUsers(params: Params.LeadsGetUsersParams): Promise<Responses.LeadsGetUsersResponse>;
-    /**
-     * Counts the metric event.
-     */
-    metricHit(params: Params.LeadsMetricHitParams): Promise<Responses.LeadsMetricHitResponse>;
-    /**
-     * Creates new session for the user passing the offer.
-     */
-    start(params: Params.LeadsStartParams): Promise<Responses.LeadsStartResponse>;
-}
-
-/**
  * The API likes group
  */
 export interface APILikes {
@@ -1052,6 +1018,7 @@ export interface APIMessages {
      * Returns a list of user's important messages.
      */
     getImportantMessages(params: Params.MessagesGetImportantMessagesParams): Promise<Responses.MessagesGetImportantMessagesResponse>;
+    getIntentUsers(params: Params.MessagesGetIntentUsersParams): Promise<Responses.MessagesGetIntentUsersResponse>;
     getInviteLink(params: Params.MessagesGetInviteLinkParams): Promise<Responses.MessagesGetInviteLinkResponse>;
     /**
      * Returns a user's current status and date of last activity.
@@ -1527,14 +1494,17 @@ export interface APIPolls {
      * Edits created polls
      */
     edit(params: Params.PollsEditParams): Promise<Responses.BaseOkResponse>;
+    getBackgrounds(params: Params.PollsGetBackgroundsParams): Promise<Responses.PollsGetBackgroundsResponse>;
     /**
      * Returns detailed information about a poll by its ID.
      */
     getById(params: Params.PollsGetByIdParams): Promise<Responses.PollsGetByIdResponse>;
+    getPhotoUploadServer(params: Params.PollsGetPhotoUploadServerParams): Promise<Responses.BaseGetUploadServerResponse>;
     /**
      * Returns a list of IDs of users who selected specific answers in the poll.
      */
     getVoters(params: Params.PollsGetVotersParams): Promise<Responses.PollsGetVotersResponse>;
+    savePhoto(params: Params.PollsSavePhotoParams): Promise<Responses.PollsSavePhotoResponse>;
 }
 
 /**
@@ -1641,7 +1611,7 @@ export interface APIStorage {
     /**
      * Returns a value of variable with the name set by key parameter.
      */
-    get(params: Params.StorageGetParams): Promise<Responses.StorageGetV5110Response>;
+    get(params: Params.StorageGetParams): Promise<Responses.StorageGetResponse>;
     /**
      * Returns the names of all variables.
      */
@@ -1650,6 +1620,23 @@ export interface APIStorage {
      * Saves a value of variable with the name set by 'key' parameter.
      */
     set(params: Params.StorageSetParams): Promise<Responses.BaseOkResponse>;
+}
+
+/**
+ * The API store group
+ */
+export interface APIStore {
+    /**
+     * Adds given sticker IDs to the list of user's favorite stickers
+     */
+    addStickersToFavorite(params: Params.StoreAddStickersToFavoriteParams): Promise<Responses.BaseOkResponse>;
+    getFavoriteStickers(params: Params.StoreGetFavoriteStickersParams): Promise<Responses.StoreGetFavoriteStickersResponse>;
+    getProducts(params: Params.StoreGetProductsParams): Promise<Responses.StoreGetProductsResponse>;
+    getStickersKeywords(params: Params.StoreGetStickersKeywordsParams): Promise<Responses.StoreGetStickersKeywordsResponse>;
+    /**
+     * Removes given sticker IDs from the list of user's favorite stickers
+     */
+    removeStickersFromFavorite(params: Params.StoreRemoveStickersFromFavoriteParams): Promise<Responses.BaseOkResponse>;
 }
 
 /**
@@ -2046,10 +2033,6 @@ export interface APIMethods {
      */
     groups: APIGroups;
     /**
-     * The API leads group
-     */
-    leads: APILeads;
-    /**
      * The API likes group
      */
     likes: APILikes;
@@ -2117,6 +2100,10 @@ export interface APIMethods {
      * The API storage group
      */
     storage: APIStorage;
+    /**
+     * The API store group
+     */
+    store: APIStore;
     /**
      * The API stories group
      */

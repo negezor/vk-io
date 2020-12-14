@@ -351,7 +351,7 @@ export interface AdsAdLayout {
     /**
      * Ad ID
      */
-    id: number;
+    id: string;
     /**
      * Image URL
      */
@@ -1730,7 +1730,7 @@ export interface BaseRepostsInfo {
     /**
      * Total reposts counter. Sum of wall and mail reposts counters
      */
-    count?: number;
+    count: number;
     /**
      * Wall reposts counter
      */
@@ -1794,6 +1794,8 @@ export interface BaseStickerAnimation {
     url?: string;
     [key: string]: any;
 }
+
+export type BaseStickersList = BaseSticker[];
 
 export interface BaseUploadServer {
     /**
@@ -1874,14 +1876,6 @@ export interface BoardTopicComment {
 
 export interface BoardTopicPoll {
     /**
-     * Current user's answer ID
-     */
-    answer_id: number;
-    /**
-     * Date when poll has been created in Unixtime
-     */
-    created: number;
-    /**
      * Poll owner's ID
      */
     owner_id: number;
@@ -1890,13 +1884,21 @@ export interface BoardTopicPoll {
      */
     poll_id: number;
     /**
+     * Date when poll has been created in Unixtime
+     */
+    created: number;
+    /**
      * Poll question
      */
     question: string;
     /**
      * Votes number
      */
-    votes: string;
+    votes: number;
+    /**
+     * Current user's answer ID
+     */
+    answer_id: number;
     [key: string]: any;
     answers: PollsAnswer[];
 }
@@ -2044,7 +2046,7 @@ export interface CallbackMessageDeny {
     user_id: number;
 }
 
-export type CallbackMessageType = "confirmation" | "group_change_photo" | "group_change_settings" | "group_officers_edit" | "lead_forms_new" | "market_comment_delete" | "market_comment_edit" | "market_comment_restore" | "message_allow" | "message_deny" | "message_read" | "message_reply" | "message_typing_state" | "messages_edit" | "photo_comment_delete" | "photo_comment_edit" | "photo_comment_restore" | "poll_vote_new" | "user_block" | "user_unblock" | "video_comment_delete" | "video_comment_edit" | "video_comment_restore" | "wall_reply_delete" | "wall_reply_restore" | "wall_repost";
+export type CallbackMessageType = "audio_new" | "board_post_new" | "board_post_edit" | "board_post_restore" | "board_post_delete" | "confirmation" | "group_leave" | "group_join" | "group_change_photo" | "group_change_settings" | "group_officers_edit" | "lead_forms_new" | "market_comment_new" | "market_comment_delete" | "market_comment_edit" | "market_comment_restore" | "message_allow" | "message_new" | "message_deny" | "message_read" | "message_reply" | "message_edit" | "message_typing_state" | "messages_edit" | "photo_new" | "photo_comment_new" | "photo_comment_delete" | "photo_comment_edit" | "photo_comment_restore" | "poll_vote_new" | "user_block" | "user_unblock" | "video_new" | "video_comment_new" | "video_comment_delete" | "video_comment_edit" | "video_comment_restore" | "wall_post_new" | "wall_reply_new" | "wall_reply_edit" | "wall_reply_delete" | "wall_reply_restore" | "wall_repost";
 
 export interface CallbackPhotoComment {
     [key: string]: any;
@@ -2119,6 +2121,41 @@ export interface CallbackWallCommentDelete {
     id: number;
     user_id: number;
     post_id: number;
+}
+
+export interface CallsCall {
+    /**
+     * Call duration
+     */
+    duration?: number;
+    /**
+     * Caller initiator
+     */
+    initiator_id: number;
+    /**
+     * Caller receiver
+     */
+    receiver_id: number;
+    /**
+     * Timestamp for call
+     */
+    time: number;
+    /**
+     * Was this call initiated as video call
+     */
+    video?: boolean | number;
+    [key: string]: any;
+}
+
+export type CallsEndState = "canceled_by_initiator" | "canceled_by_receiver" | "reached";
+
+export interface CallsParticipants {
+    /**
+     * Participants count
+     */
+    count?: number;
+    [key: string]: any;
+    list?: number[];
 }
 
 export interface CommentThread {
@@ -3250,7 +3287,7 @@ export interface GroupsMemberRole {
     /**
      * User ID
      */
-    id?: number;
+    id: number;
     [key: string]: any;
     permissions?: GroupsMemberRolePermission[];
 }
@@ -3305,6 +3342,10 @@ export interface GroupsProfileItem {
      * Url for user photo
      */
     photo_100: string;
+    /**
+     * User first name
+     */
+    first_name: string;
     [key: string]: any;
 }
 
@@ -3339,129 +3380,6 @@ export interface GroupsUserXtrRole1 {
 }
 
 export type GroupsUserXtrRole = UsersUserFull & GroupsUserXtrRole1;
-
-export interface LeadsChecked {
-    /**
-     * Reason why user can't start the lead
-     */
-    reason?: string;
-    /**
-     * Session ID
-     */
-    sid?: string;
-    /**
-     * URL user should open to start the lead
-     */
-    start_link?: string;
-    [key: string]: any;
-}
-
-export type LeadsCheckedResult = "true" | "false";
-
-export interface LeadsComplete {
-    /**
-     * Offer cost
-     */
-    cost?: number;
-    /**
-     * Offer limit
-     */
-    limit?: number;
-    /**
-     * Amount of spent votes
-     */
-    spent?: number;
-    [key: string]: any;
-    success?: number;
-}
-
-export interface LeadsEntry {
-    /**
-     * Application ID
-     */
-    aid?: number;
-    /**
-     * Comment text
-     */
-    comment?: string;
-    /**
-     * Date when the action has been started in Unixtime
-     */
-    date?: number;
-    /**
-     * Session string ID
-     */
-    sid?: string;
-    /**
-     * Start date in Unixtime (for status=2)
-     */
-    start_date?: number;
-    /**
-     * Action type
-     */
-    status?: number;
-    /**
-     * User ID
-     */
-    uid?: number;
-    [key: string]: any;
-}
-
-export interface LeadsLead {
-    /**
-     * Completed offers number
-     */
-    completed?: number;
-    /**
-     * Offer cost
-     */
-    cost?: number;
-    /**
-     * Impressions number
-     */
-    impressions?: number;
-    /**
-     * Lead limit
-     */
-    limit?: number;
-    /**
-     * Amount of spent votes
-     */
-    spent?: number;
-    /**
-     * Started offers number
-     */
-    started?: number;
-    [key: string]: any;
-}
-
-export interface LeadsLeadDays {
-    /**
-     * Completed offers number
-     */
-    completed?: number;
-    /**
-     * Impressions number
-     */
-    impressions?: number;
-    /**
-     * Amount of spent votes
-     */
-    spent?: number;
-    /**
-     * Started offers number
-     */
-    started?: number;
-    [key: string]: any;
-}
-
-export interface LeadsStart {
-    /**
-     * Session data
-     */
-    vk_sid?: string;
-    [key: string]: any;
-}
 
 export type LikesType = "post" | "comment" | "photo" | "audio" | "video" | "note" | "market" | "photo_comment" | "video_comment" | "topic_comment" | "market_comment" | "sitepage";
 
@@ -3806,6 +3724,7 @@ export interface MessagesChatPreview {
     members?: number[];
     members_count?: number;
     title?: string;
+    is_member?: boolean | number;
 }
 
 export interface MessagesChatPushSettings {
@@ -3855,6 +3774,7 @@ export interface MessagesChatSettings {
     active_ids: number[];
     [key: string]: any;
     members_count?: number;
+    friends_count?: number;
     owner_id: number;
     is_group_channel?: boolean | number;
     is_disappearing?: boolean | number;
@@ -4230,21 +4150,21 @@ export interface MessagesLongpollMessages {
 
 export interface MessagesLongpollParams {
     /**
+     * Server URL
+     */
+    server: string;
+    /**
      * Key
      */
-    key?: string;
+    key: string;
+    /**
+     * Timestamp
+     */
+    ts: number;
     /**
      * Persistent timestamp
      */
     pts?: number;
-    /**
-     * Server URL
-     */
-    server?: string;
-    /**
-     * Timestamp
-     */
-    ts?: string;
     [key: string]: any;
 }
 
@@ -4360,7 +4280,7 @@ export interface MessagesMessageAttachment {
     [key: string]: any;
 }
 
-export type MessagesMessageAttachmentType = "photo" | "audio" | "video" | "doc" | "link" | "market" | "market_album" | "gift" | "sticker" | "wall" | "wall_reply" | "article" | "graffiti" | "audio_message";
+export type MessagesMessageAttachmentType = "photo" | "audio" | "video" | "doc" | "link" | "market" | "market_album" | "gift" | "sticker" | "wall" | "wall_reply" | "article" | "poll" | "call" | "graffiti" | "audio_message";
 
 export interface MessagesMessageRequestData {
     /**
@@ -4439,7 +4359,7 @@ export interface MessagesPushSettings {
     [key: string]: any;
 }
 
-export type MessagesTemplateActionTypeNames = "text" | "start" | "location" | "vkpay" | "open_app" | "open_photo" | "open_link";
+export type MessagesTemplateActionTypeNames = "text" | "start" | "location" | "vkpay" | "open_app" | "open_photo" | "open_link" | "callback";
 
 export interface MessagesUserXtrInvitedBy1 {
     /**
@@ -4473,7 +4393,7 @@ export interface NewsfeedEventActivity {
     friends: number[];
 }
 
-export type NewsfeedFilters = "post" | "photo" | "photo_tag" | "wall_photo" | "friend" | "recommended_groups" | "note" | "audio" | "video" | "audio_playlist" | "games_carousel" | "clip";
+export type NewsfeedFilters = "post" | "photo" | "photo_tag" | "wall_photo" | "friend" | "recommended_groups" | "note" | "audio" | "video" | "audio_playlist" | "games_carousel" | "clip" | "recommended_game";
 
 export type NewsfeedIgnoreItemType = "wall" | "tag" | "profilephoto" | "video" | "photo" | "audio";
 
@@ -4517,7 +4437,7 @@ export interface NewsfeedItemDigest1 {
      * type of digest
      */
     template?: "list" | "grid" | "single";
-    items?: WallWallpost[];
+    items?: NewsfeedItemDigestItem[];
     main_post_ids?: string[];
     header?: NewsfeedItemDigestHeader;
     footer?: NewsfeedItemDigestFooter;
@@ -4525,6 +4445,12 @@ export interface NewsfeedItemDigest1 {
 }
 
 export type NewsfeedItemDigest = NewsfeedItemBase & NewsfeedItemDigest1;
+
+export interface NewsfeedItemDigestButton {
+    [key: string]: any;
+    title: string;
+    style?: "primary";
+}
 
 export interface NewsfeedItemDigestFooter {
     /**
@@ -4535,10 +4461,12 @@ export interface NewsfeedItemDigestFooter {
     style: "text" | "button";
 }
 
-export interface NewsfeedItemDigestFooterButton {
+export interface NewsfeedItemDigestFullItem {
     [key: string]: any;
-    title: string;
-    style: "primary";
+    text?: string;
+    source_name?: string;
+    attachment_index?: number;
+    style?: "default" | "inversed";
 }
 
 export interface NewsfeedItemDigestHeader {
@@ -4553,6 +4481,8 @@ export interface NewsfeedItemDigestHeader {
     [key: string]: any;
     style: "singleline" | "multiline";
 }
+
+export type NewsfeedItemDigestItem = WallWallpost;
 
 export interface NewsfeedItemFriend1 {
     friends?: NewsfeedItemFriendFriends;
@@ -6369,6 +6299,57 @@ export interface StorageValue {
     value: string;
 }
 
+export interface StoreProduct {
+    /**
+     * Id of the product
+     */
+    id: number;
+    /**
+     * Product type
+     */
+    type: "stickers";
+    /**
+     * Date (Unix time) when the product was purchased
+     */
+    purchase_date?: number;
+    /**
+     * Title of the product
+     */
+    title?: string;
+    /**
+     * Information whether the product is an animated sticker pack (for stickers product type)
+     */
+    has_animation?: boolean | number;
+    /**
+     * Subtitle of the product
+     */
+    subtitle?: string;
+    [key: string]: any;
+    previews?: BaseImage[];
+}
+
+export type StoreProductIcon = BaseImage[];
+
+export interface StoreStickersKeyword {
+    [key: string]: any;
+    words: string[];
+    stickers?: StoreStickersKeywordSticker[];
+}
+
+export interface StoreStickersKeywordSticker {
+    /**
+     * Pack id
+     */
+    pack_id: number;
+    /**
+     * Sticker id
+     */
+    sticker_id: number;
+    [key: string]: any;
+}
+
+export type StoreStickersKeywordStickers = BaseStickersList;
+
 export interface StoriesClickableArea {
     [key: string]: any;
     x?: number;
@@ -6421,6 +6402,7 @@ export interface StoriesClickableSticker {
     post_owner_id?: number;
     post_id?: number;
     situational_theme_id?: number;
+    situational_app_url?: string;
 }
 
 export interface StoriesClickableStickers {
@@ -6627,7 +6609,7 @@ export interface UsersExports {
     twitter?: number;
 }
 
-export type UsersFields = "photo_id" | "verified" | "sex" | "bdate" | "city" | "country" | "home_town" | "has_photo" | "photo_50" | "photo_100" | "photo_200_orig" | "photo_200" | "photo_400" | "photo_400_orig" | "photo_max" | "photo_max_orig" | "photo_max_size" | "online" | "lists" | "domain" | "has_mobile" | "contacts" | "site" | "education" | "universities" | "schools" | "status" | "last_seen" | "followers_count" | "counters" | "common_count" | "occupation" | "nickname" | "relatives" | "relation" | "personal" | "connections" | "exports" | "wall_comments" | "activities" | "interests" | "music" | "movies" | "tv" | "books" | "games" | "about" | "quotes" | "can_post" | "can_see_all_posts" | "can_see_audio" | "can_write_private_message" | "can_send_friend_request" | "is_favorite" | "is_hidden_from_feed" | "timezone" | "screen_name" | "maiden_name" | "crop_photo" | "is_friend" | "friend_status" | "career" | "military" | "blacklisted" | "blacklisted_by_me" | "can_subscribe_posts" | "descriptions" | "trending" | "mutual" | "friendship_weeks" | "can_invite_to_chats" | "stories_archive_count" | "video_live_level" | "video_live_count" | "clips_count" | "service_description" | "is_dead";
+export type UsersFields = "first_name_nom" | "first_name_gen" | "first_name_dat" | "first_name_acc" | "first_name_ins" | "first_name_abl" | "last_name_nom" | "last_name_gen" | "last_name_dat" | "last_name_acc" | "last_name_ins" | "last_name_abl" | "photo_id" | "verified" | "sex" | "bdate" | "city" | "country" | "home_town" | "has_photo" | "photo_50" | "photo_100" | "photo_200_orig" | "photo_200" | "photo_400" | "photo_400_orig" | "photo_max" | "photo_max_orig" | "photo_max_size" | "online" | "lists" | "domain" | "has_mobile" | "contacts" | "site" | "education" | "universities" | "schools" | "status" | "last_seen" | "followers_count" | "counters" | "common_count" | "occupation" | "nickname" | "relatives" | "relation" | "personal" | "connections" | "exports" | "wall_comments" | "activities" | "interests" | "music" | "movies" | "tv" | "books" | "games" | "about" | "quotes" | "can_post" | "can_see_all_posts" | "can_see_audio" | "can_write_private_message" | "can_send_friend_request" | "is_favorite" | "is_hidden_from_feed" | "timezone" | "screen_name" | "maiden_name" | "crop_photo" | "is_friend" | "friend_status" | "career" | "military" | "blacklisted" | "blacklisted_by_me" | "can_subscribe_posts" | "descriptions" | "trending" | "mutual" | "friendship_weeks" | "can_invite_to_chats" | "stories_archive_count" | "video_live_level" | "video_live_count" | "clips_count" | "service_description" | "is_dead";
 
 export interface UsersLastSeen {
     /**
@@ -7874,7 +7856,7 @@ export interface WallPostSource {
     [key: string]: any;
 }
 
-export type WallPostSourceType = "vk" | "widget" | "api" | "rss" | "sms";
+export type WallPostSourceType = "vk" | "widget" | "api" | "rss" | "sms" | "mvk";
 
 export type WallPostType = "post" | "copy" | "reply" | "postpone" | "suggest";
 
@@ -7990,6 +7972,10 @@ export interface WallWallpost {
      */
     owner_id?: number;
     /**
+     * If post type 'reply', contains original post ID
+     */
+    post_id?: number;
+    /**
      * Post signer ID
      */
     signer_id?: number;
@@ -7999,6 +7985,7 @@ export interface WallWallpost {
     text?: string;
     [key: string]: any;
     attachments?: WallWallpostAttachment[];
+    parents_stack?: number[];
 }
 
 export interface WallWallpostAttachment {
