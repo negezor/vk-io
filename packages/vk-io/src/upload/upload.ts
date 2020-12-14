@@ -821,11 +821,9 @@ export class Upload {
 			field: 'file',
 			params,
 
-			// @ts-expect-error
 			getServer: this.api.polls.getPhotoUploadServer,
 			serverParams: ['owner_id'],
 
-			// @ts-expect-error
 			saveFiles: this.api.polls.savePhoto,
 
 			maxFiles: 1,
