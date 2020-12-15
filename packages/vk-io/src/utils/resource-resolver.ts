@@ -22,10 +22,11 @@ export interface IResolvedOwnerResource {
 const onlyNumberRe = /^-?\d+$/;
 const systemMentionRe = /\[([^|]+)\|[^\]]+\]/;
 
-const isVKUrlRe = /^(?:https:\/\/)?(?:m\.)?vk.com\//;
+const isHttpsRe = /^https:\/\//i;
+const isVKUrlRe = /^(?:https:\/\/)?(?:m\.)?vk.com\//i;
 
-const parseTargetResourceRe = /^(id|club|public|albums|tag|app)(-?\d+)$/;
-const parseOwnerResourceRe = /^(album|topic|page|photo|video|audio|doc|audio_message|graffiti|wall|market|poll|gift)(-?\d+)_(\d+)/;
+const parseTargetResourceRe = /^(id|club|public|albums|tag|app)(-?\d+)$/i;
+const parseOwnerResourceRe = /^(album|topic|page|photo|video|audio|doc|audio_message|graffiti|wall|market|poll|gift)(-?\d+)_(\d+)/i;
 
 const enumResourceTypes: Record<string, IResolvedTargetResource['type']> = {
 	id: ResourceType.USER,
@@ -132,7 +133,7 @@ export const resolveResource = async ({
 		return resolveSlugResource(resource, api);
 	}
 
-	const resourceUrl = !resource.startsWith('https://')
+	const resourceUrl = !isHttpsRe.test(resource)
 		? `https://${resource}`
 		: resource;
 
