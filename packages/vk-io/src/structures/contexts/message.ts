@@ -575,8 +575,18 @@ class MessageContext<S = ContextDefaultState>
 		text: string | IMessageContextSendOptions,
 		params?: IMessageContextSendOptions
 	): Promise<MessageContext> {
+		const forwardOptions = this.conversationMessageId
+			? { conversation_message_ids: this.conversationMessageId }
+			: { message_ids: this.id };
+
 		return this.send({
-			reply_to: this.id,
+			forward: JSON.stringify({
+				...forwardOptions,
+
+				peer_id: this.peerId,
+				conversation_message_ids: this.conversationMessageId,
+				is_reply: true
+			}),
 
 			...(
 				typeof text !== 'object'
