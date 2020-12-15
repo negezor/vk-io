@@ -515,7 +515,6 @@ class MessageContext<S = ContextDefaultState>
 		const randomId = getRandomId();
 
 		const options = {
-			peer_id: this.peerId,
 			random_id: randomId,
 
 			...(
@@ -529,9 +528,28 @@ class MessageContext<S = ContextDefaultState>
 			)
 		} as IMessageContextSendOptions;
 
-		const id = await this.api.messages.send(options);
+		if (this.$groupId !== undefined) {
+			options.peer_ids = this.peerId;
+		} else {
+			options.peer_id = this.peerId;
+		}
+
+		const rawDestination = await this.api.messages.send(options);
 
 		const { message } = this;
+
+		const destination = typeof rawDestination !== 'number'
+			? rawDestination[0] as {
+				peer_id : number;
+				message_id: number;
+				conversation_message_id: number;
+				error: number;
+			}
+			: {
+				peer_id: message.peer_id,
+				message_id: rawDestination,
+				conversation_message_id: 0
+			};
 
 		const messageContext = new MessageContext({
 			api: this.api,
@@ -543,12 +561,12 @@ class MessageContext<S = ContextDefaultState>
 			payload: {
 				client_info: this.clientInfo,
 				message: {
-					id,
-					conversation_message_id: 0,
+					id: destination.message_id,
+					conversation_message_id: destination.conversation_message_id,
 
 					// TODO: This must be the bot identifier
 					from_id: message.from_id,
-					peer_id: message.peer_id,
+					peer_id: destination.peer_id,
 
 					out: 1,
 					important: false,
