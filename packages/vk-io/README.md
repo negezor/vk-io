@@ -61,5 +61,6 @@ run().catch(console.log);
 * [@vk-io/hear](https://github.com/negezor/vk-io/tree/master/packages/hear): Simple implementation of the hears
 * [vk-io-question](https://github.com/fakemancat/vk-io-question): Simple promise-based prompt
 * [vk-io-pages](https://github.com/MrZillaGold/vk-io-pages): Dynamic pages pagination module
+* [henta](https://github.com/u14-team/henta): Simple VK bot engine
 
 > If you want to add your module in the list, create a [new issue](https://github.com/negezor/vk-io/issues/new) in the repository.
