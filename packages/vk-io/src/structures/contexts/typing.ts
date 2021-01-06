@@ -2,7 +2,7 @@ import { Context, ContextFactoryOptions, ContextDefaultState } from './context';
 
 import { pickProperties, getPeerType } from '../../utils/helpers';
 import {
-	CHAT_PEER,
+	PEER_CHAT_ID_OFFSET,
 
 	UpdateSource,
 	kSerializeData
@@ -115,7 +115,7 @@ export class TypingContext<S = ContextDefaultState>
 	 * Returns the identifier chat
 	 */
 	public get chatId(): number | undefined {
-		const chatId = this.toId - CHAT_PEER;
+		const chatId = this.toId - PEER_CHAT_ID_OFFSET;
 
 		return chatId > 0
 			? chatId

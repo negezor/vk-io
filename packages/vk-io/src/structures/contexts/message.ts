@@ -21,7 +21,7 @@ import {
 import {
 	UpdateSource,
 	MessageSource,
-	CHAT_PEER,
+	PEER_CHAT_ID_OFFSET,
 	AttachmentType,
 	kSerializeData,
 	AttachmentTypeString
@@ -366,7 +366,7 @@ class MessageContext<S = ContextDefaultState>
 			return undefined;
 		}
 
-		return this.peerId - CHAT_PEER;
+		return this.peerId - PEER_CHAT_ID_OFFSET;
 	}
 
 	/**

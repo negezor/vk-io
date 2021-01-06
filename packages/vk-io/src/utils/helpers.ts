@@ -1,4 +1,4 @@
-import { MessageSource, CHAT_PEER } from './constants';
+import { MessageSource, PEER_CHAT_ID_OFFSET } from './constants';
 
 /**
  * Returns params for execute
@@ -110,7 +110,7 @@ export const pickProperties = <
  * Returns peer id type
  */
 export const getPeerType = (id: number): string => {
-	if (CHAT_PEER < id) {
+	if (PEER_CHAT_ID_OFFSET < id) {
 		return MessageSource.CHAT;
 	}
 
