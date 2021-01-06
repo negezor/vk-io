@@ -602,7 +602,6 @@ class MessageContext<S = ContextDefaultState>
 				...forwardOptions,
 
 				peer_id: this.peerId,
-				conversation_message_ids: this.conversationMessageId,
 				is_reply: true
 			}),
 
