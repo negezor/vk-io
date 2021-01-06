@@ -234,7 +234,7 @@ export class PollAttachment extends Attachment<IPollAttachmentPayload, Attachmen
 	/**
 	 * Returns the information about the options for the answer
 	 */
-	public get answers(): object[] | undefined {
+	public get answers(): IPollAttachmentPayload['answers'] | undefined {
 		return this.payload.answers;
 	}
 
