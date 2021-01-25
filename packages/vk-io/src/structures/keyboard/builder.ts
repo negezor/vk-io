@@ -93,7 +93,7 @@ export class KeyboardBuilder {
 	 * ```ts
 	 * builder.urlButton({
 	 *  label: 'Buy a coffee',
-	 *  url: 'https://coffee.mania/buy
+	 *  url: 'https://coffee.mania/buy'
 	 * });
 	 * ```
 	 */
