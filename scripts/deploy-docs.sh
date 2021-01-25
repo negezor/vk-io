@@ -9,7 +9,7 @@ for modulePath in ./packages/*; do
 
 	echo $module
 
-	yarn typedoc --out docs/.vuepress/dist/references/$module --target es6 --readme none --mode file packages/$module/src
+	yarn typedoc --out docs/.vuepress/dist/references/$module --readme none packages/$module/src/index.ts
 done
 
 cd docs/.vuepress/dist
