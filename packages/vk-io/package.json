@@ -35,7 +35,7 @@
 	},
 	"devDependencies": {
 		"@types/debug": "^4.1.5",
-		"@types/node-fetch": "^2.5.7"
+		"@types/node-fetch": "^2.5.8"
 	},
 	"dependencies": {
 		"abort-controller": "^3.0.0",
