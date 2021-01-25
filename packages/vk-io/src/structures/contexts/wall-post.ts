@@ -48,7 +48,7 @@ export class WallPostContext<S = ContextDefaultState>
 	 * Checks is repost
 	 */
 	public get isRepost(): boolean {
-		return this.subTypes.includes('wall_post_new');
+		return this.subTypes.includes('wall_repost');
 	}
 
 	/**
