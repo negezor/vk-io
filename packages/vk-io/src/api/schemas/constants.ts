@@ -217,6 +217,12 @@ export enum APIErrorCode {
      */
     UNKNOWN_GROUP = 40,
     /**
+     * Additional signup required
+     *
+     * Code: `41`
+     */
+    ADDITIONAL_SIGNUP_REQUIRED = 41,
+    /**
      * One of the parameters specified was missing or invalid
      *
      * Code: `100`
@@ -553,12 +559,6 @@ export enum APIErrorCode {
      */
     VOTES_PERMISSION = 500,
     /**
-     * Not enough votes
-     *
-     * Code: `503`
-     */
-    VOTES = 503,
-    /**
      * Permission denied. You have no access to operations specified with given object(s)
      *
      * Code: `600`
@@ -577,7 +577,7 @@ export enum APIErrorCode {
      */
     ADS_PARTIAL_SUCCESS = 602,
     /**
-     * Some ads error occured
+     * Some ads error occurs
      *
      * Code: `603`
      */
@@ -841,29 +841,11 @@ export enum APIErrorCode {
      */
     MESSAGES_PEER_BLOCKED_REASON_BY_TIME = 950,
     /**
-     * Invalid phone number
-     *
-     * Code: `1000`
-     */
-    PARAM_PHONE = 1000,
-    /**
-     * This phone number is used by another user
-     *
-     * Code: `1004`
-     */
-    PHONE_ALREADY_USED = 1004,
-    /**
      * Too many auth attempts, try again later
      *
      * Code: `1105`
      */
     AUTH_FLOOD_ERROR = 1105,
-    /**
-     * Processing.. Try later
-     *
-     * Code: `1112`
-     */
-    AUTH_DELAY = 1112,
     /**
      * Invalid document id
      *
@@ -991,11 +973,11 @@ export enum APIErrorCode {
      */
     MARKET_ITEM_HAS_BAD_LINKS = 1408,
     /**
-     * Shop not enabled
+     * Extended market not enabled
      *
      * Code: `1409`
      */
-    MARKET_SHOP_NOT_ENABLED = 1409,
+    MARKET_EXTENDED_NOT_ENABLED = 1409,
     /**
      * Variant not found
      *
@@ -1068,6 +1050,12 @@ export enum APIErrorCode {
      * Code: `1435`
      */
     MARKET_PHOTOS_CROP_SIZE_TOO_LOW = 1435,
+    /**
+     * Market not enabled
+     *
+     * Code: `1438`
+     */
+    MARKET_NOT_ENABLED = 1438,
     /**
      * Story has already expired
      *

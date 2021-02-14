@@ -247,6 +247,18 @@ export interface AppsGetLeaderboardResponse {
     items?: Objects.AppsLeaderboard[];
 }
 
+export interface AppsGetMiniAppPoliciesResponse {
+    /**
+     * URL of the app's privacy policy
+     */
+    privacy_policy?: string;
+    /**
+     * URL of the app's terms
+     */
+    terms?: string;
+    [key: string]: any;
+}
+
 export interface AppsGetScopesResponse {
     /**
      * Total number
@@ -265,6 +277,18 @@ export interface AppsGetResponse {
     count?: number;
     [key: string]: any;
     items?: Objects.AppsApp[];
+}
+
+export interface AppsImageUploadResponse {
+    /**
+     * Uploading hash
+     */
+    hash?: string;
+    /**
+     * Uploaded photo data
+     */
+    image?: string;
+    [key: string]: any;
 }
 
 export type AppsSendRequestResponse = number;
@@ -411,6 +435,14 @@ export interface DatabaseGetUniversitiesResponse {
 }
 
 export type DocsAddResponse = number;
+
+export interface DocsDocUploadResponse {
+    /**
+     * Uploaded file data
+     */
+    file?: string;
+    [key: string]: any;
+}
 
 export type DocsGetByIdResponse = Objects.DocsDoc[];
 
@@ -857,7 +889,7 @@ export interface GroupsGetSettingsResponse {
      */
     start_date?: number;
     /**
-     * Finish date in Unixtime format
+     * Finish date in Unix-time format
      */
     finish_date?: number;
     /**
@@ -881,7 +913,7 @@ export interface GroupsGetSettingsResponse {
      */
     email?: string;
     [key: string]: any;
-    sections_list?: any[];
+    sections_list?: Objects.GroupsSectionsListItem[];
     secondary_section?: number;
     obscene_words: string[];
     event_group_id?: number;
@@ -1220,7 +1252,8 @@ export interface MessagesGetConversationsByIdExtendedResponse {
     count: number;
     [key: string]: any;
     items: Objects.MessagesConversation[];
-    profiles?: Objects.UsersUser[];
+    profiles?: Objects.UsersUserFull[];
+    groups?: Objects.GroupsGroupFull[];
 }
 
 export interface MessagesGetConversationsByIdResponse {
@@ -1341,15 +1374,24 @@ export type MessagesMarkAsImportantResponse = number[];
 
 export type MessagesPinResponse = Objects.MessagesPinnedMessage;
 
+export interface MessagesSearchConversationsExtendedResponse {
+    /**
+     * Total results number
+     */
+    count: number;
+    [key: string]: any;
+    items: Objects.MessagesConversation[];
+    profiles?: Objects.UsersUserFull[];
+    groups?: Objects.GroupsGroupFull[];
+}
+
 export interface MessagesSearchConversationsResponse {
     /**
      * Total results number
      */
-    count?: number;
+    count: number;
     [key: string]: any;
-    items?: Objects.MessagesConversation[];
-    profiles?: Objects.UsersUserFull[];
-    groups?: Objects.GroupsGroupFull[];
+    items: Objects.MessagesConversation[];
 }
 
 export interface MessagesSearchExtendedResponse {
@@ -1470,6 +1512,11 @@ export interface NewsfeedGetResponse {
     items?: Objects.NewsfeedNewsfeedItem[];
     profiles?: Objects.UsersUserFull[];
     groups?: Objects.GroupsGroupFull[];
+}
+
+export interface NewsfeedIgnoreItemResponse {
+    [key: string]: any;
+    status: boolean | number;
 }
 
 export type NewsfeedSaveListResponse = number;
@@ -1724,6 +1771,122 @@ export interface PhotosGetResponse {
     items: Objects.PhotosPhoto[];
 }
 
+export interface PhotosMarketAlbumUploadResponse {
+    /**
+     * Community ID
+     */
+    gid?: number;
+    /**
+     * Uploading hash
+     */
+    hash?: string;
+    /**
+     * Uploaded photo data
+     */
+    photo?: string;
+    /**
+     * Upload server number
+     */
+    server?: number;
+    [key: string]: any;
+}
+
+export interface PhotosMarketUploadResponse {
+    /**
+     * Crop data
+     */
+    crop_data?: string;
+    /**
+     * Crop hash
+     */
+    crop_hash?: string;
+    /**
+     * Community ID
+     */
+    group_id?: number;
+    /**
+     * Uploading hash
+     */
+    hash?: string;
+    /**
+     * Uploaded photo data
+     */
+    photo?: string;
+    /**
+     * Upload server number
+     */
+    server?: number;
+    [key: string]: any;
+}
+
+export interface PhotosMessageUploadResponse {
+    /**
+     * Uploading hash
+     */
+    hash?: string;
+    /**
+     * Uploaded photo data
+     */
+    photo?: string;
+    /**
+     * Upload server number
+     */
+    server?: number;
+    [key: string]: any;
+}
+
+export interface PhotosOwnerCoverUploadResponse {
+    /**
+     * Uploading hash
+     */
+    hash?: string;
+    /**
+     * Uploaded photo data
+     */
+    photo?: string;
+    [key: string]: any;
+}
+
+export interface PhotosOwnerUploadResponse {
+    /**
+     * Uploading hash
+     */
+    hash?: string;
+    /**
+     * Uploaded photo data
+     */
+    photo?: string;
+    /**
+     * Upload server number
+     */
+    server?: number;
+    [key: string]: any;
+}
+
+export interface PhotosPhotoUploadResponse {
+    /**
+     * Album ID
+     */
+    aid?: number;
+    /**
+     * Uploading hash
+     */
+    hash?: string;
+    /**
+     * Uploaded photo data
+     */
+    photo?: string;
+    /**
+     * Uploaded photos data
+     */
+    photos_list?: string;
+    /**
+     * Upload server number
+     */
+    server?: number;
+    [key: string]: any;
+}
+
 export type PhotosPutTagResponse = number;
 
 export type PhotosRestoreCommentResponse = Objects.BaseBoolInt;
@@ -1777,16 +1940,29 @@ export interface PhotosSearchResponse {
     items?: Objects.PhotosPhoto[];
 }
 
-export type PodcastsGetPopularResponse = Objects.PodcastPopularPodcast[];
-
-export type PodcastsGetRecentSearchRequestsResponse = string[];
-
-export interface PodcastsSearchResponse {
+export interface PhotosWallUploadResponse {
+    /**
+     * Uploading hash
+     */
+    hash?: string;
+    /**
+     * Uploaded photo data
+     */
+    photo?: string;
+    /**
+     * Upload server number
+     */
+    server?: number;
     [key: string]: any;
-    podcasts?: Objects.PodcastPodcast[];
-    episodes?: Objects.AudioAudio[];
-    profiles?: Objects.UsersUser[];
-    groups?: any[];
+}
+
+export interface PodcastsSearchPodcastResponse {
+    /**
+     * Total amount of found results
+     */
+    results_total: number;
+    [key: string]: any;
+    podcasts: Objects.PodcastExternalData[];
 }
 
 export type PollsAddVoteResponse = Objects.BaseBoolInt;
@@ -2171,8 +2347,8 @@ export interface VideoGetExtendedResponse {
     count: number;
     [key: string]: any;
     items: Objects.VideoVideoFull[];
-    profiles: Objects.UsersUserMin[];
-    groups: Objects.GroupsGroupFull[];
+    profiles?: Objects.UsersUserMin[];
+    groups?: Objects.GroupsGroupFull[];
 }
 
 export interface VideoGetResponse {
@@ -2181,7 +2357,7 @@ export interface VideoGetResponse {
      */
     count: number;
     [key: string]: any;
-    items: Objects.VideoVideo[];
+    items: Objects.VideoVideoFull[];
 }
 
 export type VideoRestoreCommentResponse = Objects.BaseBoolInt;
@@ -2194,7 +2370,7 @@ export interface VideoSearchExtendedResponse {
      */
     count: number;
     [key: string]: any;
-    items: Objects.VideoVideo[];
+    items: Objects.VideoVideoFull[];
     profiles: Objects.UsersUserMin[];
     groups: Objects.GroupsGroupFull[];
 }
@@ -2206,6 +2382,18 @@ export interface VideoSearchResponse {
     count: number;
     [key: string]: any;
     items: Objects.VideoVideo[];
+}
+
+export interface VideoUploadResponse {
+    /**
+     * Video size
+     */
+    size?: number;
+    /**
+     * Video ID
+     */
+    video_id?: number;
+    [key: string]: any;
 }
 
 export interface WallCreateCommentResponse {

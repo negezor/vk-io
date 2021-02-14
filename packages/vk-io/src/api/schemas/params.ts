@@ -592,6 +592,11 @@ export interface AdsGetMusiciansParams {
     [key: string]: any;
 }
 
+export interface AdsGetMusiciansByIdsParams {
+    ids?: number[] | number;
+    [key: string]: any;
+}
+
 export interface AdsGetOfficeUsersParams {
     /**
      * Advertising account ID.
@@ -1069,6 +1074,14 @@ export interface AppsGetLeaderboardParams {
      * 1 — to return additional info about users
      */
     extended?: boolean | number;
+    [key: string]: any;
+}
+
+export interface AppsGetMiniAppPoliciesParams {
+    /**
+     * Mini App ID
+     */
+    app_id: number;
     [key: string]: any;
 }
 
@@ -1729,6 +1742,18 @@ export interface FaveAddArticleParams {
     [key: string]: any;
 }
 
+export interface FaveAddClassifiedParams {
+    /**
+     * Classifieds item source
+     */
+    item_source: "youla";
+    /**
+     * Classifieds item id
+     */
+    item_id: string;
+    [key: string]: any;
+}
+
 export interface FaveAddLinkParams {
     /**
      * Link URL.
@@ -1819,6 +1844,18 @@ export interface FaveMarkSeenParams {
 export interface FaveRemoveArticleParams {
     owner_id: number;
     article_id: number;
+    [key: string]: any;
+}
+
+export interface FaveRemoveClassifiedParams {
+    /**
+     * Classifieds item source
+     */
+    item_source: "youla";
+    /**
+     * Classifieds item id
+     */
+    item_id: string;
     [key: string]: any;
 }
 
@@ -2151,7 +2188,7 @@ export interface FriendsSearchParams {
     /**
      * Case for declension of user name and surname: 'nom' — nominative (default), 'gen' — genitive , 'dat' — dative, 'acc' — accusative , 'ins' — instrumental , 'abl' — prepositional
      */
-    name_case?: "nom" | "gen" | "dat" | "acc" | "ins" | "abl";
+    name_case?: "Nom" | "Gen" | "Dat" | "Acc" | "Ins" | "Abl";
     /**
      * Offset needed to return a specific subset of friends.
      */
@@ -3577,6 +3614,13 @@ export interface MarketEditOrderParams {
     order_id: number;
     merchant_comment?: string;
     status?: number;
+    track_number?: string;
+    payment_status?: "not_paid" | "paid" | "returned";
+    delivery_price?: number;
+    width?: number;
+    length?: number;
+    height?: number;
+    weight?: number;
     [key: string]: any;
 }
 
@@ -4532,7 +4576,7 @@ export interface MessagesSetActivityParams {
     /**
      * 'typing' — user has started to type.
      */
-    type?: string;
+    type?: "audiomessage" | "file" | "photo" | "typing" | "video";
     /**
      * Destination ID. "For user: 'User ID', e.g. '12345'. For chat: '2000000000' + 'chat_id', e.g. '2000000001'. For community: '- community ID', e.g. '-12345'. "
      */
@@ -6076,19 +6120,7 @@ export interface PhotosSearchParams {
     [key: string]: any;
 }
 
-export interface PodcastsClearRecentSearchesParams {
-    [key: string]: any;
-}
-
-export interface PodcastsGetPopularParams {
-    [key: string]: any;
-}
-
-export interface PodcastsGetRecentSearchRequestsParams {
-    [key: string]: any;
-}
-
-export interface PodcastsSearchParams {
+export interface PodcastsSearchPodcastParams {
     search_string: string;
     offset?: number;
     count?: number;

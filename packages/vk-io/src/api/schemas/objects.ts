@@ -674,6 +674,10 @@ export interface AdsMusician {
      * Music artist name
      */
     name: string;
+    /**
+     * Music artist photo
+     */
+    avatar?: string;
     [key: string]: any;
 }
 
@@ -1305,6 +1309,10 @@ export interface AppsScope {
 
 export interface AudioAudio {
     /**
+     * Access key for the audio
+     */
+    access_key?: string;
+    /**
      * Artist name
      */
     artist: string;
@@ -1312,6 +1320,10 @@ export interface AudioAudio {
      * Audio ID
      */
     id: number;
+    /**
+     * Audio owner's ID
+     */
+    owner_id: number;
     /**
      * Title
      */
@@ -2018,7 +2030,7 @@ export interface CallbackMarketComment {
     from_id: number;
     date: number;
     text?: string;
-    market_owner_od?: number;
+    market_owner_id?: number;
     photo_id?: number;
 }
 
@@ -2054,7 +2066,7 @@ export interface CallbackPhotoComment {
     from_id: number;
     date: number;
     text: string;
-    photo_owner_od: number;
+    photo_owner_id: number;
 }
 
 export interface CallbackPhotoCommentDelete {
@@ -2104,7 +2116,7 @@ export interface CallbackVideoComment {
     from_id: number;
     date: number;
     text: string;
-    video_owner_od: number;
+    video_owner_id: number;
 }
 
 export interface CallbackVideoCommentDelete {
@@ -2398,14 +2410,6 @@ export interface DocsDocTypes {
      * Number of docs
      */
     count: number;
-    [key: string]: any;
-}
-
-export interface DocsDocUploadResponse {
-    /**
-     * Uploaded file data
-     */
-    file?: string;
     [key: string]: any;
 }
 
@@ -2868,7 +2872,7 @@ export interface GroupsCover {
     images?: BaseImage[];
 }
 
-export type GroupsFields = "market" | "member_status" | "is_favorite" | "is_subscribed" | "is_subscribed_podcasts" | "can_subscribe_podcasts" | "city" | "country" | "verified" | "description" | "wiki_page" | "members_count" | "requests_count" | "counters" | "cover" | "can_post" | "can_suggest" | "can_upload_story" | "can_upload_doc" | "can_upload_video" | "can_see_all_posts" | "can_create_topic" | "activity" | "fixed_post" | "has_photo" | "status" | "main_album_id" | "links" | "contacts" | "site" | "main_section" | "secondary_section" | "wall" | "trending" | "can_message" | "is_market_cart_enabled" | "is_messages_blocked" | "can_send_notify" | "has_group_channel" | "group_channel" | "online_status" | "start_date" | "finish_date" | "age_limits" | "ban_info" | "action_button" | "author_id" | "phone" | "has_market_app" | "addresses" | "live_covers" | "is_adult" | "can_subscribe_posts" | "warning_notification" | "msg_push_allowed" | "stories_archive_count" | "video_live_level" | "video_live_count" | "clips_count" | "is_business";
+export type GroupsFields = "market" | "member_status" | "is_favorite" | "is_subscribed" | "is_subscribed_podcasts" | "can_subscribe_podcasts" | "city" | "country" | "verified" | "description" | "wiki_page" | "members_count" | "requests_count" | "counters" | "cover" | "can_post" | "can_suggest" | "can_upload_story" | "can_upload_doc" | "can_upload_video" | "can_upload_clip" | "can_see_all_posts" | "can_create_topic" | "activity" | "fixed_post" | "has_photo" | "status" | "main_album_id" | "links" | "contacts" | "site" | "main_section" | "secondary_section" | "wall" | "trending" | "can_message" | "is_market_cart_enabled" | "is_messages_blocked" | "can_send_notify" | "has_group_channel" | "group_channel" | "online_status" | "start_date" | "finish_date" | "age_limits" | "ban_info" | "action_button" | "author_id" | "phone" | "has_market_app" | "addresses" | "live_covers" | "is_adult" | "can_subscribe_posts" | "warning_notification" | "msg_push_allowed" | "stories_archive_count" | "video_live_level" | "video_live_count" | "clips_count" | "is_business" | "textlives_count";
 
 export type GroupsFilter = "admin" | "editor" | "moder" | "advertiser" | "groups" | "publics" | "events" | "has_addresses";
 
@@ -3351,6 +3355,8 @@ export interface GroupsProfileItem {
 
 export type GroupsRoleOptions = "moderator" | "editor" | "administrator" | "creator";
 
+export type GroupsSectionsListItem = any[];
+
 export interface GroupsSettingsTwitter {
     [key: string]: any;
     status: "loading" | "sync";
@@ -3502,7 +3508,7 @@ export interface MarketMarketItem {
     /**
      * URL of the preview image
      */
-    thumb_photo: string;
+    thumb_photo?: string;
     /**
      * Item title
      */
@@ -3575,11 +3581,11 @@ export interface MarketPrice {
     /**
      * Amount
      */
-    amount?: string;
+    amount: string;
     /**
      * Text
      */
-    text?: string;
+    text: string;
     /**
      * Textual representation of old price
      */
@@ -4356,6 +4362,14 @@ export interface MessagesPushSettings {
      * Information whether the sound is on
      */
     no_sound: boolean | number;
+    /**
+     * Information whether the mentions are disabled
+     */
+    disabled_mentions?: boolean | number;
+    /**
+     * Information whether the mass mentions (like '@all', '@online') are disabled
+     */
+    disabled_mass_mentions?: boolean | number;
     [key: string]: any;
 }
 
@@ -4393,7 +4407,7 @@ export interface NewsfeedEventActivity {
     friends: number[];
 }
 
-export type NewsfeedFilters = "post" | "photo" | "photo_tag" | "wall_photo" | "friend" | "recommended_groups" | "note" | "audio" | "video" | "audio_playlist" | "games_carousel" | "clip" | "recommended_game";
+export type NewsfeedFilters = "post" | "photo" | "photo_tag" | "wall_photo" | "friend" | "note" | "audio" | "video" | "audio_playlist" | "clip";
 
 export type NewsfeedIgnoreItemType = "wall" | "tag" | "profilephoto" | "video" | "photo" | "audio";
 
@@ -4795,7 +4809,7 @@ export interface NotificationsNotification {
     [key: string]: any;
 }
 
-export type NotificationsNotificationItem = any;
+export type NotificationsNotificationItem = NotificationsNotification;
 
 export type NotificationsNotificationParent = WallWallpostToId & PhotosPhoto & BoardTopic & VideoVideo & NotificationsNotificationsComment;
 
@@ -5006,7 +5020,7 @@ export interface OwnerState {
      */
     description?: string;
     [key: string]: any;
-    state?: 1 | 2 | 3 | 4;
+    state?: 1 | 2 | 3 | 4 | 5;
 }
 
 export type PagesPrivacySettings = 0 | 1 | 2;
@@ -5170,86 +5184,6 @@ export interface PhotosImage {
 }
 
 export type PhotosImageType = "s" | "m" | "x" | "l" | "o" | "p" | "q" | "r" | "y" | "z" | "w";
-
-export interface PhotosMarketAlbumUploadResponse {
-    /**
-     * Community ID
-     */
-    gid?: number;
-    /**
-     * Uploading hash
-     */
-    hash?: string;
-    /**
-     * Uploaded photo data
-     */
-    photo?: string;
-    /**
-     * Upload server number
-     */
-    server?: number;
-    [key: string]: any;
-}
-
-export interface PhotosMarketUploadResponse {
-    /**
-     * Crop data
-     */
-    crop_data?: string;
-    /**
-     * Crop hash
-     */
-    crop_hash?: string;
-    /**
-     * Community ID
-     */
-    group_id?: number;
-    /**
-     * Uploading hash
-     */
-    hash?: string;
-    /**
-     * Uploaded photo data
-     */
-    photo?: string;
-    /**
-     * Upload server number
-     */
-    server?: number;
-    [key: string]: any;
-}
-
-export interface PhotosMessageUploadResponse {
-    /**
-     * Uploading hash
-     */
-    hash?: string;
-    /**
-     * Uploaded photo data
-     */
-    photo?: string;
-    /**
-     * Upload server number
-     */
-    server?: number;
-    [key: string]: any;
-}
-
-export interface PhotosOwnerUploadResponse {
-    /**
-     * Uploading hash
-     */
-    hash?: string;
-    /**
-     * Uploaded photo data
-     */
-    photo?: string;
-    /**
-     * Upload server number
-     */
-    server?: number;
-    [key: string]: any;
-}
 
 export interface PhotosPhoto {
     /**
@@ -5613,30 +5547,6 @@ export interface PhotosPhotoUpload {
     [key: string]: any;
 }
 
-export interface PhotosPhotoUploadResponse {
-    /**
-     * Album ID
-     */
-    aid?: number;
-    /**
-     * Uploading hash
-     */
-    hash?: string;
-    /**
-     * Uploaded photo data
-     */
-    photo?: string;
-    /**
-     * Uploaded photos data
-     */
-    photos_list?: string;
-    /**
-     * Upload server number
-     */
-    server?: number;
-    [key: string]: any;
-}
-
 export interface PhotosPhotoXtrRealOffset {
     /**
      * Access key for the photo
@@ -5824,39 +5734,29 @@ export interface PhotosTagsSuggestionItemButton {
     style?: "primary" | "secondary";
 }
 
-export interface PhotosWallUploadResponse {
-    /**
-     * Uploading hash
-     */
-    hash?: string;
-    /**
-     * Uploaded photo data
-     */
-    photo?: string;
-    /**
-     * Upload server number
-     */
-    server?: number;
+export interface PodcastCover {
     [key: string]: any;
+    sizes?: PhotosPhotoSizes[];
 }
 
-export interface PodcastPodcast {
+export interface PodcastExternalData {
     /**
-     * ID of the podcast's owner
+     * Url of the podcast page
      */
-    owner_id: number;
+    url?: string;
+    /**
+     * Url of the podcasts owner community
+     */
+    owner_url?: string;
     /**
      * Podcast title
      */
-    podcast_title: string;
+    title?: string;
+    /**
+     * Name of the podcasts owner community
+     */
+    owner_name?: string;
     [key: string]: any;
-}
-
-export interface PodcastPopularPodcast {
-    [key: string]: any;
-    owner_id?: number;
-    owner_title?: string;
-    url?: string;
 }
 
 export interface PollsAnswer {
@@ -6293,6 +6193,18 @@ export interface StatusStatus {
     [key: string]: any;
 }
 
+export interface StickersImageSet {
+    /**
+     * Base URL for images in set
+     */
+    base_url: string;
+    /**
+     * Version number to be appended to the image URL
+     */
+    version?: number;
+    [key: string]: any;
+}
+
 export interface StorageValue {
     [key: string]: any;
     key: string;
@@ -6308,6 +6220,10 @@ export interface StoreProduct {
      * Product type
      */
     type: "stickers";
+    /**
+     * Information whether sticker product wasn't used after being purchased
+     */
+    is_new?: boolean | number;
     /**
      * Date (Unix time) when the product was purchased
      */
@@ -6325,6 +6241,7 @@ export interface StoreProduct {
      */
     subtitle?: string;
     [key: string]: any;
+    style_sticker_ids?: number[];
     previews?: BaseImage[];
 }
 
@@ -8000,7 +7917,7 @@ export interface WallWallpostAttachment {
     [key: string]: any;
 }
 
-export type WallWallpostAttachmentType = "photo" | "posted_photo" | "audio" | "video" | "doc" | "link" | "graffiti" | "note" | "app" | "poll" | "page" | "album" | "photos_list" | "market_market_album" | "market" | "event";
+export type WallWallpostAttachmentType = "photo" | "posted_photo" | "audio" | "video" | "doc" | "link" | "graffiti" | "note" | "app" | "poll" | "page" | "album" | "photos_list" | "market_market_album" | "market" | "event" | "donut_link";
 
 export interface WallWallpostCommentsDonut {
     [key: string]: any;

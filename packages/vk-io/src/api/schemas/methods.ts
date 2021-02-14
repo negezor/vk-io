@@ -165,6 +165,7 @@ export interface APIAds {
     getFloodStats(params: Params.AdsGetFloodStatsParams): Promise<Responses.AdsGetFloodStatsResponse>;
     getLookalikeRequests(params: Params.AdsGetLookalikeRequestsParams): Promise<Responses.AdsGetLookalikeRequestsResponse>;
     getMusicians(params: Params.AdsGetMusiciansParams): Promise<Responses.AdsGetMusiciansResponse>;
+    getMusiciansByIds(params: Params.AdsGetMusiciansByIdsParams): Promise<Responses.AdsGetMusiciansResponse>;
     /**
      * Returns a list of managers and supervisors of advertising account.
      */
@@ -305,6 +306,10 @@ export interface APIApps {
      * Returns players rating in the game.
      */
     getLeaderboard(params: Params.AppsGetLeaderboardParams): Promise<Responses.AppsGetLeaderboardResponse>;
+    /**
+     * Returns policies and terms given to a mini app.
+     */
+    getMiniAppPolicies(params: Params.AppsGetMiniAppPoliciesParams): Promise<Responses.AppsGetMiniAppPoliciesResponse>;
     /**
      * Returns scopes for auth
      */
@@ -521,6 +526,10 @@ export interface APIFave {
     /**
      * Adds a link to user faves.
      */
+    addClassified(params: Params.FaveAddClassifiedParams): Promise<Responses.BaseOkResponse>;
+    /**
+     * Adds a link to user faves.
+     */
     addLink(params: Params.FaveAddLinkParams): Promise<Responses.BaseOkResponse>;
     addPage(params: Params.FaveAddPageParams): Promise<Responses.BaseOkResponse>;
     addPost(params: Params.FaveAddPostParams): Promise<Responses.BaseOkResponse>;
@@ -533,6 +542,10 @@ export interface APIFave {
     getTags(params: Params.FaveGetTagsParams): Promise<Responses.FaveGetTagsResponse>;
     markSeen(params: Params.FaveMarkSeenParams): Promise<Responses.BaseBoolResponse>;
     removeArticle(params: Params.FaveRemoveArticleParams): Promise<Responses.BaseBoolResponse>;
+    /**
+     * Removes link from the user's faves.
+     */
+    removeClassified(params: Params.FaveRemoveClassifiedParams): Promise<Responses.BaseOkResponse>;
     /**
      * Removes link from the user's faves.
      */
@@ -883,7 +896,7 @@ export interface APIMarket {
      */
     getAlbumById(params: Params.MarketGetAlbumByIdParams): Promise<Responses.MarketGetAlbumByIdResponse>;
     /**
-     * Returns community's collections list.
+     * Returns community's market collections list.
      */
     getAlbums(params: Params.MarketGetAlbumsParams): Promise<Responses.MarketGetAlbumsResponse>;
     /**
@@ -1468,10 +1481,7 @@ export interface APIPhotos {
  * The API podcasts group
  */
 export interface APIPodcasts {
-    clearRecentSearches(params: Params.PodcastsClearRecentSearchesParams): Promise<Responses.BaseOkResponse>;
-    getPopular(params: Params.PodcastsGetPopularParams): Promise<Responses.PodcastsGetPopularResponse>;
-    getRecentSearchRequests(params: Params.PodcastsGetRecentSearchRequestsParams): Promise<Responses.PodcastsGetRecentSearchRequestsResponse>;
-    search(params: Params.PodcastsSearchParams): Promise<Responses.PodcastsSearchResponse>;
+    searchPodcast(params: Params.PodcastsSearchPodcastParams): Promise<Responses.PodcastsSearchPodcastResponse>;
 }
 
 /**
