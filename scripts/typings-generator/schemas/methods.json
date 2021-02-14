@@ -1,5 +1,9 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
+  "version": "5.130",
+  "title": "VK API JSON Schema",
+  "description": "Contains JSON Schema documents explaining the VK.COM API objects and methods",
+  "termsOfService": "https://vk.com/dev/rules",
   "methods": [
     {
       "name": "account.ban",
@@ -1456,6 +1460,34 @@
       ]
     },
     {
+      "name": "ads.getMusiciansByIds",
+      "access_token_type": [
+        "user"
+      ],
+      "parameters": [
+        {
+          "name": "ids",
+          "type": "array",
+          "required": true,
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "maxItems": 200
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/ads_getMusicians_response"
+        }
+      },
+      "errors": [
+        {
+          "$ref": "errors.json#/errors/api_error_weighted_flood"
+        }
+      ]
+    },
+    {
       "name": "ads.getOfficeUsers",
       "description": "Returns a list of managers and supervisors of advertising account.",
       "access_token_type": [
@@ -2903,6 +2935,27 @@
         },
         "extendedResponse": {
           "$ref": "responses.json#/definitions/apps_getLeaderboard_extended_response"
+        }
+      }
+    },
+    {
+      "name": "apps.getMiniAppPolicies",
+      "description": "Returns policies and terms given to a mini app.",
+      "access_token_type": [
+        "user"
+      ],
+      "parameters": [
+        {
+          "name": "app_id",
+          "description": "Mini App ID",
+          "type": "integer",
+          "required": true,
+          "minimum": 0
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/apps_getMiniAppPolicies_response"
         }
       }
     },
@@ -4630,6 +4683,40 @@
       ]
     },
     {
+      "name": "fave.addClassified",
+      "description": "Adds a link to user faves.",
+      "access_token_type": [
+        "user"
+      ],
+      "parameters": [
+        {
+          "name": "item_source",
+          "description": "Classifieds item source",
+          "type": "string",
+          "required": true,
+          "enum": [
+            "youla"
+          ]
+        },
+        {
+          "name": "item_id",
+          "description": "Classifieds item id",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/base_ok_response"
+        }
+      },
+      "errors": [
+        {
+          "$ref": "errors.json#/errors/api_error_not_found"
+        }
+      ]
+    },
+    {
       "name": "fave.addLink",
       "description": "Adds a link to user faves.",
       "access_token_type": [
@@ -4967,6 +5054,40 @@
           "$ref": "responses.json#/definitions/base_bool_response"
         }
       }
+    },
+    {
+      "name": "fave.removeClassified",
+      "description": "Removes link from the user's faves.",
+      "access_token_type": [
+        "user"
+      ],
+      "parameters": [
+        {
+          "name": "item_source",
+          "description": "Classifieds item source",
+          "type": "string",
+          "required": true,
+          "enum": [
+            "youla"
+          ]
+        },
+        {
+          "name": "item_id",
+          "description": "Classifieds item id",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/base_ok_response"
+        }
+      },
+      "errors": [
+        {
+          "$ref": "errors.json#/errors/api_error_not_found"
+        }
+      ]
     },
     {
       "name": "fave.removeLink",
@@ -5330,7 +5451,8 @@
           "required": true,
           "items": {
             "type": "integer"
-          }
+          },
+          "maxItems": 1000
         },
         {
           "name": "need_sign",
@@ -5973,12 +6095,12 @@
           "type": "string",
           "default": "Nom",
           "enum": [
-            "nom",
-            "gen",
-            "dat",
-            "acc",
-            "ins",
-            "abl"
+            "Nom",
+            "Gen",
+            "Dat",
+            "Acc",
+            "Ins",
+            "Abl"
           ],
           "enumNames": [
             "nominative",
@@ -8703,7 +8825,8 @@
           "name": "user_id",
           "type": "integer",
           "required": true,
-          "minimum": 0
+          "minimum": 0,
+          "maximum": 2000000000
         },
         {
           "name": "act",
@@ -9183,6 +9306,9 @@
         },
         {
           "$ref": "errors.json#/errors/api_error_market_photos_crop_size_too_low"
+        },
+        {
+          "$ref": "errors.json#/errors/api_error_market_not_enabled"
         }
       ]
     },
@@ -9226,6 +9352,9 @@
       "errors": [
         {
           "$ref": "errors.json#/errors/api_error_market_too_many_albums"
+        },
+        {
+          "$ref": "errors.json#/errors/api_error_market_not_enabled"
         }
       ]
     },
@@ -9268,6 +9397,9 @@
       "errors": [
         {
           "$ref": "errors.json#/errors/api_error_market_album_not_found"
+        },
+        {
+          "$ref": "errors.json#/errors/api_error_market_not_enabled"
         },
         {
           "$ref": "errors.json#/errors/api_error_market_item_not_found"
@@ -9371,6 +9503,9 @@
       "errors": [
         {
           "$ref": "errors.json#/errors/api_error_access_market"
+        },
+        {
+          "$ref": "errors.json#/errors/api_error_market_not_enabled"
         }
       ]
     },
@@ -9403,6 +9538,9 @@
       "errors": [
         {
           "$ref": "errors.json#/errors/api_error_market_album_not_found"
+        },
+        {
+          "$ref": "errors.json#/errors/api_error_market_not_enabled"
         }
       ]
     },
@@ -9535,6 +9673,9 @@
         },
         {
           "$ref": "errors.json#/errors/api_error_market_photos_crop_size_too_low"
+        },
+        {
+          "$ref": "errors.json#/errors/api_error_market_not_enabled"
         }
       ]
     },
@@ -9585,6 +9726,9 @@
       "errors": [
         {
           "$ref": "errors.json#/errors/api_error_market_album_not_found"
+        },
+        {
+          "$ref": "errors.json#/errors/api_error_market_not_enabled"
         }
       ]
     },
@@ -9657,6 +9801,49 @@
           "name": "status",
           "type": "integer",
           "minimum": 0
+        },
+        {
+          "name": "track_number",
+          "type": "string",
+          "maxLength": 60
+        },
+        {
+          "name": "payment_status",
+          "type": "string",
+          "enum": [
+            "not_paid",
+            "paid",
+            "returned"
+          ]
+        },
+        {
+          "name": "delivery_price",
+          "type": "integer",
+          "minimum": 0
+        },
+        {
+          "name": "width",
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100000
+        },
+        {
+          "name": "length",
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100000
+        },
+        {
+          "name": "height",
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100000
+        },
+        {
+          "name": "weight",
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100000000
         }
       ],
       "responses": {
@@ -9756,7 +9943,7 @@
     },
     {
       "name": "market.getAlbums",
-      "description": "Returns community's collections list.",
+      "description": "Returns community's market collections list.",
       "access_token_type": [
         "user"
       ],
@@ -9967,7 +10154,7 @@
       },
       "errors": [
         {
-          "$ref": "errors.json#/errors/api_error_market_shop_not_enabled"
+          "$ref": "errors.json#/errors/api_error_market_extended_not_enabled"
         }
       ]
     },
@@ -10108,6 +10295,9 @@
         },
         {
           "$ref": "errors.json#/errors/api_error_market_item_not_found"
+        },
+        {
+          "$ref": "errors.json#/errors/api_error_market_not_enabled"
         }
       ]
     },
@@ -10154,6 +10344,9 @@
         },
         {
           "$ref": "errors.json#/errors/api_error_market_album_not_found"
+        },
+        {
+          "$ref": "errors.json#/errors/api_error_market_not_enabled"
         }
       ]
     },
@@ -10209,6 +10402,9 @@
         },
         {
           "$ref": "errors.json#/errors/api_error_market_item_not_found"
+        },
+        {
+          "$ref": "errors.json#/errors/api_error_market_not_enabled"
         }
       ]
     },
@@ -10348,6 +10544,9 @@
         },
         {
           "$ref": "errors.json#/errors/api_error_market_restore_too_late"
+        },
+        {
+          "$ref": "errors.json#/errors/api_error_market_not_enabled"
         }
       ]
     },
@@ -10394,7 +10593,6 @@
         {
           "name": "album_id",
           "type": "integer",
-          "default": 0,
           "minimum": 0
         },
         {
@@ -10574,7 +10772,12 @@
         "response": {
           "$ref": "responses.json#/definitions/base_ok_response"
         }
-      }
+      },
+      "errors": [
+        {
+          "$ref": "errors.json#/errors/api_error_messages_intent_cant_use"
+        }
+      ]
     },
     {
       "name": "messages.createChat",
@@ -10630,7 +10833,8 @@
           "items": {
             "type": "integer",
             "minimum": 0
-          }
+          },
+          "maxItems": 1000
         },
         {
           "name": "spam",
@@ -10771,7 +10975,8 @@
         {
           "name": "message",
           "description": "(Required if 'attachments' is not set.) Text of the message.",
-          "type": "string"
+          "type": "string",
+          "maxLength": 9000
         },
         {
           "name": "lat",
@@ -11739,7 +11944,12 @@
         "response": {
           "$ref": "responses.json#/definitions/messages_isMessagesFromGroupAllowed_response"
         }
-      }
+      },
+      "errors": [
+        {
+          "$ref": "errors.json#/errors/api_error_messages_intent_cant_use"
+        }
+      ]
     },
     {
       "name": "messages.joinChatByInviteLink",
@@ -12039,7 +12249,8 @@
         {
           "name": "q",
           "description": "Search query string.",
-          "type": "string"
+          "type": "string",
+          "maxLength": 9000
         },
         {
           "name": "peer_id",
@@ -12145,6 +12356,9 @@
       "responses": {
         "response": {
           "$ref": "responses.json#/definitions/messages_searchConversations_response"
+        },
+        "extendedResponse": {
+          "$ref": "responses.json#/definitions/messages_searchConversations_extended_response"
         }
       }
     },
@@ -12204,7 +12418,8 @@
         {
           "name": "message",
           "description": "(Required if 'attachments' is not set.) Text of the message.",
-          "type": "string"
+          "type": "string",
+          "maxLength": 9000
         },
         {
           "name": "lat",
@@ -12219,7 +12434,8 @@
         {
           "name": "attachment",
           "description": "(Required if 'message' is not set.) List of objects attached to the message, separated by commas, in the following format: \"<owner_id>_<media_id>\", '' — Type of media attachment: 'photo' — photo, 'video' — video, 'audio' — audio, 'doc' — document, 'wall' — wall post, '<owner_id>' — ID of the media attachment owner. '<media_id>' — media attachment ID. Example: \"photo100172_166443618\"",
-          "type": "string"
+          "type": "string",
+          "maxLength": 9000
         },
         {
           "name": "reply_to",
@@ -12231,7 +12447,8 @@
           "type": "array",
           "items": {
             "type": "integer"
-          }
+          },
+          "maxItems": 1000
         },
         {
           "name": "forward",
@@ -12364,6 +12581,9 @@
         },
         {
           "$ref": "errors.json#/errors/api_error_messages_peer_blocked_reason_by_time"
+        },
+        {
+          "$ref": "errors.json#/errors/api_error_not_found"
         }
       ]
     },
@@ -12416,7 +12636,14 @@
         {
           "name": "type",
           "description": "'typing' — user has started to type.",
-          "type": "string"
+          "type": "string",
+          "enum": [
+            "audiomessage",
+            "file",
+            "photo",
+            "typing",
+            "video"
+          ]
         },
         {
           "name": "peer_id",
@@ -14811,7 +15038,8 @@
           "type": "array",
           "items": {
             "type": "integer"
-          }
+          },
+          "maxItems": 1000
         },
         {
           "name": "offset",
@@ -14999,7 +15227,8 @@
           "required": true,
           "items": {
             "type": "string"
-          }
+          },
+          "maxItems": 500
         },
         {
           "name": "extended",
@@ -15157,7 +15386,12 @@
         "response": {
           "$ref": "responses.json#/definitions/base_getUploadServer_response"
         }
-      }
+      },
+      "errors": [
+        {
+          "$ref": "errors.json#/errors/api_error_market_not_enabled"
+        }
+      ]
     },
     {
       "name": "photos.getMarketUploadServer",
@@ -15201,7 +15435,12 @@
         "response": {
           "$ref": "responses.json#/definitions/photos_getMarketUploadServer_response"
         }
-      }
+      },
+      "errors": [
+        {
+          "$ref": "errors.json#/errors/api_error_market_not_enabled"
+        }
+      ]
     },
     {
       "name": "photos.getMessagesUploadServer",
@@ -15924,6 +16163,9 @@
         },
         {
           "$ref": "errors.json#/errors/api_error_param_photo"
+        },
+        {
+          "$ref": "errors.json#/errors/api_error_market_not_enabled"
         }
       ]
     },
@@ -15980,6 +16222,9 @@
         },
         {
           "$ref": "errors.json#/errors/api_error_param_photo"
+        },
+        {
+          "$ref": "errors.json#/errors/api_error_market_not_enabled"
         }
       ]
     },
@@ -16219,6 +16464,38 @@
       "responses": {
         "response": {
           "$ref": "responses.json#/definitions/photos_search_response"
+        }
+      }
+    },
+    {
+      "name": "podcasts.searchPodcast",
+      "access_token_type": [
+        "user",
+        "group"
+      ],
+      "parameters": [
+        {
+          "name": "search_string",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "offset",
+          "type": "integer",
+          "default": 0,
+          "minimum": 0
+        },
+        {
+          "name": "count",
+          "type": "integer",
+          "default": 20,
+          "minimum": 1,
+          "maximum": 1000
+        }
+      ],
+      "responses": {
+        "response": {
+          "$ref": "responses.json#/definitions/podcasts_searchPodcast_response"
         }
       }
     },
@@ -16898,7 +17175,8 @@
         {
           "name": "q",
           "description": "Search query string.",
-          "type": "string"
+          "type": "string",
+          "maxLength": 9000
         },
         {
           "name": "offset",
@@ -17428,16 +17706,16 @@
           "minimum": 0
         }
       ],
-      "errors": [
-        {
-          "$ref": "errors.json#/errors/api_error_status_no_audio"
-        }
-      ],
       "responses": {
         "response": {
           "$ref": "responses.json#/definitions/base_ok_response"
         }
-      }
+      },
+      "errors": [
+        {
+          "$ref": "errors.json#/errors/api_error_status_no_audio"
+        }
+      ]
     },
     {
       "name": "storage.get",
@@ -20139,6 +20417,9 @@
         },
         {
           "$ref": "errors.json#/errors/api_error_wall_ads_published"
+        },
+        {
+          "$ref": "errors.json#/errors/api_error_upload"
         }
       ]
     },
@@ -21455,7 +21736,8 @@
         {
           "name": "query",
           "description": "search query string.",
-          "type": "string"
+          "type": "string",
+          "maxLength": 9000
         },
         {
           "name": "owners_only",

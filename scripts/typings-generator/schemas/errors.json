@@ -196,6 +196,11 @@
       "description": "Unknown group",
       "global": true
     },
+    "api_error_additional_signup_required": {
+      "code": 41,
+      "description": "Additional signup required",
+      "global": true
+    },
     "api_error_param": {
       "code": 100,
       "description": "One of the parameters specified was missing or invalid",
@@ -449,7 +454,7 @@
     },
     "api_error_ads_specific": {
       "code": 603,
-      "description": "Some ads error occured",
+      "description": "Some ads error occurs",
       "global": true
     },
     "api_error_ads_object_deleted": {
@@ -712,9 +717,9 @@
       "code": 1408,
       "description": "Item has bad links in description"
     },
-    "api_error_market_shop_not_enabled": {
+    "api_error_market_extended_not_enabled": {
       "code": 1409,
-      "description": "Shop not enabled"
+      "description": "Extended market not enabled"
     },
     "api_error_market_variant_not_found": {
       "code": 1416,
@@ -763,6 +768,10 @@
     "api_error_market_photos_crop_size_too_low": {
       "code": 1435,
       "description": "Crop size is less than the minimum"
+    },
+    "api_error_market_not_enabled": {
+      "code": 1438,
+      "description": "Market not enabled"
     },
     "api_error_story_expired": {
       "code": 1600,

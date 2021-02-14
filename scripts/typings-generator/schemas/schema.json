@@ -95,17 +95,11 @@
           "pattern": "^[a-zA-Z][a-zA-Z0-9_]*$",
           "description": "Parameter name"
         },
-        "nodoc": {
-          "$ref": "#/definitions/nodoc"
-        },
         "format": {
           "type": "string",
           "enum": [
             "json"
           ]
-        },
-        "ignore_sdk": {
-          "$ref": "#/definitions/ignore_sdk"
         },
         "type": {
           "$ref": "#/definitions/parameterTypes",
@@ -136,14 +130,13 @@
               "type": "integer",
               "minimum": 0
             },
-            "enum": [
-              "#/definitions/enum"
-            ],
+            "enum": {
+              "type": "array",
+              "description": "Allowed enumerable values",
+              "$ref": "#/definitions/enum"
+            },
             "enumNames": {
               "$ref": "#/definitions/enumNames"
-            },
-            "ignore_sdk": {
-              "$ref": "#/definitions/ignore_sdk"
             }
           },
           "oneOf": [
@@ -179,13 +172,16 @@
           "type": "string",
           "format": "uri-reference"
         },
-        "enum": [
-          "#/definitions/enum"
-        ],
+        "enum": {
+          "type": "array",
+          "$ref": "#/definitions/enum"
+        },
         "enumNames": {
           "$ref": "#/definitions/enumNames"
         },
-        "default": [],
+        "default": {
+          "description": "Default property value"
+        },
         "required": {
           "type": "boolean",
           "default": false
@@ -248,9 +244,6 @@
         "description": {
           "type": "string"
         },
-        "nodoc": {
-          "$ref": "#/definitions/nodoc"
-        },
         "deprecated_from_version": {
           "$ref": "#/definitions/deprecated_from_version"
         },
@@ -300,9 +293,6 @@
           },
           "additionalProperties": false
         },
-        "ignore_sdk": {
-          "$ref": "#/definitions/ignore_sdk"
-        },
         "additional_properties": {
           "type": "boolean"
         }
@@ -336,9 +326,6 @@
           "type": "boolean",
           "default": false
         },
-        "nodoc": {
-          "$ref": "#/definitions/nodoc"
-        },
         "deprecated_from_version": {
           "$ref": "#/definitions/deprecated_from_version"
         },
@@ -361,7 +348,7 @@
         "description": {
           "type": "string"
         },
-        "@comment": {
+        "$comment": {
           "type": "string"
         }
       }
@@ -374,9 +361,6 @@
           "$ref": {
             "type": "string",
             "format": "uri-reference"
-          },
-          "nodoc": {
-            "$ref": "#/definitions/nodoc"
           }
         }
       },
@@ -393,9 +377,6 @@
         "description": {
           "type": "string",
           "description": "Method description"
-        },
-        "nodoc": {
-          "$ref": "#/definitions/nodoc"
         },
         "timeout": {
           "type": "integer",
@@ -445,9 +426,6 @@
         },
         "errors": {
           "$ref": "#/definitions/methodErrors"
-        },
-        "ignore_sdk": {
-          "$ref": "#/definitions/ignore_sdk"
         }
       },
       "required": [
@@ -488,6 +466,16 @@
       "format": "uri-reference"
     },
     "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "termsOfService": {
+      "type": "string",
+      "format": "url"
+    },
+    "version": {
       "type": "string"
     }
   },

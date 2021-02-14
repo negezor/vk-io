@@ -1068,6 +1068,29 @@
         "response"
       ]
     },
+    "apps_getMiniAppPolicies_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "privacy_policy": {
+              "type": "string",
+              "format": "uri",
+              "description": "URL of the app's privacy policy"
+            },
+            "terms": {
+              "type": "string",
+              "format": "uri",
+              "description": "URL of the app's terms"
+            }
+          }
+        }
+      },
+      "required": [
+        "response"
+      ]
+    },
     "apps_getScopes_response": {
       "type": "object",
       "properties": {
@@ -1124,6 +1147,27 @@
               "items": {
                 "$ref": "objects.json#/definitions/apps_app"
               }
+            }
+          }
+        }
+      },
+      "required": [
+        "response"
+      ]
+    },
+    "apps_image_upload_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "hash": {
+              "type": "string",
+              "description": "Uploading hash"
+            },
+            "image": {
+              "type": "string",
+              "description": "Uploaded photo data"
             }
           }
         }
@@ -1641,6 +1685,23 @@
         "response": {
           "type": "integer",
           "description": "Document ID"
+        }
+      },
+      "required": [
+        "response"
+      ]
+    },
+    "docs_doc_upload_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "file": {
+              "type": "string",
+              "description": "Uploaded file data"
+            }
+          }
         }
       },
       "required": [
@@ -3055,7 +3116,9 @@
             },
             "sections_list": {
               "type": "array",
-              "items": []
+              "items": {
+                "$ref": "objects.json#/definitions/groups_sections_list_item"
+              }
             },
             "main_section": {
               "$ref": "objects.json#/definitions/groups_group_full_main_section"
@@ -3086,7 +3149,7 @@
               "$ref": "objects.json#/definitions/base_bool_int"
             },
             "obscene_stopwords": {
-              "description": "Information whether the stopwords filter is enabled",
+              "description": "Information whether the stop words filter is enabled",
               "$ref": "objects.json#/definitions/base_bool_int"
             },
             "obscene_words": {
@@ -3134,7 +3197,7 @@
               "minimum": 0
             },
             "finish_date": {
-              "description": "Finish date in Unixtime format",
+              "description": "Finish date in Unix-time format",
               "type": "integer"
             },
             "subject": {
@@ -4296,7 +4359,13 @@
             "profiles": {
               "type": "array",
               "items": {
-                "$ref": "objects.json#/definitions/users_user"
+                "$ref": "objects.json#/definitions/users_user_full"
+              }
+            },
+            "groups": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/groups_group_full"
               }
             }
           },
@@ -4743,7 +4812,7 @@
         "response"
       ]
     },
-    "messages_searchConversations_response": {
+    "messages_searchConversations_extended_response": {
       "type": "object",
       "properties": {
         "response": {
@@ -4771,7 +4840,38 @@
                 "$ref": "objects.json#/definitions/groups_group_full"
               }
             }
-          }
+          },
+          "required": [
+            "count",
+            "items"
+          ]
+        }
+      },
+      "required": [
+        "response"
+      ]
+    },
+    "messages_searchConversations_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": "integer",
+              "description": "Total results number"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/messages_conversation"
+              }
+            }
+          },
+          "required": [
+            "count",
+            "items"
+          ]
         }
       },
       "required": [
@@ -5176,6 +5276,26 @@
               "description": "New from value"
             }
           }
+        }
+      },
+      "required": [
+        "response"
+      ]
+    },
+    "newsfeed_ignore_item_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "status": {
+              "type": "boolean",
+              "default": 1
+            }
+          },
+          "required": [
+            "status"
+          ]
         }
       },
       "required": [
@@ -6115,6 +6235,176 @@
         "response"
       ]
     },
+    "photos_market_album_upload_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "gid": {
+              "type": "integer",
+              "description": "Community ID"
+            },
+            "hash": {
+              "type": "string",
+              "description": "Uploading hash"
+            },
+            "photo": {
+              "type": "string",
+              "description": "Uploaded photo data"
+            },
+            "server": {
+              "type": "integer",
+              "description": "Upload server number"
+            }
+          }
+        }
+      },
+      "required": [
+        "response"
+      ]
+    },
+    "photos_market_upload_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "crop_data": {
+              "type": "string",
+              "description": "Crop data"
+            },
+            "crop_hash": {
+              "type": "string",
+              "description": "Crop hash"
+            },
+            "group_id": {
+              "type": "integer",
+              "description": "Community ID"
+            },
+            "hash": {
+              "type": "string",
+              "description": "Uploading hash"
+            },
+            "photo": {
+              "type": "string",
+              "description": "Uploaded photo data"
+            },
+            "server": {
+              "type": "integer",
+              "description": "Upload server number"
+            }
+          }
+        }
+      },
+      "required": [
+        "response"
+      ]
+    },
+    "photos_message_upload_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "hash": {
+              "type": "string",
+              "description": "Uploading hash"
+            },
+            "photo": {
+              "type": "string",
+              "description": "Uploaded photo data"
+            },
+            "server": {
+              "type": "integer",
+              "description": "Upload server number"
+            }
+          }
+        }
+      },
+      "required": [
+        "response"
+      ]
+    },
+    "photos_owner_cover_upload_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "hash": {
+              "type": "string",
+              "description": "Uploading hash"
+            },
+            "photo": {
+              "type": "string",
+              "description": "Uploaded photo data"
+            }
+          }
+        }
+      },
+      "required": [
+        "response"
+      ]
+    },
+    "photos_owner_upload_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "hash": {
+              "type": "string",
+              "description": "Uploading hash"
+            },
+            "photo": {
+              "type": "string",
+              "description": "Uploaded photo data"
+            },
+            "server": {
+              "type": "integer",
+              "description": "Upload server number"
+            }
+          }
+        }
+      },
+      "required": [
+        "response"
+      ]
+    },
+    "photos_photo_upload_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "aid": {
+              "type": "integer",
+              "description": "Album ID"
+            },
+            "hash": {
+              "type": "string",
+              "description": "Uploading hash"
+            },
+            "photo": {
+              "type": "string",
+              "description": "Uploaded photo data"
+            },
+            "photos_list": {
+              "type": "string",
+              "description": "Uploaded photos data"
+            },
+            "server": {
+              "type": "integer",
+              "description": "Upload server number"
+            }
+          }
+        }
+      },
+      "required": [
+        "response"
+      ]
+    },
     "photos_putTag_response": {
       "type": "object",
       "properties": {
@@ -6281,6 +6571,58 @@
               }
             }
           }
+        }
+      },
+      "required": [
+        "response"
+      ]
+    },
+    "photos_wall_upload_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "hash": {
+              "type": "string",
+              "description": "Uploading hash"
+            },
+            "photo": {
+              "type": "string",
+              "description": "Uploaded photo data"
+            },
+            "server": {
+              "type": "integer",
+              "description": "Upload server number"
+            }
+          }
+        }
+      },
+      "required": [
+        "response"
+      ]
+    },
+    "podcasts_searchPodcast_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "podcasts": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/podcast_external_data"
+              }
+            },
+            "results_total": {
+              "type": "integer",
+              "description": "Total amount of found results"
+            }
+          },
+          "required": [
+            "podcasts",
+            "results_total"
+          ]
         }
       },
       "required": [
@@ -7660,9 +8002,7 @@
           },
           "required": [
             "count",
-            "items",
-            "profiles",
-            "groups"
+            "items"
           ]
         }
       },
@@ -7683,7 +8023,7 @@
             "items": {
               "type": "array",
               "items": {
-                "$ref": "objects.json#/definitions/video_video"
+                "$ref": "objects.json#/definitions/video_video_full"
               }
             }
           },
@@ -7733,7 +8073,7 @@
             "items": {
               "type": "array",
               "items": {
-                "$ref": "objects.json#/definitions/video_video"
+                "$ref": "objects.json#/definitions/video_video_full"
               }
             },
             "profiles": {
@@ -7782,6 +8122,27 @@
             "count",
             "items"
           ]
+        }
+      },
+      "required": [
+        "response"
+      ]
+    },
+    "video_upload_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "size": {
+              "type": "integer",
+              "description": "Video size"
+            },
+            "video_id": {
+              "type": "integer",
+              "description": "Video ID"
+            }
+          }
         }
       },
       "required": [
