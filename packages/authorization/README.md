@@ -30,6 +30,8 @@ const callbackService = new CallbackService();
 const direct = new DirectAuthorization({
 	callbackService,
 
+	scope: 'all',
+
 	clientId: process.env.CLIENT_ID,
 	clientSecret: process.env.CLIENT_SECRET,
 
