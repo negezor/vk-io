@@ -156,7 +156,35 @@ const api = new API({
 ```
 
 ## Обработка капчи
-TODO: ...
+
+::: warning Внимание
+Изображение по ссылке должно быть загружено только один раз, иначе это сгенерирует новый ключ капчи
+:::
+
+```ts
+import { API, CallbackService } from 'vk-io';
+
+const callbackService = new CallbackService();
+
+const api = new API({
+	token: process.env.TOKEN,
+
+	callbackService
+});
+
+callbackService.onCaptcha(async (payload, retry) => {
+	
+	const key = await myAwesomeCaptchaHandler(payload.src);
+
+	try {
+		await retry(key);
+
+		console.log('Капча успешно решена');
+	} catch (error) {
+		console.log('Капча не решена');
+	}
+});
+```
 
 ## Использование APIRequest
 Вам может понадобится контролировать запрос на всех стадиях, или иметь удобную оболочку для создания [execute](http://vk.com/dev/execute) методов.
