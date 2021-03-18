@@ -55,7 +55,7 @@ const builder = Keyboard.builder()
 		color: Keyboard.NEGATIVE_COLOR
 	}); // => KeyboardBuilder
 
-// Отправка клавиатуру
+// Отправка клавиатуры
 await api.messages.send({
 	// ...
 	
@@ -105,7 +105,7 @@ const builder = Keyboard.keyboard([
 	})
 ]); // => KeyboardBuilder
 
-// Отправка клавиатуру
+// Отправка клавиатуры
 await api.messages.send({
 	// ...
 
