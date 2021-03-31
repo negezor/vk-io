@@ -1,6 +1,6 @@
 import { Attachment, AttachmentFactoryOptions } from './attachment';
 import { ExternalAttachment } from './external';
-import { Attachmentable } from '../shared/attachmentable';
+import { Attachmentable } from '../shared';
 
 // eslint-disable-next-line import/no-cycle
 import { transformAttachments } from './helpers';
@@ -60,6 +60,19 @@ export interface IWallAttachmentPayload {
 	is_pinned?: number;
 	marked_as_ads?: number;
 	is_favorite?: number;
+	donut?: {
+		is_donut: boolean;
+		paid_duration?: number;
+		placeholder?: {
+			text: string;
+		};
+		can_publish_free_copy?: boolean;
+		edit_mode?: 'all' | 'duration';
+		durations?: {
+			id: number;
+			name: string;
+		}[];
+	}
 }
 
 export type WallAttachmentOptions =
