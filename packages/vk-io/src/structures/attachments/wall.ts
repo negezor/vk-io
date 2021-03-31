@@ -30,6 +30,12 @@ export interface IWallAttachmentPayload {
 		can_close: number;
 		can_open: number;
 	};
+	copyright?: {
+		id?: number;
+		link: string;
+		name: string;
+		type: string;
+	};
 	likes?: {
 		count: number;
 		user_likes: number;
