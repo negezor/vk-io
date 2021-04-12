@@ -823,6 +823,10 @@ class MessageContext<S = ContextDefaultState>
 			afterAttachments.push('messagePayload');
 		}
 
+		if (this.hasGeo) {
+			afterAttachments.push('geo');
+		}
+
 		afterAttachments.push('isOutbox');
 
 		if (this.referralSource || this.referralValue) {
