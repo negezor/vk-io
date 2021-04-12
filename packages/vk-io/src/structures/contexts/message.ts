@@ -825,7 +825,7 @@ class MessageContext<S = ContextDefaultState>
 
 		afterAttachments.push('isOutbox');
 
-		if (this.referralValue) {
+		if (this.referralSource || this.referralValue) {
 			afterAttachments.push('referralValue', 'referralSource');
 		}
 
