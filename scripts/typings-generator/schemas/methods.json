@@ -316,7 +316,7 @@
         },
         {
           "name": "sex",
-          "description": "User sex. Possible values: , * '1' – female,, * '2' – male.",
+          "description": "User sex. Possible values: , * '1' - female,, * '2' - male.",
           "type": "integer",
           "minimum": 0,
           "enum": [
@@ -332,7 +332,7 @@
         },
         {
           "name": "relation",
-          "description": "User relationship status. Possible values: , * '1' – single,, * '2' – in a relationship,, * '3' – engaged,, * '4' – married,, * '5' – it's complicated,, * '6' – actively searching,, * '7' – in love,, * '0' – not specified.",
+          "description": "User relationship status. Possible values: , * '1' - single,, * '2' - in a relationship,, * '3' - engaged,, * '4' - married,, * '5' - it's complicated,, * '6' - actively searching,, * '7' - in love,, * '0' - not specified.",
           "type": "integer",
           "minimum": 0,
           "enum": [
@@ -369,7 +369,7 @@
         },
         {
           "name": "bdate_visibility",
-          "description": "Birth date visibility. Returned values: , * '1' – show birth date,, * '2' – show only month and day,, * '0' – hide birth date.",
+          "description": "Birth date visibility. Returned values: , * '1' - show birth date,, * '2' - show only month and day,, * '0' - hide birth date.",
           "type": "integer",
           "minimum": 0,
           "enum": [
@@ -1840,6 +1840,10 @@
           "type": "string"
         },
         {
+          "name": "publisher_platforms",
+          "type": "string"
+        },
+        {
           "name": "link_url",
           "description": "URL for the advertised object.",
           "type": "string",
@@ -3083,7 +3087,7 @@
         },
         {
           "name": "type",
-          "description": "request type. Values: 'invite' – if the request is sent to a user who does not have the app installed,, 'request' – if a user has already installed the app",
+          "description": "request type. Values: 'invite' - if the request is sent to a user who does not have the app installed,, 'request' - if a user has already installed the app",
           "type": "string",
           "default": "request",
           "enum": [
@@ -4361,7 +4365,8 @@
         {
           "name": "peer_id",
           "description": "Destination ID. \"For user: 'User ID', e.g. '12345'. For chat: '2000000000' + 'Chat ID', e.g. '2000000001'. For community: '- Community ID', e.g. '-12345'. \"",
-          "type": "integer"
+          "type": "integer",
+          "format": "int32"
         }
       ],
       "responses": {
@@ -4683,40 +4688,6 @@
       ]
     },
     {
-      "name": "fave.addClassified",
-      "description": "Adds a link to user faves.",
-      "access_token_type": [
-        "user"
-      ],
-      "parameters": [
-        {
-          "name": "item_source",
-          "description": "Classifieds item source",
-          "type": "string",
-          "required": true,
-          "enum": [
-            "youla"
-          ]
-        },
-        {
-          "name": "item_id",
-          "description": "Classifieds item id",
-          "type": "string",
-          "required": true
-        }
-      ],
-      "responses": {
-        "response": {
-          "$ref": "responses.json#/definitions/base_ok_response"
-        }
-      },
-      "errors": [
-        {
-          "$ref": "errors.json#/errors/api_error_not_found"
-        }
-      ]
-    },
-    {
       "name": "fave.addLink",
       "description": "Adds a link to user faves.",
       "access_token_type": [
@@ -4920,7 +4891,8 @@
             "podcast",
             "post",
             "product",
-            "video"
+            "video",
+            "youla_product"
           ]
         },
         {
@@ -5054,40 +5026,6 @@
           "$ref": "responses.json#/definitions/base_bool_response"
         }
       }
-    },
-    {
-      "name": "fave.removeClassified",
-      "description": "Removes link from the user's faves.",
-      "access_token_type": [
-        "user"
-      ],
-      "parameters": [
-        {
-          "name": "item_source",
-          "description": "Classifieds item source",
-          "type": "string",
-          "required": true,
-          "enum": [
-            "youla"
-          ]
-        },
-        {
-          "name": "item_id",
-          "description": "Classifieds item id",
-          "type": "string",
-          "required": true
-        }
-      ],
-      "responses": {
-        "response": {
-          "$ref": "responses.json#/definitions/base_ok_response"
-        }
-      },
-      "errors": [
-        {
-          "$ref": "errors.json#/errors/api_error_not_found"
-        }
-      ]
     },
     {
       "name": "fave.removeLink",
@@ -5295,7 +5233,8 @@
             "podcast",
             "post",
             "product",
-            "video"
+            "video",
+            "youla_product"
           ]
         },
         {
@@ -6435,7 +6374,7 @@
         },
         {
           "name": "type",
-          "description": "Community type. Possible values: *'group' – group,, *'event' – event,, *'public' – public page",
+          "description": "Community type. Possible values: *'group' - group,, *'event' - event,, *'public' - public page",
           "type": "string",
           "default": "group",
           "enum": [
@@ -6452,7 +6391,7 @@
         },
         {
           "name": "subtype",
-          "description": "Public page subtype. Possible values: *'1' – place or small business,, *'2' – company, organization or website,, *'3' – famous person or group of people,, *'4' – product or work of art.",
+          "description": "Public page subtype. Possible values: *'1' - place or small business,, *'2' - company, organization or website,, *'3' - famous person or group of people,, *'4' - product or work of art.",
           "type": "integer",
           "minimum": 0,
           "enum": [
@@ -6625,7 +6564,7 @@
         },
         {
           "name": "access",
-          "description": "Community type. Possible values: *'0' – open,, *'1' – closed,, *'2' – private.",
+          "description": "Community type. Possible values: *'0' - open,, *'1' - closed,, *'2' - private.",
           "type": "integer",
           "minimum": 0,
           "$ref": "objects.json#/definitions/groups_group_access"
@@ -6637,7 +6576,7 @@
         },
         {
           "name": "subject",
-          "description": "Community subject. Possible values: , *'1' – auto/moto,, *'2' – activity holidays,, *'3' – business,, *'4' – pets,, *'5' – health,, *'6' – dating and communication, , *'7' – games,, *'8' – IT (computers and software),, *'9' – cinema,, *'10' – beauty and fashion,, *'11' – cooking,, *'12' – art and culture,, *'13' – literature,, *'14' – mobile services and internet,, *'15' – music,, *'16' – science and technology,, *'17' – real estate,, *'18' – news and media,, *'19' – security,, *'20' – education,, *'21' – home and renovations,, *'22' – politics,, *'23' – food,, *'24' – industry,, *'25' – travel,, *'26' – work,, *'27' – entertainment,, *'28' – religion,, *'29' – family,, *'30' – sports,, *'31' – insurance,, *'32' – television,, *'33' – goods and services,, *'34' – hobbies,, *'35' – finance,, *'36' – photo,, *'37' – esoterics,, *'38' – electronics and appliances,, *'39' – erotic,, *'40' – humor,, *'41' – society, humanities,, *'42' – design and graphics.",
+          "description": "Community subject. Possible values: , *'1' - auto/moto,, *'2' - activity holidays,, *'3' - business,, *'4' - pets,, *'5' - health,, *'6' - dating and communication, , *'7' - games,, *'8' - IT (computers and software),, *'9' - cinema,, *'10' - beauty and fashion,, *'11' - cooking,, *'12' - art and culture,, *'13' - literature,, *'14' - mobile services and internet,, *'15' - music,, *'16' - science and technology,, *'17' - real estate,, *'18' - news and media,, *'19' - security,, *'20' - education,, *'21' - home and renovations,, *'22' - politics,, *'23' - food,, *'24' - industry,, *'25' - travel,, *'26' - work,, *'27' - entertainment,, *'28' - religion,, *'29' - family,, *'30' - sports,, *'31' - insurance,, *'32' - television,, *'33' - goods and services,, *'34' - hobbies,, *'35' - finance,, *'36' - photo,, *'37' - esoterics,, *'38' - electronics and appliances,, *'39' - erotic,, *'40' - humor,, *'41' - society, humanities,, *'42' - design and graphics.",
           "type": "string",
           "$ref": "objects.json#/definitions/groups_group_subject"
         },
@@ -6693,69 +6632,69 @@
         },
         {
           "name": "wall",
-          "description": "Wall settings. Possible values: *'0' – disabled,, *'1' – open,, *'2' – limited (groups and events only),, *'3' – closed (groups and events only).",
+          "description": "Wall settings. Possible values: *'0' - disabled,, *'1' - open,, *'2' - limited (groups and events only),, *'3' - closed (groups and events only).",
           "type": "integer",
           "minimum": 0,
           "$ref": "objects.json#/definitions/groups_group_wall"
         },
         {
           "name": "topics",
-          "description": "Board topics settings. Possbile values: , *'0' – disabled,, *'1' – open,, *'2' – limited (for groups and events only).",
+          "description": "Board topics settings. Possbile values: , *'0' - disabled,, *'1' - open,, *'2' - limited (for groups and events only).",
           "type": "integer",
           "minimum": 0,
           "$ref": "objects.json#/definitions/groups_group_topics"
         },
         {
           "name": "photos",
-          "description": "Photos settings. Possible values: *'0' – disabled,, *'1' – open,, *'2' – limited (for groups and events only).",
+          "description": "Photos settings. Possible values: *'0' - disabled,, *'1' - open,, *'2' - limited (for groups and events only).",
           "type": "integer",
           "minimum": 0,
           "$ref": "objects.json#/definitions/groups_group_photos"
         },
         {
           "name": "video",
-          "description": "Video settings. Possible values: *'0' – disabled,, *'1' – open,, *'2' – limited (for groups and events only).",
+          "description": "Video settings. Possible values: *'0' - disabled,, *'1' - open,, *'2' - limited (for groups and events only).",
           "type": "integer",
           "minimum": 0,
           "$ref": "objects.json#/definitions/groups_group_video"
         },
         {
           "name": "audio",
-          "description": "Audio settings. Possible values: *'0' – disabled,, *'1' – open,, *'2' – limited (for groups and events only).",
+          "description": "Audio settings. Possible values: *'0' - disabled,, *'1' - open,, *'2' - limited (for groups and events only).",
           "type": "integer",
           "minimum": 0,
           "$ref": "objects.json#/definitions/groups_group_audio"
         },
         {
           "name": "links",
-          "description": "Links settings (for public pages only). Possible values: *'0' – disabled,, *'1' – enabled.",
+          "description": "Links settings (for public pages only). Possible values: *'0' - disabled,, *'1' - enabled.",
           "type": "boolean"
         },
         {
           "name": "events",
-          "description": "Events settings (for public pages only). Possible values: *'0' – disabled,, *'1' – enabled.",
+          "description": "Events settings (for public pages only). Possible values: *'0' - disabled,, *'1' - enabled.",
           "type": "boolean"
         },
         {
           "name": "places",
-          "description": "Places settings (for public pages only). Possible values: *'0' – disabled,, *'1' – enabled.",
+          "description": "Places settings (for public pages only). Possible values: *'0' - disabled,, *'1' - enabled.",
           "type": "boolean"
         },
         {
           "name": "contacts",
-          "description": "Contacts settings (for public pages only). Possible values: *'0' – disabled,, *'1' – enabled.",
+          "description": "Contacts settings (for public pages only). Possible values: *'0' - disabled,, *'1' - enabled.",
           "type": "boolean"
         },
         {
           "name": "docs",
-          "description": "Documents settings. Possible values: *'0' – disabled,, *'1' – open,, *'2' – limited (for groups and events only).",
+          "description": "Documents settings. Possible values: *'0' - disabled,, *'1' - open,, *'2' - limited (for groups and events only).",
           "type": "integer",
           "minimum": 0,
           "$ref": "objects.json#/definitions/groups_group_docs"
         },
         {
           "name": "wiki",
-          "description": "Wiki pages settings. Possible values: *'0' – disabled,, *'1' – open,, *'2' – limited (for groups and events only).",
+          "description": "Wiki pages settings. Possible values: *'0' - disabled,, *'1' - open,, *'2' - limited (for groups and events only).",
           "type": "integer",
           "minimum": 0,
           "$ref": "objects.json#/definitions/groups_group_wiki"
@@ -6788,12 +6727,12 @@
         },
         {
           "name": "market",
-          "description": "Market settings. Possible values: *'0' – disabled,, *'1' – enabled.",
+          "description": "Market settings. Possible values: *'0' - disabled,, *'1' - enabled.",
           "type": "boolean"
         },
         {
           "name": "market_comments",
-          "description": "market comments settings. Possible values: *'0' – disabled,, *'1' – enabled.",
+          "description": "market comments settings. Possible values: *'0' - disabled,, *'1' - enabled.",
           "type": "boolean"
         },
         {
@@ -6817,7 +6756,7 @@
         },
         {
           "name": "market_currency",
-          "description": "Market currency settings. Possbile values: , *'643' – Russian rubles,, *'980' – Ukrainian hryvnia,, *'398' – Kazakh tenge,, *'978' – Euro,, *'840' – US dollars",
+          "description": "Market currency settings. Possbile values: , *'643' - Russian rubles,, *'980' - Ukrainian hryvnia,, *'398' - Kazakh tenge,, *'978' - Euro,, *'840' - US dollars",
           "type": "integer",
           "minimum": 0,
           "$ref": "objects.json#/definitions/groups_group_market_currency"
@@ -6836,12 +6775,12 @@
         },
         {
           "name": "obscene_filter",
-          "description": "Obscene expressions filter in comments. Possible values: , *'0' – disabled,, *'1' – enabled.",
+          "description": "Obscene expressions filter in comments. Possible values: , *'0' - disabled,, *'1' - enabled.",
           "type": "boolean"
         },
         {
           "name": "obscene_stopwords",
-          "description": "Stopwords filter in comments. Possible values: , *'0' – disabled,, *'1' – enabled.",
+          "description": "Stopwords filter in comments. Possible values: , *'0' - disabled,, *'1' - enabled.",
           "type": "boolean"
         },
         {
@@ -7512,13 +7451,13 @@
       "parameters": [
         {
           "name": "extended",
-          "description": "1 – to return communities count and three communities for preview. By default: 0.",
+          "description": "1 - to return communities count and three communities for preview. By default: 0.",
           "type": "boolean",
           "default": 0
         },
         {
           "name": "subcategories",
-          "description": "1 – to return subcategories info. By default: 0.",
+          "description": "1 - to return subcategories info. By default: 0.",
           "type": "boolean",
           "default": 0
         }
@@ -7723,7 +7662,7 @@
         },
         {
           "name": "filter",
-          "description": "*'friends' – only friends in this community will be returned,, *'unsure' – only those who pressed 'I may attend' will be returned (if it's an event).",
+          "description": "*'friends' - only friends in this community will be returned,, *'unsure' - only those who pressed 'I may attend' will be returned (if it's an event).",
           "type": "string",
           "enum": [
             "friends",
@@ -9211,7 +9150,7 @@
           "name": "price",
           "description": "Item price.",
           "type": "number",
-          "minimum": 0.01
+          "minimum": 0
         },
         {
           "name": "old_price",
@@ -9227,6 +9166,7 @@
           "name": "main_photo_id",
           "description": "Cover photo ID.",
           "type": "integer",
+          "required": true,
           "minimum": 0
         },
         {
@@ -9340,7 +9280,7 @@
         },
         {
           "name": "main_album",
-          "description": "Set as main ('1' – set, '0' – no).",
+          "description": "Set as main ('1' - set, '0' - no).",
           "type": "boolean"
         }
       ],
@@ -9617,8 +9557,7 @@
           "name": "price",
           "description": "Item price.",
           "type": "number",
-          "required": true,
-          "minimum": 0.01
+          "minimum": 0
         },
         {
           "name": "deleted",
@@ -9714,7 +9653,7 @@
         },
         {
           "name": "main_album",
-          "description": "Set as main ('1' – set, '0' – no).",
+          "description": "Set as main ('1' - set, '0' - no).",
           "type": "boolean"
         }
       ],
@@ -9795,7 +9734,7 @@
         {
           "name": "merchant_comment",
           "type": "string",
-          "maxLength": 400
+          "maxLength": 800
         },
         {
           "name": "status",
@@ -9874,11 +9813,13 @@
           "name": "owner_id",
           "description": "ID of an item owner community, \"Note that community id in the 'owner_id' parameter should be negative number. For example 'owner_id'=-1 matches the [vk.com/apiclub|VK API] community \"",
           "type": "integer",
-          "required": true
+          "required": true,
+          "format": "int32"
         },
         {
           "name": "album_id",
           "type": "integer",
+          "format": "int32",
           "default": 0,
           "minimum": 0
         },
@@ -9898,7 +9839,7 @@
         },
         {
           "name": "extended",
-          "description": "'1' – method will return additional fields: 'likes, can_comment, car_repost, photos'. These parameters are not returned by default.",
+          "description": "'1' - method will return additional fields: 'likes, can_comment, car_repost, photos'. These parameters are not returned by default.",
           "type": "boolean"
         }
       ],
@@ -9994,7 +9935,7 @@
         },
         {
           "name": "extended",
-          "description": "'1' – to return additional fields: 'likes, can_comment, car_repost, photos'. By default: '0'.",
+          "description": "'1' - to return additional fields: 'likes, can_comment, car_repost, photos'. By default: '0'.",
           "type": "boolean"
         }
       ],
@@ -10031,7 +9972,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/market_getCategories_new_response"
+          "$ref": "responses.json#/definitions/market_getCategories_response"
         }
       }
     },
@@ -10660,7 +10601,7 @@
         },
         {
           "name": "extended",
-          "description": "'1' – to return additional fields: 'likes, can_comment, car_repost, photos'. By default: '0'.",
+          "description": "'1' - to return additional fields: 'likes, can_comment, car_repost, photos'. By default: '0'.",
           "type": "boolean",
           "default": "0"
         },
@@ -11267,7 +11208,8 @@
           "name": "peer_id",
           "description": "Peer ID.",
           "type": "integer",
-          "required": true
+          "required": true,
+          "format": "int32"
         },
         {
           "name": "fields",
@@ -11353,6 +11295,7 @@
           "name": "group_id",
           "description": "Group ID (for group messages with group access token)",
           "type": "integer",
+          "format": "int32",
           "minimum": 0
         }
       ],
@@ -11459,7 +11402,8 @@
         },
         {
           "name": "peer_id",
-          "type": "integer"
+          "type": "integer",
+          "format": "int32"
         },
         {
           "name": "start_message_id",
@@ -11497,6 +11441,7 @@
           "name": "group_id",
           "description": "Group ID (for group messages with group access token)",
           "type": "integer",
+          "format": "int32",
           "minimum": 0
         }
       ],
@@ -11930,6 +11875,7 @@
           "description": "Group ID.",
           "type": "integer",
           "required": true,
+          "format": "int32",
           "minimum": 0
         },
         {
@@ -11937,6 +11883,7 @@
           "description": "User ID.",
           "type": "integer",
           "required": true,
+          "format": "int32",
           "minimum": 0
         }
       ],
@@ -12089,7 +12036,8 @@
           "default": [],
           "items": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "format": "int32"
           }
         },
         {
@@ -12180,11 +12128,13 @@
         {
           "name": "user_id",
           "description": "ID of the user to be removed from the chat.",
-          "type": "integer"
+          "type": "integer",
+          "format": "int32"
         },
         {
           "name": "member_id",
-          "type": "integer"
+          "type": "integer",
+          "format": "int32"
         }
       ],
       "responses": {
@@ -12648,7 +12598,8 @@
         {
           "name": "peer_id",
           "description": "Destination ID. \"For user: 'User ID', e.g. '12345'. For chat: '2000000000' + 'chat_id', e.g. '2000000001'. For community: '- community ID', e.g. '-12345'. \"",
-          "type": "integer"
+          "type": "integer",
+          "format": "int32"
         },
         {
           "name": "group_id",
@@ -13181,14 +13132,14 @@
       "parameters": [
         {
           "name": "type",
-          "description": "Item type. Possible values: *'wall' – post on the wall,, *'tag' – tag on a photo,, *'profilephoto' – profile photo,, *'video' – video,, *'audio' – audio.",
+          "description": "Item type. Possible values: *'wall' - post on the wall,, *'tag' - tag on a photo,, *'profilephoto' - profile photo,, *'video' - video,, *'audio' - audio.",
           "type": "string",
           "required": true,
           "$ref": "objects.json#/definitions/newsfeed_ignore_item_type"
         },
         {
           "name": "owner_id",
-          "description": "Item owner's identifier (user or community), \"Note that community id must be negative. 'owner_id=1' – user , 'owner_id=-1' – community \"",
+          "description": "Item owner's identifier (user or community), \"Note that community id must be negative. 'owner_id=1' - user , 'owner_id=-1' - community \"",
           "type": "integer",
           "default": 0
         },
@@ -13329,14 +13280,14 @@
       "parameters": [
         {
           "name": "type",
-          "description": "Item type. Possible values: *'wall' – post on the wall,, *'tag' – tag on a photo,, *'profilephoto' – profile photo,, *'video' – video,, *'audio' – audio.",
+          "description": "Item type. Possible values: *'wall' - post on the wall,, *'tag' - tag on a photo,, *'profilephoto' - profile photo,, *'video' - video,, *'audio' - audio.",
           "type": "string",
           "required": true,
           "$ref": "objects.json#/definitions/newsfeed_ignore_item_type"
         },
         {
           "name": "owner_id",
-          "description": "Item owner's identifier (user or community), \"Note that community id must be negative. 'owner_id=1' – user , 'owner_id=-1' – community \"",
+          "description": "Item owner's identifier (user or community), \"Note that community id must be negative. 'owner_id=1' - user , 'owner_id=-1' - community \"",
           "type": "integer",
           "required": true
         },
@@ -13933,6 +13884,17 @@
         {
           "name": "random_id",
           "type": "integer"
+        },
+        {
+          "name": "sending_mode",
+          "description": "Type of sending (delivering) notifications: 'immediately' — push and bell notifications will be delivered as soon as possible, 'delayed' — push and bell notifications will be delivered in the most comfortable time for the user, 'delayed_push' — only push notifications will be delivered in the most comfortable time, while the bell notifications will be delivered as soon as possible",
+          "type": "string",
+          "default": "immediately",
+          "enum": [
+            "delayed",
+            "delayed_push",
+            "immediately"
+          ]
         }
       ],
       "responses": {
@@ -15132,22 +15094,22 @@
         },
         {
           "name": "photo_sizes",
-          "description": "'1' – to return image sizes in [vk.com/dev/photo_sizes|special format].",
+          "description": "'1' - to return image sizes in [vk.com/dev/photo_sizes|special format].",
           "type": "boolean"
         },
         {
           "name": "no_service_albums",
-          "description": "'1' – to return photos only from standard albums, '0' – to return all photos including those in service albums, e.g., 'My wall photos' (default)",
+          "description": "'1' - to return photos only from standard albums, '0' - to return all photos including those in service albums, e.g., 'My wall photos' (default)",
           "type": "boolean"
         },
         {
           "name": "need_hidden",
-          "description": "'1' – to show information about photos being hidden from the block above the wall.",
+          "description": "'1' - to show information about photos being hidden from the block above the wall.",
           "type": "boolean"
         },
         {
           "name": "skip_hidden",
-          "description": "'1' – not to return photos being hidden from the block above the wall. Works only with owner_id>0, no_service_albums is ignored.",
+          "description": "'1' - not to return photos being hidden from the block above the wall. Works only with owner_id>0, no_service_albums is ignored.",
           "type": "boolean"
         }
       ],
@@ -15243,10 +15205,10 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/photos_getById_response"
+          "$ref": "responses.json#/definitions/photos_getById_legacy_response"
         },
         "extendedResponse": {
-          "$ref": "responses.json#/definitions/photos_getById_extended_response"
+          "$ref": "responses.json#/definitions/photos_getById_legacy_extended_response"
         }
       }
     },
@@ -15553,7 +15515,7 @@
       "parameters": [
         {
           "name": "owner_id",
-          "description": "identifier of a community or current user. \"Note that community id must be negative. 'owner_id=1' – user, 'owner_id=-1' – community, \"",
+          "description": "identifier of a community or current user. \"Note that community id must be negative. 'owner_id=1' - user, 'owner_id=-1' - community, \"",
           "type": "integer"
         }
       ],
@@ -15922,7 +15884,7 @@
         },
         {
           "name": "reason",
-          "description": "Reason for the complaint: '0' – spam, '1' – child pornography, '2' – extremism, '3' – violence, '4' – drug propaganda, '5' – adult material, '6' – insult, abuse",
+          "description": "Reason for the complaint: '0' - spam, '1' - child pornography, '2' - extremism, '3' - violence, '4' - drug propaganda, '5' - adult material, '6' - insult, abuse",
           "type": "integer",
           "minimum": 0,
           "enum": [
@@ -15973,7 +15935,7 @@
         },
         {
           "name": "reason",
-          "description": "Reason for the complaint: '0' – spam, '1' – child pornography, '2' – extremism, '3' – violence, '4' – drug propaganda, '5' – adult material, '6' – insult, abuse",
+          "description": "Reason for the complaint: '0' - spam, '1' - child pornography, '2' - extremism, '3' - violence, '4' - drug propaganda, '5' - adult material, '6' - insult, abuse",
           "type": "integer",
           "minimum": 0,
           "enum": [
@@ -16563,7 +16525,7 @@
         },
         {
           "name": "is_anonymous",
-          "description": "'1' – anonymous poll, participants list is hidden,, '0' – public poll, participants list is available,, Default value is '0'.",
+          "description": "'1' - anonymous poll, participants list is hidden,, '0' - public poll, participants list is available,, Default value is '0'.",
           "type": "boolean"
         },
         {
@@ -16693,7 +16655,7 @@
         },
         {
           "name": "edit_answers",
-          "description": "object containing answers that need to be edited,, key – answer id, value – new answer text. Example: {\"382967099\":\"option1\", \"382967103\":\"option2\"}\"",
+          "description": "object containing answers that need to be edited,, key - answer id, value - new answer text. Example: {\"382967099\":\"option1\", \"382967103\":\"option2\"}\"",
           "type": "string"
         },
         {
@@ -16757,7 +16719,7 @@
         },
         {
           "name": "is_board",
-          "description": "'1' – poll is in a board, '0' – poll is on a wall. '0' by default.",
+          "description": "'1' - poll is in a board, '0' - poll is on a wall. '0' by default.",
           "type": "boolean"
         },
         {
@@ -17235,14 +17197,14 @@
         },
         {
           "name": "activity_id",
-          "description": "there are 2 default activities: , * 1 – level. Works similar to ,, * 2 – points, saves points amount, Any other value is for saving completed missions",
+          "description": "there are 2 default activities: , * 1 - level. Works similar to ,, * 2 - points, saves points amount, Any other value is for saving completed missions",
           "type": "integer",
           "required": true,
           "minimum": 0
         },
         {
           "name": "value",
-          "description": "depends on activity_id: * 1 – number, current level number,, * 2 – number, current user's points amount, , Any other value is ignored",
+          "description": "depends on activity_id: * 1 - number, current level number,, * 2 - number, current user's points amount, , Any other value is ignored",
           "type": "integer",
           "minimum": 0
         }
@@ -18484,6 +18446,17 @@
           "items": {
             "type": "string"
           }
+        },
+        {
+          "name": "extended",
+          "type": "boolean"
+        },
+        {
+          "name": "fields",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       ],
       "responses": {
@@ -18837,7 +18810,7 @@
         },
         {
           "name": "type",
-          "description": "Type of complaint: 'porn' – pornography, 'spam' – spamming, 'insult' – abusive behavior, 'advertisement' – disruptive advertisements",
+          "description": "Type of complaint: 'porn' - pornography, 'spam' - spamming, 'insult' - abusive behavior, 'advertisement' - disruptive advertisements",
           "type": "string",
           "required": true,
           "enum": [
@@ -19366,7 +19339,7 @@
         },
         {
           "name": "privacy",
-          "description": "new access permissions for the album. Possible values: , *'0' – all users,, *'1' – friends only,, *'2' – friends and friends of friends,, *'3' – \"only me\".",
+          "description": "new access permissions for the album. Possible values: , *'0' - all users,, *'1' - friends only,, *'2' - friends and friends of friends,, *'3' - \"only me\".",
           "type": "array",
           "items": {
             "type": "string",
@@ -19684,7 +19657,7 @@
         },
         {
           "name": "privacy",
-          "description": "new access permissions for the album. Possible values: , *'0' – all users,, *'1' – friends only,, *'2' – friends and friends of friends,, *'3' – \"only me\".",
+          "description": "new access permissions for the album. Possible values: , *'0' - all users,, *'1' - friends only,, *'2' - friends and friends of friends,, *'3' - \"only me\".",
           "type": "array",
           "items": {
             "type": "string",
@@ -19795,14 +19768,18 @@
           "name": "extended",
           "description": "'1' — to return an extended response with additional fields",
           "type": "boolean"
+        },
+        {
+          "name": "fields",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
         }
       ],
       "responses": {
         "response": {
           "$ref": "responses.json#/definitions/video_get_response"
-        },
-        "extendedResponse": {
-          "$ref": "responses.json#/definitions/video_get_extended_response"
         }
       },
       "errors": [
@@ -20190,7 +20167,7 @@
         },
         {
           "name": "reason",
-          "description": "Reason for the complaint: '0' – spam, '1' – child pornography, '2' – extremism, '3' – violence, '4' – drug propaganda, '5' – adult material, '6' – insult, abuse",
+          "description": "Reason for the complaint: '0' - spam, '1' - child pornography, '2' - extremism, '3' - violence, '4' - drug propaganda, '5' - adult material, '6' - insult, abuse",
           "type": "integer",
           "minimum": 0,
           "enum": [
@@ -20251,7 +20228,7 @@
         },
         {
           "name": "reason",
-          "description": "Reason for the complaint: , 0 – spam , 1 – child pornography , 2 – extremism , 3 – violence , 4 – drug propaganda , 5 – adult material , 6 – insult, abuse",
+          "description": "Reason for the complaint: , 0 - spam , 1 - child pornography , 2 - extremism , 3 - violence , 4 - drug propaganda , 5 - adult material , 6 - insult, abuse",
           "type": "integer",
           "minimum": 0,
           "enum": [
@@ -21521,7 +21498,7 @@
         },
         {
           "name": "reason",
-          "description": "Reason for the complaint: '0' – spam, '1' – child pornography, '2' – extremism, '3' – violence, '4' – drug propaganda, '5' – adult material, '6' – insult, abuse",
+          "description": "Reason for the complaint: '0' - spam, '1' - child pornography, '2' - extremism, '3' - violence, '4' - drug propaganda, '5' - adult material, '6' - insult, abuse",
           "type": "integer",
           "minimum": 0,
           "enum": [
@@ -21572,7 +21549,7 @@
         },
         {
           "name": "reason",
-          "description": "Reason for the complaint: '0' – spam, '1' – child pornography, '2' – extremism, '3' – violence, '4' – drug propaganda, '5' – adult material, '6' – insult, abuse",
+          "description": "Reason for the complaint: '0' - spam, '1' - child pornography, '2' - extremism, '3' - violence, '4' - drug propaganda, '5' - adult material, '6' - insult, abuse",
           "type": "integer",
           "minimum": 0,
           "enum": [
@@ -21741,7 +21718,7 @@
         },
         {
           "name": "owners_only",
-          "description": "'1' – returns only page owner's posts.",
+          "description": "'1' - returns only page owner's posts.",
           "type": "boolean"
         },
         {

@@ -4,20 +4,18 @@
   "description": "VK API declaration",
   "type": "object",
   "definitions": {
-    "deprecated_from_version": {
-      "type": "string",
-      "description": "Property deprecated from version",
-      "pattern": "^[0-9]+.[0-9]+$"
-    },
-    "from_version": {
-      "type": "string",
-      "description": "Property implemented from version",
-      "pattern": "^[0-9]+.[0-9]+$"
-    },
     "enum": {
       "type": "array",
       "minItems": 1,
       "uniqueItems": true
+    },
+    "format": {
+      "type": "string",
+      "enum": [
+        "json",
+        "int32",
+        "int64"
+      ]
     },
     "enumNames": {
       "type": "array",
@@ -96,10 +94,7 @@
           "description": "Parameter name"
         },
         "format": {
-          "type": "string",
-          "enum": [
-            "json"
-          ]
+          "$ref": "#/definitions/format"
         },
         "type": {
           "$ref": "#/definitions/parameterTypes",
@@ -114,6 +109,9 @@
             },
             "type": {
               "$ref": "#/definitions/itemTypes"
+            },
+            "format": {
+              "$ref": "#/definitions/format"
             },
             "maximum": {
               "type": "number"
@@ -293,7 +291,7 @@
           },
           "additionalProperties": false
         },
-        "additional_properties": {
+        "additionalProperties": {
           "type": "boolean"
         }
       },

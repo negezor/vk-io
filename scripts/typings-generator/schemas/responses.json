@@ -19,12 +19,14 @@
           },
           "required": [
             "token"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "account_getActiveOffers_response": {
       "type": "object",
@@ -46,12 +48,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "account_getAppPermissions_response": {
       "type": "object",
@@ -63,7 +67,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "account_getBanned_response": {
       "type": "object",
@@ -97,12 +102,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "account_getCounters_response": {
       "type": "object",
@@ -113,7 +120,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "account_getInfo_response": {
       "type": "object",
@@ -124,7 +132,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "account_getProfileInfo_response": {
       "type": "object",
@@ -135,7 +144,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "account_getPushSettings_response": {
       "type": "object",
@@ -146,7 +156,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "account_saveProfileInfo_response": {
       "type": "object",
@@ -161,12 +172,14 @@
             "name_request": {
               "$ref": "objects.json#/definitions/account_name_request"
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ads_addOfficeUsers_response": {
       "type": "object",
@@ -178,7 +191,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ads_checkLink_response": {
       "type": "object",
@@ -189,7 +203,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ads_createAds_response": {
       "type": "object",
@@ -204,7 +219,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ads_createCampaigns_response": {
       "type": "object",
@@ -219,7 +235,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ads_createClients_response": {
       "type": "object",
@@ -234,7 +251,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ads_createTargetGroup_response": {
       "type": "object",
@@ -250,12 +268,14 @@
               "type": "string",
               "description": "Pixel code"
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ads_deleteAds_response": {
       "type": "object",
@@ -270,7 +290,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ads_deleteCampaigns_response": {
       "type": "object",
@@ -282,7 +303,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ads_deleteClients_response": {
       "type": "object",
@@ -294,7 +316,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ads_getAccounts_response": {
       "type": "object",
@@ -308,7 +331,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ads_getAdsLayout_response": {
       "type": "object",
@@ -322,7 +346,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ads_getAdsTargeting_response": {
       "type": "object",
@@ -336,7 +361,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ads_getAds_response": {
       "type": "object",
@@ -350,7 +376,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ads_getBudget_response": {
       "type": "object",
@@ -362,7 +389,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ads_getCampaigns_response": {
       "type": "object",
@@ -376,7 +404,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ads_getCategories_response": {
       "type": "object",
@@ -398,12 +427,14 @@
               },
               "description": "Actual categories"
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ads_getClients_response": {
       "type": "object",
@@ -417,7 +448,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ads_getDemographics_response": {
       "type": "object",
@@ -431,7 +463,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ads_getFloodStats_response": {
       "type": "object",
@@ -442,7 +475,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ads_getLookalikeRequests_response": {
       "type": "object",
@@ -466,12 +500,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ads_getMusicians_response": {
       "type": "object",
@@ -489,12 +525,14 @@
           },
           "required": [
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ads_getOfficeUsers_response": {
       "type": "object",
@@ -508,7 +546,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ads_getPostsReach_response": {
       "type": "object",
@@ -522,7 +561,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ads_getRejectionReason_response": {
       "type": "object",
@@ -533,7 +573,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ads_getStatistics_response": {
       "type": "object",
@@ -547,7 +588,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ads_getSuggestions_cities_response": {
       "type": "object",
@@ -561,7 +603,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ads_getSuggestions_regions_response": {
       "type": "object",
@@ -575,7 +618,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ads_getSuggestions_response": {
       "type": "object",
@@ -589,7 +633,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ads_getSuggestions_schools_response": {
       "type": "object",
@@ -603,7 +648,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ads_getTargetGroups_response": {
       "type": "object",
@@ -617,7 +663,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ads_getTargetingStats_response": {
       "type": "object",
@@ -628,7 +675,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ads_getUploadURL_response": {
       "type": "object",
@@ -640,7 +688,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ads_getVideoUploadURL_response": {
       "type": "object",
@@ -652,7 +701,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ads_importTargetContacts_response": {
       "type": "object",
@@ -664,7 +714,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ads_removeOfficeUsers_response": {
       "type": "object",
@@ -676,7 +727,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ads_updateAds_response": {
       "type": "object",
@@ -691,7 +743,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ads_updateCampaigns_response": {
       "type": "object",
@@ -703,7 +756,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ads_updateClients_response": {
       "type": "object",
@@ -715,7 +769,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ads_updateOfficeUsers_response": {
       "type": "object",
@@ -729,7 +784,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "adsweb_getAdCategories_response": {
       "type": "object",
@@ -746,12 +802,14 @@
           },
           "required": [
             "categories"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "adsweb_getAdUnitCode_response": {
       "type": "object",
@@ -765,12 +823,14 @@
           },
           "required": [
             "html"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "adsweb_getAdUnits_response": {
       "type": "object",
@@ -790,12 +850,14 @@
           },
           "required": [
             "count"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "adsweb_getFraudHistory_response": {
       "type": "object",
@@ -815,12 +877,14 @@
           },
           "required": [
             "count"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "adsweb_getSites_response": {
       "type": "object",
@@ -840,12 +904,14 @@
           },
           "required": [
             "count"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "adsweb_getStatistics_response": {
       "type": "object",
@@ -865,12 +931,14 @@
           },
           "required": [
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "appWidgets_getAppImageUploadServer_response": {
       "type": "object",
@@ -882,12 +950,14 @@
               "type": "string",
               "description": "To upload an image, generate POST-request to upload_url with a file in photo field. Then call appWidgets.saveAppImage method"
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "appWidgets_getAppImages_response": {
       "type": "object",
@@ -898,7 +968,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "appWidgets_getGroupImageUploadServer_response": {
       "type": "object",
@@ -910,12 +981,14 @@
               "type": "string",
               "description": "To upload an image, generate POST-request to upload_url with a file in photo field. Then call appWidgets.saveAppImage method"
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "appWidgets_getGroupImages_response": {
       "type": "object",
@@ -926,7 +999,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "appWidgets_getImagesById_response": {
       "type": "object",
@@ -940,7 +1014,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "appWidgets_saveAppImage_response": {
       "type": "object",
@@ -951,7 +1026,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "appWidgets_saveGroupImage_response": {
       "type": "object",
@@ -962,7 +1038,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "apps_getCatalog_response": {
       "type": "object",
@@ -986,12 +1063,14 @@
                 "$ref": "objects.json#/definitions/users_user_min"
               }
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "apps_getFriendsList_response": {
       "type": "object",
@@ -1009,12 +1088,14 @@
                 "$ref": "objects.json#/definitions/users_user_full"
               }
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "apps_getLeaderboard_extended_response": {
       "type": "object",
@@ -1038,12 +1119,14 @@
                 "$ref": "objects.json#/definitions/users_user_min"
               }
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "apps_getLeaderboard_response": {
       "type": "object",
@@ -1061,12 +1144,14 @@
                 "$ref": "objects.json#/definitions/apps_leaderboard"
               }
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "apps_getMiniAppPolicies_response": {
       "type": "object",
@@ -1084,12 +1169,14 @@
               "format": "uri",
               "description": "URL of the app's terms"
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "apps_getScopes_response": {
       "type": "object",
@@ -1111,12 +1198,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "apps_getScore_response": {
       "type": "object",
@@ -1128,7 +1217,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "apps_get_response": {
       "type": "object",
@@ -1148,12 +1238,14 @@
                 "$ref": "objects.json#/definitions/apps_app"
               }
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "apps_image_upload_response": {
       "type": "object",
@@ -1169,12 +1261,14 @@
               "type": "string",
               "description": "Uploaded photo data"
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "apps_sendRequest_response": {
       "type": "object",
@@ -1186,7 +1280,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "auth_restore_response": {
       "type": "object",
@@ -1208,12 +1303,14 @@
               "type": "string",
               "description": "Parameter needed to grant access by code"
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "base_bool_response": {
       "type": "object",
@@ -1224,7 +1321,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "base_getUploadServer_response": {
       "type": "object",
@@ -1235,7 +1333,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "base_ok_response": {
       "type": "object",
@@ -1253,7 +1352,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "board_addTopic_response": {
       "type": "object",
@@ -1265,7 +1365,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "board_createComment_response": {
       "type": "object",
@@ -1277,7 +1378,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "board_getComments_extended_response": {
       "type": "object",
@@ -1316,12 +1418,14 @@
             "items",
             "profiles",
             "groups"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "board_getComments_response": {
       "type": "object",
@@ -1346,12 +1450,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "board_getTopics_extended_response": {
       "type": "object",
@@ -1389,12 +1495,14 @@
             "default_order",
             "can_add_topics",
             "profiles"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "board_getTopics_response": {
       "type": "object",
@@ -1425,12 +1533,14 @@
             "items",
             "default_order",
             "can_add_topics"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "database_getChairs_response": {
       "type": "object",
@@ -1448,12 +1558,14 @@
                 "$ref": "objects.json#/definitions/base_object"
               }
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "database_getCitiesById_response": {
       "type": "object",
@@ -1467,7 +1579,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "database_getCities_response": {
       "type": "object",
@@ -1485,12 +1598,14 @@
                 "$ref": "objects.json#/definitions/database_city"
               }
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "database_getCountriesById_response": {
       "type": "object",
@@ -1504,7 +1619,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "database_getCountries_response": {
       "type": "object",
@@ -1522,12 +1638,14 @@
                 "$ref": "objects.json#/definitions/base_country"
               }
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "database_getFaculties_response": {
       "type": "object",
@@ -1545,12 +1663,14 @@
                 "$ref": "objects.json#/definitions/database_faculty"
               }
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "database_getMetroStationsById_response": {
       "type": "object",
@@ -1564,7 +1684,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "database_getMetroStations_response": {
       "type": "object",
@@ -1582,12 +1703,14 @@
                 "$ref": "objects.json#/definitions/database_station"
               }
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "database_getRegions_response": {
       "type": "object",
@@ -1605,12 +1728,14 @@
                 "$ref": "objects.json#/definitions/database_region"
               }
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "database_getSchoolClasses_response": {
       "type": "object",
@@ -1631,7 +1756,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "database_getSchools_response": {
       "type": "object",
@@ -1649,12 +1775,14 @@
                 "$ref": "objects.json#/definitions/database_school"
               }
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "database_getUniversities_response": {
       "type": "object",
@@ -1672,12 +1800,14 @@
                 "$ref": "objects.json#/definitions/database_university"
               }
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "docs_add_response": {
       "type": "object",
@@ -1689,7 +1819,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "docs_doc_upload_response": {
       "type": "object",
@@ -1701,12 +1832,14 @@
               "type": "string",
               "description": "Uploaded file data"
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "docs_getById_response": {
       "type": "object",
@@ -1720,7 +1853,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "docs_getTypes_response": {
       "type": "object",
@@ -1738,12 +1872,14 @@
                 "$ref": "objects.json#/definitions/docs_doc_types"
               }
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "docs_getUploadServer": {
       "type": "object",
@@ -1754,7 +1890,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "docs_get_response": {
       "type": "object",
@@ -1776,12 +1913,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "docs_save_response": {
       "type": "object",
@@ -1804,12 +1943,14 @@
           },
           "required": [
             "response"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "docs_search_response": {
       "type": "object",
@@ -1831,12 +1972,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "donut_getSubscription_response": {
       "type": "object",
@@ -1847,7 +1990,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "donut_getSubscriptions_response": {
       "type": "object",
@@ -1880,12 +2024,14 @@
           },
           "required": [
             "subscriptions"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "downloadedGames_paid_status_response": {
       "type": "object",
@@ -1900,12 +2046,14 @@
           },
           "required": [
             "is_paid"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "fave_addTag_response": {
       "type": "object",
@@ -1916,7 +2064,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "fave_getPages_response": {
       "type": "object",
@@ -1933,12 +2082,14 @@
                 "$ref": "objects.json#/definitions/fave_page"
               }
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "fave_getTags_response": {
       "type": "object",
@@ -1955,12 +2106,14 @@
                 "$ref": "objects.json#/definitions/fave_tag"
               }
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "fave_get_extended_response": {
       "type": "object",
@@ -1990,12 +2143,14 @@
                 "$ref": "objects.json#/definitions/groups_group"
               }
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "fave_get_response": {
       "type": "object",
@@ -2013,12 +2168,14 @@
                 "$ref": "objects.json#/definitions/fave_bookmark"
               }
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "friends_addList_response": {
       "type": "object",
@@ -2034,12 +2191,14 @@
           },
           "required": [
             "list_id"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "friends_add_response": {
       "type": "object",
@@ -2061,7 +2220,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "friends_areFriends_extended_response": {
       "type": "object",
@@ -2075,7 +2235,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "friends_areFriends_response": {
       "type": "object",
@@ -2089,7 +2250,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "friends_delete_response": {
       "type": "object",
@@ -2145,12 +2307,14 @@
           "required": [
             "success"
           ],
-          "maxProperties": 2
+          "maxProperties": 2,
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "friends_getAppUsers_response": {
       "type": "object",
@@ -2166,7 +2330,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "friends_getByPhones_response": {
       "type": "object",
@@ -2180,7 +2345,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "friends_getLists_response": {
       "type": "object",
@@ -2203,12 +2369,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "friends_getMutual_response": {
       "type": "object",
@@ -2224,7 +2392,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "friends_getMutual_target_uids_response": {
       "type": "object",
@@ -2238,7 +2407,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "friends_getOnline_online_mobile_response": {
       "type": "object",
@@ -2262,12 +2432,14 @@
                 "minimum": 1
               }
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "friends_getOnline_response": {
       "type": "object",
@@ -2283,7 +2455,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "friends_getRecent_response": {
       "type": "object",
@@ -2299,7 +2472,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "friends_getRequests_extended_response": {
       "type": "object",
@@ -2318,12 +2492,14 @@
                 "$ref": "objects.json#/definitions/friends_requests_xtr_message"
               }
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "friends_getRequests_need_mutual_response": {
       "type": "object",
@@ -2342,12 +2518,14 @@
                 "$ref": "objects.json#/definitions/friends_requests"
               }
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "friends_getRequests_response": {
       "type": "object",
@@ -2372,12 +2550,14 @@
               "type": "integer",
               "description": "Total unread requests number"
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "friends_getSuggestions_response": {
       "type": "object",
@@ -2400,12 +2580,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "friends_get_fields_response": {
       "type": "object",
@@ -2428,12 +2610,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "friends_get_response": {
       "type": "object",
@@ -2458,12 +2642,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "friends_search_response": {
       "type": "object",
@@ -2486,12 +2672,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "gifts_get_response": {
       "type": "object",
@@ -2509,12 +2697,14 @@
                 "$ref": "objects.json#/definitions/gifts_gift"
               }
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_addAddress_response": {
       "type": "object",
@@ -2525,7 +2715,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_addCallbackServer_response": {
       "type": "object",
@@ -2540,12 +2731,14 @@
           },
           "required": [
             "server_id"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_addLink_response": {
       "type": "object",
@@ -2556,7 +2749,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_create_response": {
       "type": "object",
@@ -2567,7 +2761,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_editAddress_response": {
       "type": "object",
@@ -2579,7 +2774,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_getAddresses_response": {
       "type": "object",
@@ -2602,12 +2798,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_getBanned_response": {
       "type": "object",
@@ -2630,12 +2828,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_getById_legacy_response": {
       "type": "object",
@@ -2649,7 +2849,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_getById_response": {
       "type": "object",
@@ -2669,12 +2870,14 @@
                 "$ref": "objects.json#/definitions/groups_profile_item"
               }
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_getCallbackConfirmationCode_response": {
       "type": "object",
@@ -2689,12 +2892,14 @@
           },
           "required": [
             "code"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_getCallbackServers_response": {
       "type": "object",
@@ -2716,12 +2921,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_getCallbackSettings_response": {
       "type": "object",
@@ -2732,7 +2939,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_getCatalogInfo_extended_response": {
       "type": "object",
@@ -2741,7 +2949,7 @@
           "type": "object",
           "properties": {
             "enabled": {
-              "type": "integer",
+              "$ref": "objects.json#/definitions/base_bool_int",
               "description": "Information whether catalog is enabled for current user"
             },
             "categories": {
@@ -2753,12 +2961,14 @@
           },
           "required": [
             "enabled"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_getCatalogInfo_response": {
       "type": "object",
@@ -2767,7 +2977,7 @@
           "type": "object",
           "properties": {
             "enabled": {
-              "type": "integer",
+              "$ref": "objects.json#/definitions/base_bool_int",
               "description": "Information whether catalog is enabled for current user"
             },
             "categories": {
@@ -2779,12 +2989,14 @@
           },
           "required": [
             "enabled"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_getCatalog_response": {
       "type": "object",
@@ -2807,12 +3019,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_getInvitedUsers_response": {
       "type": "object",
@@ -2835,12 +3049,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_getInvites_extended_response": {
       "type": "object",
@@ -2877,12 +3093,14 @@
             "items",
             "profiles",
             "groups"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_getInvites_response": {
       "type": "object",
@@ -2905,12 +3123,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_getLongPollServer_response": {
       "type": "object",
@@ -2921,7 +3141,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_getLongPollSettings_response": {
       "type": "object",
@@ -2932,7 +3153,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_getMembers_fields_response": {
       "type": "object",
@@ -2955,12 +3177,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_getMembers_filter_response": {
       "type": "object",
@@ -2983,12 +3207,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_getMembers_response": {
       "type": "object",
@@ -3013,12 +3239,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_getRequests_fields_response": {
       "type": "object",
@@ -3041,12 +3269,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_getRequests_response": {
       "type": "object",
@@ -3071,12 +3301,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_getSettings_response": {
       "type": "object",
@@ -3266,12 +3498,14 @@
             "obscene_filter",
             "obscene_stopwords",
             "obscene_words"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_getTagList_response": {
       "type": "object",
@@ -3285,7 +3519,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_getTokenPermissions_response": {
       "type": "object",
@@ -3307,12 +3542,14 @@
           "required": [
             "mask",
             "permissions"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_get_extended_response": {
       "type": "object",
@@ -3335,12 +3572,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_get_response": {
       "type": "object",
@@ -3364,12 +3603,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_isMember_extended_response": {
       "type": "object",
@@ -3400,12 +3641,14 @@
           },
           "required": [
             "member"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_isMember_response": {
       "type": "object",
@@ -3417,7 +3660,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_isMember_user_ids_extended_response": {
       "type": "object",
@@ -3431,7 +3675,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_isMember_user_ids_response": {
       "type": "object",
@@ -3445,7 +3690,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_search_response": {
       "type": "object",
@@ -3468,12 +3714,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "likes_add_response": {
       "type": "object",
@@ -3488,12 +3736,14 @@
           },
           "required": [
             "likes"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "likes_delete_response": {
       "type": "object",
@@ -3508,12 +3758,14 @@
           },
           "required": [
             "likes"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "likes_getList_extended_response": {
       "type": "object",
@@ -3535,12 +3787,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "likes_getList_response": {
       "type": "object",
@@ -3563,12 +3817,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "likes_isLiked_response": {
       "type": "object",
@@ -3588,12 +3844,14 @@
           "required": [
             "liked",
             "copied"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "market_addAlbum_response": {
       "type": "object",
@@ -3605,12 +3863,14 @@
               "type": "integer",
               "description": "Album ID"
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "market_add_response": {
       "type": "object",
@@ -3622,12 +3882,17 @@
               "type": "integer",
               "description": "Item ID"
             }
-          }
+          },
+          "required": [
+            "market_item_id"
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "market_createComment_response": {
       "type": "object",
@@ -3639,7 +3904,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "market_deleteComment_response": {
       "type": "object",
@@ -3651,7 +3917,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "market_getAlbumById_response": {
       "type": "object",
@@ -3669,12 +3936,14 @@
                 "$ref": "objects.json#/definitions/market_market_album"
               }
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "market_getAlbums_response": {
       "type": "object",
@@ -3692,12 +3961,14 @@
                 "$ref": "objects.json#/definitions/market_market_album"
               }
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "market_getById_extended_response": {
       "type": "object",
@@ -3715,12 +3986,14 @@
                 "$ref": "objects.json#/definitions/market_market_item_full"
               }
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "market_getById_response": {
       "type": "object",
@@ -3738,12 +4011,14 @@
                 "$ref": "objects.json#/definitions/market_market_item"
               }
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "market_getCategories_new_response": {
       "type": "object",
@@ -3760,12 +4035,14 @@
           },
           "required": [
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "market_getCategories_response": {
       "type": "object",
@@ -3783,12 +4060,14 @@
                 "$ref": "objects.json#/definitions/market_market_category"
               }
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "market_getComments_response": {
       "type": "object",
@@ -3806,12 +4085,14 @@
                 "$ref": "objects.json#/definitions/wall_wall_comment"
               }
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "market_getGroupOrders_response": {
       "type": "object",
@@ -3834,12 +4115,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "market_getOrderById_response": {
       "type": "object",
@@ -3850,12 +4133,14 @@
             "order": {
               "$ref": "objects.json#/definitions/market_order"
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "market_getOrderItems_response": {
       "type": "object",
@@ -3877,12 +4162,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "market_getOrders_extended_response": {
       "type": "object",
@@ -3911,12 +4198,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "market_getOrders_response": {
       "type": "object",
@@ -3939,12 +4228,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "market_get_extended_response": {
       "type": "object",
@@ -3962,12 +4253,14 @@
                 "$ref": "objects.json#/definitions/market_market_item_full"
               }
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "market_get_response": {
       "type": "object",
@@ -3985,12 +4278,14 @@
                 "$ref": "objects.json#/definitions/market_market_item"
               }
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "market_restoreComment_response": {
       "type": "object",
@@ -4002,7 +4297,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "market_search_extended_response": {
       "type": "object",
@@ -4014,18 +4310,28 @@
               "type": "integer",
               "description": "Total number"
             },
+            "view_type": {
+              "$ref": "objects.json#/definitions/market_services_view_type"
+            },
             "items": {
               "type": "array",
               "items": {
                 "$ref": "objects.json#/definitions/market_market_item_full"
               }
             }
-          }
+          },
+          "required": [
+            "count",
+            "view_type",
+            "items"
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "market_search_response": {
       "type": "object",
@@ -4037,18 +4343,28 @@
               "type": "integer",
               "description": "Total number"
             },
+            "view_type": {
+              "$ref": "objects.json#/definitions/market_services_view_type"
+            },
             "items": {
               "type": "array",
               "items": {
                 "$ref": "objects.json#/definitions/market_market_item"
               }
             }
-          }
+          },
+          "required": [
+            "count",
+            "view_type",
+            "items"
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_createChat_response": {
       "type": "object",
@@ -4060,7 +4376,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_deleteChatPhoto_response": {
       "type": "object",
@@ -4075,12 +4392,14 @@
             "chat": {
               "$ref": "objects.json#/definitions/messages_chat"
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_deleteConversation_response": {
       "type": "object",
@@ -4096,12 +4415,14 @@
           },
           "required": [
             "last_deleted_id"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_delete_response": {
       "type": "object",
@@ -4112,12 +4433,14 @@
             "^[0-9]+$": {
               "$ref": "objects.json#/definitions/base_bool_int"
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_edit_response": {
       "type": "object",
@@ -4129,7 +4452,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_getByConversationMessageId_response": {
       "type": "object",
@@ -4151,12 +4475,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_getById_extended_response": {
       "type": "object",
@@ -4191,12 +4517,14 @@
             "count",
             "items",
             "profiles"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_getById_response": {
       "type": "object",
@@ -4218,12 +4546,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_getChatPreview_response": {
       "type": "object",
@@ -4240,12 +4570,14 @@
                 "$ref": "objects.json#/definitions/users_user_full"
               }
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_getChat_chat_ids_fields_response": {
       "type": "object",
@@ -4259,7 +4591,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_getChat_chat_ids_response": {
       "type": "object",
@@ -4273,7 +4606,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_getChat_fields_response": {
       "type": "object",
@@ -4284,7 +4618,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_getChat_response": {
       "type": "object",
@@ -4295,7 +4630,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_getConversationMembers_response": {
       "type": "object",
@@ -4333,12 +4669,14 @@
           "required": [
             "items",
             "count"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_getConversationsById_extended_response": {
       "type": "object",
@@ -4372,12 +4710,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_getConversationsById_response": {
       "type": "object",
@@ -4399,12 +4739,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_getConversations_response": {
       "type": "object",
@@ -4442,12 +4784,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_getHistoryAttachments_response": {
       "type": "object",
@@ -4465,12 +4809,14 @@
               "type": "string",
               "description": "Value for pagination"
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_getHistory_extended_response": {
       "type": "object",
@@ -4510,12 +4856,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_getHistory_response": {
       "type": "object",
@@ -4537,12 +4885,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_getImportantMessages_extended_response": {
       "type": "object",
@@ -4574,12 +4924,14 @@
           },
           "required": [
             "messages"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_getImportantMessages_response": {
       "type": "object",
@@ -4611,12 +4963,14 @@
           },
           "required": [
             "messages"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_getIntentUsers_response": {
       "type": "object",
@@ -4645,12 +4999,14 @@
           "required": [
             "items",
             "count"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_getInviteLink_response": {
       "type": "object",
@@ -4661,12 +5017,14 @@
             "link": {
               "type": "string"
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_getLastActivity_response": {
       "type": "object",
@@ -4677,7 +5035,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_getLongPollHistory_response": {
       "type": "object",
@@ -4736,12 +5095,14 @@
                 "$ref": "objects.json#/definitions/messages_conversation"
               }
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_getLongPollServer_response": {
       "type": "object",
@@ -4752,7 +5113,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_isMessagesFromGroupAllowed_response": {
       "type": "object",
@@ -4763,12 +5125,14 @@
             "is_allowed": {
               "$ref": "objects.json#/definitions/base_bool_int"
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_joinChatByInviteLink_response": {
       "type": "object",
@@ -4779,12 +5143,14 @@
             "chat_id": {
               "type": "integer"
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_markAsImportant_response": {
       "type": "object",
@@ -4799,7 +5165,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_pin_response": {
       "type": "object",
@@ -4810,7 +5177,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_searchConversations_extended_response": {
       "type": "object",
@@ -4844,12 +5212,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_searchConversations_response": {
       "type": "object",
@@ -4871,12 +5241,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_search_extended_response": {
       "type": "object",
@@ -4916,12 +5288,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_search_response": {
       "type": "object",
@@ -4943,12 +5317,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_send_response": {
       "type": "object",
@@ -4960,7 +5336,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_send_user_ids_response": {
       "type": "object",
@@ -4994,7 +5371,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_setChatPhoto_response": {
       "type": "object",
@@ -5009,12 +5387,14 @@
             "chat": {
               "$ref": "objects.json#/definitions/messages_chat"
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "newsfeed_getBanned_extended_response": {
       "type": "object",
@@ -5034,12 +5414,14 @@
                 "$ref": "objects.json#/definitions/groups_group_full"
               }
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "newsfeed_getBanned_response": {
       "type": "object",
@@ -5061,12 +5443,14 @@
                 "description": "User ID"
               }
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "newsfeed_getComments_response": {
       "type": "object",
@@ -5101,12 +5485,14 @@
             "items",
             "profiles",
             "groups"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "newsfeed_getLists_extended_response": {
       "type": "object",
@@ -5128,12 +5514,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "newsfeed_getLists_response": {
       "type": "object",
@@ -5155,12 +5543,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "newsfeed_getMentions_response": {
       "type": "object",
@@ -5182,12 +5572,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "newsfeed_getRecommended_response": {
       "type": "object",
@@ -5217,12 +5609,14 @@
               "type": "string",
               "description": "Next from value"
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "newsfeed_getSuggestedSources_response": {
       "type": "object",
@@ -5240,12 +5634,14 @@
                 "$ref": "objects.json#/definitions/users_subscriptions_item"
               }
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "newsfeed_get_response": {
       "type": "object",
@@ -5275,12 +5671,14 @@
               "type": "string",
               "description": "New from value"
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "newsfeed_ignore_item_response": {
       "type": "object",
@@ -5295,12 +5693,14 @@
           },
           "required": [
             "status"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "newsfeed_saveList_response": {
       "type": "object",
@@ -5312,7 +5712,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "newsfeed_search_extended_response": {
       "type": "object",
@@ -5357,12 +5758,14 @@
               "description": "Total number",
               "minimum": 0
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "newsfeed_search_response": {
       "type": "object",
@@ -5395,12 +5798,14 @@
               "description": "Total number",
               "minimum": 0
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "notes_add_response": {
       "type": "object",
@@ -5412,7 +5817,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "notes_createComment_response": {
       "type": "object",
@@ -5424,7 +5830,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "notes_getById_response": {
       "type": "object",
@@ -5435,7 +5842,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "notes_getComments_response": {
       "type": "object",
@@ -5457,12 +5865,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "notes_get_response": {
       "type": "object",
@@ -5484,12 +5894,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "notifications_get_response": {
       "type": "object",
@@ -5547,12 +5959,14 @@
             "ttl": {
               "type": "integer"
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "notifications_markAsViewed_response": {
       "type": "object",
@@ -5564,7 +5978,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "notifications_sendMessage_response": {
       "type": "object",
@@ -5578,7 +5993,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "orders_cancelSubscription_response": {
       "type": "object",
@@ -5590,7 +6006,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "orders_changeState_response": {
       "type": "object",
@@ -5602,7 +6019,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "orders_getAmount_response": {
       "type": "object",
@@ -5613,7 +6031,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "orders_getById_response": {
       "type": "object",
@@ -5627,7 +6046,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "orders_getUserSubscriptionById_response": {
       "type": "object",
@@ -5638,7 +6058,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "orders_getUserSubscriptions_response": {
       "type": "object",
@@ -5656,12 +6077,14 @@
                 "$ref": "objects.json#/definitions/orders_subscription"
               }
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "orders_get_response": {
       "type": "object",
@@ -5675,7 +6098,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "orders_updateSubscription_response": {
       "type": "object",
@@ -5687,7 +6111,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "pages_getHistory_response": {
       "type": "object",
@@ -5701,7 +6126,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "pages_getTitles_response": {
       "type": "object",
@@ -5715,7 +6141,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "pages_getVersion_response": {
       "type": "object",
@@ -5726,7 +6153,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "pages_get_response": {
       "type": "object",
@@ -5737,7 +6165,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "pages_parseWiki_response": {
       "type": "object",
@@ -5749,7 +6178,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "pages_saveAccess_response": {
       "type": "object",
@@ -5761,7 +6191,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "pages_save_response": {
       "type": "object",
@@ -5773,7 +6204,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "photos_copy_response": {
       "type": "object",
@@ -5786,7 +6218,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "photos_createAlbum_response": {
       "type": "object",
@@ -5797,7 +6230,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "photos_createComment_response": {
       "type": "object",
@@ -5809,7 +6243,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "photos_deleteComment_response": {
       "type": "object",
@@ -5821,7 +6256,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "photos_getAlbumsCount_response": {
       "type": "object",
@@ -5834,7 +6270,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "photos_getAlbums_response": {
       "type": "object",
@@ -5856,12 +6293,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "photos_getAllComments_response": {
       "type": "object",
@@ -5879,12 +6318,14 @@
                 "$ref": "objects.json#/definitions/photos_comment_xtr_pid"
               }
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "photos_getAll_extended_response": {
       "type": "object",
@@ -5906,12 +6347,14 @@
               "description": "Information whether next page is presented",
               "$ref": "objects.json#/definitions/base_bool_int"
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "photos_getAll_response": {
       "type": "object",
@@ -5933,14 +6376,40 @@
               "description": "Information whether next page is presented",
               "$ref": "objects.json#/definitions/base_bool_int"
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "photos_getById_extended_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/photos_photo_full"
+              }
+            }
+          },
+          "required": [
+            "items"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "response"
+      ],
+      "additionalProperties": false
+    },
+    "photos_getById_legacy_extended_response": {
       "type": "object",
       "properties": {
         "response": {
@@ -5952,9 +6421,10 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
-    "photos_getById_response": {
+    "photos_getById_legacy_response": {
       "type": "object",
       "properties": {
         "response": {
@@ -5966,7 +6436,29 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
+    },
+    "photos_getById_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/photos_photo"
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "items"
+      ],
+      "additionalProperties": false
     },
     "photos_getComments_extended_response": {
       "type": "object",
@@ -6007,12 +6499,14 @@
             "items",
             "profiles",
             "groups"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "photos_getComments_response": {
       "type": "object",
@@ -6035,12 +6529,14 @@
                 "$ref": "objects.json#/definitions/wall_wall_comment"
               }
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "photos_getMarketUploadServer_response": {
       "type": "object",
@@ -6051,7 +6547,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "photos_getMessagesUploadServer_response": {
       "type": "object",
@@ -6062,7 +6559,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "photos_getNewTags_response": {
       "type": "object",
@@ -6084,12 +6582,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "photos_getTags_response": {
       "type": "object",
@@ -6103,7 +6603,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "photos_getUploadServer_response": {
       "type": "object",
@@ -6114,7 +6615,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "photos_getUserPhotos_extended_response": {
       "type": "object",
@@ -6136,12 +6638,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "photos_getUserPhotos_response": {
       "type": "object",
@@ -6163,12 +6667,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "photos_getWallUploadServer_response": {
       "type": "object",
@@ -6179,7 +6685,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "photos_get_extended_response": {
       "type": "object",
@@ -6201,12 +6708,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "photos_get_response": {
       "type": "object",
@@ -6228,12 +6737,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "photos_market_album_upload_response": {
       "type": "object",
@@ -6257,12 +6768,14 @@
               "type": "integer",
               "description": "Upload server number"
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "photos_market_upload_response": {
       "type": "object",
@@ -6294,12 +6807,14 @@
               "type": "integer",
               "description": "Upload server number"
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "photos_message_upload_response": {
       "type": "object",
@@ -6319,12 +6834,14 @@
               "type": "integer",
               "description": "Upload server number"
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "photos_owner_cover_upload_response": {
       "type": "object",
@@ -6340,12 +6857,14 @@
               "type": "string",
               "description": "Uploaded photo data"
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "photos_owner_upload_response": {
       "type": "object",
@@ -6365,12 +6884,14 @@
               "type": "integer",
               "description": "Upload server number"
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "photos_photo_upload_response": {
       "type": "object",
@@ -6398,12 +6919,14 @@
               "type": "integer",
               "description": "Upload server number"
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "photos_putTag_response": {
       "type": "object",
@@ -6415,7 +6938,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "photos_restoreComment_response": {
       "type": "object",
@@ -6427,7 +6951,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "photos_saveMarketAlbumPhoto_response": {
       "type": "object",
@@ -6441,7 +6966,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "photos_saveMarketPhoto_response": {
       "type": "object",
@@ -6455,7 +6981,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "photos_saveMessagesPhoto_response": {
       "type": "object",
@@ -6469,7 +6996,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "photos_saveOwnerCoverPhoto_response": {
       "type": "object",
@@ -6483,7 +7011,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "photos_saveOwnerPhoto_response": {
       "type": "object",
@@ -6519,12 +7048,14 @@
           "required": [
             "photo_hash",
             "photo_src"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "photos_saveWallPhoto_response": {
       "type": "object",
@@ -6538,7 +7069,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "photos_save_response": {
       "type": "object",
@@ -6552,7 +7084,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "photos_search_response": {
       "type": "object",
@@ -6570,12 +7103,14 @@
                 "$ref": "objects.json#/definitions/photos_photo"
               }
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "photos_wall_upload_response": {
       "type": "object",
@@ -6595,12 +7130,14 @@
               "type": "integer",
               "description": "Upload server number"
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "podcasts_searchPodcast_response": {
       "type": "object",
@@ -6622,12 +7159,14 @@
           "required": [
             "podcasts",
             "results_total"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "polls_addVote_response": {
       "type": "object",
@@ -6639,7 +7178,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "polls_create_response": {
       "type": "object",
@@ -6650,7 +7190,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "polls_deleteVote_response": {
       "type": "object",
@@ -6662,7 +7203,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "polls_getBackgrounds_response": {
       "type": "object",
@@ -6676,7 +7218,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "polls_getById_response": {
       "type": "object",
@@ -6687,7 +7230,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "polls_getVoters_response": {
       "type": "object",
@@ -6701,7 +7245,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "polls_savePhoto_response": {
       "type": "object",
@@ -6712,7 +7257,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "prettyCards_create_response": {
       "type": "object",
@@ -6732,12 +7278,14 @@
           "required": [
             "owner_id",
             "card_id"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "prettyCards_delete_response": {
       "type": "object",
@@ -6761,12 +7309,14 @@
           "required": [
             "owner_id",
             "card_id"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "prettyCards_edit_response": {
       "type": "object",
@@ -6786,12 +7336,14 @@
           "required": [
             "owner_id",
             "card_id"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "prettyCards_getById_response": {
       "type": "object",
@@ -6805,7 +7357,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "prettyCards_getUploadURL_response": {
       "type": "object",
@@ -6817,7 +7370,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "prettyCards_get_response": {
       "type": "object",
@@ -6839,12 +7393,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "search_getHints_response": {
       "type": "object",
@@ -6872,12 +7428,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "secure_checkToken_response": {
       "type": "object",
@@ -6888,7 +7446,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "secure_getAppBalance_response": {
       "type": "object",
@@ -6900,7 +7459,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "secure_getSMSHistory_response": {
       "type": "object",
@@ -6914,7 +7474,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "secure_getTransactionsHistory_response": {
       "type": "object",
@@ -6928,7 +7489,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "secure_getUserLevel_response": {
       "type": "object",
@@ -6942,7 +7504,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "secure_giveEventSticker_response": {
       "type": "object",
@@ -6964,7 +7527,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "secure_sendNotification_response": {
       "type": "object",
@@ -6979,7 +7543,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "stats_getPostReach_response": {
       "type": "object",
@@ -6993,7 +7558,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "stats_get_response": {
       "type": "object",
@@ -7007,7 +7573,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "status_get_response": {
       "type": "object",
@@ -7018,7 +7585,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "storage_getKeys_response": {
       "type": "object",
@@ -7033,7 +7601,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "storage_get_response": {
       "type": "object",
@@ -7047,7 +7616,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "store_getFavoriteStickers_response": {
       "type": "object",
@@ -7061,7 +7631,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "store_getProducts_response": {
       "type": "object",
@@ -7075,7 +7646,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "store_getStickersKeywords_response": {
       "type": "object",
@@ -7107,12 +7679,14 @@
           "required": [
             "count",
             "dictionary"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "stories_getBanned_extended_response": {
       "type": "object",
@@ -7149,12 +7723,14 @@
             "items",
             "profiles",
             "groups"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "stories_getBanned_response": {
       "type": "object",
@@ -7177,12 +7753,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "stories_getById_extended_response": {
       "type": "object",
@@ -7218,12 +7796,14 @@
             "items",
             "profiles",
             "groups"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "stories_getById_response": {
       "type": "object",
@@ -7245,12 +7825,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "stories_getPhotoUploadServer_response": {
       "type": "object",
@@ -7274,12 +7856,14 @@
           "required": [
             "upload_url",
             "user_ids"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "stories_getStats_response": {
       "type": "object",
@@ -7290,7 +7874,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "stories_getVideoUploadServer_response": {
       "type": "object",
@@ -7314,12 +7899,14 @@
           "required": [
             "upload_url",
             "user_ids"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "stories_getViewers_extended_V5115_response": {
       "type": "object",
@@ -7344,12 +7931,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "stories_getViewers_extended_response": {
       "type": "object",
@@ -7371,12 +7960,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "stories_get_V5113_response": {
       "type": "object",
@@ -7412,12 +8003,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "stories_get_response": {
       "type": "object",
@@ -7460,12 +8053,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "stories_save_response": {
       "type": "object",
@@ -7481,17 +8076,31 @@
               "items": {
                 "$ref": "objects.json#/definitions/stories_story"
               }
+            },
+            "profiles": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/users_user"
+              }
+            },
+            "groups": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/groups_group"
+              }
             }
           },
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "stories_upload_response": {
       "type": "object",
@@ -7503,12 +8112,14 @@
               "type": "string",
               "description": "A string hash that is used in the stories.save method"
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "streaming_getServerUrl_response": {
       "type": "object",
@@ -7524,12 +8135,14 @@
               "type": "string",
               "description": "Access key"
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "users_getFollowers_fields_response": {
       "type": "object",
@@ -7552,12 +8165,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "users_getFollowers_response": {
       "type": "object",
@@ -7582,12 +8197,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "users_getSubscriptions_extended_response": {
       "type": "object",
@@ -7610,12 +8227,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "users_getSubscriptions_response": {
       "type": "object",
@@ -7633,12 +8252,14 @@
           "required": [
             "users",
             "groups"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "users_get_response": {
       "type": "object",
@@ -7652,7 +8273,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "users_search_response": {
       "type": "object",
@@ -7670,12 +8292,14 @@
                 "$ref": "objects.json#/definitions/users_user_full"
               }
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "utils_checkLink_response": {
       "type": "object",
@@ -7686,7 +8310,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "utils_getLastShortenedLinks_response": {
       "type": "object",
@@ -7705,12 +8330,14 @@
                 "$ref": "objects.json#/definitions/utils_last_shortened_link"
               }
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "utils_getLinkStats_extended_response": {
       "type": "object",
@@ -7721,7 +8348,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "utils_getLinkStats_response": {
       "type": "object",
@@ -7732,7 +8360,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "utils_getServerTime_response": {
       "type": "object",
@@ -7744,7 +8373,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "utils_getShortLink_response": {
       "type": "object",
@@ -7755,7 +8385,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "utils_resolveScreenName_response": {
       "type": "object",
@@ -7766,7 +8397,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "video_addAlbum_response": {
       "type": "object",
@@ -7781,12 +8413,14 @@
           },
           "required": [
             "album_id"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "video_createComment_response": {
       "type": "object",
@@ -7798,7 +8432,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "video_getAlbumById_response": {
       "type": "object",
@@ -7809,7 +8444,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "video_getAlbumsByVideo_extended_response": {
       "type": "object",
@@ -7827,12 +8463,14 @@
                 "$ref": "objects.json#/definitions/video_video_album_full"
               }
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "video_getAlbumsByVideo_response": {
       "type": "object",
@@ -7847,7 +8485,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "video_getAlbums_extended_response": {
       "type": "object",
@@ -7869,12 +8508,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "video_getAlbums_response": {
       "type": "object",
@@ -7896,12 +8537,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "video_getComments_extended_response": {
       "type": "object",
@@ -7937,12 +8580,14 @@
             "items",
             "groups",
             "profiles"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "video_getComments_response": {
       "type": "object",
@@ -7964,14 +8609,16 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
-    "video_get_extended_response": {
+    "video_get_response": {
       "type": "object",
       "properties": {
         "response": {
@@ -8003,39 +8650,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
-    },
-    "video_get_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "type": "object",
-          "properties": {
-            "count": {
-              "type": "integer",
-              "description": "Total number"
-            },
-            "items": {
-              "type": "array",
-              "items": {
-                "$ref": "objects.json#/definitions/video_video_full"
-              }
-            }
-          },
-          "required": [
-            "count",
-            "items"
-          ]
-        }
-      },
-      "required": [
-        "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "video_restoreComment_response": {
       "type": "object",
@@ -8047,7 +8669,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "video_save_response": {
       "type": "object",
@@ -8058,7 +8681,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "video_search_extended_response": {
       "type": "object",
@@ -8094,12 +8718,14 @@
             "items",
             "profiles",
             "groups"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "video_search_response": {
       "type": "object",
@@ -8121,12 +8747,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "video_upload_response": {
       "type": "object",
@@ -8142,12 +8770,14 @@
               "type": "integer",
               "description": "Video ID"
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "wall_createComment_response": {
       "type": "object",
@@ -8162,12 +8792,14 @@
           },
           "required": [
             "comment_id"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "wall_edit_response": {
       "type": "object",
@@ -8183,12 +8815,14 @@
           },
           "required": [
             "post_id"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "wall_getById_extended_response": {
       "type": "object",
@@ -8219,12 +8853,14 @@
             "items",
             "profiles",
             "groups"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "wall_getById_legacy_response": {
       "type": "object",
@@ -8238,7 +8874,8 @@
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "wall_getById_response": {
       "type": "object",
@@ -8252,12 +8889,14 @@
                 "$ref": "objects.json#/definitions/wall_wallpost_full"
               }
             }
-          }
+          },
+          "additionalProperties": false
         }
       },
       "required": [
         "items"
-      ]
+      ],
+      "additionalProperties": false
     },
     "wall_getComment_extended_response": {
       "type": "object",
@@ -8288,12 +8927,14 @@
             "items",
             "profiles",
             "groups"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "wall_getComment_response": {
       "type": "object",
@@ -8310,12 +8951,14 @@
           },
           "required": [
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "wall_getComments_extended_response": {
       "type": "object",
@@ -8366,12 +9009,14 @@
             "items",
             "profiles",
             "groups"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "wall_getComments_response": {
       "type": "object",
@@ -8405,12 +9050,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "wall_getReposts_response": {
       "type": "object",
@@ -8441,12 +9088,14 @@
             "items",
             "profiles",
             "groups"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "wall_get_extended_response": {
       "type": "object",
@@ -8482,12 +9131,14 @@
             "items",
             "profiles",
             "groups"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "wall_get_response": {
       "type": "object",
@@ -8509,12 +9160,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "wall_postAdsStealth_response": {
       "type": "object",
@@ -8529,12 +9182,14 @@
           },
           "required": [
             "post_id"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "wall_post_response": {
       "type": "object",
@@ -8549,12 +9204,14 @@
           },
           "required": [
             "post_id"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "wall_repost_response": {
       "type": "object",
@@ -8596,12 +9253,14 @@
             "post_id",
             "reposts_count",
             "likes_count"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "wall_search_extended_response": {
       "type": "object",
@@ -8637,12 +9296,14 @@
             "items",
             "profiles",
             "groups"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "wall_search_response": {
       "type": "object",
@@ -8664,12 +9325,14 @@
           "required": [
             "count",
             "items"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "widgets_getComments_response": {
       "type": "object",
@@ -8691,12 +9354,14 @@
           "required": [
             "count",
             "posts"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     },
     "widgets_getPages_response": {
       "type": "object",
@@ -8718,12 +9383,14 @@
           "required": [
             "count",
             "pages"
-          ]
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
         "response"
-      ]
+      ],
+      "additionalProperties": false
     }
   }
 }

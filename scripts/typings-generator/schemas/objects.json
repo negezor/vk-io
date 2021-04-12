@@ -82,7 +82,8 @@
           "description": "New sdk number",
           "minimum": 1
         }
-      }
+      },
+      "additionalProperties": false
     },
     "account_info": {
       "type": "object",
@@ -172,7 +173,8 @@
           "type": "string",
           "description": "label to display for link in lang field"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "account_name_request_status": {
       "type": "string",
@@ -262,7 +264,8 @@
             "$ref": "objects.json#/definitions/account_push_conversations_item"
           }
         }
-      }
+      },
+      "additionalProperties": false
     },
     "account_push_conversations_item": {
       "type": "object",
@@ -292,7 +295,8 @@
         "peer_id",
         "sound",
         "disabled_until"
-      ]
+      ],
+      "additionalProperties": false
     },
     "account_push_params": {
       "type": "object",
@@ -411,7 +415,8 @@
             "$ref": "objects.json#/definitions/account_push_params_onoff"
           }
         }
-      }
+      },
+      "additionalProperties": false
     },
     "account_push_params_mode": {
       "type": "string",
@@ -457,7 +462,8 @@
         "conversations": {
           "$ref": "objects.json#/definitions/account_push_conversations"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "account_user_settings": {
       "type": "object",
@@ -481,7 +487,8 @@
             }
           }
         }
-      ]
+      ],
+      "additionalProperties": false
     },
     "account_user_settings_interest": {
       "type": "object",
@@ -496,7 +503,8 @@
       "required": [
         "title",
         "value"
-      ]
+      ],
+      "additionalProperties": false
     },
     "account_user_settings_interests": {
       "type": "object",
@@ -528,7 +536,8 @@
         "about": {
           "$ref": "objects.json#/definitions/account_user_settings_interest"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "addresses_fields": {
       "type": "string",
@@ -576,7 +585,8 @@
         "role": {
           "$ref": "objects.json#/definitions/ads_access_role"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "ads_account": {
       "type": "object",
@@ -1288,7 +1298,8 @@
           "minimum": 0,
           "description": "Saved audience audience size for according level"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "ads_musician": {
       "type": "object",
@@ -1330,7 +1341,8 @@
           "type": "string",
           "description": "Rules paragraph"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "ads_promoted_post_reach": {
       "type": "object",
@@ -1438,7 +1450,8 @@
           "type": "string",
           "description": "Comment"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "ads_stats": {
       "type": "object",
@@ -1474,7 +1487,8 @@
           "type": "string",
           "description": "Age interval"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "ads_stats_cities": {
       "type": "object",
@@ -1495,7 +1509,8 @@
           "type": "integer",
           "description": "City ID"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "ads_stats_format": {
       "type": "object",
@@ -1503,6 +1518,14 @@
         "clicks": {
           "type": "integer",
           "description": "Clicks number"
+        },
+        "link_owner_clicks": {
+          "type": "integer",
+          "description": "Group clicks number"
+        },
+        "link_external_clicks": {
+          "type": "integer",
+          "description": "External clicks number"
         },
         "day": {
           "type": "string",
@@ -1548,7 +1571,8 @@
           "type": "integer",
           "description": "Video views (half of video)"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "ads_stats_sex": {
       "type": "object",
@@ -1564,7 +1588,8 @@
         "value": {
           "$ref": "objects.json#/definitions/ads_stats_sex_value"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "ads_stats_sex_age": {
       "type": "object",
@@ -1581,7 +1606,8 @@
           "type": "string",
           "description": "Sex and age interval"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "ads_stats_sex_value": {
       "type": "string",
@@ -1631,7 +1657,8 @@
         "views_ads_times_11_plus": {
           "type": "integer"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "ads_targ_settings": {
       "type": "object",
@@ -1651,7 +1678,8 @@
         {
           "$ref": "objects.json#/definitions/ads_criteria"
         }
-      ]
+      ],
+      "additionalProperties": false
     },
     "ads_targ_stats": {
       "type": "object",
@@ -1832,7 +1860,8 @@
       "required": [
         "user_id",
         "is_success"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ads_user_specification": {
       "type": "object",
@@ -1863,7 +1892,8 @@
       "required": [
         "user_id",
         "role"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ads_user_specification_cutted": {
       "type": "object",
@@ -1887,7 +1917,8 @@
       "required": [
         "user_id",
         "role"
-      ]
+      ],
+      "additionalProperties": false
     },
     "ads_users": {
       "type": "object",
@@ -1922,7 +1953,8 @@
       "required": [
         "id",
         "name"
-      ]
+      ],
+      "additionalProperties": false
     },
     "adsweb_getAdUnits_response_ad_units_ad_unit": {
       "type": "object",
@@ -1940,7 +1972,8 @@
       "required": [
         "id",
         "site_id"
-      ]
+      ],
+      "additionalProperties": false
     },
     "adsweb_getFraudHistory_response_entries_entry": {
       "type": "object",
@@ -1955,7 +1988,8 @@
       "required": [
         "site_id",
         "day"
-      ]
+      ],
+      "additionalProperties": false
     },
     "adsweb_getSites_response_sites_site": {
       "type": "object",
@@ -1975,7 +2009,8 @@
       },
       "required": [
         "id"
-      ]
+      ],
+      "additionalProperties": false
     },
     "adsweb_getStatistics_response_items_item": {
       "type": "object",
@@ -2016,7 +2051,8 @@
         "hour_max": {
           "type": "string"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "appWidgets_photo": {
       "type": "object",
@@ -2036,7 +2072,8 @@
         "id",
         "type",
         "images"
-      ]
+      ],
+      "additionalProperties": false
     },
     "appWidgets_photos": {
       "type": "object",
@@ -2051,7 +2088,8 @@
             "$ref": "objects.json#/definitions/appWidgets_photo"
           }
         }
-      }
+      },
+      "additionalProperties": false
     },
     "apps_app": {
       "type": "object",
@@ -2149,7 +2187,8 @@
             }
           }
         }
-      ]
+      ],
+      "additionalProperties": false
     },
     "apps_app_leaderboard_type": {
       "type": "integer",
@@ -2226,7 +2265,8 @@
         "id",
         "title",
         "type"
-      ]
+      ],
+      "additionalProperties": false
     },
     "apps_app_type": {
       "type": "string",
@@ -2264,7 +2304,8 @@
       },
       "required": [
         "user_id"
-      ]
+      ],
+      "additionalProperties": false
     },
     "apps_scope": {
       "type": "object",
@@ -2387,7 +2428,8 @@
       "required": [
         "id",
         "title"
-      ]
+      ],
+      "additionalProperties": false
     },
     "base_comments_info": {
       "type": "object",
@@ -2408,7 +2450,8 @@
         "donut": {
           "$ref": "objects.json#/definitions/wall_wallpost_comments_donut"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "base_country": {
       "type": "object",
@@ -2446,7 +2489,8 @@
         "photo",
         "crop",
         "rect"
-      ]
+      ],
+      "additionalProperties": false
     },
     "base_crop_photo_crop": {
       "type": "object",
@@ -2529,7 +2573,8 @@
             "$ref": "objects.json#/definitions/base_request_param"
           }
         }
-      }
+      },
+      "additionalProperties": false
     },
     "base_geo": {
       "type": "object",
@@ -2548,7 +2593,8 @@
           "type": "string",
           "description": "Place type"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "base_geo_coordinates": {
       "type": "object",
@@ -2850,6 +2896,9 @@
       ],
       "additionalProperties": false
     },
+    "base_link_product_category": {
+      "type": "string"
+    },
     "base_link_product_status": {
       "type": "string",
       "description": "Status representation",
@@ -2886,7 +2935,8 @@
           "type": "string",
           "description": "Error message"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "base_object": {
       "type": "object",
@@ -2914,7 +2964,8 @@
           "minimum": 0,
           "description": "Items count"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "base_object_with_name": {
       "type": "object",
@@ -2982,7 +3033,8 @@
           "type": "string",
           "description": "Place type"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "base_property_exists": {
       "type": "integer",
@@ -3019,7 +3071,8 @@
       },
       "required": [
         "count"
-      ]
+      ],
+      "additionalProperties": false
     },
     "base_request_param": {
       "type": "object",
@@ -3032,7 +3085,8 @@
           "type": "string",
           "description": "Parameter value"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "base_sex": {
       "type": "integer",
@@ -3105,7 +3159,8 @@
           "format": "uri",
           "description": "URL of animation script"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "base_stickers_list": {
       "type": "array",
@@ -3239,7 +3294,8 @@
           "type": "integer",
           "description": "User ID"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "board_default_order": {
       "type": "integer",
@@ -3296,7 +3352,8 @@
           "type": "integer",
           "description": "ID of user who updated the topic"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "board_topic_comment": {
       "type": "object",
@@ -3418,7 +3475,8 @@
         "topic_owner_id",
         "topic_id",
         "id"
-      ]
+      ],
+      "additionalProperties": false
     },
     "callback_confirmation_message": {
       "type": "object",
@@ -3437,7 +3495,8 @@
       "required": [
         "type",
         "group_id"
-      ]
+      ],
+      "additionalProperties": false
     },
     "callback_donut_money_withdraw": {
       "type": "object",
@@ -3454,7 +3513,8 @@
       "required": [
         "amount",
         "amount_without_fee"
-      ]
+      ],
+      "additionalProperties": false
     },
     "callback_donut_money_withdraw_error": {
       "type": "object",
@@ -3466,7 +3526,8 @@
       },
       "required": [
         "reason"
-      ]
+      ],
+      "additionalProperties": false
     },
     "callback_donut_subscription_cancelled": {
       "type": "object",
@@ -3475,7 +3536,8 @@
           "type": "integer",
           "minimum": 0
         }
-      }
+      },
+      "additionalProperties": false
     },
     "callback_donut_subscription_create": {
       "type": "object",
@@ -3496,7 +3558,8 @@
       "required": [
         "amount",
         "amount_without_fee"
-      ]
+      ],
+      "additionalProperties": false
     },
     "callback_donut_subscription_expired": {
       "type": "object",
@@ -3505,7 +3568,8 @@
           "type": "integer",
           "minimum": 0
         }
-      }
+      },
+      "additionalProperties": false
     },
     "callback_donut_subscription_price_changed": {
       "type": "object",
@@ -3534,7 +3598,8 @@
       "required": [
         "amount_old",
         "amount_new"
-      ]
+      ],
+      "additionalProperties": false
     },
     "callback_donut_subscription_prolonged": {
       "type": "object",
@@ -3555,7 +3620,8 @@
       "required": [
         "amount",
         "amount_without_fee"
-      ]
+      ],
+      "additionalProperties": false
     },
     "callback_group_change_photo": {
       "type": "object",
@@ -3571,7 +3637,8 @@
       "required": [
         "user_id",
         "photo"
-      ]
+      ],
+      "additionalProperties": false
     },
     "callback_group_change_settings": {
       "type": "object",
@@ -3587,7 +3654,8 @@
       "required": [
         "user_id",
         "self"
-      ]
+      ],
+      "additionalProperties": false
     },
     "callback_group_join": {
       "type": "object",
@@ -3602,7 +3670,8 @@
       "required": [
         "user_id",
         "join_type"
-      ]
+      ],
+      "additionalProperties": false
     },
     "callback_group_join_type": {
       "type": "string",
@@ -3624,7 +3693,8 @@
         "self": {
           "$ref": "objects.json#/definitions/base_bool_int"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "callback_group_market": {
       "type": "integer",
@@ -3675,7 +3745,8 @@
         "user_id",
         "level_old",
         "level_new"
-      ]
+      ],
+      "additionalProperties": false
     },
     "callback_group_settings_changes": {
       "type": "object",
@@ -3719,7 +3790,8 @@
         "enable_market": {
           "$ref": "objects.json#/definitions/callback_group_market"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "callback_like_add_remove": {
       "type": "object",
@@ -3763,7 +3835,8 @@
         "post_id",
         "object_type",
         "object_owner_id"
-      ]
+      ],
+      "additionalProperties": false
     },
     "callback_market_comment": {
       "type": "object",
@@ -3793,7 +3866,8 @@
         "id",
         "from_id",
         "date"
-      ]
+      ],
+      "additionalProperties": false
     },
     "callback_market_comment_delete": {
       "type": "object",
@@ -3818,7 +3892,8 @@
         "id",
         "user_id",
         "item_id"
-      ]
+      ],
+      "additionalProperties": false
     },
     "callback_message_allow": {
       "type": "object",
@@ -3834,7 +3909,8 @@
       "required": [
         "user_id",
         "key"
-      ]
+      ],
+      "additionalProperties": false
     },
     "callback_message_base": {
       "type": "object",
@@ -3854,7 +3930,8 @@
         "type",
         "object",
         "group_id"
-      ]
+      ],
+      "additionalProperties": false
     },
     "callback_message_deny": {
       "type": "object",
@@ -3866,7 +3943,8 @@
       },
       "required": [
         "user_id"
-      ]
+      ],
+      "additionalProperties": false
     },
     "callback_message_type": {
       "type": "string",
@@ -3944,7 +4022,8 @@
         "date",
         "text",
         "photo_owner_id"
-      ]
+      ],
+      "additionalProperties": false
     },
     "callback_photo_comment_delete": {
       "type": "object",
@@ -3971,7 +4050,8 @@
         "owner_id",
         "user_id",
         "photo_id"
-      ]
+      ],
+      "additionalProperties": false
     },
     "callback_poll_vote_new": {
       "type": "object",
@@ -3997,7 +4077,8 @@
         "poll_id",
         "option_id",
         "user_id"
-      ]
+      ],
+      "additionalProperties": false
     },
     "callback_qr_scan": {
       "type": "object",
@@ -4025,7 +4106,8 @@
         "type",
         "subtype",
         "reread"
-      ]
+      ],
+      "additionalProperties": false
     },
     "callback_user_block": {
       "type": "object",
@@ -4055,7 +4137,8 @@
         "user_id",
         "unblock_date",
         "reason"
-      ]
+      ],
+      "additionalProperties": false
     },
     "callback_user_unblock": {
       "type": "object",
@@ -4077,7 +4160,8 @@
         "admin_id",
         "user_id",
         "by_end_date"
-      ]
+      ],
+      "additionalProperties": false
     },
     "callback_video_comment": {
       "type": "object",
@@ -4106,7 +4190,8 @@
         "date",
         "text",
         "video_owner_id"
-      ]
+      ],
+      "additionalProperties": false
     },
     "callback_video_comment_delete": {
       "type": "object",
@@ -4132,7 +4217,8 @@
         "owner_id",
         "user_id",
         "video_id"
-      ]
+      ],
+      "additionalProperties": false
     },
     "callback_wall_comment_delete": {
       "type": "object",
@@ -4158,7 +4244,8 @@
         "id",
         "user_id",
         "post_id"
-      ]
+      ],
+      "additionalProperties": false
     },
     "calls_call": {
       "type": "object",
@@ -4198,7 +4285,8 @@
         "receiver_id",
         "state",
         "time"
-      ]
+      ],
+      "additionalProperties": false
     },
     "calls_end_state": {
       "type": "string",
@@ -4223,7 +4311,8 @@
           "minimum": 0,
           "description": "Participants count"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "comment_thread": {
       "type": "object",
@@ -4254,7 +4343,8 @@
       },
       "required": [
         "count"
-      ]
+      ],
+      "additionalProperties": false
     },
     "database_city": {
       "type": "object",
@@ -4279,7 +4369,8 @@
           },
           "additionalProperties": false
         }
-      ]
+      ],
+      "additionalProperties": false
     },
     "database_faculty": {
       "type": "object",
@@ -4292,7 +4383,8 @@
           "type": "string",
           "description": "Faculty title"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "database_region": {
       "type": "object",
@@ -4305,7 +4397,8 @@
           "type": "string",
           "description": "Region title"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "database_school": {
       "type": "object",
@@ -4318,7 +4411,8 @@
           "type": "string",
           "description": "School title"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "database_station": {
       "type": "object",
@@ -4345,7 +4439,8 @@
       "required": [
         "id",
         "name"
-      ]
+      ],
+      "additionalProperties": false
     },
     "database_university": {
       "type": "object",
@@ -4358,7 +4453,8 @@
           "type": "string",
           "description": "University title"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "docs_doc": {
       "type": "object",
@@ -4452,7 +4548,8 @@
         "video": {
           "$ref": "objects.json#/definitions/docs_doc_preview_video"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "docs_doc_preview_audio_msg": {
       "type": "object",
@@ -4524,7 +4621,8 @@
             "$ref": "objects.json#/definitions/docs_doc_preview_photo_sizes"
           }
         }
-      }
+      },
+      "additionalProperties": false
     },
     "docs_doc_preview_photo_sizes": {
       "type": "object",
@@ -4609,7 +4707,8 @@
         "id",
         "name",
         "count"
-      ]
+      ],
+      "additionalProperties": false
     },
     "donut_donator_subscription_info": {
       "description": "Info about user VK Donut subscription",
@@ -4637,7 +4736,8 @@
         "next_payment_date",
         "amount",
         "status"
-      ]
+      ],
+      "additionalProperties": false
     },
     "events_event_attach": {
       "type": "object",
@@ -4728,7 +4828,8 @@
         "seen",
         "added_date",
         "tags"
-      ]
+      ],
+      "additionalProperties": false
     },
     "fave_bookmark_type": {
       "type": "string",
@@ -4773,7 +4874,8 @@
         "type",
         "description",
         "tags"
-      ]
+      ],
+      "additionalProperties": false
     },
     "fave_page_type": {
       "type": "string",
@@ -4795,7 +4897,8 @@
           "type": "string",
           "description": "Tag name"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "friends_friend_extended_status": {
       "type": "object",
@@ -4811,7 +4914,8 @@
             }
           }
         }
-      ]
+      ],
+      "additionalProperties": false
     },
     "friends_friend_status": {
       "type": "object",
@@ -4967,7 +5071,8 @@
             }
           }
         }
-      ]
+      ],
+      "additionalProperties": false
     },
     "friends_user_xtr_phone": {
       "type": "object",
@@ -4983,7 +5088,8 @@
             }
           }
         }
-      ]
+      ],
+      "additionalProperties": false
     },
     "gifts_gift": {
       "type": "object",
@@ -5014,7 +5120,8 @@
         "privacy": {
           "$ref": "objects.json#/definitions/gifts_gift_privacy"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "gifts_gift_privacy": {
       "type": "integer",
@@ -5074,7 +5181,8 @@
           "type": "string",
           "description": "Keywords used for search"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "groups_address": {
       "type": "object",
@@ -5137,11 +5245,15 @@
         "work_info_status": {
           "description": "Status of information about timetable",
           "$ref": "objects.json#/definitions/groups_address_work_info_status"
+        },
+        "place_id": {
+          "type": "integer"
         }
       },
       "required": [
         "id"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_address_timetable": {
       "type": "object",
@@ -5175,7 +5287,8 @@
           "description": "Timetable for wednesday",
           "$ref": "objects.json#/definitions/groups_address_timetable_day"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "groups_address_timetable_day": {
       "type": "object",
@@ -5201,7 +5314,8 @@
       "required": [
         "open_time",
         "close_time"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_address_work_info_status": {
       "type": "string",
@@ -5324,7 +5438,8 @@
         "url",
         "secret_key",
         "status"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_callback_settings": {
       "type": "object",
@@ -5336,7 +5451,8 @@
         "events": {
           "$ref": "objects.json#/definitions/groups_long_poll_events"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "groups_contacts_item": {
       "type": "object",
@@ -5399,7 +5515,8 @@
           "type": "integer",
           "description": "Videos number"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "groups_cover": {
       "type": "object",
@@ -5446,6 +5563,7 @@
         "can_upload_clip",
         "can_see_all_posts",
         "can_create_topic",
+        "crop_photo",
         "activity",
         "fixed_post",
         "has_photo",
@@ -5476,6 +5594,7 @@
         "addresses",
         "live_covers",
         "is_adult",
+        "is_hidden_from_feed",
         "can_subscribe_posts",
         "warning_notification",
         "msg_push_allowed",
@@ -5569,7 +5688,8 @@
         "name",
         "screen_name",
         "is_closed"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_group_access": {
       "type": "integer",
@@ -5754,7 +5874,8 @@
       "required": [
         "id",
         "name"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_group_docs": {
       "type": "integer",
@@ -6010,7 +6131,8 @@
             }
           }
         }
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_group_full_age_limits": {
       "type": "integer",
@@ -6156,7 +6278,8 @@
             "$ref": "objects.json#/definitions/groups_group_category_type"
           }
         }
-      }
+      },
+      "additionalProperties": false
     },
     "groups_group_role": {
       "type": "string",
@@ -6314,7 +6437,8 @@
         "id",
         "name",
         "color"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_group_topics": {
       "type": "integer",
@@ -6439,7 +6563,8 @@
           "format": "uri",
           "description": "Link URL"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "groups_live_covers": {
       "type": "object",
@@ -6660,7 +6785,8 @@
         "message_edit",
         "message_typing_state",
         "message_read"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_long_poll_server": {
       "type": "object",
@@ -6703,7 +6829,8 @@
       "required": [
         "is_enabled",
         "events"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_market_info": {
       "type": "object",
@@ -6735,7 +6862,8 @@
           "type": "string",
           "description": "Minimum price"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "groups_market_state": {
       "type": "string",
@@ -6765,7 +6893,8 @@
       },
       "required": [
         "id"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_member_role_permission": {
       "type": "string",
@@ -6880,7 +7009,8 @@
         "type": {
           "$ref": "objects.json#/definitions/groups_owner_xtr_ban_info_type"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "groups_owner_xtr_ban_info_type": {
       "type": "string",
@@ -6917,7 +7047,8 @@
         "photo_50",
         "photo_100",
         "first_name"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_role_options": {
       "type": "string",
@@ -6957,7 +7088,8 @@
       },
       "required": [
         "status"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_subject_item": {
       "type": "object",
@@ -6974,7 +7106,8 @@
       "required": [
         "id",
         "name"
-      ]
+      ],
+      "additionalProperties": false
     },
     "groups_token_permission_setting": {
       "type": "object",
@@ -7006,7 +7139,8 @@
             }
           }
         }
-      ]
+      ],
+      "additionalProperties": false
     },
     "likes_type": {
       "type": "string",
@@ -7040,7 +7174,8 @@
           "type": "integer",
           "description": "Item ID"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "market_currency": {
       "type": "object",
@@ -7053,11 +7188,16 @@
         "name": {
           "type": "string",
           "description": "Currency sign"
+        },
+        "title": {
+          "type": "string",
+          "description": "Currency title"
         }
       },
       "required": [
         "id",
-        "name"
+        "name",
+        "title"
       ],
       "additionalProperties": false
     },
@@ -7313,7 +7453,8 @@
             }
           }
         }
-      ]
+      ],
+      "additionalProperties": false
     },
     "market_order": {
       "type": "object",
@@ -7387,7 +7528,8 @@
         "status",
         "items_count",
         "total_price"
-      ]
+      ],
+      "additionalProperties": false
     },
     "market_order_item": {
       "type": "object",
@@ -7427,7 +7569,8 @@
         "price",
         "quantity",
         "item"
-      ]
+      ],
+      "additionalProperties": false
     },
     "market_price": {
       "type": "object",
@@ -7458,7 +7601,8 @@
         "amount",
         "currency",
         "text"
-      ]
+      ],
+      "additionalProperties": false
     },
     "market_section": {
       "type": "object",
@@ -7478,6 +7622,18 @@
         "name"
       ],
       "additionalProperties": false
+    },
+    "market_services_view_type": {
+      "type": "integer",
+      "description": "Type of view. 1 - cards, 2 - rows",
+      "enum": [
+        1,
+        2
+      ],
+      "enumNames": [
+        "cards",
+        "rows"
+      ]
     },
     "media_restriction": {
       "description": "Media restrictions",
@@ -7523,7 +7679,8 @@
       },
       "required": [
         "title"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_audio_message": {
       "type": "object",
@@ -7734,7 +7891,8 @@
         "is_member": {
           "type": "boolean"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "messages_chat_push_settings": {
       "type": "object",
@@ -7747,7 +7905,8 @@
           "description": "Information whether the sound is on",
           "$ref": "objects.json#/definitions/base_bool_int"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "messages_chat_restrictions": {
       "type": "object",
@@ -7772,7 +7931,8 @@
           "type": "boolean",
           "description": "Only admins can kick users from this chat"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "messages_chat_settings": {
       "type": "object",
@@ -7842,7 +8002,8 @@
         "state",
         "active_ids",
         "acl"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_chat_settings_acl": {
       "type": "object",
@@ -7903,7 +8064,8 @@
         "can_copy_chat",
         "can_call",
         "can_use_mass_mentions"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_chat_settings_permissions": {
       "type": "object",
@@ -7970,7 +8132,8 @@
             "owner_and_admins"
           ]
         }
-      }
+      },
+      "additionalProperties": false
     },
     "messages_chat_settings_photo": {
       "type": "object",
@@ -7994,7 +8157,8 @@
           "type": "boolean",
           "description": "If provided photo is default"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "messages_chat_settings_state": {
       "type": "string",
@@ -8081,7 +8245,8 @@
         "in_read",
         "out_read",
         "last_message_id"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_conversation_can_write": {
       "type": "object",
@@ -8095,7 +8260,8 @@
       },
       "required": [
         "allowed"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_conversation_member": {
       "type": "object",
@@ -8131,7 +8297,8 @@
       },
       "required": [
         "member_id"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_conversation_peer": {
       "type": "object",
@@ -8149,7 +8316,8 @@
       "required": [
         "id",
         "type"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_conversation_peer_type": {
       "type": "string",
@@ -8178,7 +8346,8 @@
       "required": [
         "major_id",
         "minor_id"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_conversation_with_message": {
       "type": "object",
@@ -8192,7 +8361,8 @@
       },
       "required": [
         "conversation"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_foreign_message": {
       "type": "object",
@@ -8256,7 +8426,8 @@
         "date",
         "from_id",
         "text"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_forward": {
       "type": "object",
@@ -8289,7 +8460,7 @@
         }
       },
       "required": [],
-      "withSetters": true
+      "additionalProperties": false
     },
     "messages_graffiti": {
       "type": "object",
@@ -8355,7 +8526,8 @@
         "message_id",
         "from_id",
         "attachment"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_history_message_attachment": {
       "type": "object",
@@ -8396,7 +8568,8 @@
       },
       "required": [
         "type"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_history_message_attachment_type": {
       "type": "string",
@@ -8442,7 +8615,7 @@
         "one_time",
         "buttons"
       ],
-      "withSetters": true
+      "additionalProperties": false
     },
     "messages_keyboard_button": {
       "type": "object",
@@ -8464,7 +8637,7 @@
       "required": [
         "action"
       ],
-      "withSetters": true
+      "additionalProperties": false
     },
     "messages_keyboard_button_action": {
       "type": "object",
@@ -8502,8 +8675,7 @@
       "required": [
         "type"
       ],
-      "additionalProperties": false,
-      "withSetters": true
+      "additionalProperties": false
     },
     "messages_last_activity": {
       "type": "object",
@@ -8537,7 +8709,8 @@
             "$ref": "objects.json#/definitions/messages_message"
           }
         }
-      }
+      },
+      "additionalProperties": false
     },
     "messages_longpoll_params": {
       "type": "object",
@@ -8563,7 +8736,8 @@
         "server",
         "key",
         "ts"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_message": {
       "type": "object",
@@ -8677,7 +8851,8 @@
         "out",
         "peer_id",
         "text"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_message_action": {
       "type": "object",
@@ -8711,7 +8886,8 @@
       },
       "required": [
         "type"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_message_action_photo": {
       "type": "object",
@@ -8736,7 +8912,8 @@
         "photo_50",
         "photo_100",
         "photo_200"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_message_action_status": {
       "type": "string",
@@ -8850,7 +9027,8 @@
           "type": "integer",
           "description": "Message request date"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "messages_messages_array": {
       "type": "object",
@@ -8865,7 +9043,8 @@
             "$ref": "objects.json#/definitions/messages_message"
           }
         }
-      }
+      },
+      "additionalProperties": false
     },
     "messages_out_read_by": {
       "type": "object",
@@ -8881,7 +9060,8 @@
             "description": "Member IDs"
           }
         }
-      }
+      },
+      "additionalProperties": false
     },
     "messages_pinned_message": {
       "type": "object",
@@ -8939,7 +9119,8 @@
         "from_id",
         "peer_id",
         "text"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_push_settings": {
       "type": "object",
@@ -8968,7 +9149,8 @@
       "required": [
         "disabled_forever",
         "no_sound"
-      ]
+      ],
+      "additionalProperties": false
     },
     "messages_template_action_type_names": {
       "type": "string",
@@ -8998,7 +9180,8 @@
             }
           }
         }
-      ]
+      ],
+      "additionalProperties": false
     },
     "newsfeed_comments_filters": {
       "type": "string",
@@ -9100,7 +9283,8 @@
             }
           }
         }
-      ]
+      ],
+      "additionalProperties": false
     },
     "newsfeed_item_audio_audio": {
       "type": "object",
@@ -9116,7 +9300,8 @@
             "$ref": "objects.json#/definitions/audio_audio"
           }
         }
-      }
+      },
+      "additionalProperties": false
     },
     "newsfeed_item_base": {
       "type": "object",
@@ -9137,7 +9322,8 @@
         "type",
         "source_id",
         "date"
-      ]
+      ],
+      "additionalProperties": false
     },
     "newsfeed_item_digest": {
       "type": "object",
@@ -9183,7 +9369,8 @@
             }
           }
         }
-      ]
+      ],
+      "additionalProperties": false
     },
     "newsfeed_item_digest_button": {
       "type": "object",
@@ -9200,7 +9387,8 @@
       },
       "required": [
         "title"
-      ]
+      ],
+      "additionalProperties": false
     },
     "newsfeed_item_digest_footer": {
       "type": "object",
@@ -9223,7 +9411,8 @@
       "required": [
         "style",
         "text"
-      ]
+      ],
+      "additionalProperties": false
     },
     "newsfeed_item_digest_full_item": {
       "type": "object",
@@ -9244,7 +9433,8 @@
           "type": "string",
           "enum": [
             "default",
-            "inversed"
+            "inversed",
+            "spotlight"
           ]
         },
         "post": {
@@ -9253,7 +9443,8 @@
       },
       "required": [
         "post"
-      ]
+      ],
+      "additionalProperties": false
     },
     "newsfeed_item_digest_header": {
       "type": "object",
@@ -9280,7 +9471,8 @@
       "required": [
         "style",
         "title"
-      ]
+      ],
+      "additionalProperties": false
     },
     "newsfeed_item_digest_item": {
       "$ref": "objects.json#/definitions/wall_wallpost"
@@ -9298,7 +9490,8 @@
             }
           }
         }
-      ]
+      ],
+      "additionalProperties": false
     },
     "newsfeed_item_friend_friends": {
       "type": "object",
@@ -9314,7 +9507,8 @@
             "$ref": "objects.json#/definitions/base_user_id"
           }
         }
-      }
+      },
+      "additionalProperties": false
     },
     "newsfeed_item_holiday_recommendations_block_header": {
       "type": "object",
@@ -9336,7 +9530,8 @@
         "action": {
           "$ref": "objects.json#/definitions/base_link_button_action"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "newsfeed_item_photo": {
       "type": "object",
@@ -9358,7 +9553,8 @@
             }
           }
         }
-      ]
+      ],
+      "additionalProperties": false
     },
     "newsfeed_item_photo_photos": {
       "type": "object",
@@ -9374,7 +9570,8 @@
             "$ref": "objects.json#/definitions/newsfeed_newsfeed_photo"
           }
         }
-      }
+      },
+      "additionalProperties": false
     },
     "newsfeed_item_photo_tag": {
       "type": "object",
@@ -9396,7 +9593,8 @@
             }
           }
         }
-      ]
+      ],
+      "additionalProperties": false
     },
     "newsfeed_item_photo_tag_photo_tags": {
       "type": "object",
@@ -9412,7 +9610,8 @@
             "$ref": "objects.json#/definitions/newsfeed_newsfeed_photo"
           }
         }
-      }
+      },
+      "additionalProperties": false
     },
     "newsfeed_item_promo_button": {
       "type": "object",
@@ -9442,7 +9641,8 @@
             }
           }
         }
-      ]
+      ],
+      "additionalProperties": false
     },
     "newsfeed_item_promo_button_action": {
       "type": "object",
@@ -9456,7 +9656,8 @@
         "target": {
           "type": "string"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "newsfeed_item_promo_button_image": {
       "type": "object",
@@ -9470,7 +9671,8 @@
         "url": {
           "type": "string"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "newsfeed_item_topic": {
       "type": "object",
@@ -9500,7 +9702,8 @@
             "text"
           ]
         }
-      ]
+      ],
+      "additionalProperties": false
     },
     "newsfeed_item_video": {
       "type": "object",
@@ -9518,7 +9721,8 @@
             }
           }
         }
-      ]
+      ],
+      "additionalProperties": false
     },
     "newsfeed_item_video_video": {
       "type": "object",
@@ -9534,7 +9738,8 @@
             "$ref": "objects.json#/definitions/video_video"
           }
         }
-      }
+      },
+      "additionalProperties": false
     },
     "newsfeed_item_wallpost": {
       "type": "object",
@@ -9615,7 +9820,8 @@
             }
           }
         }
-      ]
+      ],
+      "additionalProperties": false
     },
     "newsfeed_item_wallpost_feedback": {
       "type": "object",
@@ -9644,7 +9850,8 @@
       "required": [
         "question",
         "type"
-      ]
+      ],
+      "additionalProperties": false
     },
     "newsfeed_item_wallpost_feedback_answer": {
       "type": "object",
@@ -9659,7 +9866,8 @@
       "required": [
         "title",
         "id"
-      ]
+      ],
+      "additionalProperties": false
     },
     "newsfeed_item_wallpost_feedback_type": {
       "type": "string",
@@ -9716,7 +9924,8 @@
             }
           }
         }
-      ]
+      ],
+      "additionalProperties": false
     },
     "newsfeed_newsfeed_item": {
       "type": "object",
@@ -9795,7 +10004,8 @@
             }
           }
         }
-      ]
+      ],
+      "additionalProperties": false
     },
     "notes_note": {
       "type": "object",
@@ -9929,7 +10139,8 @@
           "type": "integer",
           "description": "Wall owner's ID"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "notifications_notification": {
       "type": "object",
@@ -9951,7 +10162,8 @@
           "type": "string",
           "description": "Notification type"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "notifications_notification_item": {
       "$ref": "objects.json#/definitions/notifications_notification"
@@ -9974,7 +10186,8 @@
         {
           "$ref": "objects.json#/definitions/notifications_notifications_comment"
         }
-      ]
+      ],
+      "additionalProperties": false
     },
     "notifications_notifications_comment": {
       "type": "object",
@@ -10009,7 +10222,8 @@
         "video": {
           "$ref": "objects.json#/definitions/video_video"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "notifications_reply": {
       "type": "object",
@@ -10026,7 +10240,8 @@
           "type": "integer",
           "description": "Reply text"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "notifications_send_message_error": {
       "type": "object",
@@ -10051,7 +10266,8 @@
           "type": "string",
           "description": "Error description"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "notifications_send_message_item": {
       "type": "object",
@@ -10067,7 +10283,8 @@
         "error": {
           "$ref": "objects.json#/definitions/notifications_send_message_error"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "oauth_error": {
       "type": "object",
@@ -10088,7 +10305,8 @@
       "required": [
         "error",
         "error_description"
-      ]
+      ],
+      "additionalProperties": false
     },
     "orders_amount": {
       "type": "object",
@@ -10103,7 +10321,8 @@
           "type": "string",
           "description": "Currency name"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "orders_amount_item": {
       "type": "object",
@@ -10120,7 +10339,8 @@
           "type": "string",
           "description": "Votes number"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "orders_order": {
       "type": "object",
@@ -10165,7 +10385,8 @@
           "type": "integer",
           "description": "User ID"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "orders_subscription": {
       "type": "object",
@@ -10259,7 +10480,8 @@
           "type": "string",
           "description": "wiki text to describe user state"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "pages_privacy_settings": {
       "type": "integer",
@@ -10443,7 +10665,8 @@
         "date",
         "editor_id",
         "editor_name"
-      ]
+      ],
+      "additionalProperties": false
     },
     "photos_comment_xtr_pid": {
       "type": "object",
@@ -10526,7 +10749,8 @@
           "type": "integer",
           "description": "Width of the photo in px."
         }
-      }
+      },
+      "additionalProperties": false
     },
     "photos_image_type": {
       "type": "string",
@@ -11409,7 +11633,8 @@
         "track_code": {
           "type": "string"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "photos_tags_suggestion_item_button": {
       "type": "object",
@@ -11432,7 +11657,8 @@
             "secondary"
           ]
         }
-      }
+      },
+      "additionalProperties": false
     },
     "podcast_cover": {
       "type": "object",
@@ -11443,7 +11669,8 @@
             "$ref": "objects.json#/definitions/photos_photo_sizes"
           }
         }
-      }
+      },
+      "additionalProperties": false
     },
     "podcast_external_data": {
       "type": "object",
@@ -11468,7 +11695,8 @@
           "$ref": "objects.json#/definitions/podcast_cover",
           "description": "Podcast cover"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "polls_answer": {
       "type": "object",
@@ -11562,7 +11790,8 @@
       },
       "required": [
         "id"
-      ]
+      ],
+      "additionalProperties": false
     },
     "polls_poll": {
       "type": "object",
@@ -11692,7 +11921,8 @@
         "users": {
           "$ref": "objects.json#/definitions/polls_voters_users"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "polls_voters_users": {
       "type": "object",
@@ -11709,7 +11939,8 @@
             "description": "User ID"
           }
         }
-      }
+      },
+      "additionalProperties": false
     },
     "prettyCards_prettyCard": {
       "type": "object",
@@ -11758,7 +11989,8 @@
         "link_url",
         "title",
         "photo"
-      ]
+      ],
+      "additionalProperties": false
     },
     "search_hint": {
       "type": "object",
@@ -11791,7 +12023,8 @@
         "type",
         "section",
         "description"
-      ]
+      ],
+      "additionalProperties": false
     },
     "search_hint_section": {
       "type": "string",
@@ -11828,7 +12061,8 @@
           "type": "integer",
           "description": "User ID"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "secure_sms_notification": {
       "type": "object",
@@ -11853,7 +12087,8 @@
           "type": "string",
           "description": "User ID"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "secure_token_checked": {
       "type": "object",
@@ -11875,7 +12110,8 @@
           "type": "integer",
           "description": "User ID"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "secure_transaction": {
       "type": "object",
@@ -11900,7 +12136,8 @@
           "type": "integer",
           "description": "Votes number"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "stats_activity": {
       "type": "object",
@@ -11936,7 +12173,8 @@
           "minimum": 0,
           "description": "Unsubscribed count"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "stats_city": {
       "type": "object",
@@ -11954,7 +12192,8 @@
           "type": "integer",
           "description": "City ID"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "stats_country": {
       "type": "object",
@@ -11976,7 +12215,8 @@
           "type": "integer",
           "description": "Country ID"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "stats_period": {
       "type": "object",
@@ -11998,7 +12238,8 @@
         "visitors": {
           "$ref": "objects.json#/definitions/stats_views"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "stats_reach": {
       "type": "object",
@@ -12049,7 +12290,8 @@
             "$ref": "objects.json#/definitions/stats_sex_age"
           }
         }
-      }
+      },
+      "additionalProperties": false
     },
     "stats_sex_age": {
       "type": "object",
@@ -12075,7 +12317,8 @@
       },
       "required": [
         "value"
-      ]
+      ],
+      "additionalProperties": false
     },
     "stats_views": {
       "type": "object",
@@ -12126,7 +12369,8 @@
           "minimum": 0,
           "description": "Visitors number"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "stats_wallpost_stat": {
       "type": "object",
@@ -12184,7 +12428,8 @@
             "$ref": "objects.json#/definitions/stats_sex_age"
           }
         }
-      }
+      },
+      "additionalProperties": false
     },
     "status_status": {
       "type": "object",
@@ -12199,7 +12444,8 @@
       },
       "required": [
         "text"
-      ]
+      ],
+      "additionalProperties": false
     },
     "stickers_image_set": {
       "type": "object",
@@ -12216,7 +12462,8 @@
       },
       "required": [
         "base_url"
-      ]
+      ],
+      "additionalProperties": false
     },
     "storage_value": {
       "type": "object",
@@ -12231,7 +12478,8 @@
       "required": [
         "key",
         "value"
-      ]
+      ],
+      "additionalProperties": false
     },
     "store_product": {
       "type": "object",
@@ -12305,7 +12553,8 @@
       "required": [
         "id",
         "type"
-      ]
+      ],
+      "additionalProperties": false
     },
     "store_product_icon": {
       "type": "array",
@@ -12337,7 +12586,8 @@
       },
       "required": [
         "words"
-      ]
+      ],
+      "additionalProperties": false
     },
     "store_stickers_keyword_sticker": {
       "type": "object",
@@ -12354,7 +12604,8 @@
       "required": [
         "pack_id",
         "sticker_id"
-      ]
+      ],
+      "additionalProperties": false
     },
     "store_stickers_keyword_stickers": {
       "$ref": "objects.json#/definitions/base_stickers_list"
@@ -12372,7 +12623,8 @@
       "requried": [
         "x",
         "y"
-      ]
+      ],
+      "additionalProperties": false
     },
     "stories_clickable_sticker": {
       "type": "object",
@@ -12511,7 +12763,8 @@
         "type",
         "clickable_area",
         "id"
-      ]
+      ],
+      "additionalProperties": false
     },
     "stories_clickable_stickers": {
       "type": "object",
@@ -12535,7 +12788,8 @@
         "original_height",
         "original_width",
         "clickable_stickers"
-      ]
+      ],
+      "additionalProperties": false
     },
     "stories_feed_item": {
       "type": "object",
@@ -12580,11 +12834,21 @@
         },
         "birthday_user_id": {
           "type": "integer"
+        },
+        "track_code": {
+          "type": "string"
+        },
+        "has_unseen": {
+          "type": "boolean"
+        },
+        "name": {
+          "type": "string"
         }
       },
       "required": [
         "type"
-      ]
+      ],
+      "additionalProperties": false
     },
     "stories_promo_block": {
       "type": "object",
@@ -12612,7 +12876,8 @@
         "photo_100",
         "name",
         "not_animated"
-      ]
+      ],
+      "additionalProperties": false
     },
     "stories_replies": {
       "type": "object",
@@ -12629,7 +12894,8 @@
       },
       "required": [
         "count"
-      ]
+      ],
+      "additionalProperties": false
     },
     "stories_stat_line": {
       "type": "object",
@@ -12647,7 +12913,8 @@
       },
       "required": [
         "name"
-      ]
+      ],
+      "additionalProperties": false
     },
     "stories_story": {
       "type": "object",
@@ -12773,7 +13040,8 @@
       "required": [
         "id",
         "owner_id"
-      ]
+      ],
+      "additionalProperties": false
     },
     "stories_story_link": {
       "type": "object",
@@ -12791,7 +13059,8 @@
       "required": [
         "text",
         "url"
-      ]
+      ],
+      "additionalProperties": false
     },
     "stories_story_stats": {
       "type": "object",
@@ -12830,7 +13099,8 @@
         "subscribers",
         "bans",
         "open_link"
-      ]
+      ],
+      "additionalProperties": false
     },
     "stories_story_stats_stat": {
       "type": "object",
@@ -12846,7 +13116,8 @@
       },
       "required": [
         "state"
-      ]
+      ],
+      "additionalProperties": false
     },
     "stories_story_stats_state": {
       "type": "string",
@@ -12912,7 +13183,8 @@
       "required": [
         "is_liked",
         "user_id"
-      ]
+      ],
+      "additionalProperties": false
     },
     "users_career": {
       "type": "object",
@@ -12968,7 +13240,8 @@
         "twitter": {
           "type": "integer"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "users_fields": {
       "type": "string",
@@ -13171,7 +13444,8 @@
       },
       "required": [
         "visible"
-      ]
+      ],
+      "additionalProperties": false
     },
     "users_personal": {
       "type": "object",
@@ -13422,7 +13696,8 @@
             }
           }
         }
-      ]
+      ],
+      "additionalProperties": false
     },
     "users_user_connections": {
       "type": "object",
@@ -13457,7 +13732,8 @@
         "instagram",
         "twitter",
         "skype"
-      ]
+      ],
+      "additionalProperties": false
     },
     "users_user_counters": {
       "type": "object",
@@ -13545,7 +13821,8 @@
         "clips_followers": {
           "type": "integer"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "users_user_full": {
       "type": "object",
@@ -14002,7 +14279,8 @@
           ],
           "additionalProperties": false
         }
-      ]
+      ],
+      "additionalProperties": false
     },
     "users_user_min": {
       "type": "object",
@@ -14158,7 +14436,8 @@
       "required": [
         "home_town",
         "status"
-      ]
+      ],
+      "additionalProperties": false
     },
     "users_user_type": {
       "type": "string",
@@ -14173,7 +14452,8 @@
         {
           "$ref": "objects.json#/definitions/users_user_full"
         }
-      ]
+      ],
+      "additionalProperties": false
     },
     "users_user_xtr_type": {
       "type": "object",
@@ -14188,7 +14468,8 @@
             }
           }
         }
-      ]
+      ],
+      "additionalProperties": false
     },
     "users_users_array": {
       "type": "object",
@@ -14226,7 +14507,8 @@
         "type": {
           "$ref": "objects.json#/definitions/utils_domain_resolved_type"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "utils_domain_resolved_type": {
       "type": "string",
@@ -14269,7 +14551,8 @@
           "type": "integer",
           "description": "Total views number"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "utils_link_checked": {
       "type": "object",
@@ -14282,7 +14565,8 @@
         "status": {
           "$ref": "objects.json#/definitions/utils_link_checked_status"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "utils_link_checked_status": {
       "type": "string",
@@ -14306,7 +14590,8 @@
             "$ref": "objects.json#/definitions/utils_stats"
           }
         }
-      }
+      },
+      "additionalProperties": false
     },
     "utils_link_stats_extended": {
       "type": "object",
@@ -14321,7 +14606,8 @@
             "$ref": "objects.json#/definitions/utils_stats_extended"
           }
         }
-      }
+      },
+      "additionalProperties": false
     },
     "utils_short_link": {
       "type": "object",
@@ -14344,7 +14630,8 @@
           "format": "uri",
           "description": "Full URL"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "utils_stats": {
       "type": "object",
@@ -14357,7 +14644,8 @@
           "type": "integer",
           "description": "Total views number"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "utils_stats_city": {
       "type": "object",
@@ -14370,7 +14658,8 @@
           "type": "integer",
           "description": "Views number"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "utils_stats_country": {
       "type": "object",
@@ -14383,7 +14672,8 @@
           "type": "integer",
           "description": "Views number"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "utils_stats_extended": {
       "type": "object",
@@ -14414,7 +14704,8 @@
           "type": "integer",
           "description": "Total views number"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "utils_stats_sex_age": {
       "type": "object",
@@ -14431,7 +14722,8 @@
           "type": "integer",
           "description": " Views by male users"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "video_live_info": {
       "type": "object",
@@ -14442,7 +14734,8 @@
         "is_notifications_blocked": {
           "$ref": "objects.json#/definitions/base_bool_int"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "video_live_settings": {
       "description": "Video live settings",
@@ -14460,7 +14753,8 @@
           "description": "Max possible time for rewind",
           "type": "integer"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "video_restriction_button": {
       "description": "Video restriction button",
@@ -14475,7 +14769,8 @@
         "title": {
           "type": "string"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "video_save_result": {
       "type": "object",
@@ -14505,7 +14800,8 @@
           "type": "integer",
           "description": "Video ID"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "video_video": {
       "type": "object",
@@ -14728,7 +15024,8 @@
             }
           }
         }
-      ]
+      ],
+      "additionalProperties": false
     },
     "video_video_album_full": {
       "type": "object",
@@ -14812,6 +15109,16 @@
           "format": "uri",
           "description": "URL of the mpeg4 file with 1080p quality"
         },
+        "mp4_1440": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL of the mpeg4 file with 2K quality"
+        },
+        "mp4_2160": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL of the mpeg4 file with 4K quality"
+        },
         "flv_320": {
           "type": "string",
           "format": "uri",
@@ -14838,7 +15145,8 @@
             }
           }
         }
-      ]
+      ],
+      "additionalProperties": false
     },
     "video_video_image": {
       "type": "object",
@@ -14853,7 +15161,8 @@
             }
           }
         }
-      ]
+      ],
+      "additionalProperties": false
     },
     "wall_app_post": {
       "type": "object",
@@ -14876,7 +15185,8 @@
           "format": "uri",
           "description": "URL of the preview image with 604 px in width"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "wall_attached_note": {
       "type": "object",
@@ -14935,7 +15245,8 @@
           "minimum": 0,
           "description": "Index of current carousel element"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "wall_comment_attachment": {
       "type": "object",
@@ -15013,7 +15324,8 @@
           "type": "string",
           "description": "Place type"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "wall_graffiti": {
       "type": "object",
@@ -15036,7 +15348,8 @@
           "format": "uri",
           "description": "URL of the preview image with 586 px in width"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "wall_post_copyright": {
       "type": "object",
@@ -15058,7 +15371,8 @@
         "type",
         "link",
         "name"
-      ]
+      ],
+      "additionalProperties": false
     },
     "wall_post_source": {
       "type": "object",
@@ -15079,7 +15393,8 @@
           "format": "uri",
           "description": "URL to an external site used to publish the post"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "wall_post_source_type": {
       "type": "string",
@@ -15125,7 +15440,8 @@
           "format": "uri",
           "description": "URL of the preview image with 604 px in width"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "wall_views": {
       "type": "object",
@@ -15220,7 +15536,8 @@
         "placeholder": {
           "$ref": "objects.json#/definitions/wall_wall_comment_donut_placeholder"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "wall_wall_comment_donut_placeholder": {
       "type": "object",
@@ -15232,7 +15549,8 @@
       "required": [
         "text",
         "button"
-      ]
+      ],
+      "additionalProperties": false
     },
     "wall_wallpost": {
       "type": "object",
@@ -15322,7 +15640,8 @@
           "description": "Count of views",
           "$ref": "objects.json#/definitions/wall_views"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "wall_wallpost_attachment": {
       "type": "object",
@@ -15415,7 +15734,10 @@
         "market_market_album",
         "market",
         "event",
-        "donut_link"
+        "donut_link",
+        "article",
+        "textlive",
+        "textpost"
       ]
     },
     "wall_wallpost_comments_donut": {
@@ -15424,7 +15746,8 @@
         "placeholder": {
           "$ref": "objects.json#/definitions/wall_wallpost_comments_donut_placeholder"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "wall_wallpost_comments_donut_placeholder": {
       "description": "Info about paid comments feature",
@@ -15436,7 +15759,8 @@
       },
       "required": [
         "text"
-      ]
+      ],
+      "additionalProperties": false
     },
     "wall_wallpost_donut": {
       "description": "Info about paid wall post",
@@ -15469,7 +15793,8 @@
       },
       "required": [
         "is_donut"
-      ]
+      ],
+      "additionalProperties": false
     },
     "wall_wallpost_donut_placeholder": {
       "type": "object",
@@ -15481,7 +15806,8 @@
       "required": [
         "text",
         "button"
-      ]
+      ],
+      "additionalProperties": false
     },
     "wall_wallpost_full": {
       "type": "object",
@@ -15538,7 +15864,8 @@
             }
           }
         }
-      ]
+      ],
+      "additionalProperties": false
     },
     "wall_wallpost_to_id": {
       "type": "object",
@@ -15607,7 +15934,8 @@
           "type": "integer",
           "description": "Wall owner's ID"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "widgets_comment_media": {
       "type": "object",
@@ -15628,7 +15956,8 @@
         "type": {
           "$ref": "objects.json#/definitions/widgets_comment_media_type"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "widgets_comment_media_type": {
       "type": "string",
@@ -15657,7 +15986,8 @@
             "$ref": "objects.json#/definitions/widgets_comment_replies_item"
           }
         }
-      }
+      },
+      "additionalProperties": false
     },
     "widgets_comment_replies_item": {
       "type": "object",
@@ -15684,7 +16014,8 @@
         "user": {
           "$ref": "objects.json#/definitions/users_user_full"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "widgets_widget_comment": {
       "type": "object",
@@ -15760,7 +16091,8 @@
           "minimum": 0,
           "description": "Likes number"
         }
-      }
+      },
+      "additionalProperties": false
     },
     "widgets_widget_page": {
       "type": "object",
@@ -15801,7 +16133,8 @@
           "format": "uri",
           "description": "Page absolute URL"
         }
-      }
+      },
+      "additionalProperties": false
     }
   }
 }
