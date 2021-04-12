@@ -823,6 +823,14 @@ export interface AdsStatsFormat {
      */
     clicks?: number;
     /**
+     * Group clicks number
+     */
+    link_owner_clicks?: number;
+    /**
+     * External clicks number
+     */
+    link_external_clicks?: number;
+    /**
      * Day as YYYY-MM-DD
      */
     day?: string;
@@ -1628,6 +1636,8 @@ export interface BaseLinkProduct {
     merchant?: string;
     orders_count?: number;
 }
+
+export type BaseLinkProductCategory = string;
 
 export type BaseLinkProductStatus = "active" | "blocked" | "sold" | "deleted" | "archived";
 
@@ -2718,6 +2728,7 @@ export interface GroupsAddress {
      */
     title?: string;
     [key: string]: any;
+    place_id?: number;
 }
 
 /*Timetable for a week*/
@@ -2872,7 +2883,7 @@ export interface GroupsCover {
     images?: BaseImage[];
 }
 
-export type GroupsFields = "market" | "member_status" | "is_favorite" | "is_subscribed" | "is_subscribed_podcasts" | "can_subscribe_podcasts" | "city" | "country" | "verified" | "description" | "wiki_page" | "members_count" | "requests_count" | "counters" | "cover" | "can_post" | "can_suggest" | "can_upload_story" | "can_upload_doc" | "can_upload_video" | "can_upload_clip" | "can_see_all_posts" | "can_create_topic" | "activity" | "fixed_post" | "has_photo" | "status" | "main_album_id" | "links" | "contacts" | "site" | "main_section" | "secondary_section" | "wall" | "trending" | "can_message" | "is_market_cart_enabled" | "is_messages_blocked" | "can_send_notify" | "has_group_channel" | "group_channel" | "online_status" | "start_date" | "finish_date" | "age_limits" | "ban_info" | "action_button" | "author_id" | "phone" | "has_market_app" | "addresses" | "live_covers" | "is_adult" | "can_subscribe_posts" | "warning_notification" | "msg_push_allowed" | "stories_archive_count" | "video_live_level" | "video_live_count" | "clips_count" | "is_business" | "textlives_count";
+export type GroupsFields = "market" | "member_status" | "is_favorite" | "is_subscribed" | "is_subscribed_podcasts" | "can_subscribe_podcasts" | "city" | "country" | "verified" | "description" | "wiki_page" | "members_count" | "requests_count" | "counters" | "cover" | "can_post" | "can_suggest" | "can_upload_story" | "can_upload_doc" | "can_upload_video" | "can_upload_clip" | "can_see_all_posts" | "can_create_topic" | "crop_photo" | "activity" | "fixed_post" | "has_photo" | "status" | "main_album_id" | "links" | "contacts" | "site" | "main_section" | "secondary_section" | "wall" | "trending" | "can_message" | "is_market_cart_enabled" | "is_messages_blocked" | "can_send_notify" | "has_group_channel" | "group_channel" | "online_status" | "start_date" | "finish_date" | "age_limits" | "ban_info" | "action_button" | "author_id" | "phone" | "has_market_app" | "addresses" | "live_covers" | "is_adult" | "is_hidden_from_feed" | "can_subscribe_posts" | "warning_notification" | "msg_push_allowed" | "stories_archive_count" | "video_live_level" | "video_live_count" | "clips_count" | "is_business" | "textlives_count";
 
 export type GroupsFilter = "admin" | "editor" | "moder" | "advertiser" | "groups" | "publics" | "events" | "has_addresses";
 
@@ -3414,6 +3425,10 @@ export interface MarketCurrency {
      * Currency sign
      */
     name: string;
+    /**
+     * Currency title
+     */
+    title: string;
     [key: string]: any;
 }
 
@@ -3606,6 +3621,8 @@ export interface MarketSection {
     name: string;
     [key: string]: any;
 }
+
+export type MarketServicesViewType = 1 | 2;
 
 /*Media restrictions*/
 export interface MediaRestriction {
@@ -4480,7 +4497,7 @@ export interface NewsfeedItemDigestFullItem {
     text?: string;
     source_name?: string;
     attachment_index?: number;
-    style?: "default" | "inversed";
+    style?: "default" | "inversed" | "spotlight";
 }
 
 export interface NewsfeedItemDigestHeader {
@@ -6339,6 +6356,9 @@ export interface StoriesFeedItem {
     stories?: StoriesStory[];
     grouped?: StoriesFeedItem[];
     birthday_user_id?: number;
+    track_code?: string;
+    has_unseen?: boolean | number;
+    name?: string;
 }
 
 /*Additional data for promo stories*/
@@ -7628,6 +7648,14 @@ export interface VideoVideoFiles {
      */
     mp4_1080?: string;
     /**
+     * URL of the mpeg4 file with 2K quality
+     */
+    mp4_1440?: string;
+    /**
+     * URL of the mpeg4 file with 4K quality
+     */
+    mp4_2160?: string;
+    /**
      * URL of the flv file with 320p quality
      */
     flv_320?: string;
@@ -7917,7 +7945,7 @@ export interface WallWallpostAttachment {
     [key: string]: any;
 }
 
-export type WallWallpostAttachmentType = "photo" | "posted_photo" | "audio" | "video" | "doc" | "link" | "graffiti" | "note" | "app" | "poll" | "page" | "album" | "photos_list" | "market_market_album" | "market" | "event" | "donut_link";
+export type WallWallpostAttachmentType = "photo" | "posted_photo" | "audio" | "video" | "doc" | "link" | "graffiti" | "note" | "app" | "poll" | "page" | "album" | "photos_list" | "market_market_album" | "market" | "event" | "donut_link" | "article" | "textlive" | "textpost";
 
 export interface WallWallpostCommentsDonut {
     [key: string]: any;

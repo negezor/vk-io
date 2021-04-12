@@ -737,19 +737,11 @@ export interface GroupsGetCallbackServersResponse {
 export type GroupsGetCallbackSettingsResponse = Objects.GroupsCallbackSettings;
 
 export interface GroupsGetCatalogInfoExtendedResponse {
-    /**
-     * Information whether catalog is enabled for current user
-     */
-    enabled: number;
     [key: string]: any;
     categories?: Objects.GroupsGroupCategoryFull[];
 }
 
 export interface GroupsGetCatalogInfoResponse {
-    /**
-     * Information whether catalog is enabled for current user
-     */
-    enabled: number;
     [key: string]: any;
     categories?: Objects.GroupsGroupCategory[];
 }
@@ -1024,7 +1016,7 @@ export interface MarketAddResponse {
     /**
      * Item ID
      */
-    market_item_id?: number;
+    market_item_id: number;
     [key: string]: any;
 }
 
@@ -1156,18 +1148,18 @@ export interface MarketSearchExtendedResponse {
     /**
      * Total number
      */
-    count?: number;
+    count: number;
     [key: string]: any;
-    items?: Objects.MarketMarketItemFull[];
+    items: Objects.MarketMarketItemFull[];
 }
 
 export interface MarketSearchResponse {
     /**
      * Total number
      */
-    count?: number;
+    count: number;
     [key: string]: any;
-    items?: Objects.MarketMarketItem[];
+    items: Objects.MarketMarketItem[];
 }
 
 export type MessagesCreateChatResponse = number;
@@ -1684,9 +1676,19 @@ export interface PhotosGetAllResponse {
     items?: Objects.PhotosPhotoXtrRealOffset[];
 }
 
-export type PhotosGetByIdExtendedResponse = Objects.PhotosPhotoFull[];
+export interface PhotosGetByIdExtendedResponse {
+    [key: string]: any;
+    items: Objects.PhotosPhotoFull[];
+}
 
-export type PhotosGetByIdResponse = Objects.PhotosPhoto[];
+export type PhotosGetByIdLegacyExtendedResponse = Objects.PhotosPhotoFull[];
+
+export type PhotosGetByIdLegacyResponse = Objects.PhotosPhoto[];
+
+export interface PhotosGetByIdResponse {
+    [key: string]: any;
+    items?: Objects.PhotosPhoto[];
+}
 
 export interface PhotosGetCommentsExtendedResponse {
     /**
@@ -2191,6 +2193,8 @@ export interface StoriesSaveResponse {
     [key: string]: any;
     count: number;
     items: Objects.StoriesStory[];
+    profiles?: Objects.UsersUser[];
+    groups?: Objects.GroupsGroup[];
 }
 
 export interface StoriesUploadResponse {
@@ -2340,7 +2344,7 @@ export interface VideoGetCommentsResponse {
     items: Objects.WallWallComment[];
 }
 
-export interface VideoGetExtendedResponse {
+export interface VideoGetResponse {
     /**
      * Total number
      */
@@ -2349,15 +2353,6 @@ export interface VideoGetExtendedResponse {
     items: Objects.VideoVideoFull[];
     profiles?: Objects.UsersUserMin[];
     groups?: Objects.GroupsGroupFull[];
-}
-
-export interface VideoGetResponse {
-    /**
-     * Total number
-     */
-    count: number;
-    [key: string]: any;
-    items: Objects.VideoVideoFull[];
 }
 
 export type VideoRestoreCommentResponse = Objects.BaseBoolInt;

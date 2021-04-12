@@ -526,10 +526,6 @@ export interface APIFave {
     /**
      * Adds a link to user faves.
      */
-    addClassified(params: Params.FaveAddClassifiedParams): Promise<Responses.BaseOkResponse>;
-    /**
-     * Adds a link to user faves.
-     */
     addLink(params: Params.FaveAddLinkParams): Promise<Responses.BaseOkResponse>;
     addPage(params: Params.FaveAddPageParams): Promise<Responses.BaseOkResponse>;
     addPost(params: Params.FaveAddPostParams): Promise<Responses.BaseOkResponse>;
@@ -542,10 +538,6 @@ export interface APIFave {
     getTags(params: Params.FaveGetTagsParams): Promise<Responses.FaveGetTagsResponse>;
     markSeen(params: Params.FaveMarkSeenParams): Promise<Responses.BaseBoolResponse>;
     removeArticle(params: Params.FaveRemoveArticleParams): Promise<Responses.BaseBoolResponse>;
-    /**
-     * Removes link from the user's faves.
-     */
-    removeClassified(params: Params.FaveRemoveClassifiedParams): Promise<Responses.BaseOkResponse>;
     /**
      * Removes link from the user's faves.
      */
@@ -906,7 +898,7 @@ export interface APIMarket {
     /**
      * Returns a list of market categories.
      */
-    getCategories(params: Params.MarketGetCategoriesParams): Promise<Responses.MarketGetCategoriesNewResponse>;
+    getCategories(params: Params.MarketGetCategoriesParams): Promise<Responses.MarketGetCategoriesResponse>;
     /**
      * Returns comments list for an item.
      */
@@ -1354,7 +1346,7 @@ export interface APIPhotos {
     /**
      * Returns information about photos by their IDs.
      */
-    getById(params: Params.PhotosGetByIdParams): Promise<Responses.PhotosGetByIdResponse>;
+    getById(params: Params.PhotosGetByIdParams): Promise<Responses.PhotosGetByIdLegacyResponse>;
     /**
      * Returns an upload link for chat cover pictures.
      */
