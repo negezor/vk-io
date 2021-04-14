@@ -71,7 +71,7 @@ await api.procedure('important', {
 
 По умолчанию библиотека ограничивает количество запросов до `3` в секунду, этот лимит соотвествует пользовательским страницам и сервисным токенам.
 
-Для групповых токенов лимит состовляет `20`, установить его можно через опцию [apiLimit](http://negezor.github.io/vk-io/references/vk-io/interfaces/iapioptions.html#apilimit):
+Для групповых токенов лимит составляет `20`, установить его можно через опцию [apiLimit](http://negezor.github.io/vk-io/references/vk-io/interfaces/iapioptions.html#apilimit):
 
 ```ts
 import { API } from 'vk-io';
