@@ -34,7 +34,9 @@ const {
 	INVALID_PHONE_NUMBER,
 	AUTHORIZATION_FAILED,
 	FAILED_PASSED_CAPTCHA,
-	FAILED_PASSED_TWO_FACTOR
+	FAILED_PASSED_TWO_FACTOR,
+	TOO_MUCH_TRIES,
+	WRONG_OTP
 } = AuthErrorCode;
 
 /**
@@ -274,6 +276,22 @@ export class DirectAuthorization {
 						response = await this.processSecurityForm(response, $);
 
 						continue;
+					}
+
+					if (text.error === 'invalid_request') {
+						if (text.error_type === 'too_much_tries') {
+							throw new AuthorizationError({
+								message: 'Too much authorization tries. Try again later in a few hours.',
+								code: TOO_MUCH_TRIES
+							});
+						}
+
+						if (text.error_type === 'wrong_otp') {
+							throw new AuthorizationError({
+								message: 'Wrong two factor code.',
+								code: WRONG_OTP
+							});
+						}
 					}
 
 					throw new AuthorizationError({
