@@ -35,6 +35,7 @@ const {
 	AUTHORIZATION_FAILED,
 	FAILED_PASSED_CAPTCHA,
 	FAILED_PASSED_TWO_FACTOR,
+	USERNAME_OR_PASSWORD_IS_INCORRECT,
 	TOO_MUCH_TRIES,
 	WRONG_OTP,
 	OTP_FORMAT_IS_INCORRECT
@@ -253,8 +254,15 @@ export class DirectAuthorization {
 
 				if (text.error !== undefined) {
 					if (text.error === 'invalid_client') {
+						if (text.error_type === 'username_or_password_is_incorrect') {
+							throw new AuthorizationError({
+								message: "Username or password is incorrect.",
+								code: USERNAME_OR_PASSWORD_IS_INCORRECT
+							});
+						}
+						
 						throw new AuthorizationError({
-							message: `Invalid client (${text.error_description})`,
+							message: `Invalid client (${text.error_type}: ${text.error_description})`,
 							code: AUTHORIZATION_FAILED
 						});
 					}
