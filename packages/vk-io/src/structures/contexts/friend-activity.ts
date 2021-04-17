@@ -7,11 +7,13 @@ export type FriendActivityContextType = 'friend_activity';
 
 export type FriendActivityContextSubType =
 'friend_online'
-| 'friend_offline';
+| 'friend_offline'
+| 'friend_invisible';
 
 const subTypes: Record<number, FriendActivityContextSubType> = {
 	8: 'friend_online',
-	9: 'friend_offline'
+	9: 'friend_offline',
+	81: 'friend_invisible'
 };
 
 export interface IFriendActivityContextPayload {
@@ -66,6 +68,15 @@ export class FriendActivityContext<S = ContextDefaultState>
 	}
 
 	/**
+	 * Checks that the user is invisible
+	 */
+	public get isInvisible(): boolean {
+		return this.subTypes.includes('friend_invisible')
+			? Boolean(this.payload.extra)
+			: false;
+	}
+
+	/**
 	 * Checks that the user has logged out of the network himself
 	 */
 	public get isSelfLeave(): boolean {
@@ -112,7 +123,11 @@ export class FriendActivityContext<S = ContextDefaultState>
 	 * - `7` - vk.com or other unknown application
 	 */
 	public get platform(): number | undefined {
-		return this.payload.extra;
+		const { extra } = this.payload;
+
+		return extra !== -1
+			? extra
+			: undefined;
 	}
 
 	/**
@@ -126,7 +141,8 @@ export class FriendActivityContext<S = ContextDefaultState>
 			'isSelfLeave',
 			'isTimeoutLeave',
 			'isOnline',
-			'isOffline'
+			'isOffline',
+			'isInvisible'
 		]);
 	}
 }

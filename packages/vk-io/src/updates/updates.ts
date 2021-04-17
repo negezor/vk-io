@@ -211,7 +211,7 @@ const pollingContextsEvents: [number[], Constructor<any>][] = [
 		MessagesReadContext
 	],
 	[
-		[8, 9],
+		[8, 9, 81],
 		FriendActivityContext
 	],
 	[
