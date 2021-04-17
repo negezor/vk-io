@@ -33,6 +33,7 @@ import {
 
 	CommentContextType,
 	DialogFlagsContextType,
+	DialogNotificationsContextType,
 	GroupMemberContextType,
 	GroupUpdateContextType,
 	GroupUserContextType,
@@ -57,6 +58,7 @@ import {
 
 	CommentContextSubType,
 	DialogFlagsContextSubType,
+	DialogNotificationsContextSubType,
 	GroupMemberContextSubType,
 	GroupUpdateContextSubType,
 	GroupUserContextSubType,
@@ -253,6 +255,7 @@ const pollingContexts = makeContexts(pollingContextsEvents);
 export type ContextTypes =
 CommentContextType
 | DialogFlagsContextType
+| DialogNotificationsContextType
 | GroupMemberContextType
 | GroupUpdateContextType
 | GroupUserContextType
@@ -277,6 +280,7 @@ CommentContextType
 export type ContextSubTypes =
 CommentContextSubType
 | DialogFlagsContextSubType
+| DialogNotificationsContextSubType
 | GroupMemberContextSubType
 | GroupUpdateContextSubType
 | GroupUserContextSubType
@@ -437,6 +441,11 @@ export class Updates {
 	public on<T = {}>(
 		events: AllowArray<DialogFlagsContextType | DialogFlagsContextSubType>,
 		handler: AllowArray<Middleware<DialogFlagsContext & T>>
+	): this;
+
+	public on<T = {}>(
+		events: AllowArray<DialogNotificationsContextType | DialogNotificationsContextSubType>,
+		handler: AllowArray<Middleware<DialogNotificationsContext & T>>
 	): this;
 
 	public on<T = {}>(
