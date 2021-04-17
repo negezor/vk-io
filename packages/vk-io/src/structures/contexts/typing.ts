@@ -8,16 +8,23 @@ import {
 	kSerializeData
 } from '../../utils/constants';
 
+export enum TYPING_UPDATES {
+	TYPE = 'type',
+	AUDIO_MESSAGE = 'audiomessage',
+	PHOTO_MESSAGE = 'photo',
+	VIDEO_MESSAGE = 'video',
+	FILE_MESSAGE = 'file'
+}
+
 const transformPolling = (
 	{ 1: toId, 2: fromIds }: [number, number, number[]],
 	updateType: number | string
 ): ITypingContextPayload => ({
 	from_id: fromIds[0],
 	to_id: toId,
-
-	state: updateType === 64
-		? 'audiomessage'
-		: 'typing'
+	state: typeof updateType === "string"
+		? updateType
+		: Object.values(TYPING_UPDATES)[updateType - 63]
 });
 
 export type TypingContextType = 'typing';
@@ -66,14 +73,35 @@ export class TypingContext<S = ContextDefaultState>
 	 * Checks is typing
 	 */
 	public get isTyping(): boolean {
-		return this.payload.state === 'typing';
+		return this.payload.state === TYPING_UPDATES.TYPE;
 	}
 
 	/**
 	 * Checks is record audio message
 	 */
 	public get isAudioMessage(): boolean {
-		return this.payload.state === 'audiomessage';
+		return this.payload.state === TYPING_UPDATES.AUDIO_MESSAGE;
+	}
+
+	/**
+	 * Checks is upload photo message
+	 */
+	public get isPhotoMessage(): boolean {
+		return this.payload.state === TYPING_UPDATES.PHOTO_MESSAGE;
+	}
+
+	/**
+	 * Checks is upload video message
+	 */
+	public get isVideoMessage(): boolean {
+		return this.payload.state === TYPING_UPDATES.VIDEO_MESSAGE;
+	}
+
+	/**
+	 * Checks is upload file message
+	 */
+	public get isFileMessage(): boolean {
+		return this.payload.state === TYPING_UPDATES.FILE_MESSAGE;
 	}
 
 	/**
