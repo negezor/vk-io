@@ -77,11 +77,11 @@ import {
 	DonutSubscriptionContextSubType,
 	DonutSubscriptionPriceContextSubType,
 	DonutWithdrawContextSubType
-} from '../structures/contexts';
+} from '../structures';
 
 import { API } from '../api';
 import { Upload } from '../upload';
-import { Composer } from '../structures/shared/composer';
+import { Composer } from '../structures';
 import { PollingTransport, WebhookTransport, IWebhookTransportStartOptions } from './transports';
 
 import { APIErrorCode } from '../errors';
@@ -203,7 +203,7 @@ const pollingContextsEvents: [number[], Constructor<any>][] = [
 		MessageFlagsContext
 	],
 	[
-		[4, 5],
+		[4, 5, 18],
 		MessageContext
 	],
 	[

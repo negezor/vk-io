@@ -51,7 +51,8 @@ export type MessageContextSubType =
 
 const subTypesEnum: Record<string | number, MessageContextSubType> = {
 	4: 'message_new',
-	5: 'message_edit'
+	5: 'message_edit',
+	18: 'message_edit'
 };
 
 const kForwards = Symbol('forwards');
