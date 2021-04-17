@@ -162,7 +162,10 @@ export class TypingContext<S = ContextDefaultState>
 			'isGroup',
 			'isChat',
 			'isTyping',
-			'isAudioMessage'
+			'isAudioMessage',
+			'isPhotoMessage',
+			'isVideoMessage',
+			'isFileMessage'
 		]);
 	}
 }
