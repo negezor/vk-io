@@ -22,4 +22,5 @@ export * from './dialog-messages';
 export * from './vk-pay-transaction';
 export * from './donut-subscription';
 export * from './message-subscription';
+export * from './dialog-notifications';
 export * from './donut-subscription-price';

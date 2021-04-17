@@ -25,6 +25,7 @@ import {
 	CommentContext,
 	NewAttachmentsContext,
 	DialogMessagesContext,
+	DialogNotificationsContext,
 	VKPayTransactionContext,
 	DonutSubscriptionContext,
 	DonutSubscriptionPriceContext,
@@ -225,6 +226,10 @@ const pollingContextsEvents: [number[], Constructor<any>][] = [
 	[
 		[63, 64, 65, 66, 67],
 		TypingContext
+	],
+	[
+		[114],
+		DialogNotificationsContext
 	]
 ];
 
