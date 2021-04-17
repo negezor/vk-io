@@ -16,6 +16,12 @@ export enum TypingUpdates {
 	FILE_MESSAGE = 'file'
 }
 
+export interface ITypingContextPayload {
+	from_id: number;
+	to_id: number;
+	state: string;
+}
+
 const transformPolling = (
 	{ 1: toId, 2: fromIds }: [number, number, number[]],
 	updateType: number | string
@@ -33,12 +39,6 @@ export type TypingContextSubType =
 'typing_user'
 | 'typing_group'
 | 'message_typing_state';
-
-export interface ITypingContextPayload {
-	from_id: number;
-	to_id: number;
-	state: string;
-}
 
 export type TypingContextOptions<S> =
 	ContextFactoryOptions<ITypingContextPayload, S>;
