@@ -12,6 +12,9 @@ export interface IAudioMessageAttachmentPayload {
 	waveform?: number[];
 	link_ogg?: string;
 	link_mp3?: string;
+	locale?: string;
+	transcript?: string;
+	transcript_state?: 'done' | string;
 }
 
 export type AudioMessageAttachmentOptions =
@@ -78,6 +81,34 @@ export class AudioMessageAttachment
 	}
 
 	/**
+	 * Returns the locale of the audio message
+	 */
+	public get locale(): string | undefined {
+		return this.payload.locale;
+	}
+	
+	/**
+	 * Returns the transcript of the audio message
+	 */
+	public get transcript(): string | undefined {
+		return this.payload.transcript;
+	}
+
+	/**
+	 * Returns the transcript of the audio message
+	 */
+	public get transcriptState(): 'done' | string | undefined {
+		return this.payload.transcript_state;
+	}
+
+	/**
+	 * Returns the transcript of the audio message
+	 */
+	public get isTranscriptDone(): boolean {
+		return this.payload.transcript_state === 'done';
+	}
+
+	/**
 	 * Returns the URL of the audio message
 	 */
 	public get url(): string | undefined {
@@ -88,13 +119,14 @@ export class AudioMessageAttachment
 	 * Returns the custom data
 	 */
 	public [kSerializeData](): object {
-		const payload = pickProperties(this, [
+		return pickProperties(this, [
 			'duration',
 			'oggUrl',
 			'mp3Url',
-			'url'
+			'url',
+			'locale',
+			'transcript',
+			'isTranscriptDone'
 		]);
-
-		return payload;
 	}
 }
