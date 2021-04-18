@@ -68,6 +68,8 @@ const attachmentHandlers = {
 		};
 	},
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	audiomsg: (raw: any, key: string, type: string, index: number): object => JSON.parse(raw.attachments)[index - 1],
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	default: (raw: any, key: string, type: string): object => ({
 		type,
 		[type]: idToAttachmentPayload(raw[key])
@@ -168,7 +170,7 @@ export function transformMessage({
 	message.attachments = [];
 
 	for (let i = 1, key = 'attach1'; attachments[key] !== undefined; i += 1, key = `attach${i}`) {
-		const type = attachments[`${key}_type`];
+		const type = attachments[`${key}_kind`] || attachments[`${key}_type`];
 
 		const handler = attachmentHandlers[type as keyof typeof attachmentHandlers]
 			|| attachmentHandlers.default;
@@ -177,7 +179,8 @@ export function transformMessage({
 			handler(
 				attachments,
 				key,
-				type
+				type,
+				i
 			)
 		);
 	}
