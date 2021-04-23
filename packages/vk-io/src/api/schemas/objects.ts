@@ -379,9 +379,17 @@ export type AdsAdStatus = 0 | 1 | 2;
 
 export interface AdsCampaign {
     /**
+     * Amount of active ads in campaign
+     */
+    ads_count?: number;
+    /**
      * Campaign's total limit, rubles
      */
     all_limit: string;
+    /**
+     * Campaign create time, as Unixtime
+     */
+    create_time?: number;
     /**
      * Campaign's day limit, rubles
      */
@@ -402,12 +410,20 @@ export interface AdsCampaign {
      * Campaign stop time, as Unixtime
      */
     stop_time: number;
+    /**
+     * Campaign update time, as Unixtime
+     */
+    update_time?: number;
+    /**
+     * Limit of views per user per campaign
+     */
+    views_limit?: number;
     [key: string]: any;
 }
 
 export type AdsCampaignStatus = 0 | 1 | 2;
 
-export type AdsCampaignType = "normal" | "vk_apps_managed" | "mobile_apps" | "promoted_posts";
+export type AdsCampaignType = "normal" | "vk_apps_managed" | "mobile_apps" | "promoted_posts" | "adaptive_ads" | "stories";
 
 export interface AdsCategory {
     /**
@@ -2059,8 +2075,16 @@ export interface CallbackMessageAllow {
 }
 
 export interface CallbackMessageBase {
+    /**
+     * Unique event id. If it passed twice or more - you should ignore it.
+     */
+    event_id?: string;
     [key: string]: any;
     group_id: number;
+}
+
+export interface CallbackMessageData {
+    [key: string]: any;
 }
 
 export interface CallbackMessageDeny {
@@ -2178,6 +2202,27 @@ export interface CallsParticipants {
     count?: number;
     [key: string]: any;
     list?: number[];
+}
+
+export interface ClientInfoForBots {
+    /**
+     * client has support keyboard
+     */
+    keyboard?: boolean | number;
+    /**
+     * client has support inline keyboard
+     */
+    inline_keyboard?: boolean | number;
+    /**
+     * client has support carousel
+     */
+    carousel?: boolean | number;
+    /**
+     * client or user language id
+     */
+    lang_id?: number;
+    [key: string]: any;
+    button_actions?: MessagesTemplateActionTypeNames[];
 }
 
 export interface CommentThread {
@@ -3434,10 +3479,6 @@ export interface MarketCurrency {
 
 export interface MarketMarketAlbum {
     /**
-     * Items number
-     */
-    count: number;
-    /**
      * Market album ID
      */
     id: number;
@@ -3449,6 +3490,10 @@ export interface MarketMarketAlbum {
      * Market album title
      */
     title: string;
+    /**
+     * Items number
+     */
+    count: number;
     /**
      * Date when album has been updated last time in Unixtime
      */
@@ -5869,6 +5914,7 @@ export interface PollsPoll {
     can_vote: boolean | number;
     can_report: boolean | number;
     can_share: boolean | number;
+    embed_hash?: string;
     answers: PollsAnswer[];
     disable_unvote: boolean | number;
 }
@@ -7756,6 +7802,8 @@ export interface WallGeo {
     type?: string;
     [key: string]: any;
 }
+
+export type WallGetFilter = "owner" | "others" | "all" | "postponed" | "suggests" | "archived" | "donut";
 
 export interface WallGraffiti {
     /**

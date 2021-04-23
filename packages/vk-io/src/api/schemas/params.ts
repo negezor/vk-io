@@ -3388,7 +3388,7 @@ export interface MarketAddParams {
     /**
      * Cover photo ID.
      */
-    main_photo_id: number;
+    main_photo_id?: number;
     /**
      * Url for button in market item.
      */
@@ -3536,7 +3536,7 @@ export interface MarketEditParams {
     /**
      * Cover photo ID.
      */
-    main_photo_id: number;
+    main_photo_id?: number;
     /**
      * Url for button in market item.
      */
@@ -6141,6 +6141,7 @@ export interface PollsCreateParams {
     add_answers?: string;
     is_multiple?: boolean | number;
     end_date?: number;
+    app_id?: number;
     photo_id?: number;
     background_id?: "1" | "2" | "3" | "4" | "6" | "8" | "9";
     disable_unvote?: boolean | number;
@@ -7674,13 +7675,10 @@ export interface WallGetParams {
      */
     count?: number;
     /**
-     * Filter to apply: 'owner' — posts by the wall owner, 'others' — posts by someone else, 'all' — posts by the wall owner and others (default), 'postponed' — timed posts (only available for calls with an 'access_token'), 'suggests' — suggested posts on a community wall
-     */
-    filter?: "owner" | "others" | "all" | "postponed" | "suggests";
-    /**
      * '1' — to return 'wall', 'profiles', and 'groups' fields, '0' — to return no additional fields (default)
      */
     extended?: boolean | number;
+    filter?: Objects.WallGetFilter;
     fields?: Objects.BaseUserGroupFields[];
     [key: string]: any;
 }
