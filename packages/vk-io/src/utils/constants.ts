@@ -12,6 +12,7 @@ export const MINIMUM_TIME_INTERVAL_API = 1133;
  * The attachment types
  */
 export enum AttachmentType {
+	ALBUM = 'album',
 	AUDIO = 'audio',
 	AUDIO_MESSAGE = 'audio_message',
 	GRAFFITI = 'graffiti',
@@ -30,7 +31,8 @@ export enum AttachmentType {
 }
 
 export type AttachmentTypeString =
-'audio'
+'album'
+| 'audio'
 | 'audio_message'
 | 'graffiti'
 | 'doc'
