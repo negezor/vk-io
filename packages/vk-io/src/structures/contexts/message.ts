@@ -5,12 +5,10 @@ import { Params } from '../../api';
 import { VKError } from '../../errors';
 
 import { transformMessage } from './helpers/transform-message';
-import { MessageForwardsCollection } from '../shared';
+import { MessageForwardsCollection, Attachmentable, IAllAttachmentable } from '../shared';
 
-import { Attachment, ExternalAttachment } from '../attachments';
-import { Attachmentable, IAllAttachmentable } from '../shared';
+import { Attachment, ExternalAttachment, transformAttachments } from '../attachments';
 
-import { transformAttachments } from '../attachments';
 import {
 	unescapeHTML,
 	pickProperties,

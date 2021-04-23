@@ -5,6 +5,8 @@ import { Middleware, compose, noopNext } from 'middleware-io';
 import { Agent, globalAgent } from 'https';
 
 import {
+	Composer,
+
 	Context,
 	VoteContext,
 	LikeContext,
@@ -84,7 +86,7 @@ import {
 
 import { API } from '../api';
 import { Upload } from '../upload';
-import { Composer } from '../structures';
+
 import { PollingTransport, WebhookTransport, IWebhookTransportStartOptions } from './transports';
 
 import { APIErrorCode } from '../errors';
@@ -444,6 +446,7 @@ export class Updates {
 	): this;
 
 	public on<T = {}>(
+		// eslint-disable-next-line max-len
 		events: AllowArray<DialogNotificationSettingsContextType | DialogNotificationSettingsContextSubType>,
 		handler: AllowArray<Middleware<DialogNotificationSettingsContext & T>>
 	): this;
