@@ -23,6 +23,8 @@ import { API } from '../../api';
 import { AttachmentType } from '../../utils/constants';
 
 const attachmentsTypes = {
+	[AttachmentType.ALBUM]: undefined,
+
 	[AttachmentType.POLL]: (): typeof PollAttachment => PollAttachment,
 	[AttachmentType.GIFT]: (): typeof GiftAttachment => GiftAttachment,
 	[AttachmentType.WALL]: (): typeof WallAttachment => WallAttachment,
