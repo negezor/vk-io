@@ -15,17 +15,17 @@ export interface IDialogNotificationSettingsContextPayload {
 	disabled_until: number;
 }
 
-export type DialogNotificationsContextOptions<S> =
+export type DialogNotificationSettingsContextOptions<S> =
 	ContextFactoryOptions<[number, IDialogNotificationSettingsContextPayload], S>;
 
-export class DialogNotificationsContext<S = ContextDefaultState>
+export class DialogNotificationSettingsContext<S = ContextDefaultState>
 	extends Context<
 		IDialogNotificationSettingsContextPayload,
 		S,
 		DialogNotificationSettingsContextType,
 		DialogNotificationSettingsContextSubType
 		> {
-	public constructor(options: DialogNotificationsContextOptions<S>) {
+	public constructor(options: DialogNotificationSettingsContextOptions<S>) {
 		const [, payload] = options.payload;
 
 		const { disabled_until } = payload;
