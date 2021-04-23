@@ -64,7 +64,7 @@ const attachmentHandlers = {
 
 		return {
 			type,
-			[type]: Object.keys(DocumentKind).includes(type)
+			[type]: DocumentKind[type]
 				? JSON.parse(raw.attachments)[index - 1]
 				: idToAttachmentPayload(raw[key])
 		};
