@@ -34,7 +34,11 @@ const {
 	INVALID_PHONE_NUMBER,
 	AUTHORIZATION_FAILED,
 	FAILED_PASSED_CAPTCHA,
-	FAILED_PASSED_TWO_FACTOR
+	FAILED_PASSED_TWO_FACTOR,
+	USERNAME_OR_PASSWORD_IS_INCORRECT,
+	TOO_MUCH_TRIES,
+	WRONG_OTP,
+	OTP_FORMAT_IS_INCORRECT
 } = AuthErrorCode;
 
 /**
@@ -250,8 +254,15 @@ export class DirectAuthorization {
 
 				if (text.error !== undefined) {
 					if (text.error === 'invalid_client') {
+						if (text.error_type === 'username_or_password_is_incorrect') {
+							throw new AuthorizationError({
+								message: "Username or password is incorrect.",
+								code: USERNAME_OR_PASSWORD_IS_INCORRECT
+							});
+						}
+						
 						throw new AuthorizationError({
-							message: `Invalid client (${text.error_description})`,
+							message: `Invalid client (${text.error_type}: ${text.error_description})`,
 							code: AUTHORIZATION_FAILED
 						});
 					}
@@ -274,6 +285,29 @@ export class DirectAuthorization {
 						response = await this.processSecurityForm(response, $);
 
 						continue;
+					}
+
+					if (text.error === 'invalid_request') {
+						if (text.error_type === 'too_much_tries') {
+							throw new AuthorizationError({
+								message: 'Too much authorization tries. Try again later in a few hours.',
+								code: TOO_MUCH_TRIES
+							});
+						}
+
+						if (text.error_type === 'wrong_otp') {
+							throw new AuthorizationError({
+								message: 'Wrong two factor code.',
+								code: WRONG_OTP
+							});
+						}
+						
+						if (text.error_type === 'otp_format_is_incorrect') {
+							throw new AuthorizationError({
+								message: 'Invalid two factor code format.',
+								code: OTP_FORMAT_IS_INCORRECT
+							});
+						}
 					}
 
 					throw new AuthorizationError({
