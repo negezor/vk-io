@@ -59,16 +59,16 @@ const attachmentHandlers = {
 		};
 	},
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	doc: (raw: any, key: string): object => {
+	doc: (raw: any, key: string, _: string, index: number): object => {
 		const type = DocumentKind[raw[`${key}_kind`]] || AttachmentType.DOCUMENT;
 
 		return {
 			type,
-			[type]: idToAttachmentPayload(raw[key])
+			[type]: Object.keys(DocumentKind).includes(type)
+				? JSON.parse(raw.attachments)[index - 1]
+				: idToAttachmentPayload(raw[key])
 		};
 	},
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	audiomsg: (raw: any, key: string, type: string, index: number): object => JSON.parse(raw.attachments)[index - 1],
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	default: (raw: any, key: string, type: string): object => ({
 		type,
@@ -170,7 +170,7 @@ export function transformMessage({
 	message.attachments = [];
 
 	for (let i = 1, key = 'attach1'; attachments[key] !== undefined; i += 1, key = `attach${i}`) {
-		const type = attachments[`${key}_kind`] || attachments[`${key}_type`];
+		const type = attachments[`${key}_type`];
 
 		const handler = attachmentHandlers[type as keyof typeof attachmentHandlers]
 			|| attachmentHandlers.default;
