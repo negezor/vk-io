@@ -8,16 +8,37 @@ import {
 	kSerializeData
 } from '../../utils/constants';
 
+export enum TypingState {
+	TYPING = 'typing',
+	AUDIO_MESSAGE = 'audiomessage',
+	PHOTO_MESSAGE = 'photo',
+	VIDEO_MESSAGE = 'video',
+	FILE_MESSAGE = 'file'
+}
+
+export interface ITypingContextPayload {
+	from_id: number;
+	to_id: number;
+	state: string;
+}
+
+const stateTypesEnum: Record<number | string, TypingState[keyof TypingState]> = {
+	63: 'typing',
+	64: 'audiomessage',
+	65: 'photo',
+	66: 'video',
+	67: 'file'
+};
+
 const transformPolling = (
 	{ 1: toId, 2: fromIds }: [number, number, number[]],
 	updateType: number | string
 ): ITypingContextPayload => ({
 	from_id: fromIds[0],
 	to_id: toId,
-
-	state: updateType === 64
-		? 'audiomessage'
-		: 'typing'
+	state: typeof updateType === "string"
+		? updateType
+		: stateTypesEnum[updateType] as string
 });
 
 export type TypingContextType = 'typing';
@@ -26,12 +47,6 @@ export type TypingContextSubType =
 'typing_user'
 | 'typing_group'
 | 'message_typing_state';
-
-export interface ITypingContextPayload {
-	from_id: number;
-	to_id: number;
-	state: string;
-}
 
 export type TypingContextOptions<S> =
 	ContextFactoryOptions<ITypingContextPayload, S>;
@@ -66,14 +81,35 @@ export class TypingContext<S = ContextDefaultState>
 	 * Checks is typing
 	 */
 	public get isTyping(): boolean {
-		return this.payload.state === 'typing';
+		return this.payload.state === TypingState.TYPING;
 	}
 
 	/**
 	 * Checks is record audio message
 	 */
 	public get isAudioMessage(): boolean {
-		return this.payload.state === 'audiomessage';
+		return this.payload.state === TypingState.AUDIO_MESSAGE;
+	}
+
+	/**
+	 * Checks is upload photo message
+	 */
+	public get isPhotoMessage(): boolean {
+		return this.payload.state === TypingState.PHOTO_MESSAGE;
+	}
+
+	/**
+	 * Checks is upload video message
+	 */
+	public get isVideoMessage(): boolean {
+		return this.payload.state === TypingState.VIDEO_MESSAGE;
+	}
+
+	/**
+	 * Checks is upload file message
+	 */
+	public get isFileMessage(): boolean {
+		return this.payload.state === TypingState.FILE_MESSAGE;
 	}
 
 	/**
@@ -134,7 +170,10 @@ export class TypingContext<S = ContextDefaultState>
 			'isGroup',
 			'isChat',
 			'isTyping',
-			'isAudioMessage'
+			'isAudioMessage',
+			'isPhotoMessage',
+			'isVideoMessage',
+			'isFileMessage'
 		]);
 	}
 }

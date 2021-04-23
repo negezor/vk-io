@@ -5,12 +5,12 @@ import { Params } from '../../api';
 import { VKError } from '../../errors';
 
 import { transformMessage } from './helpers/transform-message';
-import { MessageForwardsCollection } from '../shared/message-forward-collection';
+import { MessageForwardsCollection } from '../shared';
 
 import { Attachment, ExternalAttachment } from '../attachments';
-import { Attachmentable, IAllAttachmentable } from '../shared/attachmentable';
+import { Attachmentable, IAllAttachmentable } from '../shared';
 
-import { transformAttachments } from '../attachments/helpers';
+import { transformAttachments } from '../attachments';
 import {
 	unescapeHTML,
 	pickProperties,
@@ -51,7 +51,8 @@ export type MessageContextSubType =
 
 const subTypesEnum: Record<string | number, MessageContextSubType> = {
 	4: 'message_new',
-	5: 'message_edit'
+	5: 'message_edit',
+	18: 'message_edit'
 };
 
 const kForwards = Symbol('forwards');
@@ -118,6 +119,13 @@ export interface IMessageContextPayload {
 				photo_200: string;
 			};
 		};
+		admin_author_id?: number;
+		is_cropped?: boolean;
+		members_count?: number;
+		was_listened?: boolean;
+		pinned_at?: number;
+		message_tag?: string;
+		is_expired?: boolean;
 	};
 	client_info: {
 		button_actions: (
@@ -413,6 +421,55 @@ class MessageContext<S = ContextDefaultState>
 		}
 
 		return this.message.geo;
+	}
+
+	/**
+	 * Returns the sender (admin community) identifier, only for community messages
+	 */
+	public get adminAuthorId(): IMessageContextPayload['message']['admin_author_id'] | undefined {
+		return this.message.admin_author_id;
+	}
+
+	/**
+	 * Checks whether the message is cropped for bot
+	 */
+	public get isCropped(): IMessageContextPayload['message']['is_cropped'] | undefined {
+		return this.message.is_cropped;
+	}
+
+	/**
+	 * Returns the members count
+	 */
+	public get membersCount(): IMessageContextPayload['message']['members_count'] | undefined {
+		return this.message.members_count;
+	}
+
+	/**
+	 * Checks whether the attached audio message has already been listened by you
+	 */
+	public get wasListened(): IMessageContextPayload['message']['was_listened'] | undefined {
+		return this.message.was_listened;
+	}
+
+	/**
+	 * Returns the date when this message was pinned
+	 */
+	public get pinnedAt(): IMessageContextPayload['message']['pinned_at'] | undefined {
+		return this.message.pinned_at;
+	}
+
+	/**
+	 * Returns the string for matching user Notify and VK
+	 */
+	public get messageTag(): IMessageContextPayload['message']['message_tag'] | undefined {
+		return this.message.message_tag;
+	}
+
+	/**
+	 * Checks whether the message is expired
+	 */
+	public get isExpired(): IMessageContextPayload['message']['is_expired'] | undefined {
+		return this.message.is_expired;
 	}
 
 	/**
@@ -846,6 +903,7 @@ class MessageContext<S = ContextDefaultState>
 			'senderType',
 			'createdAt',
 			'updatedAt',
+			'pinnedAt',
 			'text',
 			...beforeAttachments,
 			'forwards',

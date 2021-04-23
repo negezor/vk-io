@@ -25,6 +25,7 @@ import {
 	CommentContext,
 	NewAttachmentsContext,
 	DialogMessagesContext,
+	DialogNotificationSettingsContext,
 	VKPayTransactionContext,
 	DonutSubscriptionContext,
 	DonutSubscriptionPriceContext,
@@ -32,6 +33,7 @@ import {
 
 	CommentContextType,
 	DialogFlagsContextType,
+	DialogNotificationSettingsContextType,
 	GroupMemberContextType,
 	GroupUpdateContextType,
 	GroupUserContextType,
@@ -56,6 +58,7 @@ import {
 
 	CommentContextSubType,
 	DialogFlagsContextSubType,
+	DialogNotificationSettingsContextSubType,
 	GroupMemberContextSubType,
 	GroupUpdateContextSubType,
 	GroupUserContextSubType,
@@ -77,11 +80,11 @@ import {
 	DonutSubscriptionContextSubType,
 	DonutSubscriptionPriceContextSubType,
 	DonutWithdrawContextSubType
-} from '../structures/contexts';
+} from '../structures';
 
 import { API } from '../api';
 import { Upload } from '../upload';
-import { Composer } from '../structures/shared/composer';
+import { Composer } from '../structures';
 import { PollingTransport, WebhookTransport, IWebhookTransportStartOptions } from './transports';
 
 import { APIErrorCode } from '../errors';
@@ -203,7 +206,7 @@ const pollingContextsEvents: [number[], Constructor<any>][] = [
 		MessageFlagsContext
 	],
 	[
-		[4, 5],
+		[4, 5, 18],
 		MessageContext
 	],
 	[
@@ -211,7 +214,7 @@ const pollingContextsEvents: [number[], Constructor<any>][] = [
 		MessagesReadContext
 	],
 	[
-		[8, 9],
+		[8, 9, 81],
 		FriendActivityContext
 	],
 	[
@@ -223,8 +226,12 @@ const pollingContextsEvents: [number[], Constructor<any>][] = [
 		DialogMessagesContext
 	],
 	[
-		[63, 64],
+		[63, 64, 65, 66, 67],
 		TypingContext
+	],
+	[
+		[114],
+		DialogNotificationSettingsContext
 	]
 ];
 
@@ -248,6 +255,7 @@ const pollingContexts = makeContexts(pollingContextsEvents);
 export type ContextTypes =
 CommentContextType
 | DialogFlagsContextType
+| DialogNotificationSettingsContextType
 | GroupMemberContextType
 | GroupUpdateContextType
 | GroupUserContextType
@@ -272,6 +280,7 @@ CommentContextType
 export type ContextSubTypes =
 CommentContextSubType
 | DialogFlagsContextSubType
+| DialogNotificationSettingsContextSubType
 | GroupMemberContextSubType
 | GroupUpdateContextSubType
 | GroupUserContextSubType
@@ -432,6 +441,11 @@ export class Updates {
 	public on<T = {}>(
 		events: AllowArray<DialogFlagsContextType | DialogFlagsContextSubType>,
 		handler: AllowArray<Middleware<DialogFlagsContext & T>>
+	): this;
+
+	public on<T = {}>(
+		events: AllowArray<DialogNotificationSettingsContextType | DialogNotificationSettingsContextSubType>,
+		handler: AllowArray<Middleware<DialogNotificationSettingsContext & T>>
 	): this;
 
 	public on<T = {}>(
