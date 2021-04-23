@@ -9166,7 +9166,6 @@
           "name": "main_photo_id",
           "description": "Cover photo ID.",
           "type": "integer",
-          "required": true,
           "minimum": 0
         },
         {
@@ -9568,7 +9567,6 @@
           "name": "main_photo_id",
           "description": "Cover photo ID.",
           "type": "integer",
-          "required": true,
           "minimum": 0
         },
         {
@@ -16543,6 +16541,10 @@
           "type": "integer"
         },
         {
+          "name": "app_id",
+          "type": "integer"
+        },
+        {
           "name": "add_answers",
           "description": "available answers list, for example: \" [\"yes\",\"no\",\"maybe\"]\", There can be from 1 to 10 answers.",
           "type": "string"
@@ -20941,15 +20943,8 @@
         },
         {
           "name": "filter",
-          "description": "Filter to apply: 'owner' — posts by the wall owner, 'others' — posts by someone else, 'all' — posts by the wall owner and others (default), 'postponed' — timed posts (only available for calls with an 'access_token'), 'suggests' — suggested posts on a community wall",
           "type": "string",
-          "enum": [
-            "owner",
-            "others",
-            "all",
-            "postponed",
-            "suggests"
-          ]
+          "$ref": "objects.json#/definitions/wall_get_filter"
         },
         {
           "name": "extended",

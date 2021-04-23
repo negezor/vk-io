@@ -854,9 +854,17 @@
     "ads_campaign": {
       "type": "object",
       "properties": {
+        "ads_count": {
+          "type": "integer",
+          "description": "Amount of active ads in campaign"
+        },
         "all_limit": {
           "type": "string",
           "description": "Campaign's total limit, rubles"
+        },
+        "create_time": {
+          "type": "integer",
+          "description": "Campaign create time, as Unixtime"
         },
         "day_limit": {
           "type": "string",
@@ -883,6 +891,14 @@
         },
         "type": {
           "$ref": "objects.json#/definitions/ads_campaign_type"
+        },
+        "update_time": {
+          "type": "integer",
+          "description": "Campaign update time, as Unixtime"
+        },
+        "views_limit": {
+          "type": "integer",
+          "description": "Limit of views per user per campaign"
         }
       },
       "required": [
@@ -918,7 +934,9 @@
         "normal",
         "vk_apps_managed",
         "mobile_apps",
-        "promoted_posts"
+        "promoted_posts",
+        "adaptive_ads",
+        "stories"
       ]
     },
     "ads_category": {
@@ -3919,11 +3937,15 @@
           "$ref": "objects.json#/definitions/callback_message_type"
         },
         "object": {
-          "type": "object"
+          "$ref": "objects.json#/definitions/callback_message_data"
         },
         "group_id": {
           "type": "integer",
           "minimum": 0
+        },
+        "event_id": {
+          "type": "string",
+          "description": "Unique event id. If it passed twice or more - you should ignore it."
         }
       },
       "required": [
@@ -3932,6 +3954,18 @@
         "group_id"
       ],
       "additionalProperties": false
+    },
+    "callback_message_data": {
+      "type": "object",
+      "properties": {
+        "client_info": {
+          "$ref": "objects.json#/definitions/client_info_for_bots"
+        },
+        "message": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": true
     },
     "callback_message_deny": {
       "type": "object",
@@ -4310,6 +4344,34 @@
           "type": "integer",
           "minimum": 0,
           "description": "Participants count"
+        }
+      },
+      "additionalProperties": false
+    },
+    "client_info_for_bots": {
+      "type": "object",
+      "properties": {
+        "button_actions": {
+          "type": "array",
+          "items": {
+            "$ref": "objects.json#/definitions/messages_template_action_type_names"
+          }
+        },
+        "keyboard": {
+          "type": "boolean",
+          "description": "client has support keyboard"
+        },
+        "inline_keyboard": {
+          "type": "boolean",
+          "description": "client has support inline keyboard"
+        },
+        "carousel": {
+          "type": "boolean",
+          "description": "client has support carousel"
+        },
+        "lang_id": {
+          "type": "integer",
+          "description": "client or user language id"
         }
       },
       "additionalProperties": false
@@ -7204,11 +7266,6 @@
     "market_market_album": {
       "type": "object",
       "properties": {
-        "count": {
-          "type": "integer",
-          "description": "Items number",
-          "minimum": 0
-        },
         "id": {
           "type": "integer",
           "description": "Market album ID",
@@ -7218,12 +7275,17 @@
           "type": "integer",
           "description": "Market album owner's ID"
         },
-        "photo": {
-          "$ref": "objects.json#/definitions/photos_photo"
-        },
         "title": {
           "type": "string",
           "description": "Market album title"
+        },
+        "count": {
+          "type": "integer",
+          "description": "Items number",
+          "minimum": 0
+        },
+        "photo": {
+          "$ref": "objects.json#/definitions/photos_photo"
         },
         "updated_time": {
           "type": "integer",
@@ -11844,6 +11906,9 @@
         "can_share": {
           "type": "boolean"
         },
+        "embed_hash": {
+          "type": "string"
+        },
         "photo": {
           "$ref": "objects.json#/definitions/polls_background"
         },
@@ -15326,6 +15391,19 @@
         }
       },
       "additionalProperties": false
+    },
+    "wall_get_filter": {
+      "description": "Filter to apply: 'owner' — posts by the wall owner, 'others' — posts by someone else, 'all' — posts by the wall owner and others (default), 'postponed' — timed posts (only available for calls with an 'access_token'), 'suggests' — suggested posts on a community wall",
+      "type": "string",
+      "enum": [
+        "owner",
+        "others",
+        "all",
+        "postponed",
+        "suggests",
+        "archived",
+        "donut"
+      ]
     },
     "wall_graffiti": {
       "type": "object",
