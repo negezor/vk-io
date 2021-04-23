@@ -59,12 +59,14 @@ const attachmentHandlers = {
 		};
 	},
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	doc: (raw: any, key: string): object => {
+	doc: (raw: any, key: string, _: string, index: number): object => {
 		const type = DocumentKind[raw[`${key}_kind`]] || AttachmentType.DOCUMENT;
 
 		return {
 			type,
-			[type]: idToAttachmentPayload(raw[key])
+			[type]: DocumentKind[type]
+				? JSON.parse(raw.attachments)[index - 1]
+				: idToAttachmentPayload(raw[key])
 		};
 	},
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -177,7 +179,8 @@ export function transformMessage({
 			handler(
 				attachments,
 				key,
-				type
+				type,
+				i
 			)
 		);
 	}
