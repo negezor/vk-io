@@ -3,27 +3,27 @@ import { Context, ContextFactoryOptions, ContextDefaultState } from './context';
 import { pickProperties } from '../../utils/helpers';
 import { kSerializeData } from '../../utils/constants';
 
-export type DialogNotificationsContextType = 'dialog_notifications';
+export type DialogNotificationSettingsContextType = 'dialog_notification_settings';
 
-export type DialogNotificationsContextSubType =
-	'dialog_notifications_subscribe'
-	| 'dialog_notifications_unsubscribe';
+export type DialogNotificationSettingsContextSubType =
+	'dialog_notification_settings_subscribe'
+	| 'dialog_notification_settings_unsubscribe';
 
-export interface IDialogNotificationsContextPayload {
+export interface IDialogNotificationSettingsContextPayload {
 	peer_id: number;
 	sound: 0 | 1;
 	disabled_until: number;
 }
 
 export type DialogNotificationsContextOptions<S> =
-	ContextFactoryOptions<[number, IDialogNotificationsContextPayload], S>;
+	ContextFactoryOptions<[number, IDialogNotificationSettingsContextPayload], S>;
 
 export class DialogNotificationsContext<S = ContextDefaultState>
 	extends Context<
-		IDialogNotificationsContextPayload,
+		IDialogNotificationSettingsContextPayload,
 		S,
-		DialogNotificationsContextType,
-		DialogNotificationsContextSubType
+		DialogNotificationSettingsContextType,
+		DialogNotificationSettingsContextSubType
 		> {
 	public constructor(options: DialogNotificationsContextOptions<S>) {
 		const [, payload] = options.payload;
@@ -33,11 +33,11 @@ export class DialogNotificationsContext<S = ContextDefaultState>
 		super({
 			...options,
 
-			type: 'dialog_notifications',
+			type: 'dialog_notification_settings',
 			subTypes: [
 				disabled_until === 0
-					? 'dialog_notifications_subscribe'
-					: 'dialog_notifications_unsubscribe'
+					? 'dialog_notification_settings_subscribe'
+					: 'dialog_notification_settings_unsubscribe'
 			],
 
 			payload: payload
@@ -69,14 +69,14 @@ export class DialogNotificationsContext<S = ContextDefaultState>
 	 * Checks that the user has subscribed to dialog
 	 */
 	public get isSubscribed(): boolean {
-		return this.subTypes.includes('dialog_notifications_subscribe');
+		return this.subTypes.includes('dialog_notification_settings_subscribe');
 	}
 
 	/**
 	 * Checks that the user has unsubscribed to dialog
 	 */
 	public get isUnsubscribed(): boolean {
-		return this.subTypes.includes('dialog_notifications_unsubscribe');
+		return this.subTypes.includes('dialog_notification_settings_unsubscribe');
 	}
 
 	/**
