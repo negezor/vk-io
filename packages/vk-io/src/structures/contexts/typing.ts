@@ -9,7 +9,7 @@ import {
 } from '../../utils/constants';
 
 export enum TypingUpdates {
-	TYPE = 'type',
+	TYPING = 'typing',
 	AUDIO_MESSAGE = 'audiomessage',
 	PHOTO_MESSAGE = 'photo',
 	VIDEO_MESSAGE = 'video',
@@ -73,7 +73,7 @@ export class TypingContext<S = ContextDefaultState>
 	 * Checks is typing
 	 */
 	public get isTyping(): boolean {
-		return this.payload.state === TypingUpdates.TYPE;
+		return this.payload.state === TypingUpdates.TYPING;
 	}
 
 	/**
