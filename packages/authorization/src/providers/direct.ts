@@ -256,11 +256,11 @@ export class DirectAuthorization {
 					if (text.error === 'invalid_client') {
 						if (text.error_type === 'username_or_password_is_incorrect') {
 							throw new AuthorizationError({
-								message: "Username or password is incorrect.",
+								message: 'Username or password is incorrect.',
 								code: USERNAME_OR_PASSWORD_IS_INCORRECT
 							});
 						}
-						
+
 						throw new AuthorizationError({
 							message: `Invalid client (${text.error_type}: ${text.error_description})`,
 							code: AUTHORIZATION_FAILED
@@ -301,7 +301,7 @@ export class DirectAuthorization {
 								code: WRONG_OTP
 							});
 						}
-						
+
 						if (text.error_type === 'otp_format_is_incorrect') {
 							throw new AuthorizationError({
 								message: 'Invalid two factor code format.',
