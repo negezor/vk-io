@@ -25,7 +25,7 @@ import {
 	CommentContext,
 	NewAttachmentsContext,
 	DialogMessagesContext,
-	DialogNotificationsContext,
+	DialogNotificationSettingsContext,
 	VKPayTransactionContext,
 	DonutSubscriptionContext,
 	DonutSubscriptionPriceContext,
@@ -33,7 +33,7 @@ import {
 
 	CommentContextType,
 	DialogFlagsContextType,
-	DialogNotificationsContextType,
+	DialogNotificationSettingsContextType,
 	GroupMemberContextType,
 	GroupUpdateContextType,
 	GroupUserContextType,
@@ -58,7 +58,7 @@ import {
 
 	CommentContextSubType,
 	DialogFlagsContextSubType,
-	DialogNotificationsContextSubType,
+	DialogNotificationSettingsContextSubType,
 	GroupMemberContextSubType,
 	GroupUpdateContextSubType,
 	GroupUserContextSubType,
@@ -231,7 +231,7 @@ const pollingContextsEvents: [number[], Constructor<any>][] = [
 	],
 	[
 		[114],
-		DialogNotificationsContext
+		DialogNotificationSettingsContext
 	]
 ];
 
@@ -255,7 +255,7 @@ const pollingContexts = makeContexts(pollingContextsEvents);
 export type ContextTypes =
 CommentContextType
 | DialogFlagsContextType
-| DialogNotificationsContextType
+| DialogNotificationSettingsContextType
 | GroupMemberContextType
 | GroupUpdateContextType
 | GroupUserContextType
@@ -280,7 +280,7 @@ CommentContextType
 export type ContextSubTypes =
 CommentContextSubType
 | DialogFlagsContextSubType
-| DialogNotificationsContextSubType
+| DialogNotificationSettingsContextSubType
 | GroupMemberContextSubType
 | GroupUpdateContextSubType
 | GroupUserContextSubType
@@ -444,8 +444,8 @@ export class Updates {
 	): this;
 
 	public on<T = {}>(
-		events: AllowArray<DialogNotificationsContextType | DialogNotificationsContextSubType>,
-		handler: AllowArray<Middleware<DialogNotificationsContext & T>>
+		events: AllowArray<DialogNotificationSettingsContextType | DialogNotificationSettingsContextSubType>,
+		handler: AllowArray<Middleware<DialogNotificationSettingsContext & T>>
 	): this;
 
 	public on<T = {}>(
