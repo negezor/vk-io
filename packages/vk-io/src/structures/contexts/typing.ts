@@ -22,7 +22,7 @@ export interface ITypingContextPayload {
 	state: string;
 }
 
-const stateTypesEnum: Record<number | string, TypingState[typeof TypingState]> = {
+const stateTypesEnum: Record<number | string, TypingState[keyof TypingState]> = {
 	63: 'typing',
 	64: 'audiomessage',
 	65: 'photo',
@@ -38,7 +38,7 @@ const transformPolling = (
 	to_id: toId,
 	state: typeof updateType === "string"
 		? updateType
-		: stateTypesEnum[updateType]
+		: stateTypesEnum[updateType] as string
 });
 
 export type TypingContextType = 'typing';
