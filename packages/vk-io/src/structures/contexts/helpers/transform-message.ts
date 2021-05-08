@@ -62,12 +62,14 @@ const attachmentHandlers = {
 	doc: (raw: any, key: string, _: string, index: number): object => {
 		const type = DocumentKind[raw[`${key}_kind`]] || AttachmentType.DOCUMENT;
 
-		return {
-			type,
-			[type]: DocumentKind[type]
-				? JSON.parse(raw.attachments)[index - 1]
-				: idToAttachmentPayload(raw[key])
-		};
+        	if (Object.values(DocumentKind).includes(type)) {
+            		return JSON.parse(raw.attachments)[index - 1];
+        	}
+        
+        	return {
+            		type,
+            		[type]: idToAttachmentPayload(raw[key])
+        	};
 	},
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	default: (raw: any, key: string, type: string): object => ({
