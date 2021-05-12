@@ -49,6 +49,7 @@ const groupMethods = [
 	'polls',
 	'podcasts',
 	'prettyCards',
+	'store',
 	'search',
 	'secure',
 	'stats',
