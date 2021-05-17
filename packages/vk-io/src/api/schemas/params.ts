@@ -3262,6 +3262,7 @@ export interface GroupsTagUpdateParams {
 export interface GroupsToggleMarketParams {
     group_id: number;
     state?: Objects.GroupsMarketState;
+    ref?: string;
     [key: string]: any;
 }
 
@@ -3618,6 +3619,14 @@ export interface MarketGetParams {
      * '1' - method will return additional fields: 'likes, can_comment, car_repost, photos'. These parameters are not returned by default.
      */
     extended?: boolean | number;
+    /**
+     * Items update date from (format: yyyy-mm-dd)
+     */
+    date_from?: string;
+    /**
+     * Items update date to (format: yyyy-mm-dd)
+     */
+    date_to?: string;
     album_id?: number;
     [key: string]: any;
 }
@@ -3724,6 +3733,14 @@ export interface MarketGetOrderItemsParams {
 }
 
 export interface MarketGetOrdersParams {
+    /**
+     * Orders status updated date from (format: yyyy-mm-dd)
+     */
+    date_from?: string;
+    /**
+     * Orders status updated date to (format: yyyy-mm-dd)
+     */
+    date_to?: string;
     offset?: number;
     count?: number;
     extended?: boolean | number;

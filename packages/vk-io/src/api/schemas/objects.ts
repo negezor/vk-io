@@ -3671,6 +3671,10 @@ export type MarketServicesViewType = 1 | 2;
 
 /*Media restrictions*/
 export interface MediaRestriction {
+    /**
+     * The type of disclaimer that describes, whether to remove other disclaimers
+     */
+    disclaimer_type?: number;
     [key: string]: any;
     text?: string;
     title: string;

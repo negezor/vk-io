@@ -979,6 +979,12 @@ export enum APIErrorCode {
      */
     MARKET_EXTENDED_NOT_ENABLED = 1409,
     /**
+     * Grouping already has such variant
+     *
+     * Code: `1413`
+     */
+    MARKET_GROUPING_ALREADY_HAS_SUCH_VARIANT = 1413,
+    /**
      * Variant not found
      *
      * Code: `1416`
