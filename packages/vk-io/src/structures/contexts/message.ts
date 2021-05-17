@@ -407,15 +407,8 @@ class MessageContext<S = ContextDefaultState>
 	 * Returns geo
 	 */
 	public get geo(): IMessageContextPayload['message']['geo'] | undefined {
-		if (!this.hasGeo) {
+		if (!this.hasGeo || !this.$filled) {
 			return undefined;
-		}
-
-		if (!this.$filled) {
-			throw new VKError({
-				message: 'The message payload is not fully loaded',
-				code: 'PAYLOAD_IS_NOT_FULL'
-			});
 		}
 
 		return this.message.geo;
