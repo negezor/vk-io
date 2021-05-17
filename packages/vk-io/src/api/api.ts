@@ -289,7 +289,7 @@ class API {
 
 		if (!Worker) {
 			throw new VKError({
-				message: 'Unsuported api mode',
+				message: 'Unsupported api mode',
 				code: 'UNSUPPORTED_MODE'
 			});
 		}
