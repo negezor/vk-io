@@ -721,6 +721,10 @@
       "code": 1409,
       "description": "Extended market not enabled"
     },
+    "api_error_market_grouping_already_has_such_variant": {
+      "code": 1413,
+      "description": "Grouping already has such variant"
+    },
     "api_error_market_variant_not_found": {
       "code": 1416,
       "description": "Variant not found"

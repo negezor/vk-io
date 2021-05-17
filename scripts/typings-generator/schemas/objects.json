@@ -7710,10 +7710,6 @@
         "button": {
           "$ref": "objects.json#/definitions/video_restriction_button"
         },
-        "always_shown": {
-          "description": "Need show restriction always or not",
-          "$ref": "objects.json#/definitions/base_bool_int"
-        },
         "blur": {
           "description": "Need blur current video or not",
           "$ref": "objects.json#/definitions/base_bool_int"
@@ -7731,6 +7727,10 @@
           "items": {
             "$ref": "objects.json#/definitions/base_image"
           }
+        },
+        "disclaimer_type": {
+          "type": "integer",
+          "description": "The type of disclaimer that describes, whether to remove other disclaimers"
         },
         "list_icon": {
           "type": "array",

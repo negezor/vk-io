@@ -8864,6 +8864,10 @@
             "none"
           ],
           "$ref": "objects.json#/definitions/groups_market_state"
+        },
+        {
+          "name": "ref",
+          "type": "string"
         }
       ],
       "responses": {
@@ -9603,6 +9607,9 @@
           "$ref": "errors.json#/errors/api_error_market_item_has_bad_links"
         },
         {
+          "$ref": "errors.json#/errors/api_error_market_grouping_already_has_such_variant"
+        },
+        {
           "$ref": "errors.json#/errors/api_error_market_photos_crop_invalid_format"
         },
         {
@@ -9839,6 +9846,16 @@
           "name": "extended",
           "description": "'1' - method will return additional fields: 'likes, can_comment, car_repost, photos'. These parameters are not returned by default.",
           "type": "boolean"
+        },
+        {
+          "name": "date_from",
+          "description": "Items update date from (format: yyyy-mm-dd)",
+          "type": "string"
+        },
+        {
+          "name": "date_to",
+          "description": "Items update date to (format: yyyy-mm-dd)",
+          "type": "string"
         }
       ],
       "responses": {
@@ -10181,6 +10198,16 @@
         {
           "name": "extended",
           "type": "boolean"
+        },
+        {
+          "name": "date_from",
+          "description": "Orders status updated date from (format: yyyy-mm-dd)",
+          "type": "string"
+        },
+        {
+          "name": "date_to",
+          "description": "Orders status updated date to (format: yyyy-mm-dd)",
+          "type": "string"
         }
       ],
       "responses": {
