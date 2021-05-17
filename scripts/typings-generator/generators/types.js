@@ -3,31 +3,31 @@ const ts = require('typescript');
 
 module.exports = class TypesGenerator {
 	static get any() {
-		return ts.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword);
+		return ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword);
 	}
 
 	static get string() {
-		return ts.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
+		return ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
 	}
 
 	static get number() {
-		return ts.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword);
+		return ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword);
 	}
 
 	static get boolean() {
-		return ts.createKeywordTypeNode(ts.SyntaxKind.BooleanKeyword);
+		return ts.factory.createKeywordTypeNode(ts.SyntaxKind.BooleanKeyword);
 	}
 
 	static array(type) {
-		return ts.createArrayTypeNode(type);
+		return ts.factory.createArrayTypeNode(type);
 	}
 
 	static union(types) {
-		return ts.createUnionTypeNode(types);
+		return ts.factory.createUnionTypeNode(types);
 	}
 
 	static type(name, type) {
-		return ts.createTypeAliasDeclaration(
+		return ts.factory.createTypeAliasDeclaration(
 			undefined,
 			undefined,
 			name,
@@ -37,7 +37,7 @@ module.exports = class TypesGenerator {
 	}
 
 	static genericType(name, types) {
-		return ts.createTypeReferenceNode(
+		return ts.factory.createTypeReferenceNode(
 			name,
 			types
 		);
@@ -51,13 +51,13 @@ module.exports = class TypesGenerator {
 	}
 
 	static parameter({ name, type, required = false }) {
-		return ts.createParameter(
+		return ts.factory.createParameterDeclaration(
 			undefined,
 			undefined,
 			undefined,
 			name,
 			!required
-				? ts.createKeywordTypeNode(
+				? ts.factory.createKeywordTypeNode(
 					ts.SyntaxKind.QuestionToken
 				)
 				: undefined,
@@ -66,9 +66,10 @@ module.exports = class TypesGenerator {
 	}
 
 	static declarationExport(exportClause) {
-		return ts.createExportDeclaration(
+		return ts.factory.createExportDeclaration(
 			undefined,
 			undefined,
+			false,
 			exportClause
 		);
 	}

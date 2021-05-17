@@ -52,59 +52,63 @@ async function generate() {
 	const { writeNode: writeObjectsNode } = createPrinter(`${typeingsDir}/${OBJECTS_FILE}`);
 	const { writeNode: writeConstantsNode } = createPrinter(`${typeingsDir}/${CONSTANTS_FILE}`);
 
-	const paramsIdentifier = ts.createIdentifier('Params');
-	const objectsIdentifier = ts.createIdentifier('Objects');
-	const responsesIdentifier = ts.createIdentifier('Responses');
+	const paramsIdentifier = ts.factory.createIdentifier('Params');
+	const objectsIdentifier = ts.factory.createIdentifier('Objects');
+	const responsesIdentifier = ts.factory.createIdentifier('Responses');
 
 	writeParamsNode(
-		ts.createImportDeclaration(
+		ts.factory.createImportDeclaration(
 			undefined,
 			undefined,
-			ts.createImportClause(
-				ts.createNamespaceImport(
+			ts.factory.createImportClause(
+				false,
+				ts.factory.createNamespaceImport(
 					objectsIdentifier
 				)
 			),
-			ts.createStringLiteral(`./${OBJECTS_FILE.replace('.ts', '')}`)
+			ts.factory.createStringLiteral(`./${OBJECTS_FILE.replace('.ts', '')}`)
 		)
 	);
 
 	writeResponsesNode(
-		ts.createImportDeclaration(
+		ts.factory.createImportDeclaration(
 			undefined,
 			undefined,
-			ts.createImportClause(
-				ts.createNamespaceImport(
+			ts.factory.createImportClause(
+				false,
+				ts.factory.createNamespaceImport(
 					objectsIdentifier
 				)
 			),
-			ts.createStringLiteral(`./${OBJECTS_FILE.replace('.ts', '')}`)
+			ts.factory.createStringLiteral(`./${OBJECTS_FILE.replace('.ts', '')}`)
 		)
 	);
 
 	writeMethodsNode(
-		ts.createImportDeclaration(
+		ts.factory.createImportDeclaration(
 			undefined,
 			undefined,
-			ts.createImportClause(
-				ts.createNamespaceImport(
+			ts.factory.createImportClause(
+				false,
+				ts.factory.createNamespaceImport(
 					paramsIdentifier
 				)
 			),
-			ts.createStringLiteral(`./${PARAMS_FILE.replace('.ts', '')}`)
+			ts.factory.createStringLiteral(`./${PARAMS_FILE.replace('.ts', '')}`)
 		)
 	);
 
 	writeMethodsNode(
-		ts.createImportDeclaration(
+		ts.factory.createImportDeclaration(
 			undefined,
 			undefined,
-			ts.createImportClause(
-				ts.createNamespaceImport(
+			ts.factory.createImportClause(
+				false,
+				ts.factory.createNamespaceImport(
 					responsesIdentifier
 				)
 			),
-			ts.createStringLiteral(`./${RESPONSES_FILE.replace('.ts', '')}`)
+			ts.factory.createStringLiteral(`./${RESPONSES_FILE.replace('.ts', '')}`)
 		)
 	);
 
@@ -136,20 +140,20 @@ async function generate() {
 		}
 
 		params.methods.push(
-			ts.createIndexSignature(
+			ts.factory.createIndexSignature(
 				undefined,
 				undefined,
-				[ts.createParameter(
+				[ts.factory.createParameterDeclaration(
 					undefined,
 					undefined,
 					undefined,
 					'key',
 					undefined,
-					ts.createKeywordTypeNode(
+					ts.factory.createKeywordTypeNode(
 						ts.SyntaxKind.StringKeyword
 					)
 				)],
-				ts.createKeywordTypeNode(
+				ts.factory.createKeywordTypeNode(
 					ts.SyntaxKind.AnyKeyword
 				)
 			)
@@ -165,7 +169,7 @@ async function generate() {
 			parameters: [
 				TypesGenerator.parameter({
 					name: 'params',
-					type: ts.createQualifiedName(
+					type: ts.factory.createQualifiedName(
 						paramsIdentifier,
 						params.name
 					),
@@ -173,9 +177,9 @@ async function generate() {
 				})
 			],
 			result: TypesGenerator.promiseType(
-				ts.createQualifiedName(
+				ts.factory.createQualifiedName(
 					responsesIdentifier,
-					ts.createIdentifier(
+					ts.factory.createIdentifier(
 						toPascalCase(
 							(method.responses.response || method.responses.keyResponse).$ref
 								.replace(
@@ -194,9 +198,9 @@ async function generate() {
 			response.kind === 'interface'
 				? response.type.toASTNode({ exported: true })
 				: TypesGenerator.declarationExport(
-					ts.createTypeAliasDeclaration(
+					ts.factory.createTypeAliasDeclaration(
 						undefined,
-						ts.createModifier(
+						ts.factory.createModifier(
 							ts.SyntaxKind.DeclareKeyword
 						),
 						response.name,
@@ -218,7 +222,7 @@ async function generate() {
 			object.kind === 'interface'
 				? object.type.toASTNode({ exported: true })
 				: TypesGenerator.declarationExport(
-					ts.createTypeAliasDeclaration(
+					ts.factory.createTypeAliasDeclaration(
 						undefined,
 						undefined,
 						toPascalCase(object.name),
@@ -233,16 +237,16 @@ async function generate() {
 
 	writeConstantsNode(
 		TypesGenerator.declarationExport(
-			ts.createEnumDeclaration(
+			ts.factory.createEnumDeclaration(
 				undefined,
 				undefined,
 				'APIErrorCode',
 				Object.entries(errors)
 					.map(([name, info]) => (
 						ts.addSyntheticLeadingComment(
-							ts.createEnumMember(
+							ts.factory.createEnumMember(
 								name.substring(10).toUpperCase(),
-								ts.createNumericLiteral(
+								ts.factory.createNumericLiteral(
 									String(info.code)
 								)
 							),

@@ -39,12 +39,12 @@ const jsonSchemaTypes = {
 		if (items && items.$ref) {
 			const [, group, refName] = items.$ref.match(MATCH_REF_RE);
 
-			const refIdentifierName = ts.createIdentifier(
+			const refIdentifierName = ts.factory.createIdentifier(
 				toPascalCase(refName)
 			);
 
 			const refIdentifier = group !== '' && namespace
-				? ts.createQualifiedName(
+				? ts.factory.createQualifiedName(
 					namespace,
 					refIdentifierName
 				)
@@ -58,7 +58,7 @@ const jsonSchemaTypes = {
 		return {
 			kind: type,
 			type: TypesGenerator.array(
-				ts.createKeywordTypeNode(
+				ts.factory.createKeywordTypeNode(
 					ts.SyntaxKind.AnyKeyword
 				)
 			)
@@ -73,7 +73,7 @@ const jsonSchemaTypes = {
 		type: 'enum' in type
 			? TypesGenerator.union(
 				type.enum.map(enumName => (
-					ts.createStringLiteral(String(enumName))
+					ts.factory.createStringLiteral(String(enumName))
 				))
 			)
 			: TypesGenerator.string,
@@ -90,7 +90,7 @@ const jsonSchemaTypes = {
 		type: 'enum' in type
 			? TypesGenerator.union(
 				type.enum.map(enumName => (
-					ts.createNumericLiteral(String(enumName))
+					ts.factory.createNumericLiteral(String(enumName))
 				))
 			)
 			: TypesGenerator.number,
@@ -129,12 +129,12 @@ function parseJSONObject(name, type, payload = {}) {
 	if (type.$ref) {
 		const [, group, refName] = type.$ref.match(MATCH_REF_RE);
 
-		const refIdentifierName = ts.createIdentifier(
+		const refIdentifierName = ts.factory.createIdentifier(
 			toPascalCase(refName)
 		);
 
 		const refIdentifier = group !== '' && payload.namespace
-			? ts.createQualifiedName(
+			? ts.factory.createQualifiedName(
 				payload.namespace,
 				refIdentifierName
 			)
@@ -155,12 +155,12 @@ function parseJSONObject(name, type, payload = {}) {
 			if (obj.$ref) {
 				const [, group, refName] = obj.$ref.match(MATCH_REF_RE);
 
-				const refIdentifierName = ts.createIdentifier(
+				const refIdentifierName = ts.factory.createIdentifier(
 					toPascalCase(refName)
 				);
 
 				const refIdentifier = group !== '' && payload.namespace
-					? ts.createQualifiedName(
+					? ts.factory.createQualifiedName(
 						payload.namespace,
 						refIdentifierName
 					)
@@ -183,12 +183,12 @@ function parseJSONObject(name, type, payload = {}) {
 					if (propertyValue.$ref) {
 						const [, group, refName] = propertyValue.$ref.match(MATCH_REF_RE);
 
-						const refIdentifierName = ts.createIdentifier(
+						const refIdentifierName = ts.factory.createIdentifier(
 							toPascalCase(refName)
 						);
 
 						const refIdentifier = group !== '' && payload.namespace
-							? ts.createQualifiedName(
+							? ts.factory.createQualifiedName(
 								payload.namespace,
 								refIdentifierName
 							)
@@ -236,7 +236,7 @@ function parseJSONObject(name, type, payload = {}) {
 
 				name: toPascalCase(name),
 				kind: 'type',
-				type: ts.createIntersectionTypeNode(allOf)
+				type: ts.factory.createIntersectionTypeNode(allOf)
 			};
 		}
 	}
@@ -255,7 +255,7 @@ function parseJSONObject(name, type, payload = {}) {
 	if (!type.properties) {
 		return {
 			name,
-			type: ts.createKeywordTypeNode(
+			type: ts.factory.createKeywordTypeNode(
 				ts.SyntaxKind.AnyKeyword
 			)
 		};
@@ -267,20 +267,20 @@ function parseJSONObject(name, type, payload = {}) {
 	});
 
 	interfaceType.methods.push(
-		ts.createIndexSignature(
+		ts.factory.createIndexSignature(
 			undefined,
 			undefined,
-			[ts.createParameter(
+			[ts.factory.createParameterDeclaration(
 				undefined,
 				undefined,
 				undefined,
 				'key',
 				undefined,
-				ts.createKeywordTypeNode(
+				ts.factory.createKeywordTypeNode(
 					ts.SyntaxKind.StringKeyword
 				)
 			)],
-			ts.createKeywordTypeNode(
+			ts.factory.createKeywordTypeNode(
 				ts.SyntaxKind.AnyKeyword
 			)
 		)

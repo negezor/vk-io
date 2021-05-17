@@ -8,7 +8,7 @@ module.exports = class InterfaceGenerator {
 	 * Constructor
 	 */
 	constructor({ name, description }) {
-		this.name = ts.createIdentifier(name);
+		this.name = ts.factory.createIdentifier(name);
 		this.description = description;
 
 		this.properties = [];
@@ -23,12 +23,12 @@ module.exports = class InterfaceGenerator {
 
 		required = false
 	}) {
-		const property = ts.createProperty(
+		const property = ts.factory.createPropertyDeclaration(
 			undefined,
 			undefined,
 			name,
 			!required
-				? ts.createKeywordTypeNode(
+				? ts.factory.createKeywordTypeNode(
 					ts.SyntaxKind.QuestionToken
 				)
 				: undefined,
@@ -61,7 +61,7 @@ module.exports = class InterfaceGenerator {
 
 		modifiers = undefined
 	}) {
-		const method = ts.createMethod(
+		const method = ts.factory.createMethodDeclaration(
 			undefined,
 			modifiers,
 			undefined,
@@ -89,7 +89,7 @@ module.exports = class InterfaceGenerator {
 	}
 
 	toASTNode({ exported = false } = {}) {
-		let iterfaceDeclaration = ts.createInterfaceDeclaration(
+		let iterfaceDeclaration = ts.factory.createInterfaceDeclaration(
 			undefined,
 			undefined,
 			this.name,
