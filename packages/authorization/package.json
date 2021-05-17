@@ -34,7 +34,7 @@
 	},
 	"dependencies": {
 		"abort-controller": "^3.0.0",
-		"cheerio": "^1.0.0-rc.6",
+		"cheerio": "^1.0.0-rc.9",
 		"debug": "^4.3.1",
 		"inspectable": "^1.1.1",
 		"node-fetch": "^2.6.1",
