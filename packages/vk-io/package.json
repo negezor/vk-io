@@ -35,6 +35,7 @@
 			"require": "./lib/index.js"
 		}
 	},
+	"sideEffects": false,
 	"engines": {
 		"node": ">=12.0.0"
 	},
