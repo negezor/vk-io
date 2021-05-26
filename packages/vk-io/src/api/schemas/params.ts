@@ -56,7 +56,11 @@ export interface AccountGetBannedParams {
 }
 
 export interface AccountGetCountersParams {
-    filter?: ("friends" | "messages" | "photos" | "videos" | "notes" | "gifts" | "events" | "groups" | "sdk" | "friends_suggestions")[] | ("friends" | "messages" | "photos" | "videos" | "notes" | "gifts" | "events" | "groups" | "sdk" | "friends_suggestions");
+    /**
+     * User ID
+     */
+    user_id?: number;
+    filter?: ("friends" | "messages" | "photos" | "notes" | "gifts" | "events" | "groups" | "sdk" | "friends_suggestions" | "notifications" | "app_requests" | "friends_recommendations")[] | ("friends" | "messages" | "photos" | "notes" | "gifts" | "events" | "groups" | "sdk" | "friends_suggestions" | "notifications" | "app_requests" | "friends_recommendations");
     [key: string]: any;
 }
 
@@ -3400,6 +3404,7 @@ export interface MarketAddParams {
     dimension_height?: number;
     dimension_length?: number;
     weight?: number;
+    sku?: string;
     [key: string]: any;
 }
 
@@ -3726,6 +3731,7 @@ export interface MarketGetOrderByIdParams {
 }
 
 export interface MarketGetOrderItemsParams {
+    user_id?: number;
     order_id: number;
     offset?: number;
     count?: number;
@@ -3944,7 +3950,12 @@ export interface MessagesDeleteParams {
      * '1' — delete message for for all.
      */
     delete_for_all?: boolean | number;
+    /**
+     * Destination ID. "For user: 'User ID', e.g. '12345'. For chat: '2000000000' + 'chat_id', e.g. '2000000001'. For community: '- community ID', e.g. '-12345'. "
+     */
+    peer_id?: number;
     message_ids?: number[] | number;
+    conversation_message_ids?: number[] | number;
     [key: string]: any;
 }
 

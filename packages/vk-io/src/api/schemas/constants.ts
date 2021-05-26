@@ -979,6 +979,12 @@ export enum APIErrorCode {
      */
     MARKET_EXTENDED_NOT_ENABLED = 1409,
     /**
+     * Grouping items with different properties
+     *
+     * Code: `1412`
+     */
+    MARKET_GROUPING_ITEMS_WITH_DIFFERENT_PROPERTIES = 1412,
+    /**
      * Grouping already has such variant
      *
      * Code: `1413`

@@ -3582,6 +3582,7 @@ export interface MarketMarketItem {
     is_favorite?: boolean | number;
     variants_grouping_id?: number;
     is_main_variant?: boolean | number;
+    sku?: string;
 }
 
 export type MarketMarketItemAvailability = 0 | 1 | 2;
@@ -3668,19 +3669,6 @@ export interface MarketSection {
 }
 
 export type MarketServicesViewType = 1 | 2;
-
-/*Media restrictions*/
-export interface MediaRestriction {
-    /**
-     * The type of disclaimer that describes, whether to remove other disclaimers
-     */
-    disclaimer_type?: number;
-    [key: string]: any;
-    text?: string;
-    title: string;
-    card_icon?: BaseImage[];
-    list_icon?: BaseImage[];
-}
 
 export interface MessagesAudioMessage {
     /**
@@ -4297,6 +4285,10 @@ export interface MessagesMessage {
      * Date when the message has been pinned in Unixtime
      */
     pinned_at?: number;
+    /**
+     * Is silent message, push without sound
+     */
+    is_silent?: boolean | number;
     [key: string]: any;
     attachments?: MessagesMessageAttachment[];
     fwd_messages?: MessagesForeignMessage[];
@@ -5061,6 +5053,22 @@ export interface OrdersSubscription {
      * Subscription price
      */
     price: number;
+    /**
+     * Subscription name
+     */
+    title?: string;
+    /**
+     * Subscription's application id
+     */
+    app_id?: number;
+    /**
+     * Subscription's application name
+     */
+    application_name?: string;
+    /**
+     * Item photo image url
+     */
+    photo_url?: string;
     /**
      * Subscription status
      */
@@ -7066,6 +7074,10 @@ export interface UsersUserFull1 {
      */
     can_call?: boolean | number;
     /**
+     * Information whether group can call user
+     */
+    can_call_from_group?: boolean | number;
+    /**
      * Information whether current user can see the user's wishes
      */
     can_see_wishes?: boolean | number;
@@ -7491,13 +7503,6 @@ export interface VideoLiveSettings {
     [key: string]: any;
 }
 
-/*Video restriction button*/
-export interface VideoRestrictionButton {
-    [key: string]: any;
-    action?: "play";
-    title?: string;
-}
-
 export interface VideoSaveResult {
     /**
      * Video access key
@@ -7632,7 +7637,6 @@ export interface VideoVideo1 {
     first_frame?: VideoVideoImage[];
     processing?: BasePropertyExists;
     converting?: BaseBoolInt;
-    restriction?: MediaRestriction;
     added?: BaseBoolInt;
     is_subscribed?: BaseBoolInt;
     track_code?: string;
