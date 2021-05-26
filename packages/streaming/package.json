@@ -1,6 +1,6 @@
 {
 	"name": "@vk-io/streaming",
-	"version": "1.0.2",
+	"version": "1.1.0",
 	"description": "Separated module for receiving data with Streaming API",
 	"license": "MIT",
 	"author": {
