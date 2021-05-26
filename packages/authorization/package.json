@@ -1,6 +1,6 @@
 {
 	"name": "@vk-io/authorization",
-	"version": "1.1.0",
+	"version": "1.2.0",
 	"description": "Separated module for authorization",
 	"license": "MIT",
 	"author": {
