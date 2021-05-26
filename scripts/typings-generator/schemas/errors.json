@@ -5,7 +5,7 @@
       "too_many_communities": {
         "subcode": 1
       },
-      "user_link_with_another_service_uuid": {
+      "user_reached_linked_accounts_limit": {
         "subcode": 1000
       },
       "service_uuid_link_with_another_user": {
@@ -55,7 +55,7 @@
       "global": true,
       "subcodes": [
         {
-          "$ref": "#/definitions/subcodes/user_link_with_another_service_uuid"
+          "$ref": "#/definitions/subcodes/user_reached_linked_accounts_limit"
         },
         {
           "$ref": "#/definitions/subcodes/service_uuid_link_with_another_user"
@@ -720,6 +720,10 @@
     "api_error_market_extended_not_enabled": {
       "code": 1409,
       "description": "Extended market not enabled"
+    },
+    "api_error_market_grouping_items_with_different_properties": {
+      "code": 1412,
+      "description": "Grouping items with different properties"
     },
     "api_error_market_grouping_already_has_such_variant": {
       "code": 1413,

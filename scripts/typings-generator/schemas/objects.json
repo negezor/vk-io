@@ -7436,6 +7436,10 @@
         },
         "is_main_variant": {
           "type": "boolean"
+        },
+        "sku": {
+          "type": "string",
+          "maxLength": 50
         }
       },
       "required": [
@@ -7696,53 +7700,6 @@
         "cards",
         "rows"
       ]
-    },
-    "media_restriction": {
-      "description": "Media restrictions",
-      "type": "object",
-      "properties": {
-        "text": {
-          "type": "string"
-        },
-        "title": {
-          "type": "string"
-        },
-        "button": {
-          "$ref": "objects.json#/definitions/video_restriction_button"
-        },
-        "blur": {
-          "description": "Need blur current video or not",
-          "$ref": "objects.json#/definitions/base_bool_int"
-        },
-        "can_play": {
-          "description": "Can play video or not",
-          "$ref": "objects.json#/definitions/base_bool_int"
-        },
-        "can_preview": {
-          "description": "Can preview video or not",
-          "$ref": "objects.json#/definitions/base_bool_int"
-        },
-        "card_icon": {
-          "type": "array",
-          "items": {
-            "$ref": "objects.json#/definitions/base_image"
-          }
-        },
-        "disclaimer_type": {
-          "type": "integer",
-          "description": "The type of disclaimer that describes, whether to remove other disclaimers"
-        },
-        "list_icon": {
-          "type": "array",
-          "items": {
-            "$ref": "objects.json#/definitions/base_image"
-          }
-        }
-      },
-      "required": [
-        "title"
-      ],
-      "additionalProperties": false
     },
     "messages_audio_message": {
       "type": "object",
@@ -8904,6 +8861,10 @@
         "pinned_at": {
           "type": "integer",
           "description": "Date when the message has been pinned in Unixtime"
+        },
+        "is_silent": {
+          "type": "boolean",
+          "description": "Is silent message, push without sound"
         }
       },
       "required": [
@@ -10489,6 +10450,22 @@
           "type": "integer",
           "description": "Subscription price"
         },
+        "title": {
+          "type": "string",
+          "description": "Subscription name"
+        },
+        "app_id": {
+          "type": "integer",
+          "description": "Subscription's application id"
+        },
+        "application_name": {
+          "type": "string",
+          "description": "Subscription's application name"
+        },
+        "photo_url": {
+          "type": "string",
+          "description": "Item photo image url"
+        },
         "status": {
           "type": "string",
           "description": "Subscription status"
@@ -10915,9 +10892,6 @@
         "has_tags": {
           "type": "boolean",
           "description": "Whether photo has attached tag links"
-        },
-        "restrictions": {
-          "$ref": "objects.json#/definitions/media_restriction"
         }
       },
       "required": [
@@ -14112,6 +14086,10 @@
               "description": "Information whether current user can call",
               "type": "boolean"
             },
+            "can_call_from_group": {
+              "description": "Information whether group can call user",
+              "type": "boolean"
+            },
             "can_see_wishes": {
               "description": "Information whether current user can see the user's wishes",
               "type": "boolean"
@@ -14821,22 +14799,6 @@
       },
       "additionalProperties": false
     },
-    "video_restriction_button": {
-      "description": "Video restriction button",
-      "type": "object",
-      "properties": {
-        "action": {
-          "type": "string",
-          "enum": [
-            "play"
-          ]
-        },
-        "title": {
-          "type": "string"
-        }
-      },
-      "additionalProperties": false
-    },
     "video_save_result": {
       "type": "object",
       "properties": {
@@ -14993,9 +14955,6 @@
             "converting": {
               "$ref": "objects.json#/definitions/base_bool_int",
               "description": "1 if  video is being converted"
-            },
-            "restriction": {
-              "$ref": "objects.json#/definitions/media_restriction"
             },
             "added": {
               "$ref": "objects.json#/definitions/base_bool_int",

@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "version": "5.130",
+  "version": "5.131",
   "title": "VK API JSON Schema",
   "description": "Contains JSON Schema documents explaining the VK.COM API objects and methods",
   "termsOfService": "https://vk.com/dev/rules",
@@ -152,15 +152,23 @@
               "friends",
               "messages",
               "photos",
-              "videos",
               "notes",
               "gifts",
               "events",
               "groups",
               "sdk",
-              "friends_suggestions"
+              "friends_suggestions",
+              "notifications",
+              "app_requests",
+              "friends_recommendations"
             ]
           }
+        },
+        {
+          "name": "user_id",
+          "description": "User ID",
+          "type": "integer",
+          "minimum": 0
         }
       ],
       "responses": {
@@ -9212,6 +9220,11 @@
           "type": "integer",
           "minimum": 0,
           "maximum": 100000000
+        },
+        {
+          "name": "sku",
+          "type": "string",
+          "maxLength": 50
         }
       ],
       "responses": {
@@ -9605,6 +9618,9 @@
         },
         {
           "$ref": "errors.json#/errors/api_error_market_item_has_bad_links"
+        },
+        {
+          "$ref": "errors.json#/errors/api_error_market_grouping_items_with_different_properties"
         },
         {
           "$ref": "errors.json#/errors/api_error_market_grouping_already_has_such_variant"
@@ -10152,6 +10168,11 @@
         "group"
       ],
       "parameters": [
+        {
+          "name": "user_id",
+          "type": "integer",
+          "minimum": 0
+        },
         {
           "name": "order_id",
           "type": "integer",
@@ -10818,6 +10839,21 @@
           "description": "'1' — delete message for for all.",
           "type": "boolean",
           "default": false
+        },
+        {
+          "name": "peer_id",
+          "description": "Destination ID. \"For user: 'User ID', e.g. '12345'. For chat: '2000000000' + 'chat_id', e.g. '2000000001'. For community: '- community ID', e.g. '-12345'. \"",
+          "type": "integer"
+        },
+        {
+          "name": "conversation_message_ids",
+          "description": "Conversation message IDs.",
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "maxItems": 100
         }
       ],
       "responses": {
@@ -10936,7 +10972,8 @@
           "name": "peer_id",
           "description": "Destination ID. \"For user: 'User ID', e.g. '12345'. For chat: '2000000000' + 'chat_id', e.g. '2000000001'. For community: '- community ID', e.g. '-12345'. \"",
           "type": "integer",
-          "required": true
+          "required": true,
+          "format": "int32"
         },
         {
           "name": "message",
@@ -10983,11 +11020,13 @@
         {
           "name": "message_id",
           "type": "integer",
+          "format": "int32",
           "minimum": 0
         },
         {
           "name": "conversation_message_id",
           "type": "integer",
+          "format": "int32",
           "minimum": 0
         },
         {
@@ -11145,7 +11184,8 @@
           "required": true,
           "items": {
             "type": "integer",
-            "minimum": 0
+            "minimum": 0,
+            "format": "int32"
           },
           "maxItems": 100
         },
@@ -12348,7 +12388,8 @@
         {
           "name": "user_id",
           "description": "User ID (by default — current user).",
-          "type": "integer"
+          "type": "integer",
+          "format": "int32"
         },
         {
           "name": "random_id",
@@ -12358,14 +12399,16 @@
         {
           "name": "peer_id",
           "description": "Destination ID. \"For user: 'User ID', e.g. '12345'. For chat: '2000000000' + 'chat_id', e.g. '2000000001'. For community: '- community ID', e.g. '-12345'. \"",
-          "type": "integer"
+          "type": "integer",
+          "format": "int32"
         },
         {
           "name": "peer_ids",
           "description": "IDs of message recipients. (See peer_id)",
           "type": "array",
           "items": {
-            "type": "integer"
+            "type": "integer",
+            "format": "int32"
           },
           "maxItems": 100
         },
@@ -12386,7 +12429,8 @@
           "description": "IDs of message recipients (if new conversation shall be started).",
           "type": "array",
           "items": {
-            "type": "integer"
+            "type": "integer",
+            "format": "int32"
           },
           "maxItems": 100
         },
