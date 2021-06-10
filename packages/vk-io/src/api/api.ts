@@ -204,7 +204,7 @@ class API {
 			apiRequestMode: 'sequential',
 			apiWait: 3e3,
 			apiLimit: 3,
-			apiVersion: '5.130',
+			apiVersion: '5.131',
 			apiBaseUrl: 'https://api.vk.com/method',
 			apiRetryLimit: 3,
 			apiTimeout: 10e3,
