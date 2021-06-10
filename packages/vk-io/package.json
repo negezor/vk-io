@@ -49,7 +49,7 @@
 		"form-data-encoder": "^0.5.1",
 		"formdata-node": "^3.5.3",
 		"inspectable": "^1.2.0",
-		"middleware-io": "^2.6.0",
+		"middleware-io": "^2.8.0",
 		"node-fetch": "^2.6.1"
 	}
 }
