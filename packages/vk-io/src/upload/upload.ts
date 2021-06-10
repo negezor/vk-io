@@ -1,13 +1,15 @@
 import fetch from 'node-fetch';
-import FormData from 'form-data';
+// eslint-disable-next-line import/extensions
+import { FormData, File } from 'formdata-node';
+import { Encoder as FormDataEncoder } from 'form-data-encoder';
 import { AbortController } from 'abort-controller';
 
 import { inspectable } from 'inspectable';
 
 import { URL } from 'url';
-import { promisify } from 'util';
 import { createReadStream } from 'fs';
 import { globalAgent } from 'https';
+import { Readable } from 'stream';
 
 import { API } from '../api';
 import { UploadError, UploadErrorCode } from '../errors';
@@ -21,9 +23,9 @@ import {
 import {
 	isStream,
 
+	streamToBuffer,
 	normalizeSource,
-	pickExistingProperties,
-	streamToBuffer
+	pickExistingProperties
 } from './helpers';
 
 import {
@@ -951,24 +953,42 @@ export class Upload {
 				filename = `file${i}.${DefaultExtension[attachmentType as keyof typeof DefaultExtension] || 'dat'}`;
 			}
 
-			if (isStream(value) || Buffer.isBuffer(value)) {
+			let isBuffer = Buffer.isBuffer(value);
+
+			if (isStream(value) || isBuffer) {
 				const name = isMultipart
 					? field + (i + 1)
 					: field;
 
 				const { contentType } = media;
 
-				const headers = {
-					// eslint-disable-next-line @typescript-eslint/naming-convention
-					'Content-Type': contentType
-						|| DefaultContentType[attachmentType as keyof typeof DefaultContentType]
-				};
+				const fileContentType = contentType
+					|| DefaultContentType[attachmentType as keyof typeof DefaultContentType];
 
-				return formData.append(name, value, {
-					filename,
-					header: headers,
-					knownLength: contentLength
-				});
+				if (!isBuffer && typeof contentLength !== 'number') {
+					value = await streamToBuffer(value as Readable);
+					isBuffer = true;
+					contentLength = value.length;
+				}
+
+				const file = isBuffer
+					? new File([value as Buffer], filename, {
+						type: fileContentType
+					})
+					// Workground for NodeJS streams: https://github.com/octet-stream/form-data/issues/32
+					: {
+						name: filename,
+						size: contentLength,
+						type: fileContentType,
+						stream: () => (
+							value
+						),
+						[Symbol.toStringTag]: 'File'
+					};
+
+				formData.append(name, file);
+
+				return;
 			}
 
 			throw new UploadError({
@@ -992,21 +1012,9 @@ export class Upload {
 	}): Promise<any> {
 		const { agent, uploadTimeout } = this.options;
 
-		// @ts-expect-error
-		// eslint-disable-next-line no-underscore-dangle
-		const metaLength = formData._overheadLength + formData._lastBoundary().length;
+		const encoder = new FormDataEncoder(formData);
 
-		const formDataLength = await promisify(formData.getLength).call(formData);
-
-		const hasKnownLength = metaLength !== formDataLength;
-
-		const body = !hasKnownLength
-			? await streamToBuffer(formData)
-			: formData;
-
-		const length = hasKnownLength
-			? formDataLength
-			: (body as Buffer).length;
+		const body = Readable.from(encoder.encode());
 
 		const controller = new AbortController();
 
@@ -1019,12 +1027,10 @@ export class Upload {
 				method: 'POST',
 				signal: controller.signal,
 				headers: {
-					...formData.getHeaders(),
+					...encoder.headers as unknown as Record<string, string>,
 
 					// eslint-disable-next-line @typescript-eslint/naming-convention
-					Connection: 'keep-alive',
-					// eslint-disable-next-line @typescript-eslint/naming-convention
-					'Content-Length': String(length)
+					Connection: 'keep-alive'
 				},
 				body
 			});
