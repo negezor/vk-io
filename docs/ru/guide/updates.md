@@ -3,10 +3,10 @@
 Базовый модуль получения событий из [User Long Poll](https://vk.com/dev/using_longpoll), [Bots Long Poll](https://vk.com/dev/bots_longpoll) и [Callback API](https://vk.com/dev/callback_api).
 
 ## Описание типов
-[API Reference [EN]](http://negezor.github.io/vk-io/references/vk-io/classes/updates.html)
+[API Reference [EN]](https://negezor.github.io/vk-io/references/vk-io/classes/updates.html)
 
 ## Инициализация
-[Опции конструктора](http://negezor.github.io/vk-io/references/vk-io/interfaces/iupdatesoptions.html)
+[Опции конструктора](https://negezor.github.io/vk-io/references/vk-io/interfaces/iupdatesoptions.html)
 
 ```ts
 import { API, Upload, Updates } from 'vk-io';

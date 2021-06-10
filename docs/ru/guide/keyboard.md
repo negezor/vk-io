@@ -4,7 +4,7 @@
 
 ## Описание типов
 
-[API Reference [EN]](http://negezor.github.io/vk-io/references/vk-io/classes/keyboard.html)
+[API Reference [EN]](https://negezor.github.io/vk-io/references/vk-io/classes/keyboard.html)
 
 ## Концепт
 

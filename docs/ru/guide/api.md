@@ -3,10 +3,10 @@
 Базовый модуль [запросов](https://vk.com/dev/api_requests), позволяет вызывать [методы API](https://vk.com/dev/methods).
 
 ## Описание типов
-[API Reference [EN]](http://negezor.github.io/vk-io/references/vk-io/classes/api.html)
+[API Reference [EN]](https://negezor.github.io/vk-io/references/vk-io/classes/api.html)
 
 ## Инициализация
-[Опции конструктора](http://negezor.github.io/vk-io/references/vk-io/interfaces/iapioptions.html)
+[Опции конструктора](https://negezor.github.io/vk-io/references/vk-io/interfaces/iapioptions.html)
 
 ```ts
 import { API } from 'vk-io';
@@ -46,7 +46,7 @@ console.log(users) // [{ id: 1, first_name: 'Павел', last_name: 'Дуров
 
 Метод принимает обязательный параметр `code`, остальные переданные параметры будут доступны через объект `Args` внутри `code`. 
 
-В отличии от остальных методов, [execute](http://negezor.github.io/vk-io/references/vk-io/classes/api.html#execute) возвращает данные в формате:
+В отличии от остальных методов, [execute](https://negezor.github.io/vk-io/references/vk-io/classes/api.html#execute) возвращает данные в формате:
 ```ts
 export interface IExecuteResponse<T> {
 	response: T;
@@ -56,7 +56,7 @@ export interface IExecuteResponse<T> {
 
 ### Хранимые процедуры
 
-Вызов хранимых процедур вашего приложения осуществляется с помощью метода [procedure](http://negezor.github.io/vk-io/references/vk-io/classes/api.html#procedure)
+Вызов хранимых процедур вашего приложения осуществляется с помощью метода [procedure](https://negezor.github.io/vk-io/references/vk-io/classes/api.html#procedure)
 
 ```ts
 await api.procedure('important', {
@@ -71,7 +71,7 @@ await api.procedure('important', {
 
 По умолчанию библиотека ограничивает количество запросов до `3` в секунду, этот лимит соотвествует пользовательским страницам и сервисным токенам.
 
-Для групповых токенов лимит составляет `20`, установить его можно через опцию [apiLimit](http://negezor.github.io/vk-io/references/vk-io/interfaces/iapioptions.html#apilimit):
+Для групповых токенов лимит составляет `20`, установить его можно через опцию [apiLimit](https://negezor.github.io/vk-io/references/vk-io/interfaces/iapioptions.html#apilimit):
 
 ```ts
 import { API } from 'vk-io';
@@ -84,7 +84,7 @@ const api = new API({
 ```
 
 ## Режимы работы
-Библиотека предоставляет множество режимов работы под разные ситуации. Установить режим работы можно через опцию [apiMode](http://negezor.github.io/vk-io/references/vk-io/interfaces/iapioptions.html#apimode) в конструкторе.
+Библиотека предоставляет множество режимов работы под разные ситуации. Установить режим работы можно через опцию [apiMode](https://negezor.github.io/vk-io/references/vk-io/interfaces/iapioptions.html#apimode) в конструкторе.
 
 ```ts
 import { API } from 'vk-io';
@@ -103,15 +103,15 @@ const api = new API({
 
 ### parallel
 
-объединяет методы в [execute](http://vk.com/dev/execute), позволяет вызывать до `25` методов включительно. Максимальное количество методов в `execute` контролируется опцией [apiExecuteCount](http://negezor.github.io/vk-io/references/vk-io/interfaces/iapioptions.html#apiexecutecount), [1..25] методов — 1 запрос
+объединяет методы в [execute](https://vk.com/dev/execute), позволяет вызывать до `25` методов включительно. Максимальное количество методов в `execute` контролируется опцией [apiExecuteCount](https://negezor.github.io/vk-io/references/vk-io/interfaces/iapioptions.html#apiexecutecount), [1..25] методов — 1 запрос
 
 ### parallel_selected
 
-Схож по работе с [parallel](#parallel), за исключением того, что в [execute](http://vk.com/dev/execute) будут попадать методы из опции [apiExecuteMethods](http://negezor.github.io/vk-io/references/vk-io/interfaces/iapioptions.html#apiexecutemethods), а остальные через [sequential](#sequential).
+Схож по работе с [parallel](#parallel), за исключением того, что в [execute](https://vk.com/dev/execute) будут попадать методы из опции [apiExecuteMethods](https://negezor.github.io/vk-io/references/vk-io/interfaces/iapioptions.html#apiexecutemethods), а остальные через [sequential](#sequential).
 
 ## Режим запросов
 
-Вы можете контролировать, с какой периодичностью будут вызываться запросы. Установить режим работы можно через опцию [apiRequestMode](http://negezor.github.io/vk-io/references/vk-io/interfaces/iapioptions.html#apirequestmode) в конструкторе.
+Вы можете контролировать, с какой периодичностью будут вызываться запросы. Установить режим работы можно через опцию [apiRequestMode](https://negezor.github.io/vk-io/references/vk-io/interfaces/iapioptions.html#apirequestmode) в конструкторе.
 
 ```ts
 import { API } from 'vk-io';
@@ -130,7 +130,7 @@ const api = new API({
 
 ### burst
 
-Параллельно отправляет методы на API во весь доступный лимит с опции [apiLimit](http://negezor.github.io/vk-io/references/vk-io/interfaces/iapioptions.html#apilimit).
+Параллельно отправляет методы на API во весь доступный лимит с опции [apiLimit](https://negezor.github.io/vk-io/references/vk-io/interfaces/iapioptions.html#apilimit).
 
 ::: warning Внимание
 С данным режимом API ВКонтакте может работать нестабильно и вы будете получать EAI_AGAIN ошибку.
@@ -138,7 +138,7 @@ const api = new API({
 
 ## Использование прокси
 
-Для того, чтобы использовать прокси, достаточно передать опцию [agent](http://negezor.github.io/vk-io/references/vk-io/interfaces/iapioptions.html#agent) в конструктор. Это должен быть [HTTPS Agent](https://nodejs.org/api/https.html#https_class_https_agent). На примере модуля [https-proxy-agent](https://npm.im/https-proxy-agent).
+Для того, чтобы использовать прокси, достаточно передать опцию [agent](https://negezor.github.io/vk-io/references/vk-io/interfaces/iapioptions.html#agent) в конструктор. Это должен быть [HTTPS Agent](https://nodejs.org/api/https.html#https_class_https_agent). На примере модуля [https-proxy-agent](https://npm.im/https-proxy-agent).
 
 ```ts
 import { API } from 'vk-io';
@@ -146,7 +146,7 @@ import { API } from 'vk-io';
 import HttpsProxyAgent from 'https-proxy-agent';
 
 const agent = new HttpsProxyAgent(process.env.HTTP_PROXY);
-// const agent = new HttpsProxyAgent('http://168.63.76.32:3128');
+// const agent = new HttpsProxyAgent('https://168.63.76.32:3128');
 
 const api = new API({
 	token: process.env.TOKEN,
@@ -187,9 +187,9 @@ callbackService.onCaptcha(async (payload, retry) => {
 ```
 
 ## Использование APIRequest
-Вам может понадобится контролировать запрос на всех стадиях, или иметь удобную оболочку для создания [execute](http://vk.com/dev/execute) методов.
+Вам может понадобится контролировать запрос на всех стадиях, или иметь удобную оболочку для создания [execute](https://vk.com/dev/execute) методов.
 
-[API Reference](http://negezor.github.io/vk-io/references/vk-io/classes/apirequest.html)
+[API Reference](https://negezor.github.io/vk-io/references/vk-io/classes/apirequest.html)
 
 ### Ручной вызов API
 ```ts
