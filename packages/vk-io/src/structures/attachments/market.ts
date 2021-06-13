@@ -12,7 +12,7 @@ export interface IMarketAttachmentPayload {
 	title?: string;
 	description?: string;
 	price?: {
-		amount: number;
+		amount: string;
 		currency: {
 			id: number;
 			name: string;
