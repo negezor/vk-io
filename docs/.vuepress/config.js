@@ -55,7 +55,7 @@ module.exports = {
 				link: '/ru/guide/introduction',
 			},
 			{
-				text: 'Community [RU]',
+				text: 'Community',
 				items: [
 					{
 						text: 'Telegram [RU]',
