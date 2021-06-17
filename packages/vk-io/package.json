@@ -46,8 +46,8 @@
 	"dependencies": {
 		"abort-controller": "^3.0.0",
 		"debug": "^4.3.1",
-		"form-data-encoder": "^0.5.1",
-		"formdata-node": "^3.5.3",
+		"form-data-encoder": "^1.0.0",
+		"formdata-node": "^3.5.4",
 		"inspectable": "^1.2.0",
 		"middleware-io": "^2.8.0",
 		"node-fetch": "^2.6.1"

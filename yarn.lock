@@ -4715,10 +4715,10 @@ forever-agent@~0.6.1:
   resolved "https://registry.yarnpkg.com/forever-agent/-/forever-agent-0.6.1.tgz#fbc71f0c41adeb37f96c577ad1ed42d8fdacca91"
   integrity sha1-+8cfDEGt6zf5bFd60e1C2P2sypE=
 
-form-data-encoder@^0.5.1:
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/form-data-encoder/-/form-data-encoder-0.5.1.tgz#682902f2d7a96016f5eed679726748176969ff9e"
-  integrity sha512-FxKoD5xSvKECE6WGQ0o7tZ+OX1bkxHkLvRNQRA5Q0zGYGpPlSDGuLKkx/GdIhByucmZ9pXbe8ZVJjGDSgKclDg==
+form-data-encoder@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/form-data-encoder/-/form-data-encoder-1.0.0.tgz#c68a41eb4b5ed2287b923ee93cba8a2d330723fe"
+  integrity sha512-oblW/VhaKo6+UYYWAjOzWuZ1/1bFo206G5bVhjbSx8xam5KYbWv/lvj/WkkCtL905WdK079RfDRpvERAOf1bfw==
   dependencies:
     nanoid "3.1.23"
 
@@ -4740,10 +4740,10 @@ form-data@~2.3.2:
     combined-stream "^1.0.6"
     mime-types "^2.1.12"
 
-formdata-node@^3.5.3:
-  version "3.5.3"
-  resolved "https://registry.yarnpkg.com/formdata-node/-/formdata-node-3.5.3.tgz#acd83971ebc5991a6b29a123492b6c740abf234e"
-  integrity sha512-RZeImYDwVTWoGHTg5M5d8kHTWOXLdKpjWrFazaU0vOwzRnrAHbutYYoWl732CVASuzsKDYNP8Z0B37xUSIyGrg==
+formdata-node@^3.5.4:
+  version "3.5.4"
+  resolved "https://registry.yarnpkg.com/formdata-node/-/formdata-node-3.5.4.tgz#f96a1666fe31ccdfe7c46f320c7c52f522b6490e"
+  integrity sha512-1uQGEK8LbsFaNW1pHFnYnK5+BBQkZWB+yEyZrNthh3Ud+zXsHQW0DhuamOWosQuyq1FY7YfZY+xOvyjl5mIaSw==
   dependencies:
     domexception "2.0.1"
     fetch-blob "2.1.2"
@@ -10590,10 +10590,15 @@ ws@^6.2.1:
   dependencies:
     async-limiter "~1.0.0"
 
-ws@^7.4.5, ws@^7.4.6:
+ws@^7.4.5:
   version "7.4.6"
   resolved "https://registry.yarnpkg.com/ws/-/ws-7.4.6.tgz#5654ca8ecdeee47c33a9a4bf6d28e2be2980377c"
   integrity sha512-YmhHDO4MzaDLB+M9ym/mDA5z0naX8j7SIlT8f8z+I0VtzsRbekxEutHSme7NPS2qE8StCYQNUnfWdXta/Yu85A==
+
+ws@^7.5.0:
+  version "7.5.0"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-7.5.0.tgz#0033bafea031fb9df041b2026fc72a571ca44691"
+  integrity sha512-6ezXvzOZupqKj4jUqbQ9tXuJNo+BR2gU8fFRk3XCP3e0G6WT414u5ELe6Y0vtp7kmSJ3F7YWObSNr1ESsgi4vw==
 
 xdg-basedir@^4.0.0:
   version "4.0.0"
