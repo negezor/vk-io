@@ -64,7 +64,7 @@ const REPLACE_PREFIX_RE = /^[+|0]+/;
 /**
  * Find location.href text
  */
-const FIND_LOCATION_HREF_RE = /location\.href\s+=\s+"([^"]+)"/i;
+const FIND_LOCATION_HREF_RE = /location\.href\s*=\s*['"]([^'"]+)['"]/i;
 
 export interface IImplicitFlowOptions {
 	callbackService: CallbackService;
