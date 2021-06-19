@@ -50,7 +50,7 @@ async function run() {
 	console.log('Expires:', response.expires);
 
 	console.log('Email:', response.email);
-	console.log('User ID:', response.user);
+	console.log('User ID:', response.userId);
 }
 
 run().catch(console.error);
