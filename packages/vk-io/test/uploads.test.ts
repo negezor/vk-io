@@ -78,7 +78,7 @@ describe('Uploads', (): void => {
 		return;
 	}
 
-	it('should upload image to wall from url', async (): Promise<void> => {
+	it('should upload image to message from url', async (): Promise<void> => {
 		const photo = await upload.messagePhoto({
 			source: {
 				value: IMAGE_URL
@@ -90,7 +90,7 @@ describe('Uploads', (): void => {
 		expect(photo.ownerId).not.toEqual(0);
 	});
 
-	it('should upload image to wall from buffer', async (): Promise<void> => {
+	it('should upload image to message from buffer', async (): Promise<void> => {
 		const response = await fetch(IMAGE_URL);
 		const buffer = await response.buffer();
 
@@ -105,7 +105,7 @@ describe('Uploads', (): void => {
 		expect(photo.ownerId).not.toEqual(0);
 	});
 
-	it('should upload image to wall from stream', async (): Promise<void> => {
+	it('should upload image to message from stream', async (): Promise<void> => {
 		const response = await fetch(IMAGE_URL);
 
 		const photo = await upload.messagePhoto({
