@@ -49,7 +49,7 @@ export class Context<
 
 	public $groupId?: number;
 
-	protected payload: P;
+	public payload: P & Record<string, any>;
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	[key: string]: any;
