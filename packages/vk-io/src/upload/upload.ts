@@ -451,7 +451,8 @@ export class Upload {
 
 		const video = await this.upload(save.upload_url!, {
 			formData,
-			timeout: source.timeout!
+			timeout: source.timeout!,
+			forceBuffer: true
 		});
 
 		return new VideoAttachment({
@@ -931,7 +932,7 @@ export class Upload {
 		const isMultipart = maxFiles > 1;
 
 		const tasks = values.map(async (media, i) => {
-			let { value, filename, contentLength } = media;
+			let { value, filename, contentLength = 0 } = media;
 
 			if (typeof value === 'string') {
 				if (isURL.test(value)) {
@@ -953,7 +954,7 @@ export class Upload {
 				filename = `file${i}.${DefaultExtension[attachmentType as keyof typeof DefaultExtension] || 'dat'}`;
 			}
 
-			let isBuffer = Buffer.isBuffer(value);
+			const isBuffer = Buffer.isBuffer(value);
 
 			if (isStream(value) || isBuffer) {
 				const name = isMultipart
@@ -964,12 +965,6 @@ export class Upload {
 
 				const fileContentType = contentType
 					|| DefaultContentType[attachmentType as keyof typeof DefaultContentType];
-
-				if (!isBuffer && typeof contentLength !== 'number') {
-					value = await streamToBuffer(value as Readable);
-					isBuffer = true;
-					contentLength = value.length;
-				}
 
 				const file = isBuffer
 					? new File([value as Buffer], filename, {
@@ -1005,20 +1000,35 @@ export class Upload {
 	/**
 	 * Upload form data
 	 */
-	async upload(url: URL | string, { formData, timeout }: {
+	async upload(url: URL | string, { formData, timeout, forceBuffer = false }: {
 		formData: FormData;
 		timeout: number;
+		forceBuffer?: boolean;
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	}): Promise<any> {
 		const { agent, uploadTimeout } = this.options;
 
 		const encoder = new FormDataEncoder(formData);
 
-		const body = Readable.from(encoder.encode());
+		const rawBody = Readable.from(encoder.encode());
 
 		const controller = new AbortController();
 
 		const interval = setTimeout(() => controller.abort(), timeout || uploadTimeout);
+
+		const headers: Record<string, string> = {
+			// eslint-disable-next-line @typescript-eslint/naming-convention
+			Connection: 'keep-alive',
+
+			'Content-Type': encoder.headers['Content-Type']
+		};
+		const body = forceBuffer
+			? await streamToBuffer(rawBody)
+			: rawBody;
+
+		if (forceBuffer) {
+			headers['Content-Length'] = String((body as Buffer).length);
+		}
 
 		try {
 			const response = await fetch(url, {
@@ -1026,12 +1036,7 @@ export class Upload {
 				compress: false,
 				method: 'POST',
 				signal: controller.signal,
-				headers: {
-					...encoder.headers as unknown as Record<string, string>,
-
-					// eslint-disable-next-line @typescript-eslint/naming-convention
-					Connection: 'keep-alive'
-				},
+				headers,
 				body
 			});
 
