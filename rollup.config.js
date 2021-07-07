@@ -62,12 +62,12 @@ export default async () => (
 					],
 					output: [
 						{
-							file: pathJoin(modulePath, 'lib/index.js'),
+							file: pathJoin(lib, 'index.js'),
 							format: 'cjs',
 							exports: 'named'
 						},
 						{
-							file: pathJoin(modulePath, 'lib/index.mjs'),
+							file: pathJoin(lib, 'index.mjs'),
 							format: 'esm'
 						}
 					]
