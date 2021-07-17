@@ -407,10 +407,45 @@ export abstract class ImplicitFlow {
 		try {
 			const url = getFullURL(action, response);
 
-			const newResponse = await this.fetch(url, {
+			let newResponse = await this.fetch(url, {
 				method: 'POST',
 				body: new URLSearchParams(fields)
 			});
+
+			const newResponseParser = cheerioLoad(await newResponse.text());
+
+			const { fields: newResponseFields } = parseFormField(newResponseParser);
+
+			if (newResponseFields.captcha_sid !== undefined) {
+				const src = newResponseParser('.captcha_img').attr('src');
+
+				if (!src) {
+					throw new AuthorizationError({
+						message: 'Failed get captcha image',
+						code: AUTHORIZATION_FAILED
+					});
+				}
+
+				const {
+					key,
+					validate: captchaValidate
+				} = await this.options.callbackService.processingCaptcha({
+					type: CaptchaType.IMPLICIT_FLOW_AUTH,
+					sid: newResponseFields.captcha_sid,
+					src: `https://api.vk.com/${src}`
+				});
+
+				this.captchaValidate = captchaValidate;
+
+				newResponseFields.captcha_key = key;
+
+				const newUrl = getFullURL(action, newResponse);
+
+				newResponse = await this.fetch(newUrl, {
+					method: 'POST',
+					body: new URLSearchParams(newResponseFields)
+				});
+			}
 
 			return newResponse;
 		} catch (error) {
