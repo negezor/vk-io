@@ -45,8 +45,8 @@
 		"ws": "^7.5.2"
 	},
 	"devDependencies": {
-		"@types/debug": "^4.1.6",
-		"@types/node-fetch": "^2.5.10",
-		"@types/ws": "^7.4.6"
+		"@types/debug": "^4.1.7",
+		"@types/node-fetch": "^2.5.12",
+		"@types/ws": "^7.4.7"
 	}
 }
