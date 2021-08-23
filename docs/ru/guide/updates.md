@@ -114,7 +114,7 @@ updates.on('like', () => {...});
 ```
 
 ::: warning Внимание
-Важно что бы middleware возвращал [Promise](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Promise), если обработка событий будет дальше передана по цепочке, так как без этого невозможно будет отследить правильно ошибки/дождатся окончательного завершения запроса для других middleware.
+Важно, чтобы middleware возвращал [Promise](https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Promise), если обработка событий будет дальше передана по цепочке, так как без этого невозможно будет отследить правильно ошибки/дождатся окончательного завершения запроса для других middleware.
 :::
 
 ## Список событий
