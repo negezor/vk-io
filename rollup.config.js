@@ -51,7 +51,25 @@ export default async () => (
 								rootDir: src,
 								include: [src]
 							}
-						})
+						}),
+						// https://rollupjs.org/guide/en/#renderdynamicimport
+						{
+							name: 'retain-import-expression',
+							resolveDynamicImport(specifier) {
+								if (specifier === 'node-fetch') return false;
+								return null;
+							},
+							renderDynamicImport({ targetModuleId }) {
+								if (targetModuleId === 'node-fetch') {
+									return {
+										left: 'import(',
+										right: ')'
+									};
+								}
+
+								return undefined;
+							}
+						}
 					],
 					external: [
 						...Object.keys(modulePkg.dependencies || {}),
