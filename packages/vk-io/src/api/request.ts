@@ -1,9 +1,9 @@
-import fetch from 'node-fetch';
 import { AbortController } from 'abort-controller';
 
 import { inspectable } from 'inspectable';
 
 import { API } from './api';
+import { fetch } from '../utils/fetch';
 import { getExecuteMethod } from '../utils/helpers';
 import { ICallbackServiceValidate } from '../utils/callback-service';
 
@@ -96,7 +96,6 @@ export class APIRequest {
 
 					connection: 'keep-alive'
 				},
-				// @ts-expect-error
 				body: new URLSearchParams(
 					Object.entries(params)
 						.filter(({ 1: value }) => value !== undefined)

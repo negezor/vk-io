@@ -1,8 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { jest } from '@jest/globals';
 
-import fetch from 'node-fetch';
-
 import {
 	VK,
 
@@ -11,6 +9,8 @@ import {
 
 	PhotoAttachment
 } from '..';
+
+import { fetch } from '../src/utils/fetch';
 
 const { TOKEN } = process.env;
 
@@ -29,7 +29,7 @@ describe('Uploads', (): void => {
 			await upload.messagePhoto();
 		} catch (error) {
 			expect(error).toBeInstanceOf(UploadError);
-			expect(error.code).toEqual(UploadErrorCode.MISSING_PARAMETERS);
+			expect((error as UploadError).code).toEqual(UploadErrorCode.MISSING_PARAMETERS);
 		}
 
 		try {
@@ -37,7 +37,7 @@ describe('Uploads', (): void => {
 			await upload.messagePhoto({});
 		} catch (error) {
 			expect(error).toBeInstanceOf(UploadError);
-			expect(error.code).toEqual(UploadErrorCode.MISSING_PARAMETERS);
+			expect((error as UploadError).code).toEqual(UploadErrorCode.MISSING_PARAMETERS);
 		}
 	});
 
@@ -50,7 +50,7 @@ describe('Uploads', (): void => {
 			});
 		} catch (error) {
 			expect(error).toBeInstanceOf(UploadError);
-			expect(error.code).toEqual(UploadErrorCode.NO_FILES_TO_UPLOAD);
+			expect((error as UploadError).code).toEqual(UploadErrorCode.NO_FILES_TO_UPLOAD);
 		}
 	});
 
@@ -70,7 +70,7 @@ describe('Uploads', (): void => {
 			});
 		} catch (error) {
 			expect(error).toBeInstanceOf(UploadError);
-			expect(error.code).toEqual(UploadErrorCode.EXCEEDED_MAX_FILES);
+			expect((error as UploadError).code).toEqual(UploadErrorCode.EXCEEDED_MAX_FILES);
 		}
 	});
 
@@ -113,7 +113,7 @@ describe('Uploads', (): void => {
 
 		const photo = await upload.messagePhoto({
 			source: {
-				value: response.body,
+				value: response.body!,
 				// @ts-expect-error
 				contentLength: response.headers.get('content-length')
 			}

@@ -1,10 +1,10 @@
-import fetch from 'node-fetch';
 import createDebug from 'debug';
 import { AbortController } from 'abort-controller';
 
 import { URL, URLSearchParams } from 'url';
 
 import { API } from '../../api';
+import { fetch } from '../../utils/fetch';
 import { delay } from '../../utils/helpers';
 import { UpdatesError, UpdatesErrorCode } from '../../errors';
 import { IUpdatesOptions } from '../updates';
@@ -185,7 +185,7 @@ export class PollingTransport {
 				});
 			}
 
-			result = await response.json();
+			result = await response.json() as any;
 		} finally {
 			clearTimeout(interval);
 		}

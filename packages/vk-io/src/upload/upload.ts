@@ -1,4 +1,3 @@
-import fetch from 'node-fetch';
 // eslint-disable-next-line import/extensions
 import { FormData, File } from 'formdata-node';
 import { Encoder as FormDataEncoder } from 'form-data-encoder';
@@ -12,6 +11,7 @@ import { globalAgent } from 'https';
 import { Readable } from 'stream';
 
 import { API } from '../api';
+import { fetch } from '../utils/fetch';
 import { UploadError, UploadErrorCode } from '../errors';
 import { DefaultExtension, DefaultContentType } from '../utils/constants';
 import {
@@ -938,6 +938,7 @@ export class Upload {
 				if (isURL.test(value)) {
 					const response = await fetch(value);
 
+					// @ts-expect-error
 					value = response.body;
 
 					const length = response.headers.get('content-length');
@@ -1044,7 +1045,7 @@ export class Upload {
 				throw new Error(response.statusText);
 			}
 
-			const result = await response.json();
+			const result = await response.json() as any;
 
 			return result.response !== undefined
 				? result.response
