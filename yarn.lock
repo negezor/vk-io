@@ -4719,11 +4719,6 @@ forever-agent@~0.6.1:
   resolved "https://registry.yarnpkg.com/forever-agent/-/forever-agent-0.6.1.tgz#fbc71f0c41adeb37f96c577ad1ed42d8fdacca91"
   integrity sha1-+8cfDEGt6zf5bFd60e1C2P2sypE=
 
-form-data-encoder@1.4.3:
-  version "1.4.3"
-  resolved "https://registry.yarnpkg.com/form-data-encoder/-/form-data-encoder-1.4.3.tgz#b0975dbe5795676f211c0ff98e473eaf52b0db4a"
-  integrity sha512-ARLR/jJaj3+tlKkO7h1uvvjQcD6xCiKyg42hcG5Q4jv8uDa1IMPs81bM3BwI8BrqVEQxF9pX6tx0iLIzAvr31Q==
-
 form-data-encoder@^1.5.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/form-data-encoder/-/form-data-encoder-1.5.1.tgz#66508c51cc635691c68c5a7e207dba4619a7c092"
@@ -4747,13 +4742,12 @@ form-data@~2.3.2:
     combined-stream "^1.0.6"
     mime-types "^2.1.12"
 
-formdata-node@^3.7.0:
-  version "3.7.0"
-  resolved "https://registry.yarnpkg.com/formdata-node/-/formdata-node-3.7.0.tgz#b58942e617639a0ebea57227cfff8332a4020760"
-  integrity sha512-O3y7XoWwE4zRvI5e1yVPDHyDGtEgGEI10KxTbQeMbEEt+imR7uxbL5Z4BCaHz5M09d1pkrFaqeYc8beAce4VSw==
+formdata-node@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/formdata-node/-/formdata-node-4.0.1.tgz#7370d752e9c53fe6c5cf1fd141dc0564172595fb"
+  integrity sha512-7qe/s/LQR4KE9zzPBg8HXRQQsgze4VtwTX9viuVOsodD5QSu7MKsNiSy5BWYDwV+kAcDTh3y7WnC5ZHK5t4Aqg==
   dependencies:
     fetch-blob "2.1.2"
-    form-data-encoder "1.4.3"
     node-domexception "1.0.0"
 
 forwarded@0.2.0:
