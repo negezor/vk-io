@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/extensions
 import { FormData, File } from 'formdata-node';
-import { Encoder as FormDataEncoder } from 'form-data-encoder';
+import { FormDataEncoder } from 'form-data-encoder';
 import { AbortController } from 'abort-controller';
 
 import { inspectable } from 'inspectable';
