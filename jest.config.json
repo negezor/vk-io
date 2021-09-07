@@ -1,7 +1,12 @@
 {
 	"name": "vk-io-monorepo",
 	"verbose": true,
-	"preset": "ts-jest",
+	"preset": "ts-jest/presets/default-esm",
 	"testEnvironment": "node",
-	"testMatch": ["<rootDir>/packages/*/test/*.test.ts"]
+	"testMatch": ["<rootDir>/packages/*/test/*.test.ts"],
+	"globals": {
+		"ts-jest": {
+			"useESM": true
+		}
+	}
 }
