@@ -46,8 +46,7 @@
           "minimum": 1
         },
         "menu_discover_badge": {
-          "type": "integer",
-          "description": ""
+          "type": "integer"
         },
         "menu_clips_badge": {
           "type": "integer"
@@ -135,10 +134,8 @@
           "$ref": "objects.json#/definitions/base_bool_int"
         },
         "subscriptions": {
-          "type": "array",
-          "items": {
-            "type": "integer"
-          }
+          "type": "object",
+          "$ref": "objects.json#/definitions/account_subscriptions"
         }
       },
       "additionalProperties": false
@@ -464,6 +461,12 @@
         }
       },
       "additionalProperties": false
+    },
+    "account_subscriptions": {
+      "type": "array",
+      "items": {
+        "type": "integer"
+      }
     },
     "account_user_settings": {
       "type": "object",
@@ -865,6 +868,18 @@
         "create_time": {
           "type": "integer",
           "description": "Campaign create time, as Unixtime"
+        },
+        "goal_type": {
+          "type": "integer",
+          "description": "Campaign goal type"
+        },
+        "user_goal_type": {
+          "type": "integer",
+          "description": "Campaign user goal type"
+        },
+        "is_cbo_enabled": {
+          "type": "boolean",
+          "description": "Shows if Campaign Budget Optimization is on"
         },
         "day_limit": {
           "type": "string",
@@ -1536,10 +1551,6 @@
         "clicks": {
           "type": "integer",
           "description": "Clicks number"
-        },
-        "link_owner_clicks": {
-          "type": "integer",
-          "description": "Group clicks number"
         },
         "link_external_clicks": {
           "type": "integer",
@@ -2300,6 +2311,33 @@
         "mini_app"
       ]
     },
+    "apps_catalog_list": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "description": "Total number",
+          "minimum": 0
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "objects.json#/definitions/apps_app"
+          }
+        },
+        "profiles": {
+          "type": "array",
+          "items": {
+            "$ref": "objects.json#/definitions/users_user_min"
+          }
+        }
+      },
+      "required": [
+        "count",
+        "items"
+      ],
+      "additionalProperties": false
+    },
     "apps_leaderboard": {
       "type": "object",
       "properties": {
@@ -2840,6 +2878,11 @@
           "type": "integer",
           "description": "curator id"
         },
+        "album_id": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Video album id"
+        },
         "owner_id": {
           "type": "integer",
           "description": "Owner id"
@@ -3121,6 +3164,37 @@
     },
     "base_sticker": {
       "type": "object",
+      "oneOf": [
+        {
+          "$ref": "objects.json#/definitions/base_sticker_old",
+          "description": "Deprecated from 5.74, but still used in later versions in queue"
+        },
+        {
+          "$ref": "objects.json#/definitions/base_sticker_new"
+        }
+      ]
+    },
+    "base_sticker_animation": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": [
+            "light",
+            "dark"
+          ],
+          "description": "Type of animation script"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL of animation script"
+        }
+      },
+      "additionalProperties": false
+    },
+    "base_sticker_new": {
+      "type": "object",
       "properties": {
         "sticker_id": {
           "type": "integer",
@@ -3161,21 +3235,53 @@
       },
       "additionalProperties": false
     },
-    "base_sticker_animation": {
+    "base_sticker_old": {
       "type": "object",
       "properties": {
-        "type": {
-          "type": "string",
-          "enum": [
-            "light",
-            "dark"
-          ],
-          "description": "Type of animation script"
+        "id": {
+          "type": "integer",
+          "description": "Sticker ID"
         },
-        "url": {
+        "product_id": {
+          "type": "integer",
+          "description": "Pack ID"
+        },
+        "width": {
+          "type": "integer",
+          "description": "Width in px"
+        },
+        "height": {
+          "type": "integer",
+          "description": "Height in px"
+        },
+        "photo_128": {
           "type": "string",
           "format": "uri",
-          "description": "URL of animation script"
+          "description": "URL of the preview image with 128 px in height"
+        },
+        "photo_256": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL of the preview image with 256 px in height"
+        },
+        "photo_352": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL of the preview image with 352 px in height"
+        },
+        "photo_512": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL of the preview image with 512 px in height"
+        },
+        "photo_64": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL of the preview image with 64 px in height"
+        },
+        "is_allowed": {
+          "type": "boolean",
+          "description": "Information whether the sticker is allowed"
         }
       },
       "additionalProperties": false
@@ -3183,7 +3289,7 @@
     "base_stickers_list": {
       "type": "array",
       "items": {
-        "$ref": "objects.json#/definitions/base_sticker"
+        "$ref": "objects.json#/definitions/base_sticker_new"
       }
     },
     "base_upload_server": {
@@ -3473,6 +3579,41 @@
       ],
       "additionalProperties": false
     },
+    "callback_base": {
+      "type": "object",
+      "required": [
+        "type",
+        "group_id",
+        "event_id"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "$ref": "objects.json#/definitions/callback_type"
+        },
+        "group_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "event_id": {
+          "type": "string",
+          "description": "Unique event id. If it passed twice or more - you should ignore it."
+        },
+        "secret": {
+          "type": "string"
+        }
+      },
+      "discriminator": {
+        "propertyName": "type",
+        "mapping": {
+          "message_new": "../callback/objects.json#/definitions/callback_message_new",
+          "message_reply": "../callback/objects.json#/definitions/callback_message_reply",
+          "message_edit": "../callback/objects.json#/definitions/callback_message_edit",
+          "confirmation": "../callback/objects.json#/definitions/callback_confirmation"
+        }
+      },
+      "additionalProperties": false
+    },
     "callback_board_post_delete": {
       "type": "object",
       "properties": {
@@ -3496,23 +3637,22 @@
       ],
       "additionalProperties": false
     },
-    "callback_confirmation_message": {
+    "callback_confirmation": {
       "type": "object",
-      "properties": {
-        "type": {
-          "$ref": "objects.json#/definitions/callback_message_type",
-          "default": "confirmation"
+      "allOf": [
+        {
+          "$ref": "objects.json#/definitions/callback_base"
         },
-        "group_id": {
-          "type": "integer"
-        },
-        "secret": {
-          "type": "string"
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "$ref": "objects.json#/definitions/callback_type",
+              "default": "confirmation"
+            }
+          }
         }
-      },
-      "required": [
-        "type",
-        "group_id"
       ],
       "additionalProperties": false
     },
@@ -3915,6 +4055,31 @@
     },
     "callback_message_allow": {
       "type": "object",
+      "allOf": [
+        {
+          "$ref": "objects.json#/definitions/callback_base"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "$ref": "objects.json#/definitions/callback_type",
+              "default": "message_allow"
+            },
+            "object": {
+              "$ref": "objects.json#/definitions/callback_message_allow_object"
+            }
+          },
+          "required": [
+            "object"
+          ]
+        }
+      ],
+      "additionalProperties": false
+    },
+    "callback_message_allow_object": {
+      "type": "object",
       "properties": {
         "user_id": {
           "type": "integer",
@@ -3930,43 +4095,6 @@
       ],
       "additionalProperties": false
     },
-    "callback_message_base": {
-      "type": "object",
-      "properties": {
-        "type": {
-          "$ref": "objects.json#/definitions/callback_message_type"
-        },
-        "object": {
-          "$ref": "objects.json#/definitions/callback_message_data"
-        },
-        "group_id": {
-          "type": "integer",
-          "minimum": 0
-        },
-        "event_id": {
-          "type": "string",
-          "description": "Unique event id. If it passed twice or more - you should ignore it."
-        }
-      },
-      "required": [
-        "type",
-        "object",
-        "group_id"
-      ],
-      "additionalProperties": false
-    },
-    "callback_message_data": {
-      "type": "object",
-      "properties": {
-        "client_info": {
-          "$ref": "objects.json#/definitions/client_info_for_bots"
-        },
-        "message": {
-          "type": "object"
-        }
-      },
-      "additionalProperties": true
-    },
     "callback_message_deny": {
       "type": "object",
       "properties": {
@@ -3980,53 +4108,93 @@
       ],
       "additionalProperties": false
     },
-    "callback_message_type": {
-      "type": "string",
-      "enum": [
-        "audio_new",
-        "board_post_new",
-        "board_post_edit",
-        "board_post_restore",
-        "board_post_delete",
-        "confirmation",
-        "group_leave",
-        "group_join",
-        "group_change_photo",
-        "group_change_settings",
-        "group_officers_edit",
-        "lead_forms_new",
-        "market_comment_new",
-        "market_comment_delete",
-        "market_comment_edit",
-        "market_comment_restore",
-        "message_allow",
-        "message_new",
-        "message_deny",
-        "message_read",
-        "message_reply",
-        "message_edit",
-        "message_typing_state",
-        "messages_edit",
-        "photo_new",
-        "photo_comment_new",
-        "photo_comment_delete",
-        "photo_comment_edit",
-        "photo_comment_restore",
-        "poll_vote_new",
-        "user_block",
-        "user_unblock",
-        "video_new",
-        "video_comment_new",
-        "video_comment_delete",
-        "video_comment_edit",
-        "video_comment_restore",
-        "wall_post_new",
-        "wall_reply_new",
-        "wall_reply_edit",
-        "wall_reply_delete",
-        "wall_reply_restore",
-        "wall_repost"
-      ]
+    "callback_message_edit": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "objects.json#/definitions/callback_base"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "$ref": "objects.json#/definitions/callback_type",
+              "default": "message_edit"
+            },
+            "object": {
+              "$ref": "objects.json#/definitions/messages_message"
+            }
+          },
+          "required": [
+            "object"
+          ]
+        }
+      ],
+      "additionalProperties": false
+    },
+    "callback_message_new": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "objects.json#/definitions/callback_base"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "$ref": "objects.json#/definitions/callback_type",
+              "default": "message_new"
+            },
+            "object": {
+              "type": "object",
+              "$ref": "objects.json#/definitions/callback_message_object"
+            }
+          },
+          "required": [
+            "object"
+          ]
+        }
+      ],
+      "additionalProperties": false
+    },
+    "callback_message_object": {
+      "type": "object",
+      "properties": {
+        "client_info": {
+          "$ref": "objects.json#/definitions/client_info_for_bots"
+        },
+        "message": {
+          "$ref": "objects.json#/definitions/messages_message"
+        }
+      },
+      "additionalProperties": false
+    },
+    "callback_message_reply": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "objects.json#/definitions/callback_base"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "$ref": "objects.json#/definitions/callback_type",
+              "default": "message_reply"
+            },
+            "object": {
+              "$ref": "objects.json#/definitions/messages_message"
+            }
+          },
+          "required": [
+            "object"
+          ]
+        }
+      ],
+      "additionalProperties": false
     },
     "callback_photo_comment": {
       "type": "object",
@@ -4142,6 +4310,54 @@
         "reread"
       ],
       "additionalProperties": false
+    },
+    "callback_type": {
+      "type": "string",
+      "enum": [
+        "audio_new",
+        "board_post_new",
+        "board_post_edit",
+        "board_post_restore",
+        "board_post_delete",
+        "confirmation",
+        "group_leave",
+        "group_join",
+        "group_change_photo",
+        "group_change_settings",
+        "group_officers_edit",
+        "lead_forms_new",
+        "market_comment_new",
+        "market_comment_delete",
+        "market_comment_edit",
+        "market_comment_restore",
+        "message_new",
+        "message_reply",
+        "message_edit",
+        "message_allow",
+        "message_deny",
+        "message_read",
+        "message_typing_state",
+        "messages_edit",
+        "photo_new",
+        "photo_comment_new",
+        "photo_comment_delete",
+        "photo_comment_edit",
+        "photo_comment_restore",
+        "poll_vote_new",
+        "user_block",
+        "user_unblock",
+        "video_new",
+        "video_comment_new",
+        "video_comment_delete",
+        "video_comment_edit",
+        "video_comment_restore",
+        "wall_post_new",
+        "wall_reply_new",
+        "wall_reply_edit",
+        "wall_reply_delete",
+        "wall_reply_restore",
+        "wall_repost"
+      ]
     },
     "callback_user_block": {
       "type": "object",
@@ -5116,26 +5332,6 @@
       },
       "additionalProperties": false
     },
-    "friends_user_xtr_lists": {
-      "type": "object",
-      "allOf": [
-        {
-          "$ref": "objects.json#/definitions/users_user_full"
-        },
-        {
-          "properties": {
-            "lists": {
-              "type": "array",
-              "items": {
-                "type": "integer",
-                "description": "IDs of friend lists with user"
-              }
-            }
-          }
-        }
-      ],
-      "additionalProperties": false
-    },
     "friends_user_xtr_phone": {
       "type": "object",
       "allOf": [
@@ -5576,6 +5772,30 @@
         "videos": {
           "type": "integer",
           "description": "Videos number"
+        },
+        "market_services": {
+          "type": "integer",
+          "description": "Market services number"
+        },
+        "podcasts": {
+          "type": "integer",
+          "description": "Podcasts number"
+        },
+        "articles": {
+          "type": "integer",
+          "description": "Articles number"
+        },
+        "narratives": {
+          "type": "integer",
+          "description": "Narratives number"
+        },
+        "clips": {
+          "type": "integer",
+          "description": "Clips number"
+        },
+        "clips_followers": {
+          "type": "integer",
+          "description": "Clips followers number"
         }
       },
       "additionalProperties": false
@@ -5664,6 +5884,7 @@
         "video_live_level",
         "video_live_count",
         "clips_count",
+        "has_unseen_stories",
         "is_business",
         "textlives_count"
       ]
@@ -5743,6 +5964,48 @@
           "type": "string",
           "format": "uri",
           "description": "URL of square photo of the community with 200 pixels in width"
+        },
+        "photo_200_orig": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL of square photo of the community with 200 pixels in width original"
+        },
+        "photo_400": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL of square photo of the community with 400 pixels in width"
+        },
+        "photo_400_orig": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL of square photo of the community with 400 pixels in width original"
+        },
+        "photo_max": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL of square photo of the community with max pixels in width"
+        },
+        "photo_max_orig": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL of square photo of the community with max pixels in width original"
+        },
+        "est_date": {
+          "type": "string",
+          "description": "Established date"
+        },
+        "public_date_label": {
+          "type": "string",
+          "description": "Public date label"
+        },
+        "photo_max_size": {
+          "$ref": "objects.json#/definitions/groups_photo_size"
+        },
+        "is_video_live_notifications_blocked": {
+          "$ref": "objects.json#/definitions/base_bool_int"
+        },
+        "video_live": {
+          "$ref": "objects.json#/definitions/video_live_info"
         }
       },
       "required": [
@@ -6120,10 +6383,10 @@
               "description": "Community's website"
             },
             "main_section": {
-              "$ref": "objects.json#/definitions/groups_group_full_main_section"
+              "$ref": "objects.json#/definitions/groups_group_full_section"
             },
             "secondary_section": {
-              "type": "integer"
+              "$ref": "objects.json#/definitions/groups_group_full_section"
             },
             "trending": {
               "$ref": "objects.json#/definitions/base_bool_int",
@@ -6190,6 +6453,9 @@
             },
             "stories_archive_count": {
               "type": "integer"
+            },
+            "has_unseen_stories": {
+              "type": "boolean"
             }
           }
         }
@@ -6207,26 +6473,6 @@
         "no",
         "over 16",
         "over 18"
-      ]
-    },
-    "groups_group_full_main_section": {
-      "type": "integer",
-      "description": "Main section of community",
-      "enum": [
-        0,
-        1,
-        2,
-        3,
-        4,
-        5
-      ],
-      "enumNames": [
-        "absent",
-        "photos",
-        "topics",
-        "audio",
-        "video",
-        "market"
       ]
     },
     "groups_group_full_member_status": {
@@ -6248,6 +6494,36 @@
         "invited"
       ]
     },
+    "groups_group_full_section": {
+      "type": "integer",
+      "description": "Main section of community",
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        10,
+        35,
+        39,
+        43,
+        51
+      ],
+      "enumNames": [
+        "absent",
+        "photos",
+        "topics",
+        "audio",
+        "video",
+        "market",
+        "events",
+        "addresses",
+        "articles",
+        "chats",
+        "market_services"
+      ]
+    },
     "groups_group_is_closed": {
       "type": "integer",
       "enum": [
@@ -6261,37 +6537,6 @@
         "private"
       ],
       "description": "Information whether community is closed"
-    },
-    "groups_group_link": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "description": "Link label"
-        },
-        "desc": {
-          "type": "string",
-          "description": "Link description"
-        },
-        "edit_title": {
-          "description": "Information whether the title can be edited",
-          "$ref": "objects.json#/definitions/base_bool_int"
-        },
-        "id": {
-          "type": "integer",
-          "description": "Link ID"
-        },
-        "image_processing": {
-          "description": "Information whether the image on processing",
-          "$ref": "objects.json#/definitions/base_bool_int"
-        },
-        "url": {
-          "type": "string",
-          "format": "uri",
-          "description": "Link URL"
-        }
-      },
-      "additionalProperties": false
     },
     "groups_group_market_currency": {
       "type": "integer",
@@ -6594,6 +6839,10 @@
     "groups_links_item": {
       "type": "object",
       "properties": {
+        "name": {
+          "type": "string",
+          "description": "Link title"
+        },
         "desc": {
           "type": "string",
           "description": "Link description"
@@ -6605,10 +6854,6 @@
         "id": {
           "type": "integer",
           "description": "Link ID"
-        },
-        "name": {
-          "type": "string",
-          "description": "Link title"
         },
         "photo_100": {
           "type": "string",
@@ -6624,6 +6869,10 @@
           "type": "string",
           "format": "uri",
           "description": "Link URL"
+        },
+        "image_processing": {
+          "description": "Information whether the image on processing",
+          "$ref": "objects.json#/definitions/base_bool_int"
         }
       },
       "additionalProperties": false
@@ -6807,6 +7056,13 @@
       },
       "required": [
         "app_payload",
+        "donut_money_withdraw",
+        "donut_money_withdraw_error",
+        "donut_subscription_cancelled",
+        "donut_subscription_create",
+        "donut_subscription_expired",
+        "donut_subscription_price_changed",
+        "donut_subscription_prolonged",
         "message_new",
         "message_reply",
         "photo_new",
@@ -6897,6 +7153,10 @@
     "groups_market_info": {
       "type": "object",
       "properties": {
+        "type": {
+          "type": "string",
+          "description": "Market type"
+        },
         "contact_id": {
           "type": "integer",
           "description": "Contact person ID"
@@ -6923,6 +7183,9 @@
         "price_min": {
           "type": "string",
           "description": "Minimum price"
+        },
+        "min_order_price": {
+          "$ref": "objects.json#/definitions/market_price"
         }
       },
       "additionalProperties": false
@@ -7082,33 +7345,23 @@
         "profile"
       ]
     },
-    "groups_profile_item": {
+    "groups_photo_size": {
       "type": "object",
       "properties": {
-        "id": {
+        "height": {
           "type": "integer",
-          "description": "User id"
+          "description": "Image height",
+          "minimum": 0
         },
-        "photo_50": {
-          "type": "string",
-          "format": "uri",
-          "description": "Url for user photo"
-        },
-        "photo_100": {
-          "type": "string",
-          "format": "uri",
-          "description": "Url for user photo"
-        },
-        "first_name": {
-          "type": "string",
-          "description": "User first name"
+        "width": {
+          "type": "integer",
+          "description": "Image width",
+          "minimum": 0
         }
       },
       "required": [
-        "id",
-        "photo_50",
-        "photo_100",
-        "first_name"
+        "width",
+        "height"
       ],
       "additionalProperties": false
     },
@@ -7283,6 +7536,14 @@
           "type": "integer",
           "description": "Items number",
           "minimum": 0
+        },
+        "is_main": {
+          "type": "boolean",
+          "description": "Is album main for owner"
+        },
+        "is_hidden": {
+          "type": "boolean",
+          "description": "Is album hidden"
         },
         "photo": {
           "$ref": "objects.json#/definitions/photos_photo"
@@ -8201,6 +8462,11 @@
           "minimum": 0,
           "description": "ID of the last message in conversation"
         },
+        "last_conversation_message_id": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Conversation message ID of the last message in conversation"
+        },
         "in_read": {
           "type": "integer",
           "minimum": 0,
@@ -8479,6 +8745,27 @@
         }
       },
       "required": [],
+      "additionalProperties": false
+    },
+    "messages_getConversationById": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total number"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "$ref": "objects.json#/definitions/messages_conversation"
+          }
+        }
+      },
+      "required": [
+        "count",
+        "items"
+      ],
       "additionalProperties": false
     },
     "messages_graffiti": {
@@ -8950,7 +9237,8 @@
         "chat_kick_user",
         "chat_pin_message",
         "chat_unpin_message",
-        "chat_invite_user_by_link"
+        "chat_invite_user_by_link",
+        "chat_invite_user_by_message_request"
       ]
     },
     "messages_message_attachment": {
@@ -9175,6 +9463,30 @@
       ],
       "additionalProperties": false
     },
+    "messages_send_user_ids_response_item": {
+      "type": "object",
+      "properties": {
+        "peer_id": {
+          "type": "integer"
+        },
+        "message_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "conversation_message_id": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "error": {
+          "$ref": "objects.json#/definitions/base_message_error"
+        }
+      },
+      "required": [
+        "peer_id",
+        "message_id"
+      ],
+      "additionalProperties": false
+    },
     "messages_template_action_type_names": {
       "type": "string",
       "description": "Template action type names",
@@ -9186,7 +9498,9 @@
         "open_app",
         "open_photo",
         "open_link",
-        "callback"
+        "callback",
+        "intent_subscribe",
+        "intent_unsubscribe"
       ]
     },
     "messages_user_xtr_invited_by": {
@@ -10351,7 +10665,7 @@
       "type": "object",
       "properties": {
         "amount": {
-          "type": "integer",
+          "type": "number",
           "description": "Votes amount in user's currency"
         },
         "description": {
@@ -10433,6 +10747,10 @@
         "next_bill_time": {
           "type": "integer",
           "description": "Date of next bill in Unixtime"
+        },
+        "expire_time": {
+          "type": "integer",
+          "description": "Subscription expiration time in Unixtime"
         },
         "pending_cancel": {
           "type": "boolean",
@@ -10656,6 +10974,23 @@
         "who_can_view": {
           "description": "View settings of the page",
           "$ref": "objects.json#/definitions/pages_privacy_settings"
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL"
+        },
+        "parent": {
+          "type": "string",
+          "description": "Parent"
+        },
+        "parent2": {
+          "type": "string",
+          "description": "Parent2"
+        },
+        "owner_id": {
+          "type": "integer",
+          "description": "Owner ID"
         }
       },
       "required": [
@@ -11933,7 +12268,6 @@
         "question",
         "votes",
         "answers",
-        "anonymous",
         "disable_unvote",
         "is_board",
         "multiple",
@@ -12056,11 +12390,13 @@
         },
         "type": {
           "$ref": "objects.json#/definitions/search_hint_type"
+        },
+        "link": {
+          "$ref": "objects.json#/definitions/base_link"
         }
       },
       "required": [
         "type",
-        "section",
         "description"
       ],
       "additionalProperties": false
@@ -12075,7 +12411,8 @@
         "correspondents",
         "people",
         "friends",
-        "mutual_friends"
+        "mutual_friends",
+        "promo"
       ]
     },
     "search_hint_type": {
@@ -12086,8 +12423,21 @@
         "profile",
         "vk_app",
         "app",
-        "html5_game"
+        "html5_game",
+        "link"
       ]
+    },
+    "secure_giveEventSticker_item": {
+      "type": "object",
+      "properties": {
+        "user_id": {
+          "type": "integer"
+        },
+        "status": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
     },
     "secure_level": {
       "type": "object",
@@ -13305,12 +13655,17 @@
         "country",
         "home_town",
         "has_photo",
+        "photo",
+        "photo_rec",
         "photo_50",
         "photo_100",
         "photo_200_orig",
         "photo_200",
         "photo_400",
         "photo_400_orig",
+        "photo_big",
+        "photo_medium",
+        "photo_medium_rec",
         "photo_max",
         "photo_max_orig",
         "photo_max_size",
@@ -13319,6 +13674,7 @@
         "domain",
         "has_mobile",
         "contacts",
+        "language",
         "site",
         "education",
         "universities",
@@ -13328,6 +13684,7 @@
         "followers_count",
         "counters",
         "common_count",
+        "online_info",
         "occupation",
         "nickname",
         "relatives",
@@ -13336,20 +13693,27 @@
         "connections",
         "exports",
         "wall_comments",
+        "wall_default",
         "activities",
+        "activity",
         "interests",
         "music",
         "movies",
         "tv",
         "books",
+        "is_no_index",
         "games",
         "about",
         "quotes",
         "can_post",
         "can_see_all_posts",
         "can_see_audio",
+        "can_see_gifts",
+        "work",
+        "places",
         "can_write_private_message",
         "can_send_friend_request",
+        "can_upload_doc",
         "is_favorite",
         "is_hidden_from_feed",
         "timezone",
@@ -13369,11 +13733,15 @@
         "friendship_weeks",
         "can_invite_to_chats",
         "stories_archive_count",
+        "has_unseen_stories",
+        "video_live",
         "video_live_level",
         "video_live_count",
         "clips_count",
         "service_description",
-        "is_dead"
+        "can_see_wishes",
+        "is_subscribed_podcasts",
+        "can_subscribe_podcasts"
       ]
     },
     "users_last_seen": {
@@ -14075,6 +14443,9 @@
             "stories_archive_count": {
               "type": "integer"
             },
+            "has_unseen_stories": {
+              "type": "boolean"
+            },
             "wall_default": {
               "type": "string",
               "enum": [
@@ -14312,9 +14683,29 @@
             "hash": {
               "type": "string"
             },
-            "has_email": {
-              "notod": true,
+            "is_no_index": {
+              "type": "boolean",
+              "description": "Access to user profile is restricted for search engines"
+            },
+            "contact_id": {
+              "type": "integer",
+              "description": "Contact person ID"
+            },
+            "is_message_request": {
               "type": "boolean"
+            },
+            "descriptions": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "lists": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "description": "IDs of friend lists with user"
+              }
             }
           },
           "required": [
@@ -15051,32 +15442,12 @@
       ],
       "additionalProperties": false
     },
-    "video_video_album_full": {
+    "video_video_album": {
       "type": "object",
       "properties": {
-        "count": {
-          "type": "integer",
-          "minimum": 0,
-          "description": "Total number of videos in album"
-        },
         "id": {
           "type": "integer",
           "description": "Album ID"
-        },
-        "image": {
-          "type": "array",
-          "items": {
-            "$ref": "objects.json#/definitions/video_video_image"
-          },
-          "description": "Album cover image in different sizes"
-        },
-        "image_blur": {
-          "$ref": "objects.json#/definitions/base_property_exists",
-          "description": "Need blur album thumb or not"
-        },
-        "is_system": {
-          "$ref": "objects.json#/definitions/base_property_exists",
-          "description": "Information whether album is system"
         },
         "owner_id": {
           "type": "integer",
@@ -15085,18 +15456,56 @@
         "title": {
           "type": "string",
           "description": "Album title"
-        },
-        "updated_time": {
-          "type": "integer",
-          "description": "Date when the album has been updated last time in Unixtime",
-          "minimum": 0
         }
       },
       "required": [
+        "id",
         "owner_id",
-        "title",
-        "updated_time",
-        "count"
+        "title"
+      ],
+      "additionalProperties": false
+    },
+    "video_video_album_full": {
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "objects.json#/definitions/video_video_album"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Total number of videos in album"
+            },
+            "image": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/video_video_image"
+              },
+              "description": "Album cover image in different sizes"
+            },
+            "image_blur": {
+              "$ref": "objects.json#/definitions/base_property_exists",
+              "description": "Need blur album thumb or not"
+            },
+            "is_system": {
+              "$ref": "objects.json#/definitions/base_property_exists",
+              "description": "Information whether album is system"
+            },
+            "updated_time": {
+              "type": "integer",
+              "description": "Date when the album has been updated last time in Unixtime",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "updated_time",
+            "count"
+          ],
+          "additionalProperties": false
+        }
       ],
       "additionalProperties": false
     },
@@ -15243,6 +15652,29 @@
         "title": {
           "type": "string",
           "description": "Note title"
+        },
+        "text": {
+          "type": "string",
+          "description": "Note text"
+        },
+        "privacy_view": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "privacy_comment": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "can_comment": {
+          "type": "integer"
+        },
+        "text_wiki": {
+          "type": "string",
+          "description": "Note wiki text"
         },
         "view_url": {
           "type": "string",
@@ -15596,6 +16028,9 @@
           "type": "string",
           "description": "Access key to private object"
         },
+        "is_deleted": {
+          "type": "boolean"
+        },
         "attachments": {
           "type": "array",
           "items": {
@@ -15774,7 +16209,8 @@
         "donut_link",
         "article",
         "textlive",
-        "textpost"
+        "textpost",
+        "situational_theme"
       ]
     },
     "wall_wallpost_comments_donut": {
@@ -15841,8 +16277,7 @@
         }
       },
       "required": [
-        "text",
-        "button"
+        "text"
       ],
       "additionalProperties": false
     },
@@ -15893,11 +16328,48 @@
               "$ref": "objects.json#/definitions/base_bool_int",
               "description": "Information whether the post is marked as ads"
             },
+            "topic_id": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Topic ID. Allowed values can be obtained from newsfeed.getPostTopics method",
+              "enum": [
+                0,
+                1,
+                7,
+                12,
+                16,
+                19,
+                21,
+                23,
+                25,
+                26,
+                32,
+                43
+              ],
+              "enumNames": [
+                "empty_topic",
+                "art",
+                "it",
+                "games",
+                "music",
+                "photo",
+                "science_and_tech",
+                "sport",
+                "travel",
+                "tv_and_cinema",
+                "humor",
+                "fashion"
+              ]
+            },
             "short_text_rate": {
               "type": "number",
               "description": "Preview length control parameter",
               "minimum": 0,
               "maximum": 1
+            },
+            "hash": {
+              "type": "string",
+              "description": "Hash for sharing"
             }
           }
         }

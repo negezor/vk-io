@@ -629,9 +629,23 @@
       "code": 950,
       "description": "Can't send message, reply timed out"
     },
+    "api_error_messages_user_not_don": {
+      "code": 962,
+      "description": "You can't access donut chat without subscription"
+    },
     "api_error_auth_flood_error": {
       "code": 1105,
       "description": "Too many auth attempts, try again later"
+    },
+    "api_error_auth_anonymous_token_has_expired": {
+      "code": 1114,
+      "description": "Anonymous token has expired",
+      "global": true
+    },
+    "api_error_auth_anonymous_token_is_invalid": {
+      "code": 1116,
+      "description": "Anonymous token is invalid",
+      "global": true
     },
     "api_error_param_doc_id": {
       "code": 1150,
@@ -780,6 +794,10 @@
     "api_error_market_not_enabled": {
       "code": 1438,
       "description": "Market not enabled"
+    },
+    "api_error_market_album_main_hidden": {
+      "code": 1446,
+      "description": "Main album can not be hidden"
     },
     "api_error_story_expired": {
       "code": 1600,

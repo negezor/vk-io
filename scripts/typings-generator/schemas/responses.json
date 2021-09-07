@@ -89,7 +89,7 @@
             "profiles": {
               "type": "array",
               "items": {
-                "$ref": "objects.json#/definitions/users_user_min"
+                "$ref": "objects.json#/definitions/users_user_full"
               }
             },
             "groups": {
@@ -1045,26 +1045,7 @@
       "type": "object",
       "properties": {
         "response": {
-          "type": "object",
-          "properties": {
-            "count": {
-              "type": "integer",
-              "description": "Total number"
-            },
-            "items": {
-              "type": "array",
-              "items": {
-                "$ref": "objects.json#/definitions/apps_app"
-              }
-            },
-            "profiles": {
-              "type": "array",
-              "items": {
-                "$ref": "objects.json#/definitions/users_user_min"
-              }
-            }
-          },
-          "additionalProperties": false
+          "$ref": "objects.json#/definitions/apps_catalog_list"
         }
       },
       "required": [
@@ -1881,7 +1862,7 @@
       ],
       "additionalProperties": false
     },
-    "docs_getUploadServer": {
+    "docs_getUploadServer_response": {
       "type": "object",
       "properties": {
         "response": {
@@ -2603,7 +2584,7 @@
             "items": {
               "type": "array",
               "items": {
-                "$ref": "objects.json#/definitions/friends_user_xtr_lists"
+                "$ref": "objects.json#/definitions/users_user_full"
               }
             }
           },
@@ -2744,7 +2725,7 @@
       "type": "object",
       "properties": {
         "response": {
-          "$ref": "objects.json#/definitions/groups_group_link"
+          "$ref": "objects.json#/definitions/groups_links_item"
         }
       },
       "required": [
@@ -2837,7 +2818,7 @@
       ],
       "additionalProperties": false
     },
-    "groups_getById_legacy_response": {
+    "groups_getById_object_legacy_response": {
       "type": "object",
       "properties": {
         "response": {
@@ -2845,33 +2826,6 @@
           "items": {
             "$ref": "objects.json#/definitions/groups_group_full"
           }
-        }
-      },
-      "required": [
-        "response"
-      ],
-      "additionalProperties": false
-    },
-    "groups_getById_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "type": "object",
-          "properties": {
-            "groups": {
-              "type": "array",
-              "items": {
-                "$ref": "objects.json#/definitions/groups_group_full"
-              }
-            },
-            "profiles": {
-              "type": "array",
-              "items": {
-                "$ref": "objects.json#/definitions/groups_profile_item"
-              }
-            }
-          },
-          "additionalProperties": false
         }
       },
       "required": [
@@ -3353,10 +3307,10 @@
               }
             },
             "main_section": {
-              "$ref": "objects.json#/definitions/groups_group_full_main_section"
+              "$ref": "objects.json#/definitions/groups_group_full_section"
             },
             "secondary_section": {
-              "type": "integer"
+              "$ref": "objects.json#/definitions/groups_group_full_section"
             },
             "age_limits": {
               "$ref": "objects.json#/definitions/groups_group_age_limits"
@@ -3551,7 +3505,7 @@
       ],
       "additionalProperties": false
     },
-    "groups_get_extended_response": {
+    "groups_get_object_extended_response": {
       "type": "object",
       "properties": {
         "response": {
@@ -4252,6 +4206,12 @@
               "items": {
                 "$ref": "objects.json#/definitions/market_market_item_full"
               }
+            },
+            "variants": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/market_market_item_full"
+              }
             }
           },
           "additionalProperties": false
@@ -4273,6 +4233,12 @@
               "description": "Total number"
             },
             "items": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/market_market_item"
+              }
+            },
+            "variants": {
               "type": "array",
               "items": {
                 "$ref": "objects.json#/definitions/market_market_item"
@@ -4318,6 +4284,12 @@
               "items": {
                 "$ref": "objects.json#/definitions/market_market_item_full"
               }
+            },
+            "variants": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/market_market_item_full"
+              }
             }
           },
           "required": [
@@ -4347,6 +4319,12 @@
               "$ref": "objects.json#/definitions/market_services_view_type"
             },
             "items": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/market_market_item"
+              }
+            },
+            "variants": {
               "type": "array",
               "items": {
                 "$ref": "objects.json#/definitions/market_market_item"
@@ -4683,33 +4661,27 @@
       "properties": {
         "response": {
           "type": "object",
-          "properties": {
-            "count": {
-              "type": "integer",
-              "description": "Total number"
+          "allOf": [
+            {
+              "$ref": "objects.json#/definitions/messages_getConversationById"
             },
-            "items": {
-              "type": "array",
-              "items": {
-                "$ref": "objects.json#/definitions/messages_conversation"
-              }
-            },
-            "profiles": {
-              "type": "array",
-              "items": {
-                "$ref": "objects.json#/definitions/users_user_full"
-              }
-            },
-            "groups": {
-              "type": "array",
-              "items": {
-                "$ref": "objects.json#/definitions/groups_group_full"
+            {
+              "type": "object",
+              "properties": {
+                "profiles": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "objects.json#/definitions/users_user_full"
+                  }
+                },
+                "groups": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "objects.json#/definitions/groups_group_full"
+                  }
+                }
               }
             }
-          },
-          "required": [
-            "count",
-            "items"
           ],
           "additionalProperties": false
         }
@@ -4723,24 +4695,7 @@
       "type": "object",
       "properties": {
         "response": {
-          "type": "object",
-          "properties": {
-            "count": {
-              "type": "integer",
-              "description": "Total number"
-            },
-            "items": {
-              "type": "array",
-              "items": {
-                "$ref": "objects.json#/definitions/messages_conversation"
-              }
-            }
-          },
-          "required": [
-            "count",
-            "items"
-          ],
-          "additionalProperties": false
+          "$ref": "objects.json#/definitions/messages_getConversationById"
         }
       },
       "required": [
@@ -5345,28 +5300,8 @@
         "response": {
           "type": "array",
           "items": {
-            "type": "object",
-            "properties": {
-              "peer_id": {
-                "type": "integer"
-              },
-              "message_id": {
-                "type": "integer",
-                "minimum": 0
-              },
-              "conversation_message_id": {
-                "type": "integer",
-                "minimum": 0
-              },
-              "error": {
-                "$ref": "objects.json#/definitions/base_message_error"
-              }
-            }
-          },
-          "required": [
-            "peer_id",
-            "message_id"
-          ]
+            "$ref": "objects.json#/definitions/messages_send_user_ids_response_item"
+          }
         }
       },
       "required": [
@@ -5402,13 +5337,13 @@
         "response": {
           "type": "object",
           "properties": {
-            "groups": {
+            "profiles": {
               "type": "array",
               "items": {
                 "$ref": "objects.json#/definitions/users_user_full"
               }
             },
-            "profiles": {
+            "groups": {
               "type": "array",
               "items": {
                 "$ref": "objects.json#/definitions/groups_group_full"
@@ -6026,7 +5961,10 @@
       "type": "object",
       "properties": {
         "response": {
-          "$ref": "objects.json#/definitions/orders_amount"
+          "type": "array",
+          "items": {
+            "$ref": "objects.json#/definitions/orders_amount"
+          }
         }
       },
       "required": [
@@ -7513,15 +7451,7 @@
         "response": {
           "type": "array",
           "items": {
-            "type": "object",
-            "properties": {
-              "user_id": {
-                "type": "integer"
-              },
-              "status": {
-                "type": "string"
-              }
-            }
+            "$ref": "objects.json#/definitions/secure_giveEventSticker_item"
           }
         }
       },
@@ -7987,7 +7917,7 @@
             "profiles": {
               "type": "array",
               "items": {
-                "$ref": "objects.json#/definitions/users_user"
+                "$ref": "objects.json#/definitions/users_user_full"
               }
             },
             "groups": {
@@ -8037,7 +7967,7 @@
             "profiles": {
               "type": "array",
               "items": {
-                "$ref": "objects.json#/definitions/users_user"
+                "$ref": "objects.json#/definitions/users_user_full"
               }
             },
             "groups": {
@@ -8703,7 +8633,7 @@
             "profiles": {
               "type": "array",
               "items": {
-                "$ref": "objects.json#/definitions/users_user_min"
+                "$ref": "objects.json#/definitions/users_user"
               }
             },
             "groups": {
