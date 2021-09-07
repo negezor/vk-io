@@ -41,12 +41,11 @@
 	"dependencies": {
 		"debug": "^4.3.2",
 		"inspectable": "^1.2.0",
-		"node-fetch": "^2.6.1",
+		"node-fetch": "^3.0.0",
 		"ws": "^7.5.2"
 	},
 	"devDependencies": {
 		"@types/debug": "^4.1.7",
-		"@types/node-fetch": "^2.5.12",
 		"@types/ws": "^7.4.7"
 	}
 }
