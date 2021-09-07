@@ -123,7 +123,7 @@ export class PollingTransport {
 
 			const { pollingWait, pollingRetryLimit } = this.options;
 
-			if (error.code !== NEED_RESTART && this.restarted !== pollingRetryLimit) {
+			if ((error as UpdatesError).code !== NEED_RESTART && this.restarted !== pollingRetryLimit) {
 				this.restarted += 1;
 
 				debug('longpoll restart request');

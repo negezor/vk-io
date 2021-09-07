@@ -36,7 +36,7 @@ export class SequentialWorker extends APIWorker {
 			if (request.retries === options.apiRetryLimit) {
 				debug(`${method} <X-`);
 
-				request.captchaValidate?.reject(error);
+				request.captchaValidate?.reject(error as Error);
 
 				request.reject(error);
 

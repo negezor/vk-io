@@ -89,7 +89,7 @@ import { Upload } from '../upload';
 
 import { PollingTransport, WebhookTransport, IWebhookTransportStartOptions } from './transports';
 
-import { APIErrorCode } from '../errors';
+import { APIError, APIErrorCode } from '../errors';
 
 import { UpdateSource } from '../utils/constants';
 import { AllowArray, Constructor } from '../types';
@@ -689,7 +689,7 @@ export class Updates {
 
 				this.options.pollingGroupId = group.id!;
 			} catch (error) {
-				if (error.code !== APIErrorCode.PARAM) {
+				if ((error as APIError).code !== APIErrorCode.PARAM) {
 					throw error;
 				}
 
