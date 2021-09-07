@@ -31,7 +31,7 @@ export interface AccountGetBannedResponse {
     count: number;
     [key: string]: any;
     items: number[];
-    profiles?: Objects.UsersUserMin[];
+    profiles?: Objects.UsersUserFull[];
     groups?: Objects.GroupsGroup[];
 }
 
@@ -209,15 +209,7 @@ export type AppWidgetsSaveAppImageResponse = Objects.AppWidgetsPhoto;
 
 export type AppWidgetsSaveGroupImageResponse = Objects.AppWidgetsPhoto;
 
-export interface AppsGetCatalogResponse {
-    /**
-     * Total number
-     */
-    count?: number;
-    [key: string]: any;
-    items?: Objects.AppsApp[];
-    profiles?: Objects.UsersUserMin[];
-}
+export type AppsGetCatalogResponse = Objects.AppsCatalogList;
 
 export interface AppsGetFriendsListResponse {
     /**
@@ -455,7 +447,7 @@ export interface DocsGetTypesResponse {
     items?: Objects.DocsDocTypes[];
 }
 
-export type DocsGetUploadServer = Objects.BaseUploadServer;
+export type DocsGetUploadServerResponse = Objects.BaseUploadServer;
 
 export interface DocsGetResponse {
     /**
@@ -648,7 +640,7 @@ export interface FriendsGetFieldsResponse {
      */
     count: number;
     [key: string]: any;
-    items: Objects.FriendsUserXtrLists[];
+    items: Objects.UsersUserFull[];
 }
 
 export interface FriendsGetResponse {
@@ -688,7 +680,7 @@ export interface GroupsAddCallbackServerResponse {
     server_id: number;
 }
 
-export type GroupsAddLinkResponse = Objects.GroupsGroupLink;
+export type GroupsAddLinkResponse = Objects.GroupsLinksItem;
 
 export type GroupsCreateResponse = Objects.GroupsGroup;
 
@@ -712,13 +704,7 @@ export interface GroupsGetBannedResponse {
     items: Objects.GroupsBannedItem[];
 }
 
-export type GroupsGetByIdLegacyResponse = Objects.GroupsGroupFull[];
-
-export interface GroupsGetByIdResponse {
-    [key: string]: any;
-    groups?: Objects.GroupsGroupFull[];
-    profiles?: Objects.GroupsProfileItem[];
-}
+export type GroupsGetByIdObjectLegacyResponse = Objects.GroupsGroupFull[];
 
 export interface GroupsGetCallbackConfirmationCodeResponse {
     /**
@@ -906,7 +892,6 @@ export interface GroupsGetSettingsResponse {
     email?: string;
     [key: string]: any;
     sections_list?: Objects.GroupsSectionsListItem[];
-    secondary_section?: number;
     obscene_words: string[];
     event_group_id?: number;
     public_category_list?: Objects.GroupsGroupPublicCategoryList[];
@@ -923,7 +908,7 @@ export interface GroupsGetTokenPermissionsResponse {
     permissions: Objects.GroupsTokenPermissionSetting[];
 }
 
-export interface GroupsGetExtendedResponse {
+export interface GroupsGetObjectExtendedResponse {
     /**
      * Total communities number
      */
@@ -1131,6 +1116,7 @@ export interface MarketGetExtendedResponse {
     count?: number;
     [key: string]: any;
     items?: Objects.MarketMarketItemFull[];
+    variants?: Objects.MarketMarketItemFull[];
 }
 
 export interface MarketGetResponse {
@@ -1140,6 +1126,7 @@ export interface MarketGetResponse {
     count?: number;
     [key: string]: any;
     items?: Objects.MarketMarketItem[];
+    variants?: Objects.MarketMarketItem[];
 }
 
 export type MarketRestoreCommentResponse = Objects.BaseBoolInt;
@@ -1151,6 +1138,7 @@ export interface MarketSearchExtendedResponse {
     count: number;
     [key: string]: any;
     items: Objects.MarketMarketItemFull[];
+    variants?: Objects.MarketMarketItemFull[];
 }
 
 export interface MarketSearchResponse {
@@ -1160,6 +1148,7 @@ export interface MarketSearchResponse {
     count: number;
     [key: string]: any;
     items: Objects.MarketMarketItem[];
+    variants?: Objects.MarketMarketItem[];
 }
 
 export type MessagesCreateChatResponse = number;
@@ -1237,25 +1226,9 @@ export interface MessagesGetConversationMembersResponse {
     groups?: Objects.GroupsGroupFull[];
 }
 
-export interface MessagesGetConversationsByIdExtendedResponse {
-    /**
-     * Total number
-     */
-    count: number;
-    [key: string]: any;
-    items: Objects.MessagesConversation[];
-    profiles?: Objects.UsersUserFull[];
-    groups?: Objects.GroupsGroupFull[];
-}
+export type MessagesGetConversationsByIdExtendedResponse = Objects.MessagesGetConversationById;
 
-export interface MessagesGetConversationsByIdResponse {
-    /**
-     * Total number
-     */
-    count: number;
-    [key: string]: any;
-    items: Objects.MessagesConversation[];
-}
+export type MessagesGetConversationsByIdResponse = Objects.MessagesGetConversationById;
 
 export interface MessagesGetConversationsResponse {
     /**
@@ -1409,7 +1382,7 @@ export interface MessagesSearchResponse {
 
 export type MessagesSendResponse = number;
 
-export type MessagesSendUserIdsResponse = any[];
+export type MessagesSendUserIdsResponse = Objects.MessagesSendUserIdsResponseItem[];
 
 export interface MessagesSetChatPhotoResponse {
     /**
@@ -1421,8 +1394,8 @@ export interface MessagesSetChatPhotoResponse {
 
 export interface NewsfeedGetBannedExtendedResponse {
     [key: string]: any;
-    groups?: Objects.UsersUserFull[];
-    profiles?: Objects.GroupsGroupFull[];
+    profiles?: Objects.UsersUserFull[];
+    groups?: Objects.GroupsGroupFull[];
 }
 
 export interface NewsfeedGetBannedResponse {
@@ -1597,7 +1570,7 @@ export type OrdersCancelSubscriptionResponse = Objects.BaseBoolInt;
 
 export type OrdersChangeStateResponse = string;
 
-export type OrdersGetAmountResponse = Objects.OrdersAmount;
+export type OrdersGetAmountResponse = Objects.OrdersAmount[];
 
 export type OrdersGetByIdResponse = Objects.OrdersOrder[];
 
@@ -2051,7 +2024,7 @@ export type SecureGetTransactionsHistoryResponse = Objects.SecureTransaction[];
 
 export type SecureGetUserLevelResponse = Objects.SecureLevel[];
 
-export type SecureGiveEventStickerResponse = any[];
+export type SecureGiveEventStickerResponse = Objects.SecureGiveEventStickerItem[];
 
 export type SecureSendNotificationResponse = number[];
 
@@ -2172,7 +2145,7 @@ export interface StoriesGetV5113Response {
     [key: string]: any;
     count: number;
     items: Objects.StoriesFeedItem[];
-    profiles?: Objects.UsersUser[];
+    profiles?: Objects.UsersUserFull[];
     groups?: Objects.GroupsGroup[];
     need_upload_screen?: boolean | number;
 }
@@ -2184,7 +2157,7 @@ export interface StoriesGetResponse {
     count: number;
     [key: string]: any;
     items: Objects.StoriesStory[][];
-    profiles?: Objects.UsersUser[];
+    profiles?: Objects.UsersUserFull[];
     groups?: Objects.GroupsGroup[];
     need_upload_screen?: boolean | number;
 }
@@ -2366,7 +2339,7 @@ export interface VideoSearchExtendedResponse {
     count: number;
     [key: string]: any;
     items: Objects.VideoVideoFull[];
-    profiles: Objects.UsersUserMin[];
+    profiles: Objects.UsersUser[];
     groups: Objects.GroupsGroupFull[];
 }
 

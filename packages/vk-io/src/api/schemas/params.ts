@@ -262,7 +262,10 @@ export interface AdsAddOfficeUsersParams {
      * Advertising account ID.
      */
     account_id: number;
-    data?: Objects.AdsUserSpecificationCutted[];
+    /**
+     * Serialized JSON array of objects that describe added managers. Description of 'user_specification' objects see below.
+     */
+    data: string;
     [key: string]: any;
 }
 
@@ -442,14 +445,6 @@ export interface AdsGetAdsLayoutParams {
      */
     account_id: number;
     /**
-     * Filter by ads. Serialized JSON array with ad IDs. If the parameter is null, all ads will be shown.
-     */
-    ad_ids?: string;
-    /**
-     * Filter by advertising campaigns. Serialized JSON array with campaign IDs. If the parameter is null, ads of all campaigns will be shown.
-     */
-    campaign_ids?: string;
-    /**
      * 'For advertising agencies.' ID of the client ads are retrieved from.
      */
     client_id?: number;
@@ -457,6 +452,18 @@ export interface AdsGetAdsLayoutParams {
      * Flag that specifies whether archived ads shall be shown. *0 — show only active ads,, *1 — show all ads.
      */
     include_deleted?: boolean | number;
+    /**
+     * Flag that specifies whether to show only archived ads: *0 — show all ads,, *1 — show only archived ads. Available when include_deleted flag is *1
+     */
+    only_deleted?: boolean | number;
+    /**
+     * Filter by advertising campaigns. Serialized JSON array with campaign IDs. If the parameter is null, ads of all campaigns will be shown.
+     */
+    campaign_ids?: string;
+    /**
+     * Filter by ads. Serialized JSON array with ad IDs. If the parameter is null, all ads will be shown.
+     */
+    ad_ids?: string;
     /**
      * Limit of number of returned ads. Used only if 'ad_ids' parameter is null, and 'campaign_ids' parameter contains ID of only one campaign.
      */
@@ -840,7 +847,10 @@ export interface AdsUpdateOfficeUsersParams {
      * Advertising account ID.
      */
     account_id: number;
-    data?: Objects.AdsUserSpecification[];
+    /**
+     * Serialized JSON array of objects that describe added managers. Description of 'user_specification' objects see below.
+     */
+    data: string;
     [key: string]: any;
 }
 
@@ -1612,7 +1622,7 @@ export interface DocsEditParams {
     /**
      * Document title.
      */
-    title?: string;
+    title: string;
     tags?: string[] | string;
     [key: string]: any;
 }
@@ -2278,6 +2288,10 @@ export interface GroupsCreateParams {
      * Category ID (for 'type' = 'public' only).
      */
     public_category?: number;
+    /**
+     * Public page subcategory ID.
+     */
+    public_subcategory?: number;
     /**
      * Public page subtype. Possible values: *'1' - place or small business,, *'2' - company, organization or website,, *'3' - famous person or group of people,, *'4' - product or work of art.
      */
@@ -3425,6 +3439,10 @@ export interface MarketAddAlbumParams {
      * Set as main ('1' - set, '0' - no).
      */
     main_album?: boolean | number;
+    /**
+     * Set as hidden
+     */
+    is_hidden?: boolean | number;
     [key: string]: any;
 }
 
@@ -3433,10 +3451,7 @@ export interface MarketAddToAlbumParams {
      * ID of an item owner community.
      */
     owner_id: number;
-    /**
-     * Item ID.
-     */
-    item_id: number;
+    item_ids?: number[] | number;
     album_ids?: number[] | number;
     [key: string]: any;
 }
@@ -3572,6 +3587,10 @@ export interface MarketEditAlbumParams {
      * Set as main ('1' - set, '0' - no).
      */
     main_album?: boolean | number;
+    /**
+     * Set as hidden
+     */
+    is_hidden?: boolean | number;
     [key: string]: any;
 }
 
@@ -3632,6 +3651,10 @@ export interface MarketGetParams {
      * Items update date to (format: yyyy-mm-dd)
      */
     date_to?: string;
+    /**
+     * Add variants to response if exist
+     */
+    need_variants?: boolean | number;
     album_id?: number;
     [key: string]: any;
 }
@@ -3899,6 +3922,10 @@ export interface MarketSearchParams {
      * '1' - to return additional fields: 'likes, can_comment, car_repost, photos'. By default: '0'.
      */
     extended?: boolean | number;
+    /**
+     * Add variants to response if exist
+     */
+    need_variants?: boolean | number;
     album_id?: number;
     sort?: 0 | 1 | 2 | 3;
     status?: 0 | 2;
@@ -7600,6 +7627,10 @@ export interface WallEditParams {
      * (Required if 'attachments' is not set.) Text of the post.
      */
     message?: string;
+    /**
+     * Topic ID. Allowed values can be obtained from newsfeed.getPostTopics method
+     */
+    topic_id?: 0 | 1 | 7 | 12 | 16 | 19 | 21 | 23 | 25 | 26 | 32 | 43;
     post_id: number;
     friends_only?: boolean | number;
     attachments?: string[] | string;
@@ -7865,6 +7896,10 @@ export interface WallPostParams {
      * Post ID. Used for publishing of scheduled and suggested posts.
      */
     post_id?: number;
+    /**
+     * Topic ID. Allowed values can be obtained from newsfeed.getPostTopics method
+     */
+    topic_id?: 0 | 1 | 7 | 12 | 16 | 19 | 21 | 23 | 25 | 26 | 32 | 43;
     attachments?: string[] | string;
     guid?: string;
     mark_as_ads?: boolean | number;

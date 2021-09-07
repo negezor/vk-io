@@ -841,11 +841,29 @@ export enum APIErrorCode {
      */
     MESSAGES_PEER_BLOCKED_REASON_BY_TIME = 950,
     /**
+     * You can't access donut chat without subscription
+     *
+     * Code: `962`
+     */
+    MESSAGES_USER_NOT_DON = 962,
+    /**
      * Too many auth attempts, try again later
      *
      * Code: `1105`
      */
     AUTH_FLOOD_ERROR = 1105,
+    /**
+     * Anonymous token has expired
+     *
+     * Code: `1114`
+     */
+    AUTH_ANONYMOUS_TOKEN_HAS_EXPIRED = 1114,
+    /**
+     * Anonymous token is invalid
+     *
+     * Code: `1116`
+     */
+    AUTH_ANONYMOUS_TOKEN_IS_INVALID = 1116,
     /**
      * Invalid document id
      *
@@ -1068,6 +1086,12 @@ export enum APIErrorCode {
      * Code: `1438`
      */
     MARKET_NOT_ENABLED = 1438,
+    /**
+     * Main album can not be hidden
+     *
+     * Code: `1446`
+     */
+    MARKET_ALBUM_MAIN_HIDDEN = 1446,
     /**
      * Story has already expired
      *

@@ -483,7 +483,7 @@ export interface APIDocs {
     /**
      * Returns the server address for document upload.
      */
-    getUploadServer(params: Params.DocsGetUploadServerParams): Promise<Responses.DocsGetUploadServer>;
+    getUploadServer(params: Params.DocsGetUploadServerParams): Promise<Responses.DocsGetUploadServerResponse>;
     /**
      * Returns the server address for document upload onto a user's or community's wall.
      */
@@ -697,7 +697,7 @@ export interface APIGroups {
     /**
      * Returns information about communities by their IDs.
      */
-    getById(params: Params.GroupsGetByIdParams): Promise<Responses.GroupsGetByIdLegacyResponse>;
+    getById(params: Params.GroupsGetByIdParams): Promise<Responses.GroupsGetByIdObjectLegacyResponse>;
     /**
      * Returns Callback API confirmation code for the community.
      */
