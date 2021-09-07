@@ -42,7 +42,7 @@
 		"debug": "^4.3.2",
 		"inspectable": "^1.2.0",
 		"node-fetch": "^3.0.0",
-		"ws": "^7.5.2"
+		"ws": "^8.2.1"
 	},
 	"devDependencies": {
 		"@types/debug": "^4.1.7",
