@@ -36,7 +36,7 @@
 		"docs:watch": "vuepress dev docs",
 		"docs:build": "sh scripts/deploy-docs.sh",
 		"test": "yarn run test:jest && yarn run test:eslint",
-		"test:jest": "jest --config jest.config.json --no-cache",
+		"test:jest": "NODE_OPTIONS=--experimental-vm-modules jest --config jest.config.json --no-cache",
 		"test:eslint": "eslint --ext .ts --ignore-path .gitignore packages/*/src/**/*.ts"
 	}
 }
