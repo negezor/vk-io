@@ -1,7 +1,13 @@
 import createDebug from 'debug';
 
 import { API, Objects } from '../api';
-import { APIError, CollectError, APIErrorCode, CollectErrorCode } from '../errors';
+import {
+	APIError,
+	CollectError,
+
+	APIErrorCode,
+	CollectErrorCode
+} from '../errors';
 
 import { getExecuteCode } from './execute-code';
 

@@ -201,6 +201,7 @@ export class StreamingAPI {
 			}
 		});
 
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		const result = await response.json() as any;
 
 		if (result.error !== undefined) {
