@@ -43,13 +43,12 @@
 		"cheerio": "^1.0.0-rc.10",
 		"debug": "^4.3.2",
 		"inspectable": "^1.2.0",
-		"node-fetch": "^2.6.1",
+		"node-fetch": "^3.0.0",
 		"tough-cookie": "^4.0.0"
 	},
 	"devDependencies": {
 		"@types/cheerio": "^0.22.30",
 		"@types/debug": "^4.1.7",
-		"@types/node-fetch": "^2.5.12",
 		"@types/tough-cookie": "^4.0.1"
 	}
 }

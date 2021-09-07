@@ -1,10 +1,13 @@
-import fetch, {
+import createDebug from 'debug';
+import { CookieJar } from 'tough-cookie';
+
+import {
+	fetch,
+
 	RequestInfo,
 	RequestInit,
 	Response
-} from 'node-fetch';
-import createDebug from 'debug';
-import { CookieJar } from 'tough-cookie';
+} from './fetch';
 
 export type Headers = Record<string, string>;
 
