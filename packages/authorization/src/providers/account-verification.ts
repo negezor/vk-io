@@ -247,7 +247,7 @@ export class AccountVerification {
 
 			return newResponse;
 		} catch (error) {
-			validate.reject(error);
+			validate.reject(error as Error);
 
 			throw error;
 		}
