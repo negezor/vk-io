@@ -21,7 +21,7 @@ export class VKError extends Error {
 	/**
 	 * Error cause
 	 */
-	public cause!: Error;
+	public cause?: Error;
 
 	/**
 	 * Constructor
