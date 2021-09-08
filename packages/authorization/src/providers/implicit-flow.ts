@@ -231,6 +231,12 @@ export abstract class ImplicitFlow {
 
 			const $ = cheerioLoad(await response.text());
 
+			if (url.includes('act=authcheck_code')) {
+				response = await this.processCaptchaForm(response, $);
+
+				continue;
+			}
+
 			if (url.includes(ACTION_AUTH_CODE)) {
 				response = await this.processTwoFactorForm(response, $);
 
@@ -418,6 +424,50 @@ export abstract class ImplicitFlow {
 
 			throw error;
 		}
+	}
+
+	/**
+	 * Process captcha form
+	 *
+	 * TODO: Make a generic captcha handler
+	 */
+	protected async processCaptchaForm(response: Response, $: CheerioStatic): Promise<Response> {
+		const { action, fields } = parseFormField($);
+
+		if (fields.captcha_sid !== undefined) {
+			const src = $('.captcha_img').attr('src');
+
+			if (!src) {
+				throw new AuthorizationError({
+					message: 'Failed get captcha image',
+					code: AUTHORIZATION_FAILED
+				});
+			}
+
+			const {
+				key,
+				validate: captchaValidate
+			} = await this.options.callbackService.processingCaptcha({
+				type: CaptchaType.IMPLICIT_FLOW_AUTH,
+				sid: fields.captcha_sid,
+				src: `https://api.vk.com/${src}`
+			});
+
+			this.captchaValidate = captchaValidate;
+
+			fields.captcha_key = key;
+
+			const newUrl = getFullURL(action, response);
+
+			const newResponse = await this.fetch(newUrl, {
+				method: 'POST',
+				body: new URLSearchParams(fields)
+			});
+
+			return newResponse;
+		}
+
+		return response;
 	}
 
 	/**
