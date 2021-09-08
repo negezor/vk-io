@@ -397,21 +397,21 @@ class WallAttachment extends Attachment<IWallAttachmentPayload, AttachmentType.W
 	/**
 	 * Returns the likes info
 	 */
-	public get likes(): object | undefined {
+	public get likes(): IWallAttachmentPayload['likes'] | undefined {
 		return this.payload.likes;
 	}
 
 	/**
 	 * Returns the post source
 	 */
-	public get postSource(): object | undefined {
+	public get postSource(): IWallAttachmentPayload['post_source'] | undefined {
 		return this.payload.post_source;
 	}
 
 	/**
 	 * Returns the geo location
 	 */
-	public get geo(): object | undefined {
+	public get geo(): IWallAttachmentPayload['geo'] | undefined {
 		return this.payload.geo;
 	}
 
