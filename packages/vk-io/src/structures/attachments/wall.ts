@@ -472,6 +472,7 @@ class WallAttachment extends Attachment<IWallAttachmentPayload, AttachmentType.W
 			'likes',
 			'postSource',
 			'geo',
+			'copyright',
 			'copyHistory',
 			'attachments'
 		]);
