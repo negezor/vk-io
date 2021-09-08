@@ -416,6 +416,13 @@ class WallAttachment extends Attachment<IWallAttachmentPayload, AttachmentType.W
 	}
 
 	/**
+	 * Returns the copyright
+	 */
+	public get copyright(): IWallAttachmentPayload['copyright'] | undefined {
+		return this.payload.copyright;
+	}
+
+	/**
 	 * Returns the attachments
 	 */
 	public get attachments(): (Attachment | ExternalAttachment)[] {
