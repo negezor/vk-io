@@ -1,6 +1,7 @@
 export interface IVKErrorOptions {
 	code: string | number;
 	message: string;
+	cause?: Error;
 }
 
 /**
@@ -18,10 +19,18 @@ export class VKError extends Error {
 	public stack!: string;
 
 	/**
+	 * Error cause
+	 */
+	public cause!: Error;
+
+	/**
 	 * Constructor
 	 */
-	public constructor({ code, message }: IVKErrorOptions) {
-		super(message);
+	public constructor({ code, message, cause }: IVKErrorOptions) {
+		// @ts-expect-error wait typyings from typescript
+		super(message, {
+			cause
+		});
 
 		this.code = code;
 		this.name = this.constructor.name;
