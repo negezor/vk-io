@@ -46,6 +46,6 @@
 	},
 	"devDependencies": {
 		"@types/debug": "^4.1.7",
-		"@types/ws": "^7.4.7"
+		"@types/ws": "^8.2.0"
 	}
 }
