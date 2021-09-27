@@ -11,7 +11,8 @@ const MODULES = [
 	'scenes',
 	'session',
 	'streaming',
-	'authorization'
+	'authorization',
+	'stateless-prompt'
 ];
 
 const coreModules = builtinModules.filter(name => (
