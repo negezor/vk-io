@@ -184,7 +184,7 @@ export class DirectAuthorization {
 				: 0),
 			v: apiVersion,
 			client_id: clientId,
-			password,
+			password: password!,
 			scope: String(scope)
 		});
 

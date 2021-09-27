@@ -79,7 +79,7 @@ export class StreamingAPI {
 			this.key = key!;
 			this.endpoint = new URL(`https://${endpoint}`);
 
-			const search = new URLSearchParams({ key });
+			const search = new URLSearchParams({ key: key! });
 
 			const { agent } = this.options;
 
