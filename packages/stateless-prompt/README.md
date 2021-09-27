@@ -6,6 +6,10 @@
 
 VK-IO Stateless Prompt - Simple implementation of middleware-based stateless prompt
 
+## How it works
+
+The basic concept is to send your message with a special text at the end. Then the user replies to the message, the bot checks message for a special text at the end of a reply message. If the message contains a special text, it calls a handler with a user message. If it doesn't contain a special text, then it skips. This is all!
+
 ![Example](https://user-images.githubusercontent.com/9392723/134985949-e5cf1758-0469-428e-85ed-12229e36e58b.png)
 
 ## Installation
