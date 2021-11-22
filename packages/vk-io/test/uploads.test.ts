@@ -95,7 +95,7 @@ describe('Uploads', (): void => {
 
 	it('should upload image to message from buffer', async (): Promise<void> => {
 		const response = await fetch(IMAGE_URL);
-		const buffer = await response.buffer();
+		const buffer = Buffer.from(await response.arrayBuffer());
 
 		const photo = await upload.messagePhoto({
 			source: {
