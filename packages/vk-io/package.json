@@ -45,10 +45,10 @@
 	"dependencies": {
 		"abort-controller": "^3.0.0",
 		"debug": "^4.3.2",
-		"form-data-encoder": "^1.5.1",
-		"formdata-node": "^4.0.1",
+		"form-data-encoder": "^1.7.1",
+		"formdata-node": "^4.3.1",
 		"inspectable": "^1.2.0",
 		"middleware-io": "^2.8.0",
-		"node-fetch": "^3.0.0"
+		"node-fetch": "^3.1.0"
 	}
 }

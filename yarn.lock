@@ -3634,10 +3634,10 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
-data-uri-to-buffer@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/data-uri-to-buffer/-/data-uri-to-buffer-3.0.1.tgz#594b8973938c5bc2c33046535785341abc4f3636"
-  integrity sha512-WboRycPNsVw3B3TL559F7kuBUM4d8CgMEvk6xEJlOp7OBPjt6G7z8WMWlD2rOFZLk6OYfFIUGsCOWzcQH9K2og==
+data-uri-to-buffer@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/data-uri-to-buffer/-/data-uri-to-buffer-4.0.0.tgz#b5db46aea50f6176428ac05b73be39a57701a64b"
+  integrity sha512-Vr3mLBA8qWmcuschSLAOogKgQ/Jwxulv3RNE4FXnYWRGujzrRWQI4m12fQqRkwX06C0KanhLr4hK+GydchZsaA==
 
 data-urls@^2.0.0:
   version "2.0.0"
@@ -4647,11 +4647,6 @@ fb-watchman@^2.0.0:
   dependencies:
     bser "2.1.1"
 
-fetch-blob@2.1.2:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/fetch-blob/-/fetch-blob-2.1.2.tgz#a7805db1361bd44c1ef62bb57fb5fe8ea173ef3c"
-  integrity sha512-YKqtUDwqLyfyMnmbw8XD6Q8j9i/HggKtPEI+pZ1+8bvheBu78biSmNaXWusx1TauGqtUUGx/cBb1mKdq2rLYow==
-
 fetch-blob@^3.1.2:
   version "3.1.2"
   resolved "https://registry.yarnpkg.com/fetch-blob/-/fetch-blob-3.1.2.tgz#6bc438675f3851ecea51758ac91f6a1cd1bacabd"
@@ -4810,10 +4805,10 @@ forever-agent@~0.6.1:
   resolved "https://registry.yarnpkg.com/forever-agent/-/forever-agent-0.6.1.tgz#fbc71f0c41adeb37f96c577ad1ed42d8fdacca91"
   integrity sha1-+8cfDEGt6zf5bFd60e1C2P2sypE=
 
-form-data-encoder@^1.5.1:
-  version "1.5.1"
-  resolved "https://registry.yarnpkg.com/form-data-encoder/-/form-data-encoder-1.5.1.tgz#66508c51cc635691c68c5a7e207dba4619a7c092"
-  integrity sha512-o9RStqNROZ86N+eBlxKxY7knpTCwPIol1Q9tE864l7AxKee77d6BtkIHX0N0zUPcHTzHHLLcwl8b5CBWnm5AiQ==
+form-data-encoder@^1.7.1:
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/form-data-encoder/-/form-data-encoder-1.7.1.tgz#ac80660e4f87ee0d3d3c3638b7da8278ddb8ec96"
+  integrity sha512-EFRDrsMm/kyqbTQocNvRXMLjc7Es2Vk+IQFx/YW7hkUH1eBl4J1fqiP34l74Yt0pFLCNpc06fkbVk00008mzjg==
 
 form-data@^3.0.0:
   version "3.0.1"
@@ -4833,13 +4828,20 @@ form-data@~2.3.2:
     combined-stream "^1.0.6"
     mime-types "^2.1.12"
 
-formdata-node@^4.0.1:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/formdata-node/-/formdata-node-4.0.1.tgz#7370d752e9c53fe6c5cf1fd141dc0564172595fb"
-  integrity sha512-7qe/s/LQR4KE9zzPBg8HXRQQsgze4VtwTX9viuVOsodD5QSu7MKsNiSy5BWYDwV+kAcDTh3y7WnC5ZHK5t4Aqg==
+formdata-node@^4.3.1:
+  version "4.3.1"
+  resolved "https://registry.yarnpkg.com/formdata-node/-/formdata-node-4.3.1.tgz#e7b78a2a51f524ccc483b4d223c89690fd22061d"
+  integrity sha512-8xKSa9et4zb+yziWsD/bI+EYjdg1z2p9EpKr+o+Yk12F/wP66bmDdvjj2ZXd2K/MJlR3HBzWnuV7f82jzHRqCA==
   dependencies:
-    fetch-blob "2.1.2"
     node-domexception "1.0.0"
+    web-streams-polyfill "4.0.0-beta.1"
+
+formdata-polyfill@^4.0.10:
+  version "4.0.10"
+  resolved "https://registry.yarnpkg.com/formdata-polyfill/-/formdata-polyfill-4.0.10.tgz#24807c31c9d402e002ab3d8c720144ceb8848423"
+  integrity sha512-buewHzMvYL29jdeQTVILecSaZKnt/RJWjoZCF5OW60Z67/GmSLBkOFM7qh1PI3zFNtJbaZL5eQu1vLfazOwj4g==
+  dependencies:
+    fetch-blob "^3.1.2"
 
 forwarded@0.2.0:
   version "0.2.0"
@@ -7346,13 +7348,14 @@ node-domexception@1.0.0:
   resolved "https://registry.yarnpkg.com/node-domexception/-/node-domexception-1.0.0.tgz#6888db46a1f71c0b76b3f7555016b63fe64766e5"
   integrity sha512-/jKZoMpw0F8GRwl4/eLROPA3cfcXtLApP0QzLmUT/HuPCZWyB7IY9ZrMeKw2O/nFIqPQB3PVM9aYm0F312AXDQ==
 
-node-fetch@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-3.0.0.tgz#79da7146a520036f2c5f644e4a26095f17e411ea"
-  integrity sha512-bKMI+C7/T/SPU1lKnbQbwxptpCrG9ashG+VkytmXCPZyuM9jB6VU+hY0oi4lC8LxTtAeWdckNCTa3nrGsAdA3Q==
+node-fetch@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-3.1.0.tgz#714f4922dc270239487654eaeeab86b8206cb52e"
+  integrity sha512-QU0WbIfMUjd5+MUzQOYhenAazakV7Irh1SGkWCsRzBwvm4fAhzEUaHMJ6QLP7gWT6WO9/oH2zhKMMGMuIrDyKw==
   dependencies:
-    data-uri-to-buffer "^3.0.1"
+    data-uri-to-buffer "^4.0.0"
     fetch-blob "^3.1.2"
+    formdata-polyfill "^4.0.10"
 
 node-forge@^0.10.0:
   version "0.10.0"
@@ -10466,6 +10469,11 @@ wbuf@^1.1.0, wbuf@^1.7.3:
   dependencies:
     minimalistic-assert "^1.0.0"
 
+web-streams-polyfill@4.0.0-beta.1:
+  version "4.0.0-beta.1"
+  resolved "https://registry.yarnpkg.com/web-streams-polyfill/-/web-streams-polyfill-4.0.0-beta.1.tgz#3b19b9817374b7cee06d374ba7eeb3aeb80e8c95"
+  integrity sha512-3ux37gEX670UUphBF9AMCq8XM6iQ8Ac6A+DSRRjDoRBm1ufCkaCDdNVbaqq60PsEkdNlLKrGtv/YBP4EJXqNtQ==
+
 web-streams-polyfill@^3.0.3:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/web-streams-polyfill/-/web-streams-polyfill-3.1.1.tgz#1516f2d4ea8f1bdbfed15eb65cb2df87098c8364"
@@ -10747,10 +10755,10 @@ ws@^7.4.6:
   resolved "https://registry.yarnpkg.com/ws/-/ws-7.5.5.tgz#8b4bc4af518cfabd0473ae4f99144287b33eb881"
   integrity sha512-BAkMFcAzl8as1G/hArkxOxq3G7pjUqQ3gzYbLL0/5zNkph70e+lCoxBGnm6AW1+/aiNeV4fnKqZ8m4GZewmH2w==
 
-ws@^8.2.1:
-  version "8.2.1"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-8.2.1.tgz#bdd92b3c56fdb47d2379b5ae534281922cc5bd12"
-  integrity sha512-XkgWpJU3sHU7gX8f13NqTn6KQ85bd1WU7noBHTT8fSohx7OS1TPY8k+cyRPCzFkia7C4mM229yeHr1qK9sM4JQ==
+ws@^8.2.3:
+  version "8.2.3"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-8.2.3.tgz#63a56456db1b04367d0b721a0b80cae6d8becbba"
+  integrity sha512-wBuoj1BDpC6ZQ1B7DWQBYVLphPWkm8i9Y0/3YdHjHKHiohOJ1ws+3OccDWtH+PoC9DZD5WOTrJvNbWvjS6JWaA==
 
 xdg-basedir@^4.0.0:
   version "4.0.0"
