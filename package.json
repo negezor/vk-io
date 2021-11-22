@@ -35,8 +35,8 @@
 		"rollup:watch": "yarn run rollup:build -w",
 		"docs:watch": "vuepress dev docs",
 		"docs:build": "sh scripts/deploy-docs.sh",
-		"test": "yarn run test:jest && yarn run test:eslint",
+		"test": "yarn run test:jest && yarn run lint:eslint",
 		"test:jest": "NODE_OPTIONS=--experimental-vm-modules jest --config jest.config.json --no-cache",
-		"test:eslint": "eslint --ext .ts --ignore-path .gitignore packages/*/src/**/*.ts"
+		"lint:eslint": "eslint --ext .ts --ignore-path .gitignore packages/*/src/**/*.ts"
 	}
 }
