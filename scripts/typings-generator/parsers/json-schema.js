@@ -125,7 +125,7 @@ const jsonSchemaTypes = {
 	})
 };
 
-function parseJSONObject(name, type, payload = {}) {
+function parseJSONObject(name, type, payload = {}, { preferRequired } = { preferRequired: false }) {
 	if (type.$ref) {
 		const [, group, refName] = type.$ref.match(MATCH_REF_RE);
 
@@ -198,7 +198,7 @@ function parseJSONObject(name, type, payload = {}) {
 							name: propertyName,
 
 							type: refIdentifier,
-							required: false
+							required: preferRequired || false
 						});
 
 						continue;
@@ -215,7 +215,7 @@ function parseJSONObject(name, type, payload = {}) {
 							name: propertyName,
 
 							type: nodeType,
-							required: false
+							required: preferRequired || false
 						});
 					}
 				}
@@ -251,13 +251,22 @@ function parseJSONObject(name, type, payload = {}) {
 			};
 		}
 
+		if (preferRequired !== false) {
+			console.log('preferRequired', preferRequired);
+		}
+
+		// preferRequired
+
+		const resolvedType = jsonSchemaTypes[type.type]({
+			...payload,
+
+			type
+		});
+
 		return {
 			name,
-			...jsonSchemaTypes[type.type]({
-				...payload,
-
-				type
-			})
+			...resolvedType,
+			required: preferRequired || resolvedType.required
 		};
 	}
 
@@ -317,7 +326,7 @@ function parseJSONObject(name, type, payload = {}) {
 				name: propertyName,
 
 				type: nodeType,
-				required: typeof required !== 'boolean'
+				required: preferRequired || typeof required !== 'boolean'
 					? required.includes(propertyName)
 					: required
 			});
@@ -331,10 +340,10 @@ function parseJSONObject(name, type, payload = {}) {
 	};
 }
 
-function parseJSONSchema(schema, payload) {
+function parseJSONSchema(schema, payload, options) {
 	return Object.entries(schema)
 		.map(([key, value]) => (
-			parseJSONObject(key, value, payload)
+			parseJSONObject(key, value, payload, options)
 		));
 }
 

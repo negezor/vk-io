@@ -215,7 +215,7 @@ async function generate() {
 		);
 	}
 
-	for (const object of parseJSONSchema(objects)) {
+	for (const object of parseJSONSchema(objects, {}, { preferRequired: true })) {
 		if (object.exportedNodes) {
 			for (const exportedNode of object.exportedNodes) {
 				writeObjectsNode(exportedNode);
