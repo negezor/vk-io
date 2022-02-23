@@ -176,6 +176,29 @@ export interface IAPIOptions {
 	 */
 	apiExecuteMethods: string[];
 
+	/**
+	 * Methods that are not supported in execute (apiMode=parallel & apiMode=parallel_selected)
+	 *
+	 * Basically it's upload methods
+	 * @defaultValue ```ts
+	 * [
+     * 'photos.save',
+     * 'photos.saveWallPhoto',
+     * 'photos.saveOwnerPhoto',
+     * 'photos.saveMessagesPhoto',
+     * 'messages.setChatPhoto',
+     * 'photos.saveMarketPhoto',
+     * 'photos.saveMarketAlbumPhoto',
+     * 'audio.save',
+     * 'docs.save',
+     * 'photos.saveOwnerCoverPhoto',
+     * 'stories.save',
+     * 'polls.savePhoto'
+     * ]
+	 * ```
+	 */
+	apiExecuteUnsupportedMethods: string[];
+
 	callbackService?: CallbackService;
 }
 
@@ -214,6 +237,20 @@ class API {
 			},
 			apiExecuteCount: 25,
 			apiExecuteMethods: ['messages.send'],
+			apiExecuteUnsupportedMethods: [
+				'photos.save',
+				'photos.saveWallPhoto',
+				'photos.saveOwnerPhoto',
+				'photos.saveMessagesPhoto',
+				'messages.setChatPhoto',
+				'photos.saveMarketPhoto',
+				'photos.saveMarketAlbumPhoto',
+				'audio.save',
+				'docs.save',
+				'photos.saveOwnerCoverPhoto',
+				'stories.save',
+				'polls.savePhoto'
+			],
 
 			...options
 		};
