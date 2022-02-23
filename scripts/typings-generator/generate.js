@@ -181,7 +181,11 @@ async function generate() {
 					responsesIdentifier,
 					ts.factory.createIdentifier(
 						toPascalCase(
-							(method.responses.response || method.responses.keyResponse).$ref
+							(method.responses.response
+								|| method.responses.keyResponse
+								|| method.responses.responseInteger
+								|| method.responses.responseArray
+							).$ref
 								.replace(
 									'responses.json#/definitions/',
 									''

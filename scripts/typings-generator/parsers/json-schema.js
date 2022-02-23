@@ -15,7 +15,7 @@ const jsonSchemaTypes = {
 			const {
 				type: arrayType,
 				description,
-				required
+				required = false
 			} = jsonSchemaTypes[items.type]({
 				namespace,
 				type: items
@@ -242,6 +242,15 @@ function parseJSONObject(name, type, payload = {}) {
 	}
 
 	if (type.type !== 'object') {
+		if (Array.isArray(type.type) || !jsonSchemaTypes[type.type]) {
+			return {
+				name,
+				type: ts.factory.createKeywordTypeNode(
+					ts.SyntaxKind.AnyKeyword
+				)
+			};
+		}
+
 		return {
 			name,
 			...jsonSchemaTypes[type.type]({
@@ -308,7 +317,9 @@ function parseJSONObject(name, type, payload = {}) {
 				name: propertyName,
 
 				type: nodeType,
-				required: required.includes(propertyName)
+				required: typeof required !== 'boolean'
+					? required.includes(propertyName)
+					: required
 			});
 		}
 	}
