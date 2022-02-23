@@ -87,6 +87,7 @@ module.exports = {
 						'/ru/guide/keyboard',
 						'/ru/guide/collect',
 						'/ru/guide/attachments',
+						'/ru/guide/contexts',
 						'/ru/guide/utils'
 					]
 				},
