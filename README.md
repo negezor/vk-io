@@ -19,7 +19,7 @@ VK-IO - This is a powerful [Node.js](https://nodejs.org) module that allows you 
 - Typings
 
 ## Installation
-> **[Node.js](https://nodejs.org/) 12.0.0 or newer is required**  
+> **[Node.js](https://nodejs.org/) 12.20.0 or newer is required**  
 
 ### Yarn
 Recommended
