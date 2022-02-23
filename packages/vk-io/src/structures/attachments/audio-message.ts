@@ -47,7 +47,7 @@ export class AudioMessageAttachment
 			docs: `${this.ownerId}_${this.id}`
 		});
 
-		this.payload = document;
+		this.payload = document as unknown as IAudioMessageAttachmentPayload;
 
 		this.$filled = true;
 	}
@@ -86,7 +86,7 @@ export class AudioMessageAttachment
 	public get locale(): string | undefined {
 		return this.payload.locale;
 	}
-	
+
 	/**
 	 * Returns the transcript of the audio message
 	 */

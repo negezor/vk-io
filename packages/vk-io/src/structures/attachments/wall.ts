@@ -117,7 +117,7 @@ class WallAttachment extends Attachment<IWallAttachmentPayload, AttachmentType.W
 			extended: 0
 		});
 
-		this.applyPayload(post as IWallAttachmentPayload);
+		this.applyPayload(post as unknown as IWallAttachmentPayload);
 
 		this.$filled = true;
 	}

@@ -437,7 +437,7 @@ export class Upload {
 
 			return new VideoAttachment({
 				api: this.api,
-				payload: save as VideoAttachment['payload']
+				payload: save as unknown as VideoAttachment['payload']
 			});
 		}
 

@@ -43,7 +43,7 @@ export class GraffitiAttachment
 			docs: `${this.ownerId}_${this.id}`
 		});
 
-		this.payload = document;
+		this.payload = document as unknown as IGraffitiAttachmentPayload;
 
 		this.$filled = true;
 	}
