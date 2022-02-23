@@ -181,6 +181,12 @@ export enum APIErrorCode {
      */
     NOT_IMPLEMENTED_YET = 33,
     /**
+     * Client version deprecated
+     *
+     * Code: `34`
+     */
+    CLIENT_VERSION_DEPRECATED = 34,
+    /**
      * Client update needed
      *
      * Code: `35`
@@ -222,6 +228,12 @@ export enum APIErrorCode {
      * Code: `41`
      */
     ADDITIONAL_SIGNUP_REQUIRED = 41,
+    /**
+     * IP is not allowed
+     *
+     * Code: `42`
+     */
+    IP_IS_NOT_ALLOWED = 42,
     /**
      * One of the parameters specified was missing or invalid
      *
@@ -330,12 +342,6 @@ export enum APIErrorCode {
      * Code: `147`
      */
     INSUFFICIENT_FUNDS = 147,
-    /**
-     * Access to the menu of the user denied
-     *
-     * Code: `148`
-     */
-    ACCESS_MENU = 148,
     /**
      * Invalid timestamp
      *
@@ -846,6 +852,18 @@ export enum APIErrorCode {
      * Code: `962`
      */
     MESSAGES_USER_NOT_DON = 962,
+    /**
+     * Message cannot be forwarded
+     *
+     * Code: `969`
+     */
+    MESSAGES_MESSAGE_CANNOT_BE_FORWARDED = 969,
+    /**
+     * Cannot pin an expiring message
+     *
+     * Code: `970`
+     */
+    MESSAGES_CANT_PIN_EXPIRING_MESSAGE = 970,
     /**
      * Too many auth attempts, try again later
      *

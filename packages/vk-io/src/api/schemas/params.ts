@@ -174,23 +174,11 @@ export interface AccountSetInfoParams {
     /**
      * Setting name.
      */
-    name?: string;
+    name?: "intro" | "no_wall_replies" | "own_posts_default";
     /**
      * Setting value.
      */
     value?: string;
-    [key: string]: any;
-}
-
-export interface AccountSetNameInMenuParams {
-    /**
-     * User ID.
-     */
-    user_id: number;
-    /**
-     * Application screen name.
-     */
-    name?: string;
     [key: string]: any;
 }
 
@@ -2171,7 +2159,7 @@ export interface FriendsSearchParams {
     /**
      * User ID.
      */
-    user_id: number;
+    user_id?: number;
     /**
      * Search query string (e.g., 'Vasya Babich').
      */
@@ -2602,11 +2590,8 @@ export interface GroupsGetBannedParams {
 }
 
 export interface GroupsGetByIdParams {
-    /**
-     * ID or screen name of the community.
-     */
-    group_id?: string;
-    group_ids?: string[] | string;
+    group_ids?: any[];
+    group_id?: any;
     fields?: Objects.GroupsFields[];
     [key: string]: any;
 }
@@ -2700,7 +2685,7 @@ export interface GroupsGetInvitesParams {
 
 export interface GroupsGetLongPollServerParams {
     /**
-     * Community ID
+     * Community ID.
      */
     group_id: number;
     [key: string]: any;
@@ -3290,6 +3275,72 @@ export interface GroupsUnbanParams {
     [key: string]: any;
 }
 
+export interface LeadFormsCreateParams {
+    group_id: number;
+    name: string;
+    title: string;
+    description: string;
+    questions: string;
+    policy_link_url: string;
+    photo?: string;
+    confirmation?: string;
+    site_link_url?: string;
+    active?: boolean | number;
+    once_per_user?: boolean | number;
+    pixel_code?: string;
+    notify_admins?: number[] | number;
+    notify_emails?: string[] | string;
+    [key: string]: any;
+}
+
+export interface LeadFormsDeleteParams {
+    group_id: number;
+    form_id: number;
+    [key: string]: any;
+}
+
+export interface LeadFormsGetParams {
+    group_id: number;
+    form_id: number;
+    [key: string]: any;
+}
+
+export interface LeadFormsGetLeadsParams {
+    group_id: number;
+    form_id: number;
+    limit?: number;
+    next_page_token?: string;
+    [key: string]: any;
+}
+
+export interface LeadFormsGetUploadURLParams {
+    [key: string]: any;
+}
+
+export interface LeadFormsListParams {
+    group_id: number;
+    [key: string]: any;
+}
+
+export interface LeadFormsUpdateParams {
+    group_id: number;
+    form_id: number;
+    name: string;
+    title: string;
+    description: string;
+    questions: string;
+    policy_link_url: string;
+    photo?: string;
+    confirmation?: string;
+    site_link_url?: string;
+    active?: boolean | number;
+    once_per_user?: boolean | number;
+    pixel_code?: string;
+    notify_admins?: number[] | number;
+    notify_emails?: string[] | string;
+    [key: string]: any;
+}
+
 export interface LikesAddParams {
     /**
      * ID of the user or community that owns the object.
@@ -3655,6 +3706,10 @@ export interface MarketGetParams {
      * Add variants to response if exist
      */
     need_variants?: boolean | number;
+    /**
+     * Add disabled items to response
+     */
+    with_disabled?: boolean | number;
     album_id?: number;
     [key: string]: any;
 }
@@ -3928,7 +3983,21 @@ export interface MarketSearchParams {
     need_variants?: boolean | number;
     album_id?: number;
     sort?: 0 | 1 | 2 | 3;
-    status?: 0 | 2;
+    status?: number[] | number;
+    [key: string]: any;
+}
+
+export interface MarketSearchItemsParams {
+    q: string;
+    offset?: number;
+    count?: number;
+    category_id?: number;
+    price_from?: number;
+    price_to?: number;
+    sort_by?: 1 | 2 | 3;
+    sort_direction?: 0 | 1;
+    country?: number;
+    city?: number;
     [key: string]: any;
 }
 
@@ -3982,7 +4051,7 @@ export interface MessagesDeleteParams {
      */
     peer_id?: number;
     message_ids?: number[] | number;
-    conversation_message_ids?: number[] | number;
+    cmids?: number[] | number;
     [key: string]: any;
 }
 
@@ -4053,6 +4122,7 @@ export interface MessagesEditParams {
      */
     group_id?: number;
     dont_parse_links?: boolean | number;
+    disable_mentions?: boolean | number;
     message_id?: number;
     conversation_message_id?: number;
     template?: string;
@@ -4143,7 +4213,7 @@ export interface MessagesGetConversationsParams {
     /**
      * Filter to apply: 'all' — all conversations, 'unread' — conversations with unread messages, 'important' — conversations, marked as important (only for community messages), 'unanswered' — conversations, marked as unanswered (only for community messages)
      */
-    filter?: "all" | "important" | "unanswered" | "unread";
+    filter?: "all" | "archive" | "important" | "unanswered" | "unread";
     /**
      * '1' — return extra information about users and communities
      */
@@ -4583,8 +4653,8 @@ export interface MessagesSendParams {
     forward_messages?: number[] | number;
     forward?: any;
     keyboard?: any;
-    template?: any;
-    payload?: string;
+    template?: string;
+    payload?: any;
     dont_parse_links?: boolean | number;
     disable_mentions?: boolean | number;
     intent?: "account_update" | "bot_ad_invite" | "bot_ad_promo" | "confirmed_notification" | "customer_support" | "default" | "game_notification" | "moderated_newsletter" | "non_promo_newsletter" | "promo_newsletter" | "purchase_update";
@@ -4680,7 +4750,7 @@ export interface NewsfeedGetParams {
      * Number of news items to return (default 50, maximum 100). For auto feed, you can use the 'new_offset' parameter returned by this method.
      */
     count?: number;
-    filters?: Objects.NewsfeedFilters[];
+    filters?: Objects.NewsfeedNewsfeedItemType[];
     fields?: Objects.BaseUserGroupFields[];
     section?: string;
     [key: string]: any;
@@ -6821,7 +6891,7 @@ export interface UsersGetParams {
      * Case for declension of user name and surname: 'nom' — nominative (default), 'gen' — genitive , 'dat' — dative, 'acc' — accusative , 'ins' — instrumental , 'abl' — prepositional
      */
     name_case?: "nom" | "gen" | "dat" | "acc" | "ins" | "abl";
-    user_ids?: string[] | string;
+    user_ids?: any[];
     fields?: Objects.UsersFields[];
     [key: string]: any;
 }
@@ -7521,7 +7591,7 @@ export interface VideoSearchParams {
     /**
      * Search query string (e.g., 'The Beatles').
      */
-    q: string;
+    q?: string;
     /**
      * Sort order: '1' — by duration, '2' — by relevance, '0' — by date added
      */
@@ -7542,6 +7612,7 @@ export interface VideoSearchParams {
      * Number of videos to return.
      */
     count?: number;
+    live?: boolean | number;
     filters?: ("youtube" | "vimeo" | "short" | "long")[] | ("youtube" | "vimeo" | "short" | "long");
     search_own?: boolean | number;
     longer?: number;

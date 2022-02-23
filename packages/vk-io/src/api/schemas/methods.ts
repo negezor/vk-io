@@ -53,10 +53,6 @@ export interface APIAccount {
      */
     setInfo(params: Params.AccountSetInfoParams): Promise<Responses.BaseOkResponse>;
     /**
-     * Sets an application screen name (up to 17 characters), that is shown to the user in the left menu.
-     */
-    setNameInMenu(params: Params.AccountSetNameInMenuParams): Promise<Responses.BaseOkResponse>;
-    /**
      * Marks a current user as offline.
      */
     setOffline(params: Params.AccountSetOfflineParams): Promise<Responses.BaseOkResponse>;
@@ -810,6 +806,19 @@ export interface APIGroups {
 }
 
 /**
+ * The API leadForms group
+ */
+export interface APILeadForms {
+    create(params: Params.LeadFormsCreateParams): Promise<Responses.LeadFormsCreateResponse>;
+    delete(params: Params.LeadFormsDeleteParams): Promise<Responses.LeadFormsDeleteResponse>;
+    get(params: Params.LeadFormsGetParams): Promise<Responses.LeadFormsGetResponse>;
+    getLeads(params: Params.LeadFormsGetLeadsParams): Promise<Responses.LeadFormsGetLeadsResponse>;
+    getUploadURL(params: Params.LeadFormsGetUploadURLParams): Promise<Responses.LeadFormsUploadUrlResponse>;
+    list(params: Params.LeadFormsListParams): Promise<Responses.LeadFormsListResponse>;
+    update(params: Params.LeadFormsUpdateParams): Promise<Responses.LeadFormsCreateResponse>;
+}
+
+/**
  * The API likes group
  */
 export interface APILikes {
@@ -948,6 +957,7 @@ export interface APIMarket {
      * Searches market items in a community's catalog
      */
     search(params: Params.MarketSearchParams): Promise<Responses.MarketSearchResponse>;
+    searchItems(params: Params.MarketSearchItemsParams): Promise<Responses.MarketSearchResponse>;
 }
 
 /**
@@ -1574,7 +1584,7 @@ export interface APISecure {
     /**
      * Sets a counter which is shown to the user in bold in the left menu.
      */
-    setCounter(params: Params.SecureSetCounterParams): Promise<Responses.BaseOkResponse>;
+    setCounter(params: Params.SecureSetCounterParams): Promise<Responses.BaseBoolResponse>;
 }
 
 /**
@@ -1664,7 +1674,7 @@ export interface APIStories {
     /**
      * Returns story by its ID.
      */
-    getById(params: Params.StoriesGetByIdParams): Promise<Responses.StoriesGetByIdResponse>;
+    getById(params: Params.StoriesGetByIdParams): Promise<Responses.StoriesGetByIdExtendedResponse>;
     /**
      * Returns URL for uploading a story with photo.
      */
@@ -2034,6 +2044,10 @@ export interface APIMethods {
      * The API groups group
      */
     groups: APIGroups;
+    /**
+     * The API leadForms group
+     */
+    leadForms: APILeadForms;
     /**
      * The API likes group
      */
