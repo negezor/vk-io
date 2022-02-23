@@ -36,6 +36,18 @@ export type WebhookTransportCallback = (
 	next?: (err?: Error) => unknown
 ) => unknown;
 
+export type WebhookTransportKoaCallback = (
+	context: {
+		request: {
+			body: Record<string, string>;
+		}
+		body: object;
+		status: number;
+		set(key: string, value: string): unknown;
+	},
+	next: () => unknown
+) => unknown;
+
 export class WebhookTransport {
 	public started = false;
 
@@ -205,7 +217,7 @@ export class WebhookTransport {
 	/**
 	 * Returns the middleware for the webhook under koa
 	 */
-	public getKoaWebhookMiddleware(): Function {
+	public getKoaWebhookMiddleware(): WebhookTransportKoaCallback {
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		return async (context: any): Promise<void> => {
 			const update = context.request.body;

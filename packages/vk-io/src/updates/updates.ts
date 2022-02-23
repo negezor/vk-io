@@ -87,7 +87,14 @@ import {
 import { API } from '../api';
 import { Upload } from '../upload';
 
-import { PollingTransport, WebhookTransport, WebhookTransportCallback, IWebhookTransportStartOptions } from './transports';
+import {
+	PollingTransport,
+
+	WebhookTransport,
+	WebhookTransportCallback,
+	WebhookTransportKoaCallback,
+	IWebhookTransportStartOptions
+} from './transports';
 
 import { APIError, APIErrorCode } from '../errors';
 
@@ -720,7 +727,7 @@ export class Updates {
 	/**
 	 * Returns the middleware for the webhook under koa
 	 */
-	public getKoaWebhookMiddleware(): Function {
+	public getKoaWebhookMiddleware(): WebhookTransportKoaCallback {
 		return this.webhookTransport.getKoaWebhookMiddleware();
 	}
 
