@@ -7,6 +7,7 @@ import { inspectable } from 'inspectable';
 
 import { URL } from 'url';
 import { createReadStream } from 'fs';
+import { stat as fileStat } from 'fs/promises';
 import { globalAgent } from 'https';
 import { Readable } from 'stream';
 
@@ -947,6 +948,10 @@ export class Upload {
 						contentLength = Number(length);
 					}
 				} else {
+					const stats = await fileStat(value);
+
+					contentLength = stats.size;
+
 					value = createReadStream(value);
 				}
 			}
