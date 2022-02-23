@@ -1,9 +1,14 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "API",
+  "title": "Schema",
   "description": "VK API declaration",
   "type": "object",
   "definitions": {
+    "deprecated_from_version": {
+      "type": "string",
+      "description": "Property will be removed or changed from this version",
+      "pattern": "^[0-9]+.[0-9]+$"
+    },
     "enum": {
       "type": "array",
       "minItems": 1,
@@ -14,7 +19,10 @@
       "enum": [
         "json",
         "int32",
-        "int64"
+        "int64",
+        "uri",
+        "hex",
+        "string"
       ]
     },
     "enumNames": {
@@ -26,131 +34,89 @@
       "minItems": 1,
       "uniqueItems": true
     },
-    "jsonReference": {
+    "property": {
       "type": "object",
-      "required": [
-        "$ref"
-      ],
       "additionalProperties": false,
-      "properties": {
-        "$ref": {
+      "patternProperties": {
+        "^name$": {
           "type": "string"
-        }
-      }
-    },
-    "parameterArray": {
-      "type": "array",
-      "minItems": 1,
-      "items": {
-        "$ref": "#"
-      }
-    },
-    "parameterTypes": {
-      "type": "string",
-      "enum": [
-        "array",
-        "boolean",
-        "integer",
-        "number",
-        "string"
-      ]
-    },
-    "responseTypes": {
-      "type": "string",
-      "enum": [
-        "array",
-        "boolean",
-        "integer",
-        "number",
-        "string",
-        "object"
-      ]
-    },
-    "responsePropertyTypes": {
-      "type": "string",
-      "enum": [
-        "array",
-        "boolean",
-        "integer",
-        "number",
-        "string"
-      ]
-    },
-    "itemTypes": {
-      "type": "string",
-      "enum": [
-        "object",
-        "boolean",
-        "integer",
-        "number",
-        "string"
-      ]
-    },
-    "parameter": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string",
-          "pattern": "^[a-zA-Z][a-zA-Z0-9_]*$",
-          "description": "Parameter name"
         },
+        "^name_alias$": {
+          "type": "array"
+        }
+      },
+      "properties": {
         "format": {
           "$ref": "#/definitions/format"
         },
         "type": {
-          "$ref": "#/definitions/parameterTypes",
-          "description": "Parameter type"
-        },
-        "items": {
-          "type": "object",
-          "properties": {
-            "$ref": {
-              "type": "string",
-              "format": "uri-reference"
-            },
-            "type": {
-              "$ref": "#/definitions/itemTypes"
-            },
-            "format": {
-              "$ref": "#/definitions/format"
-            },
-            "maximum": {
-              "type": "number"
-            },
-            "minimum": {
-              "type": "number"
-            },
-            "minLength": {
-              "type": "integer",
-              "minimum": 0,
-              "default": 0
-            },
-            "maxLength": {
-              "type": "integer",
-              "minimum": 0
-            },
-            "enum": {
-              "type": "array",
-              "description": "Allowed enumerable values",
-              "$ref": "#/definitions/enum"
-            },
-            "enumNames": {
-              "$ref": "#/definitions/enumNames"
-            }
-          },
           "oneOf": [
             {
-              "required": [
-                "type"
+              "type": "string",
+              "enum": [
+                "boolean",
+                "integer",
+                "string",
+                "number",
+                "array",
+                "object"
               ]
             },
             {
-              "required": [
-                "$ref"
-              ]
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "boolean",
+                  "integer",
+                  "string",
+                  "number",
+                  "array",
+                  "object"
+                ]
+              }
             }
-          ],
-          "additionalProperties": false
+          ]
+        },
+        "patternProperties": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/definitions/property"
+          }
+        },
+        "examples": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 1
+        },
+        "const": {
+          "type": [
+            "string",
+            "integer",
+            "number",
+            "boolean"
+          ]
+        },
+        "oneOf": {
+          "items": {
+            "$ref": "#/definitions/property"
+          },
+          "minItems": 2
+        },
+        "allOf": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/property"
+          }
+        },
+        "anyOf": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/property"
+          }
+        },
+        "items": {
+          "$ref": "#/definitions/property"
         },
         "maxItems": {
           "type": "integer",
@@ -167,6 +133,9 @@
         "minimum": {
           "type": "number"
         },
+        "pattern": {
+          "type": "string"
+        },
         "$ref": {
           "type": "string",
           "format": "uri-reference"
@@ -181,110 +150,78 @@
         "default": {
           "description": "Default property value"
         },
+        "discriminator": {
+          "type": "object"
+        },
+        "additionalProperties": {
+          "type": "boolean"
+        },
         "required": {
-          "type": "boolean",
+          "type": [
+            "boolean",
+            "array"
+          ],
           "default": false
         },
-        "maxLength": {
-          "type": "integer",
-          "minimum": 0
+        "minProperties": {
+          "type": "integer"
+        },
+        "maxProperties": {
+          "type": "integer"
         },
         "minLength": {
           "type": "integer",
           "minimum": 0,
           "default": 0
         },
+        "maxLength": {
+          "type": "integer",
+          "minimum": 0
+        },
         "description": {
           "type": "string",
           "description": "Parameter description"
-        }
-      },
-      "required": [
-        "name",
-        "type"
-      ],
-      "additionalProperties": false
-    },
-    "responseProperty": {
-      "type": "object",
-      "oneOf": [
-        {
-          "required": [
-            "type"
-          ]
         },
-        {
-          "required": [
-            "$ref"
-          ]
-        }
-      ],
-      "properties": {
-        "type": {
-          "$ref": "#/definitions/responseTypes"
+        "deprecated_from_version": {
+          "$ref": "#/definitions/deprecated_from_version"
         },
-        "description": {
-          "type": "string"
+        "entity": {
+          "type": "string",
+          "enum": [
+            "owner",
+            "profiles",
+            "groups"
+          ]
         }
       }
     },
-    "response": {
+    "parameter": {
+      "extends": {
+        "$ref": "#/definitions/property"
+      },
+      "allOf": [
+        {
+          "$ref": "#/definitions/property"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "pattern": "^[a-zA-Z][a-zA-Z0-9_]*$",
+              "description": "Parameter name"
+            }
+          }
+        }
+      ],
       "type": "object",
       "properties": {
-        "type": {
-          "type": "string"
-        },
-        "description": {
-          "type": "string"
-        },
-        "allOf": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/response"
-          }
-        },
-        "items": {
-          "oneOf": [
-            {
-              "type": "array"
-            },
-            {
-              "type": "object",
-              "properties": {
-                "$ref": {
-                  "type": "string"
-                }
-              }
-            }
-          ]
-        },
-        "required": {
-          "type": "array"
-        },
-        "title": {
-          "type": "string"
-        },
-        "oneOf": {
-          "type": "array"
-        },
-        "$ref": {
+        "name": {
           "type": "string",
-          "format": "uri-reference"
-        },
-        "properties": {
-          "type": "object",
-          "patternProperties": {
-            "^[a-zA-Z0-9_]+$": {
-              "$ref": "#/definitions/responseProperty"
-            }
-          },
-          "additionalProperties": false
-        },
-        "additionalProperties": {
-          "type": "boolean"
+          "pattern": "^[a-zA-Z][a-zA-Z0-9_]*$",
+          "description": "Parameter name"
         }
-      },
-      "additionalProperties": false
+      }
     },
     "error": {
       "type": "object",
@@ -300,10 +237,11 @@
         },
         "subcodes": {
           "type": "array",
+          "description": "Array of error subcodes",
           "items": {
             "$ref": "#/definitions/error_subcode"
           },
-          "description": "Array of error subcodes"
+          "uniqueItems": true
         },
         "global": {
           "type": "boolean",
@@ -317,8 +255,7 @@
       "required": [
         "code",
         "description"
-      ],
-      "additionalProperties": false
+      ]
     },
     "error_subcode": {
       "type": "object",
@@ -336,19 +273,15 @@
       },
       "additionalProperties": false
     },
-    "methodErrors": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "$ref": {
-            "type": "string",
-            "format": "uri-reference"
-          }
-        },
-        "additionalProperties": false
+    "methodError": {
+      "type": "object",
+      "properties": {
+        "$ref": {
+          "type": "string",
+          "format": "uri-reference"
+        }
       },
-      "description": "Possible custom errors"
+      "additionalProperties": false
     },
     "method": {
       "type": "object",
@@ -375,7 +308,8 @@
               "open",
               "user",
               "group",
-              "service"
+              "service",
+              "anonymous"
             ],
             "description": "Access token type"
           },
@@ -392,10 +326,9 @@
           "type": "object",
           "patternProperties": {
             "^([a-zA-Z0-9_]+)?[rR]esponse$": {
-              "$ref": "#/definitions/response"
+              "$ref": "#/definitions/property"
             }
           },
-          "additionalProperties": true,
           "description": "References to response objects"
         },
         "emptyResponse": {
@@ -403,7 +336,12 @@
           "default": false
         },
         "errors": {
-          "$ref": "#/definitions/methodErrors"
+          "type": "array",
+          "uniqueItems": true,
+          "description": "Possible custom errors",
+          "items": {
+            "$ref": "#/definitions/methodError"
+          }
         }
       },
       "required": [
@@ -418,12 +356,10 @@
     "errors": {
       "type": "object",
       "patternProperties": {
-        "^[a-z][a-z0-9_]+$": {
+        "^api_error_[a-zA-Z0-9_]+$": {
           "$ref": "#/definitions/error"
         }
-      },
-      "additionalProperties": false,
-      "uniqueProperties": true
+      }
     },
     "methods": {
       "type": "array",
@@ -432,12 +368,24 @@
       }
     },
     "definitions": {
+      "type": "object",
       "patternProperties": {
         "^([a-zA-Z0-9_]+)?[rR]esponse$": {
-          "$ref": "#/definitions/response"
+          "$ref": "#/definitions/property"
         }
       },
-      "uniqueProperties": true
+      "properties": {
+        "subcodes": {
+          "type": "object",
+          "description": "API Error subcodes",
+          "additionalProperties": {
+            "$ref": "#/definitions/error_subcode"
+          }
+        }
+      },
+      "additionalProperties": {
+        "$ref": "#/definitions/property"
+      }
     },
     "$schema": {
       "type": "string",
@@ -454,7 +402,8 @@
       "format": "url"
     },
     "version": {
-      "type": "string"
+      "type": "string",
+      "pattern": "^[0-9]+.[0-9]+$"
     }
   },
   "additionalProperties": false

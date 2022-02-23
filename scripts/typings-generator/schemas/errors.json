@@ -65,7 +65,8 @@
     "api_error_flood": {
       "code": 9,
       "description": "Flood control",
-      "global": true
+      "global": true,
+      "subcodes": []
     },
     "api_error_server": {
       "code": 10,
@@ -93,7 +94,8 @@
     "api_error_access": {
       "code": 15,
       "description": "Access denied",
-      "global": true
+      "global": true,
+      "subcodes": []
     },
     "api_error_auth_https": {
       "code": 16,
@@ -168,6 +170,11 @@
       "description": "Not implemented yet",
       "global": true
     },
+    "api_error_client_version_deprecated": {
+      "code": 34,
+      "description": "Client version deprecated",
+      "global": true
+    },
     "api_error_client_update_needed": {
       "code": 35,
       "description": "Client update needed"
@@ -201,10 +208,16 @@
       "description": "Additional signup required",
       "global": true
     },
+    "api_error_ip_is_not_allowed": {
+      "code": 42,
+      "description": "IP is not allowed",
+      "global": true
+    },
     "api_error_param": {
       "code": 100,
       "description": "One of the parameters specified was missing or invalid",
-      "global": true
+      "global": true,
+      "subcodes": []
     },
     "api_error_param_api_id": {
       "code": 101,
@@ -280,10 +293,6 @@
     "api_error_insufficient_funds": {
       "code": 147,
       "description": "Application has insufficient funds"
-    },
-    "api_error_access_menu": {
-      "code": 148,
-      "description": "Access to the menu of the user denied"
     },
     "api_error_param_timestamp": {
       "code": 150,
@@ -632,6 +641,14 @@
     "api_error_messages_user_not_don": {
       "code": 962,
       "description": "You can't access donut chat without subscription"
+    },
+    "api_error_messages_message_cannot_be_forwarded": {
+      "code": 969,
+      "description": "Message cannot be forwarded"
+    },
+    "api_error_messages_cant_pin_expiring_message": {
+      "code": 970,
+      "description": "Cannot pin an expiring message"
     },
     "api_error_auth_flood_error": {
       "code": 1105,
