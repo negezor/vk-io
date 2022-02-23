@@ -30,6 +30,12 @@ export interface IWebhookTransportStartOptions {
 	next?: (req: IncomingMessage, res: ServerResponse) => unknown
 }
 
+export type WebhookTransportCallback = (
+	req: IncomingMessage,
+	res: ServerResponse,
+	next?: (err?: Error) => unknown
+) => unknown;
+
 export class WebhookTransport {
 	public started = false;
 
@@ -72,7 +78,7 @@ export class WebhookTransport {
 		try {
 			const webhookCallback = this.getWebhookCallback(path);
 
-			const callback = (req: IncomingMessage, res: ServerResponse): Promise<void> => (
+			const callback = (req: IncomingMessage, res: ServerResponse) => (
 				webhookCallback(req, res, (): unknown => (
 					next(req, res)
 				))
@@ -121,7 +127,7 @@ export class WebhookTransport {
 	/**
 	 * Returns webhook callback like http[s] or express
 	 */
-	public getWebhookCallback(path?: string): Function {
+	public getWebhookCallback(path?: string): WebhookTransportCallback {
 		const headers = {
 			connection: 'keep-alive',
 			'content-type': 'text/plain'
@@ -131,9 +137,9 @@ export class WebhookTransport {
 			? (requestPath: string): boolean => requestPath !== path
 			: (): boolean => false;
 
-		return async (req: IncomingMessage, res: ServerResponse, next: Function): Promise<void> => {
+		return async (req, res, next) => {
 			if (req.method !== 'POST' || checkIsNotValidPath(req.url!)) {
-				next();
+				next?.();
 
 				return;
 			}

@@ -87,7 +87,7 @@ import {
 import { API } from '../api';
 import { Upload } from '../upload';
 
-import { PollingTransport, WebhookTransport, IWebhookTransportStartOptions } from './transports';
+import { PollingTransport, WebhookTransport, WebhookTransportCallback, IWebhookTransportStartOptions } from './transports';
 
 import { APIError, APIErrorCode } from '../errors';
 
@@ -713,7 +713,7 @@ export class Updates {
 	/**
 	 * Returns webhook callback like http[s] or express
 	 */
-	public getWebhookCallback(path?: string): Function {
+	public getWebhookCallback(path?: string): WebhookTransportCallback {
 		return this.webhookTransport.getWebhookCallback(path);
 	}
 
