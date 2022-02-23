@@ -7,7 +7,7 @@
 VK-IO Hear - Simple implementation of the hears ⚙️
 
 ## Installation
-> **[Node.js](https://nodejs.org/) 12.0.0 or newer is required**  
+> **[Node.js](https://nodejs.org/) 12.20.0 or newer is required** 
 
 ### Yarn
 Recommended

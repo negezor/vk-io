@@ -13,7 +13,7 @@ The basic concept is to send your message with a special text at the end. Then t
 ![Example](https://user-images.githubusercontent.com/9392723/134985949-e5cf1758-0469-428e-85ed-12229e36e58b.png)
 
 ## Installation
-> **[Node.js](https://nodejs.org/) 12.0.0 or newer is required**  
+> **[Node.js](https://nodejs.org/) 12.20.0 or newer is required** 
 
 ### Yarn
 Recommended
