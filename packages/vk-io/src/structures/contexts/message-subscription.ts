@@ -45,7 +45,7 @@ export class MessageSubscriptionContext<S = ContextDefaultState>
 	/**
 	 * Checks that the user has unsubscribed from the messages
 	 */
-	public get isUbsubscribed(): boolean {
+	public get isUnsubscribed(): boolean {
 		return this.subTypes.includes('message_deny');
 	}
 
@@ -71,7 +71,7 @@ export class MessageSubscriptionContext<S = ContextDefaultState>
 			'userId',
 			'key',
 			'isSubscribed',
-			'isUbsubscribed'
+			'isUnsubscribed'
 		]);
 	}
 }
