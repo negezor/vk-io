@@ -27,7 +27,6 @@ export class VKError extends Error {
 	 * Constructor
 	 */
 	public constructor({ code, message, cause }: IVKErrorOptions) {
-		// @ts-expect-error wait typyings from typescript
 		super(message, {
 			cause
 		});
