@@ -761,7 +761,11 @@ export class Upload {
 				'attach_access_key'
 			],
 
-			saveFiles: this.api.stories.save,
+			saveFiles: file => (
+				this.api.stories.save({
+					upload_results: file.upload_result
+				})
+			),
 
 			maxFiles: 1,
 			attachmentType: 'photo'
@@ -800,7 +804,11 @@ export class Upload {
 				'group_id'
 			],
 
-			saveFiles: this.api.stories.save,
+			saveFiles: file => (
+				this.api.stories.save({
+					upload_results: file.upload_result
+				})
+			),
 
 			maxFiles: 1,
 			attachmentType: 'video'
