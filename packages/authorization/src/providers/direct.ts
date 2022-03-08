@@ -179,6 +179,7 @@ export class DirectAuthorization {
 			username: String(login || phone),
 			grant_type: 'password',
 			client_secret: clientSecret,
+			// eslint-disable-next-line @typescript-eslint/naming-convention
 			'2fa_supported': String(this.options.callbackService.hasTwoFactorHandler
 				? 1
 				: 0),

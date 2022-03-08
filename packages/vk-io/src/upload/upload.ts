@@ -1034,6 +1034,7 @@ export class Upload {
 			// eslint-disable-next-line @typescript-eslint/naming-convention
 			Connection: 'keep-alive',
 
+			// eslint-disable-next-line @typescript-eslint/naming-convention
 			'Content-Type': encoder.headers['Content-Type']
 		};
 		const body = forceBuffer

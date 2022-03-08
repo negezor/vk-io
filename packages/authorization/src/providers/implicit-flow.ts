@@ -145,6 +145,7 @@ export abstract class ImplicitFlow {
 	/**
 	 * Returns cookie
 	 */
+	// eslint-disable-next-line @typescript-eslint/naming-convention
 	public async getCookies(): Promise<{ 'login.vk.com': string; 'vk.com': string }> {
 		const { jar } = this;
 
@@ -154,7 +155,9 @@ export abstract class ImplicitFlow {
 		]);
 
 		return {
+			// eslint-disable-next-line @typescript-eslint/naming-convention
 			'login.vk.com': login,
+			// eslint-disable-next-line @typescript-eslint/naming-convention
 			'vk.com': main
 		};
 	}
