@@ -746,7 +746,7 @@ export class Upload {
 			link_url: string;
 		}
 	): Promise<StoryAttachment> {
-		const story = await this.conduct({
+		const { items: [story] } = await this.conduct({
 			field: 'file',
 			params,
 
@@ -790,7 +790,7 @@ export class Upload {
 			link_url: string;
 		}
 	): Promise<StoryAttachment> {
-		const story = await this.conduct({
+		const { items: [story] } = await this.conduct({
 			field: 'video_file',
 			params,
 
