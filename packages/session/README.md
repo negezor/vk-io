@@ -52,3 +52,10 @@ vk.updates.on('message_new', async (context, next) => {
 
 vk.updates.start().catch(console.error);
 ```
+
+## Community
+### Useful modules that may be useful to you
+
+* [vk-io-redis-storage](https://github.com/xtcry/vk-io-redis-storage): Simple storage add-on for [@vk-io/session](packages/session)
+
+> If you want to add your module in the list, create a [new issue](https://github.com/negezor/vk-io/issues/new) in the repository.
