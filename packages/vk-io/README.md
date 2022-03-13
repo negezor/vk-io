@@ -62,5 +62,6 @@ run().catch(console.log);
 * [vk-io-question](https://github.com/fakemancat/vk-io-question): Simple promise-based prompt
 * [vk-io-pages](https://github.com/MrZillaGold/vk-io-pages): Dynamic pages pagination module
 * [henta](https://github.com/u14-team/henta): Simple VK bot engine
+* [vk-io-redis-storage](https://github.com/xtcry/vk-io-redis-storage): Simple storage add-on for [@vk-io/session](packages/session)
 
 > If you want to add your module in the list, create a [new issue](https://github.com/negezor/vk-io/issues/new) in the repository.
