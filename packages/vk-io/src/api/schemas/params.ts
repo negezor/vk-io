@@ -3588,15 +3588,15 @@ export interface MarketEditParams {
     /**
      * Item name.
      */
-    name: string;
+    name?: string;
     /**
      * Item description.
      */
-    description: string;
+    description?: string;
     /**
      * Item category ID.
      */
-    category_id: number;
+    category_id?: number;
     /**
      * Item price.
      */
@@ -3613,7 +3613,13 @@ export interface MarketEditParams {
      * Url for button in market item.
      */
     url?: string;
+    old_price?: number;
     photo_ids?: number[] | number;
+    dimension_width?: number;
+    dimension_height?: number;
+    dimension_length?: number;
+    weight?: number;
+    sku?: string;
     [key: string]: any;
 }
 
@@ -4373,7 +4379,7 @@ export interface MessagesGetLongPollHistoryParams {
      */
     ts?: number;
     /**
-     * Lsat value of 'pts' parameter returned from the Long Poll server or by using [vk.com/dev/messages.getLongPollHistory|messages.getLongPollHistory] method.
+     * Last value of 'pts' parameter returned from the Long Poll server or by using [vk.com/dev/messages.getLongPollHistory|messages.getLongPollHistory] method.
      */
     pts?: number;
     /**
@@ -4404,6 +4410,7 @@ export interface MessagesGetLongPollHistoryParams {
     lp_version?: number;
     last_n?: number;
     credentials?: boolean | number;
+    extended?: boolean | number;
     [key: string]: any;
 }
 
@@ -5889,10 +5896,7 @@ export interface PhotosMoveParams {
      * ID of the album to which the photo will be moved.
      */
     target_album_id: number;
-    /**
-     * Photo ID.
-     */
-    photo_id: number;
+    photo_ids: number;
     [key: string]: any;
 }
 
@@ -6584,7 +6588,6 @@ export interface StatsGetPostReachParams {
 }
 
 export interface StatsTrackVisitorParams {
-    id: string;
     [key: string]: any;
 }
 
@@ -6819,6 +6822,7 @@ export interface StoriesGetViewersParams {
      * '1' — to return detailed information about photos
      */
     extended?: boolean | number;
+    fields?: Objects.BaseUserGroupFields[];
     [key: string]: any;
 }
 
@@ -6846,7 +6850,7 @@ export interface StoriesHideReplyParams {
 export interface StoriesSaveParams {
     upload_results?: string[] | string;
     extended?: boolean | number;
-    fields?: string[] | string;
+    fields?: Objects.BaseUserGroupFields[];
     [key: string]: any;
 }
 
@@ -6859,7 +6863,7 @@ export interface StoriesSearchParams {
     mentioned_id?: number;
     count?: number;
     extended?: boolean | number;
-    fields?: string[] | string;
+    fields?: Objects.BaseUserGroupFields[];
     [key: string]: any;
 }
 

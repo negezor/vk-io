@@ -1952,7 +1952,7 @@ export interface BaseUploadServer {
     [key: string]: any;
 }
 
-export type BaseUserGroupFields = "about" | "action_button" | "activities" | "activity" | "addresses" | "admin_level" | "age_limits" | "author_id" | "ban_info" | "bdate" | "blacklisted" | "blacklisted_by_me" | "books" | "can_create_topic" | "can_message" | "can_post" | "can_see_all_posts" | "can_see_audio" | "can_send_friend_request" | "can_upload_video" | "can_write_private_message" | "career" | "city" | "common_count" | "connections" | "contacts" | "counters" | "country" | "cover" | "crop_photo" | "deactivated" | "description" | "domain" | "education" | "exports" | "finish_date" | "fixed_post" | "followers_count" | "friend_status" | "games" | "has_market_app" | "has_mobile" | "has_photo" | "home_town" | "id" | "interests" | "is_admin" | "is_closed" | "is_favorite" | "is_friend" | "is_hidden_from_feed" | "is_member" | "is_messages_blocked" | "can_send_notify" | "is_subscribed" | "last_seen" | "links" | "lists" | "maiden_name" | "main_album_id" | "main_section" | "market" | "member_status" | "members_count" | "military" | "movies" | "music" | "name" | "nickname" | "occupation" | "online" | "online_status" | "personal" | "phone" | "photo_100" | "photo_200" | "photo_200_orig" | "photo_400_orig" | "photo_50" | "photo_id" | "photo_max" | "photo_max_orig" | "quotes" | "relation" | "relatives" | "schools" | "screen_name" | "sex" | "site" | "start_date" | "status" | "timezone" | "trending" | "tv" | "type" | "universities" | "verified" | "wall_comments" | "wiki_page" | "vk_admin_status";
+export type BaseUserGroupFields = "about" | "action_button" | "activities" | "activity" | "addresses" | "admin_level" | "age_limits" | "author_id" | "ban_info" | "bdate" | "blacklisted" | "blacklisted_by_me" | "books" | "can_create_topic" | "can_message" | "can_post" | "can_see_all_posts" | "can_see_audio" | "can_send_friend_request" | "can_upload_video" | "can_write_private_message" | "career" | "city" | "common_count" | "connections" | "contacts" | "counters" | "country" | "cover" | "crop_photo" | "deactivated" | "description" | "domain" | "education" | "exports" | "finish_date" | "fixed_post" | "followers_count" | "friend_status" | "games" | "has_market_app" | "has_mobile" | "has_photo" | "home_town" | "id" | "interests" | "is_admin" | "is_closed" | "is_favorite" | "is_friend" | "is_hidden_from_feed" | "is_member" | "is_messages_blocked" | "can_send_notify" | "is_subscribed" | "last_seen" | "links" | "lists" | "maiden_name" | "main_album_id" | "main_section" | "market" | "member_status" | "members_count" | "military" | "movies" | "music" | "name" | "nickname" | "occupation" | "online" | "online_status" | "personal" | "phone" | "photo_100" | "photo_200" | "photo_200_orig" | "photo_400_orig" | "photo_50" | "photo_id" | "photo_max" | "photo_max_orig" | "quotes" | "relation" | "relatives" | "schools" | "screen_name" | "sex" | "site" | "start_date" | "status" | "timezone" | "trending" | "tv" | "type" | "universities" | "verified" | "wall_comments" | "wiki_page" | "first_name" | "first_name_acc" | "first_name_dat" | "first_name_gen" | "last_name" | "last_name_acc" | "last_name_dat" | "last_name_gen" | "can_subscribe_stories" | "is_subscribed_stories" | "vk_admin_status";
 
 export interface BaseUserId {
     /**
@@ -1993,6 +1993,14 @@ export interface BoardTopic {
      * ID of user who updated the topic
      */
     updated_by?: number;
+    /**
+     * First comment text
+     */
+    first_comment?: string;
+    /**
+     * Last comment text
+     */
+    last_comment?: string;
     [key: string]: any;
 }
 
@@ -2019,35 +2027,6 @@ export interface BoardTopicComment {
     text?: string;
     [key: string]: any;
     attachments?: WallCommentAttachment[];
-}
-
-export interface BoardTopicPoll {
-    /**
-     * Poll owner's ID
-     */
-    owner_id?: number;
-    /**
-     * Poll ID
-     */
-    poll_id?: number;
-    /**
-     * Date when poll has been created in Unixtime
-     */
-    created?: number;
-    /**
-     * Poll question
-     */
-    question?: string;
-    /**
-     * Votes number
-     */
-    votes?: number;
-    /**
-     * Current user's answer ID
-     */
-    answer_id?: number;
-    [key: string]: any;
-    answers?: PollsAnswer[];
 }
 
 export interface CallbackBase {
@@ -5416,7 +5395,7 @@ export interface PagesWikipage {
     /**
      * Page creator name
      */
-    creator_name?: number;
+    creator_name?: string;
     /**
      * Last editor ID
      */
@@ -5692,59 +5671,6 @@ export interface PhotosPhotoAlbumFull {
 
 export type PhotosPhotoFalseable = any;
 
-export interface PhotosPhotoFull {
-    /**
-     * Access key for the photo
-     */
-    access_key?: string;
-    /**
-     * Album ID
-     */
-    album_id?: number;
-    /**
-     * Date when uploaded
-     */
-    date?: number;
-    /**
-     * Original photo height
-     */
-    height?: number;
-    /**
-     * Photo ID
-     */
-    id?: number;
-    /**
-     * Latitude
-     */
-    lat?: number;
-    /**
-     * Longitude
-     */
-    long?: number;
-    /**
-     * Photo owner's ID
-     */
-    owner_id?: number;
-    /**
-     * Post ID
-     */
-    post_id?: number;
-    /**
-     * Photo caption
-     */
-    text?: string;
-    /**
-     * ID of the user who have uploaded the photo
-     */
-    user_id?: number;
-    /**
-     * Original photo width
-     */
-    width?: number;
-    [key: string]: any;
-    images?: PhotosImage[];
-}
-
 export interface PhotosPhotoFullXtrRealOffset {
     /**
      * Access key for the photo
@@ -5904,7 +5830,7 @@ export interface PhotosPhotoUpload {
     /**
      * Fallback URL if upload_url returned error
      */
-    fallback_upload_url: string;
+    fallback_upload_url?: string;
     /**
      * User ID
      */
@@ -7874,6 +7800,10 @@ export interface VideoVideoFiles {
      * URL of the external player
      */
     external?: string;
+    /**
+     * URL of the mpeg4 file with 144p quality
+     */
+    mp4_144?: string;
     /**
      * URL of the mpeg4 file with 240p quality
      */

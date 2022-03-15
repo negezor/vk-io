@@ -321,10 +321,14 @@ export interface BoardGetCommentsExtendedResponse {
      * Total number
      */
     count: number;
+    /**
+     * Offset of comment
+     */
+    real_offset: number;
     [key: string]: any;
     items: Objects.BoardTopicComment[];
-    profiles: Objects.UsersUser[];
-    groups: Objects.GroupsGroup[];
+    profiles: Objects.UsersUserFull[];
+    groups: Objects.GroupsGroupFull[];
 }
 
 export interface BoardGetCommentsResponse {
@@ -332,6 +336,10 @@ export interface BoardGetCommentsResponse {
      * Total number
      */
     count: number;
+    /**
+     * Offset of comment
+     */
+    real_offset: number;
     [key: string]: any;
     items: Objects.BoardTopicComment[];
 }
@@ -343,7 +351,8 @@ export interface BoardGetTopicsExtendedResponse {
     count: number;
     [key: string]: any;
     items: Objects.BoardTopic[];
-    profiles: Objects.UsersUserMin[];
+    profiles: Objects.UsersUserFull[];
+    groups: Objects.GroupsGroupFull[];
 }
 
 export interface BoardGetTopicsResponse {
@@ -1442,6 +1451,14 @@ export interface MessagesSetChatPhotoResponse {
     [key: string]: any;
 }
 
+export interface NewsfeedGenericResponse {
+    [key: string]: any;
+    items: Objects.NewsfeedNewsfeedItem[];
+    profiles: Objects.UsersUserFull[];
+    groups: Objects.GroupsGroupFull[];
+    new_returned_news_items_count: number;
+}
+
 export interface NewsfeedGetBannedExtendedResponse {
     [key: string]: any;
     profiles: Objects.UsersUserFull[];
@@ -1498,17 +1515,6 @@ export interface NewsfeedGetMentionsResponse {
     items: Objects.WallWallpostToId[];
 }
 
-export interface NewsfeedGetRecommendedResponse {
-    /**
-     * Next from value
-     */
-    next_from: string;
-    [key: string]: any;
-    items: Objects.NewsfeedNewsfeedItem[];
-    profiles: Objects.UsersUserFull[];
-    groups: Objects.GroupsGroupFull[];
-}
-
 export interface NewsfeedGetSuggestedSourcesResponse {
     /**
      * Total number
@@ -1516,17 +1522,6 @@ export interface NewsfeedGetSuggestedSourcesResponse {
     count: number;
     [key: string]: any;
     items: Objects.UsersSubscriptionsItem[];
-}
-
-export interface NewsfeedGetResponse {
-    /**
-     * New from value
-     */
-    next_from: string;
-    [key: string]: any;
-    items: Objects.NewsfeedNewsfeedItem[];
-    profiles: Objects.UsersUserFull[];
-    groups: Objects.GroupsGroupFull[];
 }
 
 export interface NewsfeedIgnoreItemResponse {
@@ -1699,19 +1694,7 @@ export interface PhotosGetAllResponse {
     items: Objects.PhotosPhotoXtrRealOffset[];
 }
 
-export interface PhotosGetByIdExtendedResponse {
-    [key: string]: any;
-    items: Objects.PhotosPhotoFull[];
-}
-
-export type PhotosGetByIdLegacyExtendedResponse = Objects.PhotosPhotoFull[];
-
-export type PhotosGetByIdLegacyResponse = Objects.PhotosPhoto[];
-
-export interface PhotosGetByIdResponse {
-    [key: string]: any;
-    items: Objects.PhotosPhoto[];
-}
+export type PhotosGetByIdResponse = Objects.PhotosPhoto[];
 
 export interface PhotosGetCommentsExtendedResponse {
     /**
@@ -1758,15 +1741,6 @@ export type PhotosGetTagsResponse = Objects.PhotosPhotoTag[];
 
 export type PhotosGetUploadServerResponse = Objects.PhotosPhotoUpload;
 
-export interface PhotosGetUserPhotosExtendedResponse {
-    /**
-     * Total number
-     */
-    count: number;
-    [key: string]: any;
-    items: Objects.PhotosPhotoFull[];
-}
-
 export interface PhotosGetUserPhotosResponse {
     /**
      * Total number
@@ -1777,15 +1751,6 @@ export interface PhotosGetUserPhotosResponse {
 }
 
 export type PhotosGetWallUploadServerResponse = Objects.PhotosPhotoUpload;
-
-export interface PhotosGetExtendedResponse {
-    /**
-     * Total number
-     */
-    count: number;
-    [key: string]: any;
-    items: Objects.PhotosPhotoFull[];
-}
 
 export interface PhotosGetResponse {
     /**
@@ -2311,6 +2276,8 @@ export interface VideoAddAlbumResponse {
     [key: string]: any;
 }
 
+export type VideoChangeVideoAlbumsResponse = number[];
+
 export type VideoCreateCommentResponse = number;
 
 export type VideoGetAlbumByIdResponse = Objects.VideoVideoAlbumFull;
@@ -2341,7 +2308,7 @@ export interface VideoGetAlbumsResponse {
      */
     count: number;
     [key: string]: any;
-    items: Objects.VideoVideoAlbumFull[];
+    items: Objects.VideoVideoAlbum[];
 }
 
 export interface VideoGetCommentsExtendedResponse {
@@ -2349,10 +2316,24 @@ export interface VideoGetCommentsExtendedResponse {
      * Total number
      */
     count: number;
+    /**
+     * Count of replies of current level
+     */
+    current_level_count: number;
+    /**
+     * Information whether current user can comment the post
+     */
+    can_post: boolean | number;
+    /**
+     * Information whether groups can comment the post
+     */
+    groups_can_post: boolean | number;
     [key: string]: any;
     items: Objects.WallWallComment[];
-    profiles: Objects.UsersUserFull[];
-    groups: Objects.GroupsGroupFull[];
+    profiles: Objects.UsersUser[];
+    groups: Objects.GroupsGroup[];
+    show_reply_button: boolean | number;
+    real_offset: number;
 }
 
 export interface VideoGetCommentsResponse {
@@ -2360,8 +2341,22 @@ export interface VideoGetCommentsResponse {
      * Total number
      */
     count: number;
+    /**
+     * Count of replies of current level
+     */
+    current_level_count: number;
+    /**
+     * Information whether current user can comment the post
+     */
+    can_post: boolean | number;
+    /**
+     * Information whether groups can comment the post
+     */
+    groups_can_post: boolean | number;
     [key: string]: any;
     items: Objects.WallWallComment[];
+    show_reply_button: boolean | number;
+    real_offset: number;
 }
 
 export interface VideoGetResponse {
@@ -2396,7 +2391,7 @@ export interface VideoSearchResponse {
      */
     count: number;
     [key: string]: any;
-    items: Objects.VideoVideo[];
+    items: Objects.VideoVideoFull[];
 }
 
 export interface VideoUploadResponse {

@@ -471,7 +471,7 @@ export interface APIDocs {
     /**
      * Returns the server address for document upload.
      */
-    getMessagesUploadServer(params: Params.DocsGetMessagesUploadServerParams): Promise<Responses.BaseGetUploadServerResponse>;
+    getMessagesUploadServer(params: Params.DocsGetMessagesUploadServerParams): Promise<Responses.DocsGetUploadServerResponse>;
     /**
      * Returns documents types available for current user.
      */
@@ -1120,7 +1120,7 @@ export interface APINewsfeed {
     /**
      * Returns data required to show newsfeed for the current user.
      */
-    get(params: Params.NewsfeedGetParams): Promise<Responses.NewsfeedGetResponse>;
+    get(params: Params.NewsfeedGetParams): Promise<Responses.NewsfeedGenericResponse>;
     /**
      * Returns a list of users and communities banned from the current user's newsfeed.
      */
@@ -1140,7 +1140,7 @@ export interface APINewsfeed {
     /**
      * , Returns a list of newsfeeds recommended to the current user.
      */
-    getRecommended(params: Params.NewsfeedGetRecommendedParams): Promise<Responses.NewsfeedGetRecommendedResponse>;
+    getRecommended(params: Params.NewsfeedGetRecommendedParams): Promise<Responses.NewsfeedGenericResponse>;
     /**
      * Returns communities and users that current user is suggested to follow.
      */
@@ -1356,7 +1356,7 @@ export interface APIPhotos {
     /**
      * Returns information about photos by their IDs.
      */
-    getById(params: Params.PhotosGetByIdParams): Promise<Responses.PhotosGetByIdLegacyResponse>;
+    getById(params: Params.PhotosGetByIdParams): Promise<Responses.PhotosGetByIdResponse>;
     /**
      * Returns an upload link for chat cover pictures.
      */
