@@ -3382,6 +3382,16 @@
         "verified",
         "wall_comments",
         "wiki_page",
+        "first_name",
+        "first_name_acc",
+        "first_name_dat",
+        "first_name_gen",
+        "last_name",
+        "last_name_acc",
+        "last_name_dat",
+        "last_name_gen",
+        "can_subscribe_stories",
+        "is_subscribed_stories",
         "vk_admin_status"
       ]
     },
@@ -3451,6 +3461,14 @@
         "updated_by": {
           "type": "integer",
           "description": "ID of user who updated the topic"
+        },
+        "first_comment": {
+          "type": "string",
+          "description": "First comment text"
+        },
+        "last_comment": {
+          "type": "string",
+          "description": "Last comment text"
         }
       },
       "additionalProperties": false
@@ -3496,59 +3514,6 @@
         },
         "likes": {
           "$ref": "objects.json#/definitions/base_likes_info"
-        }
-      },
-      "additionalProperties": false
-    },
-    "board_topic_poll": {
-      "type": "object",
-      "properties": {
-        "owner_id": {
-          "type": "integer",
-          "description": "Poll owner's ID",
-          "entity": "owner",
-          "format": "int64",
-          "required": true
-        },
-        "poll_id": {
-          "type": "integer",
-          "description": "Poll ID",
-          "minimum": 1,
-          "required": true
-        },
-        "created": {
-          "type": "integer",
-          "description": "Date when poll has been created in Unixtime",
-          "minimum": 0,
-          "required": true
-        },
-        "is_closed": {
-          "description": "Information whether the poll is closed",
-          "$ref": "objects.json#/definitions/base_bool_int"
-        },
-        "question": {
-          "type": "string",
-          "description": "Poll question",
-          "required": true
-        },
-        "votes": {
-          "type": "integer",
-          "description": "Votes number",
-          "minimum": 0,
-          "required": true
-        },
-        "answer_id": {
-          "type": "integer",
-          "description": "Current user's answer ID",
-          "minimum": 0,
-          "required": true
-        },
-        "answers": {
-          "type": "array",
-          "items": {
-            "$ref": "objects.json#/definitions/polls_answer"
-          },
-          "required": true
         }
       },
       "additionalProperties": false
@@ -5056,7 +5021,7 @@
           "required": true
         },
         "video": {
-          "$ref": "objects.json#/definitions/video_video"
+          "$ref": "objects.json#/definitions/video_video_full"
         }
       },
       "additionalProperties": false
@@ -11132,7 +11097,7 @@
           "description": "Page creator ID"
         },
         "creator_name": {
-          "type": "integer",
+          "type": "string",
           "description": "Page creator name"
         },
         "editor_id": {
@@ -11445,6 +11410,18 @@
           "type": "boolean",
           "description": "Whether photo has attached tag links",
           "required": true
+        },
+        "likes": {
+          "$ref": "objects.json#/definitions/base_likes"
+        },
+        "comments": {
+          "$ref": "objects.json#/definitions/base_object_count"
+        },
+        "reposts": {
+          "$ref": "objects.json#/definitions/base_reposts_info"
+        },
+        "tags": {
+          "$ref": "objects.json#/definitions/base_object_count"
         }
       },
       "additionalProperties": false
@@ -11588,96 +11565,6 @@
           "type": "string"
         }
       ]
-    },
-    "photos_photo_full": {
-      "type": "object",
-      "properties": {
-        "access_key": {
-          "type": "string",
-          "description": "Access key for the photo"
-        },
-        "album_id": {
-          "type": "integer",
-          "description": "Album ID",
-          "required": true
-        },
-        "can_comment": {
-          "description": "Information whether current user can comment the photo",
-          "$ref": "objects.json#/definitions/base_bool_int"
-        },
-        "date": {
-          "type": "integer",
-          "description": "Date when uploaded",
-          "minimum": 0,
-          "required": true
-        },
-        "height": {
-          "type": "integer",
-          "description": "Original photo height",
-          "minimum": 0
-        },
-        "id": {
-          "type": "integer",
-          "description": "Photo ID",
-          "minimum": 0,
-          "required": true
-        },
-        "images": {
-          "type": "array",
-          "items": {
-            "$ref": "objects.json#/definitions/photos_image"
-          }
-        },
-        "lat": {
-          "type": "number",
-          "description": "Latitude"
-        },
-        "likes": {
-          "$ref": "objects.json#/definitions/base_likes"
-        },
-        "reposts": {
-          "$ref": "objects.json#/definitions/base_reposts_info"
-        },
-        "comments": {
-          "$ref": "objects.json#/definitions/base_object_count"
-        },
-        "long": {
-          "type": "number",
-          "description": "Longitude"
-        },
-        "owner_id": {
-          "type": "integer",
-          "description": "Photo owner's ID",
-          "entity": "owner",
-          "format": "int64",
-          "required": true
-        },
-        "post_id": {
-          "type": "integer",
-          "description": "Post ID",
-          "minimum": 1
-        },
-        "tags": {
-          "$ref": "objects.json#/definitions/base_object_count"
-        },
-        "text": {
-          "type": "string",
-          "description": "Photo caption"
-        },
-        "user_id": {
-          "type": "integer",
-          "description": "ID of the user who have uploaded the photo",
-          "minimum": 1,
-          "entity": "owner",
-          "format": "int64"
-        },
-        "width": {
-          "type": "integer",
-          "description": "Original photo width",
-          "minimum": 0
-        }
-      },
-      "additionalProperties": false
     },
     "photos_photo_full_xtr_real_offset": {
       "type": "object",
@@ -13641,7 +13528,7 @@
           "$ref": "objects.json#/definitions/stories_clickable_stickers"
         },
         "video": {
-          "$ref": "objects.json#/definitions/video_video"
+          "$ref": "objects.json#/definitions/video_video_full"
         },
         "views": {
           "type": "integer",
@@ -15736,6 +15623,11 @@
           "type": "string",
           "format": "uri",
           "description": "URL of the external player"
+        },
+        "mp4_144": {
+          "type": "string",
+          "format": "uri",
+          "description": "URL of the mpeg4 file with 144p quality"
         },
         "mp4_240": {
           "type": "string",

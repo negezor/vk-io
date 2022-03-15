@@ -65,8 +65,7 @@
     "api_error_flood": {
       "code": 9,
       "description": "Flood control",
-      "global": true,
-      "subcodes": []
+      "global": true
     },
     "api_error_server": {
       "code": 10,
@@ -94,8 +93,7 @@
     "api_error_access": {
       "code": 15,
       "description": "Access denied",
-      "global": true,
-      "subcodes": []
+      "global": true
     },
     "api_error_auth_https": {
       "code": 16,
@@ -216,8 +214,7 @@
     "api_error_param": {
       "code": 100,
       "description": "One of the parameters specified was missing or invalid",
-      "global": true,
-      "subcodes": []
+      "global": true
     },
     "api_error_param_api_id": {
       "code": 101,

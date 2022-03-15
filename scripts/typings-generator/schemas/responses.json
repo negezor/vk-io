@@ -1237,21 +1237,26 @@
               "required": true
             },
             "poll": {
-              "$ref": "objects.json#/definitions/board_topic_poll"
+              "type": "object",
+              "$ref": "objects.json#/definitions/polls_poll"
             },
             "profiles": {
               "type": "array",
               "items": {
-                "$ref": "objects.json#/definitions/users_user"
+                "$ref": "objects.json#/definitions/users_user_full"
               },
               "required": true
             },
             "groups": {
               "type": "array",
               "items": {
-                "$ref": "objects.json#/definitions/groups_group"
+                "$ref": "objects.json#/definitions/groups_group_full"
               },
               "required": true
+            },
+            "real_offset": {
+              "type": "integer",
+              "description": "Offset of comment"
             }
           },
           "additionalProperties": false,
@@ -1279,7 +1284,12 @@
               "required": true
             },
             "poll": {
-              "$ref": "objects.json#/definitions/board_topic_poll"
+              "type": "object",
+              "$ref": "objects.json#/definitions/polls_poll"
+            },
+            "real_offset": {
+              "type": "integer",
+              "description": "Offset of comment"
             }
           },
           "additionalProperties": false,
@@ -1318,7 +1328,14 @@
             "profiles": {
               "type": "array",
               "items": {
-                "$ref": "objects.json#/definitions/users_user_min"
+                "$ref": "objects.json#/definitions/users_user_full"
+              },
+              "required": true
+            },
+            "groups": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/groups_group_full"
               },
               "required": true
             }
@@ -4910,6 +4927,44 @@
       },
       "additionalProperties": false
     },
+    "newsfeed_generic_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/newsfeed_newsfeed_item"
+              },
+              "required": true
+            },
+            "profiles": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/users_user_full"
+              },
+              "required": true
+            },
+            "groups": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/groups_group_full"
+              },
+              "required": true
+            },
+            "new_returned_news_items_count": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "additionalProperties": false,
+          "required": true
+        }
+      },
+      "additionalProperties": false
+    },
     "newsfeed_getBanned_extended_response": {
       "type": "object",
       "properties": {
@@ -5075,41 +5130,6 @@
       },
       "additionalProperties": false
     },
-    "newsfeed_getRecommended_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "type": "object",
-          "properties": {
-            "items": {
-              "type": "array",
-              "items": {
-                "$ref": "objects.json#/definitions/newsfeed_newsfeed_item"
-              }
-            },
-            "profiles": {
-              "type": "array",
-              "items": {
-                "$ref": "objects.json#/definitions/users_user_full"
-              }
-            },
-            "groups": {
-              "type": "array",
-              "items": {
-                "$ref": "objects.json#/definitions/groups_group_full"
-              }
-            },
-            "next_from": {
-              "type": "string",
-              "description": "Next from value"
-            }
-          },
-          "additionalProperties": false,
-          "required": true
-        }
-      },
-      "additionalProperties": false
-    },
     "newsfeed_getSuggestedSources_response": {
       "type": "object",
       "properties": {
@@ -5125,41 +5145,6 @@
               "items": {
                 "$ref": "objects.json#/definitions/users_subscriptions_item"
               }
-            }
-          },
-          "additionalProperties": false,
-          "required": true
-        }
-      },
-      "additionalProperties": false
-    },
-    "newsfeed_get_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "type": "object",
-          "properties": {
-            "items": {
-              "type": "array",
-              "items": {
-                "$ref": "objects.json#/definitions/newsfeed_newsfeed_item"
-              }
-            },
-            "profiles": {
-              "type": "array",
-              "items": {
-                "$ref": "objects.json#/definitions/users_user_full"
-              }
-            },
-            "groups": {
-              "type": "array",
-              "items": {
-                "$ref": "objects.json#/definitions/groups_group_full"
-              }
-            },
-            "next_from": {
-              "type": "string",
-              "description": "New from value"
             }
           },
           "additionalProperties": false,
@@ -5796,40 +5781,7 @@
       },
       "additionalProperties": false
     },
-    "photos_getById_extended_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "type": "object",
-          "properties": {
-            "items": {
-              "type": "array",
-              "items": {
-                "$ref": "objects.json#/definitions/photos_photo_full"
-              },
-              "required": true
-            }
-          },
-          "additionalProperties": false,
-          "required": true
-        }
-      },
-      "additionalProperties": false
-    },
-    "photos_getById_legacy_extended_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "type": "array",
-          "items": {
-            "$ref": "objects.json#/definitions/photos_photo_full"
-          },
-          "required": true
-        }
-      },
-      "additionalProperties": false
-    },
-    "photos_getById_legacy_response": {
+    "photos_getById_response": {
       "type": "object",
       "properties": {
         "response": {
@@ -5837,25 +5789,6 @@
           "items": {
             "$ref": "objects.json#/definitions/photos_photo"
           },
-          "required": true
-        }
-      },
-      "additionalProperties": false
-    },
-    "photos_getById_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "type": "object",
-          "properties": {
-            "items": {
-              "type": "array",
-              "items": {
-                "$ref": "objects.json#/definitions/photos_photo"
-              }
-            }
-          },
-          "additionalProperties": false,
           "required": true
         }
       },
@@ -6001,31 +5934,6 @@
       },
       "additionalProperties": false
     },
-    "photos_getUserPhotos_extended_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "type": "object",
-          "properties": {
-            "count": {
-              "type": "integer",
-              "description": "Total number",
-              "required": true
-            },
-            "items": {
-              "type": "array",
-              "items": {
-                "$ref": "objects.json#/definitions/photos_photo_full"
-              },
-              "required": true
-            }
-          },
-          "additionalProperties": false,
-          "required": true
-        }
-      },
-      "additionalProperties": false
-    },
     "photos_getUserPhotos_response": {
       "type": "object",
       "properties": {
@@ -6056,31 +5964,6 @@
       "properties": {
         "response": {
           "$ref": "objects.json#/definitions/photos_photo_upload",
-          "required": true
-        }
-      },
-      "additionalProperties": false
-    },
-    "photos_get_extended_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "type": "object",
-          "properties": {
-            "count": {
-              "type": "integer",
-              "description": "Total number",
-              "required": true
-            },
-            "items": {
-              "type": "array",
-              "items": {
-                "$ref": "objects.json#/definitions/photos_photo_full"
-              },
-              "required": true
-            }
-          },
-          "additionalProperties": false,
           "required": true
         }
       },
@@ -7594,6 +7477,19 @@
       },
       "additionalProperties": false
     },
+    "video_changeVideoAlbums_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          },
+          "required": true
+        }
+      },
+      "additionalProperties": false
+    },
     "video_createComment_response": {
       "type": "object",
       "properties": {
@@ -7691,7 +7587,7 @@
             "items": {
               "type": "array",
               "items": {
-                "$ref": "objects.json#/definitions/video_video_album_full"
+                "$ref": "objects.json#/definitions/video_video_album"
               },
               "required": true
             }
@@ -7723,16 +7619,34 @@
             "profiles": {
               "type": "array",
               "items": {
-                "$ref": "objects.json#/definitions/users_user_full"
+                "$ref": "objects.json#/definitions/users_user"
               },
               "required": true
             },
             "groups": {
               "type": "array",
               "items": {
-                "$ref": "objects.json#/definitions/groups_group_full"
+                "$ref": "objects.json#/definitions/groups_group"
               },
               "required": true
+            },
+            "current_level_count": {
+              "type": "integer",
+              "description": "Count of replies of current level"
+            },
+            "can_post": {
+              "type": "boolean",
+              "description": "Information whether current user can comment the post"
+            },
+            "show_reply_button": {
+              "type": "boolean"
+            },
+            "groups_can_post": {
+              "type": "boolean",
+              "description": "Information whether groups can comment the post"
+            },
+            "real_offset": {
+              "type": "integer"
             }
           },
           "additionalProperties": false,
@@ -7758,6 +7672,24 @@
                 "$ref": "objects.json#/definitions/wall_wall_comment"
               },
               "required": true
+            },
+            "current_level_count": {
+              "type": "integer",
+              "description": "Count of replies of current level"
+            },
+            "can_post": {
+              "type": "boolean",
+              "description": "Information whether current user can comment the post"
+            },
+            "show_reply_button": {
+              "type": "boolean"
+            },
+            "groups_can_post": {
+              "type": "boolean",
+              "description": "Information whether groups can comment the post"
+            },
+            "real_offset": {
+              "type": "integer"
             }
           },
           "additionalProperties": false,
@@ -7877,7 +7809,7 @@
             "items": {
               "type": "array",
               "items": {
-                "$ref": "objects.json#/definitions/video_video"
+                "$ref": "objects.json#/definitions/video_video_full"
               },
               "required": true
             }

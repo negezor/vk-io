@@ -4410,7 +4410,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/base_getUploadServer_response"
+          "$ref": "responses.json#/definitions/docs_getUploadServer_response"
         }
       },
       "errors": [
@@ -10124,9 +10124,9 @@
           "name": "owner_id",
           "description": "ID of an item owner community.",
           "type": "integer",
+          "required": true,
           "format": "int64",
-          "entity": "owner",
-          "required": true
+          "entity": "owner"
         },
         {
           "name": "item_id",
@@ -10139,7 +10139,6 @@
           "name": "name",
           "description": "Item name.",
           "type": "string",
-          "required": true,
           "minLength": 4,
           "maxLength": 100
         },
@@ -10147,14 +10146,12 @@
           "name": "description",
           "description": "Item description.",
           "type": "string",
-          "required": true,
           "minLength": 10
         },
         {
           "name": "category_id",
           "description": "Item category ID.",
           "type": "integer",
-          "required": true,
           "minimum": 0
         },
         {
@@ -10162,6 +10159,11 @@
           "description": "Item price.",
           "type": "number",
           "minimum": 0
+        },
+        {
+          "name": "old_price",
+          "type": "number",
+          "minimum": 0.01
         },
         {
           "name": "deleted",
@@ -10190,6 +10192,35 @@
           "type": "string",
           "minLength": 0,
           "maxLength": 320
+        },
+        {
+          "name": "dimension_width",
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100000
+        },
+        {
+          "name": "dimension_height",
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100000
+        },
+        {
+          "name": "dimension_length",
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100000
+        },
+        {
+          "name": "weight",
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100000000
+        },
+        {
+          "name": "sku",
+          "type": "string",
+          "maxLength": 50
         }
       ],
       "responses": {
@@ -12572,7 +12603,7 @@
         },
         {
           "name": "pts",
-          "description": "Lsat value of 'pts' parameter returned from the Long Poll server or by using [vk.com/dev/messages.getLongPollHistory|messages.getLongPollHistory] method.",
+          "description": "Last value of 'pts' parameter returned from the Long Poll server or by using [vk.com/dev/messages.getLongPollHistory|messages.getLongPollHistory] method.",
           "type": "integer",
           "minimum": 0
         },
@@ -12639,6 +12670,11 @@
         {
           "name": "credentials",
           "type": "boolean"
+        },
+        {
+          "name": "extended",
+          "type": "boolean",
+          "default": false
         }
       ],
       "responses": {
@@ -13703,7 +13739,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/newsfeed_get_response"
+          "$ref": "responses.json#/definitions/newsfeed_generic_response"
         }
       }
     },
@@ -13951,7 +13987,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/newsfeed_getRecommended_response"
+          "$ref": "responses.json#/definitions/newsfeed_generic_response"
         }
       }
     },
@@ -15928,9 +15964,6 @@
       "responses": {
         "response": {
           "$ref": "responses.json#/definitions/photos_get_response"
-        },
-        "extendedResponse": {
-          "$ref": "responses.json#/definitions/photos_get_extended_response"
         }
       }
     },
@@ -16168,10 +16201,7 @@
       ],
       "responses": {
         "response": {
-          "$ref": "responses.json#/definitions/photos_getById_legacy_response"
-        },
-        "extendedResponse": {
-          "$ref": "responses.json#/definitions/photos_getById_legacy_extended_response"
+          "$ref": "responses.json#/definitions/photos_getById_response"
         }
       }
     },
@@ -16538,7 +16568,8 @@
       "parameters": [
         {
           "name": "album_id",
-          "type": "integer"
+          "type": "integer",
+          "format": "int32"
         },
         {
           "name": "group_id",
@@ -16597,9 +16628,6 @@
       "responses": {
         "response": {
           "$ref": "responses.json#/definitions/photos_getUserPhotos_response"
-        },
-        "extendedResponse": {
-          "$ref": "responses.json#/definitions/photos_getUserPhotos_extended_response"
         }
       }
     },
@@ -16677,10 +16705,10 @@
           "required": true
         },
         {
-          "name": "photo_id",
-          "description": "Photo ID.",
+          "name": "photo_ids",
           "type": "integer",
-          "required": true
+          "required": true,
+          "maxItems": 100
         }
       ],
       "responses": {
@@ -18664,13 +18692,7 @@
       "access_token_type": [
         "user"
       ],
-      "parameters": [
-        {
-          "name": "id",
-          "type": "string",
-          "required": true
-        }
-      ],
+      "parameters": [],
       "responses": {
         "response": {
           "$ref": "responses.json#/definitions/base_ok_response"
@@ -19439,6 +19461,13 @@
           "description": "'1' — to return detailed information about photos",
           "type": "boolean",
           "default": 0
+        },
+        {
+          "name": "fields",
+          "type": "array",
+          "items": {
+            "$ref": "objects.json#/definitions/base_user_group_fields"
+          }
         }
       ],
       "responses": {
@@ -19538,7 +19567,7 @@
           "name": "fields",
           "type": "array",
           "items": {
-            "type": "string"
+            "$ref": "objects.json#/definitions/base_user_group_fields"
           }
         }
       ],
@@ -19596,7 +19625,7 @@
           "name": "fields",
           "type": "array",
           "items": {
-            "type": "string"
+            "$ref": "objects.json#/definitions/base_user_group_fields"
           }
         }
       ],
@@ -20518,6 +20547,9 @@
       "responses": {
         "response": {
           "$ref": "responses.json#/definitions/base_ok_response"
+        },
+        "multiResponse": {
+          "$ref": "responses.json#/definitions/video_changeVideoAlbums_response"
         }
       },
       "errors": [
@@ -21177,6 +21209,9 @@
       "responses": {
         "response": {
           "$ref": "responses.json#/definitions/base_ok_response"
+        },
+        "multiResponse": {
+          "$ref": "responses.json#/definitions/video_changeVideoAlbums_response"
         }
       },
       "errors": [
