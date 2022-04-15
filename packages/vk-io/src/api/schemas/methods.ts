@@ -638,7 +638,7 @@ export interface APIGifts {
 }
 
 /**
- * The API groups group
+ * The API groups
  */
 export interface APIGroups {
     addAddress(params: Params.GroupsAddAddressParams): Promise<Responses.GroupsAddAddressResponse>;
@@ -1138,7 +1138,7 @@ export interface APINewsfeed {
      */
     getMentions(params: Params.NewsfeedGetMentionsParams): Promise<Responses.NewsfeedGetMentionsResponse>;
     /**
-     * , Returns a list of newsfeeds recommended to the current user.
+     * Returns a list of newsfeeds recommended to the current user.
      */
     getRecommended(params: Params.NewsfeedGetRecommendedParams): Promise<Responses.NewsfeedGenericResponse>;
     /**
@@ -1740,7 +1740,7 @@ export interface APIUsers {
      */
     getSubscriptions(params: Params.UsersGetSubscriptionsParams): Promise<Responses.UsersGetSubscriptionsResponse>;
     /**
-     * Reports (submits a complain about) a user.
+     * Reports (submits a complaint about) a user.
      */
     report(params: Params.UsersReportParams): Promise<Responses.BaseOkResponse>;
     /**
@@ -2041,7 +2041,7 @@ export interface APIMethods {
      */
     gifts: APIGifts;
     /**
-     * The API groups group
+     * The API groups
      */
     groups: APIGroups;
     /**

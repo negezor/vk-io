@@ -54,7 +54,7 @@ export class DialogMessagesContext<S = ContextDefaultState>
 	}
 
 	/**
-	 * Checks if messages are restore
+	 * Checks if messages are restored
 	 */
 	public get isRestore(): boolean {
 		return this.subTypes.includes('dialog_messages_restore');

@@ -65,7 +65,7 @@ updates.on('message_new', async (context, next) => {
 - [DialogNotificationSettingsContext](https://negezor.github.io/vk-io/references/vk-io/classes/DialogNotificationSettingsContext.html)
 
 ::: warning Внимание
-Контексты могут содержать не полные данные, если например вы получаете их с User Long Poll.
+Контексты могут содержать неполные данные, если например вы получаете их с User Long Poll.
 :::
 
 ## Сериализация контекста

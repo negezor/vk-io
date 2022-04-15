@@ -409,7 +409,7 @@ class WallAttachment extends Attachment<IWallAttachmentPayload, AttachmentType.W
 	}
 
 	/**
-	 * Returns the geo location
+	 * Returns the geolocation
 	 */
 	public get geo(): IWallAttachmentPayload['geo'] | undefined {
 		return this.payload.geo;

@@ -173,7 +173,7 @@ class StreamingContext<S = ContextDefaultState>
 	}
 
 	/**
-	 * Returns the geo location
+	 * Returns the geolocation
 	 */
 	public get geo(): object {
 		return this.payload.geo;

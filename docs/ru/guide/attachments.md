@@ -42,9 +42,9 @@ const attachment = new Attachment({
 // attachment.isFilled(); // => false
 ```
 
-Формат прикреплений ВКонтакте очень простой, `${type}${ownerId}_${id}_${accessKey}`. В основном идёт работа с без ключ доступа (`_${accessKey}`), пример прикрепления фотографии с ID `1`, которая принадлежит пользователю с ID `100` (`photo100_1`). Несколько прикреплений передаются через запятую `photo100_1,doc100_5`.
+Формат прикреплений ВКонтакте очень простой: `${type}${ownerId}_${id}_${accessKey}`. В основном идёт работа без ключа доступа (`_${accessKey}`), пример прикрепления фотографии с ID `1`, которая принадлежит пользователю с ID `100` (`photo100_1`). Несколько прикреплений передаются через запятую `photo100_1,doc100_5`.
 
-Вы можете вручную получать такой формат, например для всех прикриплений `${attachment.type}${attachment.ownerId}_${attachment.id}`. Но это делать не нужно, так как у класса [Attachment](https://negezor.github.io/vk-io/references/vk-io/classes/Attachment.html) есть метод [toString](https://negezor.github.io/vk-io/references/vk-io/classes/Attachment.html#toString), он автоматический вёрнёт данный формат.
+Вы можете вручную получать такой формат, например для всех прикреплений `${attachment.type}${attachment.ownerId}_${attachment.id}`. Но это делать не нужно, так как у класса [Attachment](https://negezor.github.io/vk-io/references/vk-io/classes/Attachment.html) есть метод [toString](https://negezor.github.io/vk-io/references/vk-io/classes/Attachment.html#toString), он автоматический вёрнёт данный формат.
 
 ```ts
 attachment.toString(); // photo100_1
@@ -89,7 +89,7 @@ await api.messages.send({
 ```
 
 ::: warning Внимание
-Прикрепления могут содержать не полные данные, если например вы получаете их с User Long Poll. Проверить можно через `attachment.isFilled();`
+Прикрепления могут содержать неполные данные, если например вы получаете их с User Long Poll. Проверить можно через `attachment.isFilled();`
 :::
 
 ## Получение прикрепления из строки

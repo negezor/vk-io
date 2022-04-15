@@ -148,7 +148,7 @@ export interface AccountSaveProfileInfoParams {
      */
     bdate?: string;
     /**
-     * Birth date visibility. Returned values: , * '1' - show birth date,, * '2' - show only month and day,, * '0' - hide birth date.
+     * Birthdate visibility. Returned values: , * '1' - show birth date,, * '2' - show only month and day,, * '0' - hide birth date.
      */
     bdate_visibility?: 1 | 2 | 0;
     /**
@@ -327,7 +327,7 @@ export interface AdsCreateTargetGroupParams {
      */
     name: string;
     /**
-     * 'For groups with auditory created with pixel code only.', , Number of days after that users will be automatically removed from the group.
+     * 'For groups with auditory created with pixel code only.', Number of days after that users will be automatically removed from the group.
      */
     lifetime: number;
     target_pixel_id?: number;
@@ -1328,7 +1328,7 @@ export interface BoardGetTopicsParams {
      */
     group_id: number;
     /**
-     * Sort order: '1' — by date updated in reverse chronological order. '2' — by date created in reverse chronological order. '-1' — by date updated in chronological order. '-2' — by date created in chronological order. If no sort order is specified, topics are returned in the order specified by the group administrator. Pinned topics are returned first, regardless of the sorting.
+     * Sort order: '1' — by date updated in reverse chronological order. '2' — by date created in reverse chronological order. '-1' — by date updated in chronological order. '-2' — by date created in chronological order. If no sort order is specified, topics are returned to the order specified by the group administrator. Pinned topics are returned first, regardless of the sorting.
      */
     order?: 1 | 2 | -1 | -2 | 0;
     /**
@@ -2346,7 +2346,7 @@ export interface GroupsEditParams {
      */
     phone?: string;
     /**
-     * RSS feed address for import (available only to communities with special permission. Contact vk.com/support to get it.
+     * RSS feed address for import (available only to communities with special permission. Contact vk.com/support to get it.)
      */
     rss?: string;
     /**
@@ -3554,7 +3554,7 @@ export interface MarketDeleteParams {
 
 export interface MarketDeleteAlbumParams {
     /**
-     * ID of an collection owner community.
+     * ID of a collection owner community.
      */
     owner_id: number;
     /**
@@ -3625,7 +3625,7 @@ export interface MarketEditParams {
 
 export interface MarketEditAlbumParams {
     /**
-     * ID of an collection owner community.
+     * ID of a collection owner community.
      */
     owner_id: number;
     /**
@@ -3731,7 +3731,7 @@ export interface MarketGetAlbumByIdParams {
 
 export interface MarketGetAlbumsParams {
     /**
-     * ID of an items owner community.
+     * ID of an items' owner community.
      */
     owner_id: number;
     /**
@@ -3952,7 +3952,7 @@ export interface MarketRestoreCommentParams {
 
 export interface MarketSearchParams {
     /**
-     * ID of an items owner community.
+     * ID of an items' owner community.
      */
     owner_id: number;
     /**
@@ -4049,7 +4049,7 @@ export interface MessagesDeleteParams {
      */
     group_id?: number;
     /**
-     * '1' — delete message for for all.
+     * '1' — delete message for all.
      */
     delete_for_all?: boolean | number;
     /**
@@ -4746,7 +4746,7 @@ export interface NewsfeedGetParams {
      */
     max_photos?: number;
     /**
-     * Sources to obtain news from, separated by commas. User IDs can be specified in formats '' or 'u' , where '' is the user's friend ID. Community IDs can be specified in formats '-' or 'g' , where '' is the community ID. If the parameter is not set, all of the user's friends and communities are returned, except for banned sources, which can be obtained with the [vk.com/dev/newsfeed.getBanned|newsfeed.getBanned] method.
+     * Sources to obtain news from, separated by commas. User IDs can be specified in formats '' or 'u' , where '' is the user's friend ID. Community IDs can be specified in formats '-' or 'g' , where '' is the community ID. If the parameter is not set, all the user's friends and communities are returned, except for banned sources, which can be obtained with the [vk.com/dev/newsfeed.getBanned|newsfeed.getBanned] method.
      */
     source_ids?: string;
     /**
@@ -5656,7 +5656,7 @@ export interface PhotosGetAllCommentsParams {
      */
     owner_id?: number;
     /**
-     * Album ID. If the parameter is not set, comments on all of the user's albums will be returned.
+     * Album ID. If the parameter is not set, comments on all the user's albums will be returned.
      */
     album_id?: number;
     /**
@@ -6176,7 +6176,7 @@ export interface PhotosSaveWallPhotoParams {
      */
     group_id?: number;
     /**
-     * Parameter returned when the the photo is [vk.com/dev/upload_files|uploaded to the server].
+     * Parameter returned when the photo is [vk.com/dev/upload_files|uploaded to the server].
      */
     photo: string;
     /**
@@ -7433,7 +7433,7 @@ export interface VideoRemoveFromAlbumParams {
 
 export interface VideoReorderAlbumsParams {
     /**
-     * ID of the user or community that owns the albums..
+     * ID of the user or community that owns the albums
      */
     owner_id?: number;
     /**

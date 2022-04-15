@@ -135,7 +135,7 @@ export class PollAttachment extends Attachment<IPollAttachmentPayload, Attachmen
 	}
 
 	/**
-	 * Check if can edit the poll
+	 * Check if you can edit the poll
 	 */
 	public get isCanEdit(): boolean | undefined {
 		if (!this.$filled) {
@@ -146,7 +146,7 @@ export class PollAttachment extends Attachment<IPollAttachmentPayload, Attachmen
 	}
 
 	/**
-	 * Check if can vote in the survey
+	 * Check if you can vote in the survey
 	 */
 	public get isCanVote(): boolean | undefined {
 		if (!this.$filled) {
@@ -157,7 +157,7 @@ export class PollAttachment extends Attachment<IPollAttachmentPayload, Attachmen
 	}
 
 	/**
-	 * Check if can complain about the poll
+	 * Check if you can complain about the poll
 	 */
 	public get isCanReport(): boolean | undefined {
 		if (!this.$filled) {
@@ -168,7 +168,7 @@ export class PollAttachment extends Attachment<IPollAttachmentPayload, Attachmen
 	}
 
 	/**
-	 * Check if can share a survey
+	 * Check if you can share a survey
 	 */
 	public get isCanShare(): boolean | undefined {
 		if (!this.$filled) {

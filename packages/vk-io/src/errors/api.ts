@@ -34,7 +34,7 @@ export class APIError extends VKError {
 	public captchaImg?: string;
 
 	/**
-	 * Redirect URL, eg validation
+	 * Redirect URL, e.g. validation
 	 */
 	public redirectUri?: string;
 

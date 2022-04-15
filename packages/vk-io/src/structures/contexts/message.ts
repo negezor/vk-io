@@ -309,7 +309,7 @@ class MessageContext<S = ContextDefaultState>
 	}
 
 	/**
-	 * Checks whether the message is inbox
+	 * Checks whether the message is inboxed
 	 */
 	public get isInbox(): boolean {
 		return !this.isOutbox;
@@ -718,7 +718,7 @@ class MessageContext<S = ContextDefaultState>
 	}
 
 	/**
-	 * Sends a audio message to the current dialog
+	 * Sends an audio message to the current dialog
 	 */
 	async sendAudioMessage(
 		source: IUploadSourceMedia,

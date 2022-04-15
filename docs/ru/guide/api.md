@@ -39,14 +39,14 @@ console.log(users) // [{ id: 1, first_name: 'Павел', last_name: 'Дуров
 ```
 
 ::: warning Внимание
-Вы вполне можете вызвать метод `api.users.blablabla()`, но единственное что вам это даст — это ошибку о том что метод не найден, так что будьте осторожнее.
+Вы вполне можете вызвать метод `api.users.blablabla()`, но единственное что вам это даст — это ошибку о том, что метод не найден, так что будьте осторожнее.
 :::
 
 ## Execute
 
 Метод принимает обязательный параметр `code`, остальные переданные параметры будут доступны через объект `Args` внутри `code`. 
 
-В отличии от остальных методов, [execute](https://negezor.github.io/vk-io/references/vk-io/classes/api.html#execute) возвращает данные в формате:
+В отличие от остальных методов, [execute](https://negezor.github.io/vk-io/references/vk-io/classes/api.html#execute) возвращает данные в формате:
 ```ts
 export interface IExecuteResponse<T> {
 	response: T;
@@ -69,7 +69,7 @@ await api.procedure('important', {
 
 ## Ограничения запросов
 
-По умолчанию библиотека ограничивает количество запросов до `3` в секунду, этот лимит соотвествует пользовательским страницам и сервисным токенам.
+По умолчанию библиотека ограничивает количество запросов до `3` в секунду, этот лимит соответствует пользовательским страницам и сервисным токенам.
 
 Для групповых токенов лимит составляет `20`, установить его можно через опцию [apiLimit](https://negezor.github.io/vk-io/references/vk-io/interfaces/iapioptions.html#apilimit):
 
@@ -103,7 +103,7 @@ const api = new API({
 
 ### parallel
 
-объединяет методы в [execute](https://vk.com/dev/execute), позволяет вызывать до `25` методов включительно. Максимальное количество методов в `execute` контролируется опцией [apiExecuteCount](https://negezor.github.io/vk-io/references/vk-io/interfaces/iapioptions.html#apiexecutecount), [1..25] методов — 1 запрос
+Объединяет методы в [execute](https://vk.com/dev/execute), позволяет вызывать до `25` методов включительно. Максимальное количество методов в `execute` контролируется опцией [apiExecuteCount](https://negezor.github.io/vk-io/references/vk-io/interfaces/iapioptions.html#apiexecutecount), [1..25] методов — 1 запрос
 
 ### parallel_selected
 
@@ -138,7 +138,7 @@ const api = new API({
 
 ## Использование прокси
 
-Для того, чтобы использовать прокси, достаточно передать опцию [agent](https://negezor.github.io/vk-io/references/vk-io/interfaces/iapioptions.html#agent) в конструктор. Это должен быть [HTTPS Agent](https://nodejs.org/api/https.html#https_class_https_agent). На примере модуля [https-proxy-agent](https://npm.im/https-proxy-agent).
+Для того чтобы использовать прокси, достаточно передать опцию [agent](https://negezor.github.io/vk-io/references/vk-io/interfaces/iapioptions.html#agent) в конструктор. Это должен быть [HTTPS Agent](https://nodejs.org/api/https.html#https_class_https_agent). На примере модуля [https-proxy-agent](https://npm.im/https-proxy-agent).
 
 ```ts
 import { API } from 'vk-io';
@@ -187,7 +187,7 @@ callbackService.onCaptcha(async (payload, retry) => {
 ```
 
 ## Использование APIRequest
-Вам может понадобится контролировать запрос на всех стадиях, или иметь удобную оболочку для создания [execute](https://vk.com/dev/execute) методов.
+Может вам понадобится контролировать запрос на всех стадиях, или иметь удобную оболочку для создания [execute](https://vk.com/dev/execute) методов.
 
 [API Reference](https://negezor.github.io/vk-io/references/vk-io/classes/apirequest.html)
 
