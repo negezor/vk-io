@@ -136,7 +136,7 @@ export class MessageFlagsContext<S = ContextDefaultState>
 	}
 
 	/**
-	 * Checks if a audio message has been listened
+	 * Checks if an audio message has been listened
 	 */
 	public get isAudioMessageListened(): boolean {
 		return this.hasFlag(MessageFlag.AUDIO_MESSAGE_LISTENED);

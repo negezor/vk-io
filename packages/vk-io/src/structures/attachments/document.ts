@@ -80,7 +80,7 @@ export class DocumentAttachment
 	}
 
 	/**
-	 * Checks if the document is a archive
+	 * Checks if the document is an archive
 	 */
 	public get isArchive(): boolean | undefined {
 		if (!this.$filled) {
@@ -102,7 +102,7 @@ export class DocumentAttachment
 	}
 
 	/**
-	 * Checks if the document is a image
+	 * Checks if the document is an image
 	 */
 	public get isImage(): boolean | undefined {
 		if (!this.$filled) {
@@ -124,7 +124,7 @@ export class DocumentAttachment
 	}
 
 	/**
-	 * Checks if the document is a audio
+	 * Checks if the document is an audio
 	 */
 	public get isAudio(): boolean | undefined {
 		if (!this.$filled) {

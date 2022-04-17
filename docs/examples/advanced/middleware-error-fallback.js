@@ -25,7 +25,7 @@ vk.updates.use(async (context, next) => {
 	try {
 		await next();
 	} catch (error) {
-		// We do not respond not to messages
+		// We do not respond to messages
 		if (!context.is('message')) {
 			throw error;
 		}

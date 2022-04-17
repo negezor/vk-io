@@ -691,7 +691,7 @@ export enum APIErrorCode {
      */
     MESSAGES_EDIT_EXPIRED = 909,
     /**
-     * Can't sent this message, because it's too big
+     * Can't send this message, because it's too big
      *
      * Code: `910`
      */
@@ -1087,7 +1087,7 @@ export enum APIErrorCode {
      */
     MARKET_PHOTOS_CROP_INVALID_FORMAT = 1433,
     /**
-     * Crop bottom right corner is outside of the image
+     * Crop bottom right corner is outside the image
      *
      * Code: `1434`
      */

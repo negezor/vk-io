@@ -107,7 +107,7 @@ export class GroupUserContext<S = ContextDefaultState>
 	}
 
 	/**
-	 * Returns the unblock date or undefined if permanent
+	 * Returns unblock date or undefined if permanent
 	 */
 	public get unblockAt(): number | undefined {
 		return this.payload.unblock_date;

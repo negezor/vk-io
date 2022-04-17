@@ -61,7 +61,7 @@ export class MarketAlbumAttachment
 	}
 
 	/**
-	 * Returns count of products in the album
+	 * Returns count of products on the album
 	 */
 	get count(): number | undefined {
 		return this.payload.count;

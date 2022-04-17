@@ -1,5 +1,5 @@
 // I wrote code too tired
-// For me it was torture
+// For me, it was torture
 // I wanted to finish as soon as possible
 // So what quality do not want to answer
 // I hope in the future I will rewrite it

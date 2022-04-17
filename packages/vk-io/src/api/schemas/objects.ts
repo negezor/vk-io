@@ -728,7 +728,7 @@ export interface AdsLookalikeRequestSaveAudienceLevel {
      */
     level?: number;
     /**
-     * Saved audience audience size for according level
+     * Saved audience size for according level
      */
     audience_count?: number;
     [key: string]: any;
@@ -2917,7 +2917,7 @@ export type GroupsAddressWorkInfoStatus = "no_information" | "temporarily_closed
 
 export interface GroupsAddressesInfo {
     /**
-     * Information whether addresses is enabled
+     * Information whether addresses are enabled
      */
     is_enabled?: boolean | number;
     /**
@@ -6048,7 +6048,7 @@ export interface PodcastExternalData {
      */
     title?: string;
     /**
-     * Name of the podcasts owner community
+     * Name of the podcasts' owner community
      */
     owner_name?: string;
     [key: string]: any;
