@@ -1,19 +1,23 @@
 import { IContext } from '../types';
 import { SceneContext, StepSceneContext } from '../contexts';
 
-export interface IStepContext extends IContext {
-	scene: SceneContext & {
+export interface IStepContext<S extends Record<string, unknown>> extends IContext {
+	scene: SceneContext<S> & {
 		/**
 		 * Stepping scene control context
 		 */
-		step: StepSceneContext;
+		step: StepSceneContext<S>;
 	};
 }
 
-export type StepSceneHandler<T = {}> = (context: IStepContext & T) => unknown;
+export type StepSceneHandler<
+	T = {},
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	S extends Record<string, unknown> = Record<string, any>
+> = (context: IStepContext<S> & T) => unknown;
 
-export interface IStepSceneOptions<T> {
-	steps: StepSceneHandler<T>[];
-	enterHandler?: StepSceneHandler<T>;
-	leaveHandler?: StepSceneHandler<T>;
+export interface IStepSceneOptions<T, S extends Record<string, unknown>> {
+	steps: StepSceneHandler<T, S>[];
+	enterHandler?: StepSceneHandler<T, S>;
+	leaveHandler?: StepSceneHandler<T, S>;
 }

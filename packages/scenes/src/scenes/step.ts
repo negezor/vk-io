@@ -6,16 +6,20 @@ import { StepSceneContext } from '../contexts';
 import { LastAction } from '../contexts/scene.types';
 import { StepSceneHandler, IStepContext, IStepSceneOptions } from './step.types';
 
-export class StepScene<T = MessageContext> implements IScene {
+export class StepScene<
+	T = MessageContext,
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	S extends Record<string, unknown> = Record<string, any>
+> implements IScene<S> {
 	public slug: string;
 
-	private steps: StepSceneHandler<T>[];
+	private steps: StepSceneHandler<T, S>[];
 
-	private onEnterHandler: NonNullable<IStepSceneOptions<T>['enterHandler']>;
+	private onEnterHandler: NonNullable<IStepSceneOptions<T, S>['enterHandler']>;
 
-	private onLeaveHandler: NonNullable<IStepSceneOptions<T>['leaveHandler']>;
+	private onLeaveHandler: NonNullable<IStepSceneOptions<T, S>['leaveHandler']>;
 
-	public constructor(slug: string, rawOptions: IStepSceneOptions<T> | StepSceneHandler<T>[]) {
+	public constructor(slug: string, rawOptions: IStepSceneOptions<T, S> | StepSceneHandler<T, S>[]) {
 		const options = Array.isArray(rawOptions)
 			? { steps: rawOptions }
 			: rawOptions;
@@ -31,8 +35,8 @@ export class StepScene<T = MessageContext> implements IScene {
 		this.onLeaveHandler = options.leaveHandler || ((): void => {});
 	}
 
-	public async enterHandler(context: IStepContext & T): Promise<void> {
-		context.scene.step = new StepSceneContext({
+	public async enterHandler(context: IStepContext<S> & T): Promise<void> {
+		context.scene.step = new StepSceneContext<S>({
 			context,
 
 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -47,7 +51,7 @@ export class StepScene<T = MessageContext> implements IScene {
 		}
 	}
 
-	public leaveHandler(context: IStepContext & T): Promise<unknown> {
+	public leaveHandler(context: IStepContext<S> & T): Promise<unknown> {
 		return Promise.resolve(this.onLeaveHandler(context));
 	}
 }

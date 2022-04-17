@@ -9,11 +9,14 @@ export interface ISessionContext {
 	[key: string]: any;
 }
 
-export interface IContext extends Context {
+export interface IContext<
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	S extends Record<string, unknown> = Record<string, any>
+> extends Context {
 	/**
 	 * Scene control context
 	 */
-	scene: SceneContext;
+	scene: SceneContext<S>;
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	[key: string]: any;

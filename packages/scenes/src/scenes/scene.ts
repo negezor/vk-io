@@ -1,6 +1,7 @@
 import { IContext } from '../types';
 
-export interface IScene {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export interface IScene<S extends Record<string, unknown> = Record<string, any>> {
 	/**
 	 * The unique name of the scene
 	 */
@@ -9,10 +10,10 @@ export interface IScene {
 	/**
 	 * Enter handler for the scene
 	 */
-	enterHandler(context: IContext): unknown;
+	enterHandler(context: IContext<S>): unknown;
 
 	/**
 	 * Leave handler for the scene
 	 */
-	leaveHandler(context: IContext): unknown;
+	leaveHandler(context: IContext<S>): unknown;
 }

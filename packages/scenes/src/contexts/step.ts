@@ -2,14 +2,14 @@ import { IStepContextOptions, IStepContextGoOptions } from './step.types';
 import { StepSceneHandler } from '../scenes/step.types';
 import { LastAction } from './scene.types';
 
-export class StepSceneContext {
-	private context: IStepContextOptions['context'];
+export class StepSceneContext<S extends Record<string, unknown>> {
+	private context: IStepContextOptions<S>['context'];
 
-	private steps: IStepContextOptions['steps'];
+	private steps: IStepContextOptions<S>['steps'];
 
 	private stepChanged = false;
 
-	public constructor(options: IStepContextOptions) {
+	public constructor(options: IStepContextOptions<S>) {
 		this.context = options.context;
 
 		this.steps = options.steps;
@@ -46,7 +46,7 @@ export class StepSceneContext {
 	/**
 	 * Returns current handler
 	 */
-	public get current(): StepSceneHandler<{}> | undefined {
+	public get current(): StepSceneHandler<{}, S> | undefined {
 		return this.steps[this.stepId];
 	}
 

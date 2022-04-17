@@ -8,7 +8,7 @@ import {
 } from './scene.types';
 import { IScene } from '../scenes';
 
-export class SceneContext {
+export class SceneContext<S extends Record<string, unknown>> {
 	/**
 	 * Lazy session for submodules
 	 * ```ts
@@ -25,7 +25,7 @@ export class SceneContext {
 	 * ```
 	 */
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	public state!: Record<string, any>;
+	public state!: S;
 
 	/**
 	 * Is the scene canceled, used in leaveHandler()
@@ -81,7 +81,7 @@ export class SceneContext {
 	 * });
 	 * ```
 	 */
-	public async enter(slug: string, options: ISceneContextEnterOptions = {}): Promise<void> {
+	public async enter(slug: string, options: ISceneContextEnterOptions<S> = {}): Promise<void> {
 		const scene = this.repository.strictGet(slug);
 
 		const isCurrent = this.current?.slug === scene.slug;
