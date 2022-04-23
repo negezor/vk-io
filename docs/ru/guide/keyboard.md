@@ -4,11 +4,11 @@
 
 ## Описание типов
 
-[API Reference [EN]](https://negezor.github.io/vk-io/references/vk-io/classes/keyboard.html)
+[API Reference [EN]](https://negezor.github.io/vk-io/references/vk-io/classes/Keyboard.html)
 
 ## Концепт
 
-Хелпер предоставляет [паттерн строитель](https://en.wikipedia.org/wiki/Builder_pattern). Есть два способа создания клавиатуры, но оба из них вернут инстанцию [KeyboardBuilder](https://negezor.github.io/vk-io/references/vk-io/classes/keyboardbuilder.html).
+Хелпер предоставляет [паттерн строитель](https://en.wikipedia.org/wiki/Builder_pattern). Есть два способа создания клавиатуры, но оба из них вернут инстанцию [KeyboardBuilder](https://negezor.github.io/vk-io/references/vk-io/classes/KeyboardBuilder.html).
 
 ::: warning Внимание
 Ограничение для клавиатуры составляет сетку:

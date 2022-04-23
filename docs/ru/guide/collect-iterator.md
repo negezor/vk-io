@@ -4,7 +4,7 @@
 
 ## Описание типов
 
-[API Reference [EN]](https://negezor.github.io/vk-io/references/vk-io/index.html#createcollectiterator)
+[API Reference [EN]](https://negezor.github.io/vk-io/references/vk-io/index.html#createCollectIterator)
 
 ## Концепт
 

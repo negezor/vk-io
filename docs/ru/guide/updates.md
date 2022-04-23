@@ -3,10 +3,10 @@
 Базовый модуль получения событий из [User Long Poll](https://vk.com/dev/using_longpoll), [Bots Long Poll](https://vk.com/dev/bots_longpoll) и [Callback API](https://vk.com/dev/callback_api).
 
 ## Описание типов
-[API Reference [EN]](https://negezor.github.io/vk-io/references/vk-io/classes/updates.html)
+[API Reference [EN]](https://negezor.github.io/vk-io/references/vk-io/classes/Updates.html)
 
 ## Инициализация
-[Опции конструктора](https://negezor.github.io/vk-io/references/vk-io/interfaces/iupdatesoptions.html)
+[Опции конструктора](https://negezor.github.io/vk-io/references/vk-io/interfaces/IUpdatesOptions.html)
 
 ```ts
 import { API, Upload, Updates } from 'vk-io';
@@ -70,7 +70,7 @@ updates.on('message', (context, next) => {
 });
 ```
 
-Основным методом для работы с цепочкой является [.use()](https://negezor.github.io/vk-io/references/vk-io/classes/updates.html#use), именно через него проходят все установленные события, поэтому стоит внимательно относиться в действиях внутри него.
+Основным методом для работы с цепочкой является [.use()](https://negezor.github.io/vk-io/references/vk-io/classes/Updates.html#use), именно через него проходят все установленные события, поэтому стоит внимательно относиться в действиях внутри него.
 
 Пример неправильной работы:
 
@@ -87,7 +87,7 @@ updates.use((context, next) => {
 updates.on('like', () => {...});
 ```
 
-Исправить это достаточно просто, можно использовать сразу метод [.on()](https://negezor.github.io/vk-io/references/vk-io/classes/updates.html#on) или напрямую вызывать [context.is()](https://negezor.github.io/vk-io/references/vk-io/classes/context.html#is)
+Исправить это достаточно просто, можно использовать сразу метод [.on()](https://negezor.github.io/vk-io/references/vk-io/classes/Updates.html#on) или напрямую вызывать [context.is()](https://negezor.github.io/vk-io/references/vk-io/classes/Context.html#is)
 
 ```ts
 updates.use((context, next) => {
@@ -102,7 +102,7 @@ updates.use((context, next) => {
 updates.on('like', () => {...});
 ```
 
-С использованием [.on()](https://negezor.github.io/vk-io/references/vk-io/classes/updates.html#on)
+С использованием [.on()](https://negezor.github.io/vk-io/references/vk-io/classes/Updates.html#on)
 
 ```ts
 updates.on('message', (context, next) => {
@@ -193,4 +193,4 @@ updates.startPolling();
 
 ## Ручная передача событий 
 
-Если по каким-то причинам вам не подошли предыдущие автоматические способы получения событий, вы можете их передавать библиотеке вручную с помощью [updates.handleWebhookUpdate()](https://negezor.github.io/vk-io/references/vk-io/classes/updates.html#handlewebhookupdate) или [updates.handlePollingUpdate()](https://negezor.github.io/vk-io/references/vk-io/classes/updates.html#handlepollingupdate)
+Если по каким-то причинам вам не подошли предыдущие автоматические способы получения событий, вы можете их передавать библиотеке вручную с помощью [updates.handleWebhookUpdate()](https://negezor.github.io/vk-io/references/vk-io/classes/Updates.html#handleWebhookUpdate) или [updates.handlePollingUpdate()](https://negezor.github.io/vk-io/references/vk-io/classes/Updates.html#handlePollingUpdate)

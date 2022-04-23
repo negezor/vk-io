@@ -28,7 +28,7 @@ Slug
 
 Ресурсы делятся на два типа:
 
-[Целевые](https://negezor.github.io/vk-io/references/vk-io/interfaces/iresolvedtargetresource.html) — это единичные сущности.
+[Целевые](https://negezor.github.io/vk-io/references/vk-io/interfaces/IResolvedTargetResource.html) — это единичные сущности.
 ```ts
 interface IResolvedTargetResource {
 	id: number;
@@ -36,7 +36,7 @@ interface IResolvedTargetResource {
 }
 ```
 
-[С владельцем](https://negezor.github.io/vk-io/references/vk-io/interfaces/iresolvedownerresource.html) — это сущности с владельцем, в основном прикрепления.
+[С владельцем](https://negezor.github.io/vk-io/references/vk-io/interfaces/IResolvedOwnerResource.html) — это сущности с владельцем, в основном прикрепления.
 
 ```ts
 interface IResolvedOwnerResource {
@@ -47,7 +47,7 @@ interface IResolvedOwnerResource {
 ```
 
 ### Использование resolveResource
-[Опции функции](https://negezor.github.io/vk-io/references/vk-io/interfaces/iresolveresourceoptions.html)
+[Опции функции](https://negezor.github.io/vk-io/references/vk-io/interfaces/IResolveResourceOptions.html)
 
 ::: warning Внимание
 Вы вполне можете не передавать класс API, однако если будет встречено короткое имя ([slug](https://en.wikipedia.org/wiki/Clean_URL#Slug)) по типу `durov` — вы получите ошибку, так как он нужен для вызова метода [utils.resolveScreenName](https://vk.com/dev/utils.resolveScreenName).
