@@ -24,6 +24,7 @@ import { AttachmentType } from '../../utils/constants';
 
 const attachmentsTypes = {
 	[AttachmentType.ALBUM]: undefined,
+	[AttachmentType.STORY]: undefined,
 	[AttachmentType.PODCAST]: undefined,
 	[AttachmentType.TEXTLIVE]: undefined,
 
