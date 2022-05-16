@@ -1,4 +1,5 @@
 export * from './context';
+export * from './unsupported-event';
 
 export * from './vote';
 export * from './like';
