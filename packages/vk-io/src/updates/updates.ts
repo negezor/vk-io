@@ -568,6 +568,11 @@ export class Updates {
 		handler: AllowArray<Middleware<DonutWithdrawContext & T>>
 	): this;
 
+	public on<P, T = {}>(
+		events: AllowArray<UnsupportedEventContextType | UnsupportedEventContextSubType>,
+		handler: AllowArray<Middleware<UnsupportedEventContext<P> & T>>
+	): this;
+
 	public on<T = {}>(
 		rawEvents: AllowArray<ContextPossibleTypes>,
 		rawHandlers: AllowArray<Middleware<Context & T>>
