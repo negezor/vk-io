@@ -6,7 +6,7 @@ import { AbortController } from 'abort-controller';
 import { inspectable } from 'inspectable';
 
 import { URL } from 'url';
-import { createReadStream, promises } from 'fs';
+import { createReadStream, promises as fs } from 'fs';
 import { globalAgent } from 'https';
 import { Readable } from 'stream';
 
@@ -38,7 +38,7 @@ import {
 	AudioMessageAttachment
 } from '../structures';
 
-const { stat: fileStat } = promises;
+const { stat: fileStat } = fs;
 
 const {
 	MISSING_PARAMETERS,
