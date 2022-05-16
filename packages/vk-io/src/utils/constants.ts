@@ -27,7 +27,9 @@ export enum AttachmentType {
 	WALL_REPLY = 'wall_reply',
 	WALL = 'wall',
 	POLL = 'poll',
-	STORY = 'story'
+	PODCAST = 'podcast',
+	STORY = 'story',
+	TEXTLIVE = 'textlive'
 }
 
 export type AttachmentTypeString =
