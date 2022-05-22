@@ -19,7 +19,11 @@
    vk.api.users.get({...})
    ```
 3. **Reliable.** The library is written in **TypeScript** and covered by tests.
-4. ## **Powerful.** Supports following additional features:
+4. **Powerful.** Supports following additional features:
+   - **Proxy** support via Custom Agents;
+   - Automatic **request parallelization** for processing massive amounts of requests to API;
+   - User [Authorization](./packages/authorization/README.md) (even with login and password);
+   - [Ecosystem for bot development](#useful-modules-that-may-be-useful-to-you).
 
 ## 📦 Installation
 
