@@ -1,10 +1,11 @@
-# VK-IO Stateless Prompt 
+# VK-IO Stateless Prompt
+
 <a href="https://www.npmjs.com/package/@vk-io/stateless-prompt"><img src="https://img.shields.io/npm/v/@vk-io/stateless-prompt.svg?style=flat-square" alt="NPM version"></a>
 <a href="https://github.com/negezor/vk-io/actions/workflows/tests.yml"><img src="https://img.shields.io/github/workflow/status/negezor/vk-io/VK-IO CI?style=flat-square" alt="Build Status"></a>
 <a href="https://www.npmjs.com/package/@vk-io/stateless-prompt"><img src="https://img.shields.io/npm/dt/@vk-io/stateless-prompt.svg?style=flat-square" alt="NPM downloads"></a>
 <a href="https://www.codacy.com/app/negezor/vk-io"><img src="https://img.shields.io/codacy/grade/25ee36d46e6e498981a74f8b0653aacc.svg?style=flat-square" alt="Code quality"></a>
 
-VK-IO Stateless Prompt - Simple implementation of middleware-based stateless prompt
+> VK-IO Stateless Prompt - Simple implementation of middleware-based stateless prompt
 
 ## How it works
 
@@ -12,22 +13,26 @@ The basic concept is to send your message with a special text at the end. Then t
 
 ![Example](https://user-images.githubusercontent.com/9392723/134985949-e5cf1758-0469-428e-85ed-12229e36e58b.png)
 
-## Installation
-> **[Node.js](https://nodejs.org/) 12.20.0 or newer is required** 
+## 📦 Installation
 
-### Yarn
-Recommended
-```
-yarn add @vk-io/stateless-prompt
-```
+> **[Node.js](https://nodejs.org/) 12.20.0 or newer is required**
 
-### NPM
-```
-npm i @vk-io/stateless-prompt
-```
+- **Using `Yarn`** (recommended)
+  ```shell
+  yarn add @vk-io/stateless-prompt
+  ```
+- **Using `npm`**
+  ```shell
+  npm i @vk-io/stateless-prompt
+  ```
+- **Using `pnpm`**
+  ```shell
+  pnpm add @vk-io/stateless-prompt
+  ```
 
 ## Example usage
-```js
+
+```javascript
 import { VK } from 'vk-io';
 
 import { StatelessPromptManager } from '@vk-io/stateless-prompt';

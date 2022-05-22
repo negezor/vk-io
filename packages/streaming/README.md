@@ -4,24 +4,27 @@
 <a href="https://www.npmjs.com/package/@vk-io/streaming"><img src="https://img.shields.io/npm/dt/@vk-io/streaming.svg?style=flat-square" alt="NPM downloads"></a>
 <a href="https://www.codacy.com/app/negezor/vk-io"><img src="https://img.shields.io/codacy/grade/25ee36d46e6e498981a74f8b0653aacc.svg?style=flat-square" alt="Code quality"></a>
 
-VK-IO Streaming API - Separated module for receiving data with Streaming API ⚙️
+> VK-IO Streaming API - Separated module for receiving data with Streaming API ⚙️
 
-## Installation
-> **[Node.js](https://nodejs.org/) 12.20.0 or newer is required** 
+## 📦 Installation
 
-### Yarn
-Recommended
-```
-yarn add @vk-io/streaming
-```
+> **[Node.js](https://nodejs.org/) 12.20.0 or newer is required**
 
-### NPM
-```
-npm i @vk-io/streaming
-```
+- **Using `Yarn`** (recommended)
+  ```shell
+  yarn add @vk-io/streaming
+  ```
+- **Using `npm`**
+  ```shell
+  npm i @vk-io/streaming
+  ```
+- **Using `pnpm`**
+  ```shell
+  pnpm add @vk-io/streaming
+  ```
 
 ## Example usage
-```js
+```javascript
 import { VK } from 'vk-io';
 
 import { StreamingAPI } from '@vk-io/streaming';

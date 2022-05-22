@@ -1,27 +1,32 @@
 # VK-IO Authorization
+
 <a href="https://www.npmjs.com/package/@vk-io/authorization"><img src="https://img.shields.io/npm/v/@vk-io/authorization.svg?style=flat-square" alt="NPM version"></a>
 <a href="https://github.com/negezor/vk-io/actions/workflows/tests.yml"><img src="https://img.shields.io/github/workflow/status/negezor/vk-io/VK-IO CI?style=flat-square" alt="Build Status"></a>
 <a href="https://www.npmjs.com/package/@vk-io/authorization"><img src="https://img.shields.io/npm/dt/@vk-io/authorization.svg?style=flat-square" alt="NPM downloads"></a>
 <a href="https://www.codacy.com/app/negezor/vk-io"><img src="https://img.shields.io/codacy/grade/25ee36d46e6e498981a74f8b0653aacc.svg?style=flat-square" alt="Code quality"></a>
 
-VK-IO Authorization API - Separated module for authorization by login & password, and etc... ⚙️
+> VK-IO Authorization API - Separated module for authorization by login & password, and etc... ⚙️
 
-## Installation
-> **[Node.js](https://nodejs.org/) 12.20.0 or newer is required** 
+## 📦 Installation
 
-### Yarn
-Recommended
-```
-yarn add @vk-io/authorization
-```
+> **[Node.js](https://nodejs.org/) 12.20.0 or newer is required**
 
-### NPM
-```
-npm i @vk-io/authorization
-```
+- **Using `Yarn`** (recommended)
+  ```shell
+  yarn add @vk-io/authorization
+  ```
+- **Using `npm`**
+  ```shell
+  npm i @vk-io/authorization
+  ```
+- **Using `pnpm`**
+  ```shell
+  pnpm add @vk-io/authorization
+  ```
 
 ## Example usage
-```js
+
+```javascript
 import { CallbackService } from 'vk-io';
 import { DirectAuthorization, officialAppCredentials } from '@vk-io/authorization';
 
@@ -56,6 +61,6 @@ async function run() {
 run().catch(console.error);
 ```
 
-## Additional info 
+## Additional info
 
 The module also supports `ImplicitFlowUser`, `ImplicitFlowGroup` and `AccountVerification`
