@@ -16,7 +16,7 @@
 1. **Complete.** `100%` coverage of the VK API
 2. **Simple.** Predictable abstraction of VK API. 1 to 1 mapping of API method
    ```javascript
-   vk.api.users.get({...})
+   vk.api.users.get({ ... });
    ```
 3. **Reliable.** The library is written in **TypeScript** and covered by tests.
 4. **Powerful.** Supports following additional features:
