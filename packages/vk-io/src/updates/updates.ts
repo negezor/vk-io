@@ -8,6 +8,7 @@ import {
 	Composer,
 
 	Context,
+	UnsupportedEventContext,
 	VoteContext,
 	LikeContext,
 	TypingContext,
@@ -33,6 +34,7 @@ import {
 	DonutSubscriptionPriceContext,
 	DonutWithdrawContext,
 
+	UnsupportedEventContextType,
 	CommentContextType,
 	DialogFlagsContextType,
 	DialogNotificationSettingsContextType,
@@ -58,6 +60,7 @@ import {
 	DonutSubscriptionPriceContextType,
 	DonutWithdrawContextType,
 
+	UnsupportedEventContextSubType,
 	CommentContextSubType,
 	DialogFlagsContextSubType,
 	DialogNotificationSettingsContextSubType,
@@ -262,7 +265,8 @@ const webhookContexts = makeContexts(webhookContextsEvents);
 const pollingContexts = makeContexts(pollingContextsEvents);
 
 export type ContextTypes =
-CommentContextType
+UnsupportedEventContextType
+| CommentContextType
 | DialogFlagsContextType
 | DialogNotificationSettingsContextType
 | GroupMemberContextType
@@ -287,7 +291,8 @@ CommentContextType
 | DonutWithdrawContextType;
 
 export type ContextSubTypes =
-CommentContextSubType
+UnsupportedEventContextSubType
+| CommentContextSubType
 | DialogFlagsContextSubType
 | DialogNotificationSettingsContextSubType
 | GroupMemberContextSubType
@@ -563,6 +568,11 @@ export class Updates {
 		handler: AllowArray<Middleware<DonutWithdrawContext & T>>
 	): this;
 
+	public on<P, T = {}>(
+		events: AllowArray<UnsupportedEventContextType | UnsupportedEventContextSubType>,
+		handler: AllowArray<Middleware<UnsupportedEventContext<P> & T>>
+	): this;
+
 	public on<T = {}>(
 		rawEvents: AllowArray<ContextPossibleTypes>,
 		rawHandlers: AllowArray<Middleware<Context & T>>
@@ -629,13 +639,7 @@ export class Updates {
 
 		const { type, object: payload, group_id: groupId } = update;
 
-		const UpdateContext = webhookContexts[type];
-
-		if (!UpdateContext) {
-			debug(`Unsupported webhook context type ${type}`);
-
-			return Promise.resolve();
-		}
+		const UpdateContext = webhookContexts[type] || UnsupportedEventContext;
 
 		return this.dispatchMiddleware(new UpdateContext({
 			api: this.api,
