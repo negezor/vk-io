@@ -109,6 +109,11 @@ export interface IVKPayButton extends IButton {
 		type: 'vkpay';
 
 		/**
+		 * Payload, preferably use object
+		 */
+		payload: ButtonPayload;
+
+		/**
 		 * line containing VK Pay payment parameters
 		 * and application ID in the aid parameter, separated by &.
 		 * ```
@@ -308,6 +313,8 @@ export type KeyboardVKPayHash =
 	};
 
 export interface IKeyboardVKPayButtonOptions {
+	payload: ButtonPayload;
+
 	/**
 	 * line containing VK Pay payment parameters
 	 * and application ID in the aid parameter, separated by &.

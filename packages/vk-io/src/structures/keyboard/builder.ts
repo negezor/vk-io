@@ -157,13 +157,19 @@ export class KeyboardBuilder {
 	 * })
 	 * ```
 	 */
-	public payButton({ hash: rawHash }: IKeyboardVKPayButtonOptions): this {
+	public payButton({
+		payload: rawPayload,
+		hash: rawHash
+	}: IKeyboardVKPayButtonOptions): this {
+		const payload = serializePayload(rawPayload);
+
 		const hash = typeof rawHash === 'object'
 			? String(new URLSearchParams(Object.entries(rawHash)))
 			: rawHash;
 
 		return this.addWideButton({
 			action: {
+				payload,
 				hash,
 
 				type: 'vkpay'
