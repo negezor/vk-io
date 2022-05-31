@@ -1,27 +1,32 @@
 # VK-IO Scenes
+
 <a href="https://www.npmjs.com/package/@vk-io/scenes"><img src="https://img.shields.io/npm/v/@vk-io/scenes.svg?style=flat-square" alt="NPM version"></a>
 <a href="https://github.com/negezor/vk-io/actions/workflows/tests.yml"><img src="https://img.shields.io/github/workflow/status/negezor/vk-io/VK-IO CI?style=flat-square" alt="Build Status"></a>
 <a href="https://www.npmjs.com/package/@vk-io/scenes"><img src="https://img.shields.io/npm/dt/@vk-io/scenes.svg?style=flat-square" alt="NPM downloads"></a>
 <a href="https://www.codacy.com/app/negezor/vk-io"><img src="https://img.shields.io/codacy/grade/25ee36d46e6e498981a74f8b0653aacc.svg?style=flat-square" alt="Code quality"></a>
 
-VK-IO Scenes - Simple implementation of middleware-based scene management 🎬
+> VK-IO Scenes - Simple implementation of middleware-based scene management 🎬
 
-## Installation
-> **[Node.js](https://nodejs.org/) 12.20.0 or newer is required** 
+## 📦 Installation
 
-### Yarn
-Recommended
-```
-yarn add @vk-io/scenes
-```
+> **[Node.js](https://nodejs.org/) 12.20.0 or newer is required**
 
-### NPM
-```
-npm i @vk-io/scenes
-```
+- **Using `Yarn`** (recommended)
+  ```shell
+  yarn add @vk-io/scenes
+  ```
+- **Using `npm`**
+  ```shell
+  npm i @vk-io/scenes
+  ```
+- **Using `pnpm`**
+  ```shell
+  pnpm add @vk-io/scenes
+  ```
 
 ## Example usage
-```js
+
+```javascript
 import { VK } from 'vk-io';
 
 // Session implementation can be any
