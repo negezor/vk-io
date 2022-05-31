@@ -157,11 +157,11 @@ class MessageContext<S = ContextDefaultState>
 
 	protected $filled: boolean;
 
-	protected [kForwards]: MessageForwardsCollection;
+	protected [kForwards]!: MessageForwardsCollection;
 
 	protected [kReplyMessage]: MessageContext | undefined;
 
-	protected [kAttachments]: (Attachment | ExternalAttachment)[];
+	protected [kAttachments]!: (Attachment | ExternalAttachment)[];
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	protected [kMessagePayload]: any | undefined;

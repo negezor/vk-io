@@ -21,7 +21,7 @@ const getForwards = (rootForwards: MessageContext[]): MessageContext[] => {
 const kFlatten = Symbol('flatten');
 
 class MessageForwardsCollection extends Array<MessageContext> {
-	protected [kFlatten]: MessageContext[];
+	protected [kFlatten]?: MessageContext[];
 
 	/**
 	 * Returns a flat copy of forwards
@@ -31,7 +31,7 @@ class MessageForwardsCollection extends Array<MessageContext> {
 			this[kFlatten] = getForwards(this);
 		}
 
-		return this[kFlatten];
+		return this[kFlatten]!;
 	}
 }
 
