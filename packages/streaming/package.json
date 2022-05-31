@@ -41,8 +41,8 @@
 	"dependencies": {
 		"debug": "^4.3.4",
 		"inspectable": "^1.2.1",
-		"node-fetch": "^3.2.3",
-		"ws": "^8.5.0"
+		"node-fetch": "^3.2.4",
+		"ws": "^8.7.0"
 	},
 	"devDependencies": {
 		"@types/debug": "^4.1.7",
