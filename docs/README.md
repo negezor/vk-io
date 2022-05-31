@@ -12,5 +12,5 @@ features:
     details: All basic things are available in convenience abstractions
   - title: Typings
     details: Trust your code more with typing
-footer: Released under the MIT License. Copyright © 2016-2020 Negezor
+footer: Released under the MIT License. Copyright © 2016-2022 Negezor
 ---

@@ -17,3 +17,5 @@ app.js
 app.mjs
 
 docs/.vuepress/dist
+docs/.vuepress/.temp
+docs/.vuepress/.cache

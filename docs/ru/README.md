@@ -12,5 +12,5 @@ features:
     details: Все базовые вещи доступны в удобных абстракциях
   - title: Типизация
     details: Больше доверяйте своему коду благодаря типизации
-footer: Released under the MIT License. Copyright © 2016-2020 Negezor
+footer: Released under the MIT License. Copyright © 2016-2022 Negezor
 ---
