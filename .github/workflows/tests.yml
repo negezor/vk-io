@@ -7,7 +7,13 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [12.x, 14.x, 16.x, 18.x]
+        node-version:
+          # Segmentation fault (core dumped) https://github.com/nodejs/node/issues/35889
+          # - 12.x
+          # Segmentation fault (core dumped) https://github.com/nodejs/node/issues/35889
+          # - 14.x
+          - 16.x
+          - 18.x
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
