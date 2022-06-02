@@ -523,9 +523,9 @@ export class Updates {
 		handler: AllowArray<Middleware<FriendActivityContext & T>>
 	): this;
 
-	public on<T = {}>(
+	public on<P extends Record<string, any>, T = {}>(
 		events: AllowArray<VKAppPayloadContextType | VKAppPayloadContextSubType>,
-		handler: AllowArray<Middleware<VKAppPayloadContext & T>>
+		handler: AllowArray<Middleware<VKAppPayloadContext<P> & T>>
 	): this;
 
 	public on<T = {}>(
@@ -568,7 +568,7 @@ export class Updates {
 		handler: AllowArray<Middleware<DonutWithdrawContext & T>>
 	): this;
 
-	public on<P, T = {}>(
+	public on<P extends Record<string, any>, T = {}>(
 		events: AllowArray<UnsupportedEventContextType | UnsupportedEventContextSubType>,
 		handler: AllowArray<Middleware<UnsupportedEventContext<P> & T>>
 	): this;
