@@ -7,24 +7,24 @@ export type VKAppPayloadContextType = 'vk_app_event';
 
 export type VKAppPayloadContextSubType = 'app_payload';
 
-export interface IVKAppPayloadPayload<P extends Record<string, any>> {
+export interface IVKAppPayloadPayload {
 	user_id: number;
 	app_id: number;
-	payload: P;
+	payload: string;
 	group_id: number;
 }
 
-export type VKAppPayloadContextOptions<P, S> =
-	ContextFactoryOptions<IVKAppPayloadPayload<P>, S>;
+export type VKAppPayloadContextOptions<S> =
+	ContextFactoryOptions<IVKAppPayloadPayload, S>;
 
 export class VKAppPayloadContext<P extends Record<string, any>, S = ContextDefaultState>
 	extends Context<
-	IVKAppPayloadPayload<P>,
+	IVKAppPayloadPayload,
 	S,
 	VKAppPayloadContextType,
 	VKAppPayloadContextSubType
 	> {
-	public constructor(options: VKAppPayloadContextOptions<P, S>) {
+	public constructor(options: VKAppPayloadContextOptions<S>) {
 		super({
 			...options,
 
@@ -60,7 +60,7 @@ export class VKAppPayloadContext<P extends Record<string, any>, S = ContextDefau
 	 * Returns the transferred useful data
 	 */
 	public get eventPayload(): P {
-		return this.payload.payload;
+		return JSON.parse(this.payload.payload);
 	}
 
 	/**
