@@ -6,6 +6,7 @@ import { Agent, globalAgent } from 'https';
 
 import {
 	Composer,
+	ContextDefaultState,
 
 	Context,
 	UnsupportedEventContext,
@@ -523,9 +524,9 @@ export class Updates {
 		handler: AllowArray<Middleware<FriendActivityContext & T>>
 	): this;
 
-	public on<P extends Record<string, any>, T = {}>(
+	public on<T = {}, P extends Record<string, any> = {}>(
 		events: AllowArray<VKAppPayloadContextType | VKAppPayloadContextSubType>,
-		handler: AllowArray<Middleware<VKAppPayloadContext<P> & T>>
+		handler: AllowArray<Middleware<VKAppPayloadContext<ContextDefaultState, P> & T>>
 	): this;
 
 	public on<T = {}>(
@@ -568,9 +569,9 @@ export class Updates {
 		handler: AllowArray<Middleware<DonutWithdrawContext & T>>
 	): this;
 
-	public on<P extends Record<string, any>, T = {}>(
+	public on<T = {}, P extends Record<string, any> = {}>(
 		events: AllowArray<UnsupportedEventContextType | UnsupportedEventContextSubType>,
-		handler: AllowArray<Middleware<UnsupportedEventContext<P> & T>>
+		handler: AllowArray<Middleware<UnsupportedEventContext<ContextDefaultState, P> & T>>
 	): this;
 
 	public on<T = {}>(

@@ -17,7 +17,8 @@ export interface IVKAppPayloadPayload {
 export type VKAppPayloadContextOptions<S> =
 	ContextFactoryOptions<IVKAppPayloadPayload, S>;
 
-export class VKAppPayloadContext<P extends Record<string, any>, S = ContextDefaultState>
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export class VKAppPayloadContext<S = ContextDefaultState, P extends Record<string, any> = {}>
 	extends Context<
 	IVKAppPayloadPayload,
 	S,
