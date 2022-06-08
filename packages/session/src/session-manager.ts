@@ -23,7 +23,7 @@ export class SessionManager<T = {}> {
 		this.contextKey = options.contextKey || 'session';
 
 		this.getStorageKey = options.getStorageKey || ((context): string => (
-			String(context.senderId)
+			String(context.senderId || context.userId)
 		));
 	}
 
