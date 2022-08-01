@@ -32,7 +32,7 @@ import { DirectAuthorization, officialAppCredentials } from '@vk-io/authorizatio
 const callbackService = new CallbackService();
 
 const direct = new DirectAuthorization({
-	callbackService,
+	callbackService: callbackService,
 
 	scope: 'all',
 
