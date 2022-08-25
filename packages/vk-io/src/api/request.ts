@@ -93,13 +93,16 @@ export class APIRequest {
 				signal: controller.signal,
 				headers: {
 					...options.apiHeaders,
-
 					connection: 'keep-alive'
 				},
-				body: new URLSearchParams(
-					Object.entries(params)
-						.filter(({ 1: value }) => value !== undefined)
-				)
+				body: new URLSearchParams(Object.entries(params)
+					.filter(i => i[1] !== undefined)
+					.map(i => {
+						if (typeof i[1] === 'object') {
+							i[1] = JSON.stringify(i[1])
+						}
+						return i
+					}))
 			});
 
 			const result = await response.json();
