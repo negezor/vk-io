@@ -23,7 +23,7 @@ const onlyNumberRe = /^-?\d+$/;
 const systemMentionRe = /\[([^|]+)\|[^\]]+\]/;
 
 const isHttpsRe = /^https:\/\//i;
-const isVKUrlRe = /^(?:https:\/\/)?(?:m\.)?vk.com\//i;
+const isVKUrlRe = /^(?:https?:\/\/)?(?:m\.)?vk\.(?:com|me|ru)\//i;
 
 const parseTargetResourceRe = /^(id|club|public|albums|tag|app)(-?\d+)$/i;
 const parseOwnerResourceRe = /^(album|topic|page|photo|video|audio|doc|audio_message|graffiti|wall|market|poll|gift)(-?\d+)_(\d+)/i;
