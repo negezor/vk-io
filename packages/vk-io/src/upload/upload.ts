@@ -444,7 +444,7 @@ export class Upload {
 
 		const source = normalizeSource(params.source);
 
-		const formData = await this.buildPayload({
+		const { formData, knownLength } = await this.buildPayload({
 			maxFiles: 1,
 			field: 'video_file',
 			attachmentType: 'video',
@@ -454,7 +454,7 @@ export class Upload {
 		const video = await this.upload(save.upload_url!, {
 			formData,
 			timeout: source.timeout!,
-			forceBuffer: true
+			forceBuffer: !knownLength
 		});
 
 		return new VideoAttachment({
@@ -893,7 +893,7 @@ export class Upload {
 			});
 		}
 
-		const [{ upload_url: url }, formData] = await Promise.all([
+		const [{ upload_url: url }, { formData, knownLength }] = await Promise.all([
 			getServer(pickExistingProperties(params, serverParams)),
 			this.buildPayload({
 				field,
@@ -905,7 +905,8 @@ export class Upload {
 
 		const uploaded = await this.upload(url, {
 			formData,
-			timeout: source.timeout!
+			timeout: source.timeout!,
+			forceBuffer: !knownLength
 		});
 
 		if (typeof uploaded !== 'object') {
@@ -936,10 +937,12 @@ export class Upload {
 		values: IUploadSourceMedia[];
 		maxFiles: number;
 		attachmentType?: string;
-	}): Promise<FormData> {
+	}): Promise<{ formData: FormData; knownLength: boolean; }> {
 		const formData = new FormData();
 
 		const isMultipart = maxFiles > 1;
+
+		let knownLength = true;
 
 		const tasks = values.map(async (media, i) => {
 			let { value, filename, contentLength = 0 } = media;
@@ -987,16 +990,19 @@ export class Upload {
 					})
 					// Workground for NodeJS streams: https://github.com/octet-stream/form-data/issues/32
 					: {
-						name: filename,
-						size: contentLength,
+						size: Number(contentLength),
 						type: fileContentType,
 						stream: () => (
 							value
 						),
-						[Symbol.toStringTag]: 'File'
+						[Symbol.toStringTag]: 'Blob'
 					};
 
-				formData.append(name, file);
+				if (!contentLength) {
+					knownLength = false;
+				}
+
+				formData.append(name, file, filename);
 
 				return;
 			}
@@ -1009,16 +1015,19 @@ export class Upload {
 
 		await Promise.all(tasks);
 
-		return formData;
+		return {
+			formData,
+			knownLength
+		};
 	}
 
 	/**
 	 * Upload form data
 	 */
-	async upload(url: URL | string, { formData, timeout, forceBuffer = false }: {
+	async upload(url: URL | string, { formData, timeout, forceBuffer }: {
 		formData: FormData;
 		timeout: number;
-		forceBuffer?: boolean;
+		forceBuffer: boolean;
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	}): Promise<any> {
 		const { agent, uploadTimeout } = this.options;
@@ -1036,8 +1045,9 @@ export class Upload {
 			Connection: 'keep-alive',
 
 			// eslint-disable-next-line @typescript-eslint/naming-convention
-			'Content-Type': encoder.headers['Content-Type']
+			...encoder.headers
 		};
+
 		const body = forceBuffer
 			? await streamToBuffer(rawBody)
 			: rawBody;
