@@ -42,7 +42,7 @@
 	"devDependencies": {
 		"@types/debug": "^4.1.7",
 		"@types/express": "^4.17.13",
-		"@types/koa": "^2.13.4"
+		"@types/koa": "^2.13.5"
 	},
 	"dependencies": {
 		"abort-controller": "^3.0.0",
