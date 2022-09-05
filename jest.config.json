@@ -1,12 +1,15 @@
 {
 	"name": "vk-io-monorepo",
 	"verbose": true,
-	"preset": "ts-jest/presets/default-esm",
 	"testEnvironment": "node",
 	"testMatch": ["<rootDir>/packages/*/test/*.test.ts"],
-	"globals": {
-		"ts-jest": {
+	"extensionsToTreatAsEsm": [".ts"],
+	"moduleNameMapper": {
+		"^(\\.{1,2}/.*)\\.js$": "$1"
+	},
+	"transform": {
+		".+\\.(ts|js)$": ["ts-jest", {
 			"useESM": true
-		}
+		}]
 	}
 }
