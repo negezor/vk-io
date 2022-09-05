@@ -20,8 +20,8 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node-version }}
-      - run: yarn install --ignore-scripts --frozen-lockfile
-      - run: yarn run build
+      - run: npm ci
+      - run: npm run build
       - env:
           TOKEN: ${{ secrets.VK_TEST_TOKEN }}
-        run: yarn test
+        run: npm run test

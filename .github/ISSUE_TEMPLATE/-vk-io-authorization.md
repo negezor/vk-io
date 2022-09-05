@@ -29,4 +29,4 @@ assignees: ''
 | `@vk-io/authorization`             | `X.Y.Z` |
 | `node`                             | `X.Y.Z` |
 | `TypeScript`                       | `X.Y.Z` |
-| `yarn` or `npm`                    | `X.Y.Z` |
+| `npm` or `yarn`                    | `X.Y.Z` |

@@ -27,15 +27,15 @@
 		"vuepress": "^2.0.0-beta.51"
 	},
 	"scripts": {
-		"prepare": "yarn run rollup:build && yarn run test",
-		"build": "yarn run rollup:build",
-		"watch": "yarn run rollup:watch",
+		"prepare": "npm run rollup:build && npm run test",
+		"build": "npm run rollup:build",
+		"watch": "npm run rollup:watch",
 		"clean": "rm -rf ./packages/*/lib",
 		"rollup:build": "NODE_ENV=production rollup -c rollup.config.js",
-		"rollup:watch": "yarn run rollup:build -w",
+		"rollup:watch": "npm run rollup:build -- -w",
 		"docs:watch": "vuepress dev docs",
 		"docs:build": "sh scripts/deploy-docs.sh",
-		"test": "yarn run test:jest && yarn run lint:eslint",
+		"test": "npm run test:jest && npm run lint:eslint",
 		"test:jest": "NODE_OPTIONS=--experimental-vm-modules jest --config jest.config.json --no-cache",
 		"lint:eslint": "eslint --ext .ts --ignore-path .gitignore packages/*/src/**/*.ts"
 	}

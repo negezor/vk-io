@@ -10,13 +10,13 @@
 
 > **[Node.js](https://nodejs.org/) 12.20.0 or newer is required**
 
-- **Using `Yarn`** (recommended)
-  ```shell
-  yarn add @vk-io/hear
-  ```
-- **Using `npm`**
+- **Using `npm`** (recommended)
   ```shell
   npm i @vk-io/hear
+  ```
+- **Using `Yarn`**
+  ```shell
+  yarn add @vk-io/hear
   ```
 - **Using `pnpm`**
   ```shell

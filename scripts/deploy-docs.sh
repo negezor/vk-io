@@ -2,14 +2,14 @@
 
 set -e
 
-yarn vuepress build docs
+npx vuepress build docs
 
 for modulePath in ./packages/*; do
 	module=`(basename $modulePath)`;
 
 	echo $module
 
-	yarn typedoc --out docs/.vuepress/dist/references/$module --readme none packages/$module/src/index.ts
+	npx typedoc --out docs/.vuepress/dist/references/$module --readme none packages/$module/src/index.ts
 done
 
 cd docs/.vuepress/dist

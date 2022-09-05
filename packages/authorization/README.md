@@ -10,13 +10,13 @@
 
 > **[Node.js](https://nodejs.org/) 12.20.0 or newer is required**
 
-- **Using `Yarn`** (recommended)
-  ```shell
-  yarn add @vk-io/authorization
-  ```
-- **Using `npm`**
+- **Using `npm`** (recommended)
   ```shell
   npm i @vk-io/authorization
+  ```
+- **Using `Yarn`**
+  ```shell
+  yarn add @vk-io/authorization
   ```
 - **Using `pnpm`**
   ```shell

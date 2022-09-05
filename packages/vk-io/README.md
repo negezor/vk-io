@@ -28,13 +28,13 @@
 
 > **[Node.js](https://nodejs.org/) 12.20.0 or newer is required**
 
-- **Using `Yarn`** (recommended)
-  ```shell
-  yarn add vk-io
-  ```
-- **Using `npm`**
+- **Using `npm`** (recommended)
   ```shell
   npm i vk-io
+  ```
+- **Using `Yarn`**
+  ```shell
+  yarn add vk-io
   ```
 - **Using `pnpm`**
   ```shell
