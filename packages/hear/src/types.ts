@@ -12,7 +12,8 @@ Record<string, AllowArray<HearCondition<T, any>>>
 	[P in keyof T]?: AllowArray<HearCondition<T, T[P]>>;
 };
 
-export type HearConditions<T> = (
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type HearConditions<T extends Record<string, any>> = (
 	AllowArray<HearCondition<T, string | undefined>>
 	| AllowArray<HearObjectCondition<T>>
 );
