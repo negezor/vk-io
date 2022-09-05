@@ -157,9 +157,10 @@ class MessageContext<S = ContextDefaultState>
 
 	protected $filled: boolean;
 
-	protected [kForwards]!: MessageForwardsCollection;
+	protected [kForwards]!: MessageForwardsCollection<S>;
 
-	protected [kReplyMessage]: MessageContext | undefined;
+	// eslint-disable-next-line no-use-before-define
+	protected [kReplyMessage]: MessageContext<S> | undefined;
 
 	protected [kAttachments]!: (Attachment | ExternalAttachment)[];
 
@@ -502,14 +503,14 @@ class MessageContext<S = ContextDefaultState>
 	/**
 	 * Returns the forwards
 	 */
-	public get forwards(): MessageForwardsCollection {
+	public get forwards(): MessageForwardsCollection<S> {
 		return this[kForwards];
 	}
 
 	/**
 	 * Returns the reply message
 	 */
-	public get replyMessage(): MessageContext | undefined {
+	public get replyMessage(): MessageContext<S> | undefined {
 		return this[kReplyMessage];
 	}
 
@@ -559,7 +560,7 @@ class MessageContext<S = ContextDefaultState>
 	async send(
 		text: string | IMessageContextSendOptions,
 		params?: IMessageContextSendOptions
-	): Promise<MessageContext> {
+	): Promise<MessageContext<S>> {
 		const randomId = getRandomId();
 
 		const options = {
@@ -599,7 +600,7 @@ class MessageContext<S = ContextDefaultState>
 				conversation_message_id: 0
 			};
 
-		const messageContext = new MessageContext({
+		const messageContext = new MessageContext<S>({
 			api: this.api,
 			upload: this.upload,
 			source: UpdateSource.WEBHOOK,
@@ -640,7 +641,7 @@ class MessageContext<S = ContextDefaultState>
 	reply(
 		text: string | IMessageContextSendOptions,
 		params?: IMessageContextSendOptions
-	): Promise<MessageContext> {
+	): Promise<MessageContext<S>> {
 		const forwardOptions = this.conversationMessageId
 			? { conversation_message_ids: this.conversationMessageId }
 			: { message_ids: this.id };
@@ -671,7 +672,7 @@ class MessageContext<S = ContextDefaultState>
 	async sendPhotos(
 		rawSources: AllowArray<IUploadSourceMedia>,
 		params: IMessageContextSendOptions = {}
-	): Promise<MessageContext> {
+	): Promise<MessageContext<S>> {
 		const sources = !Array.isArray(rawSources)
 			? [rawSources]
 			: rawSources;
@@ -697,7 +698,7 @@ class MessageContext<S = ContextDefaultState>
 	async sendDocuments(
 		rawSources: AllowArray<IUploadSourceMedia>,
 		params: IMessageContextSendOptions = {}
-	): Promise<MessageContext> {
+	): Promise<MessageContext<S>> {
 		const sources = !Array.isArray(rawSources)
 			? [rawSources]
 			: rawSources;
@@ -723,7 +724,7 @@ class MessageContext<S = ContextDefaultState>
 	async sendAudioMessage(
 		source: IUploadSourceMedia,
 		params: IMessageContextSendOptions = {}
-	): Promise<MessageContext> {
+	): Promise<MessageContext<S>> {
 		const attachment = await this.upload.audioMessage({
 			source,
 
@@ -833,7 +834,7 @@ class MessageContext<S = ContextDefaultState>
 		}
 
 		this[kForwards] = new MessageForwardsCollection(...(message.fwd_messages || []).map(forward => (
-			new MessageContext({
+			new MessageContext<S>({
 				api: this.api,
 				upload: this.upload,
 				source: UpdateSource.WEBHOOK,

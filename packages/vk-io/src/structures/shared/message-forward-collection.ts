@@ -1,17 +1,18 @@
 /* eslint-disable max-classes-per-file */
 import { MessageContext } from '../contexts/message';
+import { ContextDefaultState } from '../contexts/context';
 import { Attachment, ExternalAttachment } from '../attachments';
 import { AttachmentTypeString } from '../../utils/constants';
 import { Attachmentable } from './attachmentable';
 import { applyMixins } from '../../utils/helpers';
 
-const getForwards = (rootForwards: MessageContext[]): MessageContext[] => {
-	const forwards: MessageContext[] = [];
+const getForwards = <S = ContextDefaultState>(rootForwards: MessageContext<S>[]): MessageContext<S>[] => {
+	const forwards: MessageContext<S>[] = [];
 
 	for (const forward of rootForwards) {
 		forwards.push(
 			forward,
-			...getForwards(forward.forwards)
+			...getForwards<S>(forward.forwards)
 		);
 	}
 
@@ -20,13 +21,13 @@ const getForwards = (rootForwards: MessageContext[]): MessageContext[] => {
 
 const kFlatten = Symbol('flatten');
 
-class MessageForwardsCollection extends Array<MessageContext> {
-	protected [kFlatten]?: MessageContext[];
+class MessageForwardsCollection<S = ContextDefaultState> extends Array<MessageContext<S>> {
+	protected [kFlatten]?: MessageContext<S>[];
 
 	/**
 	 * Returns a flat copy of forwards
 	 */
-	public get flatten(): MessageContext[] {
+	public get flatten(): MessageContext<S>[] {
 		if (!this[kFlatten]) {
 			this[kFlatten] = getForwards(this);
 		}
