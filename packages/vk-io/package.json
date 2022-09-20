@@ -41,7 +41,7 @@
 	},
 	"devDependencies": {
 		"@types/debug": "^4.1.7",
-		"@types/express": "^4.17.13",
+		"@types/express": "^4.17.14",
 		"@types/koa": "^2.13.5"
 	},
 	"dependencies": {
@@ -49,8 +49,8 @@
 		"debug": "^4.3.4",
 		"form-data-encoder": "^1.7.2",
 		"formdata-node": "^4.4.1",
-		"inspectable": "^1.2.1",
-		"middleware-io": "^2.8.0",
+		"inspectable": "^1.2.2",
+		"middleware-io": "^2.8.1",
 		"node-fetch": "^3.2.10"
 	}
 }
