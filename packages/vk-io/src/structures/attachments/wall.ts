@@ -78,7 +78,8 @@ export interface IWallAttachmentPayload {
 			id: number;
 			name: string;
 		}[];
-	}
+	};
+	postponed_id?: number;
 }
 
 export type WallAttachmentOptions =
@@ -346,6 +347,13 @@ class WallAttachment extends Attachment<IWallAttachmentPayload, AttachmentType.W
 	}
 
 	/**
+	 * Returns the id of the pending entry. This field is returned when the entry was on the timer.
+	 */
+	public get postponedId(): number | undefined {
+		return this.payload.postponed_id;
+	}
+
+	/**
 	 * Returns the date when this post was created
 	 */
 	public get createdAt(): number | undefined {
@@ -462,6 +470,7 @@ class WallAttachment extends Attachment<IWallAttachmentPayload, AttachmentType.W
 			'replyOwnerId',
 			'replyPostId',
 			'signerId',
+			'postponedId',
 			'createdAt',
 			'postType',
 			'text',
