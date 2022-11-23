@@ -136,6 +136,7 @@ export class DirectAuthorization {
 
 		return this.fetchCookie(url, {
 			...options,
+			headers: this.options.headers,
 
 			agent,
 			signal: controller.signal,
@@ -186,8 +187,7 @@ export class DirectAuthorization {
 		const url = new URL(`https://oauth.vk.com/token?${params}`);
 
 		return this.fetch(url, {
-			method: 'GET',
-			headers: this.options.headers
+			method: 'GET'
 		});
 	}
 
@@ -449,8 +449,7 @@ export class DirectAuthorization {
 
 		const rewResponse = await this.fetch(url, {
 			method: 'POST',
-			body: new URLSearchParams(fields),
-			headers: this.options.headers
+			body: new URLSearchParams(fields)
 		});
 
 		if (rewResponse.url.includes(ACTION_SECURITY_CODE)) {

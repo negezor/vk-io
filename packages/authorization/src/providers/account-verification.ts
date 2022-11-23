@@ -125,6 +125,7 @@ export class AccountVerification {
 
 		return this.fetchCookie(url, {
 			...options,
+			headers: this.options.headers,
 
 			agent,
 			signal: controller.signal,
@@ -137,8 +138,7 @@ export class AccountVerification {
 	 */
 	public async run(redirectUri: RequestInfo): Promise<{ userId: number; token: string }> {
 		let response = await this.fetch(redirectUri, {
-			method: 'GET',
-			headers: this.options.headers
+			method: 'GET'
 		});
 
 		const isProcessed = true;
@@ -239,8 +239,7 @@ export class AccountVerification {
 
 			const newResponse = await this.fetch(url, {
 				method: 'POST',
-				body: new URLSearchParams(fields),
-				headers: this.options.headers
+				body: new URLSearchParams(fields)
 			});
 
 			return newResponse;
@@ -290,8 +289,7 @@ export class AccountVerification {
 
 		const rewResponse = await this.fetch(url, {
 			method: 'POST',
-			body: new URLSearchParams(fields),
-			headers: this.options.headers
+			body: new URLSearchParams(fields)
 		});
 
 		if (rewResponse.url.includes(ACTION_SECURITY_CODE)) {
@@ -312,8 +310,7 @@ export class AccountVerification {
 		const url = getFullURL(href, response);
 
 		return this.fetch(url, {
-			method: 'GET',
-			headers: this.options.headers
+			method: 'GET'
 		});
 	}
 
@@ -359,8 +356,7 @@ export class AccountVerification {
 
 		const pageResponse = await this.fetch(url, {
 			method: 'POST',
-			body: new URLSearchParams(fields),
-			headers: this.options.headers
+			body: new URLSearchParams(fields)
 		});
 
 		return pageResponse;
