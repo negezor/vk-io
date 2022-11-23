@@ -64,6 +64,7 @@ interface IAccountVerificationOptions {
 	phone?: string | number;
 
 	timeout?: number;
+	headers?: Record<string, string>;
 }
 
 export class AccountVerification {
@@ -87,6 +88,10 @@ export class AccountVerification {
 	public constructor(options: IAccountVerificationOptions) {
 		this.options = {
 			timeout: 10_000,
+			headers: options.headers || {
+				// eslint-disable-next-line @typescript-eslint/naming-convention
+				'User-Agent': DESKTOP_USER_AGENT
+			},
 
 			...options
 		};
@@ -114,8 +119,6 @@ export class AccountVerification {
 	protected fetch(url: RequestInfo, options: RequestInit = {}): Promise<Response> {
 		const { agent, timeout } = this.options;
 
-		const { headers = {} } = options;
-
 		const controller = new AbortController();
 
 		const interval = setTimeout(() => controller.abort(), timeout);
@@ -125,14 +128,7 @@ export class AccountVerification {
 
 			agent,
 			signal: controller.signal,
-			compress: false,
-
-			headers: {
-				...headers,
-
-				// eslint-disable-next-line @typescript-eslint/naming-convention
-				'User-Agent': DESKTOP_USER_AGENT
-			}
+			compress: false
 		}).finally(() => clearTimeout(interval));
 	}
 
@@ -141,7 +137,8 @@ export class AccountVerification {
 	 */
 	public async run(redirectUri: RequestInfo): Promise<{ userId: number; token: string }> {
 		let response = await this.fetch(redirectUri, {
-			method: 'GET'
+			method: 'GET',
+			headers: this.options.headers
 		});
 
 		const isProcessed = true;
@@ -242,7 +239,8 @@ export class AccountVerification {
 
 			const newResponse = await this.fetch(url, {
 				method: 'POST',
-				body: new URLSearchParams(fields)
+				body: new URLSearchParams(fields),
+				headers: this.options.headers
 			});
 
 			return newResponse;
@@ -292,7 +290,8 @@ export class AccountVerification {
 
 		const rewResponse = await this.fetch(url, {
 			method: 'POST',
-			body: new URLSearchParams(fields)
+			body: new URLSearchParams(fields),
+			headers: this.options.headers
 		});
 
 		if (rewResponse.url.includes(ACTION_SECURITY_CODE)) {
@@ -313,7 +312,8 @@ export class AccountVerification {
 		const url = getFullURL(href, response);
 
 		return this.fetch(url, {
-			method: 'GET'
+			method: 'GET',
+			headers: this.options.headers
 		});
 	}
 
@@ -359,7 +359,8 @@ export class AccountVerification {
 
 		const pageResponse = await this.fetch(url, {
 			method: 'POST',
-			body: new URLSearchParams(fields)
+			body: new URLSearchParams(fields),
+			headers: this.options.headers
 		});
 
 		return pageResponse;
