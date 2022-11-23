@@ -69,6 +69,7 @@ export interface IDirectAuthOptions {
 	agent?: Agent;
 	scope?: string | number | string[];
 	timeout?: number;
+	headers?: Record<string, string>;
 
 	apiVersion: string;
 }
@@ -96,6 +97,10 @@ export class DirectAuthorization {
 	public constructor(options: IDirectAuthOptions) {
 		this.options = {
 			timeout: 10_000,
+			headers: options.headers || {
+				// eslint-disable-next-line @typescript-eslint/naming-convention
+				'User-Agent': DESKTOP_USER_AGENT
+			},
 
 			...options
 		};
@@ -125,8 +130,6 @@ export class DirectAuthorization {
 	): Promise<Response> {
 		const { agent, timeout } = this.options;
 
-		const { headers = {} } = options;
-
 		const controller = new AbortController();
 
 		const interval = setTimeout(() => controller.abort(), timeout);
@@ -136,14 +139,7 @@ export class DirectAuthorization {
 
 			agent,
 			signal: controller.signal,
-			compress: false,
-
-			headers: {
-				...headers,
-
-				// eslint-disable-next-line @typescript-eslint/naming-convention
-				'User-Agent': DESKTOP_USER_AGENT
-			}
+			compress: false
 		}).finally(() => clearTimeout(interval));
 	}
 
@@ -190,7 +186,8 @@ export class DirectAuthorization {
 		const url = new URL(`https://oauth.vk.com/token?${params}`);
 
 		return this.fetch(url, {
-			method: 'GET'
+			method: 'GET',
+			headers: this.options.headers
 		});
 	}
 
@@ -452,7 +449,8 @@ export class DirectAuthorization {
 
 		const rewResponse = await this.fetch(url, {
 			method: 'POST',
-			body: new URLSearchParams(fields)
+			body: new URLSearchParams(fields),
+			headers: this.options.headers
 		});
 
 		if (rewResponse.url.includes(ACTION_SECURITY_CODE)) {
