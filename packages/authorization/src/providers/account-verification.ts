@@ -64,6 +64,7 @@ interface IAccountVerificationOptions {
 	phone?: string | number;
 
 	timeout?: number;
+	headers?: Record<string, string>;
 }
 
 export class AccountVerification {
@@ -87,6 +88,10 @@ export class AccountVerification {
 	public constructor(options: IAccountVerificationOptions) {
 		this.options = {
 			timeout: 10_000,
+			headers: options.headers || {
+				// eslint-disable-next-line @typescript-eslint/naming-convention
+				'User-Agent': DESKTOP_USER_AGENT
+			},
 
 			...options
 		};
@@ -114,25 +119,17 @@ export class AccountVerification {
 	protected fetch(url: RequestInfo, options: RequestInit = {}): Promise<Response> {
 		const { agent, timeout } = this.options;
 
-		const { headers = {} } = options;
-
 		const controller = new AbortController();
 
 		const interval = setTimeout(() => controller.abort(), timeout);
 
 		return this.fetchCookie(url, {
 			...options,
+			headers: this.options.headers,
 
 			agent,
 			signal: controller.signal,
-			compress: false,
-
-			headers: {
-				...headers,
-
-				// eslint-disable-next-line @typescript-eslint/naming-convention
-				'User-Agent': DESKTOP_USER_AGENT
-			}
+			compress: false
 		}).finally(() => clearTimeout(interval));
 	}
 

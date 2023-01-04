@@ -69,6 +69,7 @@ export interface IDirectAuthOptions {
 	agent?: Agent;
 	scope?: string | number | string[];
 	timeout?: number;
+	headers?: Record<string, string>;
 
 	apiVersion: string;
 }
@@ -96,6 +97,10 @@ export class DirectAuthorization {
 	public constructor(options: IDirectAuthOptions) {
 		this.options = {
 			timeout: 10_000,
+			headers: options.headers || {
+				// eslint-disable-next-line @typescript-eslint/naming-convention
+				'User-Agent': DESKTOP_USER_AGENT
+			},
 
 			...options
 		};
@@ -125,25 +130,17 @@ export class DirectAuthorization {
 	): Promise<Response> {
 		const { agent, timeout } = this.options;
 
-		const { headers = {} } = options;
-
 		const controller = new AbortController();
 
 		const interval = setTimeout(() => controller.abort(), timeout);
 
 		return this.fetchCookie(url, {
 			...options,
+			headers: this.options.headers,
 
 			agent,
 			signal: controller.signal,
-			compress: false,
-
-			headers: {
-				...headers,
-
-				// eslint-disable-next-line @typescript-eslint/naming-convention
-				'User-Agent': DESKTOP_USER_AGENT
-			}
+			compress: false
 		}).finally(() => clearTimeout(interval));
 	}
 
