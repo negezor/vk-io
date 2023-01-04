@@ -1,6 +1,6 @@
 # VK-IO Session
 <a href="https://www.npmjs.com/package/@vk-io/session"><img src="https://img.shields.io/npm/v/@vk-io/session.svg?style=flat-square" alt="NPM version"></a>
-<a href="https://github.com/negezor/vk-io/actions/workflows/tests.yml"><img src="https://img.shields.io/github/workflow/status/negezor/vk-io/VK-IO CI?style=flat-square" alt="Build Status"></a>
+<a href="https://github.com/negezor/vk-io/actions/workflows/tests.yml"><img src="https://img.shields.io/github/actions/workflow/status/negezor/vk-io/tests.yml?style=flat-square" alt="Build Status"></a>
 <a href="https://www.npmjs.com/package/@vk-io/session"><img src="https://img.shields.io/npm/dt/@vk-io/session.svg?style=flat-square" alt="NPM downloads"></a>
 
 > VK-IO Session - Simple implementation of the sessions ⚙️
