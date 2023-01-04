@@ -6,7 +6,7 @@ import { kSerializeData, AttachmentType } from '../../utils/constants';
 /**
  * Parse attachments
  */
-export const parseAttachmentRe = /^([a-z]+)(-?\d+)_(\d+)_?(\w+)?$/;
+export const parseAttachmentRe = /^([a-z_]+)(-?\d+)_(\d+)_?(\w+)?$/;
 
 export interface ISharedAttachmentPayload {
 	id: number;
