@@ -65,6 +65,11 @@ export interface IUploadConduct {
 	saveParams?: string[];
 
 	/**
+	 * Upload params
+	 */
+	uploadParams?: string[];
+
+	/**
 	 * Max uploaded files for one request
 	 */
 	maxFiles: number;
