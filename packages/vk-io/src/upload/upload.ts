@@ -857,6 +857,8 @@ export class Upload {
 		saveFiles,
 		saveParams = [],
 
+		uploadParams = [],
+
 		maxFiles = 1,
 		attachmentType
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -902,6 +904,11 @@ export class Upload {
 				attachmentType
 			})
 		]);
+
+		const uploadParamsMap = pickExistingProperties(params, uploadParams);
+		for (const [key, value] of Object.entries(uploadParamsMap)) {
+			formData.append(key, value);
+		}
 
 		const uploaded = await this.upload(url, {
 			formData,
