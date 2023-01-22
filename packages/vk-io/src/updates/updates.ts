@@ -524,6 +524,7 @@ export class Updates {
 		handler: AllowArray<Middleware<FriendActivityContext & T>>
 	): this;
 
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public on<T = {}, P extends Record<string, any> = {}>(
 		events: AllowArray<VKAppPayloadContextType | VKAppPayloadContextSubType>,
 		handler: AllowArray<Middleware<VKAppPayloadContext<ContextDefaultState, P> & T>>
@@ -569,6 +570,7 @@ export class Updates {
 		handler: AllowArray<Middleware<DonutWithdrawContext & T>>
 	): this;
 
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	public on<T = {}, P extends Record<string, any> = {}>(
 		events: AllowArray<UnsupportedEventContextType | UnsupportedEventContextSubType>,
 		handler: AllowArray<Middleware<UnsupportedEventContext<ContextDefaultState, P> & T>>
