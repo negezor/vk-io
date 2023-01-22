@@ -819,6 +819,8 @@ class MessageContext<S = ContextDefaultState>
 		this[kAttachments] = transformAttachments(message.attachments || [], this.api);
 
 		if (message.reply_message) {
+			const replyPeerId = message.reply_message.peer_id || 0;
+
 			this[kReplyMessage] = new MessageContext({
 				api: this.api,
 				upload: this.upload,
@@ -829,9 +831,11 @@ class MessageContext<S = ContextDefaultState>
 				payload: {
 					client_info: this.clientInfo,
 					message: {
-						// @ts-expect-error may missing in reply message
-						peer_id: this.peerId,
-						...message.reply_message
+						...message.reply_message,
+
+						peer_id: replyPeerId !== 0
+							? replyPeerId
+							: this.peerId
 					}
 				}
 			});
