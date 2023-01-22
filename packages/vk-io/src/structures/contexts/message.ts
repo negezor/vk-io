@@ -824,7 +824,9 @@ class MessageContext<S = ContextDefaultState>
 			this[kReplyMessage] = new MessageContext({
 				api: this.api,
 				upload: this.upload,
-				source: UpdateSource.WEBHOOK,
+				source: this.$filled
+					? UpdateSource.WEBHOOK
+					: UpdateSource.POLLING,
 				groupId: this.$groupId,
 				updateType: 'message_new',
 				state: this.state,
