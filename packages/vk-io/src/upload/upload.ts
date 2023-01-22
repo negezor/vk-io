@@ -905,11 +905,9 @@ export class Upload {
 			})
 		]);
 
-		const uploadParamsList = pickExistingProperties(params, uploadParams);
-		for (const key in uploadParamsList) {
-			if (Object.prototype.hasOwnProperty.call(uploadParamsList, key)) {
-				formData.append(key, uploadParamsList[key]);
-			}
+		const uploadParamsMap = pickExistingProperties(params, uploadParams);
+		for (const [key, value] of Object.entries(uploadParamsMap)) {
+			formData.append(key, value);
 		}
 
 		const uploaded = await this.upload(url, {
