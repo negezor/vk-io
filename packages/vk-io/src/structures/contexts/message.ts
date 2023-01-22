@@ -828,7 +828,11 @@ class MessageContext<S = ContextDefaultState>
 				state: this.state,
 				payload: {
 					client_info: this.clientInfo,
-					message: message.reply_message
+					message: {
+						// @ts-expect-error may missing in reply message
+						peer_id: this.peerId,
+						...message.reply_message
+					}
 				}
 			});
 		}
