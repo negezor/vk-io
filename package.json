@@ -10,8 +10,8 @@
 	"type": "module",
 	"devDependencies": {
 		"@rollup/plugin-json": "^6.0.0",
-		"@types/jest": "^29.2.6",
-		"@types/node": "^18.11.18",
+		"@types/jest": "^29.5.0",
+		"@types/node": "^18.15.10",
 		"@typescript-eslint/eslint-plugin": "^5.48.2",
 		"@typescript-eslint/parser": "^5.48.2",
 		"@vuepress/plugin-back-to-top": "^2.0.0-beta.54",
