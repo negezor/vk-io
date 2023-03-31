@@ -1,6 +1,6 @@
 {
 	"name": "@vk-io/stateless-prompt",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "Stateless prompts for the library vk-io",
 	"license": "MIT",
 	"author": {
