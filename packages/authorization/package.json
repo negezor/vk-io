@@ -43,8 +43,8 @@
 		"abort-controller": "^3.0.0",
 		"cheerio": "^1.0.0-rc.12",
 		"debug": "^4.3.4",
-		"inspectable": "^1.2.1",
-		"node-fetch": "^3.2.10",
+		"inspectable": "^2.0.0",
+		"node-fetch": "^3.3.1",
 		"tough-cookie": "^4.1.2"
 	},
 	"devDependencies": {

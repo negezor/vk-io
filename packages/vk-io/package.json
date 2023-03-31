@@ -42,16 +42,16 @@
 	},
 	"devDependencies": {
 		"@types/debug": "^4.1.7",
-		"@types/express": "^4.17.14",
-		"@types/koa": "^2.13.5"
+		"@types/express": "^4.17.17",
+		"@types/koa": "^2.13.6"
 	},
 	"dependencies": {
 		"abort-controller": "^3.0.0",
 		"debug": "^4.3.4",
 		"form-data-encoder": "^1.7.2",
 		"formdata-node": "^4.4.1",
-		"inspectable": "^1.2.2",
+		"inspectable": "^2.0.0",
 		"middleware-io": "^2.8.1",
-		"node-fetch": "^3.2.10"
+		"node-fetch": "^3.3.1"
 	}
 }

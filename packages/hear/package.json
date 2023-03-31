@@ -37,7 +37,7 @@
 		"node": ">=12.20.0"
 	},
 	"dependencies": {
-		"middleware-io": "^2.8.0"
+		"middleware-io": "^2.8.1"
 	},
 	"peerDependencies": {
 		"vk-io": "^4.0.0"
