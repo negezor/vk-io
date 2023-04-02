@@ -179,7 +179,10 @@ class MessageContext<S = ContextDefaultState>
 			this.$filled = false;
 
 			this.applyPayload(
-				transformMessage((options.payload as unknown) as Parameters<typeof transformMessage>[0])
+				Array.isArray(options.payload)
+					? transformMessage((options.payload as unknown) as Parameters<typeof transformMessage>[0])
+					// There's user long poll reply message
+					: options.payload
 			);
 		} else {
 			this.$filled = true;
