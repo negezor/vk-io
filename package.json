@@ -17,7 +17,6 @@
         "@vuepress/plugin-back-to-top": "^2.0.0-beta.54",
         "@vuepress/plugin-medium-zoom": "^2.0.0-beta.54",
         "eslint": "8.46.0",
-        "eslint-config-airbnb-base": "^15.0.0",
         "eslint-plugin-import": "^2.28.0",
         "jest": "^29.6.2",
         "rollup": "^3.27.0",
@@ -38,6 +37,6 @@
         "docs:build": "sh scripts/deploy-docs.sh",
         "test": "npm run test:jest && npm run lint:eslint",
         "test:jest": "NODE_OPTIONS=--experimental-vm-modules jest --config jest.config.json --no-cache",
-        "lint:eslint": "eslint --ext .ts --ignore-path .gitignore packages/*/src/**/*.ts"
+        "lint:eslint": "eslint --ext .ts --ignore-path .gitignore packages/*/src"
     }
 }
