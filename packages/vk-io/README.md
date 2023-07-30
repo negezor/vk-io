@@ -48,15 +48,15 @@
 import { VK } from 'vk-io';
 
 const vk = new VK({
-	token: process.env.TOKEN
+    token: process.env.TOKEN
 });
 
 async function run() {
-	const response = await vk.api.wall.get({
-		owner_id: 1
-	});
+    const response = await vk.api.wall.get({
+        owner_id: 1
+    });
 
-	console.log(response);
+    console.log(response);
 }
 
 run().catch(console.log);

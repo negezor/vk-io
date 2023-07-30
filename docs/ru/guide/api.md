@@ -12,7 +12,7 @@
 import { API } from 'vk-io';
 
 const api = new API({
-	token: process.env.TOKEN
+    token: process.env.TOKEN
 });
 ```
 
@@ -22,7 +22,7 @@ const api = new API({
 
 ```ts
 const users = await api.users.get({
-	user_ids: 1
+    user_ids: 1
 });
 
 console.log(users) // [{ id: 1, first_name: 'Павел', last_name: 'Дуров' }]
@@ -32,7 +32,7 @@ console.log(users) // [{ id: 1, first_name: 'Павел', last_name: 'Дуров
 
 ```ts
 const users = await api.call('users.get', {
-	user_ids: 1
+    user_ids: 1
 });
 
 console.log(users) // [{ id: 1, first_name: 'Павел', last_name: 'Дуров' }]
@@ -49,8 +49,8 @@ console.log(users) // [{ id: 1, first_name: 'Павел', last_name: 'Дуров
 В отличие от остальных методов, [execute](https://negezor.github.io/vk-io/references/vk-io/classes/API.html#execute) возвращает данные в формате:
 ```ts
 export interface IExecuteResponse<T> {
-	response: T;
-	errors: ExecuteError[];
+    response: T;
+    errors: ExecuteError[];
 }
 ```
 
@@ -60,7 +60,7 @@ export interface IExecuteResponse<T> {
 
 ```ts
 await api.procedure('important', {
-	// Аргументы будут доступны в Args
+    // Аргументы будут доступны в Args
 });
 
 // Как если бы мы вызвали
@@ -77,9 +77,9 @@ await api.procedure('important', {
 import { API } from 'vk-io';
 
 const api = new API({
-	token: process.env.TOKEN,
+    token: process.env.TOKEN,
 
-	apiLimit: 20
+    apiLimit: 20
 });
 ```
 
@@ -90,9 +90,9 @@ const api = new API({
 import { API } from 'vk-io';
 
 const api = new API({
-	token: process.env.TOKEN,
+    token: process.env.TOKEN,
 
-	apiMode: 'sequential'
+    apiMode: 'sequential'
 });
 ```
 
@@ -117,9 +117,9 @@ const api = new API({
 import { API } from 'vk-io';
 
 const api = new API({
-	token: process.env.TOKEN,
+    token: process.env.TOKEN,
 
-	apiRequestMode: 'sequential'
+    apiRequestMode: 'sequential'
 });
 ```
 
@@ -149,9 +149,9 @@ const agent = new HttpsProxyAgent(process.env.HTTP_PROXY);
 // const agent = new HttpsProxyAgent('https://168.63.76.32:3128');
 
 const api = new API({
-	token: process.env.TOKEN,
+    token: process.env.TOKEN,
 
-	agent
+    agent
 });
 ```
 
@@ -167,22 +167,22 @@ import { API, CallbackService } from 'vk-io';
 const callbackService = new CallbackService();
 
 const api = new API({
-	token: process.env.TOKEN,
+    token: process.env.TOKEN,
 
-	callbackService
+    callbackService
 });
 
 callbackService.onCaptcha(async (payload, retry) => {
-	
-	const key = await myAwesomeCaptchaHandler(payload.src);
+    
+    const key = await myAwesomeCaptchaHandler(payload.src);
 
-	try {
-		await retry(key);
+    try {
+        await retry(key);
 
-		console.log('Капча успешно решена');
-	} catch (error) {
-		console.log('Капча не решена');
-	}
+        console.log('Капча успешно решена');
+    } catch (error) {
+        console.log('Капча не решена');
+    }
 });
 ```
 
@@ -196,16 +196,16 @@ callbackService.onCaptcha(async (payload, retry) => {
 import { API, APIRequest } from 'vk-io';
 
 const api = new API({
-	token: process.env.TOKEN
+    token: process.env.TOKEN
 });
 
 const request = new APIRequest({
-	api,
+    api,
 
-	method: 'users.get',
-	params: {
-		user_ids: 1
-	}
+    method: 'users.get',
+    params: {
+        user_ids: 1
+    }
 });
 
 const response = await api.make();
@@ -222,16 +222,16 @@ const response = await api.make();
 import { API, APIRequest } from 'vk-io';
 
 const api = new API({
-	token: process.env.TOKEN
+    token: process.env.TOKEN
 });
 
 const request = new APIRequest({
-	api,
+    api,
 
-	method: 'users.get',
-	params: {
-		user_ids: 1
-	}
+    method: 'users.get',
+    params: {
+        user_ids: 1
+    }
 });
 
 const method = String(request); // API.users.get({"user_ids":1})

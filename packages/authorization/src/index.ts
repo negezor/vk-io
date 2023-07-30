@@ -3,9 +3,9 @@ export * from './providers';
 export * from './open-api';
 
 export {
-	AuthErrorCode,
-	officialAppCredentials,
+    AuthErrorCode,
+    officialAppCredentials,
 
-	userScopes,
-	groupScopes
+    userScopes,
+    groupScopes
 } from './constants';

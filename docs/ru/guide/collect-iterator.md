@@ -16,38 +16,38 @@
 import { API, createCollectIterator } from 'vk-io';
 
 const api = new API({
-	token: process.env.TOKEN
+    token: process.env.TOKEN
 });
 
 const iterator = createCollectIterator({
-	api,
-	
-	method: 'messages.getConversations',
-	params: {
-		// Будет получать profiles и groups
-		extended: 1
-	},
+    api,
+    
+    method: 'messages.getConversations',
+    params: {
+        // Будет получать profiles и groups
+        extended: 1
+    },
 
-	// Максимальный count в методе
-	countPerRequest: 200,
+    // Максимальный count в методе
+    countPerRequest: 200,
 
-	// Устанавливайте опцию для методов которые не позволяет получить больше N данных, например `users.search`
-	// maxCount: 1000,
+    // Устанавливайте опцию для методов которые не позволяет получить больше N данных, например `users.search`
+    // maxCount: 1000,
 
-	// Количество попыток вызвать снова при ошибке
-	// retryLimit: 3,
+    // Количество попыток вызвать снова при ошибке
+    // retryLimit: 3,
 
-	// Количество паралельных вызовов если поддерживается execute
-	// parallelRequests: 25
+    // Количество паралельных вызовов если поддерживается execute
+    // parallelRequests: 25
 });
 
 for await (const chunk of iterator) {
-	// chunk.received
-	// chunk.percent
-	// chunk.total
+    // chunk.received
+    // chunk.percent
+    // chunk.total
 
-	// chunk.items
-	// chunk.profiles
-	// chunk.groups
+    // chunk.items
+    // chunk.profiles
+    // chunk.groups
 }
 ```

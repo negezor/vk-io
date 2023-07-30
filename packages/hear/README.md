@@ -31,7 +31,7 @@ import { VK, MessageContext } from 'vk-io';
 import { HearManager } from '@vk-io/hear';
 
 const vk = new VK({
-	token: process.env.TOKEN
+    token: process.env.TOKEN
 });
 
 const hearManager = new HearManager<MessageContext>();
@@ -39,7 +39,7 @@ const hearManager = new HearManager<MessageContext>();
 vk.updates.on('message_new', hearManager.middleware);
 
 hearManager.hear(/^hello$/, async (context) => {
-	await context.send('Hello!');
+    await context.send('Hello!');
 });
 
 vk.updates.start().catch(console.error);

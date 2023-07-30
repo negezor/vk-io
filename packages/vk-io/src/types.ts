@@ -12,5 +12,5 @@ export type VKOptions = IAPIOptions
 & IUpdatesOptions
 & IUploadOptions
 & {
-	callbackService?: CallbackService;
+    callbackService?: CallbackService;
 };

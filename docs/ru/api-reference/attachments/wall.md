@@ -22,7 +22,7 @@ new WallAttachment(wall, vk);
 
 ```js
 const [wall] = await vk.api.wall.getById({
-	photos: '1_456264771'
+    photos: '1_456264771'
 });
 
 new WallAttachment(wall, vk);

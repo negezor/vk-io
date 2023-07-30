@@ -22,7 +22,7 @@ new AudioAttachment(audio, vk);
 
 ```js
 const [audio] = await vk.api.audio.getById({
-	audios: '1_123456789'
+    audios: '1_123456789'
 });
 
 new AudioAttachment(audio, vk);

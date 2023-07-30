@@ -11,49 +11,49 @@ import { VKOptions } from './types';
  * Main class
  */
 export class VK {
-	public api: API;
+    public api: API;
 
-	public upload: Upload;
+    public upload: Upload;
 
-	public updates: Updates;
+    public updates: Updates;
 
-	public callbackService: CallbackService;
+    public callbackService: CallbackService;
 
-	/**
-	 * Constructor
-	 */
-	public constructor(options: Partial<VKOptions> & { token: string }) {
-		this.callbackService = options.callbackService
-			|| new CallbackService();
+    /**
+     * Constructor
+     */
+    public constructor(options: Partial<VKOptions> & { token: string }) {
+        this.callbackService = options.callbackService
+            || new CallbackService();
 
-		this.api = new API({
-			...options,
+        this.api = new API({
+            ...options,
 
-			callbackService: this.callbackService
-		});
+            callbackService: this.callbackService
+        });
 
-		this.upload = new Upload({
-			...options,
+        this.upload = new Upload({
+            ...options,
 
-			api: this.api
-		});
+            api: this.api
+        });
 
-		this.updates = new Updates({
-			...options,
+        this.updates = new Updates({
+            ...options,
 
-			api: this.api,
-			upload: this.upload
-		});
-	}
+            api: this.api,
+            upload: this.upload
+        });
+    }
 
-	/**
-	 * Returns custom tag
-	 */
-	public get [Symbol.toStringTag](): string {
-		return this.constructor.name;
-	}
+    /**
+     * Returns custom tag
+     */
+    public get [Symbol.toStringTag](): string {
+        return this.constructor.name;
+    }
 }
 
 inspectable(VK, {
-	serialize: ({ api, updates }) => ({ api, updates })
+    serialize: ({ api, updates }) => ({ api, updates })
 });

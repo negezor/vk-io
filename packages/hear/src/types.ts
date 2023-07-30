@@ -9,11 +9,11 @@ export type HearObjectCondition<T extends Record<string, any>> =
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 Record<string, AllowArray<HearCondition<T, any>>>
 & {
-	[P in keyof T]?: AllowArray<HearCondition<T, T[P]>>;
+    [P in keyof T]?: AllowArray<HearCondition<T, T[P]>>;
 };
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type HearConditions<T extends Record<string, any>> = (
-	AllowArray<HearCondition<T, string | undefined>>
-	| AllowArray<HearObjectCondition<T>>
+    AllowArray<HearCondition<T, string | undefined>>
+    | AllowArray<HearObjectCondition<T>>
 );

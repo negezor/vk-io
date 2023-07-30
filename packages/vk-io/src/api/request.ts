@@ -8,112 +8,112 @@ import { getExecuteMethod } from '../utils/helpers';
 import { ICallbackServiceValidate } from '../utils/callback-service';
 
 export interface IAPIRequestOptions {
-	api: API;
+    api: API;
 
-	method: string;
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	params: Record<string, any>;
+    method: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    params: Record<string, any>;
 }
 
 export class APIRequest {
-	public method: string;
+    public method: string;
 
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	public params: Record<string, any>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    public params: Record<string, any>;
 
-	public retries = 0;
+    public retries = 0;
 
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	public promise: Promise<any>;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    public promise: Promise<any>;
 
-	public resolve!: Function;
+    public resolve!: Function;
 
-	public reject!: Function;
+    public reject!: Function;
 
-	public captchaValidate?: ICallbackServiceValidate;
+    public captchaValidate?: ICallbackServiceValidate;
 
-	protected api: API;
+    protected api: API;
 
-	/**
-	 * Constructor
-	 */
-	public constructor({ api, method, params = {} }: IAPIRequestOptions) {
-		this.api = api;
+    /**
+     * Constructor
+     */
+    public constructor({ api, method, params = {} }: IAPIRequestOptions) {
+        this.api = api;
 
-		this.method = method;
-		this.params = { ...params };
+        this.method = method;
+        this.params = { ...params };
 
-		this.promise = new Promise((resolve, reject): void => {
-			this.resolve = resolve;
-			this.reject = reject;
-		});
-	}
+        this.promise = new Promise((resolve, reject): void => {
+            this.resolve = resolve;
+            this.reject = reject;
+        });
+    }
 
-	/**
-	 * Returns custom tag
-	 */
-	public get [Symbol.toStringTag](): string {
-		return this.constructor.name;
-	}
+    /**
+     * Returns custom tag
+     */
+    public get [Symbol.toStringTag](): string {
+        return this.constructor.name;
+    }
 
-	/**
-	 * Returns string to execute
-	 */
-	public toString(): string {
-		return getExecuteMethod(this.method, this.params);
-	}
+    /**
+     * Returns string to execute
+     */
+    public toString(): string {
+        return getExecuteMethod(this.method, this.params);
+    }
 
-	/**
-	 * Sends a request to the server
-	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	public async make(): Promise<any> {
-		const { options } = this.api;
+    /**
+     * Sends a request to the server
+     */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    public async make(): Promise<any> {
+        const { options } = this.api;
 
-		const params: APIRequest['params'] = {
-			access_token: options.token,
-			v: options.apiVersion,
+        const params: APIRequest['params'] = {
+            access_token: options.token,
+            v: options.apiVersion,
 
-			...this.params
-		};
+            ...this.params
+        };
 
-		if (options.language !== undefined) {
-			params.lang = options.language;
-		}
+        if (options.language !== undefined) {
+            params.lang = options.language;
+        }
 
-		const controller = new AbortController();
+        const controller = new AbortController();
 
-		const timeout = setTimeout(() => controller.abort(), options.apiTimeout);
+        const timeout = setTimeout(() => controller.abort(), options.apiTimeout);
 
-		try {
-			const response = await fetch(`${options.apiBaseUrl}/${this.method}`, {
-				method: 'POST',
-				compress: false,
-				agent: options.agent,
-				signal: controller.signal,
-				headers: {
-					...options.apiHeaders,
+        try {
+            const response = await fetch(`${options.apiBaseUrl}/${this.method}`, {
+                method: 'POST',
+                compress: false,
+                agent: options.agent,
+                signal: controller.signal,
+                headers: {
+                    ...options.apiHeaders,
 
-					connection: 'keep-alive'
-				},
-				body: new URLSearchParams(
-					Object.entries(params)
-						.filter(({ 1: value }) => value !== undefined)
-				)
-			});
+                    connection: 'keep-alive'
+                },
+                body: new URLSearchParams(
+                    Object.entries(params)
+                        .filter(({ 1: value }) => value !== undefined)
+                )
+            });
 
-			const result = await response.json();
+            const result = await response.json();
 
-			return result;
-		} finally {
-			clearTimeout(timeout);
-		}
-	}
+            return result;
+        } finally {
+            clearTimeout(timeout);
+        }
+    }
 }
 
 inspectable(APIRequest, {
-	serialize: ({ method, params }) => ({
-		method,
-		params
-	})
+    serialize: ({ method, params }) => ({
+        method,
+        params
+    })
 });

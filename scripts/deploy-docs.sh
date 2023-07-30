@@ -5,11 +5,11 @@ set -e
 npx vuepress build docs
 
 for modulePath in ./packages/*; do
-	module=`(basename $modulePath)`;
+    module=`(basename $modulePath)`;
 
-	echo $module
+    echo $module
 
-	npx typedoc --out docs/.vuepress/dist/references/$module --readme none packages/$module/src/index.ts
+    npx typedoc --out docs/.vuepress/dist/references/$module --readme none packages/$module/src/index.ts
 done
 
 cd docs/.vuepress/dist

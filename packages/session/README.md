@@ -29,7 +29,7 @@ import { VK } from 'vk-io';
 import { SessionManager } from '@vk-io/session';
 
 const vk = new VK({
-	token: process.env.TOKEN
+    token: process.env.TOKEN
 });
 
 const sessionManager = new SessionManager();
@@ -37,19 +37,19 @@ const sessionManager = new SessionManager();
 vk.updates.on('message_new', sessionManager.middleware);
 
 vk.updates.on('message_new', async (context, next) => {
-	if (context.text !== '/counter') {
-		return next();
-	}
-	
-	const { session } = context;
+    if (context.text !== '/counter') {
+        return next();
+    }
+    
+    const { session } = context;
 
-	if (!session.counter) {
-		session.counter = 0;
-	}
+    if (!session.counter) {
+        session.counter = 0;
+    }
 
-	session.counter += 1;
+    session.counter += 1;
 
-	await context.send(`You turned to the bot (${session.counter}) times`);
+    await context.send(`You turned to the bot (${session.counter}) times`);
 });
 
 vk.updates.start().catch(console.error);

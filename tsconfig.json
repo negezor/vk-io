@@ -1,21 +1,21 @@
 {
-	"compilerOptions": {
-		"target": "ES2019",
-		"module": "ESNext",
-		"lib": ["ES2019", "DOM", "ESNext"],
-		"moduleResolution": "Node",
-		"strict": true,
-		"noEmit": true,
-		"declaration": true,
-		"strictNullChecks": true,
-		"esModuleInterop": true,
-		"forceConsistentCasingInFileNames": true
-	},
-	"ts-node": {
-		// these options are overrides used only by ts-node
-		// same as our --compilerOptions flag and our TS_NODE_COMPILER_OPTIONS environment variable
-		"compilerOptions": {
-		  "module": "commonjs"
-		}
-	}
+    "compilerOptions": {
+        "target": "ES2019",
+        "module": "ESNext",
+        "lib": ["ES2019", "DOM", "ESNext"],
+        "moduleResolution": "Node",
+        "strict": true,
+        "noEmit": true,
+        "declaration": true,
+        "strictNullChecks": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true
+    },
+    "ts-node": {
+        // these options are overrides used only by ts-node
+        // same as our --compilerOptions flag and our TS_NODE_COMPILER_OPTIONS environment variable
+        "compilerOptions": {
+          "module": "commonjs"
+        }
+    }
 }

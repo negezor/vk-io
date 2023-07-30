@@ -30,11 +30,11 @@ context.is(['chat_invite_user', 'chat_invite_user_by_link']); // => true
 
 ```ts
 updates.on('message_new', async (context, next) => {
-	context.state.user = await fetchUser(context.senderId);
-	// При этом ничего вам не мешает расширить сам контекст
-	// context.user = await fetchUser(context.senderId);
+    context.state.user = await fetchUser(context.senderId);
+    // При этом ничего вам не мешает расширить сам контекст
+    // context.user = await fetchUser(context.senderId);
 
-	return next();
+    return next();
 });
 ```
 

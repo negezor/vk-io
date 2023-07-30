@@ -10,5 +10,5 @@ export type RequestInit = import('node-fetch').RequestInit;
 export type Response = import('node-fetch').Response;
 
 export const fetch = (url: RequestInfo, init?: RequestInit): Promise<Response> => (
-	Promise.resolve(fetchPromise).then(fn => fn(url as string, init))
+    Promise.resolve(fetchPromise).then(fn => fn(url as string, init))
 );

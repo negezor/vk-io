@@ -27,7 +27,7 @@ $ yarn add vk-io
 const { VK } = require('vk-io');
 
 const vk = new VK({
-	token: 'токен'
+    token: 'токен'
 });
 
 // ...
@@ -38,7 +38,7 @@ const vk = new VK({
 import { VK } from 'vk-io';
 
 const vk = new VK({
-	token: 'токен'
+    token: 'токен'
 });
 
 // ...

@@ -29,25 +29,25 @@ import { VK } from 'vk-io';
 import { StreamingAPI } from '@vk-io/streaming';
 
 const vk = new VK({
-	token: process.env.TOKEN
+    token: process.env.TOKEN
 });
 
 const streaming = new StreamingAPI({
-	api: vk.api,
-	updates: vk.updates
+    api: vk.api,
+    updates: vk.updates
 });
 
 vk.updates.on('publication', (context) => {
-	console.log('Streaming context', context);
+    console.log('Streaming context', context);
 });
 
 async function run() {
-	await streaming.startWebSocket();
+    await streaming.startWebSocket();
 
-	await streaming.addRule({
-		tag: 'halloween',
-		value: 'тыква'
-	});
+    await streaming.addRule({
+        tag: 'halloween',
+        value: 'тыква'
+    });
 }
 
 run().catch(console.error);

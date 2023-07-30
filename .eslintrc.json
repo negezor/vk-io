@@ -1,103 +1,99 @@
 {
-	"env": {
-		"node": true
-	},
-	"extends": [
-		"airbnb-base",
-		"plugin:import/errors",
-		"plugin:import/warnings",
-		"plugin:import/typescript",
-		"plugin:@typescript-eslint/recommended"
-	],
-	"parser": "@typescript-eslint/parser",
-	"parserOptions": {
-		"project": "./tsconfig.json",
-		"sourceType": "module"
-	},
-	"plugins": [
-		"import",
-		"@typescript-eslint"
-	],
-	"rules": {
-		"@typescript-eslint/no-unused-expressions": ["error"],
-		"@typescript-eslint/no-non-null-assertion": "off",
-		"@typescript-eslint/naming-convention": [
-			"error",
-			{
-				"selector": "interface",
-				"format": ["PascalCase"],
-				"prefix": ["I"]
-			},
-			{
-				"selector": "property",
-				"format": ["camelCase", "snake_case", "UPPER_CASE", "PascalCase"]
-			}
-		],
-		"@typescript-eslint/ban-ts-comment": ["error", {
-			"ts-ignore": true,
-			"ts-expect-error": false
-		}],
-		"@typescript-eslint/ban-types": ["error", {
-			"types": {
-				"{}": false,
-				"object": false,
-				"Function": false
-			},
-			"extendDefaults": true
-		}],
-		"@typescript-eslint/indent": ["error", "tab"],
-		"@typescript-eslint/no-shadow": ["error"],
-		"@typescript-eslint/semi": ["error"],
-		"import/extensions": ["error", "ignorePackages", {
-			"js": "never",
-			"ts": "never"
-		}],
-		"import/prefer-default-export": "off",
-		"import/no-default-export": ["error"],
-		"import/no-cycle": "off",
-		"no-restricted-syntax": ["error", "WithStatement"],
-		"linebreak-style": ["error", "unix"],
-		"comma-dangle": ["error", "never"],
-		"no-param-reassign": ["error", {
-			"props": false
-		}],
-		"no-unused-expressions": "off",
-		"no-dupe-class-members": "off",
-		"no-await-in-loop": "off",
-		"arrow-parens": "off",
-		"no-continue": "off",
-		"no-tabs": ["error", {
-			"allowIndentationTabs": true
-		}],
-		"no-shadow": "off",
-		"camelcase": "off",
-		"indent": "off",
-		"semi": "off"
-	},
-	"overrides": [
-		{
-			"files": ["packages/*/test/**/*.test.ts"],
-			"env": {
-				"jest": true
-			}
-		},
-		{
-			"files": [
-				"docs/examples/**/*.js",
-				"scripts/**/*.js"
-			],
-			"rules": {
-				"@typescript-eslint/no-var-requires": "off"
-			}
-		},
-		{
-			"files": ["docs/examples/**/*.js"],
-			"rules": {
-				"no-console": "off",
-				"no-param-reassign": "off",
-				"import/no-extraneous-dependencies": "off",
-				"@typescript-eslint/explicit-function-return-type": "off"
-			}
-		}
-	]
+    "env": {
+        "node": true
+    },
+    "extends": [
+        "airbnb-base",
+        "plugin:import/errors",
+        "plugin:import/warnings",
+        "plugin:import/typescript",
+        "plugin:@typescript-eslint/recommended"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "project": "./tsconfig.json",
+        "sourceType": "module"
+    },
+    "plugins": [
+        "import",
+        "@typescript-eslint"
+    ],
+    "rules": {
+        "@typescript-eslint/no-unused-expressions": ["error"],
+        "@typescript-eslint/no-non-null-assertion": "off",
+        "@typescript-eslint/naming-convention": [
+            "error",
+            {
+                "selector": "interface",
+                "format": ["PascalCase"],
+                "prefix": ["I"]
+            },
+            {
+                "selector": "property",
+                "format": ["camelCase", "snake_case", "UPPER_CASE", "PascalCase"]
+            }
+        ],
+        "@typescript-eslint/ban-ts-comment": ["error", {
+            "ts-ignore": true,
+            "ts-expect-error": false
+        }],
+        "@typescript-eslint/ban-types": ["error", {
+            "types": {
+                "{}": false,
+                "object": false,
+                "Function": false
+            },
+            "extendDefaults": true
+        }],
+        "@typescript-eslint/no-shadow": ["error"],
+        "@typescript-eslint/semi": ["error"],
+        "import/extensions": ["error", "ignorePackages", {
+            "js": "never",
+            "ts": "never"
+        }],
+        "import/prefer-default-export": "off",
+        "import/no-default-export": ["error"],
+        "import/no-cycle": "off",
+        "no-restricted-syntax": ["error", "WithStatement"],
+        "linebreak-style": ["error", "unix"],
+        "comma-dangle": ["error", "never"],
+        "no-param-reassign": ["error", {
+            "props": false
+        }],
+        "no-unused-expressions": "off",
+        "no-dupe-class-members": "off",
+        "no-await-in-loop": "off",
+        "arrow-parens": "off",
+        "no-continue": "off",
+        "no-shadow": "off",
+        "camelcase": "off",
+        "indent": "off",
+        "semi": "off"
+    },
+    "overrides": [
+        {
+            "files": ["packages/*/test/**/*.test.ts"],
+            "env": {
+                "jest": true
+            }
+        },
+        {
+            "files": [
+                "docs/examples/**/*.js",
+                "scripts/**/*.js"
+            ],
+            "rules": {
+                "@typescript-eslint/no-var-requires": "off"
+            }
+        },
+        {
+            "files": ["docs/examples/**/*.js"],
+            "rules": {
+                "no-console": "off",
+                "no-param-reassign": "off",
+                "import/no-extraneous-dependencies": "off",
+                "@typescript-eslint/explicit-function-return-type": "off"
+            }
+        }
+    ]
 }

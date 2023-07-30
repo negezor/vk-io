@@ -1,15 +1,15 @@
 {
-	"name": "vk-io-monorepo",
-	"verbose": true,
-	"testEnvironment": "node",
-	"testMatch": ["<rootDir>/packages/*/test/*.test.ts"],
-	"extensionsToTreatAsEsm": [".ts"],
-	"moduleNameMapper": {
-		"^(\\.{1,2}/.*)\\.js$": "$1"
-	},
-	"transform": {
-		".+\\.(ts|js)$": ["ts-jest", {
-			"useESM": true
-		}]
-	}
+    "name": "vk-io-monorepo",
+    "verbose": true,
+    "testEnvironment": "node",
+    "testMatch": ["<rootDir>/packages/*/test/*.test.ts"],
+    "extensionsToTreatAsEsm": [".ts"],
+    "moduleNameMapper": {
+        "^(\\.{1,2}/.*)\\.js$": "$1"
+    },
+    "transform": {
+        ".+\\.(ts|js)$": ["ts-jest", {
+            "useESM": true
+        }]
+    }
 }

@@ -1,57 +1,57 @@
 {
-	"name": "vk-io",
-	"version": "4.8.3",
-	"description": "Modern VK API SDK for Node.js",
-	"license": "MIT",
-	"author": {
-		"name": "Vladlen (Negezor)",
-		"email": "negezor@gmail.com"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/negezor/vk-io.git",
-		"directory": "packages/vk-io"
-	},
-	"homepage": "https://github.com/negezor/vk-io#readme",
-	"bugs": "https://github.com/negezor/vk-io/issues",
-	"keywords": [
-		"vk",
-		"api",
-		"sdk",
-		"bot",
-		"node",
-		"js",
-		"es6",
-		"es7"
-	],
-	"files": [
-		"lib"
-	],
-	"main": "./lib/index.js",
-	"types": "./lib/index.d.ts",
-	"exports": {
-		".": {
-			"import": "./lib/index.mjs",
-			"require": "./lib/index.js",
-			"types": "./lib/index.d.ts"
-		}
-	},
-	"sideEffects": false,
-	"engines": {
-		"node": ">=12.20.0"
-	},
-	"devDependencies": {
-		"@types/debug": "^4.1.8",
-		"@types/express": "^4.17.17",
-		"@types/koa": "^2.13.8"
-	},
-	"dependencies": {
-		"abort-controller": "^3.0.0",
-		"debug": "^4.3.4",
-		"form-data-encoder": "^1.7.2",
-		"formdata-node": "^4.4.1",
-		"inspectable": "^2.1.0",
-		"middleware-io": "^2.8.1",
-		"node-fetch": "^3.3.2"
-	}
+    "name": "vk-io",
+    "version": "4.8.3",
+    "description": "Modern VK API SDK for Node.js",
+    "license": "MIT",
+    "author": {
+        "name": "Vladlen (Negezor)",
+        "email": "negezor@gmail.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/negezor/vk-io.git",
+        "directory": "packages/vk-io"
+    },
+    "homepage": "https://github.com/negezor/vk-io#readme",
+    "bugs": "https://github.com/negezor/vk-io/issues",
+    "keywords": [
+        "vk",
+        "api",
+        "sdk",
+        "bot",
+        "node",
+        "js",
+        "es6",
+        "es7"
+    ],
+    "files": [
+        "lib"
+    ],
+    "main": "./lib/index.js",
+    "types": "./lib/index.d.ts",
+    "exports": {
+        ".": {
+            "import": "./lib/index.mjs",
+            "require": "./lib/index.js",
+            "types": "./lib/index.d.ts"
+        }
+    },
+    "sideEffects": false,
+    "engines": {
+        "node": ">=12.20.0"
+    },
+    "devDependencies": {
+        "@types/debug": "^4.1.8",
+        "@types/express": "^4.17.17",
+        "@types/koa": "^2.13.8"
+    },
+    "dependencies": {
+        "abort-controller": "^3.0.0",
+        "debug": "^4.3.4",
+        "form-data-encoder": "^1.7.2",
+        "formdata-node": "^4.4.1",
+        "inspectable": "^2.1.0",
+        "middleware-io": "^2.8.1",
+        "node-fetch": "^3.3.2"
+    }
 }

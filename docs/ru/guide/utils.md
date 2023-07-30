@@ -31,8 +31,8 @@ Slug
 [Целевые](https://negezor.github.io/vk-io/references/vk-io/interfaces/IResolvedTargetResource.html) — это единичные сущности.
 ```ts
 interface IResolvedTargetResource {
-	id: number;
-	type: 'user' | 'group' | 'application' | 'albums' | 'videos' | 'audios';
+    id: number;
+    type: 'user' | 'group' | 'application' | 'albums' | 'videos' | 'audios';
 }
 ```
 
@@ -40,9 +40,9 @@ interface IResolvedTargetResource {
 
 ```ts
 interface IResolvedOwnerResource {
-	id: number;
-	ownerId: number;
-	type: 'photo' | 'audio' | 'video' | 'doc' | 'wall' | 'topic' | 'album';
+    id: number;
+    ownerId: number;
+    type: 'photo' | 'audio' | 'video' | 'doc' | 'wall' | 'topic' | 'album';
 }
 ```
 
@@ -57,16 +57,16 @@ interface IResolvedOwnerResource {
 import { API, resolveResource } from 'vk-io';
 
 const api = new API({
-	token: process.env.TOKEN
+    token: process.env.TOKEN
 });
 
 const resource = await resolveResource({
-	api,
-	// Или
-	// api: vk.api,
+    api,
+    // Или
+    // api: vk.api,
 
-	// Ресурс который нужно разобрать
-	resource: 'https://vk.com/id1'
+    // Ресурс который нужно разобрать
+    resource: 'https://vk.com/id1'
 });
 
 console.log(resource); // { id: 1, type: 'user' }

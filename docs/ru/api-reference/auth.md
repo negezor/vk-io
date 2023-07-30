@@ -8,8 +8,8 @@ const { auth } = vk;
 
 * [Direct](https://vk.com/dev/auth_direct)
 * Implicit Flow
-	* [Implicit Flow User](https://vk.com/dev/implicit_flow_user)
-	* [implicit Flow Groups](https://vk.com/dev/implicit_flow_group)
+    * [Implicit Flow User](https://vk.com/dev/implicit_flow_user)
+    * [implicit Flow Groups](https://vk.com/dev/implicit_flow_group)
 
 > Обратите внимание
 
@@ -31,23 +31,23 @@ const direct = auth.direct(); // => DirectAuth
 
 ```js
 vk.setOptions({
-	appId: process.env.APP_ID,
-	appSecret: process.env.APP_SECRET,
+    appId: process.env.APP_ID,
+    appSecret: process.env.APP_SECRET,
 
-	login: process.env.LOGIN,
-	password: process.env.PASSWORD
+    login: process.env.LOGIN,
+    password: process.env.PASSWORD
 });
 
 const direct = auth.direct();
 
 direct.run()
-	.then((response) => {
-		console.log('Token:', response.token);
-		console.log('Expires:', response.expires);
+    .then((response) => {
+        console.log('Token:', response.token);
+        console.log('Expires:', response.expires);
 
-		console.log('Email:', response.email);
-		console.log('User ID:', response.user);
-	});
+        console.log('Email:', response.email);
+        console.log('User ID:', response.user);
+    });
 ```
 
 Так же присутствуют заданные приложения по умолчанию для прямой авторизации
@@ -107,21 +107,21 @@ const implicitFlow = auth.implicitFlowUser(); // => ImplicitFlowUser
 
 ```js
 vk.setOptions({
-	appId: process.env.APP,
-	login: process.env.LOGIN,
-	password: process.env.PASSWORD
+    appId: process.env.APP,
+    login: process.env.LOGIN,
+    password: process.env.PASSWORD
 });
 
 const implicitFlow = auth.implicitFlowUser();
 
 implicitFlow.run()
-	.then((response) => {
-		console.log('Token:', response.token);
-		console.log('Expires:', response.expires);
+    .then((response) => {
+        console.log('Token:', response.token);
+        console.log('Expires:', response.expires);
 
-		console.log('Email:', response.email);
-		console.log('User ID:', response.user);
-	});
+        console.log('Email:', response.email);
+        console.log('User ID:', response.user);
+    });
 ```
 
 ### Implicit Flow Groups
@@ -139,21 +139,21 @@ const implicitFlow = auth.implicitFlowGroups(groups); // => ImplicitFlowGroups
 
 ```js
 vk.setOptions({
-	appId: process.env.APP,
-	login: process.env.LOGIN,
-	password: process.env.PASSWORD
+    appId: process.env.APP,
+    login: process.env.LOGIN,
+    password: process.env.PASSWORD
 });
 
 const implicitFlow = auth.implicitFlowGroups([groupIdOne [, ...]]);
 
 implicitFlow.run()
-	.then((tokens) => {
-		for (const response of tokens) {
-			console.log('Group:', response.group);
-			console.log('Token:', response.token);
-			console.log('Expires:', response.expires);
-		}
-	});
+    .then((tokens) => {
+        for (const response of tokens) {
+            console.log('Group:', response.group);
+            console.log('Token:', response.token);
+            console.log('Expires:', response.expires);
+        }
+    });
 ```
 
 ## Open API
@@ -187,27 +187,27 @@ const { URLSearchParams } = require('url');
 const APP_ID = '17071010';
 
 app.get('/vk/valid-auth', async (req, res, next) => {
-	const cookie = req.cookies[`vk_app_${APP_ID}`];
+    const cookie = req.cookies[`vk_app_${APP_ID}`];
 
-	if (!cookie) {
-		res.status(502).json({
-			message: 'Cookie not set',
-			authorized: false
-		});
-		
-		return;
-	}
+    if (!cookie) {
+        res.status(502).json({
+            message: 'Cookie not set',
+            authorized: false
+        });
+        
+        return;
+    }
 
-	const params = {};
-	for (const [key, value] of new URLSearchParams(cookie)) {
-		params[key] = value;
-	}
+    const params = {};
+    for (const [key, value] of new URLSearchParams(cookie)) {
+        params[key] = value;
+    }
 
-	const { authorized } = await auth.userAuthorizedThroughOpenAPI(params);
+    const { authorized } = await auth.userAuthorizedThroughOpenAPI(params);
 
-	res.status(200).json({
-		authorized
-	});
+    res.status(200).json({
+        authorized
+    });
 });
 ```
 
@@ -232,11 +232,11 @@ import { AuthError, AuthErrorCode } from 'vk-io';
 
 ```js
 auth.implicitFlowUser().run()
-	.catch((error) => {
-		if (error instanceof AuthError) {
-			if (error.code === AuthErrorCode.PAGE_BLOCKED) {
-				console.log('Страница заблокирована :c');
-			}
-		}
-	})
+    .catch((error) => {
+        if (error instanceof AuthError) {
+            if (error.code === AuthErrorCode.PAGE_BLOCKED) {
+                console.log('Страница заблокирована :c');
+            }
+        }
+    })
 ```

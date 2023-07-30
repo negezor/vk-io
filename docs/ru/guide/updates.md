@@ -12,17 +12,17 @@
 import { API, Upload, Updates } from 'vk-io';
 
 const api = new API({
-	token: process.env.TOKEN
+    token: process.env.TOKEN
 });
 
 const upload = new Upload({
-	api
+    api
 });
 
 const updates = new Updates({
-	api,
+    api,
 
-	upload
+    upload
 });
 ```
 
@@ -37,14 +37,14 @@ const updates = new Updates({
 ```ts
 // События по типу
 updates.on('message', (context) => {
-	// context.type // message
-	// context.subTypes // ['message_new']
+    // context.type // message
+    // context.subTypes // ['message_new']
 });
 
 // События по подтипу
 updates.on('message_new', (context) => {
-	// context.type // message
-	// context.subTypes // ['message_new']
+    // context.type // message
+    // context.subTypes // ['message_new']
 });
 ```
 
@@ -60,13 +60,13 @@ updates.on('message_new', (context) => {
 Простой пример с модификацией контекста:
 ```ts
 updates.on('message', (context, next) => {
-	context.myProp = 1;
+    context.myProp = 1;
 
-	return next();
+    return next();
 });
 
 updates.on('message', (context, next) => {
-	console.log('My prop', context.myProp); // 1
+    console.log('My prop', context.myProp); // 1
 });
 ```
 
@@ -76,11 +76,11 @@ updates.on('message', (context, next) => {
 
 ```ts
 updates.use((context, next) => {
-	if (!context.isOutbox) {
-		return;
-	}
+    if (!context.isOutbox) {
+        return;
+    }
 
-	return next();
+    return next();
 });
 
 // Больше никогда не вызовется, так как у этого контекста нет свойства `isOutbox`
@@ -91,11 +91,11 @@ updates.on('like', () => {...});
 
 ```ts
 updates.use((context, next) => {
-	if (context.is(['message']) && !context.isOutbox) {
-		return;
-	}
+    if (context.is(['message']) && !context.isOutbox) {
+        return;
+    }
 
-	return next();
+    return next();
 });
 
 // Теперь контекст дойдёт до этого middleware
@@ -106,11 +106,11 @@ updates.on('like', () => {...});
 
 ```ts
 updates.on('message', (context, next) => {
-	if (!context.isOutbox) {
-		return;
-	}
+    if (!context.isOutbox) {
+        return;
+    }
 
-	return next();
+    return next();
 });
 
 // Теперь контекст дойдёт до этого middleware
@@ -137,10 +137,10 @@ updates.on('like', () => {...});
 
 ```ts
 updates.start({
-	webhook: {
-		// ...
-		path: '/super-secret-webhook-path'
-	}
+    webhook: {
+        // ...
+        path: '/super-secret-webhook-path'
+    }
 });
 ```
 

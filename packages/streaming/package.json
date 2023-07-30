@@ -1,52 +1,52 @@
 {
-	"name": "@vk-io/streaming",
-	"version": "1.2.1",
-	"description": "Separated module for receiving data with Streaming API",
-	"license": "MIT",
-	"author": {
-		"name": "Vladlen (Negezor)",
-		"email": "negezor@gmail.com"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/negezor/vk-io.git",
-		"directory": "packages/streaming"
-	},
-	"homepage": "https://github.com/negezor/vk-io#readme",
-	"bugs": "https://github.com/negezor/vk-io/issues",
-	"keywords": [
-		"vk",
-		"io",
-		"api",
-		"streaming"
-	],
-	"files": [
-		"lib"
-	],
-	"main": "./lib/index.js",
-	"types": "./lib/index.d.ts",
-	"exports": {
-		".": {
-			"import": "./lib/index.mjs",
-			"require": "./lib/index.js",
-			"types": "./lib/index.d.ts"
-		}
-	},
-	"sideEffects": false,
-	"engines": {
-		"node": ">=12.20.0"
-	},
-	"peerDependencies": {
-		"vk-io": "^4.0.0"
-	},
-	"dependencies": {
-		"debug": "^4.3.4",
-		"inspectable": "^2.1.0",
-		"node-fetch": "^3.3.2",
-		"ws": "^8.13.0"
-	},
-	"devDependencies": {
-		"@types/debug": "^4.1.8",
-		"@types/ws": "^8.5.5"
-	}
+    "name": "@vk-io/streaming",
+    "version": "1.2.1",
+    "description": "Separated module for receiving data with Streaming API",
+    "license": "MIT",
+    "author": {
+        "name": "Vladlen (Negezor)",
+        "email": "negezor@gmail.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/negezor/vk-io.git",
+        "directory": "packages/streaming"
+    },
+    "homepage": "https://github.com/negezor/vk-io#readme",
+    "bugs": "https://github.com/negezor/vk-io/issues",
+    "keywords": [
+        "vk",
+        "io",
+        "api",
+        "streaming"
+    ],
+    "files": [
+        "lib"
+    ],
+    "main": "./lib/index.js",
+    "types": "./lib/index.d.ts",
+    "exports": {
+        ".": {
+            "import": "./lib/index.mjs",
+            "require": "./lib/index.js",
+            "types": "./lib/index.d.ts"
+        }
+    },
+    "sideEffects": false,
+    "engines": {
+        "node": ">=12.20.0"
+    },
+    "peerDependencies": {
+        "vk-io": "^4.0.0"
+    },
+    "dependencies": {
+        "debug": "^4.3.4",
+        "inspectable": "^2.1.0",
+        "node-fetch": "^3.3.2",
+        "ws": "^8.13.0"
+    },
+    "devDependencies": {
+        "@types/debug": "^4.1.8",
+        "@types/ws": "^8.5.5"
+    }
 }

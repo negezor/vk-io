@@ -12,24 +12,24 @@ export const MINIMUM_TIME_INTERVAL_API = 1133;
  * The attachment types
  */
 export enum AttachmentType {
-	ALBUM = 'album',
-	AUDIO = 'audio',
-	AUDIO_MESSAGE = 'audio_message',
-	GRAFFITI = 'graffiti',
-	DOCUMENT = 'doc',
-	GIFT = 'gift',
-	LINK = 'link',
-	MARKET_ALBUM = 'market_album',
-	MARKET = 'market',
-	PHOTO = 'photo',
-	STICKER = 'sticker',
-	VIDEO = 'video',
-	WALL_REPLY = 'wall_reply',
-	WALL = 'wall',
-	POLL = 'poll',
-	PODCAST = 'podcast',
-	STORY = 'story',
-	TEXTLIVE = 'textlive'
+    ALBUM = 'album',
+    AUDIO = 'audio',
+    AUDIO_MESSAGE = 'audio_message',
+    GRAFFITI = 'graffiti',
+    DOCUMENT = 'doc',
+    GIFT = 'gift',
+    LINK = 'link',
+    MARKET_ALBUM = 'market_album',
+    MARKET = 'market',
+    PHOTO = 'photo',
+    STICKER = 'sticker',
+    VIDEO = 'video',
+    WALL_REPLY = 'wall_reply',
+    WALL = 'wall',
+    POLL = 'poll',
+    PODCAST = 'podcast',
+    STORY = 'story',
+    TEXTLIVE = 'textlive'
 }
 
 export type AttachmentTypeString =
@@ -54,102 +54,102 @@ export type AttachmentTypeString =
  * Default extensions for attachments
  */
 export enum DefaultExtension {
-	photo = 'jpg',
-	video = 'mp4',
-	audio = 'mp3',
-	graffiti = 'png',
-	audioMessage = 'ogg'
+    photo = 'jpg',
+    video = 'mp4',
+    audio = 'mp3',
+    graffiti = 'png',
+    audioMessage = 'ogg'
 }
 
 /**
  * Default content type for attachments
  */
 export enum DefaultContentType {
-	photo = 'image/jpeg',
-	video = 'video/mp4',
-	audio = 'audio/mp3',
-	graffiti = 'image/png',
-	audioMessage = 'audio/ogg'
+    photo = 'image/jpeg',
+    video = 'video/mp4',
+    audio = 'audio/mp3',
+    graffiti = 'image/png',
+    audioMessage = 'audio/ogg'
 }
 
 /**
  * Sources of captcha
  */
 export enum CaptchaType {
-	API = 'API',
-	DIRECT_AUTH = 'DIRECT_AUTH',
-	IMPLICIT_FLOW_AUTH = 'IMPLICIT_FLOW_AUTH',
-	ACCOUNT_VERIFICATION = 'ACCOUNT_VERIFICATION'
+    API = 'API',
+    DIRECT_AUTH = 'DIRECT_AUTH',
+    IMPLICIT_FLOW_AUTH = 'IMPLICIT_FLOW_AUTH',
+    ACCOUNT_VERIFICATION = 'ACCOUNT_VERIFICATION'
 }
 
 /**
  * Message source
  */
 export enum MessageSource {
-	USER = 'user',
-	CHAT = 'chat',
-	GROUP = 'group',
-	EMAIL = 'email'
+    USER = 'user',
+    CHAT = 'chat',
+    GROUP = 'group',
+    EMAIL = 'email'
 }
 
 /**
  * Resource types
  */
 export enum ResourceType {
-	USER = 'user',
-	GROUP = 'group',
-	APPLICATION = 'application'
+    USER = 'user',
+    GROUP = 'group',
+    APPLICATION = 'application'
 }
 
 /**
  * Updates sources
  */
 export enum UpdateSource {
-	POLLING = 'POLLING',
-	WEBHOOK = 'WEBHOOK',
-	WEBSOCKET = 'WEBSOCKET'
+    POLLING = 'POLLING',
+    WEBHOOK = 'WEBHOOK',
+    WEBSOCKET = 'WEBSOCKET'
 }
 
 /**
  * Upload error codes
  */
 export enum UploadErrorCode {
-	MISSING_PARAMETERS = 'MISSING_PARAMETERS',
-	NO_FILES_TO_UPLOAD = 'NO_FILES_TO_UPLOAD',
-	EXCEEDED_MAX_FILES = 'EXCEEDED_MAX_FILES',
-	UNSUPPORTED_SOURCE_TYPE = 'UNSUPPORTED_SOURCE_TYPE'
+    MISSING_PARAMETERS = 'MISSING_PARAMETERS',
+    NO_FILES_TO_UPLOAD = 'NO_FILES_TO_UPLOAD',
+    EXCEEDED_MAX_FILES = 'EXCEEDED_MAX_FILES',
+    UNSUPPORTED_SOURCE_TYPE = 'UNSUPPORTED_SOURCE_TYPE'
 }
 
 /**
  * Updates error codes
  */
 export enum UpdatesErrorCode {
-	NEED_RESTART = 'NEED_RESTART',
-	POLLING_REQUEST_FAILED = 'POLLING_REQUEST_FAILED'
+    NEED_RESTART = 'NEED_RESTART',
+    POLLING_REQUEST_FAILED = 'POLLING_REQUEST_FAILED'
 }
 
 /**
  * Collect error codes
  */
 export enum CollectErrorCode {
-	EXECUTE_ERROR = 'EXECUTE_ERROR'
+    EXECUTE_ERROR = 'EXECUTE_ERROR'
 }
 
 /**
  * Snippets error codes
  */
 export enum ResourceErrorCode {
-	INVALID_URL = 'INVALID_URL',
-	INVALID_RESOURCE = 'INVALID_RESOURCE',
-	RESOURCE_NOT_FOUND = 'RESOURCE_NOT_FOUND'
+    INVALID_URL = 'INVALID_URL',
+    INVALID_RESOURCE = 'INVALID_RESOURCE',
+    RESOURCE_NOT_FOUND = 'RESOURCE_NOT_FOUND'
 }
 
 /**
  * Snippets error codes
  */
 export enum SharedErrorCode {
-	MISSING_CAPTCHA_HANDLER = 'MISSING_CAPTCHA_HANDLER',
-	MISSING_TWO_FACTOR_HANDLER = 'MISSING_TWO_FACTOR_HANDLER'
+    MISSING_CAPTCHA_HANDLER = 'MISSING_CAPTCHA_HANDLER',
+    MISSING_TWO_FACTOR_HANDLER = 'MISSING_TWO_FACTOR_HANDLER'
 }
 
 /**

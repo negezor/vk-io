@@ -10,33 +10,33 @@
 
 Есть два базовых класса для работы с прикреплениями:
 - [Attachment](https://negezor.github.io/vk-io/references/vk-io/classes/Attachment.html) — основной класс, может быть прикреплением `attachment1234_1234_1234`
-	- [PollAttachment](https://negezor.github.io/vk-io/references/vk-io/classes/PollAttachment.html)
-	- [WallAttachment](https://negezor.github.io/vk-io/references/vk-io/classes/WallAttachment.html)
-	- [PhotoAttachment](https://negezor.github.io/vk-io/references/vk-io/classes/PhotoAttachment.html)
-	- [AudioAttachment](https://negezor.github.io/vk-io/references/vk-io/classes/AudioAttachment.html)
-	- [StoryAttachment](https://negezor.github.io/vk-io/references/vk-io/classes/StoryAttachment.html)
-	- [VideoAttachment](https://negezor.github.io/vk-io/references/vk-io/classes/VideoAttachment.html)
-	- [MarketAttachment](https://negezor.github.io/vk-io/references/vk-io/classes/MarketAttachment.html)
-	- [GraffitiAttachment](https://negezor.github.io/vk-io/references/vk-io/classes/GraffitiAttachment.html)
-	- [DocumentAttachment](https://negezor.github.io/vk-io/references/vk-io/classes/DocumentAttachment.html)
-	- [MarketAlbumAttachment](https://negezor.github.io/vk-io/references/vk-io/classes/MarketAlbumAttachment.html)
-	- [AudioMessageAttachment](https://negezor.github.io/vk-io/references/vk-io/classes/AudioMessageAttachment.html)
+    - [PollAttachment](https://negezor.github.io/vk-io/references/vk-io/classes/PollAttachment.html)
+    - [WallAttachment](https://negezor.github.io/vk-io/references/vk-io/classes/WallAttachment.html)
+    - [PhotoAttachment](https://negezor.github.io/vk-io/references/vk-io/classes/PhotoAttachment.html)
+    - [AudioAttachment](https://negezor.github.io/vk-io/references/vk-io/classes/AudioAttachment.html)
+    - [StoryAttachment](https://negezor.github.io/vk-io/references/vk-io/classes/StoryAttachment.html)
+    - [VideoAttachment](https://negezor.github.io/vk-io/references/vk-io/classes/VideoAttachment.html)
+    - [MarketAttachment](https://negezor.github.io/vk-io/references/vk-io/classes/MarketAttachment.html)
+    - [GraffitiAttachment](https://negezor.github.io/vk-io/references/vk-io/classes/GraffitiAttachment.html)
+    - [DocumentAttachment](https://negezor.github.io/vk-io/references/vk-io/classes/DocumentAttachment.html)
+    - [MarketAlbumAttachment](https://negezor.github.io/vk-io/references/vk-io/classes/MarketAlbumAttachment.html)
+    - [AudioMessageAttachment](https://negezor.github.io/vk-io/references/vk-io/classes/AudioMessageAttachment.html)
 - [ExternalAttachment](https://negezor.github.io/vk-io/references/vk-io/classes/ExternalAttachment.html) второстепенный класс, без возможности прикрепления. Обычно можно получить только с самого ВКонтакте API.
-	- [GiftAttachment](https://negezor.github.io/vk-io/references/vk-io/classes/GiftAttachment.html)
-	- [LinkAttachment](https://negezor.github.io/vk-io/references/vk-io/classes/LinkAttachment.html)
-	- [StickerAttachment](https://negezor.github.io/vk-io/references/vk-io/classes/StickerAttachment.html)
-	- [WallReplyAttachment](https://negezor.github.io/vk-io/references/vk-io/classes/WallReplyAttachment.html)
+    - [GiftAttachment](https://negezor.github.io/vk-io/references/vk-io/classes/GiftAttachment.html)
+    - [LinkAttachment](https://negezor.github.io/vk-io/references/vk-io/classes/LinkAttachment.html)
+    - [StickerAttachment](https://negezor.github.io/vk-io/references/vk-io/classes/StickerAttachment.html)
+    - [WallReplyAttachment](https://negezor.github.io/vk-io/references/vk-io/classes/WallReplyAttachment.html)
 
 ```ts
 const attachment = new Attachment({
-	// api,
+    // api,
 
-	type: 'photo',
-	payload: {
-		id: 1,
-		owner_id: 100,
-		// access_key: 'accessKey'
-	}
+    type: 'photo',
+    payload: {
+        id: 1,
+        owner_id: 100,
+        // access_key: 'accessKey'
+    }
 });
 
 // attachment.isFilled(); // => false
@@ -64,27 +64,27 @@ String([attachment, 'doc100_5']); // photo100_1,doc100_5
 
 ```ts
 await api.messages.send({
-	peer_id: <peer_id>,
-	// Здесь будет photo100_1
-	attachment
+    peer_id: <peer_id>,
+    // Здесь будет photo100_1
+    attachment
 
-	// Ручное преобразование одного прикрепления
-	// attachment: attachment.toString()
-	// attachment: String(attachment)
+    // Ручное преобразование одного прикрепления
+    // attachment: attachment.toString()
+    // attachment: String(attachment)
 
-	// Ручное преобразование массива прикреплений
-	// attachment: [attachment].toString()
-	// attachment: String([attachment])
+    // Ручное преобразование массива прикреплений
+    // attachment: [attachment].toString()
+    // attachment: String([attachment])
 });
 
 // Можно передавать так же в массиве
 await api.messages.send({
-	peer_id: <peer_id>,
-	// Здесь будет photo100_1,doc100_5
-	attachment: [
-		attachment,
-		'doc100_5'
-	]
+    peer_id: <peer_id>,
+    // Здесь будет photo100_1,doc100_5
+    attachment: [
+        attachment,
+        'doc100_5'
+    ]
 });
 ```
 

@@ -1,55 +1,55 @@
 {
-	"name": "@vk-io/authorization",
-	"version": "1.4.1",
-	"description": "Separated module for authorization",
-	"license": "MIT",
-	"author": {
-		"name": "Vladlen (Negezor)",
-		"email": "negezor@gmail.com"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/negezor/vk-io.git",
-		"directory": "packages/authorization"
-	},
-	"homepage": "https://github.com/negezor/vk-io#readme",
-	"bugs": "https://github.com/negezor/vk-io/issues",
-	"keywords": [
-		"vk",
-		"io",
-		"api",
-		"authorization"
-	],
-	"files": [
-		"lib"
-	],
-	"main": "./lib/index.js",
-	"types": "./lib/index.d.ts",
-	"exports": {
-		".": {
-			"import": "./lib/index.mjs",
-			"require": "./lib/index.js",
-			"types": "./lib/index.d.ts"
-		}
-	},
-	"sideEffects": false,
-	"engines": {
-		"node": ">=12.20.0"
-	},
-	"peerDependencies": {
-		"vk-io": "^4.0.0"
-	},
-	"dependencies": {
-		"abort-controller": "^3.0.0",
-		"cheerio": "^1.0.0-rc.12",
-		"debug": "^4.3.4",
-		"inspectable": "^2.1.0",
-		"node-fetch": "^3.3.2",
-		"tough-cookie": "^4.1.3"
-	},
-	"devDependencies": {
-		"@types/cheerio": "^0.22.31",
-		"@types/debug": "^4.1.8",
-		"@types/tough-cookie": "^4.0.2"
-	}
+    "name": "@vk-io/authorization",
+    "version": "1.4.1",
+    "description": "Separated module for authorization",
+    "license": "MIT",
+    "author": {
+        "name": "Vladlen (Negezor)",
+        "email": "negezor@gmail.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/negezor/vk-io.git",
+        "directory": "packages/authorization"
+    },
+    "homepage": "https://github.com/negezor/vk-io#readme",
+    "bugs": "https://github.com/negezor/vk-io/issues",
+    "keywords": [
+        "vk",
+        "io",
+        "api",
+        "authorization"
+    ],
+    "files": [
+        "lib"
+    ],
+    "main": "./lib/index.js",
+    "types": "./lib/index.d.ts",
+    "exports": {
+        ".": {
+            "import": "./lib/index.mjs",
+            "require": "./lib/index.js",
+            "types": "./lib/index.d.ts"
+        }
+    },
+    "sideEffects": false,
+    "engines": {
+        "node": ">=12.20.0"
+    },
+    "peerDependencies": {
+        "vk-io": "^4.0.0"
+    },
+    "dependencies": {
+        "abort-controller": "^3.0.0",
+        "cheerio": "^1.0.0-rc.12",
+        "debug": "^4.3.4",
+        "inspectable": "^2.1.0",
+        "node-fetch": "^3.3.2",
+        "tough-cookie": "^4.1.3"
+    },
+    "devDependencies": {
+        "@types/cheerio": "^0.22.31",
+        "@types/debug": "^4.1.8",
+        "@types/tough-cookie": "^4.0.2"
+    }
 }

@@ -12,11 +12,11 @@
 import { API, Upload } from 'vk-io';
 
 const api = new API({
-	token: process.env.TOKEN
+    token: process.env.TOKEN
 });
 
 const upload = new Upload({
-	api
+    api
 });
 ```
 
@@ -27,75 +27,75 @@ const upload = new Upload({
 Полный набор опций:
 ```ts
 const attachment = await upload.messagePhoto({
-	source: {
-		// Принимает массив значений (нужно для загрузки в альбом)
-		values: [{
-			value: <input>,
-			// Название файла (нужно в основном для загрузки в документы)
-			// filename: 'cat.jpg'
-			// Тип загружаемого контента
-			// contentType: 'image/jpeg',
-			// Размер файла в битах, обязательно при загрузке через ReadableStream или если невозможно получить длину другим способом
-			// contentLength: 241000
-		}],
-		// Время ожидания в миллисекундах
-		// timeout: 60_000
-		// Сервер загрузки
-		// uploadUrl: <server url>
-	}
+    source: {
+        // Принимает массив значений (нужно для загрузки в альбом)
+        values: [{
+            value: <input>,
+            // Название файла (нужно в основном для загрузки в документы)
+            // filename: 'cat.jpg'
+            // Тип загружаемого контента
+            // contentType: 'image/jpeg',
+            // Размер файла в битах, обязательно при загрузке через ReadableStream или если невозможно получить длину другим способом
+            // contentLength: 241000
+        }],
+        // Время ожидания в миллисекундах
+        // timeout: 60_000
+        // Сервер загрузки
+        // uploadUrl: <server url>
+    }
 })
 ```
 Обычно достаточно упрощённой загрузки
 ```ts
 const attachment = await upload.messagePhoto({
-	source: {
-		value: <input>
-	}
+    source: {
+        value: <input>
+    }
 });
 ```
 
 Поддерживаемые типы загрузки:
 ```ts
 [
-	// URL
-	{
-		value: 'http://placekitten.com/200/300',
-		// Необходимо указать, если сервер в заголовках не указывает Content-Length
-		// contentLength: <size>
-	},
+    // URL
+    {
+        value: 'http://placekitten.com/200/300',
+        // Необходимо указать, если сервер в заголовках не указывает Content-Length
+        // contentLength: <size>
+    },
 
-	// File Path
-	{
-		value: './path/to/file.jpg'
-	},
+    // File Path
+    {
+        value: './path/to/file.jpg'
+    },
 
-	// Buffer
-	{
-		value: fs.readFileSync('./path/to/file.jpg')
-	},
+    // Buffer
+    {
+        value: fs.readFileSync('./path/to/file.jpg')
+    },
 
-	// ReadableStream
-	{
-		value: fs.createReadStream('./path/to/file.jpg'),
-		// Обязательно нужно указать размер файла, иначе загрузка завершится неудачей
-		// В примере использован `fs.statSync`, в реальном приложении нужно использовать `fs.stats` так как он не блокирует поток
-		contentLength: fs.statSync('./path/to/file.jpg').size
-	}
+    // ReadableStream
+    {
+        value: fs.createReadStream('./path/to/file.jpg'),
+        // Обязательно нужно указать размер файла, иначе загрузка завершится неудачей
+        // В примере использован `fs.statSync`, в реальном приложении нужно использовать `fs.stats` так как он не блокирует поток
+        contentLength: fs.statSync('./path/to/file.jpg').size
+    }
 ]
 ```
 В основном методы загрузки возвращают инстанции `Attachment`, что позволяет удобно с ними взаимодействовать, например:
 ```ts
 // PhotoAttachment
 const attachment = await upload.messagePhoto({
-	source: {
-		value: <input>
-	}
+    source: {
+        value: <input>
+    }
 });
 
 await api.messages.send({
-	peer_id: <peer id>,
-	// В итоге здесь будет photo1234_1234 (приведение через toString)
-	attachment 
+    peer_id: <peer id>,
+    // В итоге здесь будет photo1234_1234 (приведение через toString)
+    attachment 
 });
 ```
 

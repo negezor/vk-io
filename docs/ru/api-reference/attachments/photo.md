@@ -22,7 +22,7 @@ new PhotoAttachment(photo, vk);
 
 ```js
 const [photo] = await vk.api.photos.getById({
-	photos: '1_456264771'
+    photos: '1_456264771'
 });
 
 new PhotoAttachment(photo, vk);

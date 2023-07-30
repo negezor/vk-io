@@ -9,79 +9,79 @@ import { API } from '../api';
 export type UploadSourceValue = NodeJS.ReadableStream | Buffer | string;
 
 export interface IUploadSourceMedia {
-	value: UploadSourceValue;
+    value: UploadSourceValue;
 
-	filename?: string;
-	contentType?: string;
-	contentLength?: number;
+    filename?: string;
+    contentType?: string;
+    contentLength?: number;
 }
 
 export interface IUploadSourceOptions {
-	values: AllowArray<IUploadSourceMedia>;
+    values: AllowArray<IUploadSourceMedia>;
 
-	uploadUrl?: string;
-	timeout?: number;
+    uploadUrl?: string;
+    timeout?: number;
 }
 
 export type UploadNormalizedSourceOptions = IUploadSourceOptions & {
-	values: IUploadSourceMedia[];
+    values: IUploadSourceMedia[];
 };
 
 export type UploadAllowedSource = IUploadSourceOptions | IUploadSourceMedia;
 
 export interface IUploadParams {
-	source: UploadAllowedSource;
+    source: UploadAllowedSource;
 }
 
 export interface IUploadConduct {
-	/**
-	 * Field name
-	 */
-	field: string;
-	/**
-	 * Upload params
-	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	params: IUploadParams & Record<string, any>;
+    /**
+     * Field name
+     */
+    field: string;
+    /**
+     * Upload params
+     */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    params: IUploadParams & Record<string, any>;
 
-	/**
-	 * Get server functions
-	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	getServer: (params: any) => Promise<{ upload_url: string }>;
-	/**
-	 * Copies server params
-	 */
-	serverParams?: string[];
+    /**
+     * Get server functions
+     */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    getServer: (params: any) => Promise<{ upload_url: string }>;
+    /**
+     * Copies server params
+     */
+    serverParams?: string[];
 
-	/**
-	 * Save files functions
-	 */
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	saveFiles: (params: any) => Promise<any>;
-	/**
-	 * Copies save params
-	 */
-	saveParams?: string[];
+    /**
+     * Save files functions
+     */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    saveFiles: (params: any) => Promise<any>;
+    /**
+     * Copies save params
+     */
+    saveParams?: string[];
 
-	/**
-	 * Upload params
-	 */
-	uploadParams?: string[];
+    /**
+     * Upload params
+     */
+    uploadParams?: string[];
 
-	/**
-	 * Max uploaded files for one request
-	 */
-	maxFiles: number;
-	/**
-	 * Attachment type
-	 */
-	attachmentType?: string;
+    /**
+     * Max uploaded files for one request
+     */
+    maxFiles: number;
+    /**
+     * Attachment type
+     */
+    attachmentType?: string;
 }
 
 export interface IUploadOptions {
-	api: API;
+    api: API;
 
-	agent?: Agent;
-	uploadTimeout?: number;
+    agent?: Agent;
+    uploadTimeout?: number;
 }

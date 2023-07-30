@@ -23,43 +23,43 @@
 
 ```ts
 const builder = Keyboard.builder()
-	.textButton({
-		label: 'Go back',
-		payload: {
-			command: 'back'
-		}
-	})
-	.row()
-	.textButton({
-		label: 'Buy a tea',
-		payload: {
-			command: 'buy',
-			item: 'tea'
-		},
-		color: Keyboard.POSITIVE_COLOR
-	})
-	.textButton({
-		label: 'Buy a coffee',
-		payload: {
-			command: 'buy',
-			item: 'coffee'
-		},
-		color: Keyboard.POSITIVE_COLOR
-	})
-	.row()
-	.textButton({
-		label: 'Cancel',
-		payload: {
-			command: 'cancel'
-		},
-		color: Keyboard.NEGATIVE_COLOR
-	}); // => KeyboardBuilder
+    .textButton({
+        label: 'Go back',
+        payload: {
+            command: 'back'
+        }
+    })
+    .row()
+    .textButton({
+        label: 'Buy a tea',
+        payload: {
+            command: 'buy',
+            item: 'tea'
+        },
+        color: Keyboard.POSITIVE_COLOR
+    })
+    .textButton({
+        label: 'Buy a coffee',
+        payload: {
+            command: 'buy',
+            item: 'coffee'
+        },
+        color: Keyboard.POSITIVE_COLOR
+    })
+    .row()
+    .textButton({
+        label: 'Cancel',
+        payload: {
+            command: 'cancel'
+        },
+        color: Keyboard.NEGATIVE_COLOR
+    }); // => KeyboardBuilder
 
 // Отправка клавиатуры
 await api.messages.send({
-	// ...
-	
-	keyboard: builder
+    // ...
+    
+    keyboard: builder
 });
 ```
 
@@ -67,49 +67,49 @@ await api.messages.send({
 
 ```ts
 const builder = Keyboard.keyboard([
-	// Одна кнопка
-	[
-		Keyboard.textButton({
-			label: 'Go back',
-			payload: {
-				command: 'back'
-			}
-		})
-	],
-	// Строка из 2 и более кнопок
-	[
-		Keyboard.textButton({
-			label: 'Buy a tea',
-			payload: {
-				command: 'buy',
-				item: 'tea'
-			},
-			color: Keyboard.POSITIVE_COLOR
-		}),
-		Keyboard.textButton({
-			label: 'Buy a coffee',
-			payload: {
-				command: 'buy',
-				item: 'coffee'
-			},
-			color: Keyboard.POSITIVE_COLOR
-		})
-	],
-	// Альтернативный вариант для одной кнопки
-	Keyboard.textButton({
-		label: 'Cancel',
-		payload: {
-			command: 'cancel'
-		},
-		color: Keyboard.NEGATIVE_COLOR
-	})
+    // Одна кнопка
+    [
+        Keyboard.textButton({
+            label: 'Go back',
+            payload: {
+                command: 'back'
+            }
+        })
+    ],
+    // Строка из 2 и более кнопок
+    [
+        Keyboard.textButton({
+            label: 'Buy a tea',
+            payload: {
+                command: 'buy',
+                item: 'tea'
+            },
+            color: Keyboard.POSITIVE_COLOR
+        }),
+        Keyboard.textButton({
+            label: 'Buy a coffee',
+            payload: {
+                command: 'buy',
+                item: 'coffee'
+            },
+            color: Keyboard.POSITIVE_COLOR
+        })
+    ],
+    // Альтернативный вариант для одной кнопки
+    Keyboard.textButton({
+        label: 'Cancel',
+        payload: {
+            command: 'cancel'
+        },
+        color: Keyboard.NEGATIVE_COLOR
+    })
 ]); // => KeyboardBuilder
 
 // Отправка клавиатуры
 await api.messages.send({
-	// ...
+    // ...
 
-	keyboard: builder
+    keyboard: builder
 });
 ```
 
@@ -124,12 +124,12 @@ await api.messages.send({
 
 ```ts
 builder.textButton({
-	label: 'Buy a coffee',
-	payload: {
-		command: 'buy',
-		item: 'coffee'
-	},
-	color: Keyboard.POSITIVE_COLOR
+    label: 'Buy a coffee',
+    payload: {
+        command: 'buy',
+        item: 'coffee'
+    },
+    color: Keyboard.POSITIVE_COLOR
 })
 ```
 
@@ -137,8 +137,8 @@ builder.textButton({
 
 ```ts
 builder.urlButton({
-	label: 'Buy a coffee',
-	url: 'https://coffee.mania/buy'
+    label: 'Buy a coffee',
+    url: 'https://coffee.mania/buy'
 });
 ```
 
@@ -147,9 +147,9 @@ builder.urlButton({
 
 ```ts
 builder.locationRequestButton({
-	payload: {
-		command: 'order_delivery'
-	}
+    payload: {
+        command: 'order_delivery'
+    }
 });
 ```
 
@@ -157,11 +157,11 @@ builder.locationRequestButton({
 
 ```ts
 builder.payButton({
-	hash: {
-		action: 'transfer-to-group',
-		group_id: 1,
-		aid: 10
-	}
+    hash: {
+        action: 'transfer-to-group',
+        group_id: 1,
+        aid: 10
+    }
 });
 ```
 
@@ -169,10 +169,10 @@ builder.payButton({
 
 ```ts
 builder.applicationButton({
-	label: 'LiveWidget',
-	appId: 6232540,
-	ownerId: -157525928,
-	// hash: ''
+    label: 'LiveWidget',
+    appId: 6232540,
+    ownerId: -157525928,
+    // hash: ''
 })
 ```
 
@@ -181,11 +181,11 @@ builder.applicationButton({
 
 ```ts
 builder.callbackButton({
-	label: 'Buy a coffee',
-	payload: {
-		command: 'buy',
-		item: 'coffee'
-	}
+    label: 'Buy a coffee',
+    payload: {
+        command: 'buy',
+        item: 'coffee'
+    }
 });
 ```
 

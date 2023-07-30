@@ -12,14 +12,14 @@ export * from './utils/resource-resolver';
 export { getRandomId, applyMixins } from './utils/helpers';
 
 export {
-	CaptchaType,
-	UpdateSource,
-	ResourceType,
-	MessageSource,
-	AttachmentType,
-	AttachmentTypeString,
+    CaptchaType,
+    UpdateSource,
+    ResourceType,
+    MessageSource,
+    AttachmentType,
+    AttachmentTypeString,
 
-	kSerializeData
+    kSerializeData
 } from './utils/constants';
 
 export { VK } from './vk';

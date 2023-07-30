@@ -33,7 +33,7 @@ import { SessionManager } from '@vk-io/session';
 import { SceneManager, StepScene } from '@vk-io/scenes';
 
 const vk = new VK({
-	token: process.env.TOKEN
+    token: process.env.TOKEN
 });
 
 const sessionManager = new SessionManager();
@@ -45,41 +45,41 @@ vk.updates.on('message_new', sceneManager.middleware);
 vk.updates.on('message_new', sceneManager.middlewareIntercept); // Default scene entry handler
 
 vk.updates.on('message_new', (context, next) => {
-	if (context.text === '/signup') {
-		return context.scene.enter('signup');
-	}
+    if (context.text === '/signup') {
+        return context.scene.enter('signup');
+    }
 
-	return next();
+    return next();
 });
 
 sceneManager.addScenes([
-	new StepScene('signup', [
-		(context) => {
-			if (context.scene.step.firstTime || !context.text) {
-				return context.send('What\'s your name?');
-			}
+    new StepScene('signup', [
+        (context) => {
+            if (context.scene.step.firstTime || !context.text) {
+                return context.send('What\'s your name?');
+            }
 
-			context.scene.state.firstName = context.text;
+            context.scene.state.firstName = context.text;
 
-			return context.scene.step.next();
-		},
-		(context) => {
-			if (context.scene.step.firstTime || !context.text) {
-				return context.send('How old are you?');
-			}
+            return context.scene.step.next();
+        },
+        (context) => {
+            if (context.scene.step.firstTime || !context.text) {
+                return context.send('How old are you?');
+            }
 
-			context.scene.state.age = Number(context.text);
+            context.scene.state.age = Number(context.text);
 
-			return context.scene.step.next();
-		},
-		async (context) => {
-			const { firstName, age } = context.scene.state;
+            return context.scene.step.next();
+        },
+        async (context) => {
+            const { firstName, age } = context.scene.state;
 
-			await context.send(`👤 ${firstName} ${age} ages`);
+            await context.send(`👤 ${firstName} ${age} ages`);
 
-			return context.scene.step.next(); // Automatic exit, since this is the last scene
-		}
-	])
+            return context.scene.step.next(); // Automatic exit, since this is the last scene
+        }
+    ])
 ]);
 
 vk.updates.start().catch(console.error);

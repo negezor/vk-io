@@ -17,59 +17,59 @@ export interface IWallPostContextPayload extends IWallAttachmentPayload {
 }
 
 export type WallPostContextOptions<S> =
-	ContextFactoryOptions<IWallPostContextPayload, S>;
+    ContextFactoryOptions<IWallPostContextPayload, S>;
 
 export class WallPostContext<S = ContextDefaultState>
-	extends Context<
-	IWallPostContextPayload,
-	S,
-	WallPostContextType,
-	WallPostContextSubType
-	> {
-	public wall: WallAttachment;
+    extends Context<
+    IWallPostContextPayload,
+    S,
+    WallPostContextType,
+    WallPostContextSubType
+    > {
+    public wall: WallAttachment;
 
-	public constructor(options: WallPostContextOptions<S>) {
-		super({
-			...options,
+    public constructor(options: WallPostContextOptions<S>) {
+        super({
+            ...options,
 
-			type: 'wall_post',
-			subTypes: [
-				options.updateType as WallPostContextSubType
-			]
-		});
+            type: 'wall_post',
+            subTypes: [
+                options.updateType as WallPostContextSubType
+            ]
+        });
 
-		this.wall = new WallAttachment({
-			api: this.api,
-			payload: this.payload
-		});
-	}
+        this.wall = new WallAttachment({
+            api: this.api,
+            payload: this.payload
+        });
+    }
 
-	/**
-	 * Checks is repost
-	 */
-	public get isRepost(): boolean {
-		return this.subTypes.includes('wall_repost');
-	}
+    /**
+     * Checks is repost
+     */
+    public get isRepost(): boolean {
+        return this.subTypes.includes('wall_repost');
+    }
 
-	/**
-	 * Removes a record from the wall
-	 */
-	public deletePost(): Promise<number> {
-		const { wall } = this;
+    /**
+     * Removes a record from the wall
+     */
+    public deletePost(): Promise<number> {
+        const { wall } = this;
 
-		return this.api.wall.delete({
-			post_id: wall.id,
-			owner_id: wall.ownerId
-		});
-	}
+        return this.api.wall.delete({
+            post_id: wall.id,
+            owner_id: wall.ownerId
+        });
+    }
 
-	/**
-	 * Returns the custom data
-	 */
-	public [kSerializeData](): object {
-		return pickProperties(this, [
-			'wall',
-			'isRepost'
-		]);
-	}
+    /**
+     * Returns the custom data
+     */
+    public [kSerializeData](): object {
+        return pickProperties(this, [
+            'wall',
+            'isRepost'
+        ]);
+    }
 }

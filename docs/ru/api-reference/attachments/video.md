@@ -22,7 +22,7 @@ new VideoAttachment(video, vk);
 
 ```js
 const [video] = await vk.api.video.get({
-	photos: '1_456264771'
+    photos: '1_456264771'
 });
 
 new VideoAttachment(video, vk);

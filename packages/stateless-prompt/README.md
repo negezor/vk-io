@@ -37,28 +37,28 @@ import { VK } from 'vk-io';
 import { StatelessPromptManager } from '@vk-io/stateless-prompt';
 
 const vk = new VK({
-	token: process.env.TOKEN
+    token: process.env.TOKEN
 });
 
 const namePrompt = new StatelessPromptManager({
-	slug: 'name',
-	handler: (context, next) => {
-		if (!context.text) {
-			return context.send('Please reply your name with text to previous message');
-		}
+    slug: 'name',
+    handler: (context, next) => {
+        if (!context.text) {
+            return context.send('Please reply your name with text to previous message');
+        }
 
-		return context.send(`Your name is ${context.text}`);
-	}
+        return context.send(`Your name is ${context.text}`);
+    }
 });
 
 vk.updates.on('message_new', namePrompt.middlewareIntercept);
 
 vk.updates.on('message_new', (context, next) => {
-	if (context.text === '/signup') {
-		return context.send('What\'s your name? Please reply to this message. ' + namePrompt.suffix);
-	}
+    if (context.text === '/signup') {
+        return context.send('What\'s your name? Please reply to this message. ' + namePrompt.suffix);
+    }
 
-	return next();
+    return next();
 });
 
 vk.updates.start().catch(console.error);

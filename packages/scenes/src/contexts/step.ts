@@ -3,123 +3,123 @@ import { StepSceneHandler } from '../scenes/step.types';
 import { LastAction } from './scene.types';
 
 export class StepSceneContext<S extends Record<string, unknown>> {
-	private context: IStepContextOptions<S>['context'];
+    private context: IStepContextOptions<S>['context'];
 
-	private steps: IStepContextOptions<S>['steps'];
+    private steps: IStepContextOptions<S>['steps'];
 
-	private stepChanged = false;
+    private stepChanged = false;
 
-	public constructor(options: IStepContextOptions<S>) {
-		this.context = options.context;
+    public constructor(options: IStepContextOptions<S>) {
+        this.context = options.context;
 
-		this.steps = options.steps;
-	}
+        this.steps = options.steps;
+    }
 
-	/**
-	 * The first enter to the handler
-	 */
-	public get firstTime(): boolean {
-		const { firstTime = true } = this.context.scene.session;
+    /**
+     * The first enter to the handler
+     */
+    public get firstTime(): boolean {
+        const { firstTime = true } = this.context.scene.session;
 
-		return firstTime;
-	}
+        return firstTime;
+    }
 
-	/**
-	 * Returns current stepId
-	 */
-	public get stepId(): number {
-		return this.context.scene.session.stepId || 0;
-	}
+    /**
+     * Returns current stepId
+     */
+    public get stepId(): number {
+        return this.context.scene.session.stepId || 0;
+    }
 
-	/**
-	 * Sets current stepId
-	 */
-	public set stepId(stepId: number) {
-		const { session } = this.context.scene;
+    /**
+     * Sets current stepId
+     */
+    public set stepId(stepId: number) {
+        const { session } = this.context.scene;
 
-		session.stepId = stepId;
-		session.firstTime = true;
+        session.stepId = stepId;
+        session.firstTime = true;
 
-		this.stepChanged = true;
-	}
+        this.stepChanged = true;
+    }
 
-	/**
-	 * Returns current handler
-	 */
-	public get current(): StepSceneHandler<{}, S> | undefined {
-		return this.steps[this.stepId];
-	}
+    /**
+     * Returns current handler
+     */
+    public get current(): StepSceneHandler<{}, S> | undefined {
+        return this.steps[this.stepId];
+    }
 
-	/**
-	 * Reenter current step handler
-	 *
-	 * ```ts
-	 * ctx.scene.step.reenter();
-	 * ```
-	 */
-	public async reenter(): Promise<void> {
-		const { current } = this;
+    /**
+     * Reenter current step handler
+     *
+     * ```ts
+     * ctx.scene.step.reenter();
+     * ```
+     */
+    public async reenter(): Promise<void> {
+        const { current } = this;
 
-		if (!current) {
-			await this.context.scene.leave();
+        if (!current) {
+            await this.context.scene.leave();
 
-			return;
-		}
+            return;
+        }
 
-		this.stepChanged = false;
+        this.stepChanged = false;
 
-		await current(this.context);
+        await current(this.context);
 
-		if (this.context.scene.lastAction !== LastAction.LEAVE && !this.stepChanged) {
-			this.context.scene.session.firstTime = false;
-		}
-	}
+        if (this.context.scene.lastAction !== LastAction.LEAVE && !this.stepChanged) {
+            this.context.scene.session.firstTime = false;
+        }
+    }
 
-	/**
-	 * The go method goes to a specific step
-	 *
-	 * ```ts
-	 * ctx.scene.step.go(3);
-	 * ctx.scene.step.go(3, {
-	 *   silent: true
-	 * });
-	 * ```
-	 */
-	public go(stepId: number, { silent = false }: IStepContextGoOptions = {}): Promise<void> {
-		this.stepId = stepId;
+    /**
+     * The go method goes to a specific step
+     *
+     * ```ts
+     * ctx.scene.step.go(3);
+     * ctx.scene.step.go(3, {
+     *   silent: true
+     * });
+     * ```
+     */
+    public go(stepId: number, { silent = false }: IStepContextGoOptions = {}): Promise<void> {
+        this.stepId = stepId;
 
-		if (silent) {
-			return Promise.resolve();
-		}
+        if (silent) {
+            return Promise.resolve();
+        }
 
-		return this.reenter();
-	}
+        return this.reenter();
+    }
 
-	/**
-	 * Move to the next handler
-	 *
-	 * ```ts
-	 * ctx.scene.step.next();
-	 * ctx.scene.step.next({
-	 *   silent: true
-	 * });
-	 * ```
-	 */
-	public next(options?: IStepContextGoOptions): Promise<void> {
-		return this.go(this.stepId + 1, options);
-	}
+    /**
+     * Move to the next handler
+     *
+     * ```ts
+     * ctx.scene.step.next();
+     * ctx.scene.step.next({
+     *   silent: true
+     * });
+     * ```
+     */
+    public next(options?: IStepContextGoOptions): Promise<void> {
+        return this.go(this.stepId + 1, options);
+    }
 
-	/**
-	 * Move to the previous handler
-	 *
-	 * ```ts
-	 * ctx.scene.step.previous();
-	 * ctx.scene.step.previous({
-	 *   silent: true
-	 * });
-	 * ```
-	 */
-	public previous(options?: IStepContextGoOptions): Promise<void> {
-		return this.go(this.stepId - 1, options);
-	}
+    /**
+     * Move to the previous handler
+     *
+     * ```ts
+     * ctx.scene.step.previous();
+     * ctx.scene.step.previous({
+     *   silent: true
+     * });
+     * ```
+     */
+    public previous(options?: IStepContextGoOptions): Promise<void> {
+        return this.go(this.stepId - 1, options);
+    }
 }

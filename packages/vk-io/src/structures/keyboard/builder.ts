@@ -1,368 +1,368 @@
 import { URLSearchParams } from 'url';
 
 import {
-	ButtonColor,
-	ButtonPayload,
-	KeyboardButton,
+    ButtonColor,
+    ButtonPayload,
+    KeyboardButton,
 
-	IKeyboardTextButtonOptions,
-	IKeyboardURLButtonOptions,
-	IKeyboardLocationRequestButtonOptions,
-	IKeyboardVKPayButtonOptions,
-	IKeyboardApplicationButtonOptions,
-	IKeyboardCallbackButtonOptions
+    IKeyboardTextButtonOptions,
+    IKeyboardURLButtonOptions,
+    IKeyboardLocationRequestButtonOptions,
+    IKeyboardVKPayButtonOptions,
+    IKeyboardApplicationButtonOptions,
+    IKeyboardCallbackButtonOptions
 } from './types';
 
 const serializePayload = (rawPayload: ButtonPayload): string => {
-	const payload = JSON.stringify(rawPayload);
+    const payload = JSON.stringify(rawPayload);
 
-	if (payload.length > 255) {
-		throw new RangeError('Maximum length of payload 255 characters');
-	}
+    if (payload.length > 255) {
+        throw new RangeError('Maximum length of payload 255 characters');
+    }
 
-	return payload;
+    return payload;
 };
 
 export class KeyboardBuilder {
-	/**
-	 * Does the keyboard close after pressing the button
-	 */
-	public isOneTime = false;
+    /**
+     * Does the keyboard close after pressing the button
+     */
+    public isOneTime = false;
 
-	/**
-	 * The keyboard must be attached to the message
-	 */
-	public isInline = false;
+    /**
+     * The keyboard must be attached to the message
+     */
+    public isInline = false;
 
-	/**
-	 * Rows with all buttons
-	 */
-	protected rows: KeyboardButton[][] = [];
+    /**
+     * Rows with all buttons
+     */
+    protected rows: KeyboardButton[][] = [];
 
-	/**
-	 * Current row of buttons
-	 */
-	protected currentRow: KeyboardButton[] = [];
+    /**
+     * Current row of buttons
+     */
+    protected currentRow: KeyboardButton[] = [];
 
-	/**
-	 * Returns custom tag
-	 */
-	public get [Symbol.toStringTag](): string {
-		return this.constructor.name;
-	}
+    /**
+     * Returns custom tag
+     */
+    public get [Symbol.toStringTag](): string {
+        return this.constructor.name;
+    }
 
-	/**
-	 * Text button, can be colored
-	 *
-	 * ```ts
-	 * builder.textButton({
-	 *  label: 'Buy a coffee',
-	 *  payload: {
-	 *   command: 'buy',
-	 *   item: 'coffee'
-	 *  },
-	 *  color: Keyboard.POSITIVE_COLOR
-	 * });
-	 * ```
-	 */
-	public textButton({
-		label,
-		payload: rawPayload = {},
-		color = ButtonColor.SECONDARY
-	}: IKeyboardTextButtonOptions): this {
-		if (label.length > 40) {
-			throw new RangeError('Maximum length of label 40 characters');
-		}
+    /**
+     * Text button, can be colored
+     *
+     * ```ts
+     * builder.textButton({
+     *  label: 'Buy a coffee',
+     *  payload: {
+     *   command: 'buy',
+     *   item: 'coffee'
+     *  },
+     *  color: Keyboard.POSITIVE_COLOR
+     * });
+     * ```
+     */
+    public textButton({
+        label,
+        payload: rawPayload = {},
+        color = ButtonColor.SECONDARY
+    }: IKeyboardTextButtonOptions): this {
+        if (label.length > 40) {
+            throw new RangeError('Maximum length of label 40 characters');
+        }
 
-		const payload = serializePayload(rawPayload);
+        const payload = serializePayload(rawPayload);
 
-		return this.addButton({
-			color,
-			action: {
-				label,
-				payload,
+        return this.addButton({
+            color,
+            action: {
+                label,
+                payload,
 
-				type: 'text'
-			}
-		});
-	}
+                type: 'text'
+            }
+        });
+    }
 
-	/**
-	 * URL button
-	 *
-	 * ```ts
-	 * builder.urlButton({
-	 *  label: 'Buy a coffee',
-	 *  url: 'https://coffee.mania/buy'
-	 * });
-	 * ```
-	 */
-	public urlButton({
-		label,
-		url,
-		payload: rawPayload = {}
-	}: IKeyboardURLButtonOptions): this {
-		if (label.length > 40) {
-			throw new RangeError('Maximum length of label 40 characters');
-		}
+    /**
+     * URL button
+     *
+     * ```ts
+     * builder.urlButton({
+     *  label: 'Buy a coffee',
+     *  url: 'https://coffee.mania/buy'
+     * });
+     * ```
+     */
+    public urlButton({
+        label,
+        url,
+        payload: rawPayload = {}
+    }: IKeyboardURLButtonOptions): this {
+        if (label.length > 40) {
+            throw new RangeError('Maximum length of label 40 characters');
+        }
 
-		const payload = serializePayload(rawPayload);
+        const payload = serializePayload(rawPayload);
 
-		return this.addWideButton({
-			action: {
-				label,
-				payload,
+        return this.addWideButton({
+            action: {
+                label,
+                payload,
 
-				link: url,
-				type: 'open_link'
-			}
-		});
-	}
+                link: url,
+                type: 'open_link'
+            }
+        });
+    }
 
-	/**
-	 * User location request button, occupies the entire keyboard width
-	 *
-	 * ```ts
-	 * builder.locationRequestButton({
-	 *  payload: {
-	 *   command: 'order_delivery'
-	 *  }
-	 * })
-	 * ```
-	 */
-	public locationRequestButton({
-		payload: rawPayload = {}
-	}: IKeyboardLocationRequestButtonOptions): this {
-		const payload = serializePayload(rawPayload);
+    /**
+     * User location request button, occupies the entire keyboard width
+     *
+     * ```ts
+     * builder.locationRequestButton({
+     *  payload: {
+     *   command: 'order_delivery'
+     *  }
+     * })
+     * ```
+     */
+    public locationRequestButton({
+        payload: rawPayload = {}
+    }: IKeyboardLocationRequestButtonOptions): this {
+        const payload = serializePayload(rawPayload);
 
-		return this.addWideButton({
-			action: {
-				payload,
+        return this.addWideButton({
+            action: {
+                payload,
 
-				type: 'location'
-			}
-		});
-	}
+                type: 'location'
+            }
+        });
+    }
 
-	/**
-	 * VK Pay button, occupies the entire keyboard width
-	 *
-	 * ```ts
-	 * builder.payButton({
-	 *  hash: {
-	 *   action: 'transfer-to-group',
-	 *   group_id: 1,
-	 *   aid: 10
-	 *  }
-	 * })
-	 * ```
-	 */
-	public payButton({
-		payload: rawPayload,
-		hash: rawHash
-	}: IKeyboardVKPayButtonOptions): this {
-		const payload = serializePayload(rawPayload);
+    /**
+     * VK Pay button, occupies the entire keyboard width
+     *
+     * ```ts
+     * builder.payButton({
+     *  hash: {
+     *   action: 'transfer-to-group',
+     *   group_id: 1,
+     *   aid: 10
+     *  }
+     * })
+     * ```
+     */
+    public payButton({
+        payload: rawPayload,
+        hash: rawHash
+    }: IKeyboardVKPayButtonOptions): this {
+        const payload = serializePayload(rawPayload);
 
-		const hash = typeof rawHash === 'object'
-			? String(new URLSearchParams(Object.entries(rawHash)))
-			: rawHash;
+        const hash = typeof rawHash === 'object'
+            ? String(new URLSearchParams(Object.entries(rawHash)))
+            : rawHash;
 
-		return this.addWideButton({
-			action: {
-				payload,
-				hash,
+        return this.addWideButton({
+            action: {
+                payload,
+                hash,
 
-				type: 'vkpay'
-			}
-		});
-	}
+                type: 'vkpay'
+            }
+        });
+    }
 
-	/**
-	 * VK Apps button, occupies the entire keyboard width
-	 *
-	 * ```ts
-	 * builder.applicationButton({
-	 *  label: 'LiveWidget',
-	 *  appId: 6232540,
-	 *  ownerId: -157525928
-	 * })
-	 * ```
-	 */
-	public applicationButton({
-		label,
-		appId,
-		ownerId,
-		hash
-	}: IKeyboardApplicationButtonOptions): this {
-		if (label.length > 40) {
-			throw new RangeError('Maximum length of label 40 characters');
-		}
+    /**
+     * VK Apps button, occupies the entire keyboard width
+     *
+     * ```ts
+     * builder.applicationButton({
+     *  label: 'LiveWidget',
+     *  appId: 6232540,
+     *  ownerId: -157525928
+     * })
+     * ```
+     */
+    public applicationButton({
+        label,
+        appId,
+        ownerId,
+        hash
+    }: IKeyboardApplicationButtonOptions): this {
+        if (label.length > 40) {
+            throw new RangeError('Maximum length of label 40 characters');
+        }
 
-		return this.addWideButton({
-			action: {
-				label,
-				hash,
+        return this.addWideButton({
+            action: {
+                label,
+                hash,
 
-				app_id: appId,
-				owner_id: ownerId,
+                app_id: appId,
+                owner_id: ownerId,
 
-				type: 'open_app'
-			}
-		});
-	}
+                type: 'open_app'
+            }
+        });
+    }
 
-	/**
-	 * Allows without sending a message from the user
-	 * to receive a notification of a button click and perform the necessary action
-	 *
-	 * ```ts
-	 * builder.callbackButton({
-	 *  label: 'Buy a coffee',
-	 *  payload: {
-	 *   command: 'buy',
-	 *   item: 'coffee'
-	 *  }
-	 * });
-	 * ```
-	 */
-	public callbackButton({
-		label,
-		payload: rawPayload = {},
-		color = ButtonColor.SECONDARY
-	}: IKeyboardCallbackButtonOptions): this {
-		if (label.length > 40) {
-			throw new RangeError('Maximum length of label 40 characters');
-		}
+    /**
+     * Allows without sending a message from the user
+     * to receive a notification of a button click and perform the necessary action
+     *
+     * ```ts
+     * builder.callbackButton({
+     *  label: 'Buy a coffee',
+     *  payload: {
+     *   command: 'buy',
+     *   item: 'coffee'
+     *  }
+     * });
+     * ```
+     */
+    public callbackButton({
+        label,
+        payload: rawPayload = {},
+        color = ButtonColor.SECONDARY
+    }: IKeyboardCallbackButtonOptions): this {
+        if (label.length > 40) {
+            throw new RangeError('Maximum length of label 40 characters');
+        }
 
-		const payload = serializePayload(rawPayload);
+        const payload = serializePayload(rawPayload);
 
-		return this.addButton({
-			color,
-			action: {
-				label,
-				payload,
+        return this.addButton({
+            color,
+            action: {
+                label,
+                payload,
 
-				type: 'callback'
-			}
-		});
-	}
+                type: 'callback'
+            }
+        });
+    }
 
-	/**
-	 * Saves the current row of buttons in the general rows
-	 */
-	public row(): this {
-		if (this.currentRow.length === 0) {
-			return this;
-		}
+    /**
+     * Saves the current row of buttons in the general rows
+     */
+    public row(): this {
+        if (this.currentRow.length === 0) {
+            return this;
+        }
 
-		if (this.currentRow.length > 5) {
-			throw new RangeError('Max count of buttons at columns 5');
-		}
+        if (this.currentRow.length > 5) {
+            throw new RangeError('Max count of buttons at columns 5');
+        }
 
-		this.rows.push(this.currentRow);
+        this.rows.push(this.currentRow);
 
-		this.currentRow = [];
+        this.currentRow = [];
 
-		return this;
-	}
+        return this;
+    }
 
-	/**
-	 * Sets the keyboard to close after pressing
-	 *
-	 * ```ts
-	 *  builder.oneTime();
-	 *
-	 *  builder.oneTime(false);
-	 * ```
-	 */
-	public oneTime(enabled = true): this {
-		this.isOneTime = enabled;
+    /**
+     * Sets the keyboard to close after pressing
+     *
+     * ```ts
+     *  builder.oneTime();
+     *
+     *  builder.oneTime(false);
+     * ```
+     */
+    public oneTime(enabled = true): this {
+        this.isOneTime = enabled;
 
-		return this;
-	}
+        return this;
+    }
 
-	/**
-	 * Sets the keyboard inline
-	 *
-	 * ```ts
-	 *  builder.inline();
-	 *
-	 *  builder.inline(false);
-	 * ```
-	 */
-	public inline(enabled = true): this {
-		this.isInline = enabled;
+    /**
+     * Sets the keyboard inline
+     *
+     * ```ts
+     *  builder.inline();
+     *
+     *  builder.inline(false);
+     * ```
+     */
+    public inline(enabled = true): this {
+        this.isInline = enabled;
 
-		return this;
-	}
+        return this;
+    }
 
-	/**
-	 * Clones the builder with all the settings
-	 */
-	public clone(): KeyboardBuilder {
-		const builder = new KeyboardBuilder();
+    /**
+     * Clones the builder with all the settings
+     */
+    public clone(): KeyboardBuilder {
+        const builder = new KeyboardBuilder();
 
-		builder.oneTime(this.isOneTime);
-		builder.inline(this.isInline);
+        builder.oneTime(this.isOneTime);
+        builder.inline(this.isInline);
 
-		builder.rows = [...this.rows];
-		builder.currentRow = [...this.currentRow];
+        builder.rows = [...this.rows];
+        builder.currentRow = [...this.currentRow];
 
-		return builder;
-	}
+        return builder;
+    }
 
-	/**
-	 * Returns a string to keyboard a VK
-	 */
-	public toString(): string {
-		const maxRowsLength = this.isInline
-			? 6
-			: 10;
+    /**
+     * Returns a string to keyboard a VK
+     */
+    public toString(): string {
+        const maxRowsLength = this.isInline
+            ? 6
+            : 10;
 
-		if (this.rows.length > maxRowsLength) {
-			throw new RangeError(`Max count of keyboard rows ${maxRowsLength}`);
-		}
+        if (this.rows.length > maxRowsLength) {
+            throw new RangeError(`Max count of keyboard rows ${maxRowsLength}`);
+        }
 
-		const buttons = this.currentRow.length !== 0
-			? [...this.rows, this.currentRow]
-			: this.rows;
+        const buttons = this.currentRow.length !== 0
+            ? [...this.rows, this.currentRow]
+            : this.rows;
 
-		return JSON.stringify(
-			this.isInline
-				? {
-					buttons,
-					inline: true
-				}
-				: {
-					buttons,
-					one_time: this.isOneTime
-				}
-		);
-	}
+        return JSON.stringify(
+            this.isInline
+                ? {
+                    buttons,
+                    inline: true
+                }
+                : {
+                    buttons,
+                    one_time: this.isOneTime
+                }
+        );
+    }
 
-	/**
-	 * Adds a button to the current row
-	 */
-	protected addButton(button: KeyboardButton): this {
-		this.currentRow.push(button);
+    /**
+     * Adds a button to the current row
+     */
+    protected addButton(button: KeyboardButton): this {
+        this.currentRow.push(button);
 
-		return this;
-	}
+        return this;
+    }
 
-	/**
-	 * Adds a wide button to the new row
-	 */
-	protected addWideButton(button: KeyboardButton): this {
-		if (this.currentRow.length >= 2) {
-			this.row();
-		}
+    /**
+     * Adds a wide button to the new row
+     */
+    protected addWideButton(button: KeyboardButton): this {
+        if (this.currentRow.length >= 2) {
+            this.row();
+        }
 
-		this.addButton(button);
+        this.addButton(button);
 
-		if (this.currentRow.length === 2) {
-			this.row();
-		}
+        if (this.currentRow.length === 2) {
+            this.row();
+        }
 
-		return this;
-	}
+        return this;
+    }
 }

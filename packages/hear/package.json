@@ -1,45 +1,45 @@
 {
-	"name": "@vk-io/hear",
-	"version": "1.1.1",
-	"description": "Hear for the library vk-io",
-	"license": "MIT",
-	"author": {
-		"name": "Vladlen (Negezor)",
-		"email": "negezor@gmail.com"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/negezor/vk-io.git",
-		"directory": "packages/hear"
-	},
-	"homepage": "https://github.com/negezor/vk-io#readme",
-	"bugs": "https://github.com/negezor/vk-io/issues",
-	"keywords": [
-		"vk",
-		"io",
-		"hear"
-	],
-	"files": [
-		"lib",
-		"typings"
-	],
-	"main": "./lib/index.js",
-	"types": "./lib/index.d.ts",
-	"exports": {
-		".": {
-			"import": "./lib/index.mjs",
-			"require": "./lib/index.js",
-			"types": "./lib/index.d.ts"
-		}
-	},
-	"sideEffects": false,
-	"engines": {
-		"node": ">=12.20.0"
-	},
-	"dependencies": {
-		"middleware-io": "^2.8.1"
-	},
-	"peerDependencies": {
-		"vk-io": "^4.0.0"
-	}
+    "name": "@vk-io/hear",
+    "version": "1.1.1",
+    "description": "Hear for the library vk-io",
+    "license": "MIT",
+    "author": {
+        "name": "Vladlen (Negezor)",
+        "email": "negezor@gmail.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/negezor/vk-io.git",
+        "directory": "packages/hear"
+    },
+    "homepage": "https://github.com/negezor/vk-io#readme",
+    "bugs": "https://github.com/negezor/vk-io/issues",
+    "keywords": [
+        "vk",
+        "io",
+        "hear"
+    ],
+    "files": [
+        "lib",
+        "typings"
+    ],
+    "main": "./lib/index.js",
+    "types": "./lib/index.d.ts",
+    "exports": {
+        ".": {
+            "import": "./lib/index.mjs",
+            "require": "./lib/index.js",
+            "types": "./lib/index.d.ts"
+        }
+    },
+    "sideEffects": false,
+    "engines": {
+        "node": ">=12.20.0"
+    },
+    "dependencies": {
+        "middleware-io": "^2.8.1"
+    },
+    "peerDependencies": {
+        "vk-io": "^4.0.0"
+    }
 }

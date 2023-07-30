@@ -10,11 +10,11 @@
 import { VK } from 'vk-io';
 
 const vk = new VK({
-	token: process.env.TOKEN
+    token: process.env.TOKEN
 });
 
 const users = await vk.api.users.get({
-	user_ids: 1
+    user_ids: 1
 });
 ```
 
@@ -34,14 +34,14 @@ const users = await vk.api.users.get({
 import { VK } from 'vk-io';
 
 const vk = new VK({
-	token: process.env.TOKEN
+    token: process.env.TOKEN
 });
 
 const attachment = await vk.upload.messagePhoto({
-	peer_id: ...,
-	source: {	
-		value: './cat.jpeg'
-	}
+    peer_id: ...,
+    source: {    
+        value: './cat.jpeg'
+    }
 });
 ```
 
@@ -58,13 +58,13 @@ const attachment = await vk.upload.messagePhoto({
 import { VK } from 'vk-io';
 
 const vk = new VK({
-	token: process.env.TOKEN
+    token: process.env.TOKEN
 });
 
 vk.updates.on('message_new', async (context) => {
-	if (context.text === 'Привет') {
-		await context.send('Привет!');
-	}
+    if (context.text === 'Привет') {
+        await context.send('Привет!');
+    }
 });
 
 await vk.updates.start();
@@ -89,26 +89,26 @@ await vk.updates.start();
 
 ```ts
 await api.messages.send({
-	message: 'Hey!',
-	keyboard: Keyboard.builder()
-		.urlButton({
-			label: 'View on site',
-			url: 'https://coffee.mania/view/coffee'
-		})
-		.callbackButton({
-			label: 'Buy a coffee',
-			payload: {
-				command: 'buy',
-				item: 'coffee'
-			}
-		})
-		.row()
-		.textButton({
-			label: 'Back to the menu',
-			payload: {
-				command: 'menu'
-			}
-		})
+    message: 'Hey!',
+    keyboard: Keyboard.builder()
+        .urlButton({
+            label: 'View on site',
+            url: 'https://coffee.mania/view/coffee'
+        })
+        .callbackButton({
+            label: 'Buy a coffee',
+            payload: {
+                command: 'buy',
+                item: 'coffee'
+            }
+        })
+        .row()
+        .textButton({
+            label: 'Back to the menu',
+            payload: {
+                command: 'menu'
+            }
+        })
 });
 ```
 

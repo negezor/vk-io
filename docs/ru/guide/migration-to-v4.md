@@ -33,8 +33,8 @@ VK-IO v4 — это следующее мажорное обновление. Н
 Принимает опции вида:
 ```ts
 interface IResolveResourceOptions {
-	resource: string | number;
-	api?: API;
+    resource: string | number;
+    api?: API;
 }
 ```
 Например
@@ -42,10 +42,10 @@ interface IResolveResourceOptions {
 import { resolveResource } from 'vk-io';
 
 const result = await resolveResource({
-	// Объект API
-	api,
+    // Объект API
+    api,
 
-	resource: 'https://vk.com/durov'
+    resource: 'https://vk.com/durov'
 });
 ```
 - Удалён `vk.collect`, модуль разбит на мелкие классы и функции
@@ -54,19 +54,19 @@ const result = await resolveResource({
 import { Chain } from 'vk-io';
 
 const chain = new Chain({
-	// Объект API
-	api
+    // Объект API
+    api
 });
 ```
 - - **collect.executes()** - используйте функцию `executes()`
 Принимает опции вида:
 ```ts
 interface IExecutesOptions {
-	api: API;
+    api: API;
 
-	method: string;
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	queue: Record<string, any>[];
+    method: string;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    queue: Record<string, any>[];
 }
 ```
 Например
@@ -74,35 +74,35 @@ interface IExecutesOptions {
 import { executes } from 'vk-io';
 
 const result = await executes({
-	// Объект API
-	api,
-	
-	method: 'users.get',
-	queue: [
-		{ user_id: 1 },
-		{ user_id: 2 },
-		{ user_id: 3 },
-		// ...
-	]
+    // Объект API
+    api,
+    
+    method: 'users.get',
+    queue: [
+        { user_id: 1 },
+        { user_id: 2 },
+        { user_id: 3 },
+        // ...
+    ]
 });
 ```
 - - **collect.*.*()** - используйте функцию `createCollectIterator()`
 Принимает опции вида:
 ```ts
 interface ICollectIteratorOptions {
-	api: API;
+    api: API;
 
-	method: string;
-	params: Record<string, any> & {
-		count?: number;
-		offset?: number;
-	};
+    method: string;
+    params: Record<string, any> & {
+        count?: number;
+        offset?: number;
+    };
 
-	maxCount?: number;
-	countPerRequest: number;
+    maxCount?: number;
+    countPerRequest: number;
 
-	retryLimit?: number;
-	parallelRequests?: number;
+    retryLimit?: number;
+    parallelRequests?: number;
 }
 ```
 Например
@@ -110,36 +110,36 @@ interface ICollectIteratorOptions {
 import { createCollectIterator } from 'vk-io';
 
 const iterator = createCollectIterator({
-	// Объект API
-	api,
+    // Объект API
+    api,
 
-	method: 'messages.getConversations',
-	params: {
-		// Будет получать profiles и groups
-		extended: 1
-	},
+    method: 'messages.getConversations',
+    params: {
+        // Будет получать profiles и groups
+        extended: 1
+    },
 
-	// Максимальный count в методе
-	countPerRequest: 200,
+    // Максимальный count в методе
+    countPerRequest: 200,
 
-	// Устанавливайте опцию для методов которые не позволяет получить больше N данных, например `users.search`
-	// maxCount: 1000,
+    // Устанавливайте опцию для методов которые не позволяет получить больше N данных, например `users.search`
+    // maxCount: 1000,
 
-	// Количество попыток вызвать снова при ошибке
-	// retryLimit: 3,
+    // Количество попыток вызвать снова при ошибке
+    // retryLimit: 3,
 
-	// Количество паралельных вызовов если поддерживается execute
-	// parallelRequests: 25
+    // Количество паралельных вызовов если поддерживается execute
+    // parallelRequests: 25
 });
 
 for await (const chunk of iterator) {
-	// chunk.received
-	// chunk.percent
-	// chunk.total
+    // chunk.received
+    // chunk.percent
+    // chunk.total
 
-	// chunk.items
-	// chunk.profiles
-	// chunk.groups
+    // chunk.items
+    // chunk.profiles
+    // chunk.groups
 }
 ```
 
@@ -154,10 +154,10 @@ for await (const chunk of iterator) {
 import { getRandomId } from 'vk-io';
 
 const result = await api.messages.send({
-	peer_id: 1234,
-	random_id: getRandomId(),
+    peer_id: 1234,
+    random_id: getRandomId(),
 
-	text: 'Hello!'
+    text: 'Hello!'
 });
 ```
 
@@ -165,10 +165,10 @@ const result = await api.messages.send({
 - Конструктор теперь принимает опции вида:
 ```ts
 interface IAPIRequestOptions {
-	api: API;
+    api: API;
 
-	method: string;
-	params: Record<string, any>;
+    method: string;
+    params: Record<string, any>;
 }
 ```
 - Удалён алиас `Request`, используйте `APIRequest`
@@ -177,16 +177,16 @@ interface IAPIRequestOptions {
 - Конструктор теперь принимает опции вида:
 ```ts
 interface ISharedAttachmentPayload {
-	id: number;
-	owner_id: number;
-	access_key?: string;
+    id: number;
+    owner_id: number;
+    access_key?: string;
 }
 
 interface IAttachmentOptions<P, Type extends string = string> {
-	api: API;
+    api: API;
 
-	type: Type;
-	payload: Partial<ISharedAttachmentPayload> & P;
+    type: Type;
+    payload: Partial<ISharedAttachmentPayload> & P;
 }
 ```
 
@@ -197,24 +197,24 @@ interface IAttachmentOptions<P, Type extends string = string> {
 - Конструктор теперь принимает опции вида:
 ```ts
 interface IContextOptions<
-	P,
-	S,
-	Type extends string = string,
-	SubType extends string = string
+    P,
+    S,
+    Type extends string = string,
+    SubType extends string = string
 > {
-	api: API;
-	upload: Upload;
+    api: API;
+    upload: Upload;
 
-	type: Type;
-	subTypes: SubType[];
+    type: Type;
+    subTypes: SubType[];
 
-	payload: P;
-	state?: S;
+    payload: P;
+    state?: S;
 
-	source: UpdateSource;
-	updateType: string | number;
+    source: UpdateSource;
+    updateType: string | number;
 
-	groupId?: number;
+    groupId?: number;
 }
 ```
 - Метод `context.is()` принимает теперь массив типов
@@ -233,23 +233,23 @@ context.sendPhotos('./cat.png');
 Стало:
 ```ts
 context.sendPhotos({
-	value: './cat.png',
-	// filename: 'cat.png',
-	// contentType: 'image/png',
-	// contentLength: ...
+    value: './cat.png',
+    // filename: 'cat.png',
+    // contentType: 'image/png',
+    // contentLength: ...
 });
 
 // Или
 
 context.sendPhotos({
-	values: [{
-		value: './cat.png'
-		// filename: 'cat.png',
-		// contentType: 'image/png'
-		// contentLength: ...
-	}],
-	// timeout: 30_000,
-	// uploadUrl: '...'
+    values: [{
+        value: './cat.png'
+        // filename: 'cat.png',
+        // contentType: 'image/png'
+        // contentLength: ...
+    }],
+    // timeout: 30_000,
+    // uploadUrl: '...'
 });
 ```
 - Удалён метод `context.getInviteLink()`
@@ -329,13 +329,13 @@ context.sendPhotos({
 - Все контексты теперь используют `undefined` вместо `null` для удобной деструктуризации, например:
 ```ts
 updates.on('message_new', async (context) => {
-	const { text = 'default text' } = context;
+    const { text = 'default text' } = context;
 
-	if (text === 'default text') {
-		return context.send('Вы ничего не написали');
-	}
-	
-	await context.send('Hello!');
+    if (text === 'default text') {
+        return context.send('Вы ничего не написали');
+    }
+    
+    await context.send('Hello!');
 });
 ```
 - Удалён метод `updates.hear()` и `updates.setHearFallbackHandler()`, используйте вместо этого пакет [@vk-io/hear](https://github.com/negezor/vk-io/tree/master/packages/hear)
@@ -343,16 +343,16 @@ updates.on('message_new', async (context) => {
 Например
 ```ts
 updates.on('message_new', async (context) => {
-	await context.send('Hello!');
+    await context.send('Hello!');
 });
 ```
 - Удален второй аргумент у `updates.startWebhook()`, вместо этого передавайте функцию в свойство `next`
 ```ts
 updates.startWebhook({
-	// ...
-	next(req, res) {
-		// ...
-	}
+    // ...
+    next(req, res) {
+        // ...
+    }
 })
 ```
 - Версия polling'а была обновлена до `10`
@@ -364,33 +364,33 @@ updates.startWebhook({
 - Изменился формат `source`, теперь он принимает только два интерфейса:
 ```ts
 upload.messagePhoto({
-	source: {
-		value: 'https://picsum.photos/200/300/?image=1',
+    source: {
+        value: 'https://picsum.photos/200/300/?image=1',
 
-		// filename: 'image.jpeg',
-		// contentType: 'image/jpeg'
+        // filename: 'image.jpeg',
+        // contentType: 'image/jpeg'
 
-		// contentLength?: number;
-	}
+        // contentLength?: number;
+    }
 })
 ```
 Или
 ```ts
 upload.messagePhoto({
-	source: {
-		// uploadUrl?: string;
-		// timeout?: number;
-		
-		// Свойство values может быть массивом если загрузка в альбом
-		values: {
-			value: 'https://picsum.photos/200/300/?image=1',
+    source: {
+        // uploadUrl?: string;
+        // timeout?: number;
+        
+        // Свойство values может быть массивом если загрузка в альбом
+        values: {
+            value: 'https://picsum.photos/200/300/?image=1',
 
-			// filename: 'image.jpeg',
-			// contentType: 'image/jpeg
+            // filename: 'image.jpeg',
+            // contentType: 'image/jpeg
 
-			// contentLength?: number;
-		}
-	}
+            // contentLength?: number;
+        }
+    }
 })
 ```
 - У элемента в `source` появилось свойство `contentLength`, позволяет указать размер загружаемого файла

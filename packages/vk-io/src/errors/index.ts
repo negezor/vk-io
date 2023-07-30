@@ -8,9 +8,9 @@ export * from './execute';
 export * from './resource';
 
 export {
-	SharedErrorCode,
-	UploadErrorCode,
-	UpdatesErrorCode,
-	CollectErrorCode,
-	ResourceErrorCode
+    SharedErrorCode,
+    UploadErrorCode,
+    UpdatesErrorCode,
+    CollectErrorCode,
+    ResourceErrorCode
 } from '../utils/constants';
