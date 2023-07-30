@@ -25,7 +25,7 @@ export class GraffitiAttachment
         super({
             ...options,
 
-            type: AttachmentType.GRAFFITI
+            type: AttachmentType.GRAFFITI,
         });
 
         this.$filled = this.payload.url !== undefined;
@@ -40,7 +40,7 @@ export class GraffitiAttachment
         }
 
         const [document] = await this.api.docs.getById({
-            docs: `${this.ownerId}_${this.id}`
+            docs: `${this.ownerId}_${this.id}`,
         });
 
         this.payload = document as unknown as IGraffitiAttachmentPayload;
@@ -76,7 +76,7 @@ export class GraffitiAttachment
         return pickProperties(this, [
             'height',
             'width',
-            'url'
+            'url',
         ]);
     }
 }

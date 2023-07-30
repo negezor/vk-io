@@ -5,7 +5,6 @@ import { AbortController } from 'abort-controller';
 import { CaptchaType, ICallbackServiceValidate, CallbackService } from 'vk-io';
 
 import { Agent } from 'https';
-import { URL, URLSearchParams } from 'url';
 
 import { AuthorizationError } from '../errors';
 import { DESKTOP_USER_AGENT, AuthErrorCode } from '../constants';
@@ -17,7 +16,7 @@ import {
     RequestInit,
     Response,
 
-    fetchCookieFollowRedirectsDecorator
+    fetchCookieFollowRedirectsDecorator,
 } from '../fetch-cookie';
 import {
     CheerioStatic,
@@ -25,7 +24,7 @@ import {
     getFullURL,
     parseFormField,
     getUserPermissionsByName,
-    getAllUserPermissions
+    getAllUserPermissions,
 } from '../helpers';
 
 const debug = createDebug('vk-io:authorization:direct');
@@ -38,7 +37,7 @@ const {
     USERNAME_OR_PASSWORD_IS_INCORRECT,
     TOO_MUCH_TRIES,
     WRONG_OTP,
-    OTP_FORMAT_IS_INCORRECT
+    OTP_FORMAT_IS_INCORRECT,
 } = AuthErrorCode;
 
 /**
@@ -99,10 +98,10 @@ export class DirectAuthorization {
             timeout: 10_000,
             headers: options.headers || {
                 // eslint-disable-next-line @typescript-eslint/naming-convention
-                'User-Agent': DESKTOP_USER_AGENT
+                'User-Agent': DESKTOP_USER_AGENT,
             },
 
-            ...options
+            ...options,
         };
 
         this.started = false;
@@ -126,7 +125,7 @@ export class DirectAuthorization {
      */
     protected fetch(
         url: RequestInfo,
-        options: RequestInit = {}
+        options: RequestInit = {},
     ): Promise<Response> {
         const { agent, timeout } = this.options;
 
@@ -140,7 +139,7 @@ export class DirectAuthorization {
 
             agent,
             signal: controller.signal,
-            compress: false
+            compress: false,
         }).finally(() => clearTimeout(interval));
     }
 
@@ -168,7 +167,7 @@ export class DirectAuthorization {
             login,
             phone,
             password,
-            apiVersion
+            apiVersion,
         } = this.options;
 
         const params = new URLSearchParams({
@@ -181,13 +180,13 @@ export class DirectAuthorization {
             v: apiVersion,
             client_id: clientId,
             password: password!,
-            scope: String(scope)
+            scope: String(scope),
         });
 
-        const url = new URL(`https://oauth.vk.com/token?${params}`);
+        const url = new URL(`https://oauth.vk.com/token?${params.toString()}`);
 
         return this.fetch(url, {
-            method: 'GET'
+            method: 'GET',
         });
     }
 
@@ -203,7 +202,7 @@ export class DirectAuthorization {
         if (this.started) {
             throw new AuthorizationError({
                 message: 'Authorization already started!',
-                code: AUTHORIZATION_FAILED
+                code: AUTHORIZATION_FAILED,
             });
         }
 
@@ -232,7 +231,7 @@ export class DirectAuthorization {
                         email,
                         user_id: user,
                         expires_in: expires,
-                        access_token: token
+                        access_token: token,
                     } = text;
 
                     return {
@@ -244,7 +243,7 @@ export class DirectAuthorization {
                         token,
                         expires: expires
                             ? Number(expires)
-                            : 0
+                            : 0,
                     };
                 }
 
@@ -253,13 +252,13 @@ export class DirectAuthorization {
                         if (text.error_type === 'username_or_password_is_incorrect') {
                             throw new AuthorizationError({
                                 message: 'Username or password is incorrect.',
-                                code: USERNAME_OR_PASSWORD_IS_INCORRECT
+                                code: USERNAME_OR_PASSWORD_IS_INCORRECT,
                             });
                         }
 
                         throw new AuthorizationError({
                             message: `Invalid client (${text.error_type}: ${text.error_description})`,
-                            code: AUTHORIZATION_FAILED
+                            code: AUTHORIZATION_FAILED,
                         });
                     }
 
@@ -287,35 +286,35 @@ export class DirectAuthorization {
                         if (text.error_type === 'too_much_tries') {
                             throw new AuthorizationError({
                                 message: 'Too much authorization tries. Try again later in a few hours.',
-                                code: TOO_MUCH_TRIES
+                                code: TOO_MUCH_TRIES,
                             });
                         }
 
                         if (text.error_type === 'wrong_otp') {
                             throw new AuthorizationError({
                                 message: 'Wrong two factor code.',
-                                code: WRONG_OTP
+                                code: WRONG_OTP,
                             });
                         }
 
                         if (text.error_type === 'otp_format_is_incorrect') {
                             throw new AuthorizationError({
                                 message: 'Invalid two factor code format.',
-                                code: OTP_FORMAT_IS_INCORRECT
+                                code: OTP_FORMAT_IS_INCORRECT,
                             });
                         }
                     }
 
                     throw new AuthorizationError({
                         message: 'Unsupported type validation',
-                        code: AUTHORIZATION_FAILED
+                        code: AUTHORIZATION_FAILED,
                     });
                 }
             }
 
             throw new AuthorizationError({
                 message: 'Authorization failed',
-                code: AUTHORIZATION_FAILED
+                code: AUTHORIZATION_FAILED,
             });
         }
 
@@ -329,14 +328,14 @@ export class DirectAuthorization {
         { captcha_sid: sid, captcha_img: src }: {
             captcha_sid: number;
             captcha_img: string;
-        }
+        },
     ): Promise<Response> {
         debug('captcha process');
 
         if (this.captchaValidate !== undefined) {
             this.captchaValidate.reject(new AuthorizationError({
                 message: 'Incorrect captcha code',
-                code: FAILED_PASSED_CAPTCHA
+                code: FAILED_PASSED_CAPTCHA,
             }));
 
             this.captchaValidate = undefined;
@@ -347,21 +346,21 @@ export class DirectAuthorization {
         if (this.captchaAttempts >= CAPTCHA_ATTEMPTS) {
             throw new AuthorizationError({
                 message: 'Maximum attempts passage captcha',
-                code: FAILED_PASSED_CAPTCHA
+                code: FAILED_PASSED_CAPTCHA,
             });
         }
 
         const { key, validate } = await this.options.callbackService.processingCaptcha({
             type: CaptchaType.DIRECT_AUTH,
             sid,
-            src
+            src,
         });
 
         this.captchaValidate = validate;
 
         const response = await this.getPermissionsPage({
             captcha_sid: sid,
-            captcha_key: key
+            captcha_key: key,
         });
 
         return response;
@@ -374,14 +373,14 @@ export class DirectAuthorization {
         { validation_type: validationType, phone_mask: phoneMask }: {
             validation_type: string;
             phone_mask: string;
-        }
+        },
     ): Promise<Response> {
         debug('process two-factor handle');
 
         if (this.twoFactorValidate !== undefined) {
             this.twoFactorValidate.reject(new AuthorizationError({
                 message: 'Incorrect two-factor code',
-                code: FAILED_PASSED_TWO_FACTOR
+                code: FAILED_PASSED_TWO_FACTOR,
             }));
 
             this.twoFactorValidate = undefined;
@@ -392,7 +391,7 @@ export class DirectAuthorization {
         if (this.twoFactorAttempts >= TWO_FACTOR_ATTEMPTS) {
             throw new AuthorizationError({
                 message: 'Failed passed two-factor authentication',
-                code: FAILED_PASSED_TWO_FACTOR
+                code: FAILED_PASSED_TWO_FACTOR,
             });
         }
 
@@ -400,7 +399,7 @@ export class DirectAuthorization {
             phoneMask,
             type: validationType === '2fa_app'
                 ? 'app'
-                : 'sms'
+                : 'sms',
         });
 
         this.twoFactorValidate = validate;
@@ -426,7 +425,7 @@ export class DirectAuthorization {
         } else {
             throw new AuthorizationError({
                 message: 'Missing phone number in the phone or login field',
-                code: INVALID_PHONE_NUMBER
+                code: INVALID_PHONE_NUMBER,
             });
         }
 
@@ -449,13 +448,13 @@ export class DirectAuthorization {
 
         const rewResponse = await this.fetch(url, {
             method: 'POST',
-            body: new URLSearchParams(fields)
+            body: new URLSearchParams(fields),
         });
 
         if (rewResponse.url.includes(ACTION_SECURITY_CODE)) {
             throw new AuthorizationError({
                 message: 'Invalid phone number',
-                code: INVALID_PHONE_NUMBER
+                code: INVALID_PHONE_NUMBER,
             });
         }
 

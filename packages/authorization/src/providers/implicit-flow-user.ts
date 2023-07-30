@@ -1,7 +1,5 @@
 import createDebug from 'debug';
 
-import { URL, URLSearchParams } from 'url';
-
 import { ImplicitFlow } from './implicit-flow';
 import { AuthorizationError } from '../errors';
 
@@ -39,13 +37,13 @@ export class ImplicitFlowUser extends ImplicitFlow {
             display: 'page',
             v: this.options.apiVersion,
             client_id: clientId,
-            scope: String(scope)
+            scope: String(scope),
         });
 
-        const url = new URL(`https://oauth.vk.com/authorize?${params}`);
+        const url = new URL(`https://oauth.vk.com/authorize?${params.toString()}`);
 
         return this.fetch(url, {
-            method: 'GET'
+            method: 'GET',
         });
     }
 
@@ -71,7 +69,7 @@ export class ImplicitFlowUser extends ImplicitFlow {
         if (params.has('error')) {
             throw new AuthorizationError({
                 message: `Failed passed grant access: ${params.get('error_description') || 'Unknown error'}`,
-                code: AUTHORIZATION_FAILED
+                code: AUTHORIZATION_FAILED,
             });
         }
 
@@ -87,7 +85,7 @@ export class ImplicitFlowUser extends ImplicitFlow {
             token: params.get('access_token')!,
             expires: expires !== null
                 ? Number(expires)
-                : undefined
+                : undefined,
         };
     }
 }

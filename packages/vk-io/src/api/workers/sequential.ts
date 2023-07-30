@@ -10,7 +10,7 @@ import {
     APIError,
     ExecuteError,
 
-    APIErrorCode
+    APIErrorCode,
 } from '../../errors';
 
 import { CaptchaType, MINIMUM_TIME_INTERVAL_API } from '../../utils/constants';
@@ -69,7 +69,7 @@ export class SequentialWorker extends APIWorker {
                 response: response.response,
                 errors: (response.execute_errors || []).map((error: IExecuteErrorOptions) => (
                     new ExecuteError(error)
-                ))
+                )),
             });
 
             return;
@@ -121,7 +121,7 @@ export class SequentialWorker extends APIWorker {
                 type: CaptchaType.API,
                 src: error.captchaImg!,
                 sid: captchaSid!,
-                request
+                request,
             });
 
             request.captchaValidate = validate;

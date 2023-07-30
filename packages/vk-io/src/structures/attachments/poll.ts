@@ -59,7 +59,7 @@ export class PollAttachment extends Attachment<IPollAttachmentPayload, Attachmen
         super({
             ...options,
 
-            type: AttachmentType.POLL
+            type: AttachmentType.POLL,
         });
 
         this.$filled = this.payload.answers !== undefined;
@@ -67,7 +67,7 @@ export class PollAttachment extends Attachment<IPollAttachmentPayload, Attachmen
         if (this.payload.photo) {
             this.photo = new PhotoAttachment({
                 api: this.api,
-                payload: this.payload.photo
+                payload: this.payload.photo,
             });
         }
     }
@@ -82,7 +82,7 @@ export class PollAttachment extends Attachment<IPollAttachmentPayload, Attachmen
 
         const poll = await this.api.polls.getById({
             poll_id: this.id,
-            owner_id: this.ownerId
+            owner_id: this.ownerId,
         });
 
         this.payload = (poll as unknown) as IPollAttachmentPayload;
@@ -259,7 +259,7 @@ export class PollAttachment extends Attachment<IPollAttachmentPayload, Attachmen
             'friends',
             'answers',
             'background',
-            'photo'
+            'photo',
         ]);
     }
 }

@@ -19,7 +19,7 @@ export class ExecuteError extends APIError {
         super({
             error_code: options.error_code,
             error_msg: options.error_msg,
-            request_params: []
+            request_params: [],
         });
 
         this.method = options.method;

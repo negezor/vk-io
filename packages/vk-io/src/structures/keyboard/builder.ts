@@ -1,5 +1,3 @@
-import { URLSearchParams } from 'url';
-
 import {
     ButtonColor,
     ButtonPayload,
@@ -10,7 +8,7 @@ import {
     IKeyboardLocationRequestButtonOptions,
     IKeyboardVKPayButtonOptions,
     IKeyboardApplicationButtonOptions,
-    IKeyboardCallbackButtonOptions
+    IKeyboardCallbackButtonOptions,
 } from './types';
 
 const serializePayload = (rawPayload: ButtonPayload): string => {
@@ -68,7 +66,7 @@ export class KeyboardBuilder {
     public textButton({
         label,
         payload: rawPayload = {},
-        color = ButtonColor.SECONDARY
+        color = ButtonColor.SECONDARY,
     }: IKeyboardTextButtonOptions): this {
         if (label.length > 40) {
             throw new RangeError('Maximum length of label 40 characters');
@@ -82,8 +80,8 @@ export class KeyboardBuilder {
                 label,
                 payload,
 
-                type: 'text'
-            }
+                type: 'text',
+            },
         });
     }
 
@@ -100,7 +98,7 @@ export class KeyboardBuilder {
     public urlButton({
         label,
         url,
-        payload: rawPayload = {}
+        payload: rawPayload = {},
     }: IKeyboardURLButtonOptions): this {
         if (label.length > 40) {
             throw new RangeError('Maximum length of label 40 characters');
@@ -114,8 +112,8 @@ export class KeyboardBuilder {
                 payload,
 
                 link: url,
-                type: 'open_link'
-            }
+                type: 'open_link',
+            },
         });
     }
 
@@ -131,7 +129,7 @@ export class KeyboardBuilder {
      * ```
      */
     public locationRequestButton({
-        payload: rawPayload = {}
+        payload: rawPayload = {},
     }: IKeyboardLocationRequestButtonOptions): this {
         const payload = serializePayload(rawPayload);
 
@@ -139,8 +137,8 @@ export class KeyboardBuilder {
             action: {
                 payload,
 
-                type: 'location'
-            }
+                type: 'location',
+            },
         });
     }
 
@@ -159,7 +157,7 @@ export class KeyboardBuilder {
      */
     public payButton({
         payload: rawPayload,
-        hash: rawHash
+        hash: rawHash,
     }: IKeyboardVKPayButtonOptions): this {
         const payload = serializePayload(rawPayload);
 
@@ -172,8 +170,8 @@ export class KeyboardBuilder {
                 payload,
                 hash,
 
-                type: 'vkpay'
-            }
+                type: 'vkpay',
+            },
         });
     }
 
@@ -192,7 +190,7 @@ export class KeyboardBuilder {
         label,
         appId,
         ownerId,
-        hash
+        hash,
     }: IKeyboardApplicationButtonOptions): this {
         if (label.length > 40) {
             throw new RangeError('Maximum length of label 40 characters');
@@ -206,8 +204,8 @@ export class KeyboardBuilder {
                 app_id: appId,
                 owner_id: ownerId,
 
-                type: 'open_app'
-            }
+                type: 'open_app',
+            },
         });
     }
 
@@ -228,7 +226,7 @@ export class KeyboardBuilder {
     public callbackButton({
         label,
         payload: rawPayload = {},
-        color = ButtonColor.SECONDARY
+        color = ButtonColor.SECONDARY,
     }: IKeyboardCallbackButtonOptions): this {
         if (label.length > 40) {
             throw new RangeError('Maximum length of label 40 characters');
@@ -242,8 +240,8 @@ export class KeyboardBuilder {
                 label,
                 payload,
 
-                type: 'callback'
-            }
+                type: 'callback',
+            },
         });
     }
 
@@ -331,12 +329,12 @@ export class KeyboardBuilder {
             this.isInline
                 ? {
                     buttons,
-                    inline: true
+                    inline: true,
                 }
                 : {
                     buttons,
-                    one_time: this.isOneTime
-                }
+                    one_time: this.isOneTime,
+                },
         );
     }
 

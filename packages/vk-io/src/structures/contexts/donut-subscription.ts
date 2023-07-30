@@ -34,8 +34,8 @@ export class DonutSubscriptionContext<S = ContextDefaultState>
 
             type: 'donut_subscription',
             subTypes: [
-                options.updateType as DonutSubscriptionContextSubType
-            ]
+                options.updateType as DonutSubscriptionContextSubType,
+            ],
         });
     }
 
@@ -99,7 +99,7 @@ export class DonutSubscriptionContext<S = ContextDefaultState>
             'isCancelled',
             'userId',
             'amount',
-            'amountWithoutFee'
+            'amountWithoutFee',
         ]);
     }
 }

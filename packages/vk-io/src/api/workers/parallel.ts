@@ -8,7 +8,7 @@ export class ParallelWorker extends SequentialWorker {
         const { queue } = this;
 
         if (this.skipMethod(queue[0].method)) {
-            super.execute();
+            void super.execute();
 
             return;
         }
@@ -23,7 +23,7 @@ export class ParallelWorker extends SequentialWorker {
             }
 
             tasks.push(
-                queue.splice(i, 1)[0]
+                queue.splice(i, 1)[0],
             );
 
             i -= 1;
@@ -41,11 +41,11 @@ export class ParallelWorker extends SequentialWorker {
             api: this.api,
             method: 'execute',
             params: {
-                code: getChainReturn(tasks.map(String))
-            }
+                code: getChainReturn(tasks.map(String)),
+            },
         });
 
-        super.execute(request);
+        void super.execute(request);
 
         try {
             resolveExecuteTask(tasks, await request.promise);

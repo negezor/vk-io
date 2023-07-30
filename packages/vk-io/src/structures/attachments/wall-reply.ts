@@ -25,7 +25,7 @@ export interface IWallReplyAttachmentPayload {
         show_reply_button: boolean;
         groups_can_post: boolean;
     };
-};
+}
 
 export type WallReplyAttachmentOptions =
     ExternalAttachmentFactoryOptions<IWallReplyAttachmentPayload>;
@@ -40,7 +40,7 @@ export class WallReplyAttachment extends ExternalAttachment<IWallReplyAttachment
         super({
             ...options,
 
-            type: AttachmentType.WALL_REPLY
+            type: AttachmentType.WALL_REPLY,
         });
 
         this.attachments = transformAttachments(options.payload.attachments || [], this.api);

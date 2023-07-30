@@ -8,7 +8,7 @@ import {
     APIWorker,
     SequentialWorker,
     ParallelWorker,
-    ParallelSelectedWorker
+    ParallelSelectedWorker,
 } from './workers';
 
 import { APIRequest } from './request';
@@ -68,13 +68,13 @@ const groupMethods = [
     'specials',
     'statEvents',
     'loyaltyTeen',
-    'marusia'
+    'marusia',
 ];
 
 const workers: Record<string, Constructor<APIWorker>> = {
     sequential: SequentialWorker,
     parallel: ParallelWorker,
-    parallel_selected: ParallelSelectedWorker
+    parallel_selected: ParallelSelectedWorker,
 };
 
 export interface IAPIOptions {
@@ -237,7 +237,7 @@ class API {
             apiTimeout: 10e3,
             apiHeaders: {
                 // eslint-disable-next-line @typescript-eslint/naming-convention
-                'User-Agent': `vk-io/${version} (+https://github.com/negezor/vk-io)`
+                'User-Agent': `vk-io/${version} (+https://github.com/negezor/vk-io)`,
             },
             apiExecuteCount: 25,
             apiExecuteMethods: ['messages.send'],
@@ -253,10 +253,10 @@ class API {
                 'docs.save',
                 'photos.saveOwnerCoverPhoto',
                 'stories.save',
-                'polls.savePhoto'
+                'polls.savePhoto',
             ],
 
-            ...options
+            ...options,
         };
 
         for (const group of groupMethods) {
@@ -268,9 +268,9 @@ class API {
                     this.callWithRequest(new APIRequest({
                         api: this,
                         method: `${group}.${prop}`,
-                        params
+                        params,
                     }))
-                )
+                ),
             });
         }
 
@@ -289,7 +289,7 @@ class API {
      */
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     public execute<T = any>(
-        params: Record<string, unknown> & { code: string }
+        params: Record<string, unknown> & { code: string },
     ): Promise<IExecuteResponse<T>> {
         return this.call('execute', params);
     }
@@ -311,7 +311,7 @@ class API {
             method,
             params,
 
-            api: this
+            api: this,
         }));
     }
 
@@ -331,7 +331,7 @@ class API {
         if (!Worker) {
             throw new VKError({
                 message: 'Unsupported api mode',
-                code: 'UNSUPPORTED_MODE'
+                code: 'UNSUPPORTED_MODE',
             });
         }
 
@@ -354,7 +354,7 @@ class API {
 
             setTimeout(
                 () => newWorker.resume(),
-                MINIMUM_TIME_INTERVAL_API
+                MINIMUM_TIME_INTERVAL_API,
             );
         }
 
@@ -366,9 +366,9 @@ inspectable(API, {
         options: {
             token: options.token
                 ? '[set]'
-                : '[none]'
-        }
-    })
+                : '[none]',
+        },
+    }),
 });
 
 // eslint-disable-next-line

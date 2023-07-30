@@ -41,7 +41,7 @@ export class StepScene<
 
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
-            steps: this.steps
+            steps: this.steps,
         });
 
         await this.onEnterHandler(context);

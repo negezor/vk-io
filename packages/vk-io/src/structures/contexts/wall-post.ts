@@ -34,13 +34,13 @@ export class WallPostContext<S = ContextDefaultState>
 
             type: 'wall_post',
             subTypes: [
-                options.updateType as WallPostContextSubType
-            ]
+                options.updateType as WallPostContextSubType,
+            ],
         });
 
         this.wall = new WallAttachment({
             api: this.api,
-            payload: this.payload
+            payload: this.payload,
         });
     }
 
@@ -59,7 +59,7 @@ export class WallPostContext<S = ContextDefaultState>
 
         return this.api.wall.delete({
             post_id: wall.id,
-            owner_id: wall.ownerId
+            owner_id: wall.ownerId,
         });
     }
 
@@ -69,7 +69,7 @@ export class WallPostContext<S = ContextDefaultState>
     public [kSerializeData](): object {
         return pickProperties(this, [
             'wall',
-            'isRepost'
+            'isRepost',
         ]);
     }
 }

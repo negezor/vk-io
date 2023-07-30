@@ -37,10 +37,10 @@ export class DialogNotificationSettingsContext<S = ContextDefaultState>
             subTypes: [
                 disabled_until === 0
                     ? 'dialog_notification_settings_subscribe'
-                    : 'dialog_notification_settings_unsubscribe'
+                    : 'dialog_notification_settings_unsubscribe',
             ],
 
-            payload: payload
+            payload: payload,
         });
     }
 
@@ -88,7 +88,7 @@ export class DialogNotificationSettingsContext<S = ContextDefaultState>
             'hasSound',
             'disabledUntil',
             'isSubscribed',
-            'isUnsubscribed'
+            'isUnsubscribed',
         ]);
     }
 }

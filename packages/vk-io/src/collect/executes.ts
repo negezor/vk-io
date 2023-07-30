@@ -19,11 +19,11 @@ export interface IExecutesOptions {
 
 export const executeRequests = async (
     api: API,
-    queue: APIRequest[]
+    queue: APIRequest[],
 ): Promise<IExecutesPayload> => {
     const out: IExecutesPayload = {
         response: [],
-        errors: []
+        errors: [],
     };
 
     if (queue.length === 0) {
@@ -56,13 +56,13 @@ export const executeRequests = async (
 export const executes = ({
     api,
     method,
-    queue
+    queue,
 }: IExecutesOptions): Promise<IExecutesPayload> => (
     executeRequests(api, queue.map(params => (
         new APIRequest({
             api,
             method,
-            params
+            params,
         })
     )))
 );

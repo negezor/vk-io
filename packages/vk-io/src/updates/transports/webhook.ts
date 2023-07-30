@@ -1,13 +1,13 @@
 import createDebug from 'debug';
 
 import { TlsOptions } from 'tls';
-import { Server as HTTPSServer, createServer as httpsCreateServer } from 'https';
+import { Server as HTTPSServer, createServer as createHttpsServer } from 'https';
 import {
-    Server as HTTPServer,
+    Server as HttpServer,
     IncomingMessage,
     ServerResponse,
 
-    createServer as httpCreateServer
+    createServer as createHttpServer,
 } from 'http';
 import { promisify } from 'util';
 
@@ -51,9 +51,9 @@ export type WebhookTransportKoaCallback = (
 export class WebhookTransport {
     public started = false;
 
-    public webhookHandler!: Function;
+    public webhookHandler!: (update: object) => unknown;
 
-    protected webhookServer?: HTTPServer | HTTPSServer;
+    protected webhookServer?: HttpServer | HTTPSServer;
 
     protected api: API;
 
@@ -75,7 +75,7 @@ export class WebhookTransport {
         host,
         port: customPort,
 
-        next = defaultNextHandler
+        next = defaultNextHandler,
     }: IWebhookTransportStartOptions = {}): Promise<void> {
         if (this.started) {
             throw new Error('Webhook updates already started');
@@ -97,8 +97,8 @@ export class WebhookTransport {
             );
 
             this.webhookServer = tls
-                ? httpsCreateServer(tls, callback)
-                : httpCreateServer(callback);
+                ? createHttpsServer(tls, callback)
+                : createHttpServer(callback);
 
             const { webhookServer } = this;
 
@@ -142,7 +142,7 @@ export class WebhookTransport {
     public getWebhookCallback(path?: string): WebhookTransportCallback {
         const headers = {
             connection: 'keep-alive',
-            'content-type': 'text/plain'
+            'content-type': 'text/plain',
         };
 
         const checkIsNotValidPath = path !== undefined
@@ -197,7 +197,7 @@ export class WebhookTransport {
                 res.writeHead(200, headers);
                 res.end('ok');
 
-                this.webhookHandler(update).catch((error: Error): void => {
+                Promise.resolve(this.webhookHandler(update)).catch((error: Error): void => {
                     // eslint-disable-next-line no-console
                     console.error('Handle webhook update error', error);
                 });
@@ -210,7 +210,7 @@ export class WebhookTransport {
         };
     }
 
-    public subscribe(handler: Function): void {
+    public subscribe(handler: (update: object) => unknown): void {
         this.webhookHandler = handler;
     }
 

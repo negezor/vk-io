@@ -4,7 +4,7 @@ import {
     ISceneContextEnterOptions,
     ISceneContextLeaveOptions,
 
-    LastAction
+    LastAction,
 } from './scene.types';
 import { IScene } from '../scenes';
 
@@ -89,7 +89,7 @@ export class SceneContext<S extends Record<string, unknown>> {
         if (!isCurrent) {
             if (!this.leaving) {
                 await this.leave({
-                    silent: options.silent
+                    silent: options.silent,
                 });
             }
 
@@ -187,7 +187,7 @@ export class SceneContext<S extends Record<string, unknown>> {
                 this.context[this.sessionKey].__scene = target;
 
                 return true;
-            }
+            },
         });
 
         this.state = new Proxy(this.session.state || {}, {
@@ -197,7 +197,7 @@ export class SceneContext<S extends Record<string, unknown>> {
                 this.session.state = target;
 
                 return true;
-            }
+            },
         });
     }
 }

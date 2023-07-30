@@ -7,7 +7,7 @@ export const getExecuteParams = (params: Record<string, object | string>): strin
     JSON.stringify(params, (key, value) => (
         typeof value === 'object' && value !== params
             ? String(value)
-            : value
+            : value as unknown
     ))
 );
 
@@ -16,7 +16,7 @@ export const getExecuteParams = (params: Record<string, object | string>): strin
  */
 export const getExecuteMethod = (
     method: string,
-    params: Record<string, object | string> = {}
+    params: Record<string, object | string> = {},
 ): string => (
     `API.${method}(${getExecuteParams(params)})`
 );
@@ -33,13 +33,13 @@ export const getChainReturn = (methods: string[]): string => (
  */
 export const resolveExecuteTask = (
     tasks: {
-        resolve: Function;
-        reject: Function;
+        resolve: (value: unknown) => void;
+        reject: (error: object) => void;
     }[],
     result: {
         errors: object[];
         response: (object | false)[];
-    }
+    },
 ): void => {
     let errors = 0;
 
@@ -133,15 +133,18 @@ export const showDeprecatedMessage = (message: string): void => {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 export const applyMixins = (derivedCtor: any, baseCtors: any[]): void => {
     for (const baseCtor of baseCtors) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         for (const name of Object.getOwnPropertyNames(baseCtor.prototype)) {
             if (name === 'constructor') {
                 continue;
             }
 
             Object.defineProperty(
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
                 derivedCtor.prototype,
                 name,
-                Object.getOwnPropertyDescriptor(baseCtor.prototype, name)!
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+                Object.getOwnPropertyDescriptor(baseCtor.prototype, name)!,
             );
         }
     }

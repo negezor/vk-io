@@ -27,7 +27,7 @@ export class MarketAlbumAttachment
         super({
             ...options,
 
-            type: AttachmentType.MARKET_ALBUM
+            type: AttachmentType.MARKET_ALBUM,
         });
 
         this.$filled = this.payload.title !== undefined && this.payload.updated_time !== undefined;
@@ -45,12 +45,12 @@ export class MarketAlbumAttachment
 
         const { items } = await this.api.market.getAlbumById({
             owner_id: this.ownerId,
-            album_ids: this.id
+            album_ids: this.id,
         });
 
         this.$filled = true;
 
-        this.applyPayload(items![0] as IMarketAlbumAttachmentPayload);
+        this.applyPayload(items[0] as IMarketAlbumAttachmentPayload);
     }
 
     /**
@@ -83,7 +83,7 @@ export class MarketAlbumAttachment
         if (this.payload.photo) {
             this.photo = new PhotoAttachment({
                 api: this.api,
-                payload: this.payload.photo
+                payload: this.payload.photo,
             });
         }
     }

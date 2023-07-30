@@ -29,7 +29,7 @@ export interface ICommentContextPayload {
     date?: number;
     text?: string;
     attachments?: object[];
-    likes?: {};
+    likes?: object;
 }
 
 export type CommentContextOptions<S> =
@@ -74,7 +74,7 @@ class CommentContext<S = ContextDefaultState>
     public constructor(options: CommentContextOptions<S>) {
         const initiator = (options.updateType as string).substring(
             0,
-            (options.updateType as string).lastIndexOf('_')
+            (options.updateType as string).lastIndexOf('_'),
         );
 
         super({
@@ -83,8 +83,8 @@ class CommentContext<S = ContextDefaultState>
             type: 'comment',
             subTypes: [
                 initiator as CommentContextSubType,
-                options.updateType as CommentContextSubType
-            ]
+                options.updateType as CommentContextSubType,
+            ],
         });
 
         this.attachments = transformAttachments(this.payload.attachments || [], this.api);
@@ -280,7 +280,7 @@ class CommentContext<S = ContextDefaultState>
         if (this.isDelete) {
             return Promise.reject(new VKError({
                 message: 'Comment is deleted',
-                code: 'ALREADY_DELETED'
+                code: 'ALREADY_DELETED',
             }));
         }
 
@@ -290,7 +290,7 @@ class CommentContext<S = ContextDefaultState>
 
                 comment_id: this.id,
                 topic_id: this.objectId,
-                group_id: this.$groupId!
+                group_id: this.$groupId!,
             });
         }
 
@@ -298,7 +298,7 @@ class CommentContext<S = ContextDefaultState>
             ...options,
 
             comment_id: this.id,
-            owner_id: this.ownerId
+            owner_id: this.ownerId,
         };
 
         if (this.isPhotoComment) {
@@ -319,7 +319,7 @@ class CommentContext<S = ContextDefaultState>
 
         return Promise.reject(new VKError({
             message: 'Unsupported event for editing comment',
-            code: 'UNSUPPORTED_EVENT'
+            code: 'UNSUPPORTED_EVENT',
         }));
     }
 
@@ -330,7 +330,7 @@ class CommentContext<S = ContextDefaultState>
         if (this.isDelete) {
             return Promise.reject(new VKError({
                 message: 'Comment is deleted',
-                code: 'ALREADY_DELETED'
+                code: 'ALREADY_DELETED',
             }));
         }
 
@@ -338,13 +338,13 @@ class CommentContext<S = ContextDefaultState>
             return this.api.board.deleteComment({
                 comment_id: this.id,
                 topic_id: this.objectId,
-                group_id: this.$groupId!
+                group_id: this.$groupId!,
             });
         }
 
         const params = {
             comment_id: this.id,
-            owner_id: this.ownerId
+            owner_id: this.ownerId,
         };
 
         if (this.isPhotoComment) {
@@ -365,7 +365,7 @@ class CommentContext<S = ContextDefaultState>
 
         return Promise.reject(new VKError({
             message: 'Unsupported event for deleting comment',
-            code: 'UNSUPPORTED_EVENT'
+            code: 'UNSUPPORTED_EVENT',
         }));
     }
 
@@ -395,7 +395,7 @@ class CommentContext<S = ContextDefaultState>
             'isReply',
             'isUser',
             'isGroup',
-            'likes'
+            'likes',
         ];
 
         const filtredEmptyProperties = properties.filter(property => (

@@ -29,7 +29,7 @@ export const pickExistingProperties = <
 export const normalizeSource = (rawSource: UploadAllowedSource): UploadNormalizedSourceOptions => {
     if ('value' in rawSource) {
         return {
-            values: [rawSource]
+            values: [rawSource],
         };
     }
 
@@ -38,7 +38,7 @@ export const normalizeSource = (rawSource: UploadAllowedSource): UploadNormalize
 
         values: Array.isArray(rawSource.values)
             ? rawSource.values
-            : [rawSource.values]
+            : [rawSource.values],
     };
 };
 
@@ -51,7 +51,7 @@ export const streamToBuffer = async (rawStream: NodeJS.ReadableStream): Promise<
     let totalSize = 0;
 
     for await (const chunk of stream) {
-        totalSize += chunk.length;
+        totalSize += (chunk as Buffer).length;
 
         chunks.push(chunk as Buffer);
     }

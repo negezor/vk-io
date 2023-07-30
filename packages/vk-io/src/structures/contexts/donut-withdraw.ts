@@ -32,8 +32,8 @@ export class DonutWithdrawContext<S = ContextDefaultState>
 
             type: 'donut_withdraw',
             subTypes: [
-                options.updateType as DonutWithdrawContextSubType
-            ]
+                options.updateType as DonutWithdrawContextSubType,
+            ],
         });
     }
 
@@ -73,7 +73,7 @@ export class DonutWithdrawContext<S = ContextDefaultState>
             'isError',
             'amount',
             'amountWithoutFee',
-            'reason'
+            'reason',
         ]);
     }
 }

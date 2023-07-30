@@ -10,7 +10,7 @@ IAttachmentOptions<P, Type>;
 
 export type ExternalAttachmentFactoryOptions<P> = AttachmentFactoryOptions<P>;
 
-export class ExternalAttachment<P = {}, Type extends string | AttachmentType = string> {
+export class ExternalAttachment<P = object, Type extends string | AttachmentType = string> {
     public type: Type;
 
     protected $filled: boolean;
@@ -66,7 +66,7 @@ export class ExternalAttachment<P = {}, Type extends string | AttachmentType = s
      */
     public [kSerializeData](): object {
         return {
-            payload: this.payload
+            payload: this.payload,
         };
     }
 }
@@ -75,5 +75,5 @@ inspectable(ExternalAttachment, {
     serialize: instance => instance.toJSON(),
     stringify: (instance, payload, context): string => (
         `${context.stylize(instance.constructor.name, 'special')} ${context.inspect(payload)}`
-    )
+    ),
 });

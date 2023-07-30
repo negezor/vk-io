@@ -16,7 +16,7 @@ import {
     DocumentAttachment,
     WallReplyAttachment,
     MarketAlbumAttachment,
-    AudioMessageAttachment
+    AudioMessageAttachment,
 } from '.';
 
 import { API } from '../../api';
@@ -41,7 +41,7 @@ const attachmentsTypes = {
     [AttachmentType.GRAFFITI]: (): typeof GraffitiAttachment => GraffitiAttachment,
     [AttachmentType.WALL_REPLY]: (): typeof WallReplyAttachment => WallReplyAttachment,
     [AttachmentType.MARKET_ALBUM]: (): typeof MarketAlbumAttachment => MarketAlbumAttachment,
-    [AttachmentType.AUDIO_MESSAGE]: (): typeof AudioMessageAttachment => AudioMessageAttachment
+    [AttachmentType.AUDIO_MESSAGE]: (): typeof AudioMessageAttachment => AudioMessageAttachment,
 };
 
 /**
@@ -50,7 +50,7 @@ const attachmentsTypes = {
 export const transformAttachments = (
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     rawAttachments: any[],
-    api: API
+    api: API,
 // eslint-disable-next-line function-paren-newline
 ): (Attachment | ExternalAttachment)[] => {
     const attachments: (Attachment | ExternalAttachment)[] = [];
@@ -69,8 +69,8 @@ export const transformAttachments = (
         attachments.push(
             new AttachmentConstructor({
                 api,
-                payload: rawAttachment[type]
-            })
+                payload: rawAttachment[type],
+            }),
         );
     }
 

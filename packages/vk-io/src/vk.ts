@@ -29,20 +29,20 @@ export class VK {
         this.api = new API({
             ...options,
 
-            callbackService: this.callbackService
+            callbackService: this.callbackService,
         });
 
         this.upload = new Upload({
             ...options,
 
-            api: this.api
+            api: this.api,
         });
 
         this.updates = new Updates({
             ...options,
 
             api: this.api,
-            upload: this.upload
+            upload: this.upload,
         });
     }
 
@@ -55,5 +55,5 @@ export class VK {
 }
 
 inspectable(VK, {
-    serialize: ({ api, updates }) => ({ api, updates })
+    serialize: ({ api, updates }) => ({ api, updates }),
 });

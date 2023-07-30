@@ -32,7 +32,7 @@ export type ContextFactoryOptions<P, S> =
     Omit<IContextOptions<P, S>, 'type' | 'subTypes'>;
 
 export class Context<
-    P = {},
+    P = object,
     S = ContextDefaultState,
     Type extends string = string,
     SubType extends string = string
@@ -103,7 +103,7 @@ export class Context<
 
             type: this.type,
             subTypes: this.subTypes,
-            state: this.state
+            state: this.state,
         };
     }
 
@@ -122,5 +122,5 @@ inspectable(Context, {
     serialize: instance => instance.toJSON(),
     stringify: (instance, payload, context): string => (
         `${context.stylize(instance.constructor.name, 'special')} ${context.inspect(payload)}`
-    )
+    ),
 });

@@ -8,7 +8,7 @@ import {
     IKeyboardApplicationButtonOptions,
     IKeyboardCallbackButtonOptions,
 
-    ButtonColor
+    ButtonColor,
 } from './types';
 
 export class Keyboard {
@@ -127,7 +127,7 @@ export class Keyboard {
      * Text button, can be colored
      */
     public static textButton(
-        options: IKeyboardTextButtonOptions
+        options: IKeyboardTextButtonOptions,
     ): IKeyboardProxyButton {
         return { options, kind: 'text' };
     }
@@ -136,7 +136,7 @@ export class Keyboard {
      * URL button
      */
     public static urlButton(
-        options: IKeyboardURLButtonOptions
+        options: IKeyboardURLButtonOptions,
     ): IKeyboardProxyButton {
         return { options, kind: 'url' };
     }
@@ -145,7 +145,7 @@ export class Keyboard {
      * User location request button, occupies the entire keyboard width
      */
     public static locationRequestButton(
-        options: IKeyboardLocationRequestButtonOptions
+        options: IKeyboardLocationRequestButtonOptions,
     ): IKeyboardProxyButton {
         return { options, kind: 'location_request' };
     }
@@ -154,7 +154,7 @@ export class Keyboard {
      * VK Pay button, occupies the entire keyboard width
      */
     public static payButton(
-        options: IKeyboardVKPayButtonOptions
+        options: IKeyboardVKPayButtonOptions,
     ): IKeyboardProxyButton {
         return { options, kind: 'vk_pay' };
     }
@@ -163,7 +163,7 @@ export class Keyboard {
      * VK Apps button, occupies the entire keyboard width
      */
     public static applicationButton(
-        options: IKeyboardApplicationButtonOptions
+        options: IKeyboardApplicationButtonOptions,
     ): IKeyboardProxyButton {
         return { options, kind: 'vk_application' };
     }
@@ -173,7 +173,7 @@ export class Keyboard {
      * to receive a notification of a button click and perform the necessary action
      */
     public static callbackButton(
-        options: IKeyboardCallbackButtonOptions
+        options: IKeyboardCallbackButtonOptions,
     ): IKeyboardProxyButton {
         return { options, kind: 'callback' };
     }

@@ -97,7 +97,7 @@ class WallAttachment extends Attachment<IWallAttachmentPayload, AttachmentType.W
         super({
             ...options,
 
-            type: AttachmentType.WALL
+            type: AttachmentType.WALL,
         });
 
         this.$filled = this.payload.date !== undefined;
@@ -115,7 +115,7 @@ class WallAttachment extends Attachment<IWallAttachmentPayload, AttachmentType.W
 
         const [post] = await this.api.wall.getById({
             posts: `${this.ownerId}_${this.id}`,
-            extended: 0
+            extended: 0,
         });
 
         this.applyPayload(post as unknown as IWallAttachmentPayload);
@@ -455,7 +455,7 @@ class WallAttachment extends Attachment<IWallAttachmentPayload, AttachmentType.W
         this[kCopyHistoryAttachments] = (payload.copy_history || []).map((history): WallAttachment => (
             new WallAttachment({
                 api: this.api,
-                payload: history
+                payload: history,
             })
         ));
     }
@@ -483,7 +483,7 @@ class WallAttachment extends Attachment<IWallAttachmentPayload, AttachmentType.W
             'geo',
             'copyright',
             'copyHistory',
-            'attachments'
+            'attachments',
         ]);
     }
 }

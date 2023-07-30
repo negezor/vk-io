@@ -45,7 +45,7 @@ export class DocumentAttachment
         super({
             ...options,
 
-            type: AttachmentType.DOCUMENT
+            type: AttachmentType.DOCUMENT,
         });
 
         this.$filled = this.payload.ext !== undefined && this.payload.date !== undefined;
@@ -60,7 +60,7 @@ export class DocumentAttachment
         }
 
         const [document] = await this.api.docs.getById({
-            docs: `${this.ownerId}_${this.id}`
+            docs: `${this.ownerId}_${this.id}`,
         });
 
         this.payload = document as IDocumentAttachmentPayload;
@@ -248,7 +248,7 @@ export class DocumentAttachment
             'typeId',
             'createdAt',
             'extension',
-            'url'
+            'url',
         ]);
     }
 }

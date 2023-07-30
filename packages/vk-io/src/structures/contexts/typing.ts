@@ -5,7 +5,7 @@ import {
     PEER_CHAT_ID_OFFSET,
 
     UpdateSource,
-    kSerializeData
+    kSerializeData,
 } from '../../utils/constants';
 
 export enum TypingState {
@@ -19,7 +19,7 @@ export enum TypingState {
 export interface ITypingContextPayload {
     from_id: number;
     to_id: number;
-    state: string;
+    state: TypingState;
 }
 
 const stateTypesEnum: Record<number, TypingState> = {
@@ -27,18 +27,18 @@ const stateTypesEnum: Record<number, TypingState> = {
     64: TypingState.AUDIO_MESSAGE,
     65: TypingState.PHOTO_MESSAGE,
     66: TypingState.VIDEO_MESSAGE,
-    67: TypingState.FILE_MESSAGE
+    67: TypingState.FILE_MESSAGE,
 };
 
 const transformPolling = (
     { 1: toId, 2: fromIds }: [number, number, number[]],
-    updateType: number | string
+    updateType: number | string,
 ): ITypingContextPayload => ({
     from_id: fromIds[0],
     to_id: toId,
     state: typeof updateType === 'string'
-        ? updateType
-        : stateTypesEnum[updateType]
+        ? updateType as TypingState
+        : stateTypesEnum[updateType],
 });
 
 export type TypingContextType = 'typing';
@@ -65,15 +65,15 @@ export class TypingContext<S = ContextDefaultState>
             type: 'typing',
             subTypes: [
                 'message_typing_state',
-                `typing_${getPeerType(options.payload.from_id)}` as TypingContextSubType
+                `typing_${getPeerType(options.payload.from_id)}` as TypingContextSubType,
             ],
 
             payload: options.source === UpdateSource.POLLING
                 ? transformPolling(
                     (options.payload as unknown) as [number, number, number[]],
-                    options.updateType
+                    options.updateType,
                 )
-                : options.payload
+                : options.payload,
         });
     }
 
@@ -173,7 +173,7 @@ export class TypingContext<S = ContextDefaultState>
             'isAudioMessage',
             'isPhotoMessage',
             'isVideoMessage',
-            'isFileMessage'
+            'isFileMessage',
         ]);
     }
 }

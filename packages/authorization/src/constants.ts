@@ -45,7 +45,7 @@ export const userScopes = new Map<string, number>([
     ['notifications', 524288],
     ['stats', 1048576],
     ['email', 4194304],
-    ['market', 134217728]
+    ['market', 134217728],
 ]);
 
 /**
@@ -57,7 +57,7 @@ export const groupScopes = new Map<string, number>([
     // ['app_widget', 64],
     ['messages', 4096],
     ['docs', 131072],
-    ['manage', 262144]
+    ['manage', 262144],
 ]);
 
 export const officialAppCredentials = {
@@ -66,27 +66,27 @@ export const officialAppCredentials = {
         clientSecret: 'hHbZxrka2uZ6jB1inYsH',
         headers: {
             // eslint-disable-next-line @typescript-eslint/naming-convention
-            'User-Agent': 'VKAndroidApp/7.7-10445 (Android 11; SDK 30; arm64-v8a; Xiaomi M2003J15SC; ru; 2340x1080)'
-        }
+            'User-Agent': 'VKAndroidApp/7.7-10445 (Android 11; SDK 30; arm64-v8a; Xiaomi M2003J15SC; ru; 2340x1080)',
+        },
     },
     windows: {
         clientId: '3697615',
-        clientSecret: 'AlVXZFMUqyrnABp8ncuU'
+        clientSecret: 'AlVXZFMUqyrnABp8ncuU',
     },
     windowsPhone: {
         clientId: '3502557',
-        clientSecret: 'PEObAuQi6KloPM4T30DV'
+        clientSecret: 'PEObAuQi6KloPM4T30DV',
     },
     iphone: {
         clientId: '3140623',
-        clientSecret: 'VeWdmVclDCtn6ihuP1nt'
+        clientSecret: 'VeWdmVclDCtn6ihuP1nt',
     },
     ipad: {
         clientId: '3682744',
-        clientSecret: 'mY6CDUswIVdJLCD3j15n'
+        clientSecret: 'mY6CDUswIVdJLCD3j15n',
     },
     vkMe: {
         clientId: '6146827',
-        clientSecret: 'qVxWRF1CwHERuIrKBnqe'
-    }
+        clientSecret: 'qVxWRF1CwHERuIrKBnqe',
+    },
 };

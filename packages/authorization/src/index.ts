@@ -7,5 +7,5 @@ export {
     officialAppCredentials,
 
     userScopes,
-    groupScopes
+    groupScopes,
 } from './constants';

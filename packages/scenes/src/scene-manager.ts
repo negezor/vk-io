@@ -44,7 +44,7 @@ export class SceneManager {
             context.scene = new SceneContext({
                 context,
                 sessionKey: this.sessionKey,
-                repository: this.repository
+                repository: this.repository,
             });
 
             return next();

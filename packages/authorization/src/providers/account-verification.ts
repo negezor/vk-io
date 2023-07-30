@@ -5,7 +5,6 @@ import { AbortController } from 'abort-controller';
 import { CaptchaType, ICallbackServiceValidate, CallbackService } from 'vk-io';
 
 import { Agent } from 'https';
-import { URL, URLSearchParams } from 'url';
 
 import { AuthorizationError } from '../errors';
 import { CheerioStatic, parseFormField, getFullURL } from '../helpers';
@@ -17,7 +16,7 @@ import {
     RequestInit,
     Response,
 
-    fetchCookieFollowRedirectsDecorator
+    fetchCookieFollowRedirectsDecorator,
 } from '../fetch-cookie';
 import { DESKTOP_USER_AGENT, CALLBACK_BLANK, AuthErrorCode } from '../constants';
 
@@ -27,7 +26,7 @@ const {
     INVALID_PHONE_NUMBER,
     AUTHORIZATION_FAILED,
     FAILED_PASSED_CAPTCHA,
-    FAILED_PASSED_TWO_FACTOR
+    FAILED_PASSED_TWO_FACTOR,
 } = AuthErrorCode;
 
 /**
@@ -90,10 +89,10 @@ export class AccountVerification {
             timeout: 10_000,
             headers: options.headers || {
                 // eslint-disable-next-line @typescript-eslint/naming-convention
-                'User-Agent': DESKTOP_USER_AGENT
+                'User-Agent': DESKTOP_USER_AGENT,
             },
 
-            ...options
+            ...options,
         };
 
         this.jar = new CookieJar();
@@ -129,7 +128,7 @@ export class AccountVerification {
 
             agent,
             signal: controller.signal,
-            compress: false
+            compress: false,
         }).finally(() => clearTimeout(interval));
     }
 
@@ -138,7 +137,7 @@ export class AccountVerification {
      */
     public async run(redirectUri: RequestInfo): Promise<{ userId: number; token: string }> {
         let response = await this.fetch(redirectUri, {
-            method: 'GET'
+            method: 'GET',
         });
 
         const isProcessed = true;
@@ -158,7 +157,7 @@ export class AccountVerification {
                 if (params.has('error')) {
                     throw new AuthorizationError({
                         message: `Failed passed grant access: ${params.get('error_description') || 'Unknown error'}`,
-                        code: AUTHORIZATION_FAILED
+                        code: AUTHORIZATION_FAILED,
                     });
                 }
 
@@ -166,7 +165,7 @@ export class AccountVerification {
 
                 return {
                     userId: Number(userId),
-                    token: params.get('access_token')!
+                    token: params.get('access_token')!,
                 };
             }
 
@@ -198,7 +197,7 @@ export class AccountVerification {
 
             throw new AuthorizationError({
                 message: 'Account verification failed',
-                code: AUTHORIZATION_FAILED
+                code: AUTHORIZATION_FAILED,
             });
         }
 
@@ -215,7 +214,7 @@ export class AccountVerification {
             this.twoFactorValidate.reject(new AuthorizationError({
                 message: 'Incorrect two-factor code',
                 code: FAILED_PASSED_TWO_FACTOR,
-                pageHtml: $.html()
+                pageHtml: $.html(),
             }));
 
             this.twoFactorAttempts += 1;
@@ -224,7 +223,7 @@ export class AccountVerification {
         if (this.twoFactorAttempts >= TWO_FACTOR_ATTEMPTS) {
             throw new AuthorizationError({
                 message: 'Failed passed two-factor authentication',
-                code: FAILED_PASSED_TWO_FACTOR
+                code: FAILED_PASSED_TWO_FACTOR,
             });
         }
 
@@ -239,7 +238,7 @@ export class AccountVerification {
 
             const newResponse = await this.fetch(url, {
                 method: 'POST',
-                body: new URLSearchParams(fields)
+                body: new URLSearchParams(fields),
             });
 
             return newResponse;
@@ -266,7 +265,7 @@ export class AccountVerification {
         } else {
             throw new AuthorizationError({
                 message: 'Missing phone number in the phone or login field',
-                code: INVALID_PHONE_NUMBER
+                code: INVALID_PHONE_NUMBER,
             });
         }
 
@@ -289,13 +288,13 @@ export class AccountVerification {
 
         const rewResponse = await this.fetch(url, {
             method: 'POST',
-            body: new URLSearchParams(fields)
+            body: new URLSearchParams(fields),
         });
 
         if (rewResponse.url.includes(ACTION_SECURITY_CODE)) {
             throw new AuthorizationError({
                 message: 'Invalid phone number',
-                code: INVALID_PHONE_NUMBER
+                code: INVALID_PHONE_NUMBER,
             });
         }
 
@@ -310,7 +309,7 @@ export class AccountVerification {
         const url = getFullURL(href, response);
 
         return this.fetch(url, {
-            method: 'GET'
+            method: 'GET',
         });
     }
 
@@ -321,7 +320,7 @@ export class AccountVerification {
         if (this.captchaValidate !== undefined) {
             this.captchaValidate.reject(new AuthorizationError({
                 message: 'Incorrect captcha code',
-                code: FAILED_PASSED_CAPTCHA
+                code: FAILED_PASSED_CAPTCHA,
             }));
 
             this.captchaValidate = undefined;
@@ -336,14 +335,14 @@ export class AccountVerification {
         if (!src) {
             throw new AuthorizationError({
                 message: 'Failed get captcha image',
-                code: AUTHORIZATION_FAILED
+                code: AUTHORIZATION_FAILED,
             });
         }
 
         const { key, validate } = await this.options.callbackService.processingCaptcha({
             type: CaptchaType.ACCOUNT_VERIFICATION,
             sid: fields.captcha_sid,
-            src
+            src,
         });
 
         this.captchaValidate = validate;
@@ -356,7 +355,7 @@ export class AccountVerification {
 
         const pageResponse = await this.fetch(url, {
             method: 'POST',
-            body: new URLSearchParams(fields)
+            body: new URLSearchParams(fields),
         });
 
         return pageResponse;

@@ -182,8 +182,6 @@ auth.userAuthorizedThroughOpenAPI(params); // => Promise<Object>
 Как разобрать cookie вида `vk_app_[APP_ID]` в `express` (предполагается что у вас уже разобраны cookies):
 
 ```js
-const { URLSearchParams } = require('url');
-
 const APP_ID = '17071010';
 
 app.get('/vk/valid-auth', async (req, res, next) => {

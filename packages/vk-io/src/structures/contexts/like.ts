@@ -34,8 +34,8 @@ export class LikeContext<S = ContextDefaultState>
 
             type: 'like',
             subTypes: [
-                options.updateType as LikeContextSubType
-            ]
+                options.updateType as LikeContextSubType,
+            ],
         });
     }
 
@@ -91,7 +91,7 @@ export class LikeContext<S = ContextDefaultState>
             'objectOwnerId',
             'objectType',
             'postId',
-            'threadReplyId'
+            'threadReplyId',
         ]);
     }
 }

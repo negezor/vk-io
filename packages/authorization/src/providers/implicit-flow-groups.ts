@@ -1,7 +1,5 @@
 import createDebug from 'debug';
 
-import { URL, URLSearchParams } from 'url';
-
 import { ImplicitFlow, IImplicitFlowOptions } from './implicit-flow';
 
 import { Response } from '../fetch-cookie';
@@ -65,13 +63,13 @@ export class ImplicitFlowGroups extends ImplicitFlow {
             display: 'page',
             v: this.options.apiVersion,
             client_id: clientId,
-            scope: String(scope)
+            scope: String(scope),
         });
 
-        const url = new URL(`https://oauth.vk.com/authorize?${params}`);
+        const url = new URL(`https://oauth.vk.com/authorize?${params.toString()}`);
 
         return this.fetch(url, {
-            method: 'GET'
+            method: 'GET',
         });
     }
 
@@ -98,7 +96,7 @@ export class ImplicitFlowGroups extends ImplicitFlow {
         if (params.has('error')) {
             throw new AuthorizationError({
                 message: `Failed passed grant access: ${params.get('error_description') || 'Unknown error'}`,
-                code: AUTHORIZATION_FAILED
+                code: AUTHORIZATION_FAILED,
             });
         }
 
@@ -125,7 +123,7 @@ export class ImplicitFlowGroups extends ImplicitFlow {
             groups.push({
                 groupId: Number(groupId),
                 token: value,
-                expires: expires as number
+                expires: expires!,
             });
         }
 

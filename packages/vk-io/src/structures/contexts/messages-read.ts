@@ -11,7 +11,7 @@ export type MessagesReadContextSubType =
 
 const subTypes: Record<number, MessagesReadContextSubType> = {
     6: 'messages_read_inbox',
-    7: 'messages_read_outbox'
+    7: 'messages_read_outbox',
 };
 
 export interface IMessagesReadContextPayload {
@@ -37,13 +37,13 @@ export class MessagesReadContext<S = ContextDefaultState>
 
             type: 'messages_read',
             subTypes: [
-                subTypes[eventId]
+                subTypes[eventId],
             ],
 
             payload: {
                 peer_id: peerId,
-                local_id: localId
-            }
+                local_id: localId,
+            },
         });
     }
 
@@ -83,7 +83,7 @@ export class MessagesReadContext<S = ContextDefaultState>
             'id',
             'peerId',
             'isInbox',
-            'isOutbox'
+            'isOutbox',
         ]);
     }
 }

@@ -32,7 +32,7 @@ const enumResourceTypes: Record<string, IResolvedTargetResource['type']> = {
     id: ResourceType.USER,
     club: ResourceType.GROUP,
     public: ResourceType.GROUP,
-    app: ResourceType.APPLICATION
+    app: ResourceType.APPLICATION,
 };
 
 const transformNumberResourceToTarget = (resource: number): string => (
@@ -56,7 +56,7 @@ const resolveTargetResouce = (resource: string): IResolvedTargetResource => {
 
     return {
         id: Number(rawId),
-        type: enumResourceTypes[rawType] || rawType
+        type: enumResourceTypes[rawType] || rawType,
     };
 };
 
@@ -66,38 +66,38 @@ const resolveOwnerResource = (resource: string): IResolvedOwnerResource => {
     return {
         id: Number(rawId),
         ownerId: Number(rawOwnerId),
-        type: rawType as IResolvedOwnerResource['type']
+        type: rawType as IResolvedOwnerResource['type'],
     };
 };
 
 const resolveSlugResource = async (
     resource: string,
-    api?: API
+    api?: API,
 ): Promise<IResolvedTargetResource> => {
     if (api === undefined) {
         throw new Error('API object is not passed');
     }
 
     const response = await api.utils.resolveScreenName({
-        screen_name: resource
+        screen_name: resource,
     });
 
     if (Array.isArray(response)) {
         throw new ResourceError({
             code: ResourceErrorCode.RESOURCE_NOT_FOUND,
-            message: 'Resource not found'
+            message: 'Resource not found',
         });
     }
 
     return {
         id: response.object_id!,
-        type: response.type
+        type: response.type as IResolvedTargetResource['type'],
     };
 };
 
 export const resolveResource = async ({
     resource: rawResource,
-    api
+    api,
 }: IResolveResourceOptions): Promise<IResolvedTargetResource | IResolvedOwnerResource> => {
     if (!rawResource) {
         throw new TypeError('Resource is required');
@@ -108,16 +108,16 @@ export const resolveResource = async ({
     if (onlyNumberRe.test(resource)) {
         return resolveTargetResouce(
             transformNumberResourceToTarget(
-                Number(resource)
-            )
+                Number(resource),
+            ),
         );
     }
 
     if (systemMentionRe.test(resource)) {
         return resolveTargetResouce(
             transformMentionResourceToTarget(
-                resource
-            )
+                resource,
+            ),
         );
     }
 
@@ -142,7 +142,7 @@ export const resolveResource = async ({
     if (rawPathname === '/') {
         throw new ResourceError({
             code: ResourceErrorCode.INVALID_URL,
-            message: 'URL should contain path'
+            message: 'URL should contain path',
         });
     }
 

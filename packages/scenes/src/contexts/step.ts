@@ -46,7 +46,7 @@ export class StepSceneContext<S extends Record<string, unknown>> {
     /**
      * Returns current handler
      */
-    public get current(): StepSceneHandler<{}, S> | undefined {
+    public get current(): StepSceneHandler<object, S> | undefined {
         return this.steps[this.stepId];
     }
 

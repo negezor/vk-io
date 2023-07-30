@@ -61,7 +61,6 @@ import {
     DonutSubscriptionPriceContextType,
     DonutWithdrawContextType,
 
-    UnsupportedEventContextSubType,
     CommentContextSubType,
     DialogFlagsContextSubType,
     DialogNotificationSettingsContextSubType,
@@ -85,7 +84,7 @@ import {
     MarketOrderContextSubType,
     DonutSubscriptionContextSubType,
     DonutSubscriptionPriceContextSubType,
-    DonutWithdrawContextSubType
+    DonutWithdrawContextSubType,
 } from '../structures';
 
 import { API } from '../api';
@@ -97,7 +96,7 @@ import {
     WebhookTransport,
     WebhookTransportCallback,
     WebhookTransportKoaCallback,
-    IWebhookTransportStartOptions
+    IWebhookTransportStartOptions,
 } from './transports';
 
 import { APIError, APIErrorCode } from '../errors';
@@ -111,31 +110,31 @@ const debug = createDebug('vk-io:updates');
 const webhookContextsEvents: [string[], Constructor<any>][] = [
     [
         ['message_new', 'message_edit', 'message_reply'],
-        MessageContext
+        MessageContext,
     ],
     [
         ['message_allow', 'message_deny'],
-        MessageSubscriptionContext
+        MessageSubscriptionContext,
     ],
     [
         ['message_event'],
-        MessageEventContext
+        MessageEventContext,
     ],
     [
         ['photo_new', 'audio_new', 'video_new'],
-        NewAttachmentsContext
+        NewAttachmentsContext,
     ],
     [
         ['wall_post_new', 'wall_repost'],
-        WallPostContext
+        WallPostContext,
     ],
     [
         ['group_join', 'group_leave'],
-        GroupMemberContext
+        GroupMemberContext,
     ],
     [
         ['user_block', 'user_unblock'],
-        GroupUserContext
+        GroupUserContext,
     ],
     [
         [
@@ -158,98 +157,98 @@ const webhookContextsEvents: [string[], Constructor<any>][] = [
             'market_comment_new',
             'market_comment_edit',
             'market_comment_delete',
-            'market_comment_restore'
+            'market_comment_restore',
         ],
-        CommentContext
+        CommentContext,
     ],
     [
         ['poll_vote_new'],
-        VoteContext
+        VoteContext,
     ],
     [
         ['group_change_photo', 'group_officers_edit', 'group_change_settings'],
-        GroupUpdateContext
+        GroupUpdateContext,
     ],
     [
         ['message_typing_state'],
-        TypingContext
+        TypingContext,
     ],
     [
         ['app_payload'],
-        VKAppPayloadContext
+        VKAppPayloadContext,
     ],
     [
         ['vkpay_transaction'],
-        VKPayTransactionContext
+        VKPayTransactionContext,
     ],
     [
         ['like_add', 'like_remove'],
-        LikeContext
+        LikeContext,
     ],
     [
         ['market_order_new', 'market_order_edit'],
-        MarketOrderContext
+        MarketOrderContext,
     ],
     [
         [
             'donut_subscription_create',
             'donut_subscription_prolonged',
             'donut_subscription_expired',
-            'donut_subscription_cancelled'
+            'donut_subscription_cancelled',
         ],
-        DonutSubscriptionContext
+        DonutSubscriptionContext,
     ],
     [
         ['donut_subscription_price_changed'],
-        DonutSubscriptionPriceContext
+        DonutSubscriptionPriceContext,
     ],
     [
         [
             'donut_money_withdraw',
-            'donut_money_withdraw_error'
+            'donut_money_withdraw_error',
         ],
-        DonutWithdrawContext
-    ]
+        DonutWithdrawContext,
+    ],
 ];
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const pollingContextsEvents: [number[], Constructor<any>][] = [
     [
         [1, 2, 3],
-        MessageFlagsContext
+        MessageFlagsContext,
     ],
     [
         [4, 5, 18],
-        MessageContext
+        MessageContext,
     ],
     [
         [6, 7],
-        MessagesReadContext
+        MessagesReadContext,
     ],
     [
         [8, 9, 81],
-        FriendActivityContext
+        FriendActivityContext,
     ],
     [
         [10, 11, 12],
-        DialogFlagsContext
+        DialogFlagsContext,
     ],
     [
         [13, 14],
-        DialogMessagesContext
+        DialogMessagesContext,
     ],
     [
         [63, 64, 65, 66, 67],
-        TypingContext
+        TypingContext,
     ],
     [
         [114],
-        DialogNotificationSettingsContext
-    ]
+        DialogNotificationSettingsContext,
+    ],
 ];
 
 const makeContexts = (
-    groups: [(number | string)[], Constructor<Context>][]
+    groups: [(number | string)[], Constructor<Context>][],
 ): Record<string, Constructor<Context>> => {
     const contexts: Record<string | number, Constructor<Context>> = {};
 
@@ -292,8 +291,7 @@ UnsupportedEventContextType
 | DonutWithdrawContextType;
 
 export type ContextSubTypes =
-UnsupportedEventContextSubType
-| CommentContextSubType
+CommentContextSubType
 | DialogFlagsContextSubType
 | DialogNotificationSettingsContextSubType
 | GroupMemberContextSubType
@@ -317,7 +315,7 @@ UnsupportedEventContextSubType
 | DonutSubscriptionPriceContextSubType
 | DonutWithdrawContextSubType;
 
-export type ContextPossibleTypes = ContextTypes | ContextSubTypes | string;
+export type ContextPossibleTypes = ContextTypes | ContextSubTypes;
 
 export interface IUpdatesOptions {
     api: API;
@@ -397,7 +395,7 @@ export class Updates {
             webhookSecret: undefined,
             webhookConfirmation: undefined,
 
-            ...options
+            ...options,
         };
 
         this.recompose();
@@ -405,12 +403,12 @@ export class Updates {
         this.pollingTransport = new PollingTransport({
             api,
 
-            ...this.options
+            ...this.options,
         });
         this.webhookTransport = new WebhookTransport({
             api,
 
-            ...this.options
+            ...this.options,
         });
 
         this.webhookTransport.subscribe(this.handleWebhookUpdate.bind(this));
@@ -433,7 +431,7 @@ export class Updates {
     /**
      * Added middleware
      */
-    public use<T = {}>(middleware: Middleware<Context & T>): this {
+    public use<T = object>(middleware: Middleware<Context & T>): this {
         if (typeof middleware !== 'function') {
             throw new TypeError('Middleware must be a function');
         }
@@ -448,137 +446,138 @@ export class Updates {
     /**
      * Subscribe to events
      */
-    public on<T = {}>(
+    public on<T = object>(
         events: AllowArray<CommentContextType | CommentContextSubType>,
         handler: AllowArray<Middleware<CommentContext & T>>
     ): this;
 
-    public on<T = {}>(
+    public on<T = object>(
         events: AllowArray<DialogFlagsContextType | DialogFlagsContextSubType>,
         handler: AllowArray<Middleware<DialogFlagsContext & T>>
     ): this;
 
-    public on<T = {}>(
+    public on<T = object>(
         // eslint-disable-next-line max-len
         events: AllowArray<DialogNotificationSettingsContextType | DialogNotificationSettingsContextSubType>,
         handler: AllowArray<Middleware<DialogNotificationSettingsContext & T>>
     ): this;
 
-    public on<T = {}>(
+    public on<T = object>(
         events: AllowArray<GroupMemberContextType | GroupMemberContextSubType>,
         handler: AllowArray<Middleware<GroupMemberContext & T>>
     ): this;
 
-    public on<T = {}>(
+    public on<T = object>(
         events: AllowArray<GroupUpdateContextType | GroupUpdateContextSubType>,
         handler: AllowArray<Middleware<GroupUpdateContext & T>>
     ): this;
 
-    public on<T = {}>(
+    public on<T = object>(
         events: AllowArray<GroupUserContextType | GroupUserContextSubType>,
         handler: AllowArray<Middleware<GroupUserContext & T>>
     ): this;
 
-    public on<T = {}>(
+    public on<T = object>(
         events: AllowArray<MessageSubscriptionContextType | MessageSubscriptionContextSubType>,
         handler: AllowArray<Middleware<MessageSubscriptionContext & T>>
     ): this;
 
-    public on<T = {}>(
+    public on<T = object>(
         events: AllowArray<MessageFlagsContextType | MessageFlagsContextSubType>,
         handler: AllowArray<Middleware<MessageFlagsContext & T>>
     ): this;
 
-    public on<T = {}>(
-        events: AllowArray<MessageEventContextType | MessageEventContextSubType>,
+    public on<T = object>(
+        events: AllowArray<MessageEventContextType  >,
         handler: AllowArray<Middleware<MessageEventContext & T>>
     ): this;
 
-    public on<T = {}>(
+    public on<T = object>(
         events: AllowArray<MessageContextType | MessageContextSubType>,
         handler: AllowArray<Middleware<MessageContext & T>>
     ): this;
 
-    public on<T = {}>(
+    public on<T = object>(
         events: AllowArray<NewAttachmentsContextType | NewAttachmentsContextSubType>,
         handler: AllowArray<Middleware<NewAttachmentsContext & T>>
     ): this;
 
-    public on<T = {}>(
+    public on<T = object>(
         events: AllowArray<MessagesReadContextType | MessagesReadContextSubType>,
         handler: AllowArray<Middleware<MessagesReadContext & T>>
     ): this;
 
-    public on<T = {}>(
+    public on<T = object>(
         events: AllowArray<DialogMessagesContextType | DialogMessagesContextSubType>,
         handler: AllowArray<Middleware<DialogMessagesContext & T>>
     ): this;
 
-    public on<T = {}>(
+    public on<T = object>(
         events: AllowArray<TypingContextType | TypingContextSubType>,
         handler: AllowArray<Middleware<TypingContext & T>>
     ): this;
 
-    public on<T = {}>(
+    public on<T = object>(
         events: AllowArray<FriendActivityContextType | FriendActivityContextSubType>,
         handler: AllowArray<Middleware<FriendActivityContext & T>>
     ): this;
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    public on<T = {}, P extends Record<string, any> = {}>(
+    public on<T = object, P extends Record<string, any> = object>(
         events: AllowArray<VKAppPayloadContextType | VKAppPayloadContextSubType>,
         handler: AllowArray<Middleware<VKAppPayloadContext<ContextDefaultState, P> & T>>
     ): this;
 
-    public on<T = {}>(
+    public on<T = object>(
         events: AllowArray<VKPayTransactionContextType | VKPayTransactionContextSubType>,
         handler: AllowArray<Middleware<VKPayTransactionContext & T>>
     ): this;
 
-    public on<T = {}>(
+    public on<T = object>(
         events: AllowArray<VoteContextType | VoteContextSubType>,
         handler: AllowArray<Middleware<VoteContext & T>>
     ): this;
 
-    public on<T = {}>(
+    public on<T = object>(
         events: AllowArray<WallPostContextType | WallPostContextSubType>,
         handler: AllowArray<Middleware<WallPostContext & T>>
     ): this;
 
-    public on<T = {}>(
+    public on<T = object>(
         events: AllowArray<LikeContextType | LikeContextSubType>,
         handler: AllowArray<Middleware<LikeContext & T>>
     ): this;
 
-    public on<T = {}>(
+    // @ts-expect-error incompitable overload signature
+    public on<T = object>(
         events: AllowArray<MarketOrderContextType | MarketOrderContextSubType>,
         handler: AllowArray<Middleware<MarketOrderContext & T>>
     ): this;
 
-    public on<T = {}>(
+    public on<T = object>(
         events: AllowArray<DonutSubscriptionContextType | DonutSubscriptionContextSubType>,
         handler: AllowArray<Middleware<DonutSubscriptionContext & T>>
     ): this;
 
-    public on<T = {}>(
+    public on<T = object>(
         events: AllowArray<DonutSubscriptionPriceContextType | DonutSubscriptionPriceContextSubType>,
         handler: AllowArray<Middleware<DonutSubscriptionPriceContext & T>>
     ): this;
 
-    public on<T = {}>(
+    public on<T = object>(
         events: AllowArray<DonutWithdrawContextType | DonutWithdrawContextSubType>,
         handler: AllowArray<Middleware<DonutWithdrawContext & T>>
     ): this;
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    public on<T = {}, P extends Record<string, any> = {}>(
-        events: AllowArray<UnsupportedEventContextType | UnsupportedEventContextSubType>,
+    public on<T = object, P extends Record<string, any> = object>(
+        events: AllowArray<UnsupportedEventContextType>,
         handler: AllowArray<Middleware<UnsupportedEventContext<ContextDefaultState, P> & T>>
     ): this;
 
-    public on<T = {}>(
+    public on<T = object>(
         rawEvents: AllowArray<ContextPossibleTypes>,
-        rawHandlers: AllowArray<Middleware<Context & T>>
+        rawHandlers: AllowArray<Middleware<Context & T>>,
     ): this {
         const events = !Array.isArray(rawEvents)
             ? [rawEvents]
@@ -600,7 +599,7 @@ export class Updates {
 
         return this.use((context, next): unknown => (
             context.is(events)
-                // @ts-expect-error
+                // @ts-expect-error we need support generic
                 ? handler(context, next)
                 : next()
         ));
@@ -629,7 +628,7 @@ export class Updates {
 
             payload: update,
             updateType: type,
-            source: UpdateSource.POLLING
+            source: UpdateSource.POLLING,
         }));
     }
 
@@ -651,7 +650,7 @@ export class Updates {
             payload,
             groupId,
             updateType: type,
-            source: UpdateSource.WEBHOOK
+            source: UpdateSource.WEBHOOK,
         }));
     }
 
@@ -666,7 +665,7 @@ export class Updates {
         this.pollingTransport.subscribe(
             isGroup
                 ? this.handleWebhookUpdate.bind(this)
-                : this.handlePollingUpdate.bind(this)
+                : this.handlePollingUpdate.bind(this),
         );
 
         return this.pollingTransport.start();
@@ -698,7 +697,7 @@ export class Updates {
 
                     ...this.options,
 
-                    pollingGroupId: group.id!
+                    pollingGroupId: group.id!,
                 });
 
                 this.options.pollingGroupId = group.id!;
@@ -720,7 +719,7 @@ export class Updates {
     public async stop(): Promise<void> {
         await Promise.all([
             this.pollingTransport.stop(),
-            this.webhookTransport.stop()
+            this.webhookTransport.stop(),
         ]);
     }
 
@@ -757,6 +756,6 @@ inspectable(Updates, {
     // @ts-expect-error
     serialize: ({ isStarted, composer }) => ({
         isStarted,
-        composer
-    })
+        composer,
+    }),
 });

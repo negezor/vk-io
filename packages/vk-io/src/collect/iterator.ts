@@ -6,7 +6,7 @@ import {
     CollectError,
 
     APIErrorCode,
-    CollectErrorCode
+    CollectErrorCode,
 } from '../errors';
 
 import { getExecuteCode } from './execute-code';
@@ -56,7 +56,7 @@ export async function* createCollectIterator<T>({
     maxCount = Infinity,
 
     retryLimit = 3,
-    parallelRequests = 25
+    parallelRequests = 25,
 }: ICollectIteratorOptions): AsyncGenerator<ICollectIteratorData<T>> {
     if (parallelRequests < 1 || parallelRequests > 25) {
         throw new RangeError('The number of parallel calls can be between 1 and 25');
@@ -65,14 +65,14 @@ export async function* createCollectIterator<T>({
     const params = {
         ...rawParams,
 
-        count: countPerRequest
+        count: countPerRequest,
     };
 
     const code = getExecuteCode({ method, params });
 
     const {
         count: desiredCount = Infinity,
-        offset: ignoredOffset = 0
+        offset: ignoredOffset = 0,
     } = rawParams;
 
     let total: number | undefined = Math.min(maxCount, desiredCount);
@@ -101,7 +101,7 @@ export async function* createCollectIterator<T>({
                 result = await api.call<ICollectPaginateResponse<T>>(method, {
                     ...params,
 
-                    offset
+                    offset,
                 });
             } else {
                 const { errors, response } = await api.execute<ICollectPaginateResponse<T>>({
@@ -109,14 +109,14 @@ export async function* createCollectIterator<T>({
                     total,
                     offset,
                     received,
-                    parallelRequests
+                    parallelRequests,
                 });
 
                 if (errors.length !== 0) {
                     throw new CollectError({
                         message: 'Execute error',
                         code: CollectErrorCode.EXECUTE_ERROR,
-                        errors
+                        errors,
                     });
                 }
 
@@ -174,7 +174,7 @@ export async function* createCollectIterator<T>({
             total,
             items: result.items,
             profiles: result.profiles ?? [],
-            groups: result.groups ?? []
+            groups: result.groups ?? [],
         };
     }
 }

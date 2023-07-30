@@ -5,7 +5,6 @@ import { inspectable } from 'inspectable';
 import { API, Updates, UpdateSource } from 'vk-io';
 
 import { Agent, globalAgent } from 'https';
-import { URL, URLSearchParams } from 'url';
 
 import { fetch } from './fetch';
 import { StreamingRuleError } from './errors';
@@ -56,7 +55,7 @@ export class StreamingAPI {
         this.options = {
             agent: globalAgent,
 
-            ...options
+            ...options,
         };
     }
 
@@ -79,11 +78,11 @@ export class StreamingAPI {
             this.key = key!;
             this.endpoint = new URL(`https://${endpoint}`);
 
-            const search = new URLSearchParams({ key: key! });
+            const search = new URLSearchParams({ key: key });
 
             const { agent } = this.options;
 
-            this.socket = new WebSocket(`wss://${endpoint}/stream?${search}`, { agent });
+            this.socket = new WebSocket(`wss://${endpoint}/stream?${search.toString()}`, { agent });
         } catch (error) {
             this.started = false;
 
@@ -151,7 +150,7 @@ export class StreamingAPI {
      * Processes server messages
      */
     public async handleServiceMessage(
-        { service_code: code }: { service_code: number }
+        { service_code: code }: { service_code: number },
     ): Promise<void> {
         if ([3000, 3001].includes(code)) {
             await this.stop();
@@ -172,7 +171,7 @@ export class StreamingAPI {
             state: {},
 
             updateType: 'publication',
-            source: UpdateSource.WEBSOCKET
+            source: UpdateSource.WEBSOCKET,
         });
 
         await this.updates.dispatchMiddleware(context);
@@ -184,7 +183,7 @@ export class StreamingAPI {
     private async fetchRules<T = never>(method: string, payload: object = {}): Promise<T> {
         const { agent } = this.options;
 
-        const url = new URL('/rules', this.endpoint!);
+        const url = new URL('/rules', this.endpoint);
         url.searchParams.set('key', this.key!);
 
         let body;
@@ -197,8 +196,8 @@ export class StreamingAPI {
             method,
             body,
             headers: {
-                'content-type': 'application/json'
-            }
+                'content-type': 'application/json',
+            },
         });
 
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -258,6 +257,6 @@ export class StreamingAPI {
 inspectable(StreamingAPI, {
     // @ts-expect-error
     serialize: ({ started }) => ({
-        started
-    })
+        started,
+    }),
 });

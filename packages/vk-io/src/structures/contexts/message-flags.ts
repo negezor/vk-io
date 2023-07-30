@@ -15,7 +15,7 @@ export type MessageFlagsContextSubType =
 const subTypes: Record<number, MessageFlagsContextSubType> = {
     1: 'message_flags_replace',
     2: 'message_flags_add',
-    3: 'message_flags_delete'
+    3: 'message_flags_delete',
 };
 
 /* eslint-disable no-bitwise */
@@ -64,14 +64,14 @@ export class MessageFlagsContext<S = ContextDefaultState>
 
             type: 'message_flags',
             subTypes: [
-                subTypes[eventId]
+                subTypes[eventId],
             ],
 
             payload: {
                 peer_id: peerId,
                 flags,
-                id
-            }
+                id,
+            },
         });
 
         if (options.payload.length > 4) {
@@ -81,7 +81,7 @@ export class MessageFlagsContext<S = ContextDefaultState>
                 source: UpdateSource.POLLING,
                 updateType: 4,
                 // @ts-expect-error
-                payload: options.payload
+                payload: options.payload,
             });
         }
     }
@@ -240,7 +240,7 @@ export class MessageFlagsContext<S = ContextDefaultState>
             'isDeletedForAll',
             'isInboxFromChat',
             'isSilent',
-            'isReplied'
+            'isReplied',
         ]);
     }
 }

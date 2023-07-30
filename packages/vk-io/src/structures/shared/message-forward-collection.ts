@@ -12,7 +12,7 @@ const getForwards = <S = ContextDefaultState>(rootForwards: MessageContext<S>[])
     for (const forward of rootForwards) {
         forwards.push(
             forward,
-            ...getForwards<S>(forward.forwards)
+            ...getForwards<S>(forward.forwards),
         );
     }
 
@@ -49,16 +49,16 @@ applyMixins(MessageForwardsCollection, [
         }
 
         public getAttachments(
-            type?: AttachmentTypeString
+            type?: AttachmentTypeString,
         ): (Attachment | ExternalAttachment)[] {
             const attachments = this.flatten.map(forward => (
-                // @ts-expect-error
+                // @ts-expect-error too annoying for overload types
                 forward.getAttachments(type)
             ));
 
             return ([] as (Attachment | ExternalAttachment)[]).concat(...attachments);
         }
-    }
+    },
 ]);
 
 export { MessageForwardsCollection };

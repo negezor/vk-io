@@ -29,7 +29,7 @@ export class AudioMessageAttachment
         super({
             ...options,
 
-            type: AttachmentType.AUDIO_MESSAGE
+            type: AttachmentType.AUDIO_MESSAGE,
         });
 
         this.$filled = this.payload.duration !== undefined;
@@ -44,7 +44,7 @@ export class AudioMessageAttachment
         }
 
         const [document] = await this.api.docs.getById({
-            docs: `${this.ownerId}_${this.id}`
+            docs: `${this.ownerId}_${this.id}`,
         });
 
         this.payload = document as unknown as IAudioMessageAttachmentPayload;
@@ -126,7 +126,7 @@ export class AudioMessageAttachment
             'url',
             'locale',
             'transcript',
-            'isTranscriptDone'
+            'isTranscriptDone',
         ]);
     }
 }

@@ -18,7 +18,7 @@ export interface ISessionContext {
     [key: string]: any;
 }
 
-export interface ISessionManagerOptions<T = {}> {
+export interface ISessionManagerOptions<T = object> {
     /**
      * Storage based on ISessionStorage interface
      */

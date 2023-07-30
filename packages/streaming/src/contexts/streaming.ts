@@ -8,7 +8,7 @@ import {
     kSerializeData,
 
     applyMixins,
-    ContextDefaultState
+    ContextDefaultState,
 } from 'vk-io';
 
 import { copyParams } from '../helpers';
@@ -60,8 +60,8 @@ class StreamingContext<S = ContextDefaultState>
             subTypes: [
                 `publication_${type}`,
                 `${action}_publication`,
-                `${action}_publication_${type}`
-            ]
+                `${action}_publication_${type}`,
+            ],
         });
 
         this.attachments = transformAttachments(this.payload.attachments || [], this.api);
@@ -271,7 +271,7 @@ class StreamingContext<S = ContextDefaultState>
             'isRestore',
             'isPost',
             'isShare',
-            'isComment'
+            'isComment',
         ];
 
         const filtredEmptyProperties = properties.filter(property => (
@@ -285,7 +285,7 @@ class StreamingContext<S = ContextDefaultState>
 // eslint-disable-next-line
 interface StreamingContext extends Attachmentable {}
 applyMixins(StreamingContext, [
-    Attachmentable
+    Attachmentable,
 ]);
 
 export { StreamingContext };

@@ -26,9 +26,9 @@ export class APIRequest {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     public promise: Promise<any>;
 
-    public resolve!: Function;
+    public resolve!: (value: unknown) => unknown;
 
-    public reject!: Function;
+    public reject!: (reason: unknown) => unknown;
 
     public captchaValidate?: ICallbackServiceValidate;
 
@@ -74,7 +74,7 @@ export class APIRequest {
             access_token: options.token,
             v: options.apiVersion,
 
-            ...this.params
+            ...this.params,
         };
 
         if (options.language !== undefined) {
@@ -94,12 +94,12 @@ export class APIRequest {
                 headers: {
                     ...options.apiHeaders,
 
-                    connection: 'keep-alive'
+                    connection: 'keep-alive',
                 },
                 body: new URLSearchParams(
                     Object.entries(params)
-                        .filter(({ 1: value }) => value !== undefined)
-                )
+                        .filter(({ 1: value }) => value !== undefined),
+                ),
             });
 
             const result = await response.json();
@@ -114,6 +114,6 @@ export class APIRequest {
 inspectable(APIRequest, {
     serialize: ({ method, params }) => ({
         method,
-        params
-    })
+        params,
+    }),
 });

@@ -30,8 +30,8 @@ export class VKPayTransactionContext<S = ContextDefaultState>
 
             type: 'vk_pay_transaction',
             subTypes: [
-                options.updateType as VKPayTransactionContextSubType
-            ]
+                options.updateType as VKPayTransactionContextSubType,
+            ],
         });
     }
 
@@ -71,7 +71,7 @@ export class VKPayTransactionContext<S = ContextDefaultState>
             'fromId',
             'amount',
             'description',
-            'createdAt'
+            'createdAt',
         ]);
     }
 }

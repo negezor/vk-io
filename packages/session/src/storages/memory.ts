@@ -17,18 +17,18 @@ export class MemoryStorage implements ISessionStorage {
         this.store = store;
     }
 
-    public async get(key: string): Promise<object | undefined> {
-        return this.store.get(key);
+    public get(key: string): Promise<object | undefined> {
+        return Promise.resolve(this.store.get(key));
     }
 
-    public async set(key: string, value: object): Promise<boolean> {
+    public set(key: string, value: object): Promise<boolean> {
         this.store.set(key, value);
 
-        return true;
+        return Promise.resolve(true);
     }
 
-    public async delete(key: string): Promise<boolean> {
-        return this.store.delete(key);
+    public delete(key: string): Promise<boolean> {
+        return Promise.resolve(this.store.delete(key));
     }
 
     // eslint-disable-next-line class-methods-use-this

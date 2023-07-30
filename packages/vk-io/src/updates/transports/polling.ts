@@ -1,8 +1,6 @@
 import createDebug from 'debug';
 import { AbortController } from 'abort-controller';
 
-import { URL, URLSearchParams } from 'url';
-
 import { API } from '../../api';
 import { fetch } from '../../utils/fetch';
 import { delay } from '../../utils/helpers';
@@ -30,7 +28,7 @@ export class PollingTransport {
     // eslint-disable-next-line no-bitwise
     public mode = 2 | 8 | 64 | 128;
 
-    public pollingHandler!: Function;
+    public pollingHandler!: (update: unknown[]) => unknown;
 
     protected api: API;
 
@@ -68,10 +66,10 @@ export class PollingTransport {
 
             const { server, key, ts } = isGroup
                 ? await this.api.groups.getLongPollServer({
-                    group_id: pollingGroupId!
+                    group_id: pollingGroupId,
                 })
                 : await this.api.messages.getLongPollServer({
-                    lp_version: POLLING_VERSION
+                    lp_version: POLLING_VERSION,
                 });
 
             if (this.ts === 0) {
@@ -88,10 +86,10 @@ export class PollingTransport {
                 act: 'a_check',
                 wait: '25',
                 mode: String(this.mode),
-                version: String(POLLING_VERSION)
+                version: String(POLLING_VERSION),
             }));
 
-            this.startFetchLoop();
+            void this.startFetchLoop();
 
             debug(`${isGroup ? 'Bot' : 'User'} Polling started`);
         } catch (error) {
@@ -104,10 +102,12 @@ export class PollingTransport {
     /**
      * Stopping gets updates
      */
-    public async stop(): Promise<void> {
+    public stop(): Promise<void> {
         this.started = false;
 
         this.restarted = 0;
+
+        return Promise.resolve();
     }
 
     /**
@@ -130,7 +130,7 @@ export class PollingTransport {
 
                 await delay(3e3);
 
-                this.startFetchLoop();
+                void this.startFetchLoop();
 
                 return;
             }
@@ -172,8 +172,8 @@ export class PollingTransport {
                 compress: false,
                 signal: controller.signal,
                 headers: {
-                    connection: 'keep-alive'
-                }
+                    connection: 'keep-alive',
+                },
             });
 
             debug(`http <-- ${response.status}`);
@@ -181,7 +181,7 @@ export class PollingTransport {
             if (!response.ok) {
                 throw new UpdatesError({
                     code: POLLING_REQUEST_FAILED,
-                    message: 'Polling request failed'
+                    message: 'Polling request failed',
                 });
             }
 
@@ -202,7 +202,7 @@ export class PollingTransport {
 
             throw new UpdatesError({
                 code: NEED_RESTART,
-                message: 'The server has failed'
+                message: 'The server has failed',
             });
         }
 
@@ -219,7 +219,7 @@ export class PollingTransport {
         }
     }
 
-    public subscribe(handler: Function): void {
+    public subscribe(handler: (update: unknown[]) => unknown): void {
         this.pollingHandler = handler;
     }
 }

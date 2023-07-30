@@ -19,7 +19,7 @@ export {
     AttachmentType,
     AttachmentTypeString,
 
-    kSerializeData
+    kSerializeData,
 } from './utils/constants';
 
 export { VK } from './vk';

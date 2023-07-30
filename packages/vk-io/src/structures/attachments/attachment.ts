@@ -24,7 +24,7 @@ export interface IAttachmentOptions<P, Type extends string = string> {
 export type AttachmentFactoryOptions<P> =
     Omit<IAttachmentOptions<P>, 'type'>;
 
-export class Attachment<P = {}, Type extends string | AttachmentType = string> {
+export class Attachment<P = object, Type extends string | AttachmentType = string> {
     public type: Type;
 
     protected $filled: boolean;
@@ -82,8 +82,8 @@ export class Attachment<P = {}, Type extends string | AttachmentType = string> {
             payload: {
                 id: Number(id),
                 owner_id: Number(ownerId),
-                access_key: accessKey
-            }
+                access_key: accessKey,
+            },
         });
     }
 
@@ -137,7 +137,7 @@ export class Attachment<P = {}, Type extends string | AttachmentType = string> {
             ownerId: this.ownerId,
             accessKey: this.accessKey,
 
-            ...this[kSerializeData]()
+            ...this[kSerializeData](),
         };
     }
 
@@ -146,7 +146,7 @@ export class Attachment<P = {}, Type extends string | AttachmentType = string> {
      */
     public [kSerializeData](): object {
         return {
-            payload: this.payload
+            payload: this.payload,
         };
     }
 }
@@ -155,5 +155,5 @@ inspectable(Attachment, {
     serialize: (instance) => instance.toJSON(),
     stringify: (instance, payload, context): string => (
         `${context.stylize(instance.constructor.name, 'special')} <${context.stylize(String(instance), 'string')}> ${context.inspect(payload)}`
-    )
+    ),
 });

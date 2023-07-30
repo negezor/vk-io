@@ -11,7 +11,7 @@ export type DialogMessagesContextSubType =
 
 const subTypes: Record<number, DialogMessagesContextSubType> = {
     13: 'dialog_messages_delete',
-    14: 'dialog_messages_restore'
+    14: 'dialog_messages_restore',
 };
 export interface IDialogMessagesContextPayload {
     local_id: number;
@@ -36,13 +36,13 @@ export class DialogMessagesContext<S = ContextDefaultState>
 
             type: 'dialog_messages',
             subTypes: [
-                subTypes[eventId]
+                subTypes[eventId],
             ],
 
             payload: {
                 peer_id: peerId,
-                local_id: localId
-            }
+                local_id: localId,
+            },
         });
     }
 
@@ -82,7 +82,7 @@ export class DialogMessagesContext<S = ContextDefaultState>
             'peerId',
             'localId',
             'isDelete',
-            'isRestore'
+            'isRestore',
         ]);
     }
 }

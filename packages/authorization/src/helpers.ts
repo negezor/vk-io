@@ -1,7 +1,5 @@
 import { load as cheerioLoad } from 'cheerio';
 
-import { URL } from 'url';
-
 import { Response } from './fetch-cookie';
 import { userScopes, groupScopes } from './constants';
 
@@ -74,7 +72,7 @@ export const parseFormField = ($: unknown): {
 
     return {
         action: $form.attr('action')!,
-        fields
+        fields,
     };
 };
 

@@ -5,7 +5,6 @@ import { AbortController } from 'abort-controller';
 
 import { inspectable } from 'inspectable';
 
-import { URL } from 'url';
 import { createReadStream, promises as fs } from 'fs';
 import { globalAgent } from 'https';
 import { Readable } from 'stream';
@@ -18,14 +17,14 @@ import {
     IUploadOptions,
     IUploadParams,
     IUploadSourceMedia,
-    IUploadConduct
+    IUploadConduct,
 } from './types';
 import {
     isStream,
 
     streamToBuffer,
     normalizeSource,
-    pickExistingProperties
+    pickExistingProperties,
 } from './helpers';
 
 import {
@@ -35,7 +34,7 @@ import {
     VideoAttachment,
     DocumentAttachment,
     GraffitiAttachment,
-    AudioMessageAttachment
+    AudioMessageAttachment,
 } from '../structures';
 
 const { stat: fileStat } = fs;
@@ -44,7 +43,7 @@ const {
     MISSING_PARAMETERS,
     NO_FILES_TO_UPLOAD,
     EXCEEDED_MAX_FILES,
-    UNSUPPORTED_SOURCE_TYPE
+    UNSUPPORTED_SOURCE_TYPE,
 } = UploadErrorCode;
 
 const isURL = /^https?:\/\//i;
@@ -54,7 +53,7 @@ const DocumentTypes: Record<string, typeof DocumentAttachment
 | typeof AudioMessageAttachment> = {
     doc: DocumentAttachment,
     graffiti: GraffitiAttachment,
-    audio_message: AudioMessageAttachment
+    audio_message: AudioMessageAttachment,
 };
 
 export class Upload {
@@ -73,7 +72,7 @@ export class Upload {
             agent: globalAgent,
             uploadTimeout: 20_000,
 
-            ...options
+            ...options,
         };
     }
 
@@ -95,7 +94,7 @@ export class Upload {
             caption?: string;
             latitude?: number;
             longitude?: number;
-        }
+        },
     ): Promise<PhotoAttachment[]> {
         const photos = await this.conduct({
             field: 'file',
@@ -108,13 +107,13 @@ export class Upload {
             saveParams: ['album_id', 'group_id', 'latitude', 'longitude', 'caption'],
 
             maxFiles: 5,
-            attachmentType: 'photo'
+            attachmentType: 'photo',
         }) as PhotoAttachment['payload'][];
 
         return photos.map(photo => (
             new PhotoAttachment({
                 api: this.api,
-                payload: photo
+                payload: photo,
             })
         ));
     }
@@ -130,7 +129,7 @@ export class Upload {
             caption?: string;
             latitude?: number;
             longitude?: number;
-        }
+        },
     ): Promise<PhotoAttachment> {
         const [photo] = await this.conduct({
             field: 'photo',
@@ -143,12 +142,12 @@ export class Upload {
             saveParams: ['user_id', 'group_id', 'latitude', 'longitude', 'caption'],
 
             maxFiles: 1,
-            attachmentType: 'photo'
+            attachmentType: 'photo',
         });
 
         return new PhotoAttachment({
             api: this.api,
-            payload: photo
+            payload: photo,
         });
     }
 
@@ -158,7 +157,7 @@ export class Upload {
     ownerPhoto(
         params: IUploadParams & {
             owner_id?: number;
-        }
+        },
     ): Promise<{
             photo_hash: string;
             photo_src: string;
@@ -177,7 +176,7 @@ export class Upload {
             saveFiles: this.api.photos.saveOwnerPhoto,
 
             maxFiles: 1,
-            attachmentType: 'photo'
+            attachmentType: 'photo',
         });
 
         // {
@@ -196,7 +195,7 @@ export class Upload {
     async messagePhoto(
         params: IUploadParams & {
             peer_id?: number;
-        }
+        },
     ): Promise<PhotoAttachment> {
         const [photo] = await this.conduct({
             field: 'photo',
@@ -208,12 +207,12 @@ export class Upload {
             saveFiles: this.api.photos.saveMessagesPhoto,
 
             maxFiles: 1,
-            attachmentType: 'photo'
+            attachmentType: 'photo',
         });
 
         return new PhotoAttachment({
             api: this.api,
-            payload: photo
+            payload: photo,
         });
     }
 
@@ -227,7 +226,7 @@ export class Upload {
             crop_x?: number;
             crop_y?: number;
             crop_width?: number;
-        }
+        },
     ): Promise<{
             message_id: number;
             chat: object;
@@ -244,7 +243,7 @@ export class Upload {
             ),
 
             maxFiles: 1,
-            attachmentType: 'photo'
+            attachmentType: 'photo',
         });
 
         // {
@@ -312,7 +311,7 @@ export class Upload {
             crop_x?: number;
             crop_y?: number;
             crop_width?: number;
-        }
+        },
     ): Promise<PhotoAttachment> {
         const [photo] = await this.conduct({
             field: 'file',
@@ -325,12 +324,12 @@ export class Upload {
             saveParams: ['group_id'],
 
             maxFiles: 1,
-            attachmentType: 'photo'
+            attachmentType: 'photo',
         });
 
         return new PhotoAttachment({
             api: this.api,
-            payload: photo
+            payload: photo,
         });
     }
 
@@ -340,7 +339,7 @@ export class Upload {
     async marketAlbumPhoto(
         params: IUploadParams & {
             group_id: number;
-        }
+        },
     ): Promise<PhotoAttachment> {
         const [photo] = await this.conduct({
             field: 'file',
@@ -353,12 +352,12 @@ export class Upload {
             saveParams: ['group_id'],
 
             maxFiles: 1,
-            attachmentType: 'photo'
+            attachmentType: 'photo',
         });
 
         return new PhotoAttachment({
             api: this.api,
-            payload: photo
+            payload: photo,
         });
     }
 
@@ -369,7 +368,7 @@ export class Upload {
         params: IUploadParams & {
             title?: string;
             artist?: string;
-        }
+        },
     ): Promise<AudioAttachment> {
         const audio = await this.conduct({
             field: 'file',
@@ -383,12 +382,12 @@ export class Upload {
             saveParams: ['title', 'artist'],
 
             maxFiles: 1,
-            attachmentType: 'audio'
+            attachmentType: 'audio',
         });
 
         return new AudioAttachment({
             api: this.api,
-            payload: audio
+            payload: audio,
         });
     }
 
@@ -410,7 +409,7 @@ export class Upload {
             no_comments?: number;
             repeat?: number;
             compression?: number;
-        }
+        },
     ): Promise<VideoAttachment> {
         const save = await this.api.video.save(pickExistingProperties(params, [
             'group_id',
@@ -424,21 +423,21 @@ export class Upload {
             'privacy_comment',
             'no_comments',
             'repeat',
-            'compression'
+            'compression',
         ]));
 
         save.id = save.video_id;
 
         if (params.link !== undefined) {
-            const response = await fetch(save.upload_url!, {
-                agent: this.options.agent
+            const response = await fetch(save.upload_url, {
+                agent: this.options.agent,
             });
 
             await response.json();
 
             return new VideoAttachment({
                 api: this.api,
-                payload: save as unknown as VideoAttachment['payload']
+                payload: save as unknown as VideoAttachment['payload'],
             });
         }
 
@@ -448,18 +447,18 @@ export class Upload {
             maxFiles: 1,
             field: 'video_file',
             attachmentType: 'video',
-            values: source.values
+            values: source.values,
         });
 
-        const video = await this.upload(save.upload_url!, {
+        const video = await this.upload(save.upload_url, {
             formData,
             timeout: source.timeout!,
-            forceBuffer: !knownLength
+            forceBuffer: !knownLength,
         });
 
         return new VideoAttachment({
             api: this.api,
-            payload: { ...save, ...video }
+            payload: { ...save, ...video },
         });
     }
 
@@ -479,14 +478,14 @@ export class Upload {
             saveParams: ['title', 'tags'],
 
             maxFiles: 1,
-            attachmentType
+            attachmentType,
         });
 
         const ConductAttachment = DocumentTypes[response.type] || DocumentTypes.doc;
 
         return new ConductAttachment({
             api: this.api,
-            payload: response[response.type]
+            payload: response[response.type],
         });
     }
 
@@ -499,10 +498,10 @@ export class Upload {
 
             title?: string;
             tags?: string;
-        }
+        },
     ): Promise<DocumentAttachment> {
         return this.conductDocument(params, {
-            attachmentType: 'doc'
+            attachmentType: 'doc',
         });
     }
 
@@ -522,14 +521,14 @@ export class Upload {
             saveParams: ['title', 'tags'],
 
             maxFiles: 1,
-            attachmentType
+            attachmentType,
         });
 
         const ConductAttachment = DocumentTypes[response.type] || DocumentTypes.doc;
 
         return new ConductAttachment({
             api: this.api,
-            payload: response[response.type]
+            payload: response[response.type],
         });
     }
 
@@ -543,10 +542,10 @@ export class Upload {
 
             title?: string;
             tags?: string;
-        }
+        },
     ): Promise<DocumentAttachment> {
         return this.conductWallDocument(params, {
-            attachmentType: 'doc'
+            attachmentType: 'doc',
         });
     }
 
@@ -566,14 +565,14 @@ export class Upload {
             saveParams: ['title', 'tags'],
 
             maxFiles: 1,
-            attachmentType
+            attachmentType,
         });
 
         const ConductAttachment = DocumentTypes[response.type] || DocumentTypes.doc;
 
         return new ConductAttachment({
             api: this.api,
-            payload: response[response.type]
+            payload: response[response.type],
         });
     }
 
@@ -586,16 +585,16 @@ export class Upload {
 
             title?: string;
             tags?: string;
-        }
+        },
     ): Promise<DocumentAttachment> {
         return this.conductMessageDocument(
             {
                 ...params,
-                type: 'doc'
+                type: 'doc',
             },
             {
-                attachmentType: 'doc'
-            }
+                attachmentType: 'doc',
+            },
         );
     }
 
@@ -608,16 +607,16 @@ export class Upload {
 
             title?: string;
             tags?: string;
-        }
+        },
     ): Promise<AudioMessageAttachment> {
         return this.conductMessageDocument(
             {
                 ...params,
-                type: 'audio_message'
+                type: 'audio_message',
             },
             {
-                attachmentType: 'audioMessage'
-            }
+                attachmentType: 'audioMessage',
+            },
         );
 
         // { type: 'audio_message',
@@ -639,16 +638,16 @@ export class Upload {
     documentGraffiti(
         params: IUploadParams & {
             group_id?: number;
-        }
+        },
     ): Promise<GraffitiAttachment> {
         return this.conductDocument(
             {
                 ...params,
-                type: 'graffiti'
+                type: 'graffiti',
             },
             {
-                attachmentType: 'graffiti'
-            }
+                attachmentType: 'graffiti',
+            },
         );
     }
 
@@ -658,16 +657,16 @@ export class Upload {
     messageGraffiti(
         params: IUploadParams & {
             peer_id?: number;
-        }
+        },
     ): Promise<GraffitiAttachment> {
         return this.conductMessageDocument(
             {
                 ...params,
-                type: 'graffiti'
+                type: 'graffiti',
             },
             {
-                attachmentType: 'graffiti'
-            }
+                attachmentType: 'graffiti',
+            },
         );
     }
 
@@ -682,7 +681,7 @@ export class Upload {
             crop_y?: number;
             crop_x2?: number;
             crop_y2?: number;
-        }
+        },
     ): Promise<{
             images: {
                 url: string;
@@ -700,7 +699,7 @@ export class Upload {
             saveFiles: this.api.photos.saveOwnerCoverPhoto,
 
             maxFiles: 1,
-            attachmentType: 'photo'
+            attachmentType: 'photo',
         });
 
         // {
@@ -745,7 +744,7 @@ export class Upload {
             reply_to_story?: string;
             link_text: string;
             link_url: string;
-        }
+        },
     ): Promise<StoryAttachment> {
         const { items: [story] } = await this.conduct({
             field: 'file',
@@ -759,22 +758,22 @@ export class Upload {
                 'link_text',
                 'link_url',
                 'group_id',
-                'attach_access_key'
+                'attach_access_key',
             ],
 
             saveFiles: file => (
                 this.api.stories.save({
-                    upload_results: file.upload_result
+                    upload_results: file.upload_result,
                 })
             ),
 
             maxFiles: 1,
-            attachmentType: 'photo'
+            attachmentType: 'photo',
         });
 
         return new StoryAttachment({
             api: this.api,
-            payload: story
+            payload: story,
         });
     }
 
@@ -789,7 +788,7 @@ export class Upload {
             reply_to_story?: string;
             link_text: string;
             link_url: string;
-        }
+        },
     ): Promise<StoryAttachment> {
         const { items: [story] } = await this.conduct({
             field: 'video_file',
@@ -802,22 +801,22 @@ export class Upload {
                 'reply_to_story',
                 'link_text',
                 'link_url',
-                'group_id'
+                'group_id',
             ],
 
             saveFiles: file => (
                 this.api.stories.save({
-                    upload_results: file.upload_result
+                    upload_results: file.upload_result,
                 })
             ),
 
             maxFiles: 1,
-            attachmentType: 'video'
+            attachmentType: 'video',
         });
 
         return new StoryAttachment({
             api: this.api,
-            payload: story
+            payload: story,
         });
     }
 
@@ -827,7 +826,7 @@ export class Upload {
     pollPhoto(
         params: IUploadParams & {
             owner_id?: number;
-        }
+        },
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ): Promise<Record<string, any>> {
         return this.conduct({
@@ -840,7 +839,7 @@ export class Upload {
             saveFiles: this.api.polls.savePhoto,
 
             maxFiles: 1,
-            attachmentType: 'photo'
+            attachmentType: 'photo',
         });
     }
 
@@ -860,13 +859,13 @@ export class Upload {
         uploadParams = [],
 
         maxFiles = 1,
-        attachmentType
+        attachmentType,
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }: IUploadConduct): Promise<any> {
         if (!params || !params.source) {
             throw new UploadError({
                 message: 'Missing upload params',
-                code: MISSING_PARAMETERS
+                code: MISSING_PARAMETERS,
             });
         }
 
@@ -875,7 +874,7 @@ export class Upload {
         if (source.uploadUrl !== undefined) {
             // eslint-disable-next-line no-param-reassign
             getServer = (): Promise<{ upload_url: string }> => Promise.resolve({
-                upload_url: source.uploadUrl!
+                upload_url: source.uploadUrl!,
             });
         }
 
@@ -884,14 +883,14 @@ export class Upload {
         if (valuesLength === 0) {
             throw new UploadError({
                 message: 'No files to upload',
-                code: NO_FILES_TO_UPLOAD
+                code: NO_FILES_TO_UPLOAD,
             });
         }
 
         if (valuesLength > maxFiles) {
             throw new UploadError({
                 message: 'The number of files uploaded has exceeded',
-                code: EXCEEDED_MAX_FILES
+                code: EXCEEDED_MAX_FILES,
             });
         }
 
@@ -901,8 +900,8 @@ export class Upload {
                 field,
                 values: source.values,
                 maxFiles,
-                attachmentType
-            })
+                attachmentType,
+            }),
         ]);
 
         const uploadParamsMap = pickExistingProperties(params, uploadParams);
@@ -913,7 +912,7 @@ export class Upload {
         const uploaded = await this.upload(url, {
             formData,
             timeout: source.timeout!,
-            forceBuffer: !knownLength
+            forceBuffer: !knownLength,
         });
 
         if (typeof uploaded !== 'object') {
@@ -924,7 +923,7 @@ export class Upload {
 
         const response = await saveFiles({
             ...pickExistingProperties(params, saveParams),
-            ...uploaded
+            ...uploaded,
         });
 
         return response;
@@ -938,7 +937,7 @@ export class Upload {
         field,
         values,
         maxFiles,
-        attachmentType
+        attachmentType,
     }: {
         field: string;
         values: IUploadSourceMedia[];
@@ -993,7 +992,7 @@ export class Upload {
 
                 const file = isBuffer
                     ? new File([value as Buffer], filename, {
-                        type: fileContentType
+                        type: fileContentType,
                     })
                     // Workground for NodeJS streams: https://github.com/octet-stream/form-data/issues/32
                     : {
@@ -1002,7 +1001,7 @@ export class Upload {
                         stream: () => (
                             value
                         ),
-                        [Symbol.toStringTag]: 'Blob'
+                        [Symbol.toStringTag]: 'Blob',
                     };
 
                 if (!contentLength) {
@@ -1016,7 +1015,7 @@ export class Upload {
 
             throw new UploadError({
                 message: 'Unsupported source type',
-                code: UNSUPPORTED_SOURCE_TYPE
+                code: UNSUPPORTED_SOURCE_TYPE,
             });
         });
 
@@ -1024,7 +1023,7 @@ export class Upload {
 
         return {
             formData,
-            knownLength
+            knownLength,
         };
     }
 
@@ -1052,7 +1051,7 @@ export class Upload {
             Connection: 'keep-alive',
 
             // eslint-disable-next-line @typescript-eslint/naming-convention
-            ...encoder.headers
+            ...encoder.headers,
         };
 
         const body = forceBuffer
@@ -1070,7 +1069,7 @@ export class Upload {
                 method: 'POST',
                 signal: controller.signal,
                 headers,
-                body
+                body,
             });
 
             if (!response.ok) {

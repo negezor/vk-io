@@ -28,7 +28,7 @@ export class StickerAttachment
         super({
             ...options,
 
-            type: AttachmentType.STICKER
+            type: AttachmentType.STICKER,
         });
     }
 
@@ -68,7 +68,7 @@ export class StickerAttachment
             'id',
             'productId',
             'images',
-            'imagesWithBackground'
+            'imagesWithBackground',
         ]);
     }
 }

@@ -32,8 +32,8 @@ export class DonutSubscriptionPriceContext<S = ContextDefaultState>
 
             type: 'donut_subscription_price',
             subTypes: [
-                options.updateType as DonutSubscriptionPriceContextSubType
-            ]
+                options.updateType as DonutSubscriptionPriceContextSubType,
+            ],
         });
     }
 
@@ -89,7 +89,7 @@ export class DonutSubscriptionPriceContext<S = ContextDefaultState>
             'oldAmount',
             'newAmount',
             'diffAmount',
-            'diffAmountWithoutFee'
+            'diffAmountWithoutFee',
         ]);
     }
 }

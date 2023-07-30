@@ -37,14 +37,14 @@ class GroupUpdateContext<S = ContextDefaultState>
 
             type: 'group_update',
             subTypes: [
-                options.updateType as GroupUpdateContextSubType
-            ]
+                options.updateType as GroupUpdateContextSubType,
+            ],
         });
 
         this.attachments = options.updateType === 'group_change_photo'
             ? [new PhotoAttachment({
                 api: this.api,
-                payload: this.payload.photo!
+                payload: this.payload.photo!,
             })]
             : [];
     }
@@ -115,7 +115,7 @@ class GroupUpdateContext<S = ContextDefaultState>
             'oldLevel',
             'newLevel',
             'changes',
-            'attachments'
+            'attachments',
         ]);
     }
 }

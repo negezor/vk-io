@@ -82,7 +82,7 @@ export class StoryAttachment extends Attachment<IStoryAttachmentPayload, Attachm
         super({
             ...options,
 
-            type: AttachmentType.STORY
+            type: AttachmentType.STORY,
         });
 
         this.applyPayload(options.payload);
@@ -100,7 +100,7 @@ export class StoryAttachment extends Attachment<IStoryAttachmentPayload, Attachm
 
         const { items: [story] } = await this.api.stories.getById({
             stories: `${this.ownerId}_${this.id}`,
-            extended: 0
+            extended: 0,
         });
 
         this.applyPayload(story as IStoryAttachmentPayload);
@@ -259,21 +259,21 @@ export class StoryAttachment extends Attachment<IStoryAttachmentPayload, Attachm
         if (payload.photo) {
             this[kPhoto] = new PhotoAttachment({
                 api: this.api,
-                payload: payload.photo
+                payload: payload.photo,
             });
         }
 
         if (payload.video) {
             this[kVideo] = new VideoAttachment({
                 api: this.api,
-                payload: payload.video
+                payload: payload.video,
             });
         }
 
         if (payload.parent_story) {
             this[kParentStory] = new StoryAttachment({
                 api: this.api,
-                payload: payload.parent_story
+                payload: payload.parent_story,
             });
         }
     }
@@ -284,14 +284,14 @@ export class StoryAttachment extends Attachment<IStoryAttachmentPayload, Attachm
     public [kSerializeData](): object {
         if (this.isDeleted) {
             return pickProperties(this, [
-                'isDeleted'
+                'isDeleted',
             ]);
         }
 
         if (this.isExpired) {
             return pickProperties(this, [
                 'isExpired',
-                'expiresAt'
+                'expiresAt',
             ]);
         }
 
@@ -313,7 +313,7 @@ export class StoryAttachment extends Attachment<IStoryAttachmentPayload, Attachm
             'parentStoryId',
             'parentStoryOwnerId',
             'parentStory',
-            'clickableStickers'
+            'clickableStickers',
         ]);
     }
 }

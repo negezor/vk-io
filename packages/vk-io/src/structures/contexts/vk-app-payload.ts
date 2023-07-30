@@ -18,7 +18,7 @@ export type VKAppPayloadContextOptions<S> =
     ContextFactoryOptions<IVKAppPayloadPayload, S>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export class VKAppPayloadContext<S = ContextDefaultState, P extends Record<string, any> = {}>
+export class VKAppPayloadContext<S = ContextDefaultState, P extends Record<string, any> = object>
     extends Context<
     IVKAppPayloadPayload,
     S,
@@ -31,8 +31,8 @@ export class VKAppPayloadContext<S = ContextDefaultState, P extends Record<strin
 
             type: 'vk_app_event',
             subTypes: [
-                options.updateType as VKAppPayloadContextSubType
-            ]
+                options.updateType as VKAppPayloadContextSubType,
+            ],
         });
     }
 
@@ -72,7 +72,7 @@ export class VKAppPayloadContext<S = ContextDefaultState, P extends Record<strin
             'userId',
             'appId',
             'groupId',
-            'eventPayload'
+            'eventPayload',
         ]);
     }
 }

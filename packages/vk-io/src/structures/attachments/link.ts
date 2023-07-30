@@ -38,13 +38,13 @@ export class LinkAttachment
         super({
             ...options,
 
-            type: AttachmentType.LINK
+            type: AttachmentType.LINK,
         });
 
         if (this.payload.photo) {
             this[kPhoto] = new PhotoAttachment({
                 api: this.api,
-                payload: this.payload.photo
+                payload: this.payload.photo,
             });
         }
     }
@@ -116,7 +116,7 @@ export class LinkAttachment
             'url',
             'product',
             'button',
-            'photo'
+            'photo',
         ]);
     }
 }

@@ -5,7 +5,7 @@ import { AttachmentType } from '../../../utils/constants';
 
 const DocumentKind: Record<string, AttachmentType> = {
     audiomsg: AttachmentType.AUDIO_MESSAGE,
-    graffiti: AttachmentType.GRAFFITI // I know what is stupid
+    graffiti: AttachmentType.GRAFFITI, // I know this is stupid
 };
 
 const idToAttachmentPayload = (key: string): { id: number; owner_id: number } => {
@@ -13,7 +13,7 @@ const idToAttachmentPayload = (key: string): { id: number; owner_id: number } =>
 
     return {
         id: Number(key.substring(delimiterIndex + 1)),
-        owner_id: Number(key.substring(0, delimiterIndex))
+        owner_id: Number(key.substring(0, delimiterIndex)),
     };
 };
 
@@ -23,8 +23,8 @@ const attachmentHandlers = {
         type: 'sticker',
         sticker: {
             sticker_id: Number(raw[key]),
-            product_id: Number(raw[`${key}_product_id`])
-        }
+            product_id: Number(raw[`${key}_product_id`]),
+        },
     }),
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     money_transfer: (raw: any, key: string): object => ({
@@ -32,15 +32,15 @@ const attachmentHandlers = {
         money_transfer: {
             data: raw[key],
             amount: Number(raw[`${key}_amount`]),
-            currency: Number(raw[`${key}_currency`])
-        }
+            currency: Number(raw[`${key}_currency`]),
+        },
     }),
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     gift: (raw: any, key: string): object => ({
         type: 'gift',
         gift: {
-            id: Number(raw[key])
-        }
+            id: Number(raw[key]),
+        },
     }),
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     link: (raw: any, key: string): object => {
@@ -54,8 +54,8 @@ const attachmentHandlers = {
                 description: raw[`${key}_desc`],
                 photo: photoId !== undefined
                     ? idToAttachmentPayload(photoId)
-                    : undefined
-            }
+                    : undefined,
+            },
         };
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -68,14 +68,14 @@ const attachmentHandlers = {
 
         return {
             type,
-            [type]: idToAttachmentPayload(raw[key])
+            [type]: idToAttachmentPayload(raw[key]),
         };
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     default: (raw: any, key: string, type: string): object => ({
         type,
-        [type]: idToAttachmentPayload(raw[key])
-    })
+        [type]: idToAttachmentPayload(raw[key]),
+    }),
 };
 
 /**
@@ -91,7 +91,7 @@ export function transformMessage({
     7: attachments,
     8: random_id,
     9: conversation_message_id,
-    10: update_time
+    10: update_time,
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 }: [
     number,
@@ -137,7 +137,7 @@ export function transformMessage({
         geo: attachments.geo !== undefined
             ? {}
             : undefined,
-        payload: extra.payload
+        payload: extra.payload,
     } as IMessageContextPayload['message'];
 
     if (extra.from !== undefined) {
@@ -165,7 +165,7 @@ export function transformMessage({
 
             member_id: extra.source_mid
                 ? Number(extra.source_mid)
-                : undefined
+                : undefined,
         };
     }
 
@@ -182,8 +182,8 @@ export function transformMessage({
                 attachments,
                 key,
                 type,
-                i
-            )
+                i,
+            ),
         );
     }
 
@@ -202,7 +202,7 @@ export function transformMessage({
             fwd_messages: [],
             attachments: [],
             random_id: 0,
-            important: false
+            important: false,
         };
     } else if (attachments.fwd !== undefined) {
         message.fwd_messages = [{
@@ -217,7 +217,7 @@ export function transformMessage({
             fwd_messages: [],
             attachments: [],
             random_id: 0,
-            important: false
+            important: false,
         }];
     }
 

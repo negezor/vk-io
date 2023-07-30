@@ -30,7 +30,7 @@ export class AudioAttachment extends Attachment<IAudioAttachmentPayload, Attachm
         super({
             ...options,
 
-            type: AttachmentType.AUDIO
+            type: AttachmentType.AUDIO,
         });
 
         this.$filled = this.payload.duration !== undefined && this.payload.date !== undefined;
@@ -46,7 +46,7 @@ export class AudioAttachment extends Attachment<IAudioAttachmentPayload, Attachm
 
         // @ts-expect-error
         const { items: [audio] } = await this.api.audio.getById({
-            audios: `${this.ownerId}_${this.id}`
+            audios: `${this.ownerId}_${this.id}`,
         });
 
         this.payload = audio as IAudioAttachmentPayload;
@@ -135,7 +135,7 @@ export class AudioAttachment extends Attachment<IAudioAttachmentPayload, Attachm
             'artist',
             'duration',
             'createdAt',
-            'url'
+            'url',
         ]);
     }
 }

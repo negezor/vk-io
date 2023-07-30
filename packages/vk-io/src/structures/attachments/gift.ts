@@ -18,7 +18,7 @@ export class GiftAttachment
         super({
             ...options,
 
-            type: AttachmentType.GIFT
+            type: AttachmentType.GIFT,
         });
     }
 
@@ -34,7 +34,7 @@ export class GiftAttachment
      */
     public [kSerializeData](): object {
         return {
-            id: this.id
+            id: this.id,
         };
     }
 }

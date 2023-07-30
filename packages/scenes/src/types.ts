@@ -4,10 +4,7 @@ import { SceneContext } from './contexts';
 
 export type Middleware<T> = (context: T, next: Function) => unknown;
 
-export interface ISessionContext {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    [key: string]: any;
-}
+export type ISessionContext = Record<string, any>;
 
 export interface IContext<
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

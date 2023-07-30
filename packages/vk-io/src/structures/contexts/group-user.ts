@@ -14,7 +14,7 @@ const reasonNames = new Map([
     [1, 'spam'],
     [2, 'members_insult'],
     [3, 'obscene_expressions'],
-    [4, 'messages_off_topic']
+    [4, 'messages_off_topic'],
 ]);
 
 export type GroupUserContextType = 'group_user';
@@ -48,8 +48,8 @@ export class GroupUserContext<S = ContextDefaultState>
 
             type: 'group_user',
             subTypes: [
-                options.updateType as GroupUserContextSubType
-            ]
+                options.updateType as GroupUserContextSubType,
+            ],
         });
     }
 
@@ -127,7 +127,7 @@ export class GroupUserContext<S = ContextDefaultState>
         if (this.isBlocked) {
             return Promise.reject(new VKError({
                 message: 'User is blocked',
-                code: 'ALREADY_BANNED'
+                code: 'ALREADY_BANNED',
             }));
         }
 
@@ -135,7 +135,7 @@ export class GroupUserContext<S = ContextDefaultState>
             ...params,
 
             group_id: this.$groupId!,
-            user_id: this.userId
+            user_id: this.userId,
         });
     }
 
@@ -146,13 +146,13 @@ export class GroupUserContext<S = ContextDefaultState>
         if (this.isUnblocked) {
             return Promise.reject(new VKError({
                 message: 'User is not blocked',
-                code: 'ALREADY_UNBANNED'
+                code: 'ALREADY_UNBANNED',
             }));
         }
 
         return this.api.groups.unban({
             group_id: this.$groupId!,
-            user_id: this.userId
+            user_id: this.userId,
         });
     }
 
@@ -168,7 +168,7 @@ export class GroupUserContext<S = ContextDefaultState>
             'comment',
             'isExpired',
             'isBlocked',
-            'isUnblocked'
+            'isUnblocked',
         ]);
     }
 }

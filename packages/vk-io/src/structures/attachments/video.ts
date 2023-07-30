@@ -37,7 +37,7 @@ export class VideoAttachment extends Attachment<IVideoAttachmentPayload, Attachm
         super({
             ...options,
 
-            type: AttachmentType.VIDEO
+            type: AttachmentType.VIDEO,
         });
 
         this.$filled = this.payload.date !== undefined;
@@ -53,7 +53,7 @@ export class VideoAttachment extends Attachment<IVideoAttachmentPayload, Attachm
 
         const { items } = await this.api.video.get({
             videos: `${this.ownerId}_${this.id}`,
-            extended: 0
+            extended: 0,
         });
 
         const [video] = items;
@@ -205,7 +205,7 @@ export class VideoAttachment extends Attachment<IVideoAttachmentPayload, Attachm
             'viewsCount',
             'commentsCount',
             'player',
-            'platformName'
+            'platformName',
         ]);
     }
 }

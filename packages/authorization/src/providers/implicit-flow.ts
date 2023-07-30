@@ -5,7 +5,6 @@ import { AbortController } from 'abort-controller';
 import { CaptchaType, ICallbackServiceValidate, CallbackService } from 'vk-io';
 
 import { Agent } from 'https';
-import { URL, URLSearchParams } from 'url';
 
 import { AuthorizationError } from '../errors';
 import { parseFormField, getFullURL, CheerioStatic } from '../helpers';
@@ -17,7 +16,7 @@ import {
     RequestInit,
     Response,
 
-    fetchCookieFollowRedirectsDecorator
+    fetchCookieFollowRedirectsDecorator,
 } from '../fetch-cookie';
 import { DESKTOP_USER_AGENT, CALLBACK_BLANK, AuthErrorCode } from '../constants';
 
@@ -28,7 +27,7 @@ const {
     INVALID_PHONE_NUMBER,
     AUTHORIZATION_FAILED,
     FAILED_PASSED_CAPTCHA,
-    FAILED_PASSED_TWO_FACTOR
+    FAILED_PASSED_TWO_FACTOR,
 } = AuthErrorCode;
 
 /**
@@ -107,7 +106,7 @@ export abstract class ImplicitFlow {
         this.options = {
             timeout: 10_000,
 
-            ...options
+            ...options,
         };
 
         this.jar = new CookieJar();
@@ -151,14 +150,14 @@ export abstract class ImplicitFlow {
 
         const [login, main] = await Promise.all([
             jar.getCookieString('https://login.vk.com'),
-            jar.getCookieString('https://vk.com')
+            jar.getCookieString('https://vk.com'),
         ]);
 
         return {
             // eslint-disable-next-line @typescript-eslint/naming-convention
             'login.vk.com': login,
             // eslint-disable-next-line @typescript-eslint/naming-convention
-            'vk.com': main
+            'vk.com': main,
         };
     }
 
@@ -167,7 +166,7 @@ export abstract class ImplicitFlow {
      */
     protected fetch(
         url: RequestInfo,
-        options: RequestInit = {}
+        options: RequestInit = {},
     ): Promise<Response> {
         const { agent, timeout } = this.options;
 
@@ -188,8 +187,8 @@ export abstract class ImplicitFlow {
                 ...headers,
 
                 // eslint-disable-next-line @typescript-eslint/naming-convention
-                'User-Agent': DESKTOP_USER_AGENT
-            }
+                'User-Agent': DESKTOP_USER_AGENT,
+            },
         }).finally(() => clearTimeout(interval));
     }
 
@@ -200,7 +199,7 @@ export abstract class ImplicitFlow {
         if (this.started) {
             throw new AuthorizationError({
                 message: 'Authorization already started!',
-                code: AUTHORIZATION_FAILED
+                code: AUTHORIZATION_FAILED,
             });
         }
 
@@ -228,7 +227,7 @@ export abstract class ImplicitFlow {
 
                 throw new AuthorizationError({
                     message: 'Page blocked',
-                    code: PAGE_BLOCKED
+                    code: PAGE_BLOCKED,
                 });
             }
 
@@ -265,7 +264,7 @@ export abstract class ImplicitFlow {
                 throw new AuthorizationError({
                     message: `Auth form error: ${errorText}`,
                     code: AUTHORIZATION_FAILED,
-                    pageHtml: $.html()
+                    pageHtml: $.html(),
                 });
             }
 
@@ -279,7 +278,7 @@ export abstract class ImplicitFlow {
                 throw new AuthorizationError({
                     message: 'Unsupported authorization event',
                     code: AUTHORIZATION_FAILED,
-                    pageHtml: $.html()
+                    pageHtml: $.html(),
                 });
             }
 
@@ -291,7 +290,7 @@ export abstract class ImplicitFlow {
                 debug('url grant access', action);
 
                 response = await this.fetch(action, {
-                    method: 'POST'
+                    method: 'POST',
                 });
             } else {
                 const locations = $.html().match(FIND_LOCATION_HREF_RE) || undefined;
@@ -300,7 +299,7 @@ export abstract class ImplicitFlow {
                     throw new AuthorizationError({
                         message: 'Could not log in',
                         code: AUTHORIZATION_FAILED,
-                        pageHtml: $.html()
+                        pageHtml: $.html(),
                     });
                 }
 
@@ -309,7 +308,7 @@ export abstract class ImplicitFlow {
                 debug('url grant access', location);
 
                 response = await this.fetch(location, {
-                    method: 'POST'
+                    method: 'POST',
                 });
             }
         }
@@ -327,7 +326,7 @@ export abstract class ImplicitFlow {
             this.captchaValidate.reject(new AuthorizationError({
                 message: 'Incorrect captcha code',
                 code: FAILED_PASSED_CAPTCHA,
-                pageHtml: $.html()
+                pageHtml: $.html(),
             }));
 
             this.captchaValidate = undefined;
@@ -338,7 +337,7 @@ export abstract class ImplicitFlow {
         if (this.captchaAttempts > CAPTCHA_ATTEMPTS) {
             throw new AuthorizationError({
                 message: 'Maximum attempts passage captcha',
-                code: FAILED_PASSED_CAPTCHA
+                code: FAILED_PASSED_CAPTCHA,
             });
         }
 
@@ -355,14 +354,14 @@ export abstract class ImplicitFlow {
             if (!src) {
                 throw new AuthorizationError({
                     message: 'Failed get captcha image',
-                    code: AUTHORIZATION_FAILED
+                    code: AUTHORIZATION_FAILED,
                 });
             }
 
             const { key, validate } = await this.options.callbackService.processingCaptcha({
                 type: CaptchaType.IMPLICIT_FLOW_AUTH,
                 sid: fields.captcha_sid,
-                src
+                src,
             });
 
             this.captchaValidate = validate;
@@ -378,7 +377,7 @@ export abstract class ImplicitFlow {
 
         const pageResponse = await this.fetch(url, {
             method: 'POST',
-            body: new URLSearchParams(fields)
+            body: new URLSearchParams(fields),
         });
 
         return pageResponse;
@@ -394,7 +393,7 @@ export abstract class ImplicitFlow {
             this.twoFactorValidate.reject(new AuthorizationError({
                 message: 'Incorrect two-factor code',
                 code: FAILED_PASSED_TWO_FACTOR,
-                pageHtml: $.html()
+                pageHtml: $.html(),
             }));
 
             this.twoFactorAttempts += 1;
@@ -403,7 +402,7 @@ export abstract class ImplicitFlow {
         if (this.twoFactorAttempts >= TWO_FACTOR_ATTEMPTS) {
             throw new AuthorizationError({
                 message: 'Failed passed two-factor authentication',
-                code: FAILED_PASSED_TWO_FACTOR
+                code: FAILED_PASSED_TWO_FACTOR,
             });
         }
 
@@ -418,7 +417,7 @@ export abstract class ImplicitFlow {
 
             const newResponse = await this.fetch(url, {
                 method: 'POST',
-                body: new URLSearchParams(fields)
+                body: new URLSearchParams(fields),
             });
 
             return newResponse;
@@ -443,17 +442,17 @@ export abstract class ImplicitFlow {
             if (!src) {
                 throw new AuthorizationError({
                     message: 'Failed get captcha image',
-                    code: AUTHORIZATION_FAILED
+                    code: AUTHORIZATION_FAILED,
                 });
             }
 
             const {
                 key,
-                validate: captchaValidate
+                validate: captchaValidate,
             } = await this.options.callbackService.processingCaptcha({
                 type: CaptchaType.IMPLICIT_FLOW_AUTH,
                 sid: fields.captcha_sid,
-                src: `https://api.vk.com/${src}`
+                src: `https://api.vk.com/${src}`,
             });
 
             this.captchaValidate = captchaValidate;
@@ -464,7 +463,7 @@ export abstract class ImplicitFlow {
 
             const newResponse = await this.fetch(newUrl, {
                 method: 'POST',
-                body: new URLSearchParams(fields)
+                body: new URLSearchParams(fields),
             });
 
             return newResponse;
@@ -490,7 +489,7 @@ export abstract class ImplicitFlow {
             throw new AuthorizationError({
                 message: 'Missing phone number in the phone or login field',
                 code: INVALID_PHONE_NUMBER,
-                pageHtml: $.html()
+                pageHtml: $.html(),
             });
         }
 
@@ -509,14 +508,14 @@ export abstract class ImplicitFlow {
 
         const newResponse = await this.fetch(url, {
             method: 'POST',
-            body: new URLSearchParams(fields)
+            body: new URLSearchParams(fields),
         });
 
         if (newResponse.url.includes(ACTION_SECURITY_CODE)) {
             throw new AuthorizationError({
                 message: 'Invalid phone number',
                 code: INVALID_PHONE_NUMBER,
-                pageHtml: $.html()
+                pageHtml: $.html(),
             });
         }
 

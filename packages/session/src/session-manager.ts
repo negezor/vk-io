@@ -5,10 +5,10 @@ import {
     ISessionContext,
     ISessionManagerOptions,
 
-    Middleware
+    Middleware,
 } from './types';
 
-export class SessionManager<T = {}> {
+export class SessionManager<T = object> {
     protected storage: ISessionManagerOptions['storage'];
 
     protected contextKey: ISessionManagerOptions['contextKey'];
@@ -53,7 +53,7 @@ export class SessionManager<T = {}> {
                         delete target[prop];
 
                         return true;
-                    }
+                    },
                 })
             );
 
@@ -78,7 +78,7 @@ export class SessionManager<T = {}> {
                 set: (newSession): void => {
                     session = wrapSession(newSession);
                     changed = true;
-                }
+                },
             });
 
             await next();

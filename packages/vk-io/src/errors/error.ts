@@ -28,7 +28,7 @@ export class VKError extends Error {
      */
     public constructor({ code, message, cause }: IVKErrorOptions) {
         super(message, {
-            cause
+            cause,
         });
 
         this.code = code;

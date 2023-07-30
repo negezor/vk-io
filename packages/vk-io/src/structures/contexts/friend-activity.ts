@@ -13,7 +13,7 @@ export type FriendActivityContextSubType =
 const subTypes: Record<number, FriendActivityContextSubType> = {
     8: 'friend_online',
     9: 'friend_offline',
-    81: 'friend_invisible'
+    81: 'friend_invisible',
 };
 
 export interface IFriendActivityContextPayload {
@@ -41,15 +41,15 @@ export class FriendActivityContext<S = ContextDefaultState>
 
             type: 'friend_activity',
             subTypes: [
-                subTypes[eventId]
+                subTypes[eventId],
             ],
 
             payload: {
                 user_id: -userId,
                 extra,
                 date,
-                app_id: appId
-            }
+                app_id: appId,
+            },
         });
     }
 
@@ -142,7 +142,7 @@ export class FriendActivityContext<S = ContextDefaultState>
             'isTimeoutLeave',
             'isOnline',
             'isOffline',
-            'isInvisible'
+            'isInvisible',
         ]);
     }
 }

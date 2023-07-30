@@ -6,7 +6,7 @@ import {
 
     RequestInfo,
     RequestInit,
-    Response
+    Response,
 } from './fetch';
 
 export type Headers = Record<string, string>;
@@ -20,7 +20,7 @@ export {
     CookieJar,
     RequestInfo,
     RequestInit,
-    Response
+    Response,
 };
 
 const debug = createDebug('vk-io:util:fetch-cookie');
@@ -47,7 +47,7 @@ const findUserAgent = (headers?: Headers): string | undefined => {
 export const fetchCookieDecorator = (jar = new CookieJar()): FetchWrapper => (
     async function fetchCookie(
         url: RequestInfo,
-        options: RequestInit = {}
+        options: RequestInit = {},
     ): Promise<Response> {
         const previousCookie = await jar.getCookieString(String(url));
 
@@ -64,7 +64,7 @@ export const fetchCookieDecorator = (jar = new CookieJar()): FetchWrapper => (
         const response = await fetch(url, {
             ...options,
 
-            headers
+            headers,
         });
 
         const { 'set-cookie': cookies = [] } = response.headers.raw();
@@ -86,12 +86,12 @@ export const fetchCookieFollowRedirectsDecorator = (jar?: CookieJar): FetchWrapp
 
     return async function fetchCookieFollowRedirects(
         url: RequestInfo,
-        options: RequestInit = {}
+        options: RequestInit = {},
     ): Promise<Response> {
         const response = await fetchCookie(url, {
             ...options,
 
-            redirect: 'manual'
+            redirect: 'manual',
         });
 
         const isRedirect = redirectCodes.has(response.status);
@@ -122,7 +122,7 @@ export const fetchCookieFollowRedirectsDecorator = (jar?: CookieJar): FetchWrapp
                 body: undefined,
                 agent: options.agent,
                 headers,
-                follow
+                follow,
             });
 
             return redirectResponse;

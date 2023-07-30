@@ -60,7 +60,7 @@ export abstract class APIWorker {
 
                     this.immediateHeat();
                 },
-                this.intervalPerRequests
+                this.intervalPerRequests,
             );
 
             return;
@@ -84,7 +84,7 @@ export abstract class APIWorker {
             },
             interval <= 0
                 ? MINIMUM_TIME_INTERVAL_API
-                : interval
+                : interval,
         );
     }
 

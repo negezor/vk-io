@@ -3,7 +3,7 @@ import {
     Middleware,
     MiddlewareReturn,
     NextMiddleware,
-    skipMiddleware
+    skipMiddleware,
 } from 'middleware-io';
 
 import { HearConditions } from './types';
@@ -34,9 +34,9 @@ export class HearManager<C extends Context> {
         );
     }
 
-    public hear<T = {}>(
+    public hear<T = object>(
         hearConditions: HearConditions<C & T>,
-        handler: Middleware<C & T>
+        handler: Middleware<C & T>,
     ): this {
         const rawConditions = !Array.isArray(hearConditions)
             ? [hearConditions]

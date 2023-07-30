@@ -12,5 +12,5 @@ export {
     UploadErrorCode,
     UpdatesErrorCode,
     CollectErrorCode,
-    ResourceErrorCode
+    ResourceErrorCode,
 } from '../utils/constants';

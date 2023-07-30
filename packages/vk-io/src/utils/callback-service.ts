@@ -5,7 +5,7 @@ import { CaptchaType } from './constants';
 
 const {
     MISSING_CAPTCHA_HANDLER,
-    MISSING_TWO_FACTOR_HANDLER
+    MISSING_TWO_FACTOR_HANDLER,
 } = SharedErrorCode;
 
 export interface ICallbackServiceCaptchaPayload {
@@ -86,12 +86,12 @@ export class CallbackService {
         if (captchaHandler === undefined) {
             return Promise.reject(new VKError({
                 message: 'Missing captcha handler',
-                code: MISSING_CAPTCHA_HANDLER
+                code: MISSING_CAPTCHA_HANDLER,
             }));
         }
 
         return new Promise((resolveProcessing, rejectProcessing): void => {
-            captchaHandler(payload, (key): Promise<void> => (
+            void captchaHandler(payload, (key): Promise<void> => (
                 new Promise((resolve, reject): void => {
                     if (key instanceof Error) {
                         reject(key);
@@ -104,8 +104,8 @@ export class CallbackService {
                         key,
                         validate: {
                             resolve,
-                            reject
-                        }
+                            reject,
+                        },
                     });
                 })
             ));
@@ -124,12 +124,12 @@ export class CallbackService {
         if (twoFactorHandler === undefined) {
             return Promise.reject(new VKError({
                 message: 'Missing two-factor handler',
-                code: MISSING_TWO_FACTOR_HANDLER
+                code: MISSING_TWO_FACTOR_HANDLER,
             }));
         }
 
         return new Promise((resolveProcessing, rejectProcessing): void => {
-            twoFactorHandler(payload, (code): Promise<void> => (
+            void twoFactorHandler(payload, (code): Promise<void> => (
                 new Promise((resolve, reject): void => {
                     if (code instanceof Error) {
                         reject(code);
@@ -142,8 +142,8 @@ export class CallbackService {
                         code,
                         validate: {
                             resolve,
-                            reject
-                        }
+                            reject,
+                        },
                     });
                 })
             ));

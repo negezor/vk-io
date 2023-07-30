@@ -63,7 +63,7 @@ export class MarketAttachment
         super({
             ...options,
 
-            type: AttachmentType.MARKET
+            type: AttachmentType.MARKET,
         });
 
         this.$filled = this.payload.title !== undefined && this.payload.date !== undefined;
@@ -81,12 +81,12 @@ export class MarketAttachment
 
         const { items } = await this.api.market.getById({
             item_ids: `${this.ownerId}_${this.id}`,
-            extended: 0
+            extended: 0,
         });
 
         this.$filled = true;
 
-        this.applyPayload(items![0] as IMarketAttachmentPayload);
+        this.applyPayload(items[0] as IMarketAttachmentPayload);
     }
 
     /**
@@ -222,7 +222,7 @@ export class MarketAttachment
             this.photos = this.payload.photos.map(photo => (
                 new PhotoAttachment({
                     api: this.api,
-                    payload: photo
+                    payload: photo,
                 })
             ));
         }

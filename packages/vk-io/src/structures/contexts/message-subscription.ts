@@ -30,8 +30,8 @@ export class MessageSubscriptionContext<S = ContextDefaultState>
 
             type: 'message_subscription',
             subTypes: [
-                options.updateType as MessageSubscriptionContextSubType
-            ]
+                options.updateType as MessageSubscriptionContextSubType,
+            ],
         });
     }
 
@@ -71,7 +71,7 @@ export class MessageSubscriptionContext<S = ContextDefaultState>
             'userId',
             'key',
             'isSubscribed',
-            'isUnsubscribed'
+            'isUnsubscribed',
         ]);
     }
 }

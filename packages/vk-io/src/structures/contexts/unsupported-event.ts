@@ -4,7 +4,7 @@ import { kSerializeData } from '../../utils/constants';
 import { pickProperties } from '../../utils/helpers';
 
 export type UnsupportedEventContextType = 'unsupported_event';
-export type UnsupportedEventContextSubType = string;
+type UnsupportedEventContextSubType = string;
 
 type UnsupportedEventContextPayload<P> = P;
 
@@ -14,7 +14,7 @@ export type UnsupportedEventOptions<S, P> =
 export class UnsupportedEventContext<
     S = ContextDefaultState,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    P extends Record<string, any> = {}
+    P extends Record<string, any> = object
 >
     extends Context<
     P,
@@ -28,10 +28,10 @@ export class UnsupportedEventContext<
 
             type: 'unsupported_event',
             subTypes: [
-                options.updateType as string
+                options.updateType as string,
             ],
 
-            payload: options.payload
+            payload: options.payload,
         });
     }
 
@@ -47,7 +47,7 @@ export class UnsupportedEventContext<
      */
     public [kSerializeData](): object {
         return pickProperties(this, [
-            'eventPayload'
+            'eventPayload',
         ]);
     }
 }

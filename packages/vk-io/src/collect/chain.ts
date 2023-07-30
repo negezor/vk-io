@@ -39,27 +39,26 @@ export class Chain {
         if (this.started) {
             return Promise.reject(new VKError({
                 message: 'Chain already started',
-                code: 'ALREADY_STARTED'
+                code: 'ALREADY_STARTED',
             }));
         }
 
         const request = new APIRequest({
             api: this.api,
             method,
-            params
+            params,
         });
 
         this.queue.push(request);
 
-        return request.promise;
+        return request.promise as Promise<T>;
     }
 
     /**
      * Promise based
      */
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    public then(thenFn: Function, catchFn: Function): Promise<any[]> {
-        // @ts-expect-error
+    public then(thenFn: (value: IExecutesPayload) => unknown, catchFn: (reason: unknown) => unknown): Promise<unknown> {
         return this.run().then(thenFn, catchFn);
     }
 
@@ -70,7 +69,7 @@ export class Chain {
         if (this.started) {
             throw new VKError({
                 message: 'Chain already started',
-                code: 'ALREADY_STARTED'
+                code: 'ALREADY_STARTED',
             });
         }
 
@@ -84,6 +83,6 @@ inspectable(Chain, {
     // @ts-expect-error
     serialize: ({ started, queue }) => ({
         started,
-        queue
-    })
+        queue,
+    }),
 });

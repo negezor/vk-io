@@ -30,8 +30,8 @@ export class VoteContext<S = ContextDefaultState>
 
             type: 'vote',
             subTypes: [
-                options.updateType as VoteContextSubType
-            ]
+                options.updateType as VoteContextSubType,
+            ],
         });
     }
 
@@ -71,7 +71,7 @@ export class VoteContext<S = ContextDefaultState>
             'id',
             'userId',
             'ownerId',
-            'optionId'
+            'optionId',
         ]);
     }
 }

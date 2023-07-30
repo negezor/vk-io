@@ -41,7 +41,7 @@ export interface IMarketOrderContextPayload {
         type: string;
         track_number: string;
         track_link: string;
-        delivery_point: {};
+        delivery_point: object;
     };
     recipient: {
         name: string;
@@ -69,14 +69,14 @@ export class MarketOrderContext<S = ContextDefaultState>
 
             type: 'market_order',
             subTypes: [
-                options.updateType as MarketOrderContextSubType
-            ]
+                options.updateType as MarketOrderContextSubType,
+            ],
         });
 
         this.previewOrderItems = this.payload.preview_order_items.map(market => (
             new MarketAttachment({
                 api: this.api,
-                payload: market
+                payload: market,
             })
         ));
     }
@@ -211,7 +211,7 @@ export class MarketOrderContext<S = ContextDefaultState>
             'previewOrderItems',
             'delivery',
             'recipient',
-            'createdAt'
+            'createdAt',
         ]);
     }
 }

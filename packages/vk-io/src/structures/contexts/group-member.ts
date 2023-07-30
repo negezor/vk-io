@@ -31,8 +31,8 @@ export class GroupMemberContext<S = ContextDefaultState>
 
             type: 'group_member',
             subTypes: [
-                options.updateType as GroupMemberContextSubType
-            ]
+                options.updateType as GroupMemberContextSubType,
+            ],
         });
     }
 
@@ -88,7 +88,7 @@ export class GroupMemberContext<S = ContextDefaultState>
             'joinType',
             'isJoin',
             'isLeave',
-            'isSelfLeave'
+            'isSelfLeave',
         ]);
     }
 }

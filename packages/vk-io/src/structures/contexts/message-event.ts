@@ -54,8 +54,8 @@ export class MessageEventContext<S = ContextDefaultState>
 
             type: 'message_event',
             subTypes: [
-                options.updateType as MessageEventContextSubType
-            ]
+                options.updateType as MessageEventContextSubType,
+            ],
         });
     }
 
@@ -103,7 +103,7 @@ export class MessageEventContext<S = ContextDefaultState>
             event_id: this.eventId,
             peer_id: this.peerId,
             user_id: this.userId,
-            event_data: JSON.stringify(eventData)
+            event_data: JSON.stringify(eventData),
         });
     }
 
@@ -116,7 +116,7 @@ export class MessageEventContext<S = ContextDefaultState>
             'conversationMessageId',
             'peerId',
             'eventId',
-            'eventPayload'
+            'eventPayload',
         ]);
     }
 }

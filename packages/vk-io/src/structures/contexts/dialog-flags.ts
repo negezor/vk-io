@@ -15,7 +15,7 @@ export type DialogFlagsContextSubType =
 const subTypes: Record<string, DialogFlagsContextSubType> = {
     10: 'dialog_flags_delete',
     11: 'dialog_flags_replace',
-    12: 'dialog_flags_add'
+    12: 'dialog_flags_add',
 };
 
 /* eslint-disable no-bitwise */
@@ -48,13 +48,13 @@ export class DialogFlagsContext<S = ContextDefaultState>
 
             type: 'dialog_flags',
             subTypes: [
-                subTypes[eventId]
+                subTypes[eventId],
             ],
 
             payload: {
                 peer_id: peerId,
-                flags
-            }
+                flags,
+            },
         });
     }
 
@@ -90,12 +90,12 @@ export class DialogFlagsContext<S = ContextDefaultState>
      * Marks the conversation as answered or unchecked
      */
     public markAsAnsweredConversation(
-        params: Params.MessagesMarkAsAnsweredConversationParams
+        params: Params.MessagesMarkAsAnsweredConversationParams,
     ): Promise<number> {
         return this.api.messages.markAsAnsweredConversation({
             ...params,
 
-            peer_id: this.peerId
+            peer_id: this.peerId,
         });
     }
 
@@ -103,12 +103,12 @@ export class DialogFlagsContext<S = ContextDefaultState>
      * Marks the conversation as important or removes the mark
      */
     public markAsImportantConversation(
-        params: Params.MessagesMarkAsImportantConversationParams
+        params: Params.MessagesMarkAsImportantConversationParams,
     ): Promise<number> {
         return this.api.messages.markAsImportantConversation({
             ...params,
 
-            peer_id: this.peerId
+            peer_id: this.peerId,
         });
     }
 
@@ -125,7 +125,7 @@ export class DialogFlagsContext<S = ContextDefaultState>
             'peerId',
             'flags',
             'isImportant',
-            'isUnanswered'
+            'isUnanswered',
         ]);
     }
 }

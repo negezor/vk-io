@@ -39,7 +39,7 @@ export class PhotoAttachment extends Attachment<IPhotoAttachmentPayload, Attachm
         super({
             ...options,
 
-            type: AttachmentType.PHOTO
+            type: AttachmentType.PHOTO,
         });
 
         this.$filled = this.payload.album_id !== undefined && this.payload.date !== undefined;
@@ -55,7 +55,7 @@ export class PhotoAttachment extends Attachment<IPhotoAttachmentPayload, Attachm
 
         const [photo] = await this.api.photos.getById({
             photos: `${this.ownerId}_${this.id}`,
-            extended: 0
+            extended: 0,
         });
 
         this.payload = (photo as unknown) as IPhotoAttachmentPayload;
@@ -185,7 +185,7 @@ export class PhotoAttachment extends Attachment<IPhotoAttachmentPayload, Attachm
             'smallSizeUrl',
             'mediumSizeUrl',
             'largeSizeUrl',
-            'sizes'
+            'sizes',
         ]);
     }
 }
