@@ -49,7 +49,7 @@
 	},
 	"devDependencies": {
 		"@types/cheerio": "^0.22.31",
-		"@types/debug": "^4.1.7",
+		"@types/debug": "^4.1.8",
 		"@types/tough-cookie": "^4.0.2"
 	}
 }
