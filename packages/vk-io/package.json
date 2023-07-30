@@ -50,8 +50,8 @@
 		"debug": "^4.3.4",
 		"form-data-encoder": "^1.7.2",
 		"formdata-node": "^4.4.1",
-		"inspectable": "^2.0.0",
+		"inspectable": "^2.1.0",
 		"middleware-io": "^2.8.1",
-		"node-fetch": "^3.3.1"
+		"node-fetch": "^3.3.2"
 	}
 }

@@ -41,8 +41,8 @@
 	},
 	"dependencies": {
 		"debug": "^4.3.4",
-		"inspectable": "^2.0.0",
-		"node-fetch": "^3.3.1",
+		"inspectable": "^2.1.0",
+		"node-fetch": "^3.3.2",
 		"ws": "^8.13.0"
 	},
 	"devDependencies": {
