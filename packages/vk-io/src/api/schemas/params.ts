@@ -4072,7 +4072,7 @@ export interface MessagesDeleteChatPhotoParams {
 
 export interface MessagesDeleteConversationParams {
     /**
-     * User ID. To clear a chat history use 'chat_id'
+     * User ID. To clear a chat history use 'peer_id'
      */
     user_id?: number;
     /**
@@ -4083,6 +4083,14 @@ export interface MessagesDeleteConversationParams {
      * Group ID (for group messages with user access token)
      */
     group_id?: number;
+    /**
+     * Starting from which message should delete conversation. By default from the start of the conversation
+     */
+    offset?: number;
+    /**
+     * Number of conversations to delete. Max value - 10000
+     */
+    count?: number;
     [key: string]: any;
 }
 
