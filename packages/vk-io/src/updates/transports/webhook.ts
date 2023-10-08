@@ -218,7 +218,7 @@ export class WebhookTransport {
      * Returns the middleware for the webhook under koa
      */
     public getKoaWebhookMiddleware(): WebhookTransportKoaCallback {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/require-await
         return async (context: any): Promise<void> => {
             const update = context.request.body;
 
@@ -243,10 +243,11 @@ export class WebhookTransport {
             }
 
             context.body = 'ok';
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-call
             context.set('connection', 'keep-alive');
 
             /* Do not delay server response */
-            setImmediate(() => this.webhookHandler(update));
+            setImmediate(() => this.webhookHandler(update as object));
         };
     }
 }

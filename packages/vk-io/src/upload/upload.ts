@@ -374,10 +374,10 @@ export class Upload {
             field: 'file',
             params,
 
-            // @ts-expect-error
+            // @ts-expect-error missing types
             getServer: this.api.audio.getUploadServer,
 
-            // @ts-expect-error
+            // @ts-expect-error missing types
             saveFiles: this.api.audio.save,
             saveParams: ['title', 'artist'],
 
@@ -957,8 +957,7 @@ export class Upload {
                 if (isURL.test(value)) {
                     const response = await fetch(value);
 
-                    // @ts-expect-error
-                    value = response.body;
+                    value = response.body!;
 
                     const length = response.headers.get('content-length');
 

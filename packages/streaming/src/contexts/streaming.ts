@@ -48,6 +48,7 @@ export interface IStreamingContextPayload {
 export type StreamingContextOptions<S> =
     ContextFactoryOptions<IStreamingContextPayload, S>;
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 class StreamingContext<S = ContextDefaultState>
     extends Context<IStreamingContextPayload, S> {
     public constructor(options: StreamingContextOptions<S>) {

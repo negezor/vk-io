@@ -25,6 +25,7 @@ export interface IGroupUpdateContextPayload {
 export type GroupUpdateContextOptions<S> =
     ContextFactoryOptions<IGroupUpdateContextPayload, S>;
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 class GroupUpdateContext<S = ContextDefaultState>
     extends Context<
     IGroupUpdateContextPayload,

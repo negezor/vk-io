@@ -11,6 +11,7 @@ import {
     ExecuteError,
 
     APIErrorCode,
+    IAPIErrorOptions,
 } from '../../errors';
 
 import { CaptchaType, MINIMUM_TIME_INTERVAL_API } from '../../utils/constants';
@@ -57,7 +58,7 @@ export class SequentialWorker extends APIWorker {
         debug(`${method} <--`);
 
         if (response.error !== undefined) {
-            this.handleError(request, new APIError(response.error));
+            void this.handleError(request, new APIError(response.error as IAPIErrorOptions));
 
             return;
         }
@@ -67,7 +68,7 @@ export class SequentialWorker extends APIWorker {
         if (method.startsWith('execute')) {
             request.resolve({
                 response: response.response,
-                errors: (response.execute_errors || []).map((error: IExecuteErrorOptions) => (
+                errors: ((response.execute_errors || []) as IExecuteErrorOptions[]).map((error) => (
                     new ExecuteError(error)
                 )),
             });

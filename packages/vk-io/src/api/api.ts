@@ -17,7 +17,7 @@ import { VKError, ExecuteError } from '../errors';
 import { CallbackService } from '../utils/callback-service';
 import { MINIMUM_TIME_INTERVAL_API } from '../utils/constants';
 
-// @ts-expect-error
+// @ts-expect-error assert's not supported yet
 import { version } from '../../package.json';
 
 const groupMethods = [
@@ -214,6 +214,7 @@ export interface IExecuteResponse<T> {
 /**
  * Working with API methods
  */
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 class API {
     public options: IAPIOptions;
 
@@ -349,7 +350,7 @@ class API {
             this.worker.pause();
             newWorker.pause();
 
-            // @ts-expect-error
+            // @ts-expect-error private property
             newWorker.queue = [...this.worker.queue];
 
             setTimeout(

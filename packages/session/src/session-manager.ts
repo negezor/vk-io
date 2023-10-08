@@ -33,7 +33,7 @@ export class SessionManager<T = object> {
     public get middleware(): Middleware<IContext> {
         const { storage, contextKey, getStorageKey } = this;
 
-        return async (context: IContext, next: Function): Promise<void> => {
+        return async (context: IContext, next: () => Promise<void>): Promise<void> => {
             const storageKey = getStorageKey(context);
 
             let changed = false;
@@ -76,7 +76,7 @@ export class SessionManager<T = object> {
             Object.defineProperty(context, contextKey, {
                 get: (): ISessionContext => session,
                 set: (newSession): void => {
-                    session = wrapSession(newSession);
+                    session = wrapSession(newSession as object);
                     changed = true;
                 },
             });

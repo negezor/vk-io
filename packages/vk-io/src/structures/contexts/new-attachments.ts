@@ -20,7 +20,7 @@ export type NewAttachmentsContextSubType =
 | 'audio_new';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const subAttachmentTypes: Record<string, any> = {
+const subAttachmentTypes = {
     photo_new: PhotoAttachment,
     video_new: VideoAttachment,
     audio_new: AudioAttachment,
@@ -33,6 +33,7 @@ export interface INewAttachmentsContextPayload {
 export type NewAttachmentsContextOptions<S> =
     ContextFactoryOptions<INewAttachmentsContextPayload, S>;
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 class NewAttachmentsContext<S = ContextDefaultState>
     extends Context<
     INewAttachmentsContextPayload,
@@ -41,7 +42,7 @@ class NewAttachmentsContext<S = ContextDefaultState>
     NewAttachmentsContextSubType
     > {
     public constructor(options: NewAttachmentsContextOptions<S>) {
-        const PayloadAttachment = subAttachmentTypes[options.updateType];
+        const PayloadAttachment = subAttachmentTypes[options.updateType as keyof typeof subAttachmentTypes];
 
         super({
             ...options,
@@ -52,7 +53,10 @@ class NewAttachmentsContext<S = ContextDefaultState>
             ],
         });
 
-        this.attachments = [new PayloadAttachment(this.payload, this.api)];
+        this.attachments = [new PayloadAttachment({
+            api: this.api,
+            payload: this.payload as InstanceType<typeof PayloadAttachment>['payload'],
+        })];
     }
 
     /**
@@ -101,7 +105,8 @@ class NewAttachmentsContext<S = ContextDefaultState>
         if (this.isAudio) {
             const [audio] = this.getAttachments(AttachmentType.AUDIO);
 
-            // @ts-expect-error
+            // @ts-expect-error no audio types
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-call
             return this.api.audio.delete({
                 owner_id: audio.ownerId,
                 audio_id: audio.id,

@@ -1,3 +1,5 @@
+import { HearFunctionCondition } from './types';
+
 export const splitPath = (path: string): string[] => (
 	path
 		.replace(/\[([^[\]]*)\]/g, '.$1.')
@@ -20,30 +22,30 @@ export const getObjectValue = (source: Record<string, any>, selectors: string[])
 	return link;
 };
 
-export const unifyCondition = (condition: unknown): Function => {
+export const unifyCondition = <V, C>(condition: unknown): HearFunctionCondition<C, V> => {
 	if (typeof condition === 'function') {
-		return condition;
+		return condition as HearFunctionCondition<C, V>;
 	}
 
 	if (condition instanceof RegExp) {
-		return (text: string | undefined): boolean => (
-			condition.test(text!)
+		return (text) => (
+			condition.test(text as string)
 		);
 	}
 
 	if (Array.isArray(condition)) {
 		const arrayConditions = condition.map(unifyCondition);
 
-		return (value: string | undefined): boolean => (
+		return (value, context) => (
 			Array.isArray(value)
 				? arrayConditions.every((cond): boolean => (
-					value.some((val): boolean => cond(val))
+					value.some((val): boolean => cond(val, context))
 				))
 				: arrayConditions.some((cond): boolean => (
-					cond(value)
+					cond(value, context)
 				))
 		);
 	}
 
-	return (value: string | undefined): boolean => value === condition;
+	return (value) => value === condition;
 };

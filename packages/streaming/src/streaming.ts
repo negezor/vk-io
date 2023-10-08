@@ -9,6 +9,7 @@ import { Agent, globalAgent } from 'https';
 import { fetch } from './fetch';
 import { StreamingRuleError } from './errors';
 import { StreamingContext, IStreamingContextPayload } from './contexts';
+import { IStreamingRuleErrorOptions } from './errors/streaming-rule';
 
 const debug = createDebug('vk-io:streaming');
 
@@ -91,6 +92,7 @@ export class StreamingAPI {
 
         const { socket } = this;
 
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         socket.on('message', async (data: string) => {
             let message;
 
@@ -107,13 +109,15 @@ export class StreamingAPI {
             try {
                 switch (code) {
                     case 100: {
-                        await this.handleEvent(message.event);
+                        await this.handleEvent(message.event as IStreamingContextPayload);
 
                         break;
                     }
 
                     case 300: {
-                        await this.handleServiceMessage(message.service_message);
+                        await this.handleServiceMessage(message.service_message as {
+                            service_code: number;
+                        });
 
                         break;
                     }
@@ -136,14 +140,16 @@ export class StreamingAPI {
     /**
      * Stop all connection
      */
-    public async stop(): Promise<void> {
+    public stop(): Promise<void> {
         if (!this.started) {
-            return;
+            return Promise.resolve();
         }
 
         this.socket!.close();
 
         this.started = false;
+
+        return Promise.resolve();
     }
 
     /**
@@ -164,7 +170,7 @@ export class StreamingAPI {
     private async handleEvent(event: IStreamingContextPayload): Promise<void> {
         const context = new StreamingContext({
             api: this.api,
-            // @ts-expect-error
+            // @ts-expect-error private method
             upload: this.updates.upload,
             payload: event,
 
@@ -204,7 +210,7 @@ export class StreamingAPI {
         const result = await response.json() as any;
 
         if (result.error !== undefined) {
-            throw new StreamingRuleError(result.error);
+            throw new StreamingRuleError(result.error as IStreamingRuleErrorOptions);
         }
 
         return result;
@@ -255,7 +261,7 @@ export class StreamingAPI {
 }
 
 inspectable(StreamingAPI, {
-    // @ts-expect-error
+    // @ts-expect-error started is private
     serialize: ({ started }) => ({
         started,
     }),

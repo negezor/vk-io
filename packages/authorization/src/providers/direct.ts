@@ -263,19 +263,25 @@ export class DirectAuthorization {
                     }
 
                     if (text.error === 'need_captcha') {
-                        response = await this.processCaptcha(text);
+                        response = await this.processCaptcha(text as {
+                            captcha_sid: number;
+                            captcha_img: string;
+                        });
 
                         continue;
                     }
 
                     if (text.error === 'need_validation') {
                         if (text.validation_type !== undefined) {
-                            response = await this.processTwoFactor(text);
+                            response = await this.processTwoFactor(text as {
+                                validation_type: string;
+                                phone_mask: string;
+                            });
 
                             continue;
                         }
 
-                        const $ = cheerioLoad(text);
+                        const $ = cheerioLoad(text.redirect_uri as string);
 
                         response = await this.processSecurityForm(response, $);
 

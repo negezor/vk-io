@@ -39,6 +39,7 @@ export const executeRequests = async (
 
             resolveExecuteTask(tasks, response);
 
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
             out.response.push(...response.response);
             out.errors.push(...response.errors);
         } catch (error) {

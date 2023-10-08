@@ -85,6 +85,7 @@ export interface IWallAttachmentPayload {
 export type WallAttachmentOptions =
     AttachmentFactoryOptions<IWallAttachmentPayload>;
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 class WallAttachment extends Attachment<IWallAttachmentPayload, AttachmentType.WALL | 'wall'> {
     protected [kAttachments]!: (Attachment | ExternalAttachment)[];
 

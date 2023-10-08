@@ -40,7 +40,7 @@ export class SceneManager {
      * Returns the middleware for embedding
      */
     public get middleware(): Middleware<IContext> {
-        return (context: IContext, next: Function): Promise<void> => {
+        return (context: IContext, next: () => Promise<void>): Promise<void> => {
             context.scene = new SceneContext({
                 context,
                 sessionKey: this.sessionKey,
@@ -56,7 +56,7 @@ export class SceneManager {
      */
     // eslint-disable-next-line class-methods-use-this
     public get middlewareIntercept(): Middleware<IContext> {
-        return (context: IContext, next: Function): Promise<void> => {
+        return (context: IContext, next: () => Promise<void>): Promise<void> => {
             if (!context.scene.current) {
                 return next();
             }

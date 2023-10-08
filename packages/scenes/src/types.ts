@@ -2,9 +2,12 @@ import { Context } from 'vk-io';
 
 import { SceneContext } from './contexts';
 
-export type Middleware<T> = (context: T, next: Function) => unknown;
+export type Middleware<T> = (context: T, next: () => Promise<void>) => unknown;
 
-export type ISessionContext = Record<string, any>;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type ISessionContext = Record<string, any> & {
+    current: string;
+};
 
 export interface IContext<
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

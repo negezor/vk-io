@@ -48,7 +48,10 @@ export class ParallelWorker extends SequentialWorker {
         void super.execute(request);
 
         try {
-            resolveExecuteTask(tasks, await request.promise);
+            resolveExecuteTask(tasks, await request.promise as {
+                errors: object[];
+                response: (object | false)[];
+            });
         } catch (error) {
             for (const task of tasks) {
                 task.reject(error);

@@ -143,6 +143,7 @@ export interface IMessageContextPayload {
 export type MessageContextOptions<S> =
     ContextFactoryOptions<IMessageContextPayload, S>;
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 class MessageContext<S = ContextDefaultState>
     extends Context<
     IMessageContextPayload,
@@ -164,7 +165,7 @@ class MessageContext<S = ContextDefaultState>
     protected [kAttachments]!: (Attachment | ExternalAttachment)[];
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    protected [kMessagePayload]: any | undefined;
+    protected [kMessagePayload]: any;
 
     public constructor(options: MessageContextOptions<S>) {
         super({
@@ -259,6 +260,7 @@ class MessageContext<S = ContextDefaultState>
      * Checks is a chat
      */
     public get isChat(): boolean {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
         return this.peerType === MessageSource.CHAT;
     }
 
@@ -266,6 +268,7 @@ class MessageContext<S = ContextDefaultState>
      * Check is a user
      */
     public get isUser(): boolean {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
         return this.senderType === MessageSource.USER;
     }
 
@@ -273,6 +276,7 @@ class MessageContext<S = ContextDefaultState>
      * Checks is a group
      */
     public get isGroup(): boolean {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
         return this.senderType === MessageSource.GROUP;
     }
 
@@ -280,6 +284,7 @@ class MessageContext<S = ContextDefaultState>
      * Checks is from the user
      */
     public get isFromUser(): boolean {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
         return this.peerType === MessageSource.USER;
     }
 
@@ -287,6 +292,7 @@ class MessageContext<S = ContextDefaultState>
      * Checks is from the group
      */
     public get isFromGroup(): boolean {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
         return this.peerType === MessageSource.GROUP;
     }
 
@@ -498,7 +504,7 @@ class MessageContext<S = ContextDefaultState>
      * Returns the message payload
      */
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    public get messagePayload(): any | undefined {
+    public get messagePayload(): any {
         return this[kMessagePayload];
     }
 
@@ -944,11 +950,11 @@ applyMixins(MessageContext, [
             type: AttachmentType | AttachmentTypeString,
         ): (Attachment | ExternalAttachment)[] {
             return [
-                // @ts-expect-error
+                // @ts-expect-error no override
                 ...this.getAttachments(type),
-                // @ts-expect-error
+                // @ts-expect-error no override
                 ...((this.replyMessage?.getAttachments(type)) ?? []),
-                // @ts-expect-error
+                // @ts-expect-error no override
                 ...this.forwards.getAttachments(type),
             ];
         }

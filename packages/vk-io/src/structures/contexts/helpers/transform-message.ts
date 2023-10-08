@@ -44,7 +44,7 @@ const attachmentHandlers = {
     }),
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     link: (raw: any, key: string): object => {
-        const photoId = raw[`${key}_photo`];
+        const photoId = raw[`${key}_photo`] as string;
 
         return {
             type: 'link',
@@ -63,18 +63,18 @@ const attachmentHandlers = {
         const type = DocumentKind[raw[`${key}_kind`]] || AttachmentType.DOCUMENT;
 
         if (type in DocumentKind) {
-            return JSON.parse(raw.attachments)[index - 1];
+            return JSON.parse(raw.attachments as string)[index - 1];
         }
 
         return {
             type,
-            [type]: idToAttachmentPayload(raw[key]),
+            [type]: idToAttachmentPayload(raw[key] as string),
         };
     },
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     default: (raw: any, key: string, type: string): object => ({
         type,
-        [type]: idToAttachmentPayload(raw[key]),
+        [type]: idToAttachmentPayload(raw[key] as string),
     }),
 };
 
@@ -172,7 +172,7 @@ export function transformMessage({
     message.attachments = [];
 
     for (let i = 1, key = 'attach1'; attachments[key] !== undefined; i += 1, key = `attach${i}`) {
-        const type = attachments[`${key}_type`];
+        const type = attachments[`${key}_type`] as string;
 
         const handler = attachmentHandlers[type as keyof typeof attachmentHandlers]
             || attachmentHandlers.default;

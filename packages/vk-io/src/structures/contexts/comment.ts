@@ -64,6 +64,7 @@ export type CommentContextSubType =
 | 'market_comment_delete'
 | 'market_comment_restore';
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 class CommentContext<S = ContextDefaultState>
     extends Context<
     ICommentContextPayload,

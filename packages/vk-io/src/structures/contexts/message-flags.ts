@@ -80,7 +80,7 @@ export class MessageFlagsContext<S = ContextDefaultState>
                 upload: this.upload,
                 source: UpdateSource.POLLING,
                 updateType: 4,
-                // @ts-expect-error
+                // @ts-expect-error fallback for user long poll
                 payload: options.payload,
             });
         }

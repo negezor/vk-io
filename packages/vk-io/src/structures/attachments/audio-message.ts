@@ -14,7 +14,7 @@ export interface IAudioMessageAttachmentPayload {
     link_mp3?: string;
     locale?: string;
     transcript?: string;
-    transcript_state?: 'done' | string;
+    transcript_state?: 'done' | undefined;
 }
 
 export type AudioMessageAttachmentOptions =
@@ -97,7 +97,7 @@ export class AudioMessageAttachment
     /**
      * Returns the transcript of the audio message
      */
-    public get transcriptState(): 'done' | string | undefined {
+    public get transcriptState(): 'done' | undefined {
         return this.payload.transcript_state;
     }
 

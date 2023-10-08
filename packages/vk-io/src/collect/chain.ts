@@ -80,7 +80,7 @@ export class Chain {
 }
 
 inspectable(Chain, {
-    // @ts-expect-error
+    // @ts-expect-error queue is private
     serialize: ({ started, queue }) => ({
         started,
         queue,

@@ -753,7 +753,7 @@ export class Updates {
 }
 
 inspectable(Updates, {
-    // @ts-expect-error
+    // @ts-expect-error composer is private
     serialize: ({ isStarted, composer }) => ({
         isStarted,
         composer,

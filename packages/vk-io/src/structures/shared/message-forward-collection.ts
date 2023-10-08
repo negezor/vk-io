@@ -21,6 +21,7 @@ const getForwards = <S = ContextDefaultState>(rootForwards: MessageContext<S>[])
 
 const kFlatten = Symbol('flatten');
 
+// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 class MessageForwardsCollection<S = ContextDefaultState> extends Array<MessageContext<S>> {
     protected [kFlatten]?: MessageContext<S>[];
 

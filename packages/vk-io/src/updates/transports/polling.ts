@@ -215,7 +215,7 @@ export class PollingTransport {
 
         /* Async handle updates */
         for (const update of result.updates) {
-            this.pollingHandler(update);
+            this.pollingHandler(update as unknown[]);
         }
     }
 

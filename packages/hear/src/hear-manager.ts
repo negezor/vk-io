@@ -6,7 +6,7 @@ import {
     skipMiddleware,
 } from 'middleware-io';
 
-import { HearConditions } from './types';
+import { HearConditions, HearFunctionCondition } from './types';
 
 import { splitPath, unifyCondition, getObjectValue } from './helpers';
 
@@ -54,15 +54,15 @@ export class HearManager<C extends Context> {
 
         let textCondition = false;
         let functionCondtion = false;
-        const conditions = rawConditions.map((condition): Function => {
+        const conditions = rawConditions.map((condition): HearFunctionCondition<C & T, unknown> => {
             if (typeof condition === 'object' && !(condition instanceof RegExp)) {
                 functionCondtion = true;
 
-                const entries = Object.entries(condition).map(([path, value]): [string[], Function] => (
+                const entries = Object.entries(condition).map(([path, value]): [string[], HearFunctionCondition<C & T, unknown>] => (
                     [splitPath(path), unifyCondition(value)]
                 ));
 
-                return (text: string | undefined, context: C): boolean => (
+                return (text, context) => (
                     entries.every(([selectors, callback]): boolean => {
                         const value = getObjectValue(context, selectors);
 
@@ -74,19 +74,19 @@ export class HearManager<C extends Context> {
             if (typeof condition === 'function') {
                 functionCondtion = true;
 
-                return condition;
+                return condition as HearFunctionCondition<C & T, unknown>;
             }
 
             textCondition = true;
 
             if (condition instanceof RegExp) {
-                return (text: string | undefined, context: C): boolean => {
-                    const passed = condition.test(text!);
+                return (text, context): boolean => {
+                    const passed = condition.test(text as string);
 
                     if (passed) {
                         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                         // @ts-expect-error
-                        context.$match = text!.match(condition)!;
+                        context.$match = (text as string).match(condition)!;
                     }
 
                     return passed;
@@ -95,7 +95,7 @@ export class HearManager<C extends Context> {
 
             const stringCondition = String(condition);
 
-            return (text: string | undefined): boolean => text === stringCondition;
+            return (text) => text === stringCondition;
         });
 
         const needText = textCondition && functionCondtion === false;
