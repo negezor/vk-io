@@ -1,7 +1,9 @@
 import { Context, ContextFactoryOptions, ContextDefaultState } from './context';
 
-import { pickProperties } from '../../utils/helpers';
-import { kSerializeData } from '../../utils/constants';
+import { IMessageContextSendOptions, MessageContext } from './message';
+
+import { getRandomId, pickProperties } from '../../utils/helpers';
+import { UpdateSource, kSerializeData } from '../../utils/constants';
 
 export interface IMessageEventShowSnackbar {
     type: 'show_snackbar';
@@ -105,6 +107,85 @@ export class MessageEventContext<S = ContextDefaultState>
             user_id: this.userId,
             event_data: JSON.stringify(eventData),
         });
+    }
+
+    /**
+     * Sends a message to the current dialog
+     */
+    async send(
+        text: string | IMessageContextSendOptions,
+        params?: IMessageContextSendOptions,
+    ): Promise<MessageContext<S>> {
+        const randomId = getRandomId();
+
+        const options = {
+            random_id: randomId,
+
+            ...(
+                typeof text !== 'object'
+                    ? {
+                        message: text,
+
+                        ...params,
+                    }
+                    : text
+            ),
+        } as IMessageContextSendOptions;
+
+        if (this.$groupId !== undefined) {
+            options.peer_ids = this.peerId;
+        } else {
+            options.peer_id = this.peerId;
+        }
+
+        const rawDestination = await this.api.messages.send(options);
+
+        const destination = typeof rawDestination !== 'number'
+            ? rawDestination[0] as {
+                peer_id : number;
+                message_id: number;
+                conversation_message_id: number;
+                error: number;
+            }
+            : {
+                peer_id: this.peer_id,
+                message_id: rawDestination,
+                conversation_message_id: 0,
+            };
+
+        const messageContext = new MessageContext<S>({
+            api: this.api,
+            upload: this.upload,
+            source: UpdateSource.WEBHOOK,
+            groupId: this.$groupId,
+            updateType: 'message_new',
+            state: this.state,
+            payload: {
+                client_info: this.clientInfo,
+                message: {
+                    id: destination.message_id,
+                    conversation_message_id: destination.conversation_message_id,
+
+                    from_id: this.$groupId as unknown as number,
+                    peer_id: destination.peer_id,
+
+                    out: 1,
+                    important: false,
+                    random_id: randomId,
+
+                    text: options.text,
+
+                    date: Math.floor(Date.now() / 1000),
+
+                    attachments: [],
+                },
+            },
+        });
+
+        // @ts-expect-error private method
+        messageContext.$filled = false;
+
+        return messageContext;
     }
 
     /**
