@@ -48,8 +48,8 @@
         "tough-cookie": "^4.1.3"
     },
     "devDependencies": {
-        "@types/cheerio": "^0.22.31",
-        "@types/debug": "^4.1.8",
-        "@types/tough-cookie": "^4.0.2"
+        "@types/cheerio": "^0.22.32",
+        "@types/debug": "^4.1.9",
+        "@types/tough-cookie": "^4.0.3"
     }
 }
