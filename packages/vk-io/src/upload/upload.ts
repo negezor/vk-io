@@ -744,6 +744,7 @@ export class Upload {
             reply_to_story?: string;
             link_text: string;
             link_url: string;
+            clickable_stickers?: string;
         },
     ): Promise<StoryAttachment> {
         const { items: [story] } = await this.conduct({
@@ -759,6 +760,7 @@ export class Upload {
                 'link_url',
                 'group_id',
                 'attach_access_key',
+                'clickable_stickers',
             ],
 
             saveFiles: file => (
@@ -788,6 +790,7 @@ export class Upload {
             reply_to_story?: string;
             link_text: string;
             link_url: string;
+            clickable_stickers?: string;
         },
     ): Promise<StoryAttachment> {
         const { items: [story] } = await this.conduct({
@@ -802,6 +805,7 @@ export class Upload {
                 'link_text',
                 'link_url',
                 'group_id',
+                'clickable_stickers',
             ],
 
             saveFiles: file => (
