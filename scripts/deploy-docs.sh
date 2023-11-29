@@ -2,17 +2,17 @@
 
 set -e
 
-npx vuepress build docs
+npx vitepress build docs
 
 for modulePath in ./packages/*; do
     module=`(basename $modulePath)`;
 
     echo $module
 
-    npx typedoc --out docs/.vuepress/dist/references/$module --readme none packages/$module/src/index.ts
+    npx typedoc --out docs/.vitepress/dist/references/$module --readme none packages/$module/src/index.ts
 done
 
-cd docs/.vuepress/dist
+cd docs/.vitepress/dist
 
 git init
 git add -A

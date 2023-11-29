@@ -1,42 +1,41 @@
 {
-    "name": "vk-io-monorepo",
-    "private": true,
-    "workspaces": [
-        "packages/*"
-    ],
-    "engines": {
-        "node": ">=12.20.0"
-    },
-    "type": "module",
-    "devDependencies": {
-        "@rollup/plugin-json": "^6.0.1",
-        "@types/jest": "^29.5.10",
-        "@types/node": "^20.10.0",
-        "@typescript-eslint/eslint-plugin": "^6.13.1",
-        "@typescript-eslint/parser": "^6.13.1",
-        "@vuepress/plugin-back-to-top": "^2.0.0-rc.0",
-        "@vuepress/plugin-medium-zoom": "^2.0.0-rc.0",
-        "eslint": "8.54.0",
-        "eslint-plugin-import": "^2.29.0",
-        "jest": "^29.7.0",
-        "rollup": "^4.6.0",
-        "rollup-plugin-typescript2": "^0.36.0",
-        "ts-jest": "^29.1.1",
-        "typedoc": "^0.25.4",
-        "typescript": "^5.3.2",
-        "vuepress": "^2.0.0-rc.0"
-    },
-    "scripts": {
-        "prepare": "npm run rollup:build && npm run test",
-        "build": "npm run rollup:build",
-        "watch": "npm run rollup:watch",
-        "clean": "rm -rf ./packages/*/lib",
-        "rollup:build": "NODE_ENV=production rollup -c rollup.config.js",
-        "rollup:watch": "npm run rollup:build -- -w",
-        "docs:watch": "vuepress dev docs",
-        "docs:build": "sh scripts/deploy-docs.sh",
-        "test": "npm run test:jest && npm run lint:eslint",
-        "test:jest": "NODE_OPTIONS=--experimental-vm-modules jest --config jest.config.json --no-cache",
-        "lint:eslint": "eslint --ext .ts --ignore-path .gitignore packages/*/src"
-    }
+  "name": "vk-io-monorepo",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=12.20.0"
+  },
+  "type": "module",
+  "devDependencies": {
+    "@rollup/plugin-json": "^6.0.1",
+    "@types/jest": "^29.5.10",
+    "@types/node": "^20.10.0",
+    "@typescript-eslint/eslint-plugin": "^6.13.1",
+    "@typescript-eslint/parser": "^6.13.1",
+    "eslint": "8.54.0",
+    "eslint-plugin-import": "^2.29.0",
+    "jest": "^29.7.0",
+    "rollup": "^4.6.0",
+    "rollup-plugin-typescript2": "^0.36.0",
+    "ts-jest": "^29.1.1",
+    "typedoc": "^0.25.4",
+    "typescript": "^5.3.2",
+    "vitepress": "^1.0.0-rc.31"
+  },
+  "scripts": {
+    "prepare": "npm run rollup:build && npm run test",
+    "build": "npm run rollup:build",
+    "watch": "npm run rollup:watch",
+    "clean": "rm -rf ./packages/*/lib",
+    "rollup:build": "NODE_ENV=production rollup -c rollup.config.js",
+    "rollup:watch": "npm run rollup:build -- -w",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "sh scripts/deploy-docs.sh",
+    "docs:preview": "vitepress preview docs",
+    "test": "npm run test:jest && npm run lint:eslint",
+    "test:jest": "NODE_OPTIONS=--experimental-vm-modules jest --config jest.config.json --no-cache",
+    "lint:eslint": "eslint --ext .ts --ignore-path .gitignore packages/*/src"
+  }
 }
