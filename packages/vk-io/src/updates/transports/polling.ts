@@ -14,7 +14,7 @@ const debug = createDebug('vk-io:updates');
 /**
  * Version polling
  */
-const POLLING_VERSION = 10;
+const POLLING_VERSION = 19;
 
 export class PollingTransport {
     public started = false;
@@ -164,7 +164,12 @@ export class PollingTransport {
 
         const interval = setTimeout(() => controller.abort(), 30e3);
 
-        let result;
+        let result:
+            | { ts: number, pts?: number, updates: unknown[] }
+            | { failed: 1, ts: number }
+            | { failed: 2, error: string }
+            | { failed: 4, min_version: 0, max_version: 19 };
+
         try {
             const response = await fetch(this.url, {
                 agent: this.options.agent,
@@ -191,7 +196,7 @@ export class PollingTransport {
             clearTimeout(interval);
         }
 
-        if (result.failed !== undefined) {
+        if ('failed' in result) {
             if (result.failed === 1) {
                 this.ts = result.ts;
 

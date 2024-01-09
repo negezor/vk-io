@@ -5,13 +5,10 @@ import { kSerializeData } from '../../utils/constants';
 
 export type DialogMessagesContextType = 'dialog_messages';
 
-export type DialogMessagesContextSubType =
-'dialog_messages_delete'
-| 'dialog_messages_restore';
+export type DialogMessagesContextSubType = 'dialog_messages_delete';
 
 const subTypes: Record<number, DialogMessagesContextSubType> = {
-    13: 'dialog_messages_delete',
-    14: 'dialog_messages_restore',
+    10013: 'dialog_messages_delete',
 };
 export interface IDialogMessagesContextPayload {
     local_id: number;
@@ -55,10 +52,9 @@ export class DialogMessagesContext<S = ContextDefaultState>
 
     /**
      * Checks if messages are restored
+     * @deprecated
      */
-    public get isRestore(): boolean {
-        return this.subTypes.includes('dialog_messages_restore');
-    }
+    public readonly isRestore = false;
 
     /**
      * Returns the peer identifier

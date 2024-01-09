@@ -47,9 +47,9 @@ export type MessageContextSubType =
 | MessageContextPayloadEventType;
 
 const subTypesEnum: Record<string | number, MessageContextSubType> = {
-    4: 'message_new',
-    5: 'message_edit',
-    18: 'message_edit',
+    10004: 'message_new',
+    10005: 'message_edit',
+    10018: 'message_edit',
 };
 
 const kForwards = Symbol('forwards');
@@ -820,6 +820,8 @@ class MessageContext<S = ContextDefaultState>
                 },
             }
             : payload;
+
+        console.log(payload);
 
         const { message } = this;
 

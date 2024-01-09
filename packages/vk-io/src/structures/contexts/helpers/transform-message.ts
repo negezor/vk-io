@@ -81,25 +81,24 @@ const attachmentHandlers = {
 /**
  * Transform message to Object
  */
-export function transformMessage({
-    1: id,
-    2: flags,
-    3: peer_id,
-    4: date,
-    5: text,
-    6: extra,
-    7: attachments,
-    8: random_id,
-    9: conversation_message_id,
-    10: update_time,
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-}: [
+export function transformMessage(rawMessage: [
+    // type
     number,
+    // conversation message id
     number,
+    // flags
     number,
+    // minor id
     number,
+    // peer id
     number,
+    // timestamp
+    number,
+
+    // text
     string,
+
+    // additional
     {
         title?: string;
         from?: string;
@@ -115,16 +114,39 @@ export function transformMessage({
 
         payload?: string;
     },
+    // attachments
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     Record<string, any> & {
         fwd?: string;
         reply?: string;
     },
+    // randomId
     number,
+    // messageId
     number,
+    // updateTimestamp
     number
     // eslint-disable-next-line @typescript-eslint/no-explicit-any,
 ]): IMessageContextPayload['message'] {
+    if (rawMessage[0] !== 10004) {
+        // set minor id to 0
+        rawMessage.splice(3, 0, 0);
+    }
+
+    const {
+        1: conversation_message_id,
+        2: flags,
+        // 3: minor_id,
+        4: peer_id,
+        5: date,
+        6: text,
+        7: extra,
+        8: attachments,
+        9: random_id,
+        10: id,
+        11: update_time,
+    } = rawMessage;
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const message = {
         id,

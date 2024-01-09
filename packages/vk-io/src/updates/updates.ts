@@ -214,15 +214,15 @@ const webhookContextsEvents: [string[], Constructor<any>][] = [
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const pollingContextsEvents: [number[], Constructor<any>][] = [
     [
-        [1, 2, 3],
+        [10002, 10003],
         MessageFlagsContext,
     ],
     [
-        [4, 5, 18],
+        [10004, 10005, 10018],
         MessageContext,
     ],
     [
-        [6, 7],
+        [10006, 10007],
         MessagesReadContext,
     ],
     [
@@ -230,11 +230,11 @@ const pollingContextsEvents: [number[], Constructor<any>][] = [
         FriendActivityContext,
     ],
     [
-        [10, 11, 12],
+        [10, 12],
         DialogFlagsContext,
     ],
     [
-        [13, 14],
+        [10013],
         DialogMessagesContext,
     ],
     [

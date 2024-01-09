@@ -10,8 +10,8 @@ export type MessagesReadContextSubType =
 | 'messages_read_outbox';
 
 const subTypes: Record<number, MessagesReadContextSubType> = {
-    6: 'messages_read_inbox',
-    7: 'messages_read_outbox',
+    10006: 'messages_read_inbox',
+    10007: 'messages_read_outbox',
 };
 
 export interface IMessagesReadContextPayload {

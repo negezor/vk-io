@@ -8,12 +8,10 @@ import { kSerializeData, UpdateSource } from '../../utils/constants';
 export type MessageFlagsContextType = 'message_flags';
 
 export type MessageFlagsContextSubType =
-'message_flags_replace'
-| 'message_flags_add'
+'message_flags_add'
 | 'message_flags_delete';
 
 const subTypes: Record<number, MessageFlagsContextSubType> = {
-    1: 'message_flags_replace',
     2: 'message_flags_add',
     3: 'message_flags_delete',
 };
@@ -34,7 +32,8 @@ enum MessageFlag {
     DELETED_FOR_ALL = 1 << 17,
     INBOX_FROM_CHAT = 1 << 19,
     SILENT = 1 << 20,
-    REPLIED = 1 << 21
+    REPLIED = 1 << 21,
+    AUTO_READ = 1 << 23
 }
 /* eslint-enable no-bitwise */
 
@@ -189,6 +188,13 @@ export class MessageFlagsContext<S = ContextDefaultState>
      */
     public get isReplied(): boolean {
         return this.hasFlag(MessageFlag.REPLIED);
+    }
+
+    /**
+     * Checks a reply has been created to the message
+     */
+    public get isAutoRead(): boolean {
+        return this.hasFlag(MessageFlag.AUTO_READ);
     }
 
     /**
