@@ -59,7 +59,6 @@ async function generate() {
     writeParamsNode(
         ts.factory.createImportDeclaration(
             undefined,
-            undefined,
             ts.factory.createImportClause(
                 false,
                 ts.factory.createNamespaceImport(
@@ -73,7 +72,6 @@ async function generate() {
     writeResponsesNode(
         ts.factory.createImportDeclaration(
             undefined,
-            undefined,
             ts.factory.createImportClause(
                 false,
                 ts.factory.createNamespaceImport(
@@ -87,7 +85,6 @@ async function generate() {
     writeMethodsNode(
         ts.factory.createImportDeclaration(
             undefined,
-            undefined,
             ts.factory.createImportClause(
                 false,
                 ts.factory.createNamespaceImport(
@@ -100,7 +97,6 @@ async function generate() {
 
     writeMethodsNode(
         ts.factory.createImportDeclaration(
-            undefined,
             undefined,
             ts.factory.createImportClause(
                 false,
@@ -116,6 +112,10 @@ async function generate() {
     const apiParams = [];
 
     for (const method of methods) {
+        if (method.name === 'execute') {
+            continue
+        }
+
         const [groupName, methodName] = method.name.split('.');
 
         const camelizedGroupName = upperFirstLetter(groupName);
@@ -142,9 +142,7 @@ async function generate() {
         params.methods.push(
             ts.factory.createIndexSignature(
                 undefined,
-                undefined,
                 [ts.factory.createParameterDeclaration(
-                    undefined,
                     undefined,
                     undefined,
                     'key',
@@ -182,9 +180,12 @@ async function generate() {
                     ts.factory.createIdentifier(
                         toPascalCase(
                             (method.responses.response
+                                || method.responses.baseResponse
                                 || method.responses.keyResponse
                                 || method.responses.responseInteger
                                 || method.responses.responseArray
+                                || method.responses.userIdsResponse
+                                || method.responses.deprecatedResponse
                             ).$ref
                                 .replace(
                                     'responses.json#/definitions/',
@@ -203,10 +204,9 @@ async function generate() {
                 ? response.type.toASTNode({ exported: true })
                 : TypesGenerator.declarationExport(
                     ts.factory.createTypeAliasDeclaration(
-                        undefined,
-                        ts.factory.createModifier(
+                        [ts.factory.createModifier(
                             ts.SyntaxKind.DeclareKeyword
-                        ),
+                        )],
                         response.name,
                         undefined,
                         response.type
@@ -228,7 +228,6 @@ async function generate() {
                 : TypesGenerator.declarationExport(
                     ts.factory.createTypeAliasDeclaration(
                         undefined,
-                        undefined,
                         toPascalCase(object.name),
                         undefined,
                         object.type
@@ -242,7 +241,6 @@ async function generate() {
     writeConstantsNode(
         TypesGenerator.declarationExport(
             ts.factory.createEnumDeclaration(
-                undefined,
                 undefined,
                 'APIErrorCode',
                 Object.entries(errors)

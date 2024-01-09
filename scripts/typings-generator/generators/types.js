@@ -29,7 +29,6 @@ module.exports = class TypesGenerator {
     static type(name, type) {
         return ts.factory.createTypeAliasDeclaration(
             undefined,
-            undefined,
             name,
             undefined,
             type
@@ -54,7 +53,6 @@ module.exports = class TypesGenerator {
         return ts.factory.createParameterDeclaration(
             undefined,
             undefined,
-            undefined,
             name,
             !required
                 ? ts.factory.createKeywordTypeNode(
@@ -67,7 +65,6 @@ module.exports = class TypesGenerator {
 
     static declarationExport(exportClause) {
         return ts.factory.createExportDeclaration(
-            undefined,
             undefined,
             false,
             exportClause

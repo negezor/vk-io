@@ -25,7 +25,6 @@ module.exports = class InterfaceGenerator {
     }) {
         const property = ts.factory.createPropertyDeclaration(
             undefined,
-            undefined,
             name,
             !required
                 ? ts.factory.createKeywordTypeNode(
@@ -62,7 +61,6 @@ module.exports = class InterfaceGenerator {
         modifiers = undefined
     }) {
         const method = ts.factory.createMethodDeclaration(
-            undefined,
             modifiers,
             undefined,
             name,
@@ -90,7 +88,6 @@ module.exports = class InterfaceGenerator {
 
     toASTNode({ exported = false } = {}) {
         let iterfaceDeclaration = ts.factory.createInterfaceDeclaration(
-            undefined,
             undefined,
             this.name,
             undefined,

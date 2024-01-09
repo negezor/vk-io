@@ -251,12 +251,6 @@ function parseJSONObject(name, type, payload = {}, { preferRequired } = { prefer
             };
         }
 
-        if (preferRequired !== false) {
-            console.log('preferRequired', preferRequired);
-        }
-
-        // preferRequired
-
         const resolvedType = jsonSchemaTypes[type.type]({
             ...payload,
 
@@ -287,9 +281,7 @@ function parseJSONObject(name, type, payload = {}, { preferRequired } = { prefer
     interfaceType.methods.push(
         ts.factory.createIndexSignature(
             undefined,
-            undefined,
             [ts.factory.createParameterDeclaration(
-                undefined,
                 undefined,
                 undefined,
                 'key',
