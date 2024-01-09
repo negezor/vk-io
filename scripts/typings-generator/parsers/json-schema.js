@@ -318,9 +318,9 @@ function parseJSONObject(name, type, payload = {}, { preferRequired } = { prefer
                 name: propertyName,
 
                 type: nodeType,
-                required: preferRequired || typeof required !== 'boolean'
+                required: preferRequired || (typeof required !== 'boolean'
                     ? required.includes(propertyName)
-                    : required,
+                    : required),
             });
         }
     }
