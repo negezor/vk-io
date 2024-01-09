@@ -216,7 +216,10 @@ class MessageContext<S = ContextDefaultState>
 
         const [message] = items;
 
-        this.applyPayload(message as IMessageContextPayload['message']);
+        this.applyPayload({
+            out: Number(this.isOutbox),
+            ...message as Omit<IMessageContextPayload['message'], 'out'>,
+        });
 
         this.$filled = true;
     }
