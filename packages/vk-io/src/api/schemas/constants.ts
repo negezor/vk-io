@@ -175,6 +175,12 @@ export enum APIErrorCode {
      */
     PRIVATE_PROFILE = 30,
     /**
+     * Need wait
+     *
+     * Code: `32`
+     */
+    WAIT = 32,
+    /**
      * Not implemented yet
      *
      * Code: `33`
@@ -234,6 +240,12 @@ export enum APIErrorCode {
      * Code: `42`
      */
     IP_IS_NOT_ALLOWED = 42,
+    /**
+     * This section is temporary unavailable
+     *
+     * Code: `43`
+     */
+    SECTION_DISABLED = 43,
     /**
      * One of the parameters specified was missing or invalid
      *
@@ -595,6 +607,48 @@ export enum APIErrorCode {
      */
     ADS_OBJECT_DELETED = 629,
     /**
+     * Lookalike request with same source already in progress
+     *
+     * Code: `630`
+     */
+    ADS_LOOKALIKE_REQUEST_ALREADY_IN_PROGRESS = 630,
+    /**
+     * Max count of lookalike requests per day reached
+     *
+     * Code: `631`
+     */
+    ADS_LOOKALIKE_REQUEST_MAX_COUNT_PER_DAY_REACHED = 631,
+    /**
+     * Given audience is too small
+     *
+     * Code: `632`
+     */
+    ADS_LOOKALIKE_REQUEST_AUDIENCE_TOO_SMALL = 632,
+    /**
+     * Given audience is too large
+     *
+     * Code: `633`
+     */
+    ADS_LOOKALIKE_REQUEST_AUDIENCE_TOO_LARGE = 633,
+    /**
+     * Lookalike request audience save already in progress
+     *
+     * Code: `634`
+     */
+    ADS_LOOKALIKE_REQUEST_EXPORT_ALREADY_IN_PROGRESS = 634,
+    /**
+     * Max count of lookalike request audience saves per day reached
+     *
+     * Code: `635`
+     */
+    ADS_LOOKALIKE_REQUEST_EXPORT_MAX_COUNT_PER_DAY_REACHED = 635,
+    /**
+     * Max count of retargeting groups reached
+     *
+     * Code: `636`
+     */
+    ADS_LOOKALIKE_REQUEST_EXPORT_RETARGETING_GROUP_LIMIT = 636,
+    /**
      * Cannot edit creator role
      *
      * Code: `700`
@@ -691,7 +745,7 @@ export enum APIErrorCode {
      */
     MESSAGES_EDIT_EXPIRED = 909,
     /**
-     * Can't send this message, because it's too big
+     * Can't sent this message, because it's too big
      *
      * Code: `910`
      */
@@ -744,6 +798,12 @@ export enum APIErrorCode {
      * Code: `921`
      */
     MESSAGES_CANT_FWD = 921,
+    /**
+     * You left this chat
+     *
+     * Code: `922`
+     */
+    MESSAGES_CHAT_USER_LEFT = 922,
     /**
      * Can't delete this message for everybody
      *
@@ -865,6 +925,24 @@ export enum APIErrorCode {
      */
     MESSAGES_CANT_PIN_EXPIRING_MESSAGE = 970,
     /**
+     * Unknown reaction passed
+     *
+     * Code: `1009`
+     */
+    MESSAGES_INVALID_REACTION_ID = 1009,
+    /**
+     * This reaction has been disabled
+     *
+     * Code: `1010`
+     */
+    MESSAGES_FORBIDDEN_REACTION = 1010,
+    /**
+     * Reactions limit for this message has been reached
+     *
+     * Code: `1011`
+     */
+    MESSAGES_REACTIONS_LIMIT_REACHED = 1011,
+    /**
      * Too many auth attempts, try again later
      *
      * Code: `1105`
@@ -882,6 +960,30 @@ export enum APIErrorCode {
      * Code: `1116`
      */
     AUTH_ANONYMOUS_TOKEN_IS_INVALID = 1116,
+    /**
+     * Access token has expired
+     *
+     * Code: `1117`
+     */
+    AUTH_ACCESS_TOKEN_HAS_EXPIRED = 1117,
+    /**
+     * Anonymous token ip mismatch
+     *
+     * Code: `1118`
+     */
+    AUTH_ANONYMOUS_TOKEN_IP_MISMATCH = 1118,
+    /**
+     * Passkey registration error
+     *
+     * Code: `1119`
+     */
+    PASSKEY_REGISTRATION = 1119,
+    /**
+     * Passkey login error
+     *
+     * Code: `1120`
+     */
+    PASSKEY_LOGIN = 1120,
     /**
      * Invalid document id
      *
@@ -942,18 +1044,6 @@ export enum APIErrorCode {
      * Code: `1260`
      */
     INVALID_ADDRESS = 1260,
-    /**
-     * Catalog is not available for this user
-     *
-     * Code: `1310`
-     */
-    COMMUNITIES_CATALOG_DISABLED = 1310,
-    /**
-     * Catalog categories are not available for this user
-     *
-     * Code: `1311`
-     */
-    COMMUNITIES_CATEGORIES_DISABLED = 1311,
     /**
      * Too late for restore
      *
@@ -1087,7 +1177,7 @@ export enum APIErrorCode {
      */
     MARKET_PHOTOS_CROP_INVALID_FORMAT = 1433,
     /**
-     * Crop bottom right corner is outside the image
+     * Crop bottom right corner is outside of the image
      *
      * Code: `1434`
      */
@@ -1110,6 +1200,12 @@ export enum APIErrorCode {
      * Code: `1446`
      */
     MARKET_ALBUM_MAIN_HIDDEN = 1446,
+    /**
+     * Order status is invalid
+     *
+     * Code: `1456`
+     */
+    MARKET_ORDERS_INVALID_STATUS = 1456,
     /**
      * Story has already expired
      *
@@ -1229,6 +1325,42 @@ export enum APIErrorCode {
      *
      * Code: `3800`
      */
-    FAVE_ALIEXPRESS_TAG = 3800
+    FAVE_ALIEXPRESS_TAG = 3800,
+    /**
+     * Total audio duration limit reached
+     *
+     * Code: `7701`
+     */
+    ASR_AUDIO_DURATION_FLOODED = 7701,
+    /**
+     * Audio file is too big
+     *
+     * Code: `7702`
+     */
+    ASR_FILE_IS_TOO_BIG = 7702,
+    /**
+     * Invalid hash
+     *
+     * Code: `7703`
+     */
+    ASR_INVALID_HASH = 7703,
+    /**
+     * Task not found
+     *
+     * Code: `7704`
+     */
+    ASR_NOT_FOUND = 7704,
+    /**
+     * Not supported http method
+     *
+     * Code: `9999`
+     */
+    NOT_SUPPORTED_HTTP_METHOD = 9999,
+    /**
+     * CheckUserAction confirmation required
+     *
+     * Code: `11500`
+     */
+    CUA_CONFIRMATION_REQUIRED = 11500
 }
 

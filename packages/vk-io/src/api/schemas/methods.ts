@@ -99,10 +99,12 @@ export interface APIAds {
      * Creates clients of an advertising agency.
      */
     createClients(params: Params.AdsCreateClientsParams): Promise<Responses.AdsCreateClientsResponse>;
+    createLookalikeRequest(params: Params.AdsCreateLookalikeRequestParams): Promise<Responses.AdsCreateLookalikeRequestResponse>;
     /**
      * Creates a group to re-target ads for users who visited advertiser's site (viewed information about the product, registered, etc.).
      */
     createTargetGroup(params: Params.AdsCreateTargetGroupParams): Promise<Responses.AdsCreateTargetGroupResponse>;
+    createTargetPixel(params: Params.AdsCreateTargetPixelParams): Promise<Responses.AdsCreateTargetPixelResponse>;
     /**
      * Archives ads.
      */
@@ -119,6 +121,7 @@ export interface APIAds {
      * Deletes a retarget group.
      */
     deleteTargetGroup(params: Params.AdsDeleteTargetGroupParams): Promise<Responses.BaseOkResponse>;
+    deleteTargetPixel(params: Params.AdsDeleteTargetPixelParams): Promise<Responses.BaseUndefinedResponse>;
     /**
      * Returns a list of advertising accounts.
      */
@@ -156,7 +159,7 @@ export interface APIAds {
      */
     getDemographics(params: Params.AdsGetDemographicsParams): Promise<Responses.AdsGetDemographicsResponse>;
     /**
-     * Returns information about current state of a counter — number of remaining runs of methods and time to the next counter nulling in seconds.
+     * Returns information about current state of a counter - number of remaining runs of methods and time to the next counter nulling in seconds.
      */
     getFloodStats(params: Params.AdsGetFloodStatsParams): Promise<Responses.AdsGetFloodStatsResponse>;
     getLookalikeRequests(params: Params.AdsGetLookalikeRequestsParams): Promise<Responses.AdsGetLookalikeRequestsResponse>;
@@ -186,6 +189,7 @@ export interface APIAds {
      * Returns a list of target groups.
      */
     getTargetGroups(params: Params.AdsGetTargetGroupsParams): Promise<Responses.AdsGetTargetGroupsResponse>;
+    getTargetPixels(params: Params.AdsGetTargetPixelsParams): Promise<Responses.AdsGetTargetPixelsResponse>;
     /**
      * Returns the size of targeting audience, and also recommended values for CPC and CPM.
      */
@@ -206,6 +210,9 @@ export interface APIAds {
      * Removes managers and/or supervisors from advertising account.
      */
     removeOfficeUsers(params: Params.AdsRemoveOfficeUsersParams): Promise<Responses.AdsRemoveOfficeUsersResponse>;
+    removeTargetContacts(params: Params.AdsRemoveTargetContactsParams): Promise<Responses.AdsRemoveTargetContactsResponse>;
+    saveLookalikeRequestResult(params: Params.AdsSaveLookalikeRequestResultParams): Promise<Responses.AdsSaveLookalikeRequestResultResponse>;
+    shareTargetGroup(params: Params.AdsShareTargetGroupParams): Promise<Responses.AdsShareTargetGroupResponse>;
     /**
      * Edits ads.
      */
@@ -226,6 +233,7 @@ export interface APIAds {
      * Edits a retarget group.
      */
     updateTargetGroup(params: Params.AdsUpdateTargetGroupParams): Promise<Responses.BaseOkResponse>;
+    updateTargetPixel(params: Params.AdsUpdateTargetPixelParams): Promise<Responses.BaseUndefinedResponse>;
 }
 
 /**
@@ -238,6 +246,57 @@ export interface APIAdsweb {
     getFraudHistory(params: Params.AdswebGetFraudHistoryParams): Promise<Responses.AdswebGetFraudHistoryResponse>;
     getSites(params: Params.AdswebGetSitesParams): Promise<Responses.AdswebGetSitesResponse>;
     getStatistics(params: Params.AdswebGetStatisticsParams): Promise<Responses.AdswebGetStatisticsResponse>;
+}
+
+/**
+ * The API apps group
+ */
+export interface APIApps {
+    addUsersToTestingGroup(params: Params.AppsAddUsersToTestingGroupParams): Promise<Responses.BaseBoolResponse>;
+    /**
+     * Deletes all request notifications from the current app.
+     */
+    deleteAppRequests(params: Params.AppsDeleteAppRequestsParams): Promise<Responses.BaseOkResponse>;
+    /**
+     * Returns applications data.
+     */
+    get(params: Params.AppsGetParams): Promise<Responses.AppsGetResponse>;
+    /**
+     * Returns a list of applications (apps) available to users in the App Catalog.
+     */
+    getCatalog(params: Params.AppsGetCatalogParams): Promise<Responses.AppsGetCatalogResponse>;
+    /**
+     * Creates friends list for requests and invites in current app.
+     */
+    getFriendsList(params: Params.AppsGetFriendsListParams): Promise<Responses.AppsGetFriendsListResponse>;
+    getLastUploadedVersion(params: Params.AppsGetLastUploadedVersionParams): Promise<Responses.AppsGetLastUploadedVersionResponse>;
+    /**
+     * Returns players rating in the game.
+     */
+    getLeaderboard(params: Params.AppsGetLeaderboardParams): Promise<Responses.AppsGetLeaderboardResponse>;
+    /**
+     * Returns policies and terms given to a mini app.
+     */
+    getMiniAppPolicies(params: Params.AppsGetMiniAppPoliciesParams): Promise<Responses.AppsGetMiniAppPoliciesResponse>;
+    /**
+     * Returns scopes for auth
+     */
+    getScopes(params: Params.AppsGetScopesParams): Promise<Responses.AppsGetScopesResponse>;
+    /**
+     * Returns user score in app
+     */
+    getScore(params: Params.AppsGetScoreParams): Promise<Responses.AppsGetScoreResponse>;
+    getTestingGroups(params: Params.AppsGetTestingGroupsParams): Promise<Responses.AppsGetTestingGroupsResponse>;
+    isNotificationsAllowed(params: Params.AppsIsNotificationsAllowedParams): Promise<Responses.AppsIsNotificationsAllowedResponse>;
+    promoHasActiveGift(params: Params.AppsPromoHasActiveGiftParams): Promise<Responses.BaseBoolResponse>;
+    promoUseGift(params: Params.AppsPromoUseGiftParams): Promise<Responses.BaseBoolResponse>;
+    removeTestingGroup(params: Params.AppsRemoveTestingGroupParams): Promise<Responses.BaseBoolResponse>;
+    removeUsersFromTestingGroups(params: Params.AppsRemoveUsersFromTestingGroupsParams): Promise<Responses.BaseBoolResponse>;
+    /**
+     * Sends a request to another user in an app that uses VK authorization.
+     */
+    sendRequest(params: Params.AppsSendRequestParams): Promise<Responses.AppsSendRequestResponse>;
+    updateMetaForTestingGroup(params: Params.AppsUpdateMetaForTestingGroupParams): Promise<Responses.AppsCreatedGroupResponse>;
 }
 
 /**
@@ -279,47 +338,21 @@ export interface APIAppWidgets {
 }
 
 /**
- * The API apps group
+ * The API asr group
  */
-export interface APIApps {
+export interface APIAsr {
     /**
-     * Deletes all request notifications from the current app.
+     * Returns status of the task with provided `task_id`
      */
-    deleteAppRequests(params: Params.AppsDeleteAppRequestsParams): Promise<Responses.BaseOkResponse>;
+    checkStatus(params: Params.AsrCheckStatusParams): Promise<Responses.AsrCheckStatusResponse>;
     /**
-     * Returns applications data.
+     * Returns the server address to [vk.com/dev/upload_files_2|upload audio files].
      */
-    get(params: Params.AppsGetParams): Promise<Responses.AppsGetResponse>;
+    getUploadUrl(params: Params.AsrGetUploadUrlParams): Promise<Responses.BaseGetUploadServerResponse>;
     /**
-     * Returns a list of applications (apps) available to users in the App Catalog.
+     * Starts ASR task on [vk.com/dev/upload_files_2|uploaded audio file].
      */
-    getCatalog(params: Params.AppsGetCatalogParams): Promise<Responses.AppsGetCatalogResponse>;
-    /**
-     * Creates friends list for requests and invites in current app.
-     */
-    getFriendsList(params: Params.AppsGetFriendsListParams): Promise<Responses.AppsGetFriendsListResponse>;
-    /**
-     * Returns players rating in the game.
-     */
-    getLeaderboard(params: Params.AppsGetLeaderboardParams): Promise<Responses.AppsGetLeaderboardResponse>;
-    /**
-     * Returns policies and terms given to a mini app.
-     */
-    getMiniAppPolicies(params: Params.AppsGetMiniAppPoliciesParams): Promise<Responses.AppsGetMiniAppPoliciesResponse>;
-    /**
-     * Returns scopes for auth
-     */
-    getScopes(params: Params.AppsGetScopesParams): Promise<Responses.AppsGetScopesResponse>;
-    /**
-     * Returns user score in app
-     */
-    getScore(params: Params.AppsGetScoreParams): Promise<Responses.AppsGetScoreResponse>;
-    promoHasActiveGift(params: Params.AppsPromoHasActiveGiftParams): Promise<Responses.BaseBoolResponse>;
-    promoUseGift(params: Params.AppsPromoUseGiftParams): Promise<Responses.BaseBoolResponse>;
-    /**
-     * Sends a request to another user in an app that uses VK authorization.
-     */
-    sendRequest(params: Params.AppsSendRequestParams): Promise<Responses.AppsSendRequestResponse>;
+    process(params: Params.AsrProcessParams): Promise<Responses.AsrProcessResponse>;
 }
 
 /**
@@ -391,6 +424,36 @@ export interface APIBoard {
 }
 
 /**
+ * The API bugtracker group
+ */
+export interface APIBugtracker {
+    addCompanyGroupsMembers(params: Params.BugtrackerAddCompanyGroupsMembersParams): Promise<Responses.BugtrackerAddCompanyGroupsMembersResponse>;
+    addCompanyMembers(params: Params.BugtrackerAddCompanyMembersParams): Promise<Responses.BugtrackerAddCompanyMembersResponse>;
+    changeBugreportStatus(params: Params.BugtrackerChangeBugreportStatusParams): Promise<Responses.BaseBoolResponse>;
+    /**
+     * Creates the comment to bugreport
+     */
+    createComment(params: Params.BugtrackerCreateCommentParams): Promise<Responses.BugtrackerCreateCommentResponse>;
+    getCompanyGroupMembers(params: Params.BugtrackerGetCompanyGroupMembersParams): Promise<Responses.BugtrackerGetCompanyGroupMembersResponse>;
+    getCompanyMembers(params: Params.BugtrackerGetCompanyMembersParams): Promise<Responses.BugtrackerGetCompanyMembersResponse>;
+    getDownloadVersionUrl(params: Params.BugtrackerGetDownloadVersionUrlParams): Promise<Responses.BugtrackerGetDownloadVersionUrlResponse>;
+    getProductBuildUploadServer(params: Params.BugtrackerGetProductBuildUploadServerParams): Promise<Responses.BaseGetUploadServerResponse>;
+    removeCompanyGroupMember(params: Params.BugtrackerRemoveCompanyGroupMemberParams): Promise<Responses.BaseOkResponse>;
+    removeCompanyMember(params: Params.BugtrackerRemoveCompanyMemberParams): Promise<Responses.BaseOkResponse>;
+    saveProductVersion(params: Params.BugtrackerSaveProductVersionParams): Promise<Responses.BaseOkResponse>;
+    setCompanyMemberRole(params: Params.BugtrackerSetCompanyMemberRoleParams): Promise<Responses.BaseOkResponse>;
+    setProductIsOver(params: Params.BugtrackerSetProductIsOverParams): Promise<Responses.BaseOkResponse>;
+}
+
+/**
+ * The API calls group
+ */
+export interface APICalls {
+    forceFinish(params: Params.CallsForceFinishParams): Promise<Responses.BaseOkResponse>;
+    start(params: Params.CallsStartParams): Promise<Responses.CallsStartResponse>;
+}
+
+/**
  * The API database group
  */
 export interface APIDatabase {
@@ -433,7 +496,7 @@ export interface APIDatabase {
     /**
      * Returns a list of school classes specified for the country.
      */
-    getSchoolClasses(params: Params.DatabaseGetSchoolClassesParams): Promise<Responses.DatabaseGetSchoolClassesResponse>;
+    getSchoolClasses(params: Params.DatabaseGetSchoolClassesParams): Promise<Responses.DatabaseGetSchoolClassesNewResponse>;
     /**
      * Returns a list of schools.
      */
@@ -638,7 +701,7 @@ export interface APIGifts {
 }
 
 /**
- * The API groups
+ * The API groups group
  */
 export interface APIGroups {
     addAddress(params: Params.GroupsAddAddressParams): Promise<Responses.GroupsAddAddressResponse>;
@@ -693,7 +756,7 @@ export interface APIGroups {
     /**
      * Returns information about communities by their IDs.
      */
-    getById(params: Params.GroupsGetByIdParams): Promise<Responses.GroupsGetByIdObjectLegacyResponse>;
+    getById(params: Params.GroupsGetByIdParams): Promise<Responses.GroupsGetByIdObjectResponse>;
     /**
      * Returns Callback API confirmation code for the community.
      */
@@ -703,10 +766,6 @@ export interface APIGroups {
      * Returns [vk.com/dev/callback_api|Callback API] notifications settings.
      */
     getCallbackSettings(params: Params.GroupsGetCallbackSettingsParams): Promise<Responses.GroupsGetCallbackSettingsResponse>;
-    /**
-     * Returns communities list for a catalog category.
-     */
-    getCatalog(params: Params.GroupsGetCatalogParams): Promise<Responses.GroupsGetCatalogResponse>;
     /**
      * Returns categories list for communities catalog
      */
@@ -731,6 +790,7 @@ export interface APIGroups {
      * Returns a list of community members.
      */
     getMembers(params: Params.GroupsGetMembersParams): Promise<Responses.GroupsGetMembersResponse>;
+    getOnlineStatus(params: Params.GroupsGetOnlineStatusParams): Promise<Responses.GroupsGetOnlineStatusResponse>;
     /**
      * Returns a list of requests to the community.
      */
@@ -751,7 +811,7 @@ export interface APIGroups {
     /**
      * Returns information specifying whether a user is a member of a community.
      */
-    isMember(params: Params.GroupsIsMemberParams): Promise<Responses.GroupsIsMemberResponse>;
+    isMember(params: Params.GroupsIsMemberParams): Promise<Responses.BaseBoolResponse>;
     /**
      * With this method you can join the group or public page, and also confirm your participation in an event.
      */
@@ -871,7 +931,7 @@ export interface APIMarket {
     /**
      * Deletes an item's comment
      */
-    deleteComment(params: Params.MarketDeleteCommentParams): Promise<Responses.MarketDeleteCommentResponse>;
+    deleteComment(params: Params.MarketDeleteCommentParams): Promise<Responses.BaseBoolResponse>;
     /**
      * Edits an item.
      */
@@ -888,6 +948,10 @@ export interface APIMarket {
      * Edit order
      */
     editOrder(params: Params.MarketEditOrderParams): Promise<Responses.BaseOkResponse>;
+    /**
+     * Returns a filter list of market categories.
+     */
+    filterCategories(params: Params.MarketFilterCategoriesParams): Promise<Responses.MarketGetCategoriesNewResponse>;
     /**
      * Returns items list for a community.
      */
@@ -907,7 +971,7 @@ export interface APIMarket {
     /**
      * Returns a list of market categories.
      */
-    getCategories(params: Params.MarketGetCategoriesParams): Promise<Responses.MarketGetCategoriesResponse>;
+    getCategories(params: Params.MarketGetCategoriesParams): Promise<Responses.MarketGetCategoriesNewResponse>;
     /**
      * Returns comments list for an item.
      */
@@ -952,12 +1016,13 @@ export interface APIMarket {
     /**
      * Restores a recently deleted comment
      */
-    restoreComment(params: Params.MarketRestoreCommentParams): Promise<Responses.MarketRestoreCommentResponse>;
+    restoreComment(params: Params.MarketRestoreCommentParams): Promise<Responses.BaseBoolResponse>;
     /**
      * Searches market items in a community's catalog
      */
     search(params: Params.MarketSearchParams): Promise<Responses.MarketSearchResponse>;
     searchItems(params: Params.MarketSearchItemsParams): Promise<Responses.MarketSearchResponse>;
+    searchItemsBasic(params: Params.MarketSearchItemsBasicParams): Promise<Responses.MarketSearchBasicResponse>;
 }
 
 /**
@@ -969,17 +1034,21 @@ export interface APIMessages {
      */
     addChatUser(params: Params.MessagesAddChatUserParams): Promise<Responses.BaseOkResponse>;
     /**
+     * Adds new users to a chat.
+     */
+    addChatUsers(params: Params.MessagesAddChatUsersParams): Promise<Responses.MessagesAddChatUsersResponse>;
+    /**
      * Allows sending messages from community to the current user.
      */
     allowMessagesFromGroup(params: Params.MessagesAllowMessagesFromGroupParams): Promise<Responses.BaseOkResponse>;
     /**
      * Creates a chat with several participants.
      */
-    createChat(params: Params.MessagesCreateChatParams): Promise<Responses.MessagesCreateChatResponse>;
+    createChat(params: Params.MessagesCreateChatParams): Promise<Responses.MessagesCreateChatWithPeerIdsResponse>;
     /**
      * Deletes one or more messages.
      */
-    delete(params: Params.MessagesDeleteParams): Promise<Responses.MessagesDeleteResponse>;
+    delete(params: Params.MessagesDeleteParams): Promise<Responses.MessagesDeleteFullResponse>;
     /**
      * Deletes a chat's cover picture.
      */
@@ -989,13 +1058,17 @@ export interface APIMessages {
      */
     deleteConversation(params: Params.MessagesDeleteConversationParams): Promise<Responses.MessagesDeleteConversationResponse>;
     /**
+     * Delete message reaction
+     */
+    deleteReaction(params: Params.MessagesDeleteReactionParams): Promise<Responses.BaseBoolResponse>;
+    /**
      * Denies sending message from community to the current user.
      */
     denyMessagesFromGroup(params: Params.MessagesDenyMessagesFromGroupParams): Promise<Responses.BaseOkResponse>;
     /**
      * Edits the message.
      */
-    edit(params: Params.MessagesEditParams): Promise<Responses.MessagesEditResponse>;
+    edit(params: Params.MessagesEditParams): Promise<Responses.BaseBoolResponse>;
     /**
      * Edits the title of a chat.
      */
@@ -1008,6 +1081,10 @@ export interface APIMessages {
      * Returns messages by their IDs.
      */
     getById(params: Params.MessagesGetByIdParams): Promise<Responses.MessagesGetByIdResponse>;
+    /**
+     * Returns information about a chat.
+     */
+    getChat(params: Params.MessagesGetChatParams): Promise<Responses.MessagesGetChatResponse>;
     getChatPreview(params: Params.MessagesGetChatPreviewParams): Promise<Responses.MessagesGetChatPreviewResponse>;
     /**
      * Returns a list of IDs of users participating in a chat.
@@ -1048,6 +1125,18 @@ export interface APIMessages {
      */
     getLongPollServer(params: Params.MessagesGetLongPollServerParams): Promise<Responses.MessagesGetLongPollServerResponse>;
     /**
+     * Get reaction counters for message
+     */
+    getMessagesReactions(params: Params.MessagesGetMessagesReactionsParams): Promise<Responses.MessagesGetMessagesReactionsResponse>;
+    /**
+     * Get reacted users and counters for message
+     */
+    getReactedPeers(params: Params.MessagesGetReactedPeersParams): Promise<Responses.MessagesGetReactedPeersResponse>;
+    /**
+     * Get assets to display message reactions
+     */
+    getReactionsAssets(params: Params.MessagesGetReactionsAssetsParams): Promise<Responses.MessagesGetReactionsAssetsResponse>;
+    /**
      * Returns information whether sending messages from the community to current user is allowed.
      */
     isMessagesFromGroupAllowed(params: Params.MessagesIsMessagesFromGroupAllowedParams): Promise<Responses.MessagesIsMessagesFromGroupAllowedResponse>;
@@ -1059,7 +1148,7 @@ export interface APIMessages {
     /**
      * Marks and unmarks messages as important (starred).
      */
-    markAsImportant(params: Params.MessagesMarkAsImportantParams): Promise<Responses.MessagesMarkAsImportantResponse>;
+    markAsImportant(params: Params.MessagesMarkAsImportantParams): Promise<Responses.MessagesMarkAsImportantDeprecatedResponse>;
     /**
      * Marks and unmarks conversations as important.
      */
@@ -1068,6 +1157,10 @@ export interface APIMessages {
      * Marks messages as read.
      */
     markAsRead(params: Params.MessagesMarkAsReadParams): Promise<Responses.BaseOkResponse>;
+    /**
+     * Mark messages reactions as read
+     */
+    markReactionsAsRead(params: Params.MessagesMarkReactionsAsReadParams): Promise<Responses.BaseBoolResponse>;
     /**
      * Pin a message.
      */
@@ -1091,8 +1184,12 @@ export interface APIMessages {
     /**
      * Sends a message.
      */
-    send(params: Params.MessagesSendParams): Promise<Responses.MessagesSendResponse>;
+    send(params: Params.MessagesSendParams): Promise<Responses.MessagesSendUserIdsResponse>;
     sendMessageEventAnswer(params: Params.MessagesSendMessageEventAnswerParams): Promise<Responses.BaseOkResponse>;
+    /**
+     * Send message reaction
+     */
+    sendReaction(params: Params.MessagesSendReactionParams): Promise<Responses.BaseBoolResponse>;
     /**
      * Changes the status of a user as typing in a conversation.
      */
@@ -1111,7 +1208,7 @@ export interface APINewsfeed {
     /**
      * Prevents news from specified users and communities from appearing in the current user's newsfeed.
      */
-    addBan(params: Params.NewsfeedAddBanParams): Promise<Responses.BaseOkResponse>;
+    addBan(params: Params.NewsfeedAddBanParams): Promise<Responses.BaseBoolResponse>;
     /**
      * Allows news from previously banned users and communities to be shown in the current user's newsfeed.
      */
@@ -1138,7 +1235,7 @@ export interface APINewsfeed {
      */
     getMentions(params: Params.NewsfeedGetMentionsParams): Promise<Responses.NewsfeedGetMentionsResponse>;
     /**
-     * Returns a list of newsfeeds recommended to the current user.
+     * , Returns a list of newsfeeds recommended to the current user.
      */
     getRecommended(params: Params.NewsfeedGetRecommendedParams): Promise<Responses.NewsfeedGenericResponse>;
     /**
@@ -1148,7 +1245,7 @@ export interface APINewsfeed {
     /**
      * Hides an item from the newsfeed.
      */
-    ignoreItem(params: Params.NewsfeedIgnoreItemParams): Promise<Responses.BaseOkResponse>;
+    ignoreItem(params: Params.NewsfeedIgnoreItemParams): Promise<Responses.NewsfeedIgnoreItemResponse>;
     /**
      * Creates and edits user newsfeed lists
      */
@@ -1224,7 +1321,7 @@ export interface APINotifications {
     /**
      * Resets the counter of new notifications about other users' feedback to the current user's wall posts.
      */
-    markAsViewed(params: Params.NotificationsMarkAsViewedParams): Promise<Responses.NotificationsMarkAsViewedResponse>;
+    markAsViewed(params: Params.NotificationsMarkAsViewedParams): Promise<Responses.BaseBoolResponse>;
     sendMessage(params: Params.NotificationsSendMessageParams): Promise<Responses.NotificationsSendMessageResponse>;
 }
 
@@ -1232,7 +1329,7 @@ export interface APINotifications {
  * The API orders group
  */
 export interface APIOrders {
-    cancelSubscription(params: Params.OrdersCancelSubscriptionParams): Promise<Responses.OrdersCancelSubscriptionResponse>;
+    cancelSubscription(params: Params.OrdersCancelSubscriptionParams): Promise<Responses.BaseBoolResponse>;
     /**
      * Changes order status.
      */
@@ -1248,7 +1345,7 @@ export interface APIOrders {
     getById(params: Params.OrdersGetByIdParams): Promise<Responses.OrdersGetByIdResponse>;
     getUserSubscriptionById(params: Params.OrdersGetUserSubscriptionByIdParams): Promise<Responses.OrdersGetUserSubscriptionByIdResponse>;
     getUserSubscriptions(params: Params.OrdersGetUserSubscriptionsParams): Promise<Responses.OrdersGetUserSubscriptionsResponse>;
-    updateSubscription(params: Params.OrdersUpdateSubscriptionParams): Promise<Responses.OrdersUpdateSubscriptionResponse>;
+    updateSubscription(params: Params.OrdersUpdateSubscriptionParams): Promise<Responses.BaseBoolResponse>;
 }
 
 /**
@@ -1320,7 +1417,7 @@ export interface APIPhotos {
     /**
      * Deletes a comment on the photo.
      */
-    deleteComment(params: Params.PhotosDeleteCommentParams): Promise<Responses.PhotosDeleteCommentResponse>;
+    deleteComment(params: Params.PhotosDeleteCommentParams): Promise<Responses.BaseBoolResponse>;
     /**
      * Edits the caption of a photo.
      */
@@ -1444,7 +1541,7 @@ export interface APIPhotos {
     /**
      * Restores a deleted comment on a photo.
      */
-    restoreComment(params: Params.PhotosRestoreCommentParams): Promise<Responses.PhotosRestoreCommentResponse>;
+    restoreComment(params: Params.PhotosRestoreCommentParams): Promise<Responses.BaseBoolResponse>;
     /**
      * Saves photos after successful uploading.
      */
@@ -1493,7 +1590,7 @@ export interface APIPolls {
     /**
      * Adds the current user's vote to the selected answer in the poll.
      */
-    addVote(params: Params.PollsAddVoteParams): Promise<Responses.PollsAddVoteResponse>;
+    addVote(params: Params.PollsAddVoteParams): Promise<Responses.BaseBoolResponse>;
     /**
      * Creates polls that can be attached to the users' or communities' posts.
      */
@@ -1501,7 +1598,7 @@ export interface APIPolls {
     /**
      * Deletes the current user's vote from the selected answer in the poll.
      */
-    deleteVote(params: Params.PollsDeleteVoteParams): Promise<Responses.PollsDeleteVoteResponse>;
+    deleteVote(params: Params.PollsDeleteVoteParams): Promise<Responses.BaseBoolResponse>;
     /**
      * Edits created polls
      */
@@ -1675,6 +1772,7 @@ export interface APIStories {
      * Returns story by its ID.
      */
     getById(params: Params.StoriesGetByIdParams): Promise<Responses.StoriesGetByIdExtendedResponse>;
+    getDetailedStats(params: Params.StoriesGetDetailedStatsParams): Promise<Responses.StoriesGetStatsV5200Response>;
     /**
      * Returns URL for uploading a story with photo.
      */
@@ -1720,6 +1818,9 @@ export interface APIStreaming {
      * Allows to receive data for the connection to Streaming API.
      */
     getServerUrl(params: Params.StreamingGetServerUrlParams): Promise<Responses.StreamingGetServerUrlResponse>;
+    getSettings(params: Params.StreamingGetSettingsParams): Promise<Responses.StreamingGetSettingsResponse>;
+    getStats(params: Params.StreamingGetStatsParams): Promise<Responses.StreamingGetStatsResponse>;
+    getStem(params: Params.StreamingGetStemParams): Promise<Responses.StreamingGetStemResponse>;
     setSettings(params: Params.StreamingSetSettingsParams): Promise<Responses.BaseOkResponse>;
 }
 
@@ -1740,7 +1841,7 @@ export interface APIUsers {
      */
     getSubscriptions(params: Params.UsersGetSubscriptionsParams): Promise<Responses.UsersGetSubscriptionsResponse>;
     /**
-     * Reports (submits a complaint about) a user.
+     * Reports (submits a complain about) a user.
      */
     report(params: Params.UsersReportParams): Promise<Responses.BaseOkResponse>;
     /**
@@ -1815,7 +1916,7 @@ export interface APIVideo {
     /**
      * Edits information about a video on a user or community page.
      */
-    edit(params: Params.VideoEditParams): Promise<Responses.BaseOkResponse>;
+    edit(params: Params.VideoEditParams): Promise<Responses.VideoEditResponse>;
     /**
      * Edits the title of a video album.
      */
@@ -1841,6 +1942,8 @@ export interface APIVideo {
      * Returns a list of comments on a video.
      */
     getComments(params: Params.VideoGetCommentsParams): Promise<Responses.VideoGetCommentsResponse>;
+    getLongPollServer(params: Params.VideoGetLongPollServerParams): Promise<Responses.VideoGetLongPollServerResponse>;
+    liveGetCategories(params: Params.VideoLiveGetCategoriesParams): Promise<Responses.VideoLiveGetCategoriesResponse>;
     removeFromAlbum(params: Params.VideoRemoveFromAlbumParams): Promise<Responses.BaseOkResponse>;
     /**
      * Reorders the album in the list of user video albums.
@@ -1865,7 +1968,7 @@ export interface APIVideo {
     /**
      * Restores a previously deleted comment on a video.
      */
-    restoreComment(params: Params.VideoRestoreCommentParams): Promise<Responses.VideoRestoreCommentResponse>;
+    restoreComment(params: Params.VideoRestoreCommentParams): Promise<Responses.BaseBoolResponse>;
     /**
      * Returns a server address (required for upload) and video data.
      */
@@ -1874,6 +1977,12 @@ export interface APIVideo {
      * Returns a list of videos under the set search criterion.
      */
     search(params: Params.VideoSearchParams): Promise<Responses.VideoSearchResponse>;
+    startStreaming(params: Params.VideoStartStreamingParams): Promise<Responses.VideoStartStreamingResponse>;
+    stopStreaming(params: Params.VideoStopStreamingParams): Promise<Responses.VideoStopStreamingResponse>;
+    /**
+     * Unpin comment of a video.
+     */
+    unpinComment(params: Params.VideoUnpinCommentParams): Promise<Responses.BaseOkResponse>;
 }
 
 /**
@@ -1913,7 +2022,7 @@ export interface APIWall {
     /**
      * Returns a list of posts from user or community walls by their IDs.
      */
-    getById(params: Params.WallGetByIdParams): Promise<Responses.WallGetByIdLegacyResponse>;
+    getById(params: Params.WallGetByIdParams): Promise<Responses.WallGetByIdResponse>;
     /**
      * Returns a comment on a post on a user wall or community wall.
      */
@@ -1997,13 +2106,17 @@ export interface APIMethods {
      */
     adsweb: APIAdsweb;
     /**
+     * The API apps group
+     */
+    apps: APIApps;
+    /**
      * The API appWidgets group
      */
     appWidgets: APIAppWidgets;
     /**
-     * The API apps group
+     * The API asr group
      */
-    apps: APIApps;
+    asr: APIAsr;
     /**
      * The API auth group
      */
@@ -2012,6 +2125,14 @@ export interface APIMethods {
      * The API board group
      */
     board: APIBoard;
+    /**
+     * The API bugtracker group
+     */
+    bugtracker: APIBugtracker;
+    /**
+     * The API calls group
+     */
+    calls: APICalls;
     /**
      * The API database group
      */
@@ -2041,7 +2162,7 @@ export interface APIMethods {
      */
     gifts: APIGifts;
     /**
-     * The API groups
+     * The API groups group
      */
     groups: APIGroups;
     /**
