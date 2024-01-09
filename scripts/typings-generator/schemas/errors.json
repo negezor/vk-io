@@ -1,5 +1,9 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$schema": "schema-errors.json",
+  "version": "5.199",
+  "title": "VK API JSON Schema - errors",
+  "description": "Contains JSON Schema documents explaining the VK.COM API - errors",
+  "termsOfService": "https://dev.vk.com/rules",
   "definitions": {
     "subcodes": {
       "too_many_communities": {
@@ -10,6 +14,12 @@
       },
       "service_uuid_link_with_another_user": {
         "subcode": 1001
+      },
+      "method_permission_denied": {
+        "subcode": 1133
+      },
+      "app_type_permission_denied": {
+        "subcode": 1134
       }
     }
   },
@@ -83,7 +93,8 @@
     },
     "api_error_runtime": {
       "code": 13,
-      "description": "Runtime error occurred during code invocation"
+      "description": "Runtime error occurred during code invocation",
+      "global": true
     },
     "api_error_captcha": {
       "code": 14,
@@ -93,7 +104,15 @@
     "api_error_access": {
       "code": 15,
       "description": "Access denied",
-      "global": true
+      "global": true,
+      "subcodes": [
+        {
+          "$ref": "#/definitions/subcodes/method_permission_denied"
+        },
+        {
+          "$ref": "#/definitions/subcodes/app_type_permission_denied"
+        }
+      ]
     },
     "api_error_auth_https": {
       "code": 16,
@@ -163,6 +182,10 @@
       "description": "This profile is private",
       "global": true
     },
+    "api_error_wait": {
+      "code": 32,
+      "description": "Need wait"
+    },
     "api_error_not_implemented_yet": {
       "code": 33,
       "description": "Not implemented yet",
@@ -209,6 +232,11 @@
     "api_error_ip_is_not_allowed": {
       "code": 42,
       "description": "IP is not allowed",
+      "global": true
+    },
+    "api_error_section_disabled": {
+      "code": 43,
+      "description": "This section is temporary unavailable",
       "global": true
     },
     "api_error_param": {
@@ -467,6 +495,34 @@
       "code": 629,
       "description": "Object deleted"
     },
+    "api_error_ads_lookalike_request_already_in_progress": {
+      "code": 630,
+      "description": "Lookalike request with same source already in progress"
+    },
+    "api_error_ads_lookalike_request_max_count_per_day_reached": {
+      "code": 631,
+      "description": "Max count of lookalike requests per day reached"
+    },
+    "api_error_ads_lookalike_request_audience_too_small": {
+      "code": 632,
+      "description": "Given audience is too small"
+    },
+    "api_error_ads_lookalike_request_audience_too_large": {
+      "code": 633,
+      "description": "Given audience is too large"
+    },
+    "api_error_ads_lookalike_request_export_already_in_progress": {
+      "code": 634,
+      "description": "Lookalike request audience save already in progress"
+    },
+    "api_error_ads_lookalike_request_export_max_count_per_day_reached": {
+      "code": 635,
+      "description": "Max count of lookalike request audience saves per day reached"
+    },
+    "api_error_ads_lookalike_request_export_retargeting_group_limit": {
+      "code": 636,
+      "description": "Max count of retargeting groups reached"
+    },
     "api_error_group_change_creator": {
       "code": 700,
       "description": "Cannot edit creator role"
@@ -567,6 +623,10 @@
       "code": 921,
       "description": "Can't forward these messages"
     },
+    "api_error_messages_chat_user_left": {
+      "code": 922,
+      "description": "You left this chat"
+    },
     "api_error_messages_cant_delete_for_all": {
       "code": 924,
       "description": "Can't delete this message for everybody"
@@ -647,6 +707,18 @@
       "code": 970,
       "description": "Cannot pin an expiring message"
     },
+    "api_error_messages_invalid_reaction_id": {
+      "code": 1009,
+      "description": "Unknown reaction passed"
+    },
+    "api_error_messages_forbidden_reaction": {
+      "code": 1010,
+      "description": "This reaction has been disabled"
+    },
+    "api_error_messages_reactions_limit_reached": {
+      "code": 1011,
+      "description": "Reactions limit for this message has been reached"
+    },
     "api_error_auth_flood_error": {
       "code": 1105,
       "description": "Too many auth attempts, try again later"
@@ -660,6 +732,25 @@
       "code": 1116,
       "description": "Anonymous token is invalid",
       "global": true
+    },
+    "api_error_auth_access_token_has_expired": {
+      "code": 1117,
+      "description": "Access token has expired",
+      "global": true
+    },
+    "api_error_auth_anonymous_token_ip_mismatch": {
+      "code": 1118,
+      "description": "Anonymous token ip mismatch",
+      "global": true
+    },
+    "api_error_passkey_registration": {
+      "code": 1119,
+      "description": "Passkey registration error",
+      "global": true
+    },
+    "api_error_passkey_login": {
+      "code": 1120,
+      "description": "Passkey login error"
     },
     "api_error_param_doc_id": {
       "code": 1150,
@@ -700,14 +791,6 @@
     "api_error_invalid_address": {
       "code": 1260,
       "description": "Invalid screen name"
-    },
-    "api_error_communities_catalog_disabled": {
-      "code": 1310,
-      "description": "Catalog is not available for this user"
-    },
-    "api_error_communities_categories_disabled": {
-      "code": 1311,
-      "description": "Catalog categories are not available for this user"
     },
     "api_error_market_restore_too_late": {
       "code": 1400,
@@ -813,6 +896,10 @@
       "code": 1446,
       "description": "Main album can not be hidden"
     },
+    "api_error_market_orders_invalid_status": {
+      "code": 1456,
+      "description": "Order status is invalid"
+    },
     "api_error_story_expired": {
       "code": 1600,
       "description": "Story has already expired"
@@ -901,6 +988,32 @@
     "api_error_fave_aliexpress_tag": {
       "code": 3800,
       "description": "Can't set AliExpress tag to this type of object"
+    },
+    "api_error_asr_audio_duration_flooded": {
+      "code": 7701,
+      "description": "Total audio duration limit reached"
+    },
+    "api_error_asr_file_is_too_big": {
+      "code": 7702,
+      "description": "Audio file is too big"
+    },
+    "api_error_asr_invalid_hash": {
+      "code": 7703,
+      "description": "Invalid hash"
+    },
+    "api_error_asr_not_found": {
+      "code": 7704,
+      "description": "Task not found"
+    },
+    "api_error_not_supported_http_method": {
+      "code": 9999,
+      "description": "Not supported http method",
+      "global": true
+    },
+    "api_error_cua_confirmation_required": {
+      "code": 11500,
+      "description": "CheckUserAction confirmation required",
+      "global": true
     }
   }
 }

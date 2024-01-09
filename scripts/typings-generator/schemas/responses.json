@@ -1,6 +1,9 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema",
-  "title": "responses",
+  "$schema": "schema.json",
+  "version": "5.199",
+  "title": "VK API JSON Schema - responses",
+  "description": "Contains JSON Schema documents explaining the VK.COM API - responses",
+  "termsOfService": "https://dev.vk.com/rules",
   "definitions": {
     "account_changePassword_response": {
       "type": "object",
@@ -164,8 +167,11 @@
       "type": "object",
       "properties": {
         "response": {
-          "type": "boolean",
-          "description": "true if success",
+          "type": "array",
+          "items": {
+            "type": "boolean",
+            "description": "true if success"
+          },
           "required": true
         }
       },
@@ -213,9 +219,25 @@
         "response": {
           "type": "array",
           "items": {
-            "type": "integer",
-            "description": "Client ID"
+            "$ref": "objects.json#/definitions/ads_create_clients_status"
           },
+          "required": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "ads_createLookalikeRequest_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "request_id": {
+              "type": "integer",
+              "description": "Request ID"
+            }
+          },
+          "additionalProperties": false,
           "required": true
         }
       },
@@ -230,6 +252,27 @@
             "id": {
               "type": "integer",
               "description": "Group ID"
+            },
+            "pixel": {
+              "type": "string",
+              "description": "Pixel code"
+            }
+          },
+          "additionalProperties": false,
+          "required": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "ads_createTargetPixel_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "description": "Pixel ID"
             },
             "pixel": {
               "type": "string",
@@ -340,7 +383,7 @@
       "type": "object",
       "properties": {
         "response": {
-          "type": "integer",
+          "type": "string",
           "description": "Budget",
           "required": true
         }
@@ -585,6 +628,19 @@
       },
       "additionalProperties": false
     },
+    "ads_getTargetPixels_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "array",
+          "items": {
+            "$ref": "objects.json#/definitions/ads_target_pixel_info"
+          },
+          "required": true
+        }
+      },
+      "additionalProperties": false
+    },
     "ads_getTargetingStats_response": {
       "type": "object",
       "properties": {
@@ -632,8 +688,76 @@
       "type": "object",
       "properties": {
         "response": {
-          "type": "boolean",
-          "description": "true if success",
+          "type": "array",
+          "items": {
+            "type": "boolean",
+            "description": "true if success"
+          },
+          "required": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "ads_removeTargetContacts_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "result": {
+              "type": "integer",
+              "description": "Operation result",
+              "required": true,
+              "enum": [
+                1
+              ],
+              "enumNames": [
+                "ok"
+              ]
+            }
+          },
+          "additionalProperties": false,
+          "required": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "ads_saveLookalikeRequestResult_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "retargeting_group_id": {
+              "type": "integer",
+              "description": "Retargeting group ID",
+              "required": true
+            },
+            "audience_count": {
+              "type": "integer",
+              "description": "Audience count",
+              "required": true
+            }
+          },
+          "additionalProperties": false,
+          "required": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "ads_shareTargetGroup_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "description": "Group ID",
+              "required": true
+            }
+          },
+          "additionalProperties": false,
           "required": true
         }
       },
@@ -645,8 +769,7 @@
         "response": {
           "type": "array",
           "items": {
-            "type": "integer",
-            "description": "Ad ID"
+            "$ref": "objects.json#/definitions/ads_update_ads_status"
           },
           "required": true
         }
@@ -657,8 +780,10 @@
       "type": "object",
       "properties": {
         "response": {
-          "type": "integer",
-          "description": "Campaign ID",
+          "type": "array",
+          "items": {
+            "$ref": "objects.json#/definitions/ads_create_campaign_status"
+          },
           "required": true
         }
       },
@@ -668,8 +793,10 @@
       "type": "object",
       "properties": {
         "response": {
-          "type": "integer",
-          "description": "Client ID",
+          "type": "array",
+          "items": {
+            "$ref": "objects.json#/definitions/ads_update_clients_status"
+          },
           "required": true
         }
       },
@@ -817,6 +944,326 @@
       },
       "additionalProperties": false
     },
+    "apps_created_group_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "group_id": {
+              "type": "integer",
+              "format": "int64",
+              "minimum": 1,
+              "maximum": 25,
+              "entity": "groups",
+              "required": true
+            }
+          },
+          "additionalProperties": false,
+          "required": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "apps_getCatalog_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "$ref": "objects.json#/definitions/apps_catalog_list",
+          "required": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "apps_getFriendsList_extended_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": "integer",
+              "description": "Total number",
+              "required": true
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/users_user_full"
+              },
+              "required": true
+            }
+          },
+          "additionalProperties": false,
+          "required": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "apps_getFriendsList_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": "integer",
+              "description": "Total number",
+              "required": true
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "format": "int64",
+                "entity": "owner"
+              },
+              "required": true
+            }
+          },
+          "additionalProperties": false,
+          "required": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "apps_getLeaderboard_extended_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": "integer",
+              "description": "Total number",
+              "required": true
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/apps_leaderboard"
+              },
+              "required": true
+            },
+            "profiles": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/users_user"
+              }
+            }
+          },
+          "additionalProperties": false,
+          "required": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "apps_getLeaderboard_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": "integer",
+              "description": "Total number",
+              "required": true
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/apps_leaderboard"
+              },
+              "required": true
+            }
+          },
+          "additionalProperties": false,
+          "required": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "apps_getMiniAppPolicies_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "privacy_policy": {
+              "type": "string",
+              "format": "uri",
+              "description": "URL of the app's privacy policy"
+            },
+            "terms": {
+              "type": "string",
+              "format": "uri",
+              "description": "URL of the app's terms"
+            }
+          },
+          "additionalProperties": false,
+          "required": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "apps_getScopes_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": "integer",
+              "description": "Total number",
+              "required": true
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/apps_scope"
+              },
+              "required": true
+            }
+          },
+          "additionalProperties": false,
+          "required": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "apps_getScore_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "integer",
+          "description": "Score number",
+          "required": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "apps_getTestingGroups_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "array",
+          "items": {
+            "$ref": "objects.json#/definitions/apps_testing_group"
+          },
+          "required": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "apps_get_last_uploaded_version_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "version": {
+              "type": "string",
+              "description": "Last uploaded version",
+              "required": true
+            }
+          },
+          "additionalProperties": false,
+          "required": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "apps_get_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": "integer",
+              "description": "Total number of applications",
+              "minimum": 0,
+              "required": true
+            },
+            "items": {
+              "type": "array",
+              "description": "List of applications",
+              "items": {
+                "$ref": "objects.json#/definitions/apps_app"
+              },
+              "required": true
+            },
+            "profiles": {
+              "type": "array",
+              "description": "List of friends profiles, used only when return_friends=true",
+              "items": {
+                "$ref": "objects.json#/definitions/users_user_full"
+              }
+            },
+            "groups": {
+              "type": "array",
+              "description": "List of groups, used only when extended=true",
+              "items": {
+                "$ref": "objects.json#/definitions/groups_group_full"
+              }
+            }
+          },
+          "additionalProperties": false,
+          "required": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "apps_image_upload_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "hash": {
+              "type": "string",
+              "description": "Uploading hash"
+            },
+            "image": {
+              "type": "string",
+              "description": "Uploaded photo data"
+            }
+          },
+          "additionalProperties": false,
+          "required": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "apps_isNotificationsAllowed_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "is_allowed": {
+              "description": "Whether notifications are allowed for current user from concrete app or not",
+              "type": "boolean",
+              "required": true
+            }
+          },
+          "additionalProperties": false,
+          "required": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "apps_sendRequest_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "integer",
+          "description": "Request ID",
+          "required": true
+        }
+      },
+      "additionalProperties": false
+    },
     "appWidgets_getAppImageUploadServer_response": {
       "type": "object",
       "properties": {
@@ -904,230 +1351,31 @@
       },
       "additionalProperties": false
     },
-    "apps_getCatalog_response": {
+    "asr_checkStatus_response": {
       "type": "object",
       "properties": {
         "response": {
-          "$ref": "objects.json#/definitions/apps_catalog_list",
-          "required": true
+          "$ref": "objects.json#/definitions/asr_task",
+          "required": true,
+          "additionalProperties": false
         }
       },
       "additionalProperties": false
     },
-    "apps_getFriendsList_extended_response": {
+    "asr_process_response": {
       "type": "object",
       "properties": {
         "response": {
           "type": "object",
           "properties": {
-            "count": {
-              "type": "integer",
-              "description": "Total number",
-              "required": true
-            },
-            "items": {
-              "type": "array",
-              "items": {
-                "$ref": "objects.json#/definitions/users_user_full"
-              }
-            }
-          },
-          "additionalProperties": false,
-          "required": true
-        }
-      },
-      "additionalProperties": false
-    },
-    "apps_getFriendsList_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "type": "object",
-          "properties": {
-            "count": {
-              "type": "integer",
-              "description": "Total number",
-              "required": true
-            },
-            "items": {
-              "type": "array",
-              "items": {
-                "type": "integer",
-                "format": "int64",
-                "entity": "owner"
-              }
-            }
-          },
-          "additionalProperties": false,
-          "required": true
-        }
-      },
-      "additionalProperties": false
-    },
-    "apps_getLeaderboard_extended_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "type": "object",
-          "properties": {
-            "count": {
-              "type": "integer",
-              "description": "Total number"
-            },
-            "items": {
-              "type": "array",
-              "items": {
-                "$ref": "objects.json#/definitions/apps_leaderboard"
-              }
-            },
-            "profiles": {
-              "type": "array",
-              "items": {
-                "$ref": "objects.json#/definitions/users_user"
-              }
-            }
-          },
-          "additionalProperties": false,
-          "required": true
-        }
-      },
-      "additionalProperties": false
-    },
-    "apps_getLeaderboard_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "type": "object",
-          "properties": {
-            "count": {
-              "type": "integer",
-              "description": "Total number"
-            },
-            "items": {
-              "type": "array",
-              "items": {
-                "$ref": "objects.json#/definitions/apps_leaderboard"
-              }
-            }
-          },
-          "additionalProperties": false,
-          "required": true
-        }
-      },
-      "additionalProperties": false
-    },
-    "apps_getMiniAppPolicies_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "type": "object",
-          "properties": {
-            "privacy_policy": {
+            "task_id": {
               "type": "string",
-              "format": "uri",
-              "description": "URL of the app's privacy policy"
-            },
-            "terms": {
-              "type": "string",
-              "format": "uri",
-              "description": "URL of the app's terms"
+              "required": true,
+              "description": "ID of created task in UUID format."
             }
           },
-          "additionalProperties": false,
-          "required": true
-        }
-      },
-      "additionalProperties": false
-    },
-    "apps_getScopes_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "type": "object",
-          "properties": {
-            "count": {
-              "type": "integer",
-              "description": "Total number",
-              "required": true
-            },
-            "items": {
-              "type": "array",
-              "items": {
-                "$ref": "objects.json#/definitions/apps_scope"
-              },
-              "required": true
-            }
-          },
-          "additionalProperties": false,
-          "required": true
-        }
-      },
-      "additionalProperties": false
-    },
-    "apps_getScore_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "type": "integer",
-          "description": "Score number",
-          "required": true
-        }
-      },
-      "additionalProperties": false
-    },
-    "apps_get_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "type": "object",
-          "properties": {
-            "count": {
-              "type": "integer",
-              "description": "Total number of applications",
-              "minimum": 0
-            },
-            "items": {
-              "type": "array",
-              "description": "List of applications",
-              "items": {
-                "$ref": "objects.json#/definitions/apps_app"
-              }
-            }
-          },
-          "additionalProperties": false,
-          "required": true
-        }
-      },
-      "additionalProperties": false
-    },
-    "apps_image_upload_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "type": "object",
-          "properties": {
-            "hash": {
-              "type": "string",
-              "description": "Uploading hash"
-            },
-            "image": {
-              "type": "string",
-              "description": "Uploaded photo data"
-            }
-          },
-          "additionalProperties": false,
-          "required": true
-        }
-      },
-      "additionalProperties": false
-    },
-    "apps_sendRequest_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "type": "integer",
-          "description": "Request ID",
-          "required": true
+          "required": true,
+          "additionalProperties": false
         }
       },
       "additionalProperties": false
@@ -1192,6 +1440,18 @@
             "ok"
           ],
           "required": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "base_undefined_response": {
+      "type": "object",
+      "description": "Response schema is not defined yet",
+      "properties": {
+        "response": {
+          "type": "object",
+          "required": true,
+          "additionalProperties": false
         }
       },
       "additionalProperties": false
@@ -1372,6 +1632,188 @@
               "description": "Information whether current user can add topic",
               "$ref": "objects.json#/definitions/base_bool_int",
               "required": true
+            }
+          },
+          "additionalProperties": false,
+          "required": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "bugtracker_addCompanyGroupsMembers_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "errors": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/bugtracker_add_company_groups_members_error"
+              },
+              "additionalProperties": false,
+              "required": true
+            }
+          },
+          "additionalProperties": false,
+          "required": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "bugtracker_addCompanyMembers_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "errors": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "required": true
+            }
+          },
+          "additionalProperties": false,
+          "required": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "bugtracker_createComment_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "comment": {
+              "$ref": "objects.json#/definitions/bugtracker_comment",
+              "required": true
+            },
+            "comment_flood": {
+              "type": "boolean"
+            },
+            "subscribe_state": {
+              "$ref": "objects.json#/definitions/bugtracker_bugreport_subscribe_state"
+            }
+          },
+          "additionalProperties": false,
+          "required": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "bugtracker_getCompanyGroupMembers_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "user_ids": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": 0,
+                "entity": "owner",
+                "format": "int64"
+              },
+              "required": true
+            },
+            "profiles": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/users_user_full"
+              }
+            }
+          },
+          "additionalProperties": false,
+          "required": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "bugtracker_getCompanyMembers_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "company_members": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/bugtracker_company_member"
+              },
+              "required": true
+            },
+            "count": {
+              "type": "integer",
+              "required": true
+            },
+            "profiles": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/users_user_full"
+              }
+            }
+          },
+          "additionalProperties": false,
+          "required": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "bugtracker_getDownloadVersionUrl_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "url": {
+              "type": "string",
+              "required": true
+            },
+            "app_title": {
+              "type": "string"
+            },
+            "bundle_name": {
+              "type": "string"
+            },
+            "build_id": {
+              "type": "integer"
+            },
+            "build_title": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false,
+          "required": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "calls_start_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "call_id": {
+              "type": "string",
+              "description": "Call id"
+            },
+            "join_link": {
+              "type": "string",
+              "description": "Join link",
+              "required": true
+            },
+            "broadcast_video_id": {
+              "type": "string",
+              "description": "video id for link"
+            },
+            "broadcast_ov_id": {
+              "type": "string",
+              "description": "video id for streaming"
             }
           },
           "additionalProperties": false,
@@ -1569,20 +2011,13 @@
       },
       "additionalProperties": false
     },
-    "database_getSchoolClasses_response": {
+    "database_getSchoolClasses_new_response": {
       "type": "object",
       "properties": {
         "response": {
           "type": "array",
           "items": {
-            "type": "array",
-            "items": {
-              "type": [
-                "string",
-                "integer"
-              ],
-              "description": "Class ID or letter"
-            }
+            "$ref": "objects.json#/definitions/database_school_class"
           },
           "required": true
         }
@@ -1688,13 +2123,15 @@
           "properties": {
             "count": {
               "type": "integer",
-              "description": "Total number"
+              "description": "Total number",
+              "required": true
             },
             "items": {
               "type": "array",
               "items": {
                 "$ref": "objects.json#/definitions/docs_doc_types"
-              }
+              },
+              "required": true
             }
           },
           "additionalProperties": false,
@@ -1869,13 +2306,15 @@
           "type": "object",
           "properties": {
             "count": {
-              "type": "integer"
+              "type": "integer",
+              "required": true
             },
             "items": {
               "type": "array",
               "items": {
                 "$ref": "objects.json#/definitions/fave_page"
-              }
+              },
+              "required": true
             }
           },
           "additionalProperties": false,
@@ -1891,13 +2330,15 @@
           "type": "object",
           "properties": {
             "count": {
-              "type": "integer"
+              "type": "integer",
+              "required": true
             },
             "items": {
               "type": "array",
               "items": {
                 "$ref": "objects.json#/definitions/fave_tag"
-              }
+              },
+              "required": true
             }
           },
           "additionalProperties": false,
@@ -1914,13 +2355,15 @@
           "properties": {
             "count": {
               "type": "integer",
-              "description": "Total number"
+              "description": "Total number",
+              "required": true
             },
             "items": {
               "type": "array",
               "items": {
                 "$ref": "objects.json#/definitions/fave_bookmark"
-              }
+              },
+              "required": true
             },
             "profiles": {
               "type": "array",
@@ -1949,13 +2392,15 @@
           "properties": {
             "count": {
               "type": "integer",
-              "description": "Total number"
+              "description": "Total number",
+              "required": true
             },
             "items": {
               "type": "array",
               "items": {
                 "$ref": "objects.json#/definitions/fave_bookmark"
-              }
+              },
+              "required": true
             }
           },
           "additionalProperties": false,
@@ -2234,8 +2679,9 @@
           "type": "array",
           "items": {
             "type": "integer",
-            "description": "User ID",
-            "minimum": 1
+            "entity": "owner",
+            "format": "int64",
+            "description": "User ID"
           },
           "required": true
         }
@@ -2251,13 +2697,23 @@
             "count": {
               "type": "integer",
               "description": "Total requests number",
-              "minimum": 0
+              "minimum": 0,
+              "required": true
             },
             "items": {
               "type": "array",
               "items": {
                 "$ref": "objects.json#/definitions/friends_requests_xtr_message"
-              }
+              },
+              "required": true
+            },
+            "count_unread": {
+              "type": "integer",
+              "description": "Total unread requests number"
+            },
+            "last_viewed": {
+              "type": "integer",
+              "description": "Friend requests last viewed timestamp"
             }
           },
           "additionalProperties": false,
@@ -2275,13 +2731,23 @@
             "count": {
               "type": "integer",
               "description": "Total requests number",
-              "minimum": 0
+              "minimum": 0,
+              "required": true
             },
             "items": {
               "type": "array",
               "items": {
-                "$ref": "objects.json#/definitions/friends_requests"
-              }
+                "$ref": "objects.json#/definitions/friends_requests_xtr_mutual"
+              },
+              "required": true
+            },
+            "count_unread": {
+              "type": "integer",
+              "description": "Total unread requests number"
+            },
+            "last_viewed": {
+              "type": "integer",
+              "description": "Friend requests last viewed timestamp"
             }
           },
           "additionalProperties": false,
@@ -2299,7 +2765,8 @@
             "count": {
               "type": "integer",
               "description": "Total requests number",
-              "minimum": 0
+              "minimum": 0,
+              "required": true
             },
             "items": {
               "type": "array",
@@ -2309,11 +2776,16 @@
                 "format": "int64",
                 "description": "User ID",
                 "minimum": 1
-              }
+              },
+              "required": true
             },
             "count_unread": {
               "type": "integer",
               "description": "Total unread requests number"
+            },
+            "last_viewed": {
+              "type": "integer",
+              "description": "Friend requests last viewed timestamp"
             }
           },
           "additionalProperties": false,
@@ -2366,6 +2838,12 @@
                 "$ref": "objects.json#/definitions/users_user_full"
               },
               "required": true
+            },
+            "profiles": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/users_user_full"
+              }
             }
           },
           "additionalProperties": false,
@@ -2392,7 +2870,7 @@
                 "type": "integer",
                 "description": "User ID",
                 "minimum": 1,
-                "entity": "profiles",
+                "entity": "owner",
                 "format": "int64"
               },
               "required": true
@@ -2438,13 +2916,15 @@
           "properties": {
             "count": {
               "type": "integer",
-              "description": "Total number"
+              "description": "Total number",
+              "required": true
             },
             "items": {
               "type": "array",
               "items": {
                 "$ref": "objects.json#/definitions/gifts_gift"
-              }
+              },
+              "required": true
             }
           },
           "additionalProperties": false,
@@ -2495,7 +2975,7 @@
       "type": "object",
       "properties": {
         "response": {
-          "$ref": "objects.json#/definitions/groups_group",
+          "$ref": "objects.json#/definitions/groups_group_full",
           "required": true
         }
       },
@@ -2564,14 +3044,26 @@
       },
       "additionalProperties": false
     },
-    "groups_getById_object_legacy_response": {
+    "groups_getById_object_response": {
       "type": "object",
       "properties": {
         "response": {
-          "type": "array",
-          "items": {
-            "$ref": "objects.json#/definitions/groups_group_full"
+          "type": "object",
+          "properties": {
+            "groups": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/groups_group_full"
+              }
+            },
+            "profiles": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/groups_profile_item"
+              }
+            }
           },
+          "additionalProperties": false,
           "required": true
         }
       },
@@ -2670,32 +3162,6 @@
               "items": {
                 "$ref": "objects.json#/definitions/groups_group_category"
               }
-            }
-          },
-          "additionalProperties": false,
-          "required": true
-        }
-      },
-      "additionalProperties": false
-    },
-    "groups_getCatalog_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "type": "object",
-          "properties": {
-            "count": {
-              "type": "integer",
-              "description": "Total communities number",
-              "minimum": 0,
-              "required": true
-            },
-            "items": {
-              "type": "array",
-              "items": {
-                "$ref": "objects.json#/definitions/groups_group"
-              },
-              "required": true
             }
           },
           "additionalProperties": false,
@@ -2834,6 +3300,10 @@
                 "$ref": "objects.json#/definitions/groups_user_xtr_role"
               },
               "required": true
+            },
+            "next_from": {
+              "type": "string",
+              "description": "Encoded string for a next page"
             }
           },
           "additionalProperties": false,
@@ -2860,6 +3330,10 @@
                 "$ref": "objects.json#/definitions/groups_member_role"
               },
               "required": true
+            },
+            "next_from": {
+              "type": "string",
+              "description": "Encoded string for a next page"
             }
           },
           "additionalProperties": false,
@@ -2890,10 +3364,35 @@
                 "minimum": 0
               },
               "required": true
+            },
+            "next_from": {
+              "type": "string",
+              "description": "Encoded string for a next page"
             }
           },
           "additionalProperties": false,
           "required": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "groups_getOnlineStatus_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "minutes": {
+              "type": "integer",
+              "description": "Estimated time of answer (for status = answer_mark)"
+            },
+            "status": {
+              "$ref": "objects.json#/definitions/groups_online_status_type",
+              "required": true
+            }
+          },
+          "required": true,
+          "additionalProperties": false
         }
       },
       "additionalProperties": false
@@ -3034,6 +3533,21 @@
               "required": true
             },
             "events": {
+              "$ref": "objects.json#/definitions/base_bool_int"
+            },
+            "addresses": {
+              "type": "boolean"
+            },
+            "bots_capabilities": {
+              "description": "By enabling bot abilities, you can send users messages with a customized keyboard attached as well as use other promotional abilities",
+              "$ref": "objects.json#/definitions/base_bool_int"
+            },
+            "bots_start_button": {
+              "description": "If this setting is enabled, users will see a Start button when they start a chat with your community for the first time",
+              "$ref": "objects.json#/definitions/base_bool_int"
+            },
+            "bots_add_to_chat": {
+              "description": "If this setting is enabled then users can add your community to a chat",
               "$ref": "objects.json#/definitions/base_bool_int"
             },
             "obscene_filter": {
@@ -3249,6 +3763,25 @@
       },
       "additionalProperties": false
     },
+    "groups_invite_user_ids_list_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "invites_send_count": {
+              "type": "integer",
+              "description": "Total invited users number",
+              "minimum": 0,
+              "required": true
+            }
+          },
+          "required": true,
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
     "groups_isMember_extended_response": {
       "type": "object",
       "properties": {
@@ -3278,17 +3811,6 @@
             }
           },
           "additionalProperties": false,
-          "required": true
-        }
-      },
-      "additionalProperties": false
-    },
-    "groups_isMember_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "description": "Information whether user is a member of the group",
-          "$ref": "objects.json#/definitions/base_bool_int",
           "required": true
         }
       },
@@ -3335,7 +3857,7 @@
             "items": {
               "type": "array",
               "items": {
-                "$ref": "objects.json#/definitions/groups_group"
+                "$ref": "objects.json#/definitions/groups_group_full"
               },
               "required": true
             }
@@ -3492,7 +4014,7 @@
             "items": {
               "type": "array",
               "items": {
-                "$ref": "objects.json#/definitions/users_user_min"
+                "$ref": "objects.json#/definitions/users_subscriptions_item"
               },
               "required": true
             }
@@ -3604,17 +4126,6 @@
       },
       "additionalProperties": false
     },
-    "market_deleteComment_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "description": "Returns 1 if request has been processed successfully (0 if the comment is not found)",
-          "$ref": "objects.json#/definitions/base_bool_int",
-          "required": true
-        }
-      },
-      "additionalProperties": false
-    },
     "market_getAlbumById_response": {
       "type": "object",
       "properties": {
@@ -3623,13 +4134,15 @@
           "properties": {
             "count": {
               "type": "integer",
-              "description": "Total number"
+              "description": "Total number",
+              "required": true
             },
             "items": {
               "type": "array",
               "items": {
                 "$ref": "objects.json#/definitions/market_market_album"
-              }
+              },
+              "required": true
             }
           },
           "additionalProperties": false,
@@ -3646,13 +4159,15 @@
           "properties": {
             "count": {
               "type": "integer",
-              "description": "Total number"
+              "description": "Total number",
+              "required": true
             },
             "items": {
               "type": "array",
               "items": {
                 "$ref": "objects.json#/definitions/market_market_album"
-              }
+              },
+              "required": true
             }
           },
           "additionalProperties": false,
@@ -3669,13 +4184,15 @@
           "properties": {
             "count": {
               "type": "integer",
-              "description": "Total number"
+              "description": "Total number",
+              "required": true
             },
             "items": {
               "type": "array",
               "items": {
                 "$ref": "objects.json#/definitions/market_market_item_full"
-              }
+              },
+              "required": true
             }
           },
           "additionalProperties": false,
@@ -3692,13 +4209,15 @@
           "properties": {
             "count": {
               "type": "integer",
-              "description": "Total number"
+              "description": "Total number",
+              "required": true
             },
             "items": {
               "type": "array",
               "items": {
                 "$ref": "objects.json#/definitions/market_market_item"
-              }
+              },
+              "required": true
             }
           },
           "additionalProperties": false,
@@ -3727,29 +4246,6 @@
       },
       "additionalProperties": false
     },
-    "market_getCategories_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "type": "object",
-          "properties": {
-            "count": {
-              "type": "integer",
-              "description": "Total number"
-            },
-            "items": {
-              "type": "array",
-              "items": {
-                "$ref": "objects.json#/definitions/market_market_category"
-              }
-            }
-          },
-          "additionalProperties": false,
-          "required": true
-        }
-      },
-      "additionalProperties": false
-    },
     "market_getComments_response": {
       "type": "object",
       "properties": {
@@ -3758,13 +4254,31 @@
           "properties": {
             "count": {
               "type": "integer",
-              "description": "Total number"
+              "description": "Total number",
+              "required": true
             },
             "items": {
               "type": "array",
               "items": {
                 "$ref": "objects.json#/definitions/wall_wall_comment"
-              }
+              },
+              "required": true
+            },
+            "profiles": {
+              "type": "array",
+              "description": "List of users, available only if extended=true exists in query params",
+              "items": {
+                "$ref": "objects.json#/definitions/users_user_full"
+              },
+              "required": false
+            },
+            "groups": {
+              "type": "array",
+              "description": "List of groups, available only if extended=true exists in query params",
+              "items": {
+                "$ref": "objects.json#/definitions/groups_group_full"
+              },
+              "required": false
             }
           },
           "additionalProperties": false,
@@ -3906,13 +4420,15 @@
           "properties": {
             "count": {
               "type": "integer",
-              "description": "Total number"
+              "description": "Total number",
+              "required": true
             },
             "items": {
               "type": "array",
               "items": {
                 "$ref": "objects.json#/definitions/market_market_item_full"
-              }
+              },
+              "required": true
             },
             "variants": {
               "type": "array",
@@ -3935,13 +4451,15 @@
           "properties": {
             "count": {
               "type": "integer",
-              "description": "Total number"
+              "description": "Total number",
+              "required": true
             },
             "items": {
               "type": "array",
               "items": {
                 "$ref": "objects.json#/definitions/market_market_item"
-              }
+              },
+              "required": true
             },
             "variants": {
               "type": "array",
@@ -3956,12 +4474,35 @@
       },
       "additionalProperties": false
     },
-    "market_restoreComment_response": {
+    "market_search_basic_response": {
       "type": "object",
       "properties": {
         "response": {
-          "description": "Returns 1 if request has been processed successfully (0 if the comment is not found)",
-          "$ref": "objects.json#/definitions/base_bool_int",
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": "integer",
+              "description": "Current chunk size",
+              "required": true
+            },
+            "total": {
+              "type": "integer",
+              "description": "Total size",
+              "required": true
+            },
+            "has_more": {
+              "type": "boolean",
+              "description": "Next chunk present"
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/market_market_item_basic_with_group"
+              },
+              "required": true
+            }
+          },
+          "additionalProperties": false,
           "required": true
         }
       },
@@ -4035,6 +4576,9 @@
               "items": {
                 "$ref": "objects.json#/definitions/groups_group_full"
               }
+            },
+            "filters": {
+              "$ref": "objects.json#/definitions/market_global_search_filters"
             }
           },
           "additionalProperties": false,
@@ -4043,12 +4587,56 @@
       },
       "additionalProperties": false
     },
-    "messages_createChat_response": {
+    "messages_addChatUsers_response": {
       "type": "object",
       "properties": {
         "response": {
-          "type": "integer",
-          "description": "Chat ID",
+          "type": "object",
+          "properties": {
+            "failed_peer_ids": {
+              "required": true,
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "format": "int64",
+                "entity": "peer"
+              }
+            },
+            "failed_phone_numbers": {
+              "type": "array",
+              "required": true,
+              "items": {
+                "type": "string"
+              }
+            },
+            "invitees": {
+              "type": "array",
+              "required": true,
+              "items": {
+                "type": "integer",
+                "format": "int64",
+                "entity": "peer"
+              }
+            }
+          },
+          "additionalProperties": false,
+          "required": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "messages_createChat_withPeerIds_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "chat_id": {
+              "type": "integer",
+              "description": "Chat ID"
+            }
+          },
+          "additionalProperties": false,
           "required": true
         }
       },
@@ -4093,28 +4681,14 @@
       },
       "additionalProperties": false
     },
-    "messages_delete_response": {
+    "messages_delete_full_response": {
       "type": "object",
       "properties": {
         "response": {
-          "type": "object",
-          "patternProperties": {
-            "^[0-9]+$": {
-              "$ref": "objects.json#/definitions/base_bool_int"
-            }
+          "type": "array",
+          "items": {
+            "$ref": "objects.json#/definitions/messages_delete_full_response_item"
           },
-          "additionalProperties": false,
-          "required": true
-        }
-      },
-      "additionalProperties": false
-    },
-    "messages_edit_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "description": "Result",
-          "$ref": "objects.json#/definitions/base_bool_int",
           "required": true
         }
       },
@@ -4204,8 +4778,7 @@
               "type": "array",
               "items": {
                 "$ref": "objects.json#/definitions/users_user_full"
-              },
-              "required": true
+              }
             },
             "groups": {
               "type": "array",
@@ -4634,7 +5207,10 @@
               "items": {
                 "type": "array",
                 "items": {
-                  "type": "integer",
+                  "type": [
+                    "string",
+                    "integer"
+                  ],
                   "description": "Longpoll event value"
                 }
               }
@@ -4697,6 +5273,118 @@
       },
       "additionalProperties": false
     },
+    "messages_getMessagesReactions_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/messages_reaction_counters_response_item"
+              },
+              "required": true
+            },
+            "profiles": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/users_user_full"
+              }
+            },
+            "groups": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/groups_group_full"
+              }
+            }
+          },
+          "additionalProperties": false,
+          "required": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "messages_getReactedPeers_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": "integer",
+              "description": "Total number",
+              "required": true
+            },
+            "reactions": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/messages_reaction_response_item"
+              },
+              "required": true
+            },
+            "counters": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/messages_reaction_counter_response_item"
+              },
+              "required": true
+            },
+            "profiles": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/users_user_full"
+              }
+            },
+            "groups": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/groups_group_full"
+              }
+            }
+          },
+          "additionalProperties": false,
+          "required": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "messages_getReactionsAssets_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "version": {
+              "type": "integer",
+              "minimum": 0,
+              "required": true,
+              "description": "Current reactions assets version"
+            },
+            "assets": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/messages_reaction_asset_item"
+              },
+              "additionalProperties": false,
+              "required": true,
+              "description": "Base reactions assets to display by default"
+            },
+            "override_assets": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/messages_reaction_asset_item"
+              },
+              "additionalProperties": false,
+              "description": "Extended reactions assets for special occasions, user allowed to switch to the base version"
+            }
+          },
+          "additionalProperties": false,
+          "required": true
+        }
+      },
+      "additionalProperties": false
+    },
     "messages_isMessagesFromGroupAllowed_response": {
       "type": "object",
       "properties": {
@@ -4729,7 +5417,7 @@
       },
       "additionalProperties": false
     },
-    "messages_markAsImportant_response": {
+    "messages_markAsImportant_deprecated_response": {
       "type": "object",
       "properties": {
         "response": {
@@ -4883,7 +5571,7 @@
       },
       "additionalProperties": false
     },
-    "messages_send_response": {
+    "messages_send_deprecated_response": {
       "type": "object",
       "properties": {
         "response": {
@@ -4954,9 +5642,11 @@
               },
               "required": true
             },
-            "new_returned_news_items_count": {
-              "type": "integer",
-              "minimum": 0
+            "lives_items": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/newsfeed_newsfeed_item"
+              }
             }
           },
           "additionalProperties": false,
@@ -5000,14 +5690,18 @@
               "type": "array",
               "items": {
                 "type": "integer",
-                "description": "Community ID"
+                "description": "Community ID",
+                "entity": "groups",
+                "format": "int64"
               }
             },
             "members": {
               "type": "array",
               "items": {
                 "type": "integer",
-                "description": "User ID"
+                "description": "User ID",
+                "entity": "profiles",
+                "format": "int64"
               }
             }
           },
@@ -5026,7 +5720,7 @@
             "items": {
               "type": "array",
               "items": {
-                "$ref": "objects.json#/definitions/newsfeed_newsfeed_item"
+                "$ref": "objects.json#/definitions/newsfeed_comments_item"
               },
               "required": true
             },
@@ -5119,7 +5813,7 @@
             "items": {
               "type": "array",
               "items": {
-                "$ref": "objects.json#/definitions/wall_wallpost_to_id"
+                "$ref": "objects.json#/definitions/wall_wallpost_full"
               },
               "required": true
             }
@@ -5138,13 +5832,15 @@
           "properties": {
             "count": {
               "type": "integer",
-              "description": "Total number"
+              "description": "Total number",
+              "required": true
             },
             "items": {
               "type": "array",
               "items": {
                 "$ref": "objects.json#/definitions/users_subscriptions_item"
-              }
+              },
+              "required": true
             }
           },
           "additionalProperties": false,
@@ -5192,7 +5888,8 @@
               "type": "array",
               "items": {
                 "$ref": "objects.json#/definitions/wall_wallpost_full"
-              }
+              },
+              "required": true
             },
             "profiles": {
               "type": "array",
@@ -5218,7 +5915,60 @@
             "count": {
               "type": "integer",
               "minimum": 0,
-              "description": "Filtered number"
+              "description": "Filtered number",
+              "required": true
+            },
+            "total_count": {
+              "type": "integer",
+              "description": "Total number",
+              "minimum": 0
+            }
+          },
+          "additionalProperties": false,
+          "required": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "newsfeed_search_extended_strict_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/wall_wallpost_full"
+              },
+              "required": true
+            },
+            "profiles": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/users_user_full"
+              }
+            },
+            "groups": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/groups_group_full"
+              }
+            },
+            "suggested_queries": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "next_from": {
+              "type": "string"
+            },
+            "count": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Filtered number",
+              "required": true
             },
             "total_count": {
               "type": "integer",
@@ -5242,7 +5992,8 @@
               "type": "array",
               "items": {
                 "$ref": "objects.json#/definitions/wall_wallpost_full"
-              }
+              },
+              "required": true
             },
             "suggested_queries": {
               "type": "array",
@@ -5256,7 +6007,48 @@
             "count": {
               "type": "integer",
               "minimum": 0,
-              "description": "Filtered number"
+              "description": "Filtered number",
+              "required": true
+            },
+            "total_count": {
+              "type": "integer",
+              "description": "Total number",
+              "minimum": 0
+            }
+          },
+          "additionalProperties": false,
+          "required": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "newsfeed_search_strict_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/wall_wallpost_full"
+              },
+              "required": true
+            },
+            "suggested_queries": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "next_from": {
+              "type": "string"
+            },
+            "count": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Filtered number",
+              "required": true
             },
             "total_count": {
               "type": "integer",
@@ -5360,13 +6152,15 @@
           "properties": {
             "count": {
               "type": "integer",
-              "description": "Total number"
+              "description": "Total number",
+              "required": true
             },
             "items": {
               "type": "array",
               "items": {
                 "$ref": "objects.json#/definitions/notifications_notification_item"
-              }
+              },
+              "required": true
             },
             "profiles": {
               "type": "array",
@@ -5415,17 +6209,6 @@
       },
       "additionalProperties": false
     },
-    "notifications_markAsViewed_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "description": "Result",
-          "$ref": "objects.json#/definitions/base_bool_int",
-          "required": true
-        }
-      },
-      "additionalProperties": false
-    },
     "notifications_sendMessage_response": {
       "type": "object",
       "properties": {
@@ -5434,17 +6217,6 @@
           "items": {
             "$ref": "objects.json#/definitions/notifications_send_message_item"
           },
-          "required": true
-        }
-      },
-      "additionalProperties": false
-    },
-    "orders_cancelSubscription_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "description": "Result",
-          "$ref": "objects.json#/definitions/base_bool_int",
           "required": true
         }
       },
@@ -5505,13 +6277,15 @@
           "properties": {
             "count": {
               "type": "integer",
-              "description": "Total number"
+              "description": "Total number",
+              "required": true
             },
             "items": {
               "type": "array",
               "items": {
                 "$ref": "objects.json#/definitions/orders_subscription"
-              }
+              },
+              "required": true
             }
           },
           "additionalProperties": false,
@@ -5528,17 +6302,6 @@
           "items": {
             "$ref": "objects.json#/definitions/orders_order"
           },
-          "required": true
-        }
-      },
-      "additionalProperties": false
-    },
-    "orders_updateSubscription_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "description": "Result",
-          "$ref": "objects.json#/definitions/base_bool_int",
           "required": true
         }
       },
@@ -5656,17 +6419,6 @@
       },
       "additionalProperties": false
     },
-    "photos_deleteComment_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "description": "Returns 1 if request has been processed successfully, 0 if the comment is not found",
-          "$ref": "objects.json#/definitions/base_bool_int",
-          "required": true
-        }
-      },
-      "additionalProperties": false
-    },
     "photos_getAlbumsCount_response": {
       "type": "object",
       "properties": {
@@ -5712,40 +6464,15 @@
           "properties": {
             "count": {
               "type": "integer",
-              "description": "Total number"
+              "description": "Total number",
+              "required": true
             },
             "items": {
               "type": "array",
               "items": {
                 "$ref": "objects.json#/definitions/wall_wall_comment"
-              }
-            }
-          },
-          "additionalProperties": false,
-          "required": true
-        }
-      },
-      "additionalProperties": false
-    },
-    "photos_getAll_extended_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "type": "object",
-          "properties": {
-            "count": {
-              "type": "integer",
-              "description": "Total number"
-            },
-            "items": {
-              "type": "array",
-              "items": {
-                "$ref": "objects.json#/definitions/photos_photo_full_xtr_real_offset"
-              }
-            },
-            "more": {
-              "description": "Information whether next page is presented",
-              "$ref": "objects.json#/definitions/base_bool_int"
+              },
+              "required": true
             }
           },
           "additionalProperties": false,
@@ -5762,13 +6489,15 @@
           "properties": {
             "count": {
               "type": "integer",
-              "description": "Total number"
+              "description": "Total number",
+              "required": true
             },
             "items": {
               "type": "array",
               "items": {
-                "$ref": "objects.json#/definitions/photos_photo_xtr_real_offset"
-              }
+                "$ref": "objects.json#/definitions/photos_photo"
+              },
+              "required": true
             },
             "more": {
               "description": "Information whether next page is presented",
@@ -5846,7 +6575,8 @@
           "properties": {
             "count": {
               "type": "integer",
-              "description": "Total number"
+              "description": "Total number",
+              "required": true
             },
             "real_offset": {
               "type": "integer",
@@ -5857,7 +6587,8 @@
               "type": "array",
               "items": {
                 "$ref": "objects.json#/definitions/wall_wall_comment"
-              }
+              },
+              "required": true
             }
           },
           "additionalProperties": false,
@@ -6177,17 +6908,6 @@
       },
       "additionalProperties": false
     },
-    "photos_restoreComment_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "description": "Returns 1 if request has been processed successfully, 0 if the comment is not found",
-          "$ref": "objects.json#/definitions/base_bool_int",
-          "required": true
-        }
-      },
-      "additionalProperties": false
-    },
     "photos_saveMarketAlbumPhoto_response": {
       "type": "object",
       "properties": {
@@ -6319,13 +7039,15 @@
           "properties": {
             "count": {
               "type": "integer",
-              "description": "Total number"
+              "description": "Total number",
+              "required": true
             },
             "items": {
               "type": "array",
               "items": {
                 "$ref": "objects.json#/definitions/photos_photo"
-              }
+              },
+              "required": true
             }
           },
           "additionalProperties": false,
@@ -6384,33 +7106,11 @@
       },
       "additionalProperties": false
     },
-    "polls_addVote_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "description": "Result",
-          "$ref": "objects.json#/definitions/base_bool_int",
-          "required": true
-        }
-      },
-      "additionalProperties": false
-    },
     "polls_create_response": {
       "type": "object",
       "properties": {
         "response": {
           "$ref": "objects.json#/definitions/polls_poll",
-          "required": true
-        }
-      },
-      "additionalProperties": false
-    },
-    "polls_deleteVote_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "description": "Result",
-          "$ref": "objects.json#/definitions/base_bool_int",
           "required": true
         }
       },
@@ -6434,6 +7134,19 @@
       "properties": {
         "response": {
           "$ref": "objects.json#/definitions/polls_poll",
+          "required": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "polls_getVoters_fields_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "array",
+          "items": {
+            "$ref": "objects.json#/definitions/polls_fields_voters"
+          },
           "required": true
         }
       },
@@ -6790,11 +7503,25 @@
       "type": "object",
       "properties": {
         "response": {
-          "type": "array",
-          "items": {
-            "$ref": "objects.json#/definitions/base_sticker"
+          "type": "object",
+          "properties": {
+            "count": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Count of favorite stickers",
+              "required": true
+            },
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/base_sticker_new"
+              },
+              "description": "List of sticker objects",
+              "required": true
+            }
           },
-          "required": true
+          "required": true,
+          "additionalProperties": false
         }
       },
       "additionalProperties": false
@@ -6803,11 +7530,22 @@
       "type": "object",
       "properties": {
         "response": {
-          "type": "array",
-          "items": {
-            "$ref": "objects.json#/definitions/store_product"
+          "type": "object",
+          "properties": {
+            "items": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/store_product"
+              },
+              "required": true
+            },
+            "count": {
+              "type": "integer",
+              "required": true
+            }
           },
-          "required": true
+          "required": true,
+          "additionalProperties": false
         }
       },
       "additionalProperties": false
@@ -6981,6 +7719,37 @@
       },
       "additionalProperties": false
     },
+    "stories_getStats_V5200_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "preview": {
+              "type": "string"
+            },
+            "achievement": {
+              "type": "string"
+            },
+            "achievement_subtitle": {
+              "type": "string"
+            },
+            "categories": {
+              "type": "array",
+              "items": {
+                "$ref": "objects.json#/definitions/stories_stat_category"
+              }
+            },
+            "need_privacy_block": {
+              "type": "boolean"
+            }
+          },
+          "additionalProperties": false,
+          "required": true
+        }
+      },
+      "additionalProperties": false
+    },
     "stories_getStats_response": {
       "type": "object",
       "properties": {
@@ -7049,31 +7818,6 @@
       },
       "additionalProperties": false
     },
-    "stories_getViewers_extended_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "type": "object",
-          "properties": {
-            "count": {
-              "type": "integer",
-              "description": "Viewers count",
-              "required": true
-            },
-            "items": {
-              "type": "array",
-              "items": {
-                "$ref": "objects.json#/definitions/users_user_full"
-              },
-              "required": true
-            }
-          },
-          "additionalProperties": false,
-          "required": true
-        }
-      },
-      "additionalProperties": false
-    },
     "stories_get_V5113_response": {
       "type": "object",
       "properties": {
@@ -7100,57 +7844,17 @@
             "groups": {
               "type": "array",
               "items": {
-                "$ref": "objects.json#/definitions/groups_group"
+                "$ref": "objects.json#/definitions/groups_group_full"
               }
             },
             "need_upload_screen": {
               "type": "boolean"
-            }
-          },
-          "additionalProperties": false,
-          "required": true
-        }
-      },
-      "additionalProperties": false
-    },
-    "stories_get_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "type": "object",
-          "properties": {
-            "count": {
-              "type": "integer",
-              "description": "Stories count",
-              "required": true
             },
-            "items": {
-              "type": "array",
-              "items": {
-                "type": "array",
-                "items": {
-                  "$ref": "objects.json#/definitions/stories_story"
-                }
-              },
-              "required": true
+            "track_code": {
+              "type": "string"
             },
-            "promo_data": {
-              "$ref": "objects.json#/definitions/stories_promo_block"
-            },
-            "profiles": {
-              "type": "array",
-              "items": {
-                "$ref": "objects.json#/definitions/users_user_full"
-              }
-            },
-            "groups": {
-              "type": "array",
-              "items": {
-                "$ref": "objects.json#/definitions/groups_group"
-              }
-            },
-            "need_upload_screen": {
-              "type": "boolean"
+            "next_from": {
+              "type": "string"
             }
           },
           "additionalProperties": false,
@@ -7185,7 +7889,7 @@
             "groups": {
               "type": "array",
               "items": {
-                "$ref": "objects.json#/definitions/groups_group"
+                "$ref": "objects.json#/definitions/groups_group_full"
               }
             }
           },
@@ -7233,6 +7937,62 @@
       },
       "additionalProperties": false
     },
+    "streaming_getSettings_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "monthly_limit": {
+              "type": "string",
+              "description": "streaming monthly tier",
+              "enum": [
+                "tier_1",
+                "tier_2",
+                "tier_3",
+                "tier_4",
+                "tier_5",
+                "tier_6",
+                "unlimited"
+              ]
+            }
+          },
+          "additionalProperties": false,
+          "required": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "streaming_getStats_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "array",
+          "items": {
+            "$ref": "objects.json#/definitions/streaming_stats"
+          },
+          "required": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "streaming_getStem_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "stem": {
+              "type": "string",
+              "description": "part of a word responsible for its lexical meaning"
+            }
+          },
+          "additionalProperties": false,
+          "required": true
+        }
+      },
+      "additionalProperties": false
+    },
     "users_getFollowers_fields_response": {
       "type": "object",
       "properties": {
@@ -7244,6 +8004,10 @@
               "description": "Total number of available results",
               "minimum": 0,
               "required": true
+            },
+            "friends_count": {
+              "type": "integer",
+              "minimum": 0
             },
             "items": {
               "type": "array",
@@ -7393,13 +8157,15 @@
             "count": {
               "type": "integer",
               "description": "Total number of available results",
-              "minimum": 0
+              "minimum": 0,
+              "required": true
             },
             "items": {
               "type": "array",
               "items": {
                 "$ref": "objects.json#/definitions/utils_last_shortened_link"
-              }
+              },
+              "required": true
             }
           },
           "additionalProperties": false,
@@ -7501,6 +8267,27 @@
       },
       "additionalProperties": false
     },
+    "video_edit_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "success": {
+              "$ref": "objects.json#/definitions/base_bool_int",
+              "required": true
+            },
+            "access_key": {
+              "type": "string",
+              "description": "Access key for access link"
+            }
+          },
+          "additionalProperties": false,
+          "required": true
+        }
+      },
+      "additionalProperties": false
+    },
     "video_getAlbumById_response": {
       "type": "object",
       "properties": {
@@ -7519,13 +8306,15 @@
           "properties": {
             "count": {
               "type": "integer",
-              "description": "Total number"
+              "description": "Total number",
+              "required": true
             },
             "items": {
               "type": "array",
               "items": {
                 "$ref": "objects.json#/definitions/video_video_album_full"
-              }
+              },
+              "required": true
             }
           },
           "additionalProperties": false,
@@ -7619,14 +8408,14 @@
             "profiles": {
               "type": "array",
               "items": {
-                "$ref": "objects.json#/definitions/users_user"
+                "$ref": "objects.json#/definitions/users_user_full"
               },
               "required": true
             },
             "groups": {
               "type": "array",
               "items": {
-                "$ref": "objects.json#/definitions/groups_group"
+                "$ref": "objects.json#/definitions/groups_group_full"
               },
               "required": true
             },
@@ -7698,6 +8487,24 @@
       },
       "additionalProperties": false
     },
+    "video_getLongPollServer_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "url": {
+              "type": "string",
+              "format": "uri",
+              "required": true
+            }
+          },
+          "additionalProperties": false,
+          "required": true
+        }
+      },
+      "additionalProperties": false
+    },
     "video_get_response": {
       "type": "object",
       "properties": {
@@ -7735,12 +8542,15 @@
       },
       "additionalProperties": false
     },
-    "video_restoreComment_response": {
+    "video_liveGetCategories_response": {
       "type": "object",
       "properties": {
         "response": {
-          "description": "Returns 1 if request has been processed successfully, 0 if the comment is not found",
-          "$ref": "objects.json#/definitions/base_bool_int",
+          "type": "array",
+          "items": {
+            "$ref": "objects.json#/definitions/video_live_category"
+          },
+          "additionalProperties": false,
           "required": true
         }
       },
@@ -7820,6 +8630,72 @@
       },
       "additionalProperties": false
     },
+    "video_startStreaming_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "owner_id": {
+              "type": "integer",
+              "entity": "owner",
+              "format": "int64",
+              "description": "Owner ID of created video object",
+              "required": true
+            },
+            "video_id": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Video ID of created video object",
+              "required": true
+            },
+            "name": {
+              "type": "string",
+              "description": "Video title",
+              "required": true
+            },
+            "description": {
+              "type": "string",
+              "description": "Video description",
+              "required": true
+            },
+            "access_key": {
+              "type": "string",
+              "description": "Video access key",
+              "required": true
+            },
+            "stream": {
+              "$ref": "objects.json#/definitions/video_stream_input_params",
+              "required": true
+            },
+            "post_id": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": false,
+          "required": true
+        }
+      },
+      "additionalProperties": false
+    },
+    "video_stopStreaming_response": {
+      "type": "object",
+      "properties": {
+        "response": {
+          "type": "object",
+          "properties": {
+            "unique_viewers": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "additionalProperties": false,
+          "required": true
+        }
+      },
+      "additionalProperties": false
+    },
     "video_upload_response": {
       "type": "object",
       "properties": {
@@ -7851,6 +8727,12 @@
               "type": "integer",
               "description": "Created comment ID",
               "required": true
+            },
+            "parents_stack": {
+              "type": "array",
+              "items": {
+                "type": "integer"
+              }
             }
           },
           "additionalProperties": false,
@@ -7887,7 +8769,7 @@
             "items": {
               "type": "array",
               "items": {
-                "$ref": "objects.json#/definitions/wall_wallpost_full"
+                "$ref": "objects.json#/definitions/wall_wall_item"
               },
               "required": true
             },
@@ -7912,19 +8794,6 @@
       },
       "additionalProperties": false
     },
-    "wall_getById_legacy_response": {
-      "type": "object",
-      "properties": {
-        "response": {
-          "type": "array",
-          "items": {
-            "$ref": "objects.json#/definitions/wall_wallpost_full"
-          },
-          "required": true
-        }
-      },
-      "additionalProperties": false
-    },
     "wall_getById_response": {
       "type": "object",
       "properties": {
@@ -7934,7 +8803,7 @@
             "items": {
               "type": "array",
               "items": {
-                "$ref": "objects.json#/definitions/wall_wallpost_full"
+                "$ref": "objects.json#/definitions/wall_wall_item"
               }
             }
           },
@@ -7960,16 +8829,27 @@
             "profiles": {
               "type": "array",
               "items": {
-                "$ref": "objects.json#/definitions/users_user"
+                "$ref": "objects.json#/definitions/users_user_full"
               },
               "required": true
             },
             "groups": {
               "type": "array",
               "items": {
-                "$ref": "objects.json#/definitions/groups_group"
+                "$ref": "objects.json#/definitions/groups_group_full"
               },
               "required": true
+            },
+            "can_post": {
+              "type": "boolean",
+              "description": "Information whether current user can comment the post"
+            },
+            "show_reply_button": {
+              "type": "boolean"
+            },
+            "groups_can_post": {
+              "type": "boolean",
+              "description": "Information whether groups can comment the post"
             }
           },
           "additionalProperties": false,
@@ -7990,6 +8870,17 @@
                 "$ref": "objects.json#/definitions/wall_wall_comment"
               },
               "required": true
+            },
+            "can_post": {
+              "type": "boolean",
+              "description": "Information whether current user can comment the post"
+            },
+            "show_reply_button": {
+              "type": "boolean"
+            },
+            "groups_can_post": {
+              "type": "boolean",
+              "description": "Information whether groups can comment the post"
             }
           },
           "additionalProperties": false,
@@ -8019,14 +8910,14 @@
             "profiles": {
               "type": "array",
               "items": {
-                "$ref": "objects.json#/definitions/users_user"
+                "$ref": "objects.json#/definitions/users_user_full"
               },
               "required": true
             },
             "groups": {
               "type": "array",
               "items": {
-                "$ref": "objects.json#/definitions/groups_group"
+                "$ref": "objects.json#/definitions/groups_group_full"
               },
               "required": true
             },
@@ -8108,14 +8999,14 @@
             "profiles": {
               "type": "array",
               "items": {
-                "$ref": "objects.json#/definitions/users_user"
+                "$ref": "objects.json#/definitions/users_user_full"
               },
               "required": true
             },
             "groups": {
               "type": "array",
               "items": {
-                "$ref": "objects.json#/definitions/groups_group"
+                "$ref": "objects.json#/definitions/groups_group_full"
               },
               "required": true
             }
@@ -8140,7 +9031,7 @@
             "items": {
               "type": "array",
               "items": {
-                "$ref": "objects.json#/definitions/wall_wallpost_full"
+                "$ref": "objects.json#/definitions/wall_wall_item"
               },
               "required": true
             },
@@ -8179,7 +9070,7 @@
             "items": {
               "type": "array",
               "items": {
-                "$ref": "objects.json#/definitions/wall_wallpost_full"
+                "$ref": "objects.json#/definitions/wall_wall_item"
               },
               "required": true
             }
@@ -8285,7 +9176,7 @@
             "items": {
               "type": "array",
               "items": {
-                "$ref": "objects.json#/definitions/wall_wallpost_full"
+                "$ref": "objects.json#/definitions/wall_wall_item"
               },
               "required": true
             },
@@ -8324,7 +9215,7 @@
             "items": {
               "type": "array",
               "items": {
-                "$ref": "objects.json#/definitions/wall_wallpost_full"
+                "$ref": "objects.json#/definitions/wall_wall_item"
               },
               "required": true
             }
