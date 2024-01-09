@@ -9,5 +9,5 @@ module.exports = {
 
     parseParameter,
     parseParameters,
-    parseResponses
+    parseResponses,
 };

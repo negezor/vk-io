@@ -21,18 +21,18 @@ module.exports = class InterfaceGenerator {
 
         type,
 
-        required = false
+        required = false,
     }) {
         const property = ts.factory.createPropertyDeclaration(
             undefined,
             name,
             !required
                 ? ts.factory.createKeywordTypeNode(
-                    ts.SyntaxKind.QuestionToken
+                    ts.SyntaxKind.QuestionToken,
                 )
                 : undefined,
             type,
-            undefined
+            undefined,
         );
 
         if (!description) {
@@ -46,8 +46,8 @@ module.exports = class InterfaceGenerator {
                 property,
                 ts.SyntaxKind.MultiLineCommentTrivia,
                 description,
-                true
-            )
+                true,
+            ),
         );
     }
 
@@ -58,7 +58,7 @@ module.exports = class InterfaceGenerator {
         parameters,
         result,
 
-        modifiers = undefined
+        modifiers = undefined,
     }) {
         const method = ts.factory.createMethodDeclaration(
             modifiers,
@@ -67,7 +67,7 @@ module.exports = class InterfaceGenerator {
             undefined,
             undefined,
             parameters,
-            result
+            result,
         );
 
         if (!description) {
@@ -81,8 +81,8 @@ module.exports = class InterfaceGenerator {
                 method,
                 ts.SyntaxKind.MultiLineCommentTrivia,
                 description,
-                true
-            )
+                true,
+            ),
         );
     }
 
@@ -94,13 +94,13 @@ module.exports = class InterfaceGenerator {
             undefined,
             [
                 ...this.properties,
-                ...this.methods
-            ]
+                ...this.methods,
+            ],
         );
 
         if (exported) {
             iterfaceDeclaration = TypesGenerator.declarationExport(
-                iterfaceDeclaration
+                iterfaceDeclaration,
             );
         }
 
@@ -109,7 +109,7 @@ module.exports = class InterfaceGenerator {
                 iterfaceDeclaration,
                 ts.SyntaxKind.MultiLineCommentTrivia,
                 this.description,
-                true
+                true,
             );
         }
 

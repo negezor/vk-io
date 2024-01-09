@@ -3,5 +3,5 @@ const InterfaceGenerator = require('./interface');
 
 module.exports = {
     TypesGenerator,
-    InterfaceGenerator
+    InterfaceGenerator,
 };

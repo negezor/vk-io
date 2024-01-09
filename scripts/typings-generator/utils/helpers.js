@@ -8,7 +8,7 @@ const writeFile = nodeUtil.promisify(nodeFs.writeFile).bind(nodeUtil);
 
 const getDirname = url => (
     nodePath.dirname(
-        (new URL(url)).pathname
+        (new URL(url)).pathname,
     )
         .replace(/^\//, '')
 );
@@ -58,5 +58,5 @@ module.exports = {
     upperFirstLetter,
     toPascalCase,
     readJSONFile,
-    formatTSComments
+    formatTSComments,
 };

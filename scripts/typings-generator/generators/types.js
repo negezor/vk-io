@@ -31,21 +31,21 @@ module.exports = class TypesGenerator {
             undefined,
             name,
             undefined,
-            type
+            type,
         );
     }
 
     static genericType(name, types) {
         return ts.factory.createTypeReferenceNode(
             name,
-            types
+            types,
         );
     }
 
     static promiseType(type) {
         return TypesGenerator.genericType(
             'Promise',
-            [type]
+            [type],
         );
     }
 
@@ -56,10 +56,10 @@ module.exports = class TypesGenerator {
             name,
             !required
                 ? ts.factory.createKeywordTypeNode(
-                    ts.SyntaxKind.QuestionToken
+                    ts.SyntaxKind.QuestionToken,
                 )
                 : undefined,
-            type
+            type,
         );
     }
 
@@ -67,7 +67,7 @@ module.exports = class TypesGenerator {
         return ts.factory.createExportDeclaration(
             undefined,
             false,
-            exportClause
+            exportClause,
         );
     }
 };

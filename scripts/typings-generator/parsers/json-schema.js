@@ -15,10 +15,10 @@ const jsonSchemaTypes = {
             const {
                 type: arrayType,
                 description,
-                required = false
+                required = false,
             } = jsonSchemaTypes[items.type]({
                 namespace,
-                type: items
+                type: items,
             });
 
             return {
@@ -30,28 +30,28 @@ const jsonSchemaTypes = {
                 type: arrayUnion
                     ? TypesGenerator.union([
                         TypesGenerator.array(arrayType),
-                        arrayType
+                        arrayType,
                     ])
-                    : TypesGenerator.array(arrayType)
+                    : TypesGenerator.array(arrayType),
             };
         }
 
-        if (items && items.$ref) {
+        if (items?.$ref) {
             const [, group, refName] = items.$ref.match(MATCH_REF_RE);
 
             const refIdentifierName = ts.factory.createIdentifier(
-                toPascalCase(refName)
+                toPascalCase(refName),
             );
 
             const refIdentifier = group !== '' && namespace
                 ? ts.factory.createQualifiedName(
                     namespace,
-                    refIdentifierName
+                    refIdentifierName,
                 )
                 : refIdentifierName;
 
             return {
-                type: TypesGenerator.array(refIdentifier)
+                type: TypesGenerator.array(refIdentifier),
             };
         }
 
@@ -59,70 +59,70 @@ const jsonSchemaTypes = {
             kind: type,
             type: TypesGenerator.array(
                 ts.factory.createKeywordTypeNode(
-                    ts.SyntaxKind.AnyKeyword
-                )
-            )
+                    ts.SyntaxKind.AnyKeyword,
+                ),
+            ),
         };
     },
 
     string: ({ type }) => ({
         kind: 'type',
         description: type.description && formatTSComments(
-            type.description
+            type.description,
         ),
         type: 'enum' in type
             ? TypesGenerator.union(
                 type.enum.map(enumName => (
                     ts.factory.createStringLiteral(String(enumName))
-                ))
+                )),
             )
             : TypesGenerator.string,
         required: typeof type.required === 'boolean'
             ? type.required
-            : false
+            : false,
 
     }),
     integer: ({ type }) => ({
         kind: 'type',
         description: type.description && formatTSComments(
-            type.description
+            type.description,
         ),
         type: 'enum' in type
             ? TypesGenerator.union(
                 type.enum.map(enumName => (
                     ts.factory.createNumericLiteral(String(enumName))
-                ))
+                )),
             )
             : TypesGenerator.number,
         required: typeof type.required === 'boolean'
             ? type.required
-            : false
+            : false,
     }),
     boolean: ({ type }) => ({
         kind: 'type',
         description: type.description && formatTSComments(
-            type.description
+            type.description,
         ),
         type: TypesGenerator.union([
             TypesGenerator.boolean,
-            TypesGenerator.number
+            TypesGenerator.number,
         ]),
         required: typeof type.required === 'boolean'
             ? type.required
-            : false
+            : false,
     }),
     number: payload => jsonSchemaTypes.integer(payload),
 
     any: ({ type }) => ({
         kind: 'type',
         description: type.description && formatTSComments(
-            type.description
+            type.description,
         ),
         type: TypesGenerator.any,
         required: typeof type.required === 'boolean'
             ? type.required
-            : false
-    })
+            : false,
+    }),
 };
 
 function parseJSONObject(name, type, payload = {}, { preferRequired } = { preferRequired: false }) {
@@ -130,19 +130,19 @@ function parseJSONObject(name, type, payload = {}, { preferRequired } = { prefer
         const [, group, refName] = type.$ref.match(MATCH_REF_RE);
 
         const refIdentifierName = ts.factory.createIdentifier(
-            toPascalCase(refName)
+            toPascalCase(refName),
         );
 
         const refIdentifier = group !== '' && payload.namespace
             ? ts.factory.createQualifiedName(
                 payload.namespace,
-                refIdentifierName
+                refIdentifierName,
             )
             : refIdentifierName;
 
         return {
             name,
-            type: refIdentifier
+            type: refIdentifier,
         };
     }
 
@@ -156,13 +156,13 @@ function parseJSONObject(name, type, payload = {}, { preferRequired } = { prefer
                 const [, group, refName] = obj.$ref.match(MATCH_REF_RE);
 
                 const refIdentifierName = ts.factory.createIdentifier(
-                    toPascalCase(refName)
+                    toPascalCase(refName),
                 );
 
                 const refIdentifier = group !== '' && payload.namespace
                     ? ts.factory.createQualifiedName(
                         payload.namespace,
-                        refIdentifierName
+                        refIdentifierName,
                     )
                     : refIdentifierName;
 
@@ -176,7 +176,7 @@ function parseJSONObject(name, type, payload = {}, { preferRequired } = { prefer
 
                 const interfaceType = new InterfaceGenerator({
                     name: toPascalCase(name + interfacesCount),
-                    description: type.description
+                    description: type.description,
                 });
 
                 for (const [propertyName, propertyValue] of Object.entries(obj.properties)) {
@@ -184,13 +184,13 @@ function parseJSONObject(name, type, payload = {}, { preferRequired } = { prefer
                         const [, group, refName] = propertyValue.$ref.match(MATCH_REF_RE);
 
                         const refIdentifierName = ts.factory.createIdentifier(
-                            toPascalCase(refName)
+                            toPascalCase(refName),
                         );
 
                         const refIdentifier = group !== '' && payload.namespace
                             ? ts.factory.createQualifiedName(
                                 payload.namespace,
-                                refIdentifierName
+                                refIdentifierName,
                             )
                             : refIdentifierName;
 
@@ -198,7 +198,7 @@ function parseJSONObject(name, type, payload = {}, { preferRequired } = { prefer
                             name: propertyName,
 
                             type: refIdentifier,
-                            required: preferRequired || false
+                            required: preferRequired || false,
                         });
 
                         continue;
@@ -207,7 +207,7 @@ function parseJSONObject(name, type, payload = {}, { preferRequired } = { prefer
                     if (propertyValue.type in jsonSchemaTypes) {
                         const { type: nodeType, description } = jsonSchemaTypes[propertyValue.type]({
                             ...payload,
-                            type: propertyValue
+                            type: propertyValue,
                         });
 
                         interfaceType.addProperty({
@@ -215,7 +215,7 @@ function parseJSONObject(name, type, payload = {}, { preferRequired } = { prefer
                             name: propertyName,
 
                             type: nodeType,
-                            required: preferRequired || false
+                            required: preferRequired || false,
                         });
                     }
                 }
@@ -224,8 +224,8 @@ function parseJSONObject(name, type, payload = {}, { preferRequired } = { prefer
 
                 exportedNodes.push(
                     interfaceType.toASTNode({
-                        exported: true
-                    })
+                        exported: true,
+                    }),
                 );
             }
         }
@@ -236,7 +236,7 @@ function parseJSONObject(name, type, payload = {}, { preferRequired } = { prefer
 
                 name: toPascalCase(name),
                 kind: 'type',
-                type: ts.factory.createIntersectionTypeNode(allOf)
+                type: ts.factory.createIntersectionTypeNode(allOf),
             };
         }
     }
@@ -246,21 +246,21 @@ function parseJSONObject(name, type, payload = {}, { preferRequired } = { prefer
             return {
                 name,
                 type: ts.factory.createKeywordTypeNode(
-                    ts.SyntaxKind.AnyKeyword
-                )
+                    ts.SyntaxKind.AnyKeyword,
+                ),
             };
         }
 
         const resolvedType = jsonSchemaTypes[type.type]({
             ...payload,
 
-            type
+            type,
         });
 
         return {
             name,
             ...resolvedType,
-            required: preferRequired || resolvedType.required
+            required: preferRequired || resolvedType.required,
         };
     }
 
@@ -268,14 +268,14 @@ function parseJSONObject(name, type, payload = {}, { preferRequired } = { prefer
         return {
             name,
             type: ts.factory.createKeywordTypeNode(
-                ts.SyntaxKind.AnyKeyword
-            )
+                ts.SyntaxKind.AnyKeyword,
+            ),
         };
     }
 
     const interfaceType = new InterfaceGenerator({
         name: toPascalCase(name),
-        description: type.description
+        description: type.description,
     });
 
     interfaceType.methods.push(
@@ -287,20 +287,20 @@ function parseJSONObject(name, type, payload = {}, { preferRequired } = { prefer
                 'key',
                 undefined,
                 ts.factory.createKeywordTypeNode(
-                    ts.SyntaxKind.StringKeyword
-                )
+                    ts.SyntaxKind.StringKeyword,
+                ),
             )],
             ts.factory.createKeywordTypeNode(
-                ts.SyntaxKind.AnyKeyword
-            )
-        )
+                ts.SyntaxKind.AnyKeyword,
+            ),
+        ),
     );
 
     if (type.allOf || type.oneOf || type.anyOf) {
         return {
             name: interfaceType.name,
             kind: 'interface',
-            type: interfaceType
+            type: interfaceType,
         };
     }
 
@@ -310,7 +310,7 @@ function parseJSONObject(name, type, payload = {}, { preferRequired } = { prefer
         if (propertyValue.type in jsonSchemaTypes) {
             const { type: nodeType, description } = jsonSchemaTypes[propertyValue.type]({
                 ...payload,
-                type: propertyValue
+                type: propertyValue,
             });
 
             interfaceType.addProperty({
@@ -320,7 +320,7 @@ function parseJSONObject(name, type, payload = {}, { preferRequired } = { prefer
                 type: nodeType,
                 required: preferRequired || typeof required !== 'boolean'
                     ? required.includes(propertyName)
-                    : required
+                    : required,
             });
         }
     }
@@ -328,7 +328,7 @@ function parseJSONObject(name, type, payload = {}, { preferRequired } = { prefer
     return {
         name: interfaceType.name,
         kind: 'interface',
-        type: interfaceType
+        type: interfaceType,
     };
 }
 
@@ -341,5 +341,5 @@ function parseJSONSchema(schema, payload, options) {
 
 module.exports = {
     parseJSONSchema,
-    parseJSONObject
+    parseJSONObject,
 };

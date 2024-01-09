@@ -8,6 +8,9 @@ const nodePath = require('path');
 const REPLACE_MULTI_SEMICOLON_RE = /;{2,}/;
 const REPLACE_EXPORT_SEMICOLON_RE = /};/;
 
+/**
+ * @param {string} path
+ */
 module.exports = function createPrinter(path) {
     const filename = nodePath.basename(path);
 
@@ -16,15 +19,15 @@ module.exports = function createPrinter(path) {
         '',
         ts.ScriptTarget.ESNext,
         false,
-        ts.ScriptKind.TS
+        ts.ScriptKind.TS,
     );
 
     const printer = ts.createPrinter({
-        newLine: ts.NewLineKind.LineFeed
+        newLine: ts.NewLineKind.LineFeed,
     });
 
     const output = nodeFs.createWriteStream(path, {
-        start: 0
+        start: 0,
     });
 
     output.write('/* eslint-disable */\n');
@@ -36,11 +39,14 @@ module.exports = function createPrinter(path) {
         write(text) {
             output.write(text);
         },
+        /**
+         * @param {import('typescript').Node} node 
+         */
         writeNode(node) {
             const result = printer.printNode(
                 ts.EmitHint.Unspecified,
                 node,
-                methodsFile
+                methodsFile,
             );
 
             const hacked = result
@@ -48,6 +54,6 @@ module.exports = function createPrinter(path) {
                 .replace(REPLACE_EXPORT_SEMICOLON_RE, '}');
 
             output.write(`${hacked}\n\n`);
-        }
+        },
     };
 };

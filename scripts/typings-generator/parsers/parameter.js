@@ -3,7 +3,7 @@ const { parseJSONObject } = require('./json-schema');
 function parseParameter(rawParameter, payload) {
     return parseJSONObject(rawParameter.name, rawParameter, {
         arrayUnion: true,
-        ...payload
+        ...payload,
     });
 }
 
@@ -19,5 +19,5 @@ function parseParameters(rawParameters, payload) {
 
 module.exports = {
     parseParameter,
-    parseParameters
+    parseParameters,
 };

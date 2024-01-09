@@ -9,20 +9,20 @@ const ts = require('typescript');
 const createPrinter = require('./printer');
 const {
     TypesGenerator,
-    InterfaceGenerator
+    InterfaceGenerator,
 } = require('./generators');
 
 const {
     parseParameters,
     parseResponses,
-    parseJSONSchema
+    parseJSONSchema,
 } = require('./parsers');
 
 const {
     readJSONFile,
     toPascalCase,
     upperFirstLetter,
-    formatTSComments
+    formatTSComments,
 } = require('./utils/helpers');
 
 const METHODS_FILE = 'methods.ts';
@@ -38,12 +38,12 @@ async function generate() {
         { methods },
         { definitions: responses },
         { definitions: objects },
-        { errors }
+        { errors },
     ] = await Promise.all([
         readJSONFile('./schemas/methods.json'),
         readJSONFile('./schemas/responses.json'),
         readJSONFile('./schemas/objects.json'),
-        readJSONFile('./schemas/errors.json')
+        readJSONFile('./schemas/errors.json'),
     ]);
 
     const { writeNode: writeMethodsNode } = createPrinter(`${typeingsDir}/${METHODS_FILE}`);
@@ -62,11 +62,11 @@ async function generate() {
             ts.factory.createImportClause(
                 false,
                 ts.factory.createNamespaceImport(
-                    objectsIdentifier
-                )
+                    objectsIdentifier,
+                ),
             ),
-            ts.factory.createStringLiteral(`./${OBJECTS_FILE.replace('.ts', '')}`)
-        )
+            ts.factory.createStringLiteral(`./${OBJECTS_FILE.replace('.ts', '')}`),
+        ),
     );
 
     writeResponsesNode(
@@ -75,11 +75,11 @@ async function generate() {
             ts.factory.createImportClause(
                 false,
                 ts.factory.createNamespaceImport(
-                    objectsIdentifier
-                )
+                    objectsIdentifier,
+                ),
             ),
-            ts.factory.createStringLiteral(`./${OBJECTS_FILE.replace('.ts', '')}`)
-        )
+            ts.factory.createStringLiteral(`./${OBJECTS_FILE.replace('.ts', '')}`),
+        ),
     );
 
     writeMethodsNode(
@@ -88,11 +88,11 @@ async function generate() {
             ts.factory.createImportClause(
                 false,
                 ts.factory.createNamespaceImport(
-                    paramsIdentifier
-                )
+                    paramsIdentifier,
+                ),
             ),
-            ts.factory.createStringLiteral(`./${PARAMS_FILE.replace('.ts', '')}`)
-        )
+            ts.factory.createStringLiteral(`./${PARAMS_FILE.replace('.ts', '')}`),
+        ),
     );
 
     writeMethodsNode(
@@ -101,11 +101,11 @@ async function generate() {
             ts.factory.createImportClause(
                 false,
                 ts.factory.createNamespaceImport(
-                    responsesIdentifier
-                )
+                    responsesIdentifier,
+                ),
             ),
-            ts.factory.createStringLiteral(`./${RESPONSES_FILE.replace('.ts', '')}`)
-        )
+            ts.factory.createStringLiteral(`./${RESPONSES_FILE.replace('.ts', '')}`),
+        ),
     );
 
     const apiGroups = {};
@@ -125,16 +125,16 @@ async function generate() {
         if (!(groupName in apiGroups)) {
             apiGroups[groupName] = new InterfaceGenerator({
                 name: `API${camelizedGroupName}`,
-                description: formatTSComments(`The API ${groupName} group`)
+                description: formatTSComments(`The API ${groupName} group`),
             });
         }
 
         const params = new InterfaceGenerator({
-            name: `${camelizedCategory}Params`
+            name: `${camelizedCategory}Params`,
         });
 
         for (const parsedParameter of parseParameters(method.parameters, {
-            namespace: objectsIdentifier
+            namespace: objectsIdentifier,
         })) {
             params.addProperty(parsedParameter);
         }
@@ -148,13 +148,13 @@ async function generate() {
                     'key',
                     undefined,
                     ts.factory.createKeywordTypeNode(
-                        ts.SyntaxKind.StringKeyword
-                    )
+                        ts.SyntaxKind.StringKeyword,
+                    ),
                 )],
                 ts.factory.createKeywordTypeNode(
-                    ts.SyntaxKind.AnyKeyword
-                )
-            )
+                    ts.SyntaxKind.AnyKeyword,
+                ),
+            ),
         );
 
         apiParams.push(params);
@@ -169,10 +169,10 @@ async function generate() {
                     name: 'params',
                     type: ts.factory.createQualifiedName(
                         paramsIdentifier,
-                        params.name
+                        params.name,
                     ),
-                    required: true
-                })
+                    required: true,
+                }),
             ],
             result: TypesGenerator.promiseType(
                 ts.factory.createQualifiedName(
@@ -189,12 +189,12 @@ async function generate() {
                             ).$ref
                                 .replace(
                                     'responses.json#/definitions/',
-                                    ''
-                                )
-                        )
-                    )
-                )
-            )
+                                    '',
+                                ),
+                        ),
+                    ),
+                ),
+            ),
         });
     }
 
@@ -205,13 +205,13 @@ async function generate() {
                 : TypesGenerator.declarationExport(
                     ts.factory.createTypeAliasDeclaration(
                         [ts.factory.createModifier(
-                            ts.SyntaxKind.DeclareKeyword
+                            ts.SyntaxKind.DeclareKeyword,
                         )],
                         response.name,
                         undefined,
-                        response.type
-                    )
-                )
+                        response.type,
+                    ),
+                ),
         );
     }
 
@@ -230,9 +230,9 @@ async function generate() {
                         undefined,
                         toPascalCase(object.name),
                         undefined,
-                        object.type
-                    )
-                )
+                        object.type,
+                    ),
+                ),
         );
     }
 
@@ -249,49 +249,49 @@ async function generate() {
                             ts.factory.createEnumMember(
                                 name.substring(10).toUpperCase(),
                                 ts.factory.createNumericLiteral(
-                                    String(info.code)
-                                )
+                                    String(info.code),
+                                ),
                             ),
                             ts.SyntaxKind.MultiLineCommentTrivia,
                             formatTSComments(`${info.description}\n\nCode: \`${info.code}\``),
-                            true
+                            true,
                         )
-                    ))
-            )
-        )
+                    )),
+            ),
+        ),
     );
 
     const apiMethodsInterface = new InterfaceGenerator({
-        name: 'APIMethods'
+        name: 'APIMethods',
     });
 
     for (const [name, group] of Object.entries(apiGroups)) {
         writeMethodsNode(
             group.toASTNode({
-                exported: true
-            })
+                exported: true,
+            }),
         );
 
         apiMethodsInterface.addProperty({
             name,
             type: group.name,
             description: group.description,
-            required: true
+            required: true,
         });
     }
 
     for (const params of apiParams) {
         writeParamsNode(
             params.toASTNode({
-                exported: true
-            })
+                exported: true,
+            }),
         );
     }
 
     writeMethodsNode(
         apiMethodsInterface.toASTNode({
-            exported: true
-        })
+            exported: true,
+        }),
     );
 
     // eslint-disable-next-line no-console
