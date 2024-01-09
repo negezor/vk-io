@@ -80,7 +80,7 @@ export class PollingTransport {
                 ? server
                 : `https://${server}`;
 
-            this.url = new URL(pollingURL!);
+            this.url = new URL(pollingURL);
             this.url.search = String(new URLSearchParams({
                 key,
                 act: 'a_check',

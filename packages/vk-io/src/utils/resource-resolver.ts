@@ -90,7 +90,7 @@ const resolveSlugResource = async (
     }
 
     return {
-        id: response.object_id!,
+        id: response.object_id,
         type: response.type as IResolvedTargetResource['type'],
     };
 };

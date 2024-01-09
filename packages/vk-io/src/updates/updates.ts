@@ -697,7 +697,7 @@ export class Updates {
 
                     ...this.options,
 
-                    pollingGroupId: group.id!,
+                    pollingGroupId: group.id,
                 });
 
                 this.options.pollingGroupId = group.id!;
