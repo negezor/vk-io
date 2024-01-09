@@ -690,7 +690,7 @@ export class Updates {
 
         if (!this.options.pollingGroupId) {
             try {
-                const [group] = await this.api.groups.getById({});
+                const { groups: [group] } = await this.api.groups.getById({});
 
                 this.pollingTransport = new PollingTransport({
                     api: this.api,

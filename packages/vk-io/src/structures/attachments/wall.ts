@@ -114,7 +114,7 @@ class WallAttachment extends Attachment<IWallAttachmentPayload, AttachmentType.W
             return;
         }
 
-        const [post] = await this.api.wall.getById({
+        const { items: [post] } = await this.api.wall.getById({
             posts: `${this.ownerId}_${this.id}`,
             extended: 0,
         });
