@@ -821,8 +821,6 @@ class MessageContext<S = ContextDefaultState>
             }
             : payload;
 
-        console.log(payload);
-
         const { message } = this;
 
         this.text = message.text
