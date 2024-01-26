@@ -45,8 +45,8 @@ export const getExecuteCode = ({ method, params }: IExecuteCodeOptions): string 
         return {
             count: total,
             items: items.splice(0, total),
-            profiles: profiles.splice(0, total),
-            groups: groups.splice(0, total)
+            profiles: profiles,
+            groups: groups
         };
     `
 );
