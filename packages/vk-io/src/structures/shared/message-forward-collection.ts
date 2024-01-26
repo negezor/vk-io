@@ -33,7 +33,7 @@ class MessageForwardsCollection<S = ContextDefaultState> extends Array<MessageCo
             this[kFlatten] = getForwards(this);
         }
 
-        return this[kFlatten]!;
+        return this[kFlatten];
     }
 }
 
