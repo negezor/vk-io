@@ -264,7 +264,7 @@ export class DirectAuthorization {
 
                     if (text.error === 'need_captcha') {
                         response = await this.processCaptcha(text as {
-                            captcha_sid: number;
+                            captcha_sid: string;
                             captcha_img: string;
                         });
 
@@ -332,7 +332,7 @@ export class DirectAuthorization {
      */
     protected async processCaptcha(
         { captcha_sid: sid, captcha_img: src }: {
-            captcha_sid: number;
+            captcha_sid: string;
             captcha_img: string;
         },
     ): Promise<Response> {

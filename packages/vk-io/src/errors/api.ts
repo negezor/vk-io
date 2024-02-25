@@ -11,7 +11,7 @@ export interface IAPIErrorOptions {
     error_msg: string;
     request_params: IAPIErrorParam[];
 
-    captcha_sid?: number;
+    captcha_sid?: string;
     captcha_img?: string;
     redirect_uri?: string;
     confirmation_text?: string;
@@ -26,7 +26,7 @@ export class APIError extends VKError {
     /**
      * Session identifier captcha
      */
-    public captchaSid?: number;
+    public captchaSid?: string;
 
     /**
      * Image of captcha
@@ -56,7 +56,7 @@ export class APIError extends VKError {
 
         // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
         if (code === APIErrorCode.CAPTCHA) {
-            this.captchaSid = Number(payload.captcha_sid);
+            this.captchaSid = payload.captcha_sid;
             this.captchaImg = payload.captcha_img;
         // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
         } else if (code === APIErrorCode.AUTH_VALIDATION) {

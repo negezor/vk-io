@@ -10,7 +10,7 @@ const {
 
 export interface ICallbackServiceCaptchaPayload {
     type: CaptchaType;
-    sid: string | number;
+    sid: string;
     src: string;
     request?: APIRequest;
 }
