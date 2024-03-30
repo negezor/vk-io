@@ -46,7 +46,7 @@ const direct = new DirectAuthorization({
     login: process.env.LOGIN,
     password: process.env.PASSWORD,
     
-    apiVersion: '5.131'
+    apiVersion: '5.199'
 });
 
 async function run() {
