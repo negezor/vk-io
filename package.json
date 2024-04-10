@@ -32,6 +32,7 @@
     "test": "npm run test:node && npm run lint",
     "test:node": "node --import tsx --test packages/*/test/*.test.ts",
     "lint": "npm run lint:biome",
-    "lint:biome": "biome lint --apply packages/*/{src,test}"
+    "lint:biome": "biome lint --apply packages/*/{src,test}",
+    "fmt": "biome format --apply packages/*/{src,test}"
   }
 }
