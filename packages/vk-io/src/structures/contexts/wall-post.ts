@@ -11,7 +11,6 @@ export type WallPostContextSubType =
 'wall_post_new'
 | 'wall_repost';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface IWallPostContextPayload extends IWallAttachmentPayload {
 
 }

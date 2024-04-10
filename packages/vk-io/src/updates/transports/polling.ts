@@ -25,7 +25,6 @@ export class PollingTransport {
      * 64 - Online user platform ID
      * 128 - Return random_id
      */
-    // eslint-disable-next-line no-bitwise
     public mode = 2 | 8 | 64 | 128;
 
     public pollingHandler!: (update: unknown[]) => unknown;
@@ -189,8 +188,6 @@ export class PollingTransport {
                     message: 'Polling request failed',
                 });
             }
-
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             result = await response.json() as any;
         } finally {
             clearTimeout(interval);

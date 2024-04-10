@@ -45,7 +45,6 @@ export class AudioAttachment extends Attachment<IAudioAttachmentPayload, Attachm
         }
 
         // @ts-expect-error no audio types
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
         const { items: [audio] } = await this.api.audio.getById({
             audios: `${this.ownerId}_${this.id}`,
         });

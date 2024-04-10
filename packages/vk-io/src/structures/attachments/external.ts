@@ -49,7 +49,6 @@ export class ExternalAttachment<P = object, Type extends string | AttachmentType
     /**
      * Can be attached via string representation
      */
-    // eslint-disable-next-line class-methods-use-this, @typescript-eslint/class-literal-property-style
     public get canBeAttached(): boolean {
         return false;
     }

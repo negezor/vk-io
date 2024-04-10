@@ -11,19 +11,14 @@ export interface IAPIRequestOptions {
     api: API;
 
     method: string;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     params: Record<string, any>;
 }
 
 export class APIRequest {
     public method: string;
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     public params: Record<string, any>;
 
     public retries = 0;
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     public promise: Promise<any>;
 
     public resolve!: (value: unknown) => unknown;
@@ -66,7 +61,6 @@ export class APIRequest {
     /**
      * Sends a request to the server
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     public async make(): Promise<any> {
         const { options } = this.api;
 

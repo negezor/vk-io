@@ -53,15 +53,11 @@ export class APIError extends VKError {
         super({ code, message });
 
         this.params = payload.request_params;
-
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
         if (code === APIErrorCode.CAPTCHA) {
             this.captchaSid = payload.captcha_sid;
             this.captchaImg = payload.captcha_img;
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
         } else if (code === APIErrorCode.AUTH_VALIDATION) {
             this.redirectUri = payload.redirect_uri;
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-enum-comparison
         } else if (code === APIErrorCode.NEED_CONFIRMATION) {
             this.confirmationText = payload.confirmation_text;
         }

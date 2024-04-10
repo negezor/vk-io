@@ -111,7 +111,6 @@ export class DialogFlagsContext<S = ContextDefaultState>
     }
 
     protected hasFlag(flag: DialogFlag): boolean {
-        // eslint-disable-next-line no-bitwise
         return Boolean(this.flags & flag);
     }
 

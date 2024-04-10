@@ -12,7 +12,6 @@ export interface IStepContext<S extends Record<string, unknown>> extends IContex
 
 export type StepSceneHandler<
     T = object,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     S extends Record<string, unknown> = Record<string, any>
 > = (context: IStepContext<S> & T) => unknown;
 

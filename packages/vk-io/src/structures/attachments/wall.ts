@@ -2,7 +2,6 @@ import { Attachment, AttachmentFactoryOptions } from './attachment';
 import { ExternalAttachment } from './external';
 import { Attachmentable } from '../shared';
 
-// eslint-disable-next-line import/no-cycle
 import { transformAttachments } from './helpers';
 import { AttachmentType, kSerializeData } from '../../utils/constants';
 import { pickProperties, applyMixins } from '../../utils/helpers';
@@ -85,7 +84,6 @@ export interface IWallAttachmentPayload {
 export type WallAttachmentOptions =
     AttachmentFactoryOptions<IWallAttachmentPayload>;
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 class WallAttachment extends Attachment<IWallAttachmentPayload, AttachmentType.WALL | 'wall'> {
     protected [kAttachments]!: (Attachment | ExternalAttachment)[];
 
@@ -489,7 +487,6 @@ class WallAttachment extends Attachment<IWallAttachmentPayload, AttachmentType.W
     }
 }
 
-// eslint-disable-next-line
 interface WallAttachment extends Attachmentable {}
 applyMixins(WallAttachment, [Attachmentable]);
 

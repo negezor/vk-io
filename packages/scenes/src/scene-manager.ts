@@ -54,7 +54,6 @@ export class SceneManager {
     /**
      * Returns the middleware for intercept
      */
-    // eslint-disable-next-line class-methods-use-this
     public get middlewareIntercept(): Middleware<IContext> {
         return (context: IContext, next: () => Promise<void>): Promise<void> => {
             if (!context.scene.current) {

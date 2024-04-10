@@ -34,7 +34,6 @@ export class Chain {
     /**
      * Adds method to queue
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     public append<T = any>(method: string, params: object): Promise<T> {
         if (this.started) {
             return Promise.reject(new VKError({
@@ -57,7 +56,6 @@ export class Chain {
     /**
      * Promise based
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     public then(thenFn: (value: IExecutesPayload) => unknown, catchFn: (reason: unknown) => unknown): Promise<unknown> {
         return this.run().then(thenFn, catchFn);
     }

@@ -64,7 +64,6 @@ export type CommentContextSubType =
 | 'market_comment_delete'
 | 'market_comment_restore';
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 class CommentContext<S = ContextDefaultState>
     extends Context<
     ICommentContextPayload,
@@ -261,7 +260,6 @@ class CommentContext<S = ContextDefaultState>
     /**
      * Returns the likes
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     public get likes(): Record<string, any> | undefined {
         return this.payload.likes;
     }
@@ -276,7 +274,6 @@ class CommentContext<S = ContextDefaultState>
     /**
      * Edits a comment
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     editComment(options: { message?: string; attachments?: any }): Promise<number> {
         if (this.isDelete) {
             return Promise.reject(new VKError({
@@ -407,7 +404,6 @@ class CommentContext<S = ContextDefaultState>
     }
 }
 
-// eslint-disable-next-line
 interface CommentContext extends Attachmentable {}
 applyMixins(CommentContext, [Attachmentable]);
 

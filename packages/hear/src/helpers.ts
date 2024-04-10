@@ -7,7 +7,6 @@ export const splitPath = (path: string): string[] => (
 		.filter(Boolean)
 );
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const getObjectValue = (source: Record<string, any>, selectors: string[]): any => {
 	let link = source;
 

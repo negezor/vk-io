@@ -106,7 +106,6 @@ import { AllowArray, Constructor } from '../types';
 
 const debug = createDebug('vk-io:updates');
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const webhookContextsEvents: [string[], Constructor<any>][] = [
     [
         ['message_new', 'message_edit', 'message_reply'],
@@ -211,7 +210,6 @@ const webhookContextsEvents: [string[], Constructor<any>][] = [
     ],
 ];
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const pollingContextsEvents: [number[], Constructor<any>][] = [
     [
         [10002, 10003],
@@ -361,7 +359,6 @@ export class Updates {
 
     private composer = Composer.builder<Context>()
         .caught((context, error) => {
-            // eslint-disable-next-line no-console
             console.error(error);
         });
 
@@ -457,7 +454,6 @@ export class Updates {
     ): this;
 
     public on<T = object>(
-        // eslint-disable-next-line max-len
         events: AllowArray<DialogNotificationSettingsContextType | DialogNotificationSettingsContextSubType>,
         handler: AllowArray<Middleware<DialogNotificationSettingsContext & T>>
     ): this;
@@ -521,8 +517,6 @@ export class Updates {
         events: AllowArray<FriendActivityContextType | FriendActivityContextSubType>,
         handler: AllowArray<Middleware<FriendActivityContext & T>>
     ): this;
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     public on<T = object, P extends Record<string, any> = object>(
         events: AllowArray<VKAppPayloadContextType | VKAppPayloadContextSubType>,
         handler: AllowArray<Middleware<VKAppPayloadContext<ContextDefaultState, P> & T>>
@@ -568,8 +562,6 @@ export class Updates {
         events: AllowArray<DonutWithdrawContextType | DonutWithdrawContextSubType>,
         handler: AllowArray<Middleware<DonutWithdrawContext & T>>
     ): this;
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     public on<T = object, P extends Record<string, any> = object>(
         events: AllowArray<UnsupportedEventContextType>,
         handler: AllowArray<Middleware<UnsupportedEventContext<ContextDefaultState, P> & T>>
@@ -608,7 +600,6 @@ export class Updates {
     /**
      * Handles longpoll event
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     public handlePollingUpdate(update: any[]): Promise<void> {
         debug('longpoll update', update);
 
@@ -635,7 +626,6 @@ export class Updates {
     /**
      * Handles webhook event
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     public handleWebhookUpdate(update: Record<string, any>): Promise<void> {
         debug('webhook update', update);
 

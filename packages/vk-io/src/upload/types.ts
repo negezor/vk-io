@@ -41,13 +41,11 @@ export interface IUploadConduct {
     /**
      * Upload params
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     params: IUploadParams & Record<string, any>;
 
     /**
      * Get server functions
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     getServer: (params: any) => Promise<{ upload_url: string }>;
     /**
      * Copies server params
@@ -57,7 +55,6 @@ export interface IUploadConduct {
     /**
      * Save files functions
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     saveFiles: (params: any) => Promise<any>;
     /**
      * Copies save params

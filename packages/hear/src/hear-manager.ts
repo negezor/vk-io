@@ -14,8 +14,6 @@ export class HearManager<C extends Context> {
     private composer = Composer.builder<C>();
 
     private fallbackHandler: Middleware<C> = skipMiddleware;
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private composed!: Middleware<C>;
 
     public constructor() {
@@ -25,10 +23,7 @@ export class HearManager<C extends Context> {
     public get length(): number {
         return this.composer.length;
     }
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     public get middleware(): Middleware<C> {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return (context: C, next: NextMiddleware): unknown => (
             this.composed(context, next)
         );
@@ -84,7 +79,6 @@ export class HearManager<C extends Context> {
                     const passed = condition.test(text as string);
 
                     if (passed) {
-                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                         // @ts-expect-error
                         context.$match = (text as string).match(condition)!;
                     }

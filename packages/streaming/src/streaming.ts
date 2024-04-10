@@ -91,8 +91,6 @@ export class StreamingAPI {
         }
 
         const { socket } = this;
-
-        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         socket.on('message', async (data: string) => {
             let message;
 
@@ -127,7 +125,6 @@ export class StreamingAPI {
                     }
                 }
             } catch (error) {
-                // eslint-disable-next-line no-console
                 console.log('Handle event error', error);
             }
         });
@@ -205,8 +202,6 @@ export class StreamingAPI {
                 'content-type': 'application/json',
             },
         });
-
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const result = await response.json() as any;
 
         if (result.error !== undefined) {

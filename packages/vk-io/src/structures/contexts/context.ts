@@ -4,7 +4,6 @@ import { API } from '../../api';
 import { Upload } from '../../upload';
 import { kSerializeData, UpdateSource } from '../../utils/constants';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ContextDefaultState = Record<string, any>;
 
 export interface IContextOptions<
@@ -50,8 +49,6 @@ export class Context<
     public $groupId?: number;
 
     protected payload: P;
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [key: string]: any;
 
     /**
@@ -111,7 +108,6 @@ export class Context<
      * Returns the custom data
      */
     public [kSerializeData](): object {
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { api, upload, ...payload } = this;
 
         return payload;

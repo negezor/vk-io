@@ -30,7 +30,6 @@ export interface IStreamingContextPayload {
     action_time: number;
     creation_time: number;
     attachments: object[];
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     geo: Record<string, any>;
     shared_post_text?: string;
     shared_post_creation_time?: number;
@@ -48,7 +47,6 @@ export interface IStreamingContextPayload {
 export type StreamingContextOptions<S> =
     ContextFactoryOptions<IStreamingContextPayload, S>;
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 class StreamingContext<S = ContextDefaultState>
     extends Context<IStreamingContextPayload, S> {
     public constructor(options: StreamingContextOptions<S>) {
@@ -283,7 +281,6 @@ class StreamingContext<S = ContextDefaultState>
     }
 }
 
-// eslint-disable-next-line
 interface StreamingContext extends Attachmentable {}
 applyMixins(StreamingContext, [
     Attachmentable,

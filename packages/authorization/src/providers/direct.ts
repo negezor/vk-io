@@ -97,7 +97,6 @@ export class DirectAuthorization {
         this.options = {
             timeout: 10_000,
             headers: options.headers || {
-                // eslint-disable-next-line @typescript-eslint/naming-convention
                 'User-Agent': DESKTOP_USER_AGENT,
             },
 
@@ -175,7 +174,6 @@ export class DirectAuthorization {
             username: String(login || phone),
             grant_type: 'password',
             client_secret: clientSecret,
-            // eslint-disable-next-line @typescript-eslint/naming-convention
             '2fa_supported': String(Number(this.options.callbackService.hasTwoFactorHandler)),
             v: apiVersion,
             client_id: clientId,

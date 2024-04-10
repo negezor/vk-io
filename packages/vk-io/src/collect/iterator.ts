@@ -24,7 +24,6 @@ export interface ICollectIteratorOptions {
     api: API;
 
     method: string;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     params: Record<string, any> & {
         count?: number;
         offset?: number;
@@ -144,7 +143,6 @@ export async function* createCollectIterator<T>({
             }
 
             if ((error as APIError).code === APIErrorCode.RUNTIME) {
-                // eslint-disable-next-line no-param-reassign
                 parallelRequests -= 1;
 
                 continue;

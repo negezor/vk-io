@@ -2,7 +2,6 @@ import { getExecuteParams } from '../utils/helpers';
 
 export interface IExecuteCodeOptions {
     method: string;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     params: Record<string, any>;
 }
 

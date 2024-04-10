@@ -24,7 +24,6 @@ export class SceneContext<S extends Record<string, unknown>> {
      * ctx.scene.username = myInputText;
      * ```
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     public state!: S;
 
     /**
@@ -168,7 +167,6 @@ export class SceneContext<S extends Record<string, unknown>> {
      * Reset state/session
      */
     public reset(): void {
-        // eslint-disable-next-line no-underscore-dangle
         delete this.context.session.__scene;
 
         this.updateSession();
@@ -178,12 +176,9 @@ export class SceneContext<S extends Record<string, unknown>> {
      * Updates session and state is lazy
      */
     private updateSession(): void {
-        // eslint-disable-next-line no-underscore-dangle
         this.session = new Proxy(this.context[this.sessionKey].__scene || {}, {
             set: (target, prop, value): boolean => {
                 target[prop] = value;
-
-                // eslint-disable-next-line no-underscore-dangle
                 this.context[this.sessionKey].__scene = target;
 
                 return true;

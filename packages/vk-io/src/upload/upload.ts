@@ -465,7 +465,6 @@ export class Upload {
     /**
      * Uploads document
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async conductDocument(params: IUploadParams & { type?: string }, { attachmentType = 'doc' } = {}): Promise<any> {
         const response = await this.conduct({
             field: 'file',
@@ -508,7 +507,6 @@ export class Upload {
     /**
      * Uploads wall document
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async conductWallDocument(params: IUploadParams & { type?: string }, { attachmentType = 'doc' } = {}): Promise<any> {
         const response = await this.conduct({
             field: 'file',
@@ -552,7 +550,6 @@ export class Upload {
     /**
      * Uploads wall document
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     async conductMessageDocument(params: IUploadParams & { type?: string }, { attachmentType = 'doc' } = {}): Promise<any> {
         const response = await this.conduct({
             field: 'file',
@@ -831,7 +828,6 @@ export class Upload {
         params: IUploadParams & {
             owner_id?: number;
         },
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ): Promise<Record<string, any>> {
         return this.conduct({
             field: 'file',
@@ -864,7 +860,6 @@ export class Upload {
 
         maxFiles = 1,
         attachmentType,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }: IUploadConduct): Promise<any> {
         if (!params || !params.source) {
             throw new UploadError({
@@ -876,7 +871,6 @@ export class Upload {
         const source = normalizeSource(params.source);
 
         if (source.uploadUrl !== undefined) {
-            // eslint-disable-next-line no-param-reassign
             getServer = (): Promise<{ upload_url: string }> => Promise.resolve({
                 upload_url: source.uploadUrl!,
             });
@@ -936,7 +930,6 @@ export class Upload {
     /**
      * Building form data
      */
-    // eslint-disable-next-line class-methods-use-this
     async buildPayload({
         field,
         values,
@@ -1037,7 +1030,6 @@ export class Upload {
         formData: FormData;
         timeout: number;
         forceBuffer: boolean;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     }): Promise<any> {
         const { agent, uploadTimeout } = this.options;
 
@@ -1050,10 +1042,7 @@ export class Upload {
         const interval = setTimeout(() => controller.abort(), timeout || uploadTimeout);
 
         const headers: Record<string, string> = {
-            // eslint-disable-next-line @typescript-eslint/naming-convention
             Connection: 'keep-alive',
-
-            // eslint-disable-next-line @typescript-eslint/naming-convention
             ...encoder.headers,
         };
 
@@ -1078,8 +1067,6 @@ export class Upload {
             if (!response.ok) {
                 throw new Error(response.statusText);
             }
-
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const result = await response.json() as any;
 
             return result.response !== undefined

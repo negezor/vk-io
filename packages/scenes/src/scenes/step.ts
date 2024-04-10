@@ -8,7 +8,6 @@ import { StepSceneHandler, IStepContext, IStepSceneOptions } from './step.types'
 
 export class StepScene<
     T = MessageContext,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     S extends Record<string, unknown> = Record<string, any>
 > implements IScene<S> {
     public slug: string;
@@ -27,19 +26,13 @@ export class StepScene<
         this.slug = slug;
 
         this.steps = options.steps;
-
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
         this.onEnterHandler = options.enterHandler || ((): void => {});
-
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
         this.onLeaveHandler = options.leaveHandler || ((): void => {});
     }
 
     public async enterHandler(context: IStepContext<S> & T): Promise<void> {
         context.scene.step = new StepSceneContext<S>({
             context,
-
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             steps: this.steps,
         });

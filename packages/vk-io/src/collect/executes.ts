@@ -4,7 +4,6 @@ import { ExecuteError } from '../errors';
 import { getChainReturn, resolveExecuteTask } from '../utils/helpers';
 
 export interface IExecutesPayload {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     response: any[];
     errors: ExecuteError[];
 }
@@ -13,7 +12,6 @@ export interface IExecutesOptions {
     api: API;
 
     method: string;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     queue: Record<string, any>[];
 }
 
@@ -38,8 +36,6 @@ export const executeRequests = async (
             const response = await api.execute({ code });
 
             resolveExecuteTask(tasks, response);
-
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
             out.response.push(...response.response);
             out.errors.push(...response.errors);
         } catch (error) {

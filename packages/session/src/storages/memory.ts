@@ -30,8 +30,6 @@ export class MemoryStorage implements ISessionStorage {
     public delete(key: string): Promise<boolean> {
         return Promise.resolve(this.store.delete(key));
     }
-
-    // eslint-disable-next-line class-methods-use-this
     public async touch(): Promise<void> {
         // ...
     }

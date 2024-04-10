@@ -219,7 +219,6 @@ export class MessageFlagsContext<S = ContextDefaultState>
     }
 
     protected hasFlag(flag: MessageFlag): boolean {
-        // eslint-disable-next-line no-bitwise
         return Boolean(this.flags & flag);
     }
 

@@ -18,7 +18,6 @@ const idToAttachmentPayload = (key: string): { id: number; owner_id: number } =>
 };
 
 const attachmentHandlers = {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     sticker: (raw: any, key: string): object => ({
         type: 'sticker',
         sticker: {
@@ -26,7 +25,6 @@ const attachmentHandlers = {
             product_id: Number(raw[`${key}_product_id`]),
         },
     }),
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     money_transfer: (raw: any, key: string): object => ({
         type: 'money_transfer',
         money_transfer: {
@@ -35,14 +33,12 @@ const attachmentHandlers = {
             currency: Number(raw[`${key}_currency`]),
         },
     }),
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     gift: (raw: any, key: string): object => ({
         type: 'gift',
         gift: {
             id: Number(raw[key]),
         },
     }),
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     link: (raw: any, key: string): object => {
         const photoId = raw[`${key}_photo`] as string;
 
@@ -58,7 +54,6 @@ const attachmentHandlers = {
             },
         };
     },
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     doc: (raw: any, key: string, _: string, index: number): object => {
         const type = DocumentKind[raw[`${key}_kind`]] || AttachmentType.DOCUMENT;
 
@@ -71,7 +66,6 @@ const attachmentHandlers = {
             [type]: idToAttachmentPayload(raw[key] as string),
         };
     },
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     default: (raw: any, key: string, type: string): object => ({
         type,
         [type]: idToAttachmentPayload(raw[key] as string),
@@ -115,7 +109,6 @@ export function transformMessage(rawMessage: [
         payload?: string;
     },
     // attachments
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     Record<string, any> & {
         fwd?: string;
         reply?: string;
@@ -126,7 +119,6 @@ export function transformMessage(rawMessage: [
     number,
     // updateTimestamp
     number
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any,
 ]): IMessageContextPayload['message'] {
     if (rawMessage[0] !== 10004) {
         // set minor id to 0
@@ -146,8 +138,6 @@ export function transformMessage(rawMessage: [
         10: id,
         11: update_time,
     } = rawMessage;
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const message = {
         id,
         conversation_message_id,
@@ -169,14 +159,10 @@ export function transformMessage(rawMessage: [
     }
 
     if (peer_id < 0 && message.peer_id !== message.from_id) {
-        // eslint-disable-next-line no-bitwise
         message.out = Number((flags & 2) === 0);
-        // eslint-disable-next-line no-bitwise
         message.important = (flags & 1) !== 0;
     } else {
-        // eslint-disable-next-line no-bitwise
         message.out = Number((flags & 2) !== 0);
-        // eslint-disable-next-line no-bitwise
         message.important = (flags & 8) !== 0;
     }
 

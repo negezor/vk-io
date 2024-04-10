@@ -3,7 +3,6 @@
 // I wanted to finish as soon as possible
 // So what quality do not want to answer
 // I hope in the future I will rewrite it
-// eslint-disable-next-line import/no-extraneous-dependencies
 const ts = require('typescript');
 
 const createPrinter = require('./printer');
@@ -293,13 +292,10 @@ async function generate() {
             exported: true,
         }),
     );
-
-    // eslint-disable-next-line no-console
     console.log('Schema successful generated!');
 }
 
 generate().catch((error) => {
-    // eslint-disable-next-line no-console
     console.error('Could not generate schema', error);
 
     process.exit(1);

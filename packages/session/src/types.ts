@@ -6,16 +6,12 @@ export type Middleware<T> = (context: T, next: () => Promise<void>) => unknown;
 
 export type SessionForceUpdate = () => Promise<boolean>;
 
-// eslint-disable-next-line @typescript-eslint/consistent-indexed-object-style
 export interface IContext extends Context {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [key: string]: any;
 }
 
 export interface ISessionContext {
     $forceUpdate(): Promise<boolean>;
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [key: string]: any;
 }
 

@@ -19,7 +19,6 @@ export type NewAttachmentsContextSubType =
 | 'video_new'
 | 'audio_new';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 const subAttachmentTypes = {
     photo_new: PhotoAttachment,
     video_new: VideoAttachment,
@@ -33,7 +32,6 @@ export interface INewAttachmentsContextPayload {
 export type NewAttachmentsContextOptions<S> =
     ContextFactoryOptions<INewAttachmentsContextPayload, S>;
 
-// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 class NewAttachmentsContext<S = ContextDefaultState>
     extends Context<
     INewAttachmentsContextPayload,
@@ -106,7 +104,6 @@ class NewAttachmentsContext<S = ContextDefaultState>
             const [audio] = this.getAttachments(AttachmentType.AUDIO);
 
             // @ts-expect-error no audio types
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-call
             return this.api.audio.delete({
                 owner_id: audio.ownerId,
                 audio_id: audio.id,
@@ -132,7 +129,6 @@ class NewAttachmentsContext<S = ContextDefaultState>
     }
 }
 
-// eslint-disable-next-line
 interface NewAttachmentsContext extends Attachmentable {}
 applyMixins(NewAttachmentsContext, [Attachmentable]);
 

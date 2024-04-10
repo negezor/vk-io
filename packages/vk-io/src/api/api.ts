@@ -217,7 +217,6 @@ export interface IExecuteResponse<T> {
 /**
  * Working with API methods
  */
-// eslint-disable-next-line @typescript-eslint/no-unsafe-declaration-merging
 class API {
     public options: IAPIOptions;
 
@@ -240,7 +239,6 @@ class API {
             apiRetryLimit: 3,
             apiTimeout: 10e3,
             apiHeaders: {
-                // eslint-disable-next-line @typescript-eslint/naming-convention
                 'User-Agent': `vk-io/${version} (+https://github.com/negezor/vk-io)`,
             },
             apiExecuteCount: 25,
@@ -264,10 +262,8 @@ class API {
         };
 
         for (const group of groupMethods) {
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             this[group] = new Proxy(Object.create(null), {
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 get: (obj, prop: string) => (params: object): Promise<any> => (
                     this.callWithRequest(new APIRequest({
                         api: this,
@@ -291,7 +287,6 @@ class API {
     /**
      * Call execute method
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     public execute<T = any>(
         params: Record<string, unknown> & { code: string },
     ): Promise<IExecuteResponse<T>> {
@@ -301,7 +296,6 @@ class API {
     /**
      * Call execute procedure
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     public procedure<T = any>(name: string, params: object): Promise<IExecuteResponse<T>> {
         return this.call(`execute.${name}`, params);
     }
@@ -309,7 +303,6 @@ class API {
     /**
      * Call raw method
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     public call<T = any>(method: string, params: object): Promise<T> {
         return this.callWithRequest(new APIRequest({
             method,
@@ -322,7 +315,6 @@ class API {
     /**
      * Adds request for queue
      */
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     public callWithRequest<T = any>(request: APIRequest): Promise<T> {
         this.worker.enqueue(request);
 
@@ -375,7 +367,6 @@ inspectable(API, {
     }),
 });
 
-// eslint-disable-next-line
 interface API extends APIMethods {}
 
 export { API };

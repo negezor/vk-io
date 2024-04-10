@@ -24,7 +24,6 @@ export class Keyboard {
      *
      * Hex color #FFFFFF
      */
-    // eslint-disable-next-line class-methods-use-this
     public static get SECONDARY_COLOR(): ButtonColor.SECONDARY {
         return ButtonColor.SECONDARY;
     }
@@ -34,7 +33,6 @@ export class Keyboard {
      *
      * Hex color #5181B8
      */
-    // eslint-disable-next-line class-methods-use-this
     public static get PRIMARY_COLOR(): ButtonColor.PRIMARY {
         return ButtonColor.PRIMARY;
     }
@@ -44,7 +42,6 @@ export class Keyboard {
      *
      * Hex color #E64646
      */
-    // eslint-disable-next-line class-methods-use-this
     public static get NEGATIVE_COLOR(): ButtonColor.NEGATIVE {
         return ButtonColor.NEGATIVE;
     }
@@ -54,7 +51,6 @@ export class Keyboard {
      *
      * Hex color #4BB34B
      */
-    // eslint-disable-next-line class-methods-use-this
     public static get POSITIVE_COLOR(): ButtonColor.POSITIVE {
         return ButtonColor.POSITIVE;
     }

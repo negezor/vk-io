@@ -13,7 +13,6 @@ export type UnsupportedEventOptions<S, P> =
 
 export class UnsupportedEventContext<
     S = ContextDefaultState,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     P extends Record<string, any> = object
 >
     extends Context<

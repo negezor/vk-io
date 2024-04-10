@@ -16,7 +16,6 @@ export interface IDocumentAttachmentPayload {
     url?: string;
     date?: number;
     type?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     preview?: {
         photo?: IPhotoAttachmentPayload['sizes'];
         graffiti?: {

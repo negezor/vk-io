@@ -48,10 +48,8 @@ const attachmentsTypes = {
  * Transform raw attachments to wrapper
  */
 export const transformAttachments = (
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     rawAttachments: any[],
     api: API,
-// eslint-disable-next-line function-paren-newline
 ): (Attachment | ExternalAttachment)[] => {
     const attachments: (Attachment | ExternalAttachment)[] = [];
 

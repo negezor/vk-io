@@ -125,25 +125,19 @@ export const getPeerType = (id: number): string => {
  * Displays deprecated message
  */
 export const showDeprecatedMessage = (message: string): void => {
-    // eslint-disable-next-line no-console
     console.log(' \u001b[31mDeprecated:\u001b[39m', message);
 };
 
-// eslint-disable-next-line max-len
-// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
 export const applyMixins = (derivedCtor: any, baseCtors: any[]): void => {
     for (const baseCtor of baseCtors) {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         for (const name of Object.getOwnPropertyNames(baseCtor.prototype)) {
             if (name === 'constructor') {
                 continue;
             }
 
             Object.defineProperty(
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
                 derivedCtor.prototype,
                 name,
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
                 Object.getOwnPropertyDescriptor(baseCtor.prototype, name)!,
             );
         }

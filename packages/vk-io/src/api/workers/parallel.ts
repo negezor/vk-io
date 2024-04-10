@@ -58,8 +58,6 @@ export class ParallelWorker extends SequentialWorker {
             }
         }
     }
-
-    // eslint-disable-next-line class-methods-use-this
     protected skipMethod(method: string): boolean {
         return method.startsWith('execute')
             || this.api.options.apiExecuteUnsupportedMethods.includes(method);

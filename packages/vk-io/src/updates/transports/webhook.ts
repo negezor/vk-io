@@ -109,7 +109,6 @@ export class WebhookTransport {
             );
 
             await promisify(webhookServer.listen)
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                 // @ts-ignore https://devblogs.microsoft.com/typescript/announcing-typescript-4-1/#unmatched-parameters-are-no-longer-related
                 .call(webhookServer, { host, port });
 
@@ -155,8 +154,6 @@ export class WebhookTransport {
 
                 return;
             }
-
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const reqBody = (req as typeof req & { body: string | Record<string, any>; }).body;
 
             let update;
@@ -198,7 +195,6 @@ export class WebhookTransport {
                 res.end('ok');
 
                 Promise.resolve(this.webhookHandler(update)).catch((error: Error): void => {
-                    // eslint-disable-next-line no-console
                     console.error('Handle webhook update error', error);
                 });
             } catch (error) {
@@ -218,7 +214,6 @@ export class WebhookTransport {
      * Returns the middleware for the webhook under koa
      */
     public getKoaWebhookMiddleware(): WebhookTransportKoaCallback {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/require-await
         return async (context: any): Promise<void> => {
             const update = context.request.body;
 
@@ -243,7 +238,6 @@ export class WebhookTransport {
             }
 
             context.body = 'ok';
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-call
             context.set('connection', 'keep-alive');
 
             /* Do not delay server response */

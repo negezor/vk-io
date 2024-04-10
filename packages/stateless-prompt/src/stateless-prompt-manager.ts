@@ -36,7 +36,6 @@ export class StatelessPromptManager {
      * updates.on('message_new', agePrompt.middlewareIntercept);
      * ```
      */
-    // eslint-disable-next-line class-methods-use-this
     public get middlewareIntercept(): Middleware<MessageContext> {
         return (context: MessageContext, next: () => Promise<void>): unknown => {
             const { replyMessage } = context;

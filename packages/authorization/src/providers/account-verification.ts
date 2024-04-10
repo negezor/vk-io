@@ -88,7 +88,6 @@ export class AccountVerification {
         this.options = {
             timeout: 10_000,
             headers: options.headers || {
-                // eslint-disable-next-line @typescript-eslint/naming-convention
                 'User-Agent': DESKTOP_USER_AGENT,
             },
 

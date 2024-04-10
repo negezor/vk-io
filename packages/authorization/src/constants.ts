@@ -65,7 +65,6 @@ export const officialAppCredentials = {
         clientId: '2274003',
         clientSecret: 'hHbZxrka2uZ6jB1inYsH',
         headers: {
-            // eslint-disable-next-line @typescript-eslint/naming-convention
             'User-Agent': 'VKAndroidApp/7.7-10445 (Android 11; SDK 30; arm64-v8a; Xiaomi M2003J15SC; ru; 2340x1080)',
         },
     },

@@ -16,7 +16,6 @@ export interface IWallReplyAttachmentPayload {
     reply_to_user: number;
     reply_to_comment: number;
     parents_stack: number[];
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     attachments: any[];
     thread: {
         count: number;
