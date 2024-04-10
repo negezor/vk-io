@@ -12,7 +12,8 @@ jobs:
           # - 12.x
           # Segmentation fault (core dumped) https://github.com/nodejs/node/issues/35889
           # - 14.x
-          - 16.x
+          # Doesn't support --import for ts-loader in tests
+          # - 16.x
           - 18.x
           - 20.x
     steps:
