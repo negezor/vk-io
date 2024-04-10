@@ -1,8 +1,8 @@
 import { Attachment, type AttachmentFactoryOptions } from './attachment';
 
-import { pickProperties } from '../../utils/helpers';
 import { AttachmentType, kSerializeData } from '../../utils/constants';
-import { PhotoAttachment, type IPhotoAttachmentPayload } from './photo';
+import { pickProperties } from '../../utils/helpers';
+import { type IPhotoAttachmentPayload, PhotoAttachment } from './photo';
 
 export interface IPollAttachmentPayload {
     id: number;
@@ -46,8 +46,7 @@ export interface IPollAttachmentPayload {
     photo?: IPhotoAttachmentPayload;
 }
 
-export type PollAttachmentOptions =
-    AttachmentFactoryOptions<IPollAttachmentPayload>;
+export type PollAttachmentOptions = AttachmentFactoryOptions<IPollAttachmentPayload>;
 
 export class PollAttachment extends Attachment<IPollAttachmentPayload, AttachmentType.POLL | 'poll'> {
     public photo?: PhotoAttachment;
@@ -85,7 +84,7 @@ export class PollAttachment extends Attachment<IPollAttachmentPayload, Attachmen
             owner_id: this.ownerId,
         });
 
-        this.payload = (poll as unknown) as IPollAttachmentPayload;
+        this.payload = poll as unknown as IPollAttachmentPayload;
 
         this.$filled = true;
     }

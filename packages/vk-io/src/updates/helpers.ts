@@ -10,7 +10,5 @@ export const parseRequestJSON = async (req: IncomingMessage): Promise<Record<str
         chunks.push(chunk as Buffer);
     }
 
-    return JSON.parse(
-        Buffer.concat(chunks, totalSize).toString('utf8'),
-    );
+    return JSON.parse(Buffer.concat(chunks, totalSize).toString('utf8'));
 };

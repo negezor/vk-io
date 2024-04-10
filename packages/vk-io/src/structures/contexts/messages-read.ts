@@ -1,13 +1,11 @@
-import { Context, type ContextFactoryOptions, type ContextDefaultState } from './context';
+import { Context, type ContextDefaultState, type ContextFactoryOptions } from './context';
 
-import { pickProperties } from '../../utils/helpers';
 import { kSerializeData } from '../../utils/constants';
+import { pickProperties } from '../../utils/helpers';
 
 export type MessagesReadContextType = 'messages_read';
 
-export type MessagesReadContextSubType =
-'messages_read_inbox'
-| 'messages_read_outbox';
+export type MessagesReadContextSubType = 'messages_read_inbox' | 'messages_read_outbox';
 
 const subTypes: Record<number, MessagesReadContextSubType> = {
     10006: 'messages_read_inbox',
@@ -19,16 +17,14 @@ export interface IMessagesReadContextPayload {
     local_id: number;
 }
 
-export type MessagesReadContextContextOptions<S> =
-    ContextFactoryOptions<number[], S>;
+export type MessagesReadContextContextOptions<S> = ContextFactoryOptions<number[], S>;
 
-export class MessagesReadContext<S = ContextDefaultState>
-    extends Context<
+export class MessagesReadContext<S = ContextDefaultState> extends Context<
     IMessagesReadContextPayload,
     S,
     MessagesReadContextType,
     MessagesReadContextSubType
-    > {
+> {
     public constructor(options: MessagesReadContextContextOptions<S>) {
         const [eventId, peerId, localId] = options.payload;
 
@@ -36,9 +32,7 @@ export class MessagesReadContext<S = ContextDefaultState>
             ...options,
 
             type: 'messages_read',
-            subTypes: [
-                subTypes[eventId],
-            ],
+            subTypes: [subTypes[eventId]],
 
             payload: {
                 peer_id: peerId,
@@ -79,11 +73,6 @@ export class MessagesReadContext<S = ContextDefaultState>
      * Returns the custom data
      */
     public [kSerializeData](): object {
-        return pickProperties(this, [
-            'id',
-            'peerId',
-            'isInbox',
-            'isOutbox',
-        ]);
+        return pickProperties(this, ['id', 'peerId', 'isInbox', 'isOutbox']);
     }
 }

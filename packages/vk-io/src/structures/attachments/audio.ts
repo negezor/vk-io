@@ -1,7 +1,7 @@
 import { Attachment, type AttachmentFactoryOptions } from './attachment';
 
-import { pickProperties } from '../../utils/helpers';
 import { AttachmentType, kSerializeData } from '../../utils/constants';
+import { pickProperties } from '../../utils/helpers';
 
 export interface IAudioAttachmentPayload {
     id: number;
@@ -19,8 +19,7 @@ export interface IAudioAttachmentPayload {
     url?: string;
 }
 
-export type AudioAttachmentOptions =
-    AttachmentFactoryOptions<IAudioAttachmentPayload>;
+export type AudioAttachmentOptions = AttachmentFactoryOptions<IAudioAttachmentPayload>;
 
 export class AudioAttachment extends Attachment<IAudioAttachmentPayload, AttachmentType.AUDIO | 'audio'> {
     /**
@@ -44,8 +43,10 @@ export class AudioAttachment extends Attachment<IAudioAttachmentPayload, Attachm
             return;
         }
 
-        // @ts-expect-error no audio types
-        const { items: [audio] } = await this.api.audio.getById({
+        const {
+            items: [audio],
+            // @ts-expect-error no audio types
+        } = await this.api.audio.getById({
             audios: `${this.ownerId}_${this.id}`,
         });
 

@@ -1,7 +1,7 @@
-import { Context, type ContextFactoryOptions, type ContextDefaultState } from './context';
+import { Context, type ContextDefaultState, type ContextFactoryOptions } from './context';
 
-import { pickProperties } from '../../utils/helpers';
 import { kSerializeData } from '../../utils/constants';
+import { pickProperties } from '../../utils/helpers';
 
 export type VoteContextType = 'vote';
 
@@ -14,24 +14,20 @@ export interface IVoteContextPayload {
     option_id: number;
 }
 
-export type VoteContextOptions<S> =
-    ContextFactoryOptions<IVoteContextPayload, S>;
+export type VoteContextOptions<S> = ContextFactoryOptions<IVoteContextPayload, S>;
 
-export class VoteContext<S = ContextDefaultState>
-    extends Context<
+export class VoteContext<S = ContextDefaultState> extends Context<
     IVoteContextPayload,
     S,
     VoteContextType,
     VoteContextSubType
-    > {
+> {
     public constructor(options: VoteContextOptions<S>) {
         super({
             ...options,
 
             type: 'vote',
-            subTypes: [
-                options.updateType as VoteContextSubType,
-            ],
+            subTypes: [options.updateType as VoteContextSubType],
         });
     }
 
@@ -67,11 +63,6 @@ export class VoteContext<S = ContextDefaultState>
      * Returns the custom data
      */
     public [kSerializeData](): object {
-        return pickProperties(this, [
-            'id',
-            'userId',
-            'ownerId',
-            'optionId',
-        ]);
+        return pickProperties(this, ['id', 'userId', 'ownerId', 'optionId']);
     }
 }

@@ -1,11 +1,11 @@
 import createDebug from 'debug';
 
-import { ImplicitFlow, type IImplicitFlowOptions } from './implicit-flow';
+import { type IImplicitFlowOptions, ImplicitFlow } from './implicit-flow';
 
-import type { Response } from '../fetch-cookie';
+import { AuthErrorCode, CALLBACK_BLANK } from '../constants';
 import { AuthorizationError } from '../errors';
-import { getGroupPermissionsByName, getAllGroupPermissions } from '../helpers';
-import { CALLBACK_BLANK, AuthErrorCode } from '../constants';
+import type { Response } from '../fetch-cookie';
+import { getAllGroupPermissions, getGroupPermissionsByName } from '../helpers';
 
 const debug = createDebug('vk-io:authorization:implicit-flow-user');
 
@@ -30,7 +30,7 @@ export class ImplicitFlowGroups extends ImplicitFlow {
             groupIds = [groupIds];
         }
 
-        this.groupIds = groupIds.map((rawGroupId) => {
+        this.groupIds = groupIds.map(rawGroupId => {
             const groupId = Number(rawGroupId);
 
             return Math.abs(groupId);

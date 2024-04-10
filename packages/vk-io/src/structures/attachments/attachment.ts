@@ -1,7 +1,7 @@
 import { inspectable } from 'inspectable';
 
 import type { API } from '../../api';
-import { kSerializeData, type AttachmentType } from '../../utils/constants';
+import { type AttachmentType, kSerializeData } from '../../utils/constants';
 
 /**
  * Parse attachments
@@ -21,8 +21,7 @@ export interface IAttachmentOptions<P, Type extends string = string> {
     payload: Partial<ISharedAttachmentPayload> & P;
 }
 
-export type AttachmentFactoryOptions<P> =
-    Omit<IAttachmentOptions<P>, 'type'>;
+export type AttachmentFactoryOptions<P> = Omit<IAttachmentOptions<P>, 'type'>;
 
 export class Attachment<P = object, Type extends string | AttachmentType = string> {
     public type: Type;
@@ -106,24 +105,16 @@ export class Attachment<P = object, Type extends string | AttachmentType = strin
      * Checks that the attachment is equivalent with object
      */
     public equals(attachment: Attachment | string): boolean {
-        const target = typeof attachment === 'string'
-            ? Attachment.fromString(attachment, this.api)
-            : attachment;
+        const target = typeof attachment === 'string' ? Attachment.fromString(attachment, this.api) : attachment;
 
-        return (
-            this.type === target.type
-            && this.ownerId === target.ownerId
-            && this.id === target.id
-        );
+        return this.type === target.type && this.ownerId === target.ownerId && this.id === target.id;
     }
 
     /**
      * Returns a string to attach a VK
      */
     public toString(): string {
-        const accessKey = this.accessKey !== undefined
-            ? `_${this.accessKey}`
-            : '';
+        const accessKey = this.accessKey !== undefined ? `_${this.accessKey}` : '';
 
         return `${this.type}${this.ownerId}_${this.id}${accessKey}`;
     }
@@ -152,8 +143,10 @@ export class Attachment<P = object, Type extends string | AttachmentType = strin
 }
 
 inspectable(Attachment, {
-    serialize: (instance) => instance.toJSON(),
-    stringify: (instance, payload, context): string => (
-        `${context.stylize(instance.constructor.name, 'special')} <${context.stylize(String(instance), 'string')}> ${context.inspect(payload)}`
-    ),
+    serialize: instance => instance.toJSON(),
+    stringify: (instance, payload, context): string =>
+        `${context.stylize(instance.constructor.name, 'special')} <${context.stylize(
+            String(instance),
+            'string',
+        )}> ${context.inspect(payload)}`,
 });

@@ -1,7 +1,7 @@
 import { Attachment, type AttachmentFactoryOptions } from './attachment';
 
-import { pickProperties } from '../../utils/helpers';
 import { AttachmentType, kSerializeData } from '../../utils/constants';
+import { pickProperties } from '../../utils/helpers';
 
 export interface IGraffitiAttachmentPayload {
     id: number;
@@ -13,11 +13,9 @@ export interface IGraffitiAttachmentPayload {
     url?: string;
 }
 
-export type GraffitiAttachmentOptions =
-    AttachmentFactoryOptions<IGraffitiAttachmentPayload>;
+export type GraffitiAttachmentOptions = AttachmentFactoryOptions<IGraffitiAttachmentPayload>;
 
-export class GraffitiAttachment
-    extends Attachment<IGraffitiAttachmentPayload, AttachmentType.GRAFFITI | 'graffiti'> {
+export class GraffitiAttachment extends Attachment<IGraffitiAttachmentPayload, AttachmentType.GRAFFITI | 'graffiti'> {
     /**
      * Constructor
      */
@@ -73,10 +71,6 @@ export class GraffitiAttachment
      * Returns the custom data
      */
     public [kSerializeData](): object {
-        return pickProperties(this, [
-            'height',
-            'width',
-            'url',
-        ]);
+        return pickProperties(this, ['height', 'width', 'url']);
     }
 }

@@ -23,8 +23,6 @@ export class AuthorizationError extends VKError {
     public constructor({ message, code, pageHtml }: IAuthorizationErrorOptions) {
         super({ message, code });
 
-        this.pageHtml = isDebug
-            ? pageHtml
-            : undefined;
+        this.pageHtml = isDebug ? pageHtml : undefined;
     }
 }

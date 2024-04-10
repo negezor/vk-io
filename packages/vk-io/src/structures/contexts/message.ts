@@ -1,50 +1,40 @@
 /* eslint-disable max-classes-per-file */
-import { Context, type ContextFactoryOptions, type ContextDefaultState } from './context';
+import { Context, type ContextDefaultState, type ContextFactoryOptions } from './context';
 
 import type { Params } from '../../api';
 
+import { Attachmentable, type IAllAttachmentable, MessageForwardsCollection } from '../shared';
 import { transformMessage } from './helpers/transform-message';
-import { MessageForwardsCollection, Attachmentable, type IAllAttachmentable } from '../shared';
 
 import { type Attachment, type ExternalAttachment, transformAttachments } from '../attachments';
 
+import type { AllowArray } from '../../types';
+import type { IUploadSourceMedia } from '../../upload';
 import {
-    unescapeHTML,
-    pickProperties,
-    getPeerType,
-    applyMixins,
-    getRandomId,
-} from '../../utils/helpers';
-import {
-    UpdateSource,
+    type AttachmentType,
+    type AttachmentTypeString,
     MessageSource,
     PEER_CHAT_ID_OFFSET,
-    type AttachmentType,
+    UpdateSource,
     kSerializeData,
-    type AttachmentTypeString,
 } from '../../utils/constants';
-import type { AllowArray } from '../../types';
+import { applyMixins, getPeerType, getRandomId, pickProperties, unescapeHTML } from '../../utils/helpers';
 import type { KeyboardBuilder } from '../keyboard';
-import type { IUploadSourceMedia } from '../../upload';
 
 export type MessageContextType = 'message';
 
 export type MessageContextPayloadEventType =
-'chat_photo_update'
-| 'chat_photo_remove'
-| 'chat_create'
-| 'chat_title_update'
-| 'chat_invite_user'
-| 'chat_kick_user'
-| 'chat_pin_message'
-| 'chat_unpin_message'
-| 'chat_invite_user_by_link';
+    | 'chat_photo_update'
+    | 'chat_photo_remove'
+    | 'chat_create'
+    | 'chat_title_update'
+    | 'chat_invite_user'
+    | 'chat_kick_user'
+    | 'chat_pin_message'
+    | 'chat_unpin_message'
+    | 'chat_invite_user_by_link';
 
-export type MessageContextSubType =
-'message_new'
-| 'message_edit'
-| 'message_reply'
-| MessageContextPayloadEventType;
+export type MessageContextSubType = 'message_new' | 'message_edit' | 'message_reply' | MessageContextPayloadEventType;
 
 const subTypesEnum: Record<string | number, MessageContextSubType> = {
     10004: 'message_new',
@@ -125,14 +115,7 @@ export interface IMessageContextPayload {
         is_expired?: boolean;
     };
     client_info: {
-        button_actions: (
-            'text'
-            | 'vkpay'
-            | 'open_app'
-            | 'location'
-            | 'open_link'
-            | 'callback'
-        )[];
+        button_actions: ('text' | 'vkpay' | 'open_app' | 'location' | 'open_link' | 'callback')[];
         keyboard: boolean;
         inline_keyboard: boolean;
         carousel: boolean;
@@ -140,16 +123,14 @@ export interface IMessageContextPayload {
     };
 }
 
-export type MessageContextOptions<S> =
-    ContextFactoryOptions<IMessageContextPayload, S>;
+export type MessageContextOptions<S> = ContextFactoryOptions<IMessageContextPayload, S>;
 
-class MessageContext<S = ContextDefaultState>
-    extends Context<
+class MessageContext<S = ContextDefaultState> extends Context<
     IMessageContextPayload,
     S,
     MessageContextType,
     MessageContextSubType
-    > {
+> {
     public $match!: RegExpMatchArray;
 
     public text?: string;
@@ -175,9 +156,9 @@ class MessageContext<S = ContextDefaultState>
 
             this.applyPayload(
                 Array.isArray(options.payload)
-                    ? transformMessage((options.payload as unknown) as Parameters<typeof transformMessage>[0])
-                    // There's user long poll reply message
-                    : options.payload,
+                    ? transformMessage(options.payload as unknown as Parameters<typeof transformMessage>[0])
+                    : // There's user long poll reply message
+                      options.payload,
             );
         } else {
             this.$filled = true;
@@ -186,9 +167,7 @@ class MessageContext<S = ContextDefaultState>
         }
 
         this.subTypes = [
-            this.eventType
-            || subTypesEnum[options.updateType]
-            || options.updateType as MessageContextSubType,
+            this.eventType || subTypesEnum[options.updateType] || (options.updateType as MessageContextSubType),
         ];
     }
 
@@ -200,20 +179,21 @@ class MessageContext<S = ContextDefaultState>
             return;
         }
 
-        const { items } = this.id !== 0
-            ? await this.api.messages.getById({
-                message_ids: this.id,
-            })
-            : await this.api.messages.getByConversationMessageId({
-                peer_id: this.peerId,
-                conversation_message_ids: this.conversationMessageId,
-            });
+        const { items } =
+            this.id !== 0
+                ? await this.api.messages.getById({
+                      message_ids: this.id,
+                  })
+                : await this.api.messages.getByConversationMessageId({
+                      peer_id: this.peerId,
+                      conversation_message_ids: this.conversationMessageId,
+                  });
 
         const [message] = items;
 
         this.applyPayload({
             out: Number(this.isOutbox),
-            ...message as Omit<IMessageContextPayload['message'], 'out'>,
+            ...(message as Omit<IMessageContextPayload['message'], 'out'>),
         });
 
         this.$filled = true;
@@ -532,16 +512,11 @@ class MessageContext<S = ContextDefaultState>
      * Edits a message
      */
     editMessage(params: IMessageContextSendOptions): Promise<number> {
-        const target = this.id !== 0
-            ? { message_id: this.id }
-            : { conversation_message_id: this.conversationMessageId };
+        const target =
+            this.id !== 0 ? { message_id: this.id } : { conversation_message_id: this.conversationMessageId };
 
         return this.api.messages.edit({
-            attachment: String(
-                this.attachments.filter(attachment => (
-                    attachment.canBeAttached
-                )),
-            ),
+            attachment: String(this.attachments.filter(attachment => attachment.canBeAttached)),
             message: this.text,
             keep_forward_messages: 1,
             keep_snippets: 1,
@@ -566,15 +541,13 @@ class MessageContext<S = ContextDefaultState>
         const options = {
             random_id: randomId,
 
-            ...(
-                typeof text !== 'object'
-                    ? {
-                        message: text,
+            ...(typeof text !== 'object'
+                ? {
+                      message: text,
 
-                        ...params,
-                    }
-                    : text
-            ),
+                      ...params,
+                  }
+                : text),
         } as IMessageContextSendOptions;
 
         if (this.$groupId !== undefined) {
@@ -587,18 +560,19 @@ class MessageContext<S = ContextDefaultState>
 
         const { message } = this;
 
-        const destination = typeof rawDestination !== 'number'
-            ? rawDestination[0] as {
-                peer_id : number;
-                message_id: number;
-                conversation_message_id: number;
-                error: number;
-            }
-            : {
-                peer_id: message.peer_id,
-                message_id: rawDestination,
-                conversation_message_id: 0,
-            };
+        const destination =
+            typeof rawDestination !== 'number'
+                ? (rawDestination[0] as {
+                      peer_id: number;
+                      message_id: number;
+                      conversation_message_id: number;
+                      error: number;
+                  })
+                : {
+                      peer_id: message.peer_id,
+                      message_id: rawDestination,
+                      conversation_message_id: 0,
+                  };
 
         const messageContext = new MessageContext<S>({
             api: this.api,
@@ -638,10 +612,7 @@ class MessageContext<S = ContextDefaultState>
     /**
      * Responds to the current message
      */
-    reply(
-        text: string | IMessageContextSendOptions,
-        params?: IMessageContextSendOptions,
-    ): Promise<MessageContext<S>> {
+    reply(text: string | IMessageContextSendOptions, params?: IMessageContextSendOptions): Promise<MessageContext<S>> {
         const forwardOptions = this.conversationMessageId
             ? { conversation_message_ids: this.conversationMessageId }
             : { message_ids: this.id };
@@ -654,15 +625,13 @@ class MessageContext<S = ContextDefaultState>
                 is_reply: true,
             }),
 
-            ...(
-                typeof text !== 'object'
-                    ? {
-                        message: text,
+            ...(typeof text !== 'object'
+                ? {
+                      message: text,
 
-                        ...params,
-                    }
-                    : text
-            ),
+                      ...params,
+                  }
+                : text),
         });
     }
 
@@ -673,17 +642,17 @@ class MessageContext<S = ContextDefaultState>
         rawSources: AllowArray<IUploadSourceMedia>,
         params: IMessageContextSendOptions = {},
     ): Promise<MessageContext<S>> {
-        const sources = !Array.isArray(rawSources)
-            ? [rawSources]
-            : rawSources;
+        const sources = !Array.isArray(rawSources) ? [rawSources] : rawSources;
 
-        const attachment = await Promise.all(sources.map(source => (
-            this.upload.messagePhoto({
-                source,
+        const attachment = await Promise.all(
+            sources.map(source =>
+                this.upload.messagePhoto({
+                    source,
 
-                peer_id: this.peerId,
-            })
-        )));
+                    peer_id: this.peerId,
+                }),
+            ),
+        );
 
         return this.send({
             ...params,
@@ -699,17 +668,17 @@ class MessageContext<S = ContextDefaultState>
         rawSources: AllowArray<IUploadSourceMedia>,
         params: IMessageContextSendOptions = {},
     ): Promise<MessageContext<S>> {
-        const sources = !Array.isArray(rawSources)
-            ? [rawSources]
-            : rawSources;
+        const sources = !Array.isArray(rawSources) ? [rawSources] : rawSources;
 
-        const attachment = await Promise.all(sources.map(source => (
-            this.upload.messageDocument({
-                source,
+        const attachment = await Promise.all(
+            sources.map(source =>
+                this.upload.messageDocument({
+                    source,
 
-                peer_id: this.peerId,
-            })
-        )));
+                    peer_id: this.peerId,
+                }),
+            ),
+        );
 
         return this.send({
             ...params,
@@ -766,7 +735,7 @@ class MessageContext<S = ContextDefaultState>
             ...target,
         });
 
-        return Boolean(messageIds[isConversation ? this.conversationMessageId as number : this.id]);
+        return Boolean(messageIds[isConversation ? (this.conversationMessageId as number) : this.id]);
     }
 
     /**
@@ -790,31 +759,24 @@ class MessageContext<S = ContextDefaultState>
     /**
      * Applies the payload
      */
-    private applyPayload(
-        payload: IMessageContextPayload
-        | IMessageContextPayload['message'],
-    ): void {
+    private applyPayload(payload: IMessageContextPayload | IMessageContextPayload['message']): void {
         // Polyfill for all events except new_message
         this.payload = !('client_info' in payload)
             ? {
-                message: payload ,
-                client_info: {
-                    button_actions: [
-                        'text',
-                    ],
-                    inline_keyboard: false,
-                    keyboard: true,
-                    carousel: false,
-                    lang_id: 0,
-                },
-            }
+                  message: payload,
+                  client_info: {
+                      button_actions: ['text'],
+                      inline_keyboard: false,
+                      keyboard: true,
+                      carousel: false,
+                      lang_id: 0,
+                  },
+              }
             : payload;
 
         const { message } = this;
 
-        this.text = message.text
-            ? unescapeHTML(message.text)
-            : undefined;
+        this.text = message.text ? unescapeHTML(message.text) : undefined;
 
         this[kAttachments] = transformAttachments(message.attachments || [], this.api);
 
@@ -824,9 +786,7 @@ class MessageContext<S = ContextDefaultState>
             this[kReplyMessage] = new MessageContext({
                 api: this.api,
                 upload: this.upload,
-                source: this.$filled
-                    ? UpdateSource.WEBHOOK
-                    : UpdateSource.POLLING,
+                source: this.$filled ? UpdateSource.WEBHOOK : UpdateSource.POLLING,
                 groupId: this.$groupId,
                 updateType: 'message_new',
                 state: this.state,
@@ -835,28 +795,29 @@ class MessageContext<S = ContextDefaultState>
                     message: {
                         ...message.reply_message,
 
-                        peer_id: replyPeerId !== 0
-                            ? replyPeerId
-                            : this.peerId,
+                        peer_id: replyPeerId !== 0 ? replyPeerId : this.peerId,
                     },
                 },
             });
         }
 
-        this[kForwards] = new MessageForwardsCollection(...(message.fwd_messages || []).map(forward => (
-            new MessageContext<S>({
-                api: this.api,
-                upload: this.upload,
-                source: UpdateSource.WEBHOOK,
-                groupId: this.$groupId,
-                updateType: 'message_new',
-                state: this.state,
-                payload: {
-                    client_info: this.clientInfo,
-                    message: forward,
-                },
-            })
-        )));
+        this[kForwards] = new MessageForwardsCollection(
+            ...(message.fwd_messages || []).map(
+                forward =>
+                    new MessageContext<S>({
+                        api: this.api,
+                        upload: this.upload,
+                        source: UpdateSource.WEBHOOK,
+                        groupId: this.$groupId,
+                        updateType: 'message_new',
+                        state: this.state,
+                        payload: {
+                            client_info: this.clientInfo,
+                            message: forward,
+                        },
+                    }),
+            ),
+        );
 
         if (message.payload) {
             this[kMessagePayload] = JSON.parse(message.payload);
@@ -870,12 +831,7 @@ class MessageContext<S = ContextDefaultState>
         const beforeAttachments: string[] = [];
 
         if (this.isEvent) {
-            beforeAttachments.push(
-                'eventType',
-                'eventMemberId',
-                'eventText',
-                'eventEmail',
-            );
+            beforeAttachments.push('eventType', 'eventMemberId', 'eventText', 'eventEmail');
         }
 
         if (this.hasReplyMessage) {
@@ -931,20 +887,18 @@ applyMixins(MessageContext, [
 
         public hasAllAttachments(type: AttachmentType | AttachmentTypeString | undefined): boolean {
             return (
-                this.hasAttachments(type)
-                || (this.replyMessage?.hasAttachments(type))
-                || this.forwards.hasAttachments(type)
+                this.hasAttachments(type) ||
+                this.replyMessage?.hasAttachments(type) ||
+                this.forwards.hasAttachments(type)
             );
         }
 
-        public getAllAttachments(
-            type: AttachmentType | AttachmentTypeString,
-        ): (Attachment | ExternalAttachment)[] {
+        public getAllAttachments(type: AttachmentType | AttachmentTypeString): (Attachment | ExternalAttachment)[] {
             return [
                 // @ts-expect-error no override
                 ...this.getAttachments(type),
                 // @ts-expect-error no override
-                ...((this.replyMessage?.getAttachments(type)) ?? []),
+                ...(this.replyMessage?.getAttachments(type) ?? []),
                 // @ts-expect-error no override
                 ...this.forwards.getAttachments(type),
             ];

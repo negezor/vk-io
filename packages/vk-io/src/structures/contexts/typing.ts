@@ -1,19 +1,14 @@
-import { Context, type ContextFactoryOptions, type ContextDefaultState } from './context';
+import { Context, type ContextDefaultState, type ContextFactoryOptions } from './context';
 
-import { pickProperties, getPeerType } from '../../utils/helpers';
-import {
-    PEER_CHAT_ID_OFFSET,
-
-    UpdateSource,
-    kSerializeData,
-} from '../../utils/constants';
+import { PEER_CHAT_ID_OFFSET, UpdateSource, kSerializeData } from '../../utils/constants';
+import { getPeerType, pickProperties } from '../../utils/helpers';
 
 export enum TypingState {
     TYPING = 'typing',
     AUDIO_MESSAGE = 'audiomessage',
     PHOTO_MESSAGE = 'photo',
     VIDEO_MESSAGE = 'video',
-    FILE_MESSAGE = 'file'
+    FILE_MESSAGE = 'file',
 }
 
 export interface ITypingContextPayload {
@@ -36,28 +31,21 @@ const transformPolling = (
 ): ITypingContextPayload => ({
     from_id: fromIds[0],
     to_id: toId,
-    state: typeof updateType === 'string'
-        ? updateType as TypingState
-        : stateTypesEnum[updateType],
+    state: typeof updateType === 'string' ? (updateType as TypingState) : stateTypesEnum[updateType],
 });
 
 export type TypingContextType = 'typing';
 
-export type TypingContextSubType =
-'typing_user'
-| 'typing_group'
-| 'message_typing_state';
+export type TypingContextSubType = 'typing_user' | 'typing_group' | 'message_typing_state';
 
-export type TypingContextOptions<S> =
-    ContextFactoryOptions<ITypingContextPayload, S>;
+export type TypingContextOptions<S> = ContextFactoryOptions<ITypingContextPayload, S>;
 
-export class TypingContext<S = ContextDefaultState>
-    extends Context<
+export class TypingContext<S = ContextDefaultState> extends Context<
     ITypingContextPayload,
     S,
     TypingContextType,
     TypingContextSubType
-    > {
+> {
     public constructor(options: TypingContextOptions<S>) {
         super({
             ...options,
@@ -68,12 +56,10 @@ export class TypingContext<S = ContextDefaultState>
                 `typing_${getPeerType(options.payload.from_id)}` as TypingContextSubType,
             ],
 
-            payload: options.source === UpdateSource.POLLING
-                ? transformPolling(
-                    (options.payload as unknown) as [number, number, number[]],
-                    options.updateType,
-                )
-                : options.payload,
+            payload:
+                options.source === UpdateSource.POLLING
+                    ? transformPolling(options.payload as unknown as [number, number, number[]], options.updateType)
+                    : options.payload,
         });
     }
 
@@ -153,9 +139,7 @@ export class TypingContext<S = ContextDefaultState>
     public get chatId(): number | undefined {
         const chatId = this.toId - PEER_CHAT_ID_OFFSET;
 
-        return chatId > 0
-            ? chatId
-            : undefined;
+        return chatId > 0 ? chatId : undefined;
     }
 
     /**

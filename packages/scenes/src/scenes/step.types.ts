@@ -1,5 +1,5 @@
-import type { IContext } from '../types';
 import type { SceneContext, StepSceneContext } from '../contexts';
+import type { IContext } from '../types';
 
 export interface IStepContext<S extends Record<string, unknown>> extends IContext {
     scene: SceneContext<S> & {
@@ -10,10 +10,9 @@ export interface IStepContext<S extends Record<string, unknown>> extends IContex
     };
 }
 
-export type StepSceneHandler<
-    T = object,
-    S extends Record<string, unknown> = Record<string, any>
-> = (context: IStepContext<S> & T) => unknown;
+export type StepSceneHandler<T = object, S extends Record<string, unknown> = Record<string, any>> = (
+    context: IStepContext<S> & T,
+) => unknown;
 
 export interface IStepSceneOptions<T, S extends Record<string, unknown>> {
     steps: StepSceneHandler<T, S>[];

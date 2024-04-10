@@ -1,7 +1,7 @@
-import { Context, type ContextFactoryOptions, type ContextDefaultState } from './context';
+import { Context, type ContextDefaultState, type ContextFactoryOptions } from './context';
 
-import { pickProperties } from '../../utils/helpers';
 import { kSerializeData } from '../../utils/constants';
+import { pickProperties } from '../../utils/helpers';
 
 export type VKAppPayloadContextType = 'vk_app_event';
 
@@ -14,24 +14,20 @@ export interface IVKAppPayloadPayload {
     group_id: number;
 }
 
-export type VKAppPayloadContextOptions<S> =
-    ContextFactoryOptions<IVKAppPayloadPayload, S>;
+export type VKAppPayloadContextOptions<S> = ContextFactoryOptions<IVKAppPayloadPayload, S>;
 
-export class VKAppPayloadContext<S = ContextDefaultState, P extends Record<string, any> = object>
-    extends Context<
+export class VKAppPayloadContext<S = ContextDefaultState, P extends Record<string, any> = object> extends Context<
     IVKAppPayloadPayload,
     S,
     VKAppPayloadContextType,
     VKAppPayloadContextSubType
-    > {
+> {
     public constructor(options: VKAppPayloadContextOptions<S>) {
         super({
             ...options,
 
             type: 'vk_app_event',
-            subTypes: [
-                options.updateType as VKAppPayloadContextSubType,
-            ],
+            subTypes: [options.updateType as VKAppPayloadContextSubType],
         });
     }
 
@@ -67,11 +63,6 @@ export class VKAppPayloadContext<S = ContextDefaultState, P extends Record<strin
      * Returns the custom data
      */
     public [kSerializeData](): object {
-        return pickProperties(this, [
-            'userId',
-            'appId',
-            'groupId',
-            'eventPayload',
-        ]);
+        return pickProperties(this, ['userId', 'appId', 'groupId', 'eventPayload']);
     }
 }

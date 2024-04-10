@@ -1,5 +1,5 @@
-import type { IContext } from '../types';
 import type { SceneRepository } from '../scene-manager.types';
+import type { IContext } from '../types';
 
 export interface ISceneContextOptions {
     context: IContext;
@@ -36,5 +36,5 @@ export interface ISceneContextLeaveOptions {
 export enum LastAction {
     NONE = 'none',
     ENTER = 'enter',
-    LEAVE = 'leave'
+    LEAVE = 'leave',
 }

@@ -1,14 +1,11 @@
-import { Context, type ContextFactoryOptions, type ContextDefaultState } from './context';
+import { Context, type ContextDefaultState, type ContextFactoryOptions } from './context';
 
-import { pickProperties } from '../../utils/helpers';
 import { kSerializeData } from '../../utils/constants';
+import { pickProperties } from '../../utils/helpers';
 
 export type FriendActivityContextType = 'friend_activity';
 
-export type FriendActivityContextSubType =
-'friend_online'
-| 'friend_offline'
-| 'friend_invisible';
+export type FriendActivityContextSubType = 'friend_online' | 'friend_offline' | 'friend_invisible';
 
 const subTypes: Record<number, FriendActivityContextSubType> = {
     8: 'friend_online',
@@ -23,16 +20,14 @@ export interface IFriendActivityContextPayload {
     app_id: number;
 }
 
-export type FriendActivityContextOptions<S> =
-    ContextFactoryOptions<[number, number, number, number, number], S>;
+export type FriendActivityContextOptions<S> = ContextFactoryOptions<[number, number, number, number, number], S>;
 
-export class FriendActivityContext<S = ContextDefaultState>
-    extends Context<
+export class FriendActivityContext<S = ContextDefaultState> extends Context<
     IFriendActivityContextPayload,
     S,
     FriendActivityContextType,
     FriendActivityContextSubType
-    > {
+> {
     public constructor(options: FriendActivityContextOptions<S>) {
         const [eventId, userId, extra, date, appId] = options.payload;
 
@@ -40,9 +35,7 @@ export class FriendActivityContext<S = ContextDefaultState>
             ...options,
 
             type: 'friend_activity',
-            subTypes: [
-                subTypes[eventId],
-            ],
+            subTypes: [subTypes[eventId]],
 
             payload: {
                 user_id: -userId,
@@ -71,9 +64,7 @@ export class FriendActivityContext<S = ContextDefaultState>
      * Checks that the user is invisible
      */
     public get isInvisible(): boolean {
-        return this.subTypes.includes('friend_invisible')
-            ? Boolean(this.payload.extra)
-            : false;
+        return this.subTypes.includes('friend_invisible') ? Boolean(this.payload.extra) : false;
     }
 
     /**
@@ -125,9 +116,7 @@ export class FriendActivityContext<S = ContextDefaultState>
     public get platform(): number | undefined {
         const { extra } = this.payload;
 
-        return extra !== -1
-            ? extra
-            : undefined;
+        return extra !== -1 ? extra : undefined;
     }
 
     /**

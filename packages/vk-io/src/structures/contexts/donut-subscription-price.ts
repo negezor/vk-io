@@ -1,7 +1,7 @@
-import { Context, type ContextFactoryOptions, type ContextDefaultState } from './context';
+import { Context, type ContextDefaultState, type ContextFactoryOptions } from './context';
 
-import { pickProperties } from '../../utils/helpers';
 import { kSerializeData } from '../../utils/constants';
+import { pickProperties } from '../../utils/helpers';
 
 export type DonutSubscriptionPriceContextType = 'donut_subscription_price';
 
@@ -16,24 +16,20 @@ export interface IDonutSubscriptionPriceContextPayload {
     amount_diff_without_fee: number;
 }
 
-export type DonutSubscriptionPriceContextOptions<S> =
-    ContextFactoryOptions<IDonutSubscriptionPriceContextPayload, S>;
+export type DonutSubscriptionPriceContextOptions<S> = ContextFactoryOptions<IDonutSubscriptionPriceContextPayload, S>;
 
-export class DonutSubscriptionPriceContext<S = ContextDefaultState>
-    extends Context<
+export class DonutSubscriptionPriceContext<S = ContextDefaultState> extends Context<
     IDonutSubscriptionPriceContextPayload,
     S,
     DonutSubscriptionPriceContextType,
     DonutSubscriptionPriceContextSubType
-    > {
+> {
     public constructor(options: DonutSubscriptionPriceContextOptions<S>) {
         super({
             ...options,
 
             type: 'donut_subscription_price',
-            subTypes: [
-                options.updateType as DonutSubscriptionPriceContextSubType,
-            ],
+            subTypes: [options.updateType as DonutSubscriptionPriceContextSubType],
         });
     }
 

@@ -1,37 +1,31 @@
-import { Context, type ContextFactoryOptions, type ContextDefaultState } from './context';
+import { Context, type ContextDefaultState, type ContextFactoryOptions } from './context';
 
-import { pickProperties } from '../../utils/helpers';
 import { kSerializeData } from '../../utils/constants';
+import { pickProperties } from '../../utils/helpers';
 
 export type MessageSubscriptionContextType = 'message_subscription';
 
-export type MessageSubscriptionContextSubType =
-'message_allow'
-| 'message_deny';
+export type MessageSubscriptionContextSubType = 'message_allow' | 'message_deny';
 
 export interface IMessageSubscriptionContextPayload {
     user_id: number;
     key: string;
 }
 
-export type MessageSubscriptionContextOptions<S> =
-    ContextFactoryOptions<IMessageSubscriptionContextPayload, S>;
+export type MessageSubscriptionContextOptions<S> = ContextFactoryOptions<IMessageSubscriptionContextPayload, S>;
 
-export class MessageSubscriptionContext<S = ContextDefaultState>
-    extends Context<
+export class MessageSubscriptionContext<S = ContextDefaultState> extends Context<
     IMessageSubscriptionContextPayload,
     S,
     MessageSubscriptionContextType,
     MessageSubscriptionContextSubType
-    > {
+> {
     public constructor(options: MessageSubscriptionContextOptions<S>) {
         super({
             ...options,
 
             type: 'message_subscription',
-            subTypes: [
-                options.updateType as MessageSubscriptionContextSubType,
-            ],
+            subTypes: [options.updateType as MessageSubscriptionContextSubType],
         });
     }
 
@@ -67,11 +61,6 @@ export class MessageSubscriptionContext<S = ContextDefaultState>
      * Returns the custom data
      */
     public [kSerializeData](): object {
-        return pickProperties(this, [
-            'userId',
-            'key',
-            'isSubscribed',
-            'isUnsubscribed',
-        ]);
+        return pickProperties(this, ['userId', 'key', 'isSubscribed', 'isUnsubscribed']);
     }
 }

@@ -2,17 +2,9 @@ import createDebug from 'debug';
 
 import { APIWorker } from './worker';
 
-import type { APIRequest } from '../request';
+import { APIError, APIErrorCode, ExecuteError, type IAPIErrorOptions, type IExecuteErrorOptions } from '../../errors';
 import { delay } from '../../utils/helpers';
-import {
-    type IExecuteErrorOptions,
-
-    APIError,
-    ExecuteError,
-
-    APIErrorCode,
-    type IAPIErrorOptions,
-} from '../../errors';
+import type { APIRequest } from '../request';
 
 import { CaptchaType, MINIMUM_TIME_INTERVAL_API } from '../../utils/constants';
 
@@ -68,9 +60,9 @@ export class SequentialWorker extends APIWorker {
         if (method.startsWith('execute')) {
             request.resolve({
                 response: response.response,
-                errors: ((response.execute_errors || []) as IExecuteErrorOptions[]).map((error) => (
-                    new ExecuteError(error)
-                )),
+                errors: ((response.execute_errors || []) as IExecuteErrorOptions[]).map(
+                    error => new ExecuteError(error),
+                ),
             });
 
             return;
@@ -105,10 +97,7 @@ export class SequentialWorker extends APIWorker {
 
         request.captchaValidate?.reject(error);
 
-        if (
-            code !== APIErrorCode.CAPTCHA
-            || !this.api.options.callbackService?.hasCaptchaHandler
-        ) {
+        if (code !== APIErrorCode.CAPTCHA || !this.api.options.callbackService?.hasCaptchaHandler) {
             request.reject(error);
 
             return;

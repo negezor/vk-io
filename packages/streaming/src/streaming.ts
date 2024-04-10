@@ -1,15 +1,15 @@
-import WebSocket from 'ws';
 import createDebug from 'debug';
 import { inspectable } from 'inspectable';
+import WebSocket from 'ws';
 
-import { type API, type Updates, UpdateSource, VKError } from 'vk-io';
+import { type API, UpdateSource, type Updates, VKError } from 'vk-io';
 
 import { type Agent, globalAgent } from 'https';
 
-import { fetch } from './fetch';
+import { type IStreamingContextPayload, StreamingContext } from './contexts';
 import { StreamingRuleError } from './errors';
-import { StreamingContext, type IStreamingContextPayload } from './contexts';
 import type { IStreamingRuleErrorOptions } from './errors/streaming-rule';
+import { fetch } from './fetch';
 
 const debug = createDebug('vk-io:streaming');
 
@@ -44,11 +44,7 @@ export class StreamingAPI {
     /**
      * Constructor
      */
-    public constructor({
-        api,
-        updates,
-        ...options
-    }: Partial<IStreamingAPI> & { api: API; updates: Updates }) {
+    public constructor({ api, updates, ...options }: Partial<IStreamingAPI> & { api: API; updates: Updates }) {
         this.api = api;
 
         this.updates = updates;
@@ -113,9 +109,11 @@ export class StreamingAPI {
                     }
 
                     case 300: {
-                        await this.handleServiceMessage(message.service_message as {
-                            service_code: number;
-                        });
+                        await this.handleServiceMessage(
+                            message.service_message as {
+                                service_code: number;
+                            },
+                        );
 
                         break;
                     }
@@ -152,9 +150,7 @@ export class StreamingAPI {
     /**
      * Processes server messages
      */
-    public async handleServiceMessage(
-        { service_code: code }: { service_code: number },
-    ): Promise<void> {
+    public async handleServiceMessage({ service_code: code }: { service_code: number }): Promise<void> {
         if ([3000, 3001].includes(code)) {
             await this.stop();
             await this.startWebSocket();
@@ -189,7 +185,7 @@ export class StreamingAPI {
         if (!this.key) {
             throw new VKError({
                 message: 'You should start websocket before call fetchRules',
-                code: 0
+                code: 0,
             });
         }
 
@@ -209,7 +205,7 @@ export class StreamingAPI {
                 'content-type': 'application/json',
             },
         });
-        const result = await response.json() as any;
+        const result = (await response.json()) as any;
 
         if (result.error !== undefined) {
             throw new StreamingRuleError(result.error as IStreamingRuleErrorOptions);
@@ -245,9 +241,7 @@ export class StreamingAPI {
      * Adds a list of rules
      */
     public async addRules(rules: IStreamingRule[]): Promise<void> {
-        await Promise.all(rules.map(rule => (
-            this.addRule(rule)
-        )));
+        await Promise.all(rules.map(rule => this.addRule(rule)));
     }
 
     /**
@@ -256,9 +250,7 @@ export class StreamingAPI {
     public async deleteRules(): Promise<void> {
         const rules = await this.getRules();
 
-        await Promise.all(rules.map(({ tag }) => (
-            this.deleteRule(tag)
-        )));
+        await Promise.all(rules.map(({ tag }) => this.deleteRule(tag)));
     }
 }
 

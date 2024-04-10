@@ -1,7 +1,7 @@
 import { getDataHash } from './identifier';
 
-import type { MessageContext, Middleware, HandlerMiddleware } from './types';
 import type { IStatelessPromptManagerOptions } from './stateless-prompt.types';
+import type { HandlerMiddleware, MessageContext, Middleware } from './types';
 
 export class StatelessPromptManager {
     protected slug: string;

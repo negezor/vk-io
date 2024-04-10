@@ -1,14 +1,13 @@
 import createDebug from 'debug';
 
-import type { TlsOptions } from 'tls';
-import { type Server as HTTPSServer, createServer as createHttpsServer } from 'https';
 import {
     type Server as HttpServer,
     type IncomingMessage,
     type ServerResponse,
-
     createServer as createHttpServer,
 } from 'http';
+import { type Server as HTTPSServer, createServer as createHttpsServer } from 'https';
+import type { TlsOptions } from 'tls';
 import { promisify } from 'util';
 
 import type { API } from '../../api';
@@ -27,25 +26,25 @@ export interface IWebhookTransportStartOptions {
     path?: string;
     port?: number;
     host?: string;
-    next?: (req: IncomingMessage, res: ServerResponse) => unknown
+    next?: (req: IncomingMessage, res: ServerResponse) => unknown;
 }
 
 export type WebhookTransportCallback = (
     req: IncomingMessage,
     res: ServerResponse,
-    next?: (err?: Error) => unknown
+    next?: (err?: Error) => unknown,
 ) => unknown;
 
 export type WebhookTransportKoaCallback = (
     context: {
         request: {
             body: Record<string, string>;
-        }
+        };
         body: object;
         status: number;
         set(key: string, value: string): unknown;
     },
-    next: () => unknown
+    next: () => unknown,
 ) => unknown;
 
 export class WebhookTransport {
@@ -82,7 +81,7 @@ export class WebhookTransport {
         }
 
         if (!this.webhookHandler) {
-            throw new Error('You didn\'t subscribe to updates');
+            throw new Error("You didn't subscribe to updates");
         }
 
         this.started = true;
@@ -90,23 +89,14 @@ export class WebhookTransport {
         try {
             const webhookCallback = this.getWebhookCallback(path);
 
-            const callback = (req: IncomingMessage, res: ServerResponse) => (
-                webhookCallback(req, res, (): unknown => (
-                    next(req, res)
-                ))
-            );
+            const callback = (req: IncomingMessage, res: ServerResponse) =>
+                webhookCallback(req, res, (): unknown => next(req, res));
 
-            this.webhookServer = tls
-                ? createHttpsServer(tls, callback)
-                : createHttpServer(callback);
+            this.webhookServer = tls ? createHttpsServer(tls, callback) : createHttpServer(callback);
 
             const { webhookServer } = this;
 
-            const port = customPort || (
-                tls
-                    ? 443
-                    : 80
-            );
+            const port = customPort || (tls ? 443 : 80);
 
             await promisify(webhookServer.listen)
                 // @ts-ignore https://devblogs.microsoft.com/typescript/announcing-typescript-4-1/#unmatched-parameters-are-no-longer-related
@@ -144,9 +134,10 @@ export class WebhookTransport {
             'content-type': 'text/plain',
         };
 
-        const checkIsNotValidPath = path !== undefined
-            ? (requestPath: string | undefined): boolean => requestPath !== path
-            : (): boolean => false;
+        const checkIsNotValidPath =
+            path !== undefined
+                ? (requestPath: string | undefined): boolean => requestPath !== path
+                : (): boolean => false;
 
         return async (req, res, next) => {
             if (req.method !== 'POST' || checkIsNotValidPath(req.url)) {
@@ -154,13 +145,11 @@ export class WebhookTransport {
 
                 return;
             }
-            const reqBody = (req as typeof req & { body: string | Record<string, any>; }).body;
+            const reqBody = (req as typeof req & { body: string | Record<string, any> }).body;
 
             let update: any;
             try {
-                update = typeof reqBody !== 'object'
-                    ? await parseRequestJSON(req)
-                    : reqBody;
+                update = typeof reqBody !== 'object' ? await parseRequestJSON(req) : reqBody;
             } catch (e) {
                 debug(e);
 

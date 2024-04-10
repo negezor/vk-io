@@ -1,23 +1,16 @@
-import { Context, type ContextFactoryOptions, type ContextDefaultState } from './context';
+import { Context, type ContextDefaultState, type ContextFactoryOptions } from './context';
 
 import { VKError } from '../../errors';
 
-import {
-    AudioAttachment,
-    PhotoAttachment,
-    VideoAttachment,
-} from '../attachments';
+import { AudioAttachment, PhotoAttachment, VideoAttachment } from '../attachments';
 import { Attachmentable } from '../shared/attachmentable';
 
-import { pickProperties, applyMixins } from '../../utils/helpers';
-import { kSerializeData, AttachmentType } from '../../utils/constants';
+import { AttachmentType, kSerializeData } from '../../utils/constants';
+import { applyMixins, pickProperties } from '../../utils/helpers';
 
 export type NewAttachmentsContextType = 'new_attachment';
 
-export type NewAttachmentsContextSubType =
-'photo_new'
-| 'video_new'
-| 'audio_new';
+export type NewAttachmentsContextSubType = 'photo_new' | 'video_new' | 'audio_new';
 
 const subAttachmentTypes = {
     photo_new: PhotoAttachment,
@@ -29,16 +22,14 @@ export interface INewAttachmentsContextPayload {
     id: number;
 }
 
-export type NewAttachmentsContextOptions<S> =
-    ContextFactoryOptions<INewAttachmentsContextPayload, S>;
+export type NewAttachmentsContextOptions<S> = ContextFactoryOptions<INewAttachmentsContextPayload, S>;
 
-class NewAttachmentsContext<S = ContextDefaultState>
-    extends Context<
+class NewAttachmentsContext<S = ContextDefaultState> extends Context<
     INewAttachmentsContextPayload,
     S,
     NewAttachmentsContextType,
     NewAttachmentsContextSubType
-    > {
+> {
     public constructor(options: NewAttachmentsContextOptions<S>) {
         const PayloadAttachment = subAttachmentTypes[options.updateType as keyof typeof subAttachmentTypes];
 
@@ -46,15 +37,15 @@ class NewAttachmentsContext<S = ContextDefaultState>
             ...options,
 
             type: 'new_attachment',
-            subTypes: [
-                options.updateType as NewAttachmentsContextSubType,
-            ],
+            subTypes: [options.updateType as NewAttachmentsContextSubType],
         });
 
-        this.attachments = [new PayloadAttachment({
-            api: this.api,
-            payload: this.payload as InstanceType<typeof PayloadAttachment>['payload'],
-        })];
+        this.attachments = [
+            new PayloadAttachment({
+                api: this.api,
+                payload: this.payload as InstanceType<typeof PayloadAttachment>['payload'],
+            }),
+        ];
     }
 
     /**
@@ -110,22 +101,19 @@ class NewAttachmentsContext<S = ContextDefaultState>
             });
         }
 
-        return Promise.reject(new VKError({
-            message: 'Unsupported event for deleting attachment',
-            code: 'UNSUPPORTED_EVENT',
-        }));
+        return Promise.reject(
+            new VKError({
+                message: 'Unsupported event for deleting attachment',
+                code: 'UNSUPPORTED_EVENT',
+            }),
+        );
     }
 
     /**
      * Returns the custom data
      */
     public [kSerializeData](): object {
-        return pickProperties(this, [
-            'attachments',
-            'isPhoto',
-            'isVideo',
-            'isAudio',
-        ]);
+        return pickProperties(this, ['attachments', 'isPhoto', 'isVideo', 'isAudio']);
     }
 }
 

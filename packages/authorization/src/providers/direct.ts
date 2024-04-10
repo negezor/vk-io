@@ -1,30 +1,27 @@
-import createDebug from 'debug';
-import { load as cheerioLoad } from 'cheerio';
 import { AbortController } from 'abort-controller';
+import { load as cheerioLoad } from 'cheerio';
+import createDebug from 'debug';
 
-import { CaptchaType, type ICallbackServiceValidate, type CallbackService } from 'vk-io';
+import { type CallbackService, CaptchaType, type ICallbackServiceValidate } from 'vk-io';
 
 import type { Agent } from 'https';
 
+import { AuthErrorCode, DESKTOP_USER_AGENT } from '../constants';
 import { AuthorizationError } from '../errors';
-import { DESKTOP_USER_AGENT, AuthErrorCode } from '../constants';
 import {
     type CookieJar,
-
     type FetchWrapper,
     type RequestInfo,
     type RequestInit,
     type Response,
-
     fetchCookieFollowRedirectsDecorator,
 } from '../fetch-cookie';
 import {
     type CheerioStatic,
-
-    getFullURL,
-    parseFormField,
-    getUserPermissionsByName,
     getAllUserPermissions,
+    getFullURL,
+    getUserPermissionsByName,
+    parseFormField,
 } from '../helpers';
 
 const debug = createDebug('vk-io:authorization:direct');
@@ -122,10 +119,7 @@ export class DirectAuthorization {
     /**
      * Executes the HTTP request
      */
-    protected fetch(
-        url: RequestInfo,
-        options: RequestInit = {},
-    ): Promise<Response> {
+    protected fetch(url: RequestInfo, options: RequestInit = {}): Promise<Response> {
         const { agent, timeout } = this.options;
 
         const controller = new AbortController();
@@ -160,14 +154,7 @@ export class DirectAuthorization {
 
         debug('auth scope %s', scope);
 
-        const {
-            clientId,
-            clientSecret,
-            login,
-            phone,
-            password,
-            apiVersion,
-        } = this.options;
+        const { clientId, clientSecret, login, phone, password, apiVersion } = this.options;
 
         if (!password) {
             throw new AuthorizationError({
@@ -232,23 +219,14 @@ export class DirectAuthorization {
 
             if (isJSON) {
                 if (text.access_token !== undefined) {
-                    const {
-                        email,
-                        user_id: user,
-                        expires_in: expires,
-                        access_token: token,
-                    } = text;
+                    const { email, user_id: user, expires_in: expires, access_token: token } = text;
 
                     return {
                         email,
-                        user: user !== undefined
-                            ? Number(user)
-                            : 0,
+                        user: user !== undefined ? Number(user) : 0,
 
                         token,
-                        expires: expires
-                            ? Number(expires)
-                            : 0,
+                        expires: expires ? Number(expires) : 0,
                     };
                 }
 
@@ -268,20 +246,24 @@ export class DirectAuthorization {
                     }
 
                     if (text.error === 'need_captcha') {
-                        response = await this.processCaptcha(text as {
-                            captcha_sid: string;
-                            captcha_img: string;
-                        });
+                        response = await this.processCaptcha(
+                            text as {
+                                captcha_sid: string;
+                                captcha_img: string;
+                            },
+                        );
 
                         continue;
                     }
 
                     if (text.error === 'need_validation') {
                         if (text.validation_type !== undefined) {
-                            response = await this.processTwoFactor(text as {
-                                validation_type: string;
-                                phone_mask: string;
-                            });
+                            response = await this.processTwoFactor(
+                                text as {
+                                    validation_type: string;
+                                    phone_mask: string;
+                                },
+                            );
 
                             continue;
                         }
@@ -335,19 +317,22 @@ export class DirectAuthorization {
     /**
      * Process captcha
      */
-    protected async processCaptcha(
-        { captcha_sid: sid, captcha_img: src }: {
-            captcha_sid: string;
-            captcha_img: string;
-        },
-    ): Promise<Response> {
+    protected async processCaptcha({
+        captcha_sid: sid,
+        captcha_img: src,
+    }: {
+        captcha_sid: string;
+        captcha_img: string;
+    }): Promise<Response> {
         debug('captcha process');
 
         if (this.captchaValidate !== undefined) {
-            this.captchaValidate.reject(new AuthorizationError({
-                message: 'Incorrect captcha code',
-                code: FAILED_PASSED_CAPTCHA,
-            }));
+            this.captchaValidate.reject(
+                new AuthorizationError({
+                    message: 'Incorrect captcha code',
+                    code: FAILED_PASSED_CAPTCHA,
+                }),
+            );
 
             this.captchaValidate = undefined;
 
@@ -380,19 +365,22 @@ export class DirectAuthorization {
     /**
      * Process two-factor
      */
-    protected async processTwoFactor(
-        { validation_type: validationType, phone_mask: phoneMask }: {
-            validation_type: string;
-            phone_mask: string;
-        },
-    ): Promise<Response> {
+    protected async processTwoFactor({
+        validation_type: validationType,
+        phone_mask: phoneMask,
+    }: {
+        validation_type: string;
+        phone_mask: string;
+    }): Promise<Response> {
         debug('process two-factor handle');
 
         if (this.twoFactorValidate !== undefined) {
-            this.twoFactorValidate.reject(new AuthorizationError({
-                message: 'Incorrect two-factor code',
-                code: FAILED_PASSED_TWO_FACTOR,
-            }));
+            this.twoFactorValidate.reject(
+                new AuthorizationError({
+                    message: 'Incorrect two-factor code',
+                    code: FAILED_PASSED_TWO_FACTOR,
+                }),
+            );
 
             this.twoFactorValidate = undefined;
 
@@ -408,9 +396,7 @@ export class DirectAuthorization {
 
         const { code, validate } = await this.options.callbackService.processingTwoFactor({
             phoneMask,
-            type: validationType === '2fa_app'
-                ? 'app'
-                : 'sms',
+            type: validationType === '2fa_app' ? 'app' : 'sms',
         });
 
         this.twoFactorValidate = validate;

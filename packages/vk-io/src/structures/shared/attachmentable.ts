@@ -1,11 +1,10 @@
 /* eslint-disable */
 import type {
     Attachment,
-    ExternalAttachment,
-
     AudioAttachment,
     AudioMessageAttachment,
     DocumentAttachment,
+    ExternalAttachment,
     GiftAttachment,
     GraffitiAttachment,
     LinkAttachment,
@@ -16,8 +15,8 @@ import type {
     StickerAttachment,
     StoryAttachment,
     VideoAttachment,
+    WallAttachment,
     WallReplyAttachment,
-    WallAttachment
 } from '../attachments';
 
 import type { AttachmentType, AttachmentTypeString } from '../../utils/constants';
@@ -33,9 +32,7 @@ export class Attachmentable {
             return this.attachments.length > 0;
         }
 
-        return this.attachments.some(attachment => (
-            attachment.type === type
-        ));
+        return this.attachments.some(attachment => attachment.type === type);
     }
 
     /**
@@ -76,9 +73,7 @@ export class Attachmentable {
             return this.attachments;
         }
 
-        return this.attachments.filter(attachment => (
-            attachment.type === type
-        ));
+        return this.attachments.filter(attachment => attachment.type === type);
     }
 }
 

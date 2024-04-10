@@ -1,14 +1,11 @@
 import {
-    Context,
-    type ContextFactoryOptions,
-
     Attachmentable,
-
-    transformAttachments,
-    kSerializeData,
-
-    applyMixins,
+    Context,
     type ContextDefaultState,
+    type ContextFactoryOptions,
+    applyMixins,
+    kSerializeData,
+    transformAttachments,
 } from 'vk-io';
 
 import { copyParams } from '../helpers';
@@ -44,11 +41,9 @@ export interface IStreamingContextPayload {
     };
 }
 
-export type StreamingContextOptions<S> =
-    ContextFactoryOptions<IStreamingContextPayload, S>;
+export type StreamingContextOptions<S> = ContextFactoryOptions<IStreamingContextPayload, S>;
 
-class StreamingContext<S = ContextDefaultState>
-    extends Context<IStreamingContextPayload, S> {
+class StreamingContext<S = ContextDefaultState> extends Context<IStreamingContextPayload, S> {
     public constructor(options: StreamingContextOptions<S>) {
         const { action, event_type: type } = options.payload;
 
@@ -56,11 +51,7 @@ class StreamingContext<S = ContextDefaultState>
             ...options,
 
             type: 'publication',
-            subTypes: [
-                `publication_${type}`,
-                `${action}_publication`,
-                `${action}_publication_${type}`,
-            ],
+            subTypes: [`publication_${type}`, `${action}_publication`, `${action}_publication_${type}`],
         });
 
         this.attachments = transformAttachments(this.payload.attachments || [], this.api);
@@ -273,17 +264,13 @@ class StreamingContext<S = ContextDefaultState>
             'isComment',
         ];
 
-        const filtredEmptyProperties = properties.filter(property => (
-            this[property] !== undefined
-        )) as (keyof this)[];
+        const filtredEmptyProperties = properties.filter(property => this[property] !== undefined) as (keyof this)[];
 
         return copyParams(this, filtredEmptyProperties);
     }
 }
 
 interface StreamingContext extends Attachmentable {}
-applyMixins(StreamingContext, [
-    Attachmentable,
-]);
+applyMixins(StreamingContext, [Attachmentable]);
 
 export { StreamingContext };

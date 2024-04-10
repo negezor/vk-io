@@ -1,14 +1,13 @@
 import {
     ButtonColor,
     type ButtonPayload,
-    type KeyboardButton,
-
-    type IKeyboardTextButtonOptions,
-    type IKeyboardURLButtonOptions,
-    type IKeyboardLocationRequestButtonOptions,
-    type IKeyboardVKPayButtonOptions,
     type IKeyboardApplicationButtonOptions,
     type IKeyboardCallbackButtonOptions,
+    type IKeyboardLocationRequestButtonOptions,
+    type IKeyboardTextButtonOptions,
+    type IKeyboardURLButtonOptions,
+    type IKeyboardVKPayButtonOptions,
+    type KeyboardButton,
 } from './types';
 
 const serializePayload = (rawPayload: ButtonPayload): string => {
@@ -95,11 +94,7 @@ export class KeyboardBuilder {
      * });
      * ```
      */
-    public urlButton({
-        label,
-        url,
-        payload: rawPayload = {},
-    }: IKeyboardURLButtonOptions): this {
+    public urlButton({ label, url, payload: rawPayload = {} }: IKeyboardURLButtonOptions): this {
         if (label.length > 40) {
             throw new RangeError('Maximum length of label 40 characters');
         }
@@ -128,9 +123,7 @@ export class KeyboardBuilder {
      * })
      * ```
      */
-    public locationRequestButton({
-        payload: rawPayload = {},
-    }: IKeyboardLocationRequestButtonOptions): this {
+    public locationRequestButton({ payload: rawPayload = {} }: IKeyboardLocationRequestButtonOptions): this {
         const payload = serializePayload(rawPayload);
 
         return this.addWideButton({
@@ -155,15 +148,10 @@ export class KeyboardBuilder {
      * })
      * ```
      */
-    public payButton({
-        payload: rawPayload,
-        hash: rawHash,
-    }: IKeyboardVKPayButtonOptions): this {
+    public payButton({ payload: rawPayload, hash: rawHash }: IKeyboardVKPayButtonOptions): this {
         const payload = serializePayload(rawPayload);
 
-        const hash = typeof rawHash === 'object'
-            ? String(new URLSearchParams(Object.entries(rawHash)))
-            : rawHash;
+        const hash = typeof rawHash === 'object' ? String(new URLSearchParams(Object.entries(rawHash))) : rawHash;
 
         return this.addWideButton({
             action: {
@@ -186,12 +174,7 @@ export class KeyboardBuilder {
      * })
      * ```
      */
-    public applicationButton({
-        label,
-        appId,
-        ownerId,
-        hash,
-    }: IKeyboardApplicationButtonOptions): this {
+    public applicationButton({ label, appId, ownerId, hash }: IKeyboardApplicationButtonOptions): this {
         if (label.length > 40) {
             throw new RangeError('Maximum length of label 40 characters');
         }
@@ -313,28 +296,24 @@ export class KeyboardBuilder {
      * Returns a string to keyboard a VK
      */
     public toString(): string {
-        const maxRowsLength = this.isInline
-            ? 6
-            : 10;
+        const maxRowsLength = this.isInline ? 6 : 10;
 
         if (this.rows.length > maxRowsLength) {
             throw new RangeError(`Max count of keyboard rows ${maxRowsLength}`);
         }
 
-        const buttons = this.currentRow.length !== 0
-            ? [...this.rows, this.currentRow]
-            : this.rows;
+        const buttons = this.currentRow.length !== 0 ? [...this.rows, this.currentRow] : this.rows;
 
         return JSON.stringify(
             this.isInline
                 ? {
-                    buttons,
-                    inline: true,
-                }
+                      buttons,
+                      inline: true,
+                  }
                 : {
-                    buttons,
-                    one_time: this.isOneTime,
-                },
+                      buttons,
+                      one_time: this.isOneTime,
+                  },
         );
     }
 

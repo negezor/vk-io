@@ -1,5 +1,5 @@
-import { VKError } from './error';
 import { APIErrorCode } from '../api/schemas/constants';
+import { VKError } from './error';
 
 export interface IAPIErrorParam {
     key: string;

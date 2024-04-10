@@ -1,14 +1,7 @@
+import { notStrictEqual, ok, strictEqual } from 'node:assert';
 import { describe, it } from 'node:test';
-import { strictEqual, notStrictEqual, ok } from 'node:assert';
 
-import {
-    VK,
-
-    UploadError,
-    UploadErrorCode,
-
-    PhotoAttachment
-} from '..';
+import { PhotoAttachment, UploadError, UploadErrorCode, VK } from '..';
 
 import { fetch } from '../src/utils/fetch';
 
@@ -44,8 +37,8 @@ describe('Uploads', { timeout: 30_000 }, (): void => {
         try {
             await upload.messagePhoto({
                 source: {
-                    values: []
-                }
+                    values: [],
+                },
             });
         } catch (error) {
             ok(error instanceof UploadError);
@@ -59,13 +52,13 @@ describe('Uploads', { timeout: 30_000 }, (): void => {
                 source: {
                     values: [
                         {
-                            value: IMAGE_URL
+                            value: IMAGE_URL,
                         },
                         {
-                            value: IMAGE_URL
-                        }
-                    ]
-                }
+                            value: IMAGE_URL,
+                        },
+                    ],
+                },
             });
         } catch (error) {
             ok(error instanceof UploadError);
@@ -73,15 +66,13 @@ describe('Uploads', { timeout: 30_000 }, (): void => {
         }
     });
 
-    const skip = TOKEN === undefined
-        ? 'not set env TOKEN=<token>'
-        : undefined;
+    const skip = TOKEN === undefined ? 'not set env TOKEN=<token>' : undefined;
 
     it('should upload image to message from url', { skip }, async (): Promise<void> => {
         const photo = await upload.messagePhoto({
             source: {
-                value: IMAGE_URL
-            }
+                value: IMAGE_URL,
+            },
         });
 
         ok(photo instanceof PhotoAttachment);
@@ -95,8 +86,8 @@ describe('Uploads', { timeout: 30_000 }, (): void => {
 
         const photo = await upload.messagePhoto({
             source: {
-                value: buffer
-            }
+                value: buffer,
+            },
         });
 
         ok(photo instanceof PhotoAttachment);
@@ -112,8 +103,8 @@ describe('Uploads', { timeout: 30_000 }, (): void => {
                 // biome-ignore lint/style/noNonNullAssertion: testing...
                 value: response.body!,
                 // @ts-expect-error
-                contentLength: response.headers.get('content-length')
-            }
+                contentLength: response.headers.get('content-length'),
+            },
         });
 
         ok(photo instanceof PhotoAttachment);

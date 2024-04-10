@@ -1,9 +1,9 @@
 import type { IScene } from './scenes/scene';
 
-import type { IContext, Middleware } from './types';
-import { SceneContext } from './contexts';
 import { CacheRepository } from './cache-repository';
-import type { SceneRepository, ISceneManagerOptions } from './scene-manager.types';
+import { SceneContext } from './contexts';
+import type { ISceneManagerOptions, SceneRepository } from './scene-manager.types';
+import type { IContext, Middleware } from './types';
 
 export class SceneManager {
     private repository: SceneRepository = new CacheRepository();

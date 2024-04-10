@@ -1,7 +1,7 @@
-import { Context, type ContextFactoryOptions, type ContextDefaultState } from './context';
+import { Context, type ContextDefaultState, type ContextFactoryOptions } from './context';
 
-import { pickProperties } from '../../utils/helpers';
 import { kSerializeData } from '../../utils/constants';
+import { pickProperties } from '../../utils/helpers';
 
 export type LikeContextType = 'like';
 
@@ -12,30 +12,35 @@ export interface ILikeContextPayload {
 
     object_id: number;
     object_owner_id: number;
-    object_type: 'video' | 'photo' | 'comment' | 'note' | 'topic_comment' | 'photo_comment' | 'video_comment' | 'market' | 'market_comment';
+    object_type:
+        | 'video'
+        | 'photo'
+        | 'comment'
+        | 'note'
+        | 'topic_comment'
+        | 'photo_comment'
+        | 'video_comment'
+        | 'market'
+        | 'market_comment';
 
     post_id: number;
     thread_reply_id: number;
 }
 
-export type LikeContextOptions<S> =
-    ContextFactoryOptions<ILikeContextPayload, S>;
+export type LikeContextOptions<S> = ContextFactoryOptions<ILikeContextPayload, S>;
 
-export class LikeContext<S = ContextDefaultState>
-    extends Context<
+export class LikeContext<S = ContextDefaultState> extends Context<
     ILikeContextPayload,
     S,
     LikeContextType,
     LikeContextSubType
-    > {
+> {
     public constructor(options: LikeContextOptions<S>) {
         super({
             ...options,
 
             type: 'like',
-            subTypes: [
-                options.updateType as LikeContextSubType,
-            ],
+            subTypes: [options.updateType as LikeContextSubType],
         });
     }
 
@@ -85,13 +90,6 @@ export class LikeContext<S = ContextDefaultState>
      * Returns the custom data
      */
     public [kSerializeData](): object {
-        return pickProperties(this, [
-            'likerId',
-            'objectId',
-            'objectOwnerId',
-            'objectType',
-            'postId',
-            'threadReplyId',
-        ]);
+        return pickProperties(this, ['likerId', 'objectId', 'objectOwnerId', 'objectType', 'postId', 'threadReplyId']);
     }
 }

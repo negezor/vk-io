@@ -1,56 +1,41 @@
-// eslint-disable-next-line import/extensions
-import { FormData, File } from 'formdata-node';
-import { FormDataEncoder } from 'form-data-encoder';
 import { AbortController } from 'abort-controller';
+import { FormDataEncoder } from 'form-data-encoder';
+// eslint-disable-next-line import/extensions
+import { File, FormData } from 'formdata-node';
 
 import { inspectable } from 'inspectable';
 
-import { createReadStream, promises as fs } from 'fs';
+import { promises as fs, createReadStream } from 'fs';
 import { globalAgent } from 'https';
 import { Readable } from 'stream';
 
 import type { API } from '../api';
-import { fetch } from '../utils/fetch';
 import { UploadError, UploadErrorCode } from '../errors';
-import { DefaultExtension, DefaultContentType } from '../utils/constants';
-import type {
-    IUploadOptions,
-    IUploadParams,
-    IUploadSourceMedia,
-    IUploadConduct,
-} from './types';
-import {
-    isStream,
-
-    streamToBuffer,
-    normalizeSource,
-    pickExistingProperties,
-} from './helpers';
+import { DefaultContentType, DefaultExtension } from '../utils/constants';
+import { fetch } from '../utils/fetch';
+import { isStream, normalizeSource, pickExistingProperties, streamToBuffer } from './helpers';
+import type { IUploadConduct, IUploadOptions, IUploadParams, IUploadSourceMedia } from './types';
 
 import {
-    StoryAttachment,
-    PhotoAttachment,
     AudioAttachment,
-    VideoAttachment,
+    AudioMessageAttachment,
     DocumentAttachment,
     GraffitiAttachment,
-    AudioMessageAttachment,
+    PhotoAttachment,
+    StoryAttachment,
+    VideoAttachment,
 } from '../structures';
 
 const { stat: fileStat } = fs;
 
-const {
-    MISSING_PARAMETERS,
-    NO_FILES_TO_UPLOAD,
-    EXCEEDED_MAX_FILES,
-    UNSUPPORTED_SOURCE_TYPE,
-} = UploadErrorCode;
+const { MISSING_PARAMETERS, NO_FILES_TO_UPLOAD, EXCEEDED_MAX_FILES, UNSUPPORTED_SOURCE_TYPE } = UploadErrorCode;
 
 const isURL = /^https?:\/\//i;
 
-const DocumentTypes: Record<string, typeof DocumentAttachment
-| typeof GraffitiAttachment
-| typeof AudioMessageAttachment> = {
+const DocumentTypes: Record<
+    string,
+    typeof DocumentAttachment | typeof GraffitiAttachment | typeof AudioMessageAttachment
+> = {
     doc: DocumentAttachment,
     graffiti: GraffitiAttachment,
     audio_message: AudioMessageAttachment,
@@ -96,7 +81,7 @@ export class Upload {
             longitude?: number;
         },
     ): Promise<PhotoAttachment[]> {
-        const photos = await this.conduct({
+        const photos = (await this.conduct({
             field: 'file',
             params,
 
@@ -108,14 +93,15 @@ export class Upload {
 
             maxFiles: 5,
             attachmentType: 'photo',
-        }) as PhotoAttachment['payload'][];
+        })) as PhotoAttachment['payload'][];
 
-        return photos.map(photo => (
-            new PhotoAttachment({
-                api: this.api,
-                payload: photo,
-            })
-        ));
+        return photos.map(
+            photo =>
+                new PhotoAttachment({
+                    api: this.api,
+                    payload: photo,
+                }),
+        );
     }
 
     /**
@@ -159,13 +145,13 @@ export class Upload {
             owner_id?: number;
         },
     ): Promise<{
-            photo_hash: string;
-            photo_src: string;
-            photo_src_big: string;
-            photo_src_small: string;
-            saved: number;
-            post_id: number;
-        }> {
+        photo_hash: string;
+        photo_src: string;
+        photo_src_big: string;
+        photo_src_small: string;
+        saved: number;
+        post_id: number;
+    }> {
         return this.conduct({
             field: 'photo',
             params,
@@ -228,9 +214,9 @@ export class Upload {
             crop_width?: number;
         },
     ): Promise<{
-            message_id: number;
-            chat: object;
-        }> {
+        message_id: number;
+        chat: object;
+    }> {
         return this.conduct({
             field: 'file',
             params,
@@ -238,9 +224,7 @@ export class Upload {
             getServer: this.api.photos.getChatUploadServer,
             serverParams: ['chat_id', 'crop_x', 'crop_y', 'crop_width'],
 
-            saveFiles: file => (
-                this.api.messages.setChatPhoto({ file })
-            ),
+            saveFiles: file => this.api.messages.setChatPhoto({ file }),
 
             maxFiles: 1,
             attachmentType: 'photo',
@@ -411,20 +395,22 @@ export class Upload {
             compression?: number;
         },
     ): Promise<VideoAttachment> {
-        const save = await this.api.video.save(pickExistingProperties(params, [
-            'group_id',
-            'album_id',
-            'link',
-            'name',
-            'description',
-            'is_private',
-            'wallpost',
-            'privacy_view',
-            'privacy_comment',
-            'no_comments',
-            'repeat',
-            'compression',
-        ]));
+        const save = await this.api.video.save(
+            pickExistingProperties(params, [
+                'group_id',
+                'album_id',
+                'link',
+                'name',
+                'description',
+                'is_private',
+                'wallpost',
+                'privacy_view',
+                'privacy_comment',
+                'no_comments',
+                'repeat',
+                'compression',
+            ]),
+        );
 
         save.id = save.video_id;
 
@@ -507,7 +493,10 @@ export class Upload {
     /**
      * Uploads wall document
      */
-    async conductWallDocument(params: IUploadParams & { type?: string }, { attachmentType = 'doc' } = {}): Promise<any> {
+    async conductWallDocument(
+        params: IUploadParams & { type?: string },
+        { attachmentType = 'doc' } = {},
+    ): Promise<any> {
         const response = await this.conduct({
             field: 'file',
             params,
@@ -550,7 +539,10 @@ export class Upload {
     /**
      * Uploads wall document
      */
-    async conductMessageDocument(params: IUploadParams & { type?: string }, { attachmentType = 'doc' } = {}): Promise<any> {
+    async conductMessageDocument(
+        params: IUploadParams & { type?: string },
+        { attachmentType = 'doc' } = {},
+    ): Promise<any> {
         const response = await this.conduct({
             field: 'file',
             params,
@@ -680,12 +672,12 @@ export class Upload {
             crop_y2?: number;
         },
     ): Promise<{
-            images: {
-                url: string;
-                width: number;
-                height: number;
-            }[];
-        }> {
+        images: {
+            url: string;
+            width: number;
+            height: number;
+        }[];
+    }> {
         return this.conduct({
             field: 'photo',
             params,
@@ -744,7 +736,9 @@ export class Upload {
             clickable_stickers?: string;
         },
     ): Promise<StoryAttachment> {
-        const { items: [story] } = await this.conduct({
+        const {
+            items: [story],
+        } = await this.conduct({
             field: 'file',
             params,
 
@@ -760,11 +754,10 @@ export class Upload {
                 'clickable_stickers',
             ],
 
-            saveFiles: file => (
+            saveFiles: file =>
                 this.api.stories.save({
                     upload_results: file.upload_result,
-                })
-            ),
+                }),
 
             maxFiles: 1,
             attachmentType: 'photo',
@@ -790,7 +783,9 @@ export class Upload {
             clickable_stickers?: string;
         },
     ): Promise<StoryAttachment> {
-        const { items: [story] } = await this.conduct({
+        const {
+            items: [story],
+        } = await this.conduct({
             field: 'video_file',
             params,
 
@@ -805,11 +800,10 @@ export class Upload {
                 'clickable_stickers',
             ],
 
-            saveFiles: file => (
+            saveFiles: file =>
                 this.api.stories.save({
                     upload_results: file.upload_result,
-                })
-            ),
+                }),
 
             maxFiles: 1,
             attachmentType: 'video',
@@ -873,9 +867,10 @@ export class Upload {
         const { uploadUrl: sourceUploadUrl } = source;
 
         if (sourceUploadUrl !== undefined) {
-            getServer = (): Promise<{ upload_url: string }> => Promise.resolve({
-                upload_url: sourceUploadUrl,
-            });
+            getServer = (): Promise<{ upload_url: string }> =>
+                Promise.resolve({
+                    upload_url: sourceUploadUrl,
+                });
         }
 
         const { length: valuesLength } = source.values;
@@ -942,7 +937,7 @@ export class Upload {
         values: IUploadSourceMedia[];
         maxFiles: number;
         attachmentType?: string;
-    }): Promise<{ formData: FormData; knownLength: boolean; }> {
+    }): Promise<{ formData: FormData; knownLength: boolean }> {
         const formData = new FormData();
 
         const isMultipart = maxFiles > 1;
@@ -980,28 +975,24 @@ export class Upload {
             const isBuffer = Buffer.isBuffer(value);
 
             if (isStream(value) || isBuffer) {
-                const name = isMultipart
-                    ? field + (i + 1)
-                    : field;
+                const name = isMultipart ? field + (i + 1) : field;
 
                 const { contentType } = media;
 
-                const fileContentType = contentType
-                    || DefaultContentType[attachmentType as keyof typeof DefaultContentType];
+                const fileContentType =
+                    contentType || DefaultContentType[attachmentType as keyof typeof DefaultContentType];
 
                 const file = isBuffer
                     ? new File([value as Buffer], filename, {
-                        type: fileContentType,
-                    })
-                    // Workground for NodeJS streams: https://github.com/octet-stream/form-data/issues/32
-                    : {
-                        size: Number(contentLength),
-                        type: fileContentType,
-                        stream: () => (
-                            value
-                        ),
-                        [Symbol.toStringTag]: 'Blob',
-                    };
+                          type: fileContentType,
+                      })
+                    : // Workground for NodeJS streams: https://github.com/octet-stream/form-data/issues/32
+                      {
+                          size: Number(contentLength),
+                          type: fileContentType,
+                          stream: () => value,
+                          [Symbol.toStringTag]: 'Blob',
+                      };
 
                 if (!contentLength) {
                     knownLength = false;
@@ -1029,11 +1020,18 @@ export class Upload {
     /**
      * Upload form data
      */
-    async upload(url: URL | string, { formData, timeout, forceBuffer }: {
-        formData: FormData;
-        timeout: number | undefined;
-        forceBuffer: boolean;
-    }): Promise<any> {
+    async upload(
+        url: URL | string,
+        {
+            formData,
+            timeout,
+            forceBuffer,
+        }: {
+            formData: FormData;
+            timeout: number | undefined;
+            forceBuffer: boolean;
+        },
+    ): Promise<any> {
         const { agent, uploadTimeout } = this.options;
 
         const encoder = new FormDataEncoder(formData);
@@ -1049,9 +1047,7 @@ export class Upload {
             ...encoder.headers,
         };
 
-        const body = forceBuffer
-            ? await streamToBuffer(rawBody)
-            : rawBody;
+        const body = forceBuffer ? await streamToBuffer(rawBody) : rawBody;
 
         if (forceBuffer) {
             headers['Content-Length'] = String((body as Buffer).length);
@@ -1070,11 +1066,9 @@ export class Upload {
             if (!response.ok) {
                 throw new Error(response.statusText);
             }
-            const result = await response.json() as any;
+            const result = (await response.json()) as any;
 
-            return result.response !== undefined
-                ? result.response
-                : result;
+            return result.response !== undefined ? result.response : result;
         } finally {
             clearTimeout(interval);
         }

@@ -1,12 +1,9 @@
 import type { APIRequest } from '../api/request';
 
-import { VKError, SharedErrorCode } from '../errors';
+import { SharedErrorCode, VKError } from '../errors';
 import type { CaptchaType } from './constants';
 
-const {
-    MISSING_CAPTCHA_HANDLER,
-    MISSING_TWO_FACTOR_HANDLER,
-} = SharedErrorCode;
+const { MISSING_CAPTCHA_HANDLER, MISSING_TWO_FACTOR_HANDLER } = SharedErrorCode;
 
 export interface ICallbackServiceCaptchaPayload {
     type: CaptchaType;
@@ -24,12 +21,12 @@ export type CallbackServiceRetry = (code: Error | string) => Promise<void>;
 
 export type CaptchaHandler = (
     payload: ICallbackServiceCaptchaPayload,
-    retry: CallbackServiceRetry
+    retry: CallbackServiceRetry,
 ) => Promise<void> | void;
 
 export type TwoFactorHandler = (
     payload: ICallbackServiceTwoFactorPayload,
-    retry: CallbackServiceRetry
+    retry: CallbackServiceRetry,
 ) => Promise<void> | void;
 
 export interface ICallbackServiceValidate {
@@ -84,31 +81,35 @@ export class CallbackService {
         const { captchaHandler } = this;
 
         if (captchaHandler === undefined) {
-            return Promise.reject(new VKError({
-                message: 'Missing captcha handler',
-                code: MISSING_CAPTCHA_HANDLER,
-            }));
+            return Promise.reject(
+                new VKError({
+                    message: 'Missing captcha handler',
+                    code: MISSING_CAPTCHA_HANDLER,
+                }),
+            );
         }
 
         return new Promise((resolveProcessing, rejectProcessing): void => {
-            void captchaHandler(payload, (key): Promise<void> => (
-                new Promise((resolve, reject): void => {
-                    if (key instanceof Error) {
-                        reject(key);
-                        rejectProcessing(key);
+            void captchaHandler(
+                payload,
+                (key): Promise<void> =>
+                    new Promise((resolve, reject): void => {
+                        if (key instanceof Error) {
+                            reject(key);
+                            rejectProcessing(key);
 
-                        return;
-                    }
+                            return;
+                        }
 
-                    resolveProcessing({
-                        key,
-                        validate: {
-                            resolve,
-                            reject,
-                        },
-                    });
-                })
-            ));
+                        resolveProcessing({
+                            key,
+                            validate: {
+                                resolve,
+                                reject,
+                            },
+                        });
+                    }),
+            );
         });
     }
 
@@ -122,31 +123,35 @@ export class CallbackService {
         const { twoFactorHandler } = this;
 
         if (twoFactorHandler === undefined) {
-            return Promise.reject(new VKError({
-                message: 'Missing two-factor handler',
-                code: MISSING_TWO_FACTOR_HANDLER,
-            }));
+            return Promise.reject(
+                new VKError({
+                    message: 'Missing two-factor handler',
+                    code: MISSING_TWO_FACTOR_HANDLER,
+                }),
+            );
         }
 
         return new Promise((resolveProcessing, rejectProcessing): void => {
-            void twoFactorHandler(payload, (code): Promise<void> => (
-                new Promise((resolve, reject): void => {
-                    if (code instanceof Error) {
-                        reject(code);
-                        rejectProcessing(code);
+            void twoFactorHandler(
+                payload,
+                (code): Promise<void> =>
+                    new Promise((resolve, reject): void => {
+                        if (code instanceof Error) {
+                            reject(code);
+                            rejectProcessing(code);
 
-                        return;
-                    }
+                            return;
+                        }
 
-                    resolveProcessing({
-                        code,
-                        validate: {
-                            resolve,
-                            reject,
-                        },
-                    });
-                })
-            ));
+                        resolveProcessing({
+                            code,
+                            validate: {
+                                resolve,
+                                reject,
+                            },
+                        });
+                    }),
+            );
         });
     }
 }

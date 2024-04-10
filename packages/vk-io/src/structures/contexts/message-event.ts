@@ -1,9 +1,9 @@
-import { Context, type ContextFactoryOptions, type ContextDefaultState } from './context';
+import { Context, type ContextDefaultState, type ContextFactoryOptions } from './context';
 
 import { type IMessageContextSendOptions, MessageContext } from './message';
 
-import { getRandomId, pickProperties } from '../../utils/helpers';
 import { UpdateSource, kSerializeData } from '../../utils/constants';
+import { getRandomId, pickProperties } from '../../utils/helpers';
 
 export interface IMessageEventShowSnackbar {
     type: 'show_snackbar';
@@ -22,10 +22,7 @@ export interface IMessageEventOpenApp {
     hash: string;
 }
 
-export type MessageEventAction =
-IMessageEventShowSnackbar
-| IMessageEventOpenLink
-| IMessageEventOpenApp;
+export type MessageEventAction = IMessageEventShowSnackbar | IMessageEventOpenLink | IMessageEventOpenApp;
 
 export type MessageEventContextType = 'message_event';
 
@@ -39,24 +36,20 @@ export interface IMessageEventContextPayload {
     payload: any;
 }
 
-export type MessageEventContextOptions<S> =
-    ContextFactoryOptions<IMessageEventContextPayload, S>;
+export type MessageEventContextOptions<S> = ContextFactoryOptions<IMessageEventContextPayload, S>;
 
-export class MessageEventContext<S = ContextDefaultState>
-    extends Context<
+export class MessageEventContext<S = ContextDefaultState> extends Context<
     IMessageEventContextPayload,
     S,
     MessageEventContextType,
     MessageEventContextSubType
-    > {
+> {
     public constructor(options: MessageEventContextOptions<S>) {
         super({
             ...options,
 
             type: 'message_event',
-            subTypes: [
-                options.updateType as MessageEventContextSubType,
-            ],
+            subTypes: [options.updateType as MessageEventContextSubType],
         });
     }
 
@@ -119,15 +112,13 @@ export class MessageEventContext<S = ContextDefaultState>
         const options = {
             random_id: randomId,
 
-            ...(
-                typeof text !== 'object'
-                    ? {
-                        message: text,
+            ...(typeof text !== 'object'
+                ? {
+                      message: text,
 
-                        ...params,
-                    }
-                    : text
-            ),
+                      ...params,
+                  }
+                : text),
         } as IMessageContextSendOptions;
 
         if (this.$groupId !== undefined) {
@@ -138,18 +129,19 @@ export class MessageEventContext<S = ContextDefaultState>
 
         const rawDestination = await this.api.messages.send(options);
 
-        const destination = typeof rawDestination !== 'number'
-            ? rawDestination[0] as {
-                peer_id : number;
-                message_id: number;
-                conversation_message_id: number;
-                error: number;
-            }
-            : {
-                peer_id: this.peer_id,
-                message_id: rawDestination,
-                conversation_message_id: 0,
-            };
+        const destination =
+            typeof rawDestination !== 'number'
+                ? (rawDestination[0] as {
+                      peer_id: number;
+                      message_id: number;
+                      conversation_message_id: number;
+                      error: number;
+                  })
+                : {
+                      peer_id: this.peer_id,
+                      message_id: rawDestination,
+                      conversation_message_id: 0,
+                  };
 
         const messageContext = new MessageContext<S>({
             api: this.api,
@@ -190,12 +182,6 @@ export class MessageEventContext<S = ContextDefaultState>
      * Returns the custom data
      */
     public [kSerializeData](): object {
-        return pickProperties(this, [
-            'userId',
-            'conversationMessageId',
-            'peerId',
-            'eventId',
-            'eventPayload',
-        ]);
+        return pickProperties(this, ['userId', 'conversationMessageId', 'peerId', 'eventId', 'eventPayload']);
     }
 }

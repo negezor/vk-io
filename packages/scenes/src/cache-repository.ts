@@ -9,7 +9,9 @@ export class CacheRepository<Key extends string, Value> {
 
     protected sortingValues?: CacheRepositorySortingValues<Value>;
 
-    public constructor({ sortingValues }: {
+    public constructor({
+        sortingValues,
+    }: {
         sortingValues?: CacheRepositorySortingValues<Value>;
     } = {}) {
         this.sortingValues = sortingValues;

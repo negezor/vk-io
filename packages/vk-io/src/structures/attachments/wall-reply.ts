@@ -26,10 +26,12 @@ export interface IWallReplyAttachmentPayload {
     };
 }
 
-export type WallReplyAttachmentOptions =
-    ExternalAttachmentFactoryOptions<IWallReplyAttachmentPayload>;
+export type WallReplyAttachmentOptions = ExternalAttachmentFactoryOptions<IWallReplyAttachmentPayload>;
 
-export class WallReplyAttachment extends ExternalAttachment<IWallReplyAttachmentPayload, AttachmentType.WALL_REPLY | 'wall_reply'> {
+export class WallReplyAttachment extends ExternalAttachment<
+    IWallReplyAttachmentPayload,
+    AttachmentType.WALL_REPLY | 'wall_reply'
+> {
     public attachments: (Attachment | ExternalAttachment)[];
 
     /**

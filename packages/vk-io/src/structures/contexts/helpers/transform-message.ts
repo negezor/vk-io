@@ -48,9 +48,7 @@ const attachmentHandlers = {
                 url: raw[`${key}_url`],
                 title: raw[`${key}_title`],
                 description: raw[`${key}_desc`],
-                photo: photoId !== undefined
-                    ? idToAttachmentPayload(photoId)
-                    : undefined,
+                photo: photoId !== undefined ? idToAttachmentPayload(photoId) : undefined,
             },
         };
     },
@@ -75,51 +73,51 @@ const attachmentHandlers = {
 /**
  * Transform message to Object
  */
-export function transformMessage(rawMessage: [
-    // type
-    number,
-    // conversation message id
-    number,
-    // flags
-    number,
-    // minor id
-    number,
-    // peer id
-    number,
-    // timestamp
-    number,
+export function transformMessage(
+    rawMessage: [
+        // type
+        number,
+        // conversation message id
+        number,
+        // flags
+        number,
+        // minor id
+        number,
+        // peer id
+        number,
+        // timestamp
+        number,
+        // text
+        string,
+        // additional
+        {
+            title?: string;
+            from?: string;
 
-    // text
-    string,
+            emoji?: '1';
+            has_template?: '1';
+            is_expired?: '1';
 
-    // additional
-    {
-        title?: string;
-        from?: string;
+            source_act?: MessageContextPayloadEventType;
+            source_mid?: string;
+            source_message?: string;
+            source_chat_local_id?: string;
 
-        emoji?: '1';
-        has_template?: '1';
-        is_expired?: '1';
-
-        source_act?: MessageContextPayloadEventType;
-        source_mid?: string;
-        source_message?: string;
-        source_chat_local_id?: string;
-
-        payload?: string;
-    },
-    // attachments
-    Record<string, any> & {
-        fwd?: string;
-        reply?: string;
-    },
-    // randomId
-    number,
-    // messageId
-    number,
-    // updateTimestamp
-    number
-]): IMessageContextPayload['message'] {
+            payload?: string;
+        },
+        // attachments
+        Record<string, any> & {
+            fwd?: string;
+            reply?: string;
+        },
+        // randomId
+        number,
+        // messageId
+        number,
+        // updateTimestamp
+        number,
+    ],
+): IMessageContextPayload['message'] {
     if (rawMessage[0] !== 10004) {
         // set minor id to 0
         rawMessage.splice(3, 0, 0);
@@ -146,9 +144,7 @@ export function transformMessage(rawMessage: [
         update_time,
         text,
         random_id,
-        geo: attachments.geo !== undefined
-            ? {}
-            : undefined,
+        geo: attachments.geo !== undefined ? {} : undefined,
         payload: extra.payload,
     } as IMessageContextPayload['message'];
 
@@ -171,9 +167,7 @@ export function transformMessage(rawMessage: [
             type: extra.source_act,
             text: extra.source_message,
 
-            member_id: extra.source_mid
-                ? Number(extra.source_mid)
-                : undefined,
+            member_id: extra.source_mid ? Number(extra.source_mid) : undefined,
         };
     }
 
@@ -182,17 +176,9 @@ export function transformMessage(rawMessage: [
     for (let i = 1, key = 'attach1'; attachments[key] !== undefined; i += 1, key = `attach${i}`) {
         const type = attachments[`${key}_type`] as string;
 
-        const handler = attachmentHandlers[type as keyof typeof attachmentHandlers]
-            || attachmentHandlers.default;
+        const handler = attachmentHandlers[type as keyof typeof attachmentHandlers] || attachmentHandlers.default;
 
-        message.attachments.push(
-            handler(
-                attachments,
-                key,
-                type,
-                i,
-            ),
-        );
+        message.attachments.push(handler(attachments, key, type, i));
     }
 
     if (attachments.reply !== undefined) {
@@ -213,20 +199,22 @@ export function transformMessage(rawMessage: [
             important: false,
         };
     } else if (attachments.fwd !== undefined) {
-        message.fwd_messages = [{
-            id: 0,
-            conversation_message_id: 0,
-            date: 0,
-            update_time: 0,
-            from_id: 0,
-            peer_id: 0,
-            out: 0,
-            text: '',
-            fwd_messages: [],
-            attachments: [],
-            random_id: 0,
-            important: false,
-        }];
+        message.fwd_messages = [
+            {
+                id: 0,
+                conversation_message_id: 0,
+                date: 0,
+                update_time: 0,
+                from_id: 0,
+                peer_id: 0,
+                out: 0,
+                text: '',
+                fwd_messages: [],
+                attachments: [],
+                random_id: 0,
+                important: false,
+            },
+        ];
     }
 
     return message;

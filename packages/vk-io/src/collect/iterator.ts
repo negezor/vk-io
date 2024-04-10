@@ -1,13 +1,7 @@
 import createDebug from 'debug';
 
 import type { API, Objects } from '../api';
-import {
-    type APIError,
-    CollectError,
-
-    APIErrorCode,
-    CollectErrorCode,
-} from '../errors';
+import { type APIError, APIErrorCode, CollectError, CollectErrorCode } from '../errors';
 
 import { getExecuteCode } from './execute-code';
 
@@ -15,7 +9,7 @@ const debug = createDebug('api-io:collect');
 
 export interface ICollectPaginateResponse<T> {
     count: number;
-    items: T[]
+    items: T[];
     groups?: Objects.GroupsGroupFull[];
     profiles?: Objects.UsersUserFull[];
 }
@@ -69,10 +63,7 @@ export async function* createCollectIterator<T>({
 
     const code = getExecuteCode({ method, params });
 
-    const {
-        count: desiredCount = Number.POSITIVE_INFINITY,
-        offset: ignoredOffset = 0,
-    } = rawParams;
+    const { count: desiredCount = Number.POSITIVE_INFINITY, offset: ignoredOffset = 0 } = rawParams;
 
     let total: number | undefined = Math.min(maxCount, desiredCount);
     if (!Number.isFinite(total)) {

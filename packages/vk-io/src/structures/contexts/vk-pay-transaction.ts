@@ -1,7 +1,7 @@
-import { Context, type ContextFactoryOptions, type ContextDefaultState } from './context';
+import { Context, type ContextDefaultState, type ContextFactoryOptions } from './context';
 
-import { pickProperties } from '../../utils/helpers';
 import { kSerializeData } from '../../utils/constants';
+import { pickProperties } from '../../utils/helpers';
 
 export type VKPayTransactionContextType = 'vk_pay_transaction';
 
@@ -14,24 +14,20 @@ export interface IVKPayTransactionPayload {
     date: number;
 }
 
-export type VKPayTransactionContextOptions<S> =
-    ContextFactoryOptions<IVKPayTransactionPayload, S>;
+export type VKPayTransactionContextOptions<S> = ContextFactoryOptions<IVKPayTransactionPayload, S>;
 
-export class VKPayTransactionContext<S = ContextDefaultState>
-    extends Context<
+export class VKPayTransactionContext<S = ContextDefaultState> extends Context<
     IVKPayTransactionPayload,
     S,
     VKPayTransactionContextType,
     VKPayTransactionContextSubType
-    > {
+> {
     public constructor(options: VKPayTransactionContextOptions<S>) {
         super({
             ...options,
 
             type: 'vk_pay_transaction',
-            subTypes: [
-                options.updateType as VKPayTransactionContextSubType,
-            ],
+            subTypes: [options.updateType as VKPayTransactionContextSubType],
         });
     }
 
@@ -67,11 +63,6 @@ export class VKPayTransactionContext<S = ContextDefaultState>
      * Returns the custom data
      */
     public [kSerializeData](): object {
-        return pickProperties(this, [
-            'fromId',
-            'amount',
-            'description',
-            'createdAt',
-        ]);
+        return pickProperties(this, ['fromId', 'amount', 'description', 'createdAt']);
     }
 }

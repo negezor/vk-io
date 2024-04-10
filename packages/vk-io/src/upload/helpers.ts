@@ -1,20 +1,16 @@
-import { Stream, PassThrough } from 'stream';
-import type { UploadNormalizedSourceOptions, UploadAllowedSource } from './types';
+import { PassThrough, Stream } from 'stream';
+import type { UploadAllowedSource, UploadNormalizedSourceOptions } from './types';
 
 /**
  * Check object is stream
  */
-export const isStream = (source: NodeJS.ReadableStream | Buffer | string): boolean => (
-    typeof source === 'object' && source instanceof Stream
-);
+export const isStream = (source: NodeJS.ReadableStream | Buffer | string): boolean =>
+    typeof source === 'object' && source instanceof Stream;
 
 /**
  * Copies object params to new object
  */
-export const pickExistingProperties = <
-    T,
-    K extends keyof T
->(params: T, properties: K[]): Pick<T, K> => {
+export const pickExistingProperties = <T, K extends keyof T>(params: T, properties: K[]): Pick<T, K> => {
     const copies: Pick<T, K> = {} as Pick<T, K>;
 
     for (const property of properties) {
@@ -36,9 +32,7 @@ export const normalizeSource = (rawSource: UploadAllowedSource): UploadNormalize
     return {
         ...rawSource,
 
-        values: Array.isArray(rawSource.values)
-            ? rawSource.values
-            : [rawSource.values],
+        values: Array.isArray(rawSource.values) ? rawSource.values : [rawSource.values],
     };
 };
 

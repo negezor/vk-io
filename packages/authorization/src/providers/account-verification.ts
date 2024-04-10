@@ -1,33 +1,26 @@
-import createDebug from 'debug';
-import { load as cheerioLoad } from 'cheerio';
 import { AbortController } from 'abort-controller';
+import { load as cheerioLoad } from 'cheerio';
+import createDebug from 'debug';
 
-import { CaptchaType, type ICallbackServiceValidate, type CallbackService } from 'vk-io';
+import { type CallbackService, CaptchaType, type ICallbackServiceValidate } from 'vk-io';
 
 import type { Agent } from 'https';
 
+import { AuthErrorCode, CALLBACK_BLANK, DESKTOP_USER_AGENT } from '../constants';
 import { AuthorizationError } from '../errors';
-import { type CheerioStatic, parseFormField, getFullURL } from '../helpers';
 import {
     CookieJar,
-
     type FetchWrapper,
     type RequestInfo,
     type RequestInit,
     type Response,
-
     fetchCookieFollowRedirectsDecorator,
 } from '../fetch-cookie';
-import { DESKTOP_USER_AGENT, CALLBACK_BLANK, AuthErrorCode } from '../constants';
+import { type CheerioStatic, getFullURL, parseFormField } from '../helpers';
 
 const debug = createDebug('vk-io:authorization:account-verification');
 
-const {
-    INVALID_PHONE_NUMBER,
-    AUTHORIZATION_FAILED,
-    FAILED_PASSED_CAPTCHA,
-    FAILED_PASSED_TWO_FACTOR,
-} = AuthErrorCode;
+const { INVALID_PHONE_NUMBER, AUTHORIZATION_FAILED, FAILED_PASSED_CAPTCHA, FAILED_PASSED_TWO_FACTOR } = AuthErrorCode;
 
 /**
  * Two-factor auth check action
@@ -226,11 +219,13 @@ export class AccountVerification {
         debug('process two-factor handle');
 
         if (this.twoFactorValidate) {
-            this.twoFactorValidate.reject(new AuthorizationError({
-                message: 'Incorrect two-factor code',
-                code: FAILED_PASSED_TWO_FACTOR,
-                pageHtml: $.html(),
-            }));
+            this.twoFactorValidate.reject(
+                new AuthorizationError({
+                    message: 'Incorrect two-factor code',
+                    code: FAILED_PASSED_TWO_FACTOR,
+                    pageHtml: $.html(),
+                }),
+            );
 
             this.twoFactorAttempts += 1;
         }
@@ -341,10 +336,12 @@ export class AccountVerification {
      */
     protected async processCaptchaForm(response: Response, $: CheerioStatic): Promise<Response> {
         if (this.captchaValidate !== undefined) {
-            this.captchaValidate.reject(new AuthorizationError({
-                message: 'Incorrect captcha code',
-                code: FAILED_PASSED_CAPTCHA,
-            }));
+            this.captchaValidate.reject(
+                new AuthorizationError({
+                    message: 'Incorrect captcha code',
+                    code: FAILED_PASSED_CAPTCHA,
+                }),
+            );
 
             this.captchaValidate = undefined;
 

@@ -1,7 +1,7 @@
 import type { API } from '../api';
 import { ResourceError } from '../errors';
 
-import { ResourceType, ResourceErrorCode } from './constants';
+import { ResourceErrorCode, ResourceType } from './constants';
 
 export interface IResolveResourceOptions {
     resource: string | number;
@@ -26,7 +26,8 @@ const isHttpsRe = /^https:\/\//i;
 const isVKUrlRe = /^(?:https?:\/\/)?(?:m\.)?(?:vk\.(?:com|me|ru)|vkontakte\.ru)\//i;
 
 const parseTargetResourceRe = /^(id|club|public|albums|tag|app)(-?\d+)$/i;
-const parseOwnerResourceRe = /^(album|topic|page|photo|video|audio|doc|audio_message|graffiti|wall|market|poll|gift)(-?\d+)_(\d+)/i;
+const parseOwnerResourceRe =
+    /^(album|topic|page|photo|video|audio|doc|audio_message|graffiti|wall|market|poll|gift)(-?\d+)_(\d+)/i;
 
 const enumResourceTypes: Record<string, IResolvedTargetResource['type']> = {
     id: ResourceType.USER,
@@ -35,11 +36,8 @@ const enumResourceTypes: Record<string, IResolvedTargetResource['type']> = {
     app: ResourceType.APPLICATION,
 };
 
-const transformNumberResourceToTarget = (resource: number): string => (
-    resource < 0
-        ? `club${-resource}`
-        : `id${resource}`
-);
+const transformNumberResourceToTarget = (resource: number): string =>
+    resource < 0 ? `club${-resource}` : `id${resource}`;
 
 const transformMentionResourceToTarget = (resource: string): string => {
     // biome-ignore lint/style/noNonNullAssertion: we already check by test pattern
@@ -53,7 +51,7 @@ const resolveTargetResouce = (resource: string): IResolvedTargetResource => {
     const { 1: rawType, 2: rawId } = resource.match(parseTargetResourceRe)! as [
         never,
         IResolvedTargetResource['type'],
-        number
+        number,
     ];
 
     return {
@@ -73,10 +71,7 @@ const resolveOwnerResource = (resource: string): IResolvedOwnerResource => {
     };
 };
 
-const resolveSlugResource = async (
-    resource: string,
-    api?: API,
-): Promise<IResolvedTargetResource> => {
+const resolveSlugResource = async (resource: string, api?: API): Promise<IResolvedTargetResource> => {
     if (api === undefined) {
         throw new Error('API object is not passed');
     }
@@ -109,19 +104,11 @@ export const resolveResource = async ({
     const resource = String(rawResource).trim();
 
     if (onlyNumberRe.test(resource)) {
-        return resolveTargetResouce(
-            transformNumberResourceToTarget(
-                Number(resource),
-            ),
-        );
+        return resolveTargetResouce(transformNumberResourceToTarget(Number(resource)));
     }
 
     if (systemMentionRe.test(resource)) {
-        return resolveTargetResouce(
-            transformMentionResourceToTarget(
-                resource,
-            ),
-        );
+        return resolveTargetResouce(transformMentionResourceToTarget(resource));
     }
 
     if (parseOwnerResourceRe.test(resource)) {
@@ -136,9 +123,7 @@ export const resolveResource = async ({
         return resolveSlugResource(resource, api);
     }
 
-    const resourceUrl = !isHttpsRe.test(resource)
-        ? `https://${resource}`
-        : resource;
+    const resourceUrl = !isHttpsRe.test(resource) ? `https://${resource}` : resource;
 
     const { pathname: rawPathname, searchParams } = new URL(resourceUrl);
 

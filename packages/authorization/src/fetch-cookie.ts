@@ -1,27 +1,13 @@
 import createDebug from 'debug';
 import { CookieJar } from 'tough-cookie';
 
-import {
-    fetch,
-
-    RequestInfo,
-    RequestInit,
-    Response,
-} from './fetch';
+import { RequestInfo, RequestInit, Response, fetch } from './fetch';
 
 export type Headers = Record<string, string>;
 
-export type FetchWrapper = (
-    url: RequestInfo,
-    options?: RequestInit
-) => Promise<Response>;
+export type FetchWrapper = (url: RequestInfo, options?: RequestInit) => Promise<Response>;
 
-export {
-    CookieJar,
-    RequestInfo,
-    RequestInit,
-    Response,
-};
+export { CookieJar, RequestInfo, RequestInit, Response };
 
 const debug = createDebug('vk-io:util:fetch-cookie');
 
@@ -34,8 +20,7 @@ const findUserAgent = (headers?: Headers): string | undefined => {
         return undefined;
     }
 
-    const key = Object.keys(headers)
-        .find((header): boolean => userAgentRe.test(header));
+    const key = Object.keys(headers).find((header): boolean => userAgentRe.test(header));
 
     if (!key) {
         return undefined;
@@ -44,11 +29,8 @@ const findUserAgent = (headers?: Headers): string | undefined => {
     return headers[key];
 };
 
-export const fetchCookieDecorator = (jar = new CookieJar()): FetchWrapper => (
-    async function fetchCookie(
-        url: RequestInfo,
-        options: RequestInit = {},
-    ): Promise<Response> {
+export const fetchCookieDecorator = (jar = new CookieJar()): FetchWrapper =>
+    async function fetchCookie(url: RequestInfo, options: RequestInit = {}): Promise<Response> {
         const previousCookie = await jar.getCookieString(String(url));
 
         const { headers = {} } = options as {
@@ -73,21 +55,15 @@ export const fetchCookieDecorator = (jar = new CookieJar()): FetchWrapper => (
             return response;
         }
 
-        await Promise.all(cookies.map((cookie: string): Promise<unknown> => (
-            jar.setCookie(cookie, response.url)
-        )));
+        await Promise.all(cookies.map((cookie: string): Promise<unknown> => jar.setCookie(cookie, response.url)));
 
         return response;
-    }
-);
+    };
 
 export const fetchCookieFollowRedirectsDecorator = (jar?: CookieJar): FetchWrapper => {
     const fetchCookie = fetchCookieDecorator(jar);
 
-    return async function fetchCookieFollowRedirects(
-        url: RequestInfo,
-        options: RequestInit = {},
-    ): Promise<Response> {
+    return async function fetchCookieFollowRedirects(url: RequestInfo, options: RequestInit = {}): Promise<Response> {
         const response = await fetchCookie(url, {
             ...options,
 
@@ -112,9 +88,7 @@ export const fetchCookieFollowRedirectsDecorator = (jar?: CookieJar): FetchWrapp
 
             const userAgent = findUserAgent(options.headers as Headers);
 
-            const headers: Headers = userAgent !== undefined
-                ? { 'User-Agent': userAgent }
-                : {};
+            const headers: Headers = userAgent !== undefined ? { 'User-Agent': userAgent } : {};
 
             const redirectResponse = await fetchCookieFollowRedirects(location, {
                 method: 'GET',

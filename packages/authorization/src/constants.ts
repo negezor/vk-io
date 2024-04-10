@@ -6,7 +6,8 @@ export const CALLBACK_BLANK = 'https://oauth.vk.com/blank.html';
 /**
  * User-Agent for standalone auth
  */
-export const DESKTOP_USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36';
+export const DESKTOP_USER_AGENT =
+    'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.89 Safari/537.36';
 
 /**
  * Auth error codes
@@ -20,7 +21,7 @@ export enum AuthErrorCode {
     USERNAME_OR_PASSWORD_IS_INCORRECT = 'USERNAME_OR_PASSWORD_IS_INCORRECT',
     TOO_MUCH_TRIES = 'TOO_MUCH_TRIES',
     WRONG_OTP = 'WRONG_OTP',
-    OTP_FORMAT_IS_INCORRECT = 'OTP_FORMAT_IS_INCORRECT'
+    OTP_FORMAT_IS_INCORRECT = 'OTP_FORMAT_IS_INCORRECT',
 }
 
 /**

@@ -1,14 +1,9 @@
-import { type Context, Composer } from 'vk-io';
-import {
-    type Middleware,
-    type MiddlewareReturn,
-    type NextMiddleware,
-    skipMiddleware,
-} from 'middleware-io';
+import { type Middleware, type MiddlewareReturn, type NextMiddleware, skipMiddleware } from 'middleware-io';
+import { Composer, type Context } from 'vk-io';
 
 import type { HearConditions, HearFunctionCondition } from './types';
 
-import { splitPath, unifyCondition, getObjectValue } from './helpers';
+import { getObjectValue, splitPath, unifyCondition } from './helpers';
 
 export class HearManager<C extends Context> {
     private composer = Composer.builder<C>();
@@ -24,18 +19,11 @@ export class HearManager<C extends Context> {
         return this.composer.length;
     }
     public get middleware(): Middleware<C> {
-        return (context: C, next: NextMiddleware): unknown => (
-            this.composed(context, next)
-        );
+        return (context: C, next: NextMiddleware): unknown => this.composed(context, next);
     }
 
-    public hear<T = object>(
-        hearConditions: HearConditions<C & T>,
-        handler: Middleware<C & T>,
-    ): this {
-        const rawConditions = !Array.isArray(hearConditions)
-            ? [hearConditions]
-            : hearConditions;
+    public hear<T = object>(hearConditions: HearConditions<C & T>, handler: Middleware<C & T>): this {
+        const rawConditions = !Array.isArray(hearConditions) ? [hearConditions] : hearConditions;
 
         const hasConditions = rawConditions.every(Boolean);
 
@@ -53,17 +41,19 @@ export class HearManager<C extends Context> {
             if (typeof condition === 'object' && !(condition instanceof RegExp)) {
                 functionCondtion = true;
 
-                const entries = Object.entries(condition).map(([path, value]): [string[], HearFunctionCondition<C & T, unknown>] => (
-                    [splitPath(path), unifyCondition(value)]
-                ));
+                const entries = Object.entries(condition).map(
+                    ([path, value]): [string[], HearFunctionCondition<C & T, unknown>] => [
+                        splitPath(path),
+                        unifyCondition(value),
+                    ],
+                );
 
-                return (text, context) => (
+                return (text, context) =>
                     entries.every(([selectors, callback]): boolean => {
                         const value = getObjectValue(context, selectors);
 
                         return callback(value, context);
-                    })
-                );
+                    });
             }
 
             if (typeof condition === 'function') {
@@ -90,7 +80,7 @@ export class HearManager<C extends Context> {
 
             const stringCondition = String(condition);
 
-            return (text) => text === stringCondition;
+            return text => text === stringCondition;
         });
 
         const needText = textCondition && functionCondtion === false;
@@ -102,13 +92,9 @@ export class HearManager<C extends Context> {
                 return next();
             }
 
-            const hasSome = conditions.some((condition): boolean => (
-                condition(text, context)
-            ));
+            const hasSome = conditions.some((condition): boolean => condition(text, context));
 
-            return hasSome
-                ? handler(context, next)
-                : next();
+            return hasSome ? handler(context, next) : next();
         });
 
         this.recompose();
@@ -128,8 +114,6 @@ export class HearManager<C extends Context> {
     }
 
     private recompose(): void {
-        this.composed = this.composer.clone()
-            .use(this.fallbackHandler)
-            .compose();
+        this.composed = this.composer.clone().use(this.fallbackHandler).compose();
     }
 }

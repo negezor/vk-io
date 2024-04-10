@@ -1,7 +1,7 @@
 import { ExternalAttachment, type ExternalAttachmentFactoryOptions } from './external';
 
-import { pickProperties } from '../../utils/helpers';
 import { AttachmentType, kSerializeData } from '../../utils/constants';
+import { pickProperties } from '../../utils/helpers';
 
 export interface IStickerImage {
     url: string;
@@ -16,11 +16,12 @@ export interface IStickerAttachmentPayload {
     images_with_background: IStickerImage[];
 }
 
-export type StickerAttachmentOptions =
-    ExternalAttachmentFactoryOptions<IStickerAttachmentPayload>;
+export type StickerAttachmentOptions = ExternalAttachmentFactoryOptions<IStickerAttachmentPayload>;
 
-export class StickerAttachment
-    extends ExternalAttachment<IStickerAttachmentPayload, AttachmentType.STICKER | 'sticker'> {
+export class StickerAttachment extends ExternalAttachment<
+    IStickerAttachmentPayload,
+    AttachmentType.STICKER | 'sticker'
+> {
     /**
      * Constructor
      */
@@ -64,11 +65,6 @@ export class StickerAttachment
      * Returns the custom data
      */
     public [kSerializeData](): object {
-        return pickProperties(this, [
-            'id',
-            'productId',
-            'images',
-            'imagesWithBackground',
-        ]);
+        return pickProperties(this, ['id', 'productId', 'images', 'imagesWithBackground']);
     }
 }

@@ -1,12 +1,11 @@
 import { inspectable } from 'inspectable';
 
 import type { API } from '../../api';
-import type { IAttachmentOptions, AttachmentFactoryOptions } from './attachment';
+import type { AttachmentFactoryOptions, IAttachmentOptions } from './attachment';
 
-import { kSerializeData, type AttachmentType } from '../../utils/constants';
+import { type AttachmentType, kSerializeData } from '../../utils/constants';
 
-export type IExternalAttachmentOptions<P, Type extends string = string> =
-IAttachmentOptions<P, Type>;
+export type IExternalAttachmentOptions<P, Type extends string = string> = IAttachmentOptions<P, Type>;
 
 export type ExternalAttachmentFactoryOptions<P> = AttachmentFactoryOptions<P>;
 
@@ -72,7 +71,6 @@ export class ExternalAttachment<P = object, Type extends string | AttachmentType
 
 inspectable(ExternalAttachment, {
     serialize: instance => instance.toJSON(),
-    stringify: (instance, payload, context): string => (
-        `${context.stylize(instance.constructor.name, 'special')} ${context.inspect(payload)}`
-    ),
+    stringify: (instance, payload, context): string =>
+        `${context.stylize(instance.constructor.name, 'special')} ${context.inspect(payload)}`,
 });

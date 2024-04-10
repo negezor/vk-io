@@ -1,7 +1,7 @@
 import { Attachment, type AttachmentFactoryOptions } from './attachment';
 
-import { pickProperties } from '../../utils/helpers';
 import { AttachmentType, kSerializeData } from '../../utils/constants';
+import { pickProperties } from '../../utils/helpers';
 
 export interface IVideoAttachmentPayload {
     id: number;
@@ -26,8 +26,7 @@ export interface IVideoAttachmentPayload {
     platform?: string;
 }
 
-export type VideoAttachmentOptions =
-    AttachmentFactoryOptions<IVideoAttachmentPayload>;
+export type VideoAttachmentOptions = AttachmentFactoryOptions<IVideoAttachmentPayload>;
 
 export class VideoAttachment extends Attachment<IVideoAttachmentPayload, AttachmentType.VIDEO | 'video'> {
     /**

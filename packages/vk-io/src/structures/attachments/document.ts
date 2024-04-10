@@ -2,8 +2,8 @@ import { Attachment, type AttachmentFactoryOptions } from './attachment';
 
 import type { IPhotoAttachmentPayload } from './photo';
 
-import { pickProperties } from '../../utils/helpers';
 import { AttachmentType, kSerializeData } from '../../utils/constants';
+import { pickProperties } from '../../utils/helpers';
 
 export interface IDocumentAttachmentPayload {
     id: number;
@@ -32,11 +32,9 @@ export interface IDocumentAttachmentPayload {
     };
 }
 
-export type DocumentAttachmentOptions =
-    AttachmentFactoryOptions<IDocumentAttachmentPayload>;
+export type DocumentAttachmentOptions = AttachmentFactoryOptions<IDocumentAttachmentPayload>;
 
-export class DocumentAttachment
-    extends Attachment<IDocumentAttachmentPayload, AttachmentType.DOCUMENT | 'doc'> {
+export class DocumentAttachment extends Attachment<IDocumentAttachmentPayload, AttachmentType.DOCUMENT | 'doc'> {
     /**
      * Constructor
      */
@@ -242,12 +240,6 @@ export class DocumentAttachment
      * Returns the custom data
      */
     public [kSerializeData](): object {
-        return pickProperties(this, [
-            'title',
-            'typeId',
-            'createdAt',
-            'extension',
-            'url',
-        ]);
+        return pickProperties(this, ['title', 'typeId', 'createdAt', 'extension', 'url']);
     }
 }

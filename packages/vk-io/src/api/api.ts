@@ -4,18 +4,13 @@ import { type Agent, globalAgent } from 'https';
 
 import type { APIMethods } from './schemas/methods';
 
-import {
-    type APIWorker,
-    SequentialWorker,
-    ParallelWorker,
-    ParallelSelectedWorker,
-} from './workers';
+import { type APIWorker, ParallelSelectedWorker, ParallelWorker, SequentialWorker } from './workers';
 
-import { APIRequest } from './request';
+import { type ExecuteError, VKError } from '../errors';
 import type { Constructor } from '../types';
-import { VKError, type ExecuteError } from '../errors';
 import type { CallbackService } from '../utils/callback-service';
 import { MINIMUM_TIME_INTERVAL_API } from '../utils/constants';
+import { APIRequest } from './request';
 
 // @ts-expect-error assert's not supported yet
 import { version } from '../../package.json';
@@ -226,7 +221,7 @@ class API {
     /**
      * Constructor
      */
-    public constructor(options: Partial<IAPIOptions> & { token: string; }) {
+    public constructor(options: Partial<IAPIOptions> & { token: string }) {
         this.options = {
             agent: globalAgent,
             language: undefined,
@@ -265,13 +260,16 @@ class API {
         for (const group of groupMethods) {
             // @ts-ignore
             this[group] = new Proxy(Object.create(null), {
-                get: (obj, prop: string) => (params: object): Promise<any> => (
-                    this.callWithRequest(new APIRequest({
-                        api: this,
-                        method: `${group}.${prop}`,
-                        params,
-                    }))
-                ),
+                get:
+                    (obj, prop: string) =>
+                    (params: object): Promise<any> =>
+                        this.callWithRequest(
+                            new APIRequest({
+                                api: this,
+                                method: `${group}.${prop}`,
+                                params,
+                            }),
+                        ),
             });
         }
 
@@ -288,9 +286,7 @@ class API {
     /**
      * Call execute method
      */
-    public execute<T = any>(
-        params: Record<string, unknown> & { code: string },
-    ): Promise<IExecuteResponse<T>> {
+    public execute<T = any>(params: Record<string, unknown> & { code: string }): Promise<IExecuteResponse<T>> {
         return this.call('execute', params);
     }
 
@@ -305,12 +301,14 @@ class API {
      * Call raw method
      */
     public call<T = any>(method: string, params: object): Promise<T> {
-        return this.callWithRequest(new APIRequest({
-            method,
-            params,
+        return this.callWithRequest(
+            new APIRequest({
+                method,
+                params,
 
-            api: this,
-        }));
+                api: this,
+            }),
+        );
     }
 
     /**
@@ -349,10 +347,7 @@ class API {
             // @ts-expect-error private property
             newWorker.queue = [...this.worker.queue];
 
-            setTimeout(
-                () => newWorker.resume(),
-                MINIMUM_TIME_INTERVAL_API,
-            );
+            setTimeout(() => newWorker.resume(), MINIMUM_TIME_INTERVAL_API);
         }
 
         this.worker = newWorker;
@@ -361,9 +356,7 @@ class API {
 inspectable(API, {
     serialize: ({ options }) => ({
         options: {
-            token: options.token
-                ? '[set]'
-                : '[none]',
+            token: options.token ? '[set]' : '[none]',
         },
     }),
 });

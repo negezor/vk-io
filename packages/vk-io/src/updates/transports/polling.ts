@@ -1,10 +1,10 @@
-import createDebug from 'debug';
 import { AbortController } from 'abort-controller';
+import createDebug from 'debug';
 
 import type { API } from '../../api';
+import { UpdatesError, UpdatesErrorCode } from '../../errors';
 import { fetch } from '../../utils/fetch';
 import { delay } from '../../utils/helpers';
-import { UpdatesError, UpdatesErrorCode } from '../../errors';
 import type { IUpdatesOptions } from '../updates';
 
 const { NEED_RESTART, POLLING_REQUEST_FAILED } = UpdatesErrorCode;
@@ -53,7 +53,7 @@ export class PollingTransport {
         }
 
         if (!this.pollingHandler) {
-            throw new Error('You didn\'t subscribe to updates');
+            throw new Error("You didn't subscribe to updates");
         }
 
         this.started = true;
@@ -65,28 +65,28 @@ export class PollingTransport {
 
             const { server, key, ts } = isGroup
                 ? await this.api.groups.getLongPollServer({
-                    group_id: pollingGroupId,
-                })
+                      group_id: pollingGroupId,
+                  })
                 : await this.api.messages.getLongPollServer({
-                    lp_version: POLLING_VERSION,
-                });
+                      lp_version: POLLING_VERSION,
+                  });
 
             if (this.ts === 0 && ts) {
                 this.ts = ts;
             }
 
-            const pollingURL = isGroup
-                ? server
-                : `https://${server}`;
+            const pollingURL = isGroup ? server : `https://${server}`;
 
             this.url = new URL(pollingURL);
-            this.url.search = String(new URLSearchParams({
-                key,
-                act: 'a_check',
-                wait: '25',
-                mode: String(this.mode),
-                version: String(POLLING_VERSION),
-            }));
+            this.url.search = String(
+                new URLSearchParams({
+                    key,
+                    act: 'a_check',
+                    wait: '25',
+                    mode: String(this.mode),
+                    version: String(POLLING_VERSION),
+                }),
+            );
 
             void this.startFetchLoop();
 
@@ -164,10 +164,10 @@ export class PollingTransport {
         const interval = setTimeout(() => controller.abort(), 30e3);
 
         let result:
-            | { ts: number, pts?: number, updates: unknown[] }
-            | { failed: 1, ts: number }
-            | { failed: 2, error: string }
-            | { failed: 4, min_version: 0, max_version: 19 };
+            | { ts: number; pts?: number; updates: unknown[] }
+            | { failed: 1; ts: number }
+            | { failed: 2; error: string }
+            | { failed: 4; min_version: 0; max_version: 19 };
 
         try {
             const response = await fetch(this.url, {
@@ -188,7 +188,7 @@ export class PollingTransport {
                     message: 'Polling request failed',
                 });
             }
-            result = await response.json() as any;
+            result = (await response.json()) as any;
         } finally {
             clearTimeout(interval);
         }

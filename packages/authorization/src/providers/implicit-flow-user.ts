@@ -1,11 +1,11 @@
 import createDebug from 'debug';
 
-import { ImplicitFlow } from './implicit-flow';
 import { AuthorizationError } from '../errors';
+import { ImplicitFlow } from './implicit-flow';
 
+import { AuthErrorCode, CALLBACK_BLANK } from '../constants';
 import type { Response } from '../fetch-cookie';
-import { getUserPermissionsByName, getAllUserPermissions } from '../helpers';
-import { CALLBACK_BLANK, AuthErrorCode } from '../constants';
+import { getAllUserPermissions, getUserPermissionsByName } from '../helpers';
 
 const debug = createDebug('vk-io:authorization:implicit-flow-user');
 
@@ -86,14 +86,10 @@ export class ImplicitFlowUser extends ImplicitFlow {
 
         return {
             email: params.get('email') || undefined,
-            userId: userId !== null
-                ? Number(userId)
-                : undefined,
+            userId: userId !== null ? Number(userId) : undefined,
 
             token: accessToken,
-            expires: expires !== null
-                ? Number(expires)
-                : undefined,
+            expires: expires !== null ? Number(expires) : undefined,
         };
     }
 }

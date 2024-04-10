@@ -6,11 +6,9 @@ export interface IGiftAttachmentPayload {
     id: number;
 }
 
-export type GiftAttachmentOptions =
-    ExternalAttachmentFactoryOptions<IGiftAttachmentPayload>;
+export type GiftAttachmentOptions = ExternalAttachmentFactoryOptions<IGiftAttachmentPayload>;
 
-export class GiftAttachment
-    extends ExternalAttachment<IGiftAttachmentPayload, AttachmentType.GIFT | 'gift'> {
+export class GiftAttachment extends ExternalAttachment<IGiftAttachmentPayload, AttachmentType.GIFT | 'gift'> {
     /**
      * Constructor
      */

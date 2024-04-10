@@ -15,10 +15,7 @@ export interface IExecutesOptions {
     queue: Record<string, any>[];
 }
 
-export const executeRequests = async (
-    api: API,
-    queue: APIRequest[],
-): Promise<IExecutesPayload> => {
+export const executeRequests = async (api: API, queue: APIRequest[]): Promise<IExecutesPayload> => {
     const out: IExecutesPayload = {
         response: [],
         errors: [],
@@ -50,16 +47,15 @@ export const executeRequests = async (
     return out;
 };
 
-export const executes = ({
-    api,
-    method,
-    queue,
-}: IExecutesOptions): Promise<IExecutesPayload> => (
-    executeRequests(api, queue.map(params => (
-        new APIRequest({
-            api,
-            method,
-            params,
-        })
-    )))
-);
+export const executes = ({ api, method, queue }: IExecutesOptions): Promise<IExecutesPayload> =>
+    executeRequests(
+        api,
+        queue.map(
+            params =>
+                new APIRequest({
+                    api,
+                    method,
+                    params,
+                }),
+        ),
+    );

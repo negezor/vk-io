@@ -1,6 +1,6 @@
-import type { IStepContextOptions, IStepContextGoOptions } from './step.types';
 import type { StepSceneHandler } from '../scenes/step.types';
 import { LastAction } from './scene.types';
+import type { IStepContextGoOptions, IStepContextOptions } from './step.types';
 
 export class StepSceneContext<S extends Record<string, unknown>> {
     private context: IStepContextOptions<S>['context'];

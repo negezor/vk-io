@@ -1,16 +1,11 @@
-import { describe, it } from 'node:test';
 import { strictEqual } from 'node:assert';
+import { describe, it } from 'node:test';
 
-import {
-    VK,
-
-    Context,
-    UpdateSource
-} from '..';
+import { Context, UpdateSource, VK } from '..';
 
 const vk = new VK({
     // biome-ignore lint/style/noNonNullAssertion: to be honest, they're just tests
-    token: process.env.TOKEN!
+    token: process.env.TOKEN!,
 });
 
 const { api, upload } = vk;
@@ -27,7 +22,7 @@ describe('Contexts', (): void => {
                     subTypes: ['edit_message', 'text'],
                     payload: {},
                     updateType: 'test',
-                    source: UpdateSource.POLLING
+                    source: UpdateSource.POLLING,
                 });
 
                 return context;

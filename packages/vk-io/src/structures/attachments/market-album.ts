@@ -1,7 +1,7 @@
 import { Attachment, type AttachmentFactoryOptions } from './attachment';
 
 import { AttachmentType } from '../../utils/constants';
-import { PhotoAttachment, type IPhotoAttachmentPayload } from './photo';
+import { type IPhotoAttachmentPayload, PhotoAttachment } from './photo';
 
 export interface IMarketAlbumAttachmentPayload {
     id: number;
@@ -13,11 +13,12 @@ export interface IMarketAlbumAttachmentPayload {
     count?: number;
     updated_time?: number;
 }
-export type MarketAlbumAttachmentOptions =
-    AttachmentFactoryOptions<IMarketAlbumAttachmentPayload>;
+export type MarketAlbumAttachmentOptions = AttachmentFactoryOptions<IMarketAlbumAttachmentPayload>;
 
-export class MarketAlbumAttachment
-    extends Attachment<IMarketAlbumAttachmentPayload, AttachmentType.MARKET_ALBUM | 'market_album'> {
+export class MarketAlbumAttachment extends Attachment<
+    IMarketAlbumAttachmentPayload,
+    AttachmentType.MARKET_ALBUM | 'market_album'
+> {
     public photo?: PhotoAttachment;
 
     /**

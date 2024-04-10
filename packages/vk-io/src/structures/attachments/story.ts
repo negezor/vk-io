@@ -1,9 +1,9 @@
 import { Attachment, type AttachmentFactoryOptions } from './attachment';
 
-import { pickProperties } from '../../utils/helpers';
 import { AttachmentType, kSerializeData } from '../../utils/constants';
-import { PhotoAttachment, type IPhotoAttachmentPayload } from './photo';
-import { VideoAttachment, type IVideoAttachmentPayload } from './video';
+import { pickProperties } from '../../utils/helpers';
+import { type IPhotoAttachmentPayload, PhotoAttachment } from './photo';
+import { type IVideoAttachmentPayload, VideoAttachment } from './video';
 
 export interface IStoryAttachmentPayload {
     id: number;
@@ -65,8 +65,7 @@ const kPhoto = Symbol('photo');
 
 const kParentStory = Symbol('parentStory');
 
-export type StoryAttachmentOptions =
-    AttachmentFactoryOptions<IStoryAttachmentPayload>;
+export type StoryAttachmentOptions = AttachmentFactoryOptions<IStoryAttachmentPayload>;
 
 export class StoryAttachment extends Attachment<IStoryAttachmentPayload, AttachmentType.STORY | 'story'> {
     protected [kPhoto]: PhotoAttachment | undefined;
@@ -98,7 +97,9 @@ export class StoryAttachment extends Attachment<IStoryAttachmentPayload, Attachm
             return;
         }
 
-        const { items: [story] } = await this.api.stories.getById({
+        const {
+            items: [story],
+        } = await this.api.stories.getById({
             stories: `${this.ownerId}_${this.id}`,
             extended: 0,
         });
@@ -283,16 +284,11 @@ export class StoryAttachment extends Attachment<IStoryAttachmentPayload, Attachm
      */
     public [kSerializeData](): object {
         if (this.isDeleted) {
-            return pickProperties(this, [
-                'isDeleted',
-            ]);
+            return pickProperties(this, ['isDeleted']);
         }
 
         if (this.isExpired) {
-            return pickProperties(this, [
-                'isExpired',
-                'expiresAt',
-            ]);
+            return pickProperties(this, ['isExpired', 'expiresAt']);
         }
 
         return pickProperties(this, [

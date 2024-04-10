@@ -1,13 +1,11 @@
-import { Context, type ContextFactoryOptions, type ContextDefaultState } from './context';
+import { Context, type ContextDefaultState, type ContextFactoryOptions } from './context';
 
-import { pickProperties } from '../../utils/helpers';
 import { kSerializeData } from '../../utils/constants';
+import { pickProperties } from '../../utils/helpers';
 
 export type GroupMemberContextType = 'group_member';
 
-export type GroupMemberContextSubType =
-'group_leave'
-| 'group_join';
+export type GroupMemberContextSubType = 'group_leave' | 'group_join';
 
 export interface IGroupMemberContextPayload {
     user_id: number;
@@ -15,24 +13,20 @@ export interface IGroupMemberContextPayload {
     join_type?: string;
 }
 
-export type GroupMemberContextOptions<S> =
-    ContextFactoryOptions<IGroupMemberContextPayload, S>;
+export type GroupMemberContextOptions<S> = ContextFactoryOptions<IGroupMemberContextPayload, S>;
 
-export class GroupMemberContext<S = ContextDefaultState>
-    extends Context<
+export class GroupMemberContext<S = ContextDefaultState> extends Context<
     IGroupMemberContextPayload,
     S,
     GroupMemberContextType,
     GroupMemberContextSubType
-    > {
+> {
     public constructor(options: GroupMemberContextOptions<S>) {
         super({
             ...options,
 
             type: 'group_member',
-            subTypes: [
-                options.updateType as GroupMemberContextSubType,
-            ],
+            subTypes: [options.updateType as GroupMemberContextSubType],
         });
     }
 
@@ -83,12 +77,6 @@ export class GroupMemberContext<S = ContextDefaultState>
      * Returns the custom data
      */
     public [kSerializeData](): object {
-        return pickProperties(this, [
-            'userId',
-            'joinType',
-            'isJoin',
-            'isLeave',
-            'isSelfLeave',
-        ]);
+        return pickProperties(this, ['userId', 'joinType', 'isJoin', 'isLeave', 'isSelfLeave']);
     }
 }

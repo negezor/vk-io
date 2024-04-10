@@ -1,19 +1,16 @@
+import type { AttachmentTypeString } from '../../utils/constants';
+import { applyMixins } from '../../utils/helpers';
+import type { Attachment, ExternalAttachment } from '../attachments';
+import type { ContextDefaultState } from '../contexts/context';
 /* eslint-disable max-classes-per-file */
 import type { MessageContext } from '../contexts/message';
-import type { ContextDefaultState } from '../contexts/context';
-import type { Attachment, ExternalAttachment } from '../attachments';
-import type { AttachmentTypeString } from '../../utils/constants';
 import type { Attachmentable } from './attachmentable';
-import { applyMixins } from '../../utils/helpers';
 
 const getForwards = <S = ContextDefaultState>(rootForwards: MessageContext<S>[]): MessageContext<S>[] => {
     const forwards: MessageContext<S>[] = [];
 
     for (const forward of rootForwards) {
-        forwards.push(
-            forward,
-            ...getForwards<S>(forward.forwards),
-        );
+        forwards.push(forward, ...getForwards<S>(forward.forwards));
     }
 
     return forwards;
@@ -42,18 +39,14 @@ applyMixins(MessageForwardsCollection, [
         public flatten!: MessageContext[];
 
         public hasAttachments(type?: AttachmentTypeString): boolean {
-            return this.flatten.some(forward => (
-                forward.hasAttachments(type)
-            ));
+            return this.flatten.some(forward => forward.hasAttachments(type));
         }
 
-        public getAttachments(
-            type?: AttachmentTypeString,
-        ): (Attachment | ExternalAttachment)[] {
-            const attachments = this.flatten.map(forward => (
+        public getAttachments(type?: AttachmentTypeString): (Attachment | ExternalAttachment)[] {
+            const attachments = this.flatten.map(forward =>
                 // @ts-expect-error too annoying for overload types
-                forward.getAttachments(type)
-            ));
+                forward.getAttachments(type),
+            );
 
             return ([] as (Attachment | ExternalAttachment)[]).concat(...attachments);
         }

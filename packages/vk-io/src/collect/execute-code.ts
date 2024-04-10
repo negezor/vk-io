@@ -5,8 +5,7 @@ export interface IExecuteCodeOptions {
     params: Record<string, any>;
 }
 
-export const getExecuteCode = ({ method, params }: IExecuteCodeOptions): string => (
-    `
+export const getExecuteCode = ({ method, params }: IExecuteCodeOptions): string => `
         var params = ${getExecuteParams(params)};
 
         params.offset = parseInt(Args.offset);
@@ -47,5 +46,4 @@ export const getExecuteCode = ({ method, params }: IExecuteCodeOptions): string 
             profiles: profiles,
             groups: groups
         };
-    `
-);
+    `;

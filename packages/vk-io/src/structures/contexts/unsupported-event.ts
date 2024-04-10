@@ -8,35 +8,28 @@ type UnsupportedEventContextSubType = string;
 
 type UnsupportedEventContextPayload<P> = P;
 
-export type UnsupportedEventOptions<S, P> =
-        ContextFactoryOptions<UnsupportedEventContextPayload<P>, S>;
+export type UnsupportedEventOptions<S, P> = ContextFactoryOptions<UnsupportedEventContextPayload<P>, S>;
 
-export class UnsupportedEventContext<
-    S = ContextDefaultState,
-    P extends Record<string, any> = object
->
-    extends Context<
+export class UnsupportedEventContext<S = ContextDefaultState, P extends Record<string, any> = object> extends Context<
     P,
     S,
     UnsupportedEventContextType,
     UnsupportedEventContextSubType
-    > {
+> {
     constructor(options: UnsupportedEventOptions<S, P>) {
         super({
             ...options,
 
             type: 'unsupported_event',
-            subTypes: [
-                options.updateType as string,
-            ],
+            subTypes: [options.updateType as string],
 
             payload: options.payload,
         });
     }
 
     /**
-    * Event payload
-    */
+     * Event payload
+     */
     public get eventPayload(): P {
         return this.payload;
     }
@@ -45,8 +38,6 @@ export class UnsupportedEventContext<
      * Returns the custom data
      */
     public [kSerializeData](): object {
-        return pickProperties(this, [
-            'eventPayload',
-        ]);
+        return pickProperties(this, ['eventPayload']);
     }
 }

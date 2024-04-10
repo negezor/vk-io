@@ -1,8 +1,8 @@
 import { inspectable } from 'inspectable';
 
 import { API } from './api';
-import { Upload } from './upload';
 import { Updates } from './updates';
+import { Upload } from './upload';
 import { CallbackService } from './utils/callback-service';
 
 import type { VKOptions } from './types';
@@ -23,8 +23,7 @@ export class VK {
      * Constructor
      */
     public constructor(options: Partial<VKOptions> & { token: string }) {
-        this.callbackService = options.callbackService
-            || new CallbackService();
+        this.callbackService = options.callbackService || new CallbackService();
 
         this.api = new API({
             ...options,

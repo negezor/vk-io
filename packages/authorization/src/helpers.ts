@@ -1,7 +1,7 @@
 import type { load as cheerioLoad } from 'cheerio';
 
+import { groupScopes, userScopes } from './constants';
 import type { Response } from './fetch-cookie';
-import { userScopes, groupScopes } from './constants';
 
 export type CheerioStatic = ReturnType<typeof cheerioLoad>;
 
@@ -9,9 +9,7 @@ export type CheerioStatic = ReturnType<typeof cheerioLoad>;
  * Returns the bit mask of the user permission by name
  */
 export const getUserPermissionsByName = (rawScope: string | string[]): number => {
-    const scope = !Array.isArray(rawScope)
-        ? rawScope.split(/,\s*/)
-        : rawScope;
+    const scope = !Array.isArray(rawScope) ? rawScope.split(/,\s*/) : rawScope;
 
     let bitMask = 0;
 
@@ -30,9 +28,7 @@ export const getUserPermissionsByName = (rawScope: string | string[]): number =>
  * Returns the bit mask of the group permission by name
  */
 export const getGroupPermissionsByName = (rawScope: string | string[]): number => {
-    const scope = !Array.isArray(rawScope)
-        ? rawScope.split(/,\s*/)
-        : rawScope;
+    const scope = !Array.isArray(rawScope) ? rawScope.split(/,\s*/) : rawScope;
 
     let bitMask = 0;
 
@@ -47,18 +43,16 @@ export const getGroupPermissionsByName = (rawScope: string | string[]): number =
     return bitMask;
 };
 
-export const getAllUserPermissions = (): number => (
-    getUserPermissionsByName([...userScopes.keys()])
-);
+export const getAllUserPermissions = (): number => getUserPermissionsByName([...userScopes.keys()]);
 
-export const getAllGroupPermissions = (): number => (
-    getGroupPermissionsByName([...groupScopes.keys()])
-);
+export const getAllGroupPermissions = (): number => getGroupPermissionsByName([...groupScopes.keys()]);
 
 /**
  * Parse form
  */
-export const parseFormField = ($: unknown): {
+export const parseFormField = (
+    $: unknown,
+): {
     action: string;
     fields: Record<string, string>;
 } => {

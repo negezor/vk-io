@@ -1,12 +1,11 @@
+import type { IScene } from '../scenes';
 import type { ISessionContext } from '../types';
 import {
-    type ISceneContextOptions,
     type ISceneContextEnterOptions,
     type ISceneContextLeaveOptions,
-
+    type ISceneContextOptions,
     LastAction,
 } from './scene.types';
-import type { IScene } from '../scenes';
 
 export class SceneContext<S extends Record<string, unknown>> {
     /**

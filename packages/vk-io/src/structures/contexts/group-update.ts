@@ -1,17 +1,14 @@
-import { Context, type ContextFactoryOptions, type ContextDefaultState } from './context';
+import { Context, type ContextDefaultState, type ContextFactoryOptions } from './context';
 
+import { type IPhotoAttachmentPayload, PhotoAttachment } from '../attachments';
 import { Attachmentable } from '../shared/attachmentable';
-import { PhotoAttachment, type IPhotoAttachmentPayload } from '../attachments';
 
 import { kSerializeData } from '../../utils/constants';
-import { pickProperties, applyMixins } from '../../utils/helpers';
+import { applyMixins, pickProperties } from '../../utils/helpers';
 
 export type GroupUpdateContextType = 'group_update';
 
-export type GroupUpdateContextSubType =
-'group_change_photo'
-| 'group_officers_edit'
-| 'group_change_settings';
+export type GroupUpdateContextSubType = 'group_change_photo' | 'group_officers_edit' | 'group_change_settings';
 
 export interface IGroupUpdateContextPayload {
     user_id: number;
@@ -22,31 +19,31 @@ export interface IGroupUpdateContextPayload {
     photo?: IPhotoAttachmentPayload;
 }
 
-export type GroupUpdateContextOptions<S> =
-    ContextFactoryOptions<IGroupUpdateContextPayload, S>;
+export type GroupUpdateContextOptions<S> = ContextFactoryOptions<IGroupUpdateContextPayload, S>;
 
-class GroupUpdateContext<S = ContextDefaultState>
-    extends Context<
+class GroupUpdateContext<S = ContextDefaultState> extends Context<
     IGroupUpdateContextPayload,
     S,
     GroupUpdateContextType,
-    GroupUpdateContextSubType> {
+    GroupUpdateContextSubType
+> {
     public constructor(options: GroupUpdateContextOptions<S>) {
         super({
             ...options,
 
             type: 'group_update',
-            subTypes: [
-                options.updateType as GroupUpdateContextSubType,
-            ],
+            subTypes: [options.updateType as GroupUpdateContextSubType],
         });
 
-        this.attachments = options.updateType === 'group_change_photo'
-            ? [new PhotoAttachment({
-                api: this.api,
-                payload: this.payload.photo as IPhotoAttachmentPayload,
-            })]
-            : [];
+        this.attachments =
+            options.updateType === 'group_change_photo'
+                ? [
+                      new PhotoAttachment({
+                          api: this.api,
+                          payload: this.payload.photo as IPhotoAttachmentPayload,
+                      }),
+                  ]
+                : [];
     }
 
     /**
@@ -109,14 +106,7 @@ class GroupUpdateContext<S = ContextDefaultState>
      * Returns the custom data
      */
     public [kSerializeData](): object {
-        return pickProperties(this, [
-            'adminId',
-            'userId',
-            'oldLevel',
-            'newLevel',
-            'changes',
-            'attachments',
-        ]);
+        return pickProperties(this, ['adminId', 'userId', 'oldLevel', 'newLevel', 'changes', 'attachments']);
     }
 }
 

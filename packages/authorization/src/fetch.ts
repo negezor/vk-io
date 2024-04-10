@@ -9,6 +9,5 @@ export type RequestInfo = import('node-fetch').RequestInfo | URL;
 export type RequestInit = import('node-fetch').RequestInit;
 export type Response = import('node-fetch').Response;
 
-export const fetch = (url: RequestInfo, init?: RequestInit): Promise<Response> => (
-    Promise.resolve(fetchPromise).then(fn => fn(url as string, init))
-);
+export const fetch = (url: RequestInfo, init?: RequestInit): Promise<Response> =>
+    Promise.resolve(fetchPromise).then(fn => fn(url as string, init));

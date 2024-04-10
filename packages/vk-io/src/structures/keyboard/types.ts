@@ -42,14 +42,10 @@ export enum ButtonColor {
      *
      * Hex color #4BB34B
      */
-    POSITIVE = 'positive'
+    POSITIVE = 'positive',
 }
 
-export type ButtonColorUnion =
-    'secondary'
-    | 'primary'
-    | 'negative'
-    | 'positive';
+export type ButtonColorUnion = 'secondary' | 'primary' | 'negative' | 'positive';
 
 export interface ITextButton extends IButton {
     /**
@@ -174,7 +170,7 @@ export interface ICallbackButton extends IButton {
 }
 
 export type KeyboardButton =
-    ITextButton
+    | ITextButton
     | IURLButton
     | ILocationButton
     | IVKPayButton
@@ -301,16 +297,12 @@ export interface IVKPayTransferToUser {
     user_id: number;
 }
 
-export type KeyboardVKPayHash =
-    (IVKPayPayToGroup
-    | IVKPayPayToUser
-    | IVKPayTransferToGroup
-    | IVKPayTransferToUser) & {
-        /**
-         * Application id
-         */
-        aid: string | number;
-    };
+export type KeyboardVKPayHash = (IVKPayPayToGroup | IVKPayPayToUser | IVKPayTransferToGroup | IVKPayTransferToUser) & {
+    /**
+     * Application id
+     */
+    aid: string | number;
+};
 
 export interface IKeyboardVKPayButtonOptions {
     payload: ButtonPayload;
@@ -380,14 +372,13 @@ export interface IKeyboardCallbackButtonOptions {
 }
 
 export interface IKeyboardProxyButton {
-    options: (
-        IKeyboardTextButtonOptions
+    options:
+        | IKeyboardTextButtonOptions
         | IKeyboardURLButtonOptions
         | IKeyboardLocationRequestButtonOptions
         | IKeyboardVKPayButtonOptions
         | IKeyboardApplicationButtonOptions
-        | IKeyboardCallbackButtonOptions
-    );
+        | IKeyboardCallbackButtonOptions;
 
     kind: 'text' | 'url' | 'location_request' | 'vk_pay' | 'vk_application' | 'callback';
 }

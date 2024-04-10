@@ -1,12 +1,12 @@
-import { Context, type ContextFactoryOptions, type ContextDefaultState } from './context';
+import { Context, type ContextDefaultState, type ContextFactoryOptions } from './context';
 
-import { pickProperties } from '../../utils/helpers';
 import { kSerializeData } from '../../utils/constants';
+import { pickProperties } from '../../utils/helpers';
 
 export type DialogNotificationSettingsContextType = 'dialog_notification_settings';
 
 export type DialogNotificationSettingsContextSubType =
-    'dialog_notification_settings_subscribe'
+    | 'dialog_notification_settings_subscribe'
     | 'dialog_notification_settings_unsubscribe';
 
 export interface IDialogNotificationSettingsContextPayload {
@@ -15,16 +15,17 @@ export interface IDialogNotificationSettingsContextPayload {
     disabled_until: number;
 }
 
-export type DialogNotificationSettingsContextOptions<S> =
-    ContextFactoryOptions<[number, IDialogNotificationSettingsContextPayload], S>;
+export type DialogNotificationSettingsContextOptions<S> = ContextFactoryOptions<
+    [number, IDialogNotificationSettingsContextPayload],
+    S
+>;
 
-export class DialogNotificationSettingsContext<S = ContextDefaultState>
-    extends Context<
-        IDialogNotificationSettingsContextPayload,
-        S,
-        DialogNotificationSettingsContextType,
-        DialogNotificationSettingsContextSubType
-        > {
+export class DialogNotificationSettingsContext<S = ContextDefaultState> extends Context<
+    IDialogNotificationSettingsContextPayload,
+    S,
+    DialogNotificationSettingsContextType,
+    DialogNotificationSettingsContextSubType
+> {
     public constructor(options: DialogNotificationSettingsContextOptions<S>) {
         const [, payload] = options.payload;
 
@@ -83,12 +84,6 @@ export class DialogNotificationSettingsContext<S = ContextDefaultState>
      * Returns the custom data
      */
     public [kSerializeData](): object {
-        return pickProperties(this, [
-            'peerId',
-            'hasSound',
-            'disabledUntil',
-            'isSubscribed',
-            'isUnsubscribed',
-        ]);
+        return pickProperties(this, ['peerId', 'hasSound', 'disabledUntil', 'isSubscribed', 'isUnsubscribed']);
     }
 }

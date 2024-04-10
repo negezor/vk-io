@@ -1,7 +1,7 @@
 import type { Agent } from 'https';
 
-import type { AllowArray } from '../types';
 import type { API } from '../api';
+import type { AllowArray } from '../types';
 
 /**
  * Stream, buffer, url or file path

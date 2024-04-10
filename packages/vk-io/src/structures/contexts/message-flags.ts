@@ -1,15 +1,13 @@
-import { Context, type ContextFactoryOptions, type ContextDefaultState } from './context';
+import { Context, type ContextDefaultState, type ContextFactoryOptions } from './context';
 
 import { MessageContext } from './message';
 
+import { UpdateSource, kSerializeData } from '../../utils/constants';
 import { pickProperties } from '../../utils/helpers';
-import { kSerializeData, UpdateSource } from '../../utils/constants';
 
 export type MessageFlagsContextType = 'message_flags';
 
-export type MessageFlagsContextSubType =
-'message_flags_add'
-| 'message_flags_delete';
+export type MessageFlagsContextSubType = 'message_flags_add' | 'message_flags_delete';
 
 const subTypes: Record<number, MessageFlagsContextSubType> = {
     2: 'message_flags_add',
@@ -33,7 +31,7 @@ enum MessageFlag {
     INBOX_FROM_CHAT = 1 << 19,
     SILENT = 1 << 20,
     REPLIED = 1 << 21,
-    AUTO_READ = 1 << 23
+    AUTO_READ = 1 << 23,
 }
 /* eslint-enable no-bitwise */
 
@@ -43,16 +41,14 @@ export interface IMessageFlagsContextPayload {
     flags: number;
 }
 
-export type MessageFlagsContextOptions<S> =
-ContextFactoryOptions<number[], S>;
+export type MessageFlagsContextOptions<S> = ContextFactoryOptions<number[], S>;
 
-export class MessageFlagsContext<S = ContextDefaultState>
-    extends Context<
+export class MessageFlagsContext<S = ContextDefaultState> extends Context<
     IMessageFlagsContextPayload,
     S,
     MessageFlagsContextType,
     MessageFlagsContextSubType
-    > {
+> {
     public message?: MessageContext;
 
     public constructor(options: MessageFlagsContextOptions<S>) {
@@ -62,9 +58,7 @@ export class MessageFlagsContext<S = ContextDefaultState>
             ...options,
 
             type: 'message_flags',
-            subTypes: [
-                subTypes[eventId],
-            ],
+            subTypes: [subTypes[eventId]],
 
             payload: {
                 peer_id: peerId,

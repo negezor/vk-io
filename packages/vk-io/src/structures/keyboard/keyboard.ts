@@ -1,14 +1,13 @@
 import { KeyboardBuilder } from './builder';
 import {
+    ButtonColor,
+    type IKeyboardApplicationButtonOptions,
+    type IKeyboardCallbackButtonOptions,
+    type IKeyboardLocationRequestButtonOptions,
     type IKeyboardProxyButton,
     type IKeyboardTextButtonOptions,
     type IKeyboardURLButtonOptions,
-    type IKeyboardLocationRequestButtonOptions,
     type IKeyboardVKPayButtonOptions,
-    type IKeyboardApplicationButtonOptions,
-    type IKeyboardCallbackButtonOptions,
-
-    ButtonColor,
 } from './types';
 
 export class Keyboard {
@@ -69,9 +68,7 @@ export class Keyboard {
         const builder = new KeyboardBuilder();
 
         for (const row of rows) {
-            const buttons = Array.isArray(row)
-                ? row
-                : [row];
+            const buttons = Array.isArray(row) ? row : [row];
 
             for (const { kind, options } of buttons) {
                 if (kind === 'text') {
@@ -122,45 +119,35 @@ export class Keyboard {
     /**
      * Text button, can be colored
      */
-    public static textButton(
-        options: IKeyboardTextButtonOptions,
-    ): IKeyboardProxyButton {
+    public static textButton(options: IKeyboardTextButtonOptions): IKeyboardProxyButton {
         return { options, kind: 'text' };
     }
 
     /**
      * URL button
      */
-    public static urlButton(
-        options: IKeyboardURLButtonOptions,
-    ): IKeyboardProxyButton {
+    public static urlButton(options: IKeyboardURLButtonOptions): IKeyboardProxyButton {
         return { options, kind: 'url' };
     }
 
     /**
      * User location request button, occupies the entire keyboard width
      */
-    public static locationRequestButton(
-        options: IKeyboardLocationRequestButtonOptions,
-    ): IKeyboardProxyButton {
+    public static locationRequestButton(options: IKeyboardLocationRequestButtonOptions): IKeyboardProxyButton {
         return { options, kind: 'location_request' };
     }
 
     /**
      * VK Pay button, occupies the entire keyboard width
      */
-    public static payButton(
-        options: IKeyboardVKPayButtonOptions,
-    ): IKeyboardProxyButton {
+    public static payButton(options: IKeyboardVKPayButtonOptions): IKeyboardProxyButton {
         return { options, kind: 'vk_pay' };
     }
 
     /**
      * VK Apps button, occupies the entire keyboard width
      */
-    public static applicationButton(
-        options: IKeyboardApplicationButtonOptions,
-    ): IKeyboardProxyButton {
+    public static applicationButton(options: IKeyboardApplicationButtonOptions): IKeyboardProxyButton {
         return { options, kind: 'vk_application' };
     }
 
@@ -168,9 +155,7 @@ export class Keyboard {
      * Allows without sending a message from the user
      * to receive a notification of a button click and perform the necessary action
      */
-    public static callbackButton(
-        options: IKeyboardCallbackButtonOptions,
-    ): IKeyboardProxyButton {
+    public static callbackButton(options: IKeyboardCallbackButtonOptions): IKeyboardProxyButton {
         return { options, kind: 'callback' };
     }
 }

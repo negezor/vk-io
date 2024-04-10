@@ -8,9 +8,7 @@ export type ISessionContext = Record<string, any> & {
     current: string;
 };
 
-export interface IContext<
-    S extends Record<string, unknown> = Record<string, any>
-> extends Context {
+export interface IContext<S extends Record<string, unknown> = Record<string, any>> extends Context {
     /**
      * Scene control context
      */

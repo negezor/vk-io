@@ -3,30 +3,21 @@ import { MessageSource, PEER_CHAT_ID_OFFSET } from './constants';
 /**
  * Returns params for execute
  */
-export const getExecuteParams = (params: Record<string, object | string>): string => (
-    JSON.stringify(params, (key, value) => (
-        typeof value === 'object' && value !== params
-            ? String(value)
-            : value as unknown
-    ))
-);
+export const getExecuteParams = (params: Record<string, object | string>): string =>
+    JSON.stringify(params, (key, value) =>
+        typeof value === 'object' && value !== params ? String(value) : (value as unknown),
+    );
 
 /**
  * Returns method for execute
  */
-export const getExecuteMethod = (
-    method: string,
-    params: Record<string, object | string> = {},
-): string => (
-    `API.${method}(${getExecuteParams(params)})`
-);
+export const getExecuteMethod = (method: string, params: Record<string, object | string> = {}): string =>
+    `API.${method}(${getExecuteParams(params)})`;
 
 /**
  * Returns chain for execute
  */
-export const getChainReturn = (methods: string[]): string => (
-    `return [${methods.join(',')}];`
-);
+export const getChainReturn = (methods: string[]): string => `return [${methods.join(',')}];`;
 
 /**
  * Resolve task
@@ -59,18 +50,15 @@ export const resolveExecuteTask = (
 /**
  * Returns random ID
  */
-export const getRandomId = (): number => (
-    Math.floor(Math.random() * 10_000) * Date.now()
-);
+export const getRandomId = (): number => Math.floor(Math.random() * 10_000) * Date.now();
 
 /**
  * Delay N-ms
  */
-export const delay = (delayed: number): Promise<void> => (
+export const delay = (delayed: number): Promise<void> =>
     new Promise((resolve): void => {
         setTimeout(resolve, delayed);
-    })
-);
+    });
 
 const lt = /&lt;/g;
 const qt = /&gt;/g;
@@ -81,22 +69,13 @@ const quot = /&quot;/g;
 /**
  * Decodes HTML entities
  */
-export const unescapeHTML = (text: string): string => (
-    text
-        .replace(lt, '<')
-        .replace(qt, '>')
-        .replace(br, '\n')
-        .replace(amp, '&')
-        .replace(quot, '"')
-);
+export const unescapeHTML = (text: string): string =>
+    text.replace(lt, '<').replace(qt, '>').replace(br, '\n').replace(amp, '&').replace(quot, '"');
 
 /**
  * Copies object params to new object
  */
-export const pickProperties = <
-    T,
-    K extends keyof T
->(params: T, properties: K[]): Pick<T, K> => {
+export const pickProperties = <T, K extends keyof T>(params: T, properties: K[]): Pick<T, K> => {
     const copies: Pick<T, K> = {} as Pick<T, K>;
 
     for (const property of properties) {

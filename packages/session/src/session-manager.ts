@@ -1,12 +1,6 @@
 import { MemoryStorage } from './storages';
 
-import type {
-    IContext,
-    ISessionContext,
-    ISessionManagerOptions,
-
-    Middleware,
-} from './types';
+import type { IContext, ISessionContext, ISessionManagerOptions, Middleware } from './types';
 
 export class SessionManager<T = object> {
     protected storage: ISessionManagerOptions['storage'];
@@ -16,15 +10,11 @@ export class SessionManager<T = object> {
     protected getStorageKey: ISessionManagerOptions['getStorageKey'];
 
     public constructor(options: Partial<ISessionManagerOptions<T>> = {}) {
-        this.storage = options.storage || (
-            new MemoryStorage()
-        );
+        this.storage = options.storage || new MemoryStorage();
 
         this.contextKey = options.contextKey || 'session';
 
-        this.getStorageKey = options.getStorageKey || ((context): string => (
-            String(context.senderId || context.userId)
-        ));
+        this.getStorageKey = options.getStorageKey || ((context): string => String(context.senderId || context.userId));
     }
 
     /**
@@ -37,24 +27,26 @@ export class SessionManager<T = object> {
             const storageKey = getStorageKey(context);
 
             let changed = false;
-            const wrapSession = (targetRaw: object): ISessionContext => (
-                new Proxy<ISessionContext>({ ...targetRaw, $forceUpdate }, {
-                    set: (target, prop: string, value): boolean => {
-                        changed = true;
+            const wrapSession = (targetRaw: object): ISessionContext =>
+                new Proxy<ISessionContext>(
+                    { ...targetRaw, $forceUpdate },
+                    {
+                        set: (target, prop: string, value): boolean => {
+                            changed = true;
 
-                        target[prop] = value;
+                            target[prop] = value;
 
-                        return true;
+                            return true;
+                        },
+                        deleteProperty: (target, prop: string): boolean => {
+                            changed = true;
+
+                            delete target[prop];
+
+                            return true;
+                        },
                     },
-                    deleteProperty: (target, prop: string): boolean => {
-                        changed = true;
-
-                        delete target[prop];
-
-                        return true;
-                    },
-                })
-            );
+                );
 
             const $forceUpdate = (): Promise<boolean> => {
                 if (Object.keys(session).length > 1) {
@@ -65,7 +57,7 @@ export class SessionManager<T = object> {
                 return storage.delete(storageKey);
             };
 
-            const initialSession = await storage.get(storageKey) || {};
+            const initialSession = (await storage.get(storageKey)) || {};
 
             let session = wrapSession(initialSession);
 

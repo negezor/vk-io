@@ -4,12 +4,11 @@ import type { IScene } from './scene';
 
 import { StepSceneContext } from '../contexts';
 import { LastAction } from '../contexts/scene.types';
-import type { StepSceneHandler, IStepContext, IStepSceneOptions } from './step.types';
+import type { IStepContext, IStepSceneOptions, StepSceneHandler } from './step.types';
 
-export class StepScene<
-    T = MessageContext,
-    S extends Record<string, unknown> = Record<string, any>
-> implements IScene<S> {
+export class StepScene<T = MessageContext, S extends Record<string, unknown> = Record<string, any>>
+    implements IScene<S>
+{
     public slug: string;
 
     private steps: StepSceneHandler<T, S>[];
@@ -19,9 +18,7 @@ export class StepScene<
     private onLeaveHandler: NonNullable<IStepSceneOptions<T, S>['leaveHandler']>;
 
     public constructor(slug: string, rawOptions: IStepSceneOptions<T, S> | StepSceneHandler<T, S>[]) {
-        const options = Array.isArray(rawOptions)
-            ? { steps: rawOptions }
-            : rawOptions;
+        const options = Array.isArray(rawOptions) ? { steps: rawOptions } : rawOptions;
 
         this.slug = slug;
 

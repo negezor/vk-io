@@ -2,16 +2,11 @@ import { inspectable } from 'inspectable';
 
 import type { API } from '../../api';
 import type { Upload } from '../../upload';
-import { kSerializeData, type UpdateSource } from '../../utils/constants';
+import { type UpdateSource, kSerializeData } from '../../utils/constants';
 
 export type ContextDefaultState = Record<string, any>;
 
-export interface IContextOptions<
-    P,
-    S,
-    Type extends string = string,
-    SubType extends string = string
-> {
+export interface IContextOptions<P, S, Type extends string = string, SubType extends string = string> {
     api: API;
     upload: Upload;
 
@@ -27,14 +22,13 @@ export interface IContextOptions<
     groupId?: number;
 }
 
-export type ContextFactoryOptions<P, S> =
-    Omit<IContextOptions<P, S>, 'type' | 'subTypes'>;
+export type ContextFactoryOptions<P, S> = Omit<IContextOptions<P, S>, 'type' | 'subTypes'>;
 
 export class Context<
     P = object,
     S = ContextDefaultState,
     Type extends string = string,
-    SubType extends string = string
+    SubType extends string = string,
 > {
     public type: Type;
 
@@ -62,7 +56,7 @@ export class Context<
         this.subTypes = options.subTypes;
 
         this.payload = options.payload;
-        this.state = options.state || {} as S;
+        this.state = options.state || ({} as S);
 
         this.$groupId = options.groupId;
     }
@@ -78,17 +72,13 @@ export class Context<
      * Checks whether the context of some of these types
      */
     public is(rawTypes: (Type | SubType)[]): boolean {
-        const types = !Array.isArray(rawTypes)
-            ? [rawTypes]
-            : rawTypes;
+        const types = !Array.isArray(rawTypes) ? [rawTypes] : rawTypes;
 
         if (types.includes(this.type)) {
             return true;
         }
 
-        return this.subTypes.some((type): boolean => (
-            types.includes(type)
-        ));
+        return this.subTypes.some((type): boolean => types.includes(type));
     }
 
     /**
@@ -116,7 +106,6 @@ export class Context<
 
 inspectable(Context, {
     serialize: instance => instance.toJSON(),
-    stringify: (instance, payload, context): string => (
-        `${context.stylize(instance.constructor.name, 'special')} ${context.inspect(payload)}`
-    ),
+    stringify: (instance, payload, context): string =>
+        `${context.stylize(instance.constructor.name, 'special')} ${context.inspect(payload)}`,
 });

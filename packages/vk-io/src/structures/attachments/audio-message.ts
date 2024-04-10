@@ -1,7 +1,7 @@
 import { Attachment, type AttachmentFactoryOptions } from './attachment';
 
-import { pickProperties } from '../../utils/helpers';
 import { AttachmentType, kSerializeData } from '../../utils/constants';
+import { pickProperties } from '../../utils/helpers';
 
 export interface IAudioMessageAttachmentPayload {
     id: number;
@@ -17,11 +17,12 @@ export interface IAudioMessageAttachmentPayload {
     transcript_state?: 'done' | undefined;
 }
 
-export type AudioMessageAttachmentOptions =
-    AttachmentFactoryOptions<IAudioMessageAttachmentPayload>;
+export type AudioMessageAttachmentOptions = AttachmentFactoryOptions<IAudioMessageAttachmentPayload>;
 
-export class AudioMessageAttachment
-    extends Attachment<IAudioMessageAttachmentPayload, AttachmentType.AUDIO_MESSAGE | 'audio_message'> {
+export class AudioMessageAttachment extends Attachment<
+    IAudioMessageAttachmentPayload,
+    AttachmentType.AUDIO_MESSAGE | 'audio_message'
+> {
     /**
      * Constructor
      */

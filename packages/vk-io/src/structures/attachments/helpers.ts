@@ -1,22 +1,21 @@
 import {
     type Attachment,
-    type ExternalAttachment,
-
-    PollAttachment,
-    GiftAttachment,
-    WallAttachment,
-    LinkAttachment,
-    PhotoAttachment,
     AudioAttachment,
+    AudioMessageAttachment,
+    DocumentAttachment,
+    type ExternalAttachment,
+    GiftAttachment,
+    GraffitiAttachment,
+    LinkAttachment,
+    MarketAlbumAttachment,
+    MarketAttachment,
+    PhotoAttachment,
+    PollAttachment,
+    StickerAttachment,
     StoryAttachment,
     VideoAttachment,
-    MarketAttachment,
-    StickerAttachment,
-    GraffitiAttachment,
-    DocumentAttachment,
+    WallAttachment,
     WallReplyAttachment,
-    MarketAlbumAttachment,
-    AudioMessageAttachment,
 } from '.';
 
 import type { API } from '../../api';
@@ -47,10 +46,7 @@ const attachmentsTypes = {
 /**
  * Transform raw attachments to wrapper
  */
-export const transformAttachments = (
-    rawAttachments: any[],
-    api: API,
-): (Attachment | ExternalAttachment)[] => {
+export const transformAttachments = (rawAttachments: any[], api: API): (Attachment | ExternalAttachment)[] => {
     const attachments: (Attachment | ExternalAttachment)[] = [];
 
     for (const rawAttachment of rawAttachments) {

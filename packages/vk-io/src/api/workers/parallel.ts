@@ -22,9 +22,7 @@ export class ParallelWorker extends SequentialWorker {
                 continue;
             }
 
-            tasks.push(
-                queue.splice(i, 1)[0],
-            );
+            tasks.push(queue.splice(i, 1)[0]);
 
             i -= 1;
 
@@ -48,10 +46,13 @@ export class ParallelWorker extends SequentialWorker {
         void super.execute(request);
 
         try {
-            resolveExecuteTask(tasks, await request.promise as {
-                errors: object[];
-                response: (object | false)[];
-            });
+            resolveExecuteTask(
+                tasks,
+                (await request.promise) as {
+                    errors: object[];
+                    response: (object | false)[];
+                },
+            );
         } catch (error) {
             for (const task of tasks) {
                 task.reject(error);
@@ -59,7 +60,6 @@ export class ParallelWorker extends SequentialWorker {
         }
     }
     protected skipMethod(method: string): boolean {
-        return method.startsWith('execute')
-            || this.api.options.apiExecuteUnsupportedMethods.includes(method);
+        return method.startsWith('execute') || this.api.options.apiExecuteUnsupportedMethods.includes(method);
     }
 }

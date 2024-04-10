@@ -18,7 +18,6 @@ export {
     MessageSource,
     AttachmentType,
     AttachmentTypeString,
-
     kSerializeData,
 } from './utils/constants';
 

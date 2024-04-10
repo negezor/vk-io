@@ -1,12 +1,12 @@
-import { Context, type ContextFactoryOptions, type ContextDefaultState } from './context';
+import { Context, type ContextDefaultState, type ContextFactoryOptions } from './context';
 
 import { VKError } from '../../errors';
 
 import { Attachmentable } from '../shared/attachmentable';
 
 import { kSerializeData } from '../../utils/constants';
+import { applyMixins, pickProperties } from '../../utils/helpers';
 import { transformAttachments } from '../attachments/helpers';
-import { pickProperties, applyMixins } from '../../utils/helpers';
 
 export interface ICommentContextPayload {
     id: number;
@@ -32,59 +32,51 @@ export interface ICommentContextPayload {
     likes?: object;
 }
 
-export type CommentContextOptions<S> =
-    ContextFactoryOptions<ICommentContextPayload, S>;
+export type CommentContextOptions<S> = ContextFactoryOptions<ICommentContextPayload, S>;
 
 export type CommentContextType = 'comment';
 
 export type CommentContextSubType =
-'photo_comment'
-| 'video_comment'
-| 'wall_reply'
-| 'board_comment'
-| 'market_comment'
-| 'photo_comment_new'
-| 'photo_comment_edit'
-| 'photo_comment_delete'
-| 'photo_comment_restore'
-| 'video_comment_new'
-| 'video_comment_edit'
-| 'video_comment_delete'
-| 'video_comment_restore'
-| 'wall_reply_new'
-| 'wall_reply_edit'
-| 'wall_reply_restore'
-| 'wall_reply_delete'
-| 'board_comment_new'
-| 'board_comment_edit'
-| 'board_comment_delete'
-| 'board_comment_restore'
-| 'market_comment_new'
-| 'market_comment_edit'
-| 'market_comment_delete'
-| 'market_comment_restore';
+    | 'photo_comment'
+    | 'video_comment'
+    | 'wall_reply'
+    | 'board_comment'
+    | 'market_comment'
+    | 'photo_comment_new'
+    | 'photo_comment_edit'
+    | 'photo_comment_delete'
+    | 'photo_comment_restore'
+    | 'video_comment_new'
+    | 'video_comment_edit'
+    | 'video_comment_delete'
+    | 'video_comment_restore'
+    | 'wall_reply_new'
+    | 'wall_reply_edit'
+    | 'wall_reply_restore'
+    | 'wall_reply_delete'
+    | 'board_comment_new'
+    | 'board_comment_edit'
+    | 'board_comment_delete'
+    | 'board_comment_restore'
+    | 'market_comment_new'
+    | 'market_comment_edit'
+    | 'market_comment_delete'
+    | 'market_comment_restore';
 
-class CommentContext<S = ContextDefaultState>
-    extends Context<
+class CommentContext<S = ContextDefaultState> extends Context<
     ICommentContextPayload,
     S,
     CommentContextType,
     CommentContextSubType
-    > {
+> {
     public constructor(options: CommentContextOptions<S>) {
-        const initiator = (options.updateType as string).substring(
-            0,
-            (options.updateType as string).lastIndexOf('_'),
-        );
+        const initiator = (options.updateType as string).substring(0, (options.updateType as string).lastIndexOf('_'));
 
         super({
             ...options,
 
             type: 'comment',
-            subTypes: [
-                initiator as CommentContextSubType,
-                options.updateType as CommentContextSubType,
-            ],
+            subTypes: [initiator as CommentContextSubType, options.updateType as CommentContextSubType],
         });
 
         this.attachments = transformAttachments(this.payload.attachments || [], this.api);
@@ -204,10 +196,7 @@ class CommentContext<S = ContextDefaultState>
      * identifier of who wrote the comment
      */
     public get fromId(): number | undefined {
-        return (
-            this.payload.from_id
-            || this.payload.user_id
-        );
+        return this.payload.from_id || this.payload.user_id;
     }
 
     /**
@@ -231,13 +220,7 @@ class CommentContext<S = ContextDefaultState>
         const { payload } = this;
 
         // biome-ignore lint/style/noNonNullAssertion: one of properties is present
-        return (
-            payload.photo_id
-            || payload.video_id
-            || payload.post_id
-            || payload.topic_id
-            || payload.item_id
-        )!;
+        return (payload.photo_id || payload.video_id || payload.post_id || payload.topic_id || payload.item_id)!;
     }
 
     /**
@@ -247,14 +230,12 @@ class CommentContext<S = ContextDefaultState>
         const { payload } = this;
 
         // biome-ignore lint/style/noNonNullAssertion: one of properties is present
-        return (
-            payload.owner_id
-            || payload.photo_owner_id
-            || payload.video_owner_id
-            || payload.post_owner_id
-            || payload.topic_owner_id
-            || payload.market_owner_id
-        )!;
+        return (payload.owner_id ||
+            payload.photo_owner_id ||
+            payload.video_owner_id ||
+            payload.post_owner_id ||
+            payload.topic_owner_id ||
+            payload.market_owner_id)!;
     }
 
     /**
@@ -290,10 +271,12 @@ class CommentContext<S = ContextDefaultState>
      */
     editComment(options: { message?: string; attachments?: any }): Promise<number> {
         if (this.isDelete) {
-            return Promise.reject(new VKError({
-                message: 'Comment is deleted',
-                code: 'ALREADY_DELETED',
-            }));
+            return Promise.reject(
+                new VKError({
+                    message: 'Comment is deleted',
+                    code: 'ALREADY_DELETED',
+                }),
+            );
         }
 
         if (this.isBoardComment) {
@@ -330,10 +313,12 @@ class CommentContext<S = ContextDefaultState>
             return this.api.market.editComment(params);
         }
 
-        return Promise.reject(new VKError({
-            message: 'Unsupported event for editing comment',
-            code: 'UNSUPPORTED_EVENT',
-        }));
+        return Promise.reject(
+            new VKError({
+                message: 'Unsupported event for editing comment',
+                code: 'UNSUPPORTED_EVENT',
+            }),
+        );
     }
 
     /**
@@ -341,10 +326,12 @@ class CommentContext<S = ContextDefaultState>
      */
     deleteComment(): Promise<number> {
         if (this.isDelete) {
-            return Promise.reject(new VKError({
-                message: 'Comment is deleted',
-                code: 'ALREADY_DELETED',
-            }));
+            return Promise.reject(
+                new VKError({
+                    message: 'Comment is deleted',
+                    code: 'ALREADY_DELETED',
+                }),
+            );
         }
 
         if (this.isBoardComment) {
@@ -377,10 +364,12 @@ class CommentContext<S = ContextDefaultState>
             return this.api.market.deleteComment(params);
         }
 
-        return Promise.reject(new VKError({
-            message: 'Unsupported event for deleting comment',
-            code: 'UNSUPPORTED_EVENT',
-        }));
+        return Promise.reject(
+            new VKError({
+                message: 'Unsupported event for deleting comment',
+                code: 'UNSUPPORTED_EVENT',
+            }),
+        );
     }
 
     /**
@@ -412,9 +401,7 @@ class CommentContext<S = ContextDefaultState>
             'likes',
         ];
 
-        const filtredEmptyProperties = properties.filter(property => (
-            this[property] !== undefined
-        ));
+        const filtredEmptyProperties = properties.filter(property => this[property] !== undefined);
 
         return pickProperties(this, filtredEmptyProperties);
     }

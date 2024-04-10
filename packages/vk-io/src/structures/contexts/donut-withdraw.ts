@@ -1,13 +1,11 @@
-import { Context, type ContextFactoryOptions, type ContextDefaultState } from './context';
+import { Context, type ContextDefaultState, type ContextFactoryOptions } from './context';
 
-import { pickProperties } from '../../utils/helpers';
 import { kSerializeData } from '../../utils/constants';
+import { pickProperties } from '../../utils/helpers';
 
 export type DonutWithdrawContextType = 'donut_withdraw';
 
-export type DonutWithdrawContextSubType =
-'donut_money_withdraw'
-| 'donut_money_withdraw_error';
+export type DonutWithdrawContextSubType = 'donut_money_withdraw' | 'donut_money_withdraw_error';
 
 export interface IDonutWithdrawContextPayload {
     reason?: string;
@@ -16,24 +14,20 @@ export interface IDonutWithdrawContextPayload {
     amount_without_fee?: number;
 }
 
-export type DonutWithdrawContextOptions<S> =
-    ContextFactoryOptions<IDonutWithdrawContextPayload, S>;
+export type DonutWithdrawContextOptions<S> = ContextFactoryOptions<IDonutWithdrawContextPayload, S>;
 
-export class DonutWithdrawContext<S = ContextDefaultState>
-    extends Context<
+export class DonutWithdrawContext<S = ContextDefaultState> extends Context<
     IDonutWithdrawContextPayload,
     S,
     DonutWithdrawContextType,
     DonutWithdrawContextSubType
-    > {
+> {
     public constructor(options: DonutWithdrawContextOptions<S>) {
         super({
             ...options,
 
             type: 'donut_withdraw',
-            subTypes: [
-                options.updateType as DonutWithdrawContextSubType,
-            ],
+            subTypes: [options.updateType as DonutWithdrawContextSubType],
         });
     }
 
@@ -71,11 +65,6 @@ export class DonutWithdrawContext<S = ContextDefaultState>
      * Returns the custom data
      */
     public [kSerializeData](): object {
-        return pickProperties(this, [
-            'isError',
-            'amount',
-            'amountWithoutFee',
-            'reason',
-        ]);
+        return pickProperties(this, ['isError', 'amount', 'amountWithoutFee', 'reason']);
     }
 }

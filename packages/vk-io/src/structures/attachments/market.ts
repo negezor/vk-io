@@ -49,11 +49,9 @@ export interface IMarketAttachmentPayload {
     button_title?: string;
 }
 
-export type MarketAttachmentOptions =
-    AttachmentFactoryOptions<IMarketAttachmentPayload>;
+export type MarketAttachmentOptions = AttachmentFactoryOptions<IMarketAttachmentPayload>;
 
-export class MarketAttachment
-    extends Attachment<IMarketAttachmentPayload, AttachmentType.MARKET | 'market'> {
+export class MarketAttachment extends Attachment<IMarketAttachmentPayload, AttachmentType.MARKET | 'market'> {
     public photos?: PhotoAttachment[];
 
     /**
@@ -219,12 +217,13 @@ export class MarketAttachment
         this.payload = payload;
 
         if (this.payload.photos) {
-            this.photos = this.payload.photos.map(photo => (
-                new PhotoAttachment({
-                    api: this.api,
-                    payload: photo,
-                })
-            ));
+            this.photos = this.payload.photos.map(
+                photo =>
+                    new PhotoAttachment({
+                        api: this.api,
+                        payload: photo,
+                    }),
+            );
         }
     }
 }

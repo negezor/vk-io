@@ -1,9 +1,9 @@
-import { Context, type ContextFactoryOptions, type ContextDefaultState } from './context';
+import { Context, type ContextDefaultState, type ContextFactoryOptions } from './context';
 
 import { type IMarketAttachmentPayload, MarketAttachment } from '../attachments';
 
-import { pickProperties } from '../../utils/helpers';
 import { kSerializeData } from '../../utils/constants';
+import { pickProperties } from '../../utils/helpers';
 
 export type MarketOrderContextType = 'market_order';
 
@@ -22,7 +22,7 @@ export interface IMarketOrderContextPayload {
     property_values: {
         variant_id: number;
         variant_name: string;
-        property_name : string;
+        property_name: string;
     }[];
     cart_quantity: number;
     status: 0 | 1 | 2 | 3 | 4 | 5 | 6;
@@ -46,21 +46,19 @@ export interface IMarketOrderContextPayload {
     recipient: {
         name: string;
         phone: string;
-        display_text : string;
+        display_text: string;
     };
     date: number;
 }
 
-export type MarketOrderContextOptions<S> =
-    ContextFactoryOptions<IMarketOrderContextPayload, S>;
+export type MarketOrderContextOptions<S> = ContextFactoryOptions<IMarketOrderContextPayload, S>;
 
-export class MarketOrderContext<S = ContextDefaultState>
-    extends Context<
+export class MarketOrderContext<S = ContextDefaultState> extends Context<
     IMarketOrderContextPayload,
     S,
     MarketOrderContextType,
     MarketOrderContextSubType
-    > {
+> {
     public previewOrderItems: MarketAttachment[];
 
     public constructor(options: MarketOrderContextOptions<S>) {
@@ -68,17 +66,16 @@ export class MarketOrderContext<S = ContextDefaultState>
             ...options,
 
             type: 'market_order',
-            subTypes: [
-                options.updateType as MarketOrderContextSubType,
-            ],
+            subTypes: [options.updateType as MarketOrderContextSubType],
         });
 
-        this.previewOrderItems = this.payload.preview_order_items.map(market => (
-            new MarketAttachment({
-                api: this.api,
-                payload: market,
-            })
-        ));
+        this.previewOrderItems = this.payload.preview_order_items.map(
+            market =>
+                new MarketAttachment({
+                    api: this.api,
+                    payload: market,
+                }),
+        );
     }
 
     /**

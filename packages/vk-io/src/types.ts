@@ -7,9 +7,8 @@ export type AllowArray<T> = T | T[];
 
 export type Constructor<T = object> = new (...args: any[]) => T;
 
-export type VKOptions = IAPIOptions
-& IUpdatesOptions
-& IUploadOptions
-& {
-    callbackService?: CallbackService;
-};
+export type VKOptions = IAPIOptions &
+    IUpdatesOptions &
+    IUploadOptions & {
+        callbackService?: CallbackService;
+    };

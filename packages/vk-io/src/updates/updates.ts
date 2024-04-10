@@ -5,136 +5,111 @@ import { type Middleware, compose, noopNext } from 'middleware-io';
 import { type Agent, globalAgent } from 'https';
 
 import {
-    Composer,
-    type ContextDefaultState,
-
-    type Context,
-    UnsupportedEventContext,
-    VoteContext,
-    LikeContext,
-    TypingContext,
-    MessageContext,
-    WallPostContext,
-    GroupUserContext,
-    FriendActivityContext,
-    GroupUpdateContext,
-    DialogFlagsContext,
-    GroupMemberContext,
-    MarketOrderContext,
-    MessageSubscriptionContext,
-    MessagesReadContext,
-    MessageFlagsContext,
-    MessageEventContext,
-    VKAppPayloadContext,
     CommentContext,
-    NewAttachmentsContext,
-    DialogMessagesContext,
-    DialogNotificationSettingsContext,
-    VKPayTransactionContext,
-    DonutSubscriptionContext,
-    DonutSubscriptionPriceContext,
-    DonutWithdrawContext,
-
-    type UnsupportedEventContextType,
-    type CommentContextType,
-    type DialogFlagsContextType,
-    type DialogNotificationSettingsContextType,
-    type GroupMemberContextType,
-    type GroupUpdateContextType,
-    type GroupUserContextType,
-    type MessageSubscriptionContextType,
-    type MessageEventContextType,
-    type MessageFlagsContextType,
-    type MessageContextType,
-    type NewAttachmentsContextType,
-    type MessagesReadContextType,
-    type DialogMessagesContextType,
-    type TypingContextType,
-    type FriendActivityContextType,
-    type VKAppPayloadContextType,
-    type VKPayTransactionContextType,
-    type VoteContextType,
-    type LikeContextType,
-    type WallPostContextType,
-    type MarketOrderContextType,
-    type DonutSubscriptionContextType,
-    type DonutSubscriptionPriceContextType,
-    type DonutWithdrawContextType,
-
     type CommentContextSubType,
+    type CommentContextType,
+    Composer,
+    type Context,
+    type ContextDefaultState,
+    DialogFlagsContext,
     type DialogFlagsContextSubType,
-    type DialogNotificationSettingsContextSubType,
-    type GroupMemberContextSubType,
-    type GroupUpdateContextSubType,
-    type GroupUserContextSubType,
-    type MessageSubscriptionContextSubType,
-    type MessageEventContextSubType,
-    type MessageFlagsContextSubType,
-    type MessageContextSubType,
-    type NewAttachmentsContextSubType,
-    type MessagesReadContextSubType,
+    type DialogFlagsContextType,
+    DialogMessagesContext,
     type DialogMessagesContextSubType,
-    type TypingContextSubType,
-    type FriendActivityContextSubType,
-    type VKAppPayloadContextSubType,
-    type VKPayTransactionContextSubType,
-    type VoteContextSubType,
-    type LikeContextSubType,
-    type WallPostContextSubType,
-    type MarketOrderContextSubType,
+    type DialogMessagesContextType,
+    DialogNotificationSettingsContext,
+    type DialogNotificationSettingsContextSubType,
+    type DialogNotificationSettingsContextType,
+    DonutSubscriptionContext,
     type DonutSubscriptionContextSubType,
+    type DonutSubscriptionContextType,
+    DonutSubscriptionPriceContext,
     type DonutSubscriptionPriceContextSubType,
+    type DonutSubscriptionPriceContextType,
+    DonutWithdrawContext,
     type DonutWithdrawContextSubType,
+    type DonutWithdrawContextType,
+    FriendActivityContext,
+    type FriendActivityContextSubType,
+    type FriendActivityContextType,
+    GroupMemberContext,
+    type GroupMemberContextSubType,
+    type GroupMemberContextType,
+    GroupUpdateContext,
+    type GroupUpdateContextSubType,
+    type GroupUpdateContextType,
+    GroupUserContext,
+    type GroupUserContextSubType,
+    type GroupUserContextType,
+    LikeContext,
+    type LikeContextSubType,
+    type LikeContextType,
+    MarketOrderContext,
+    type MarketOrderContextSubType,
+    type MarketOrderContextType,
+    MessageContext,
+    type MessageContextSubType,
+    type MessageContextType,
+    MessageEventContext,
+    type MessageEventContextSubType,
+    type MessageEventContextType,
+    MessageFlagsContext,
+    type MessageFlagsContextSubType,
+    type MessageFlagsContextType,
+    MessageSubscriptionContext,
+    type MessageSubscriptionContextSubType,
+    type MessageSubscriptionContextType,
+    MessagesReadContext,
+    type MessagesReadContextSubType,
+    type MessagesReadContextType,
+    NewAttachmentsContext,
+    type NewAttachmentsContextSubType,
+    type NewAttachmentsContextType,
+    TypingContext,
+    type TypingContextSubType,
+    type TypingContextType,
+    UnsupportedEventContext,
+    type UnsupportedEventContextType,
+    VKAppPayloadContext,
+    type VKAppPayloadContextSubType,
+    type VKAppPayloadContextType,
+    VKPayTransactionContext,
+    type VKPayTransactionContextSubType,
+    type VKPayTransactionContextType,
+    VoteContext,
+    type VoteContextSubType,
+    type VoteContextType,
+    WallPostContext,
+    type WallPostContextSubType,
+    type WallPostContextType,
 } from '../structures';
 
 import type { API } from '../api';
 import type { Upload } from '../upload';
 
 import {
+    type IWebhookTransportStartOptions,
     PollingTransport,
-
     WebhookTransport,
     type WebhookTransportCallback,
     type WebhookTransportKoaCallback,
-    type IWebhookTransportStartOptions,
 } from './transports';
 
 import { type APIError, APIErrorCode } from '../errors';
 
-import { UpdateSource } from '../utils/constants';
 import type { AllowArray, Constructor } from '../types';
+import { UpdateSource } from '../utils/constants';
 
 const debug = createDebug('vk-io:updates');
 
 const webhookContextsEvents: [string[], Constructor<any>][] = [
-    [
-        ['message_new', 'message_edit', 'message_reply'],
-        MessageContext,
-    ],
-    [
-        ['message_allow', 'message_deny'],
-        MessageSubscriptionContext,
-    ],
-    [
-        ['message_event'],
-        MessageEventContext,
-    ],
-    [
-        ['photo_new', 'audio_new', 'video_new'],
-        NewAttachmentsContext,
-    ],
-    [
-        ['wall_post_new', 'wall_repost'],
-        WallPostContext,
-    ],
-    [
-        ['group_join', 'group_leave'],
-        GroupMemberContext,
-    ],
-    [
-        ['user_block', 'user_unblock'],
-        GroupUserContext,
-    ],
+    [['message_new', 'message_edit', 'message_reply'], MessageContext],
+    [['message_allow', 'message_deny'], MessageSubscriptionContext],
+    [['message_event'], MessageEventContext],
+    [['photo_new', 'audio_new', 'video_new'], NewAttachmentsContext],
+    [['wall_post_new', 'wall_repost'], WallPostContext],
+    [['group_join', 'group_leave'], GroupMemberContext],
+    [['user_block', 'user_unblock'], GroupUserContext],
     [
         [
             'photo_comment_new',
@@ -160,34 +135,13 @@ const webhookContextsEvents: [string[], Constructor<any>][] = [
         ],
         CommentContext,
     ],
-    [
-        ['poll_vote_new'],
-        VoteContext,
-    ],
-    [
-        ['group_change_photo', 'group_officers_edit', 'group_change_settings'],
-        GroupUpdateContext,
-    ],
-    [
-        ['message_typing_state'],
-        TypingContext,
-    ],
-    [
-        ['app_payload'],
-        VKAppPayloadContext,
-    ],
-    [
-        ['vkpay_transaction'],
-        VKPayTransactionContext,
-    ],
-    [
-        ['like_add', 'like_remove'],
-        LikeContext,
-    ],
-    [
-        ['market_order_new', 'market_order_edit'],
-        MarketOrderContext,
-    ],
+    [['poll_vote_new'], VoteContext],
+    [['group_change_photo', 'group_officers_edit', 'group_change_settings'], GroupUpdateContext],
+    [['message_typing_state'], TypingContext],
+    [['app_payload'], VKAppPayloadContext],
+    [['vkpay_transaction'], VKPayTransactionContext],
+    [['like_add', 'like_remove'], LikeContext],
+    [['market_order_new', 'market_order_edit'], MarketOrderContext],
     [
         [
             'donut_subscription_create',
@@ -197,57 +151,22 @@ const webhookContextsEvents: [string[], Constructor<any>][] = [
         ],
         DonutSubscriptionContext,
     ],
-    [
-        ['donut_subscription_price_changed'],
-        DonutSubscriptionPriceContext,
-    ],
-    [
-        [
-            'donut_money_withdraw',
-            'donut_money_withdraw_error',
-        ],
-        DonutWithdrawContext,
-    ],
+    [['donut_subscription_price_changed'], DonutSubscriptionPriceContext],
+    [['donut_money_withdraw', 'donut_money_withdraw_error'], DonutWithdrawContext],
 ];
 
 const pollingContextsEvents: [number[], Constructor<any>][] = [
-    [
-        [10002, 10003],
-        MessageFlagsContext,
-    ],
-    [
-        [10004, 10005, 10018],
-        MessageContext,
-    ],
-    [
-        [10006, 10007],
-        MessagesReadContext,
-    ],
-    [
-        [8, 9, 81],
-        FriendActivityContext,
-    ],
-    [
-        [10, 12],
-        DialogFlagsContext,
-    ],
-    [
-        [10013],
-        DialogMessagesContext,
-    ],
-    [
-        [63, 64, 65, 66, 67],
-        TypingContext,
-    ],
-    [
-        [114],
-        DialogNotificationSettingsContext,
-    ],
+    [[10002, 10003], MessageFlagsContext],
+    [[10004, 10005, 10018], MessageContext],
+    [[10006, 10007], MessagesReadContext],
+    [[8, 9, 81], FriendActivityContext],
+    [[10, 12], DialogFlagsContext],
+    [[10013], DialogMessagesContext],
+    [[63, 64, 65, 66, 67], TypingContext],
+    [[114], DialogNotificationSettingsContext],
 ];
 
-const makeContexts = (
-    groups: [(number | string)[], Constructor<Context>][],
-): Record<string, Constructor<Context>> => {
+const makeContexts = (groups: [(number | string)[], Constructor<Context>][]): Record<string, Constructor<Context>> => {
     const contexts: Record<string | number, Constructor<Context>> = {};
 
     for (const [events, UpdateContext] of groups) {
@@ -263,55 +182,55 @@ const webhookContexts = makeContexts(webhookContextsEvents);
 const pollingContexts = makeContexts(pollingContextsEvents);
 
 export type ContextTypes =
-UnsupportedEventContextType
-| CommentContextType
-| DialogFlagsContextType
-| DialogNotificationSettingsContextType
-| GroupMemberContextType
-| GroupUpdateContextType
-| GroupUserContextType
-| MessageSubscriptionContextType
-| MessageEventContextType
-| MessageFlagsContextType
-| MessageContextType
-| NewAttachmentsContextType
-| MessagesReadContextType
-| DialogMessagesContextType
-| TypingContextType
-| FriendActivityContextType
-| VKAppPayloadContextType
-| VKPayTransactionContextType
-| VoteContextType
-| LikeContextType
-| WallPostContextType
-| DonutSubscriptionContextType
-| DonutSubscriptionPriceContextType
-| DonutWithdrawContextType;
+    | UnsupportedEventContextType
+    | CommentContextType
+    | DialogFlagsContextType
+    | DialogNotificationSettingsContextType
+    | GroupMemberContextType
+    | GroupUpdateContextType
+    | GroupUserContextType
+    | MessageSubscriptionContextType
+    | MessageEventContextType
+    | MessageFlagsContextType
+    | MessageContextType
+    | NewAttachmentsContextType
+    | MessagesReadContextType
+    | DialogMessagesContextType
+    | TypingContextType
+    | FriendActivityContextType
+    | VKAppPayloadContextType
+    | VKPayTransactionContextType
+    | VoteContextType
+    | LikeContextType
+    | WallPostContextType
+    | DonutSubscriptionContextType
+    | DonutSubscriptionPriceContextType
+    | DonutWithdrawContextType;
 
 export type ContextSubTypes =
-CommentContextSubType
-| DialogFlagsContextSubType
-| DialogNotificationSettingsContextSubType
-| GroupMemberContextSubType
-| GroupUpdateContextSubType
-| GroupUserContextSubType
-| MessageSubscriptionContextSubType
-| MessageEventContextSubType
-| MessageFlagsContextSubType
-| MessageContextSubType
-| NewAttachmentsContextSubType
-| MessagesReadContextSubType
-| DialogMessagesContextSubType
-| TypingContextSubType
-| FriendActivityContextSubType
-| VKAppPayloadContextSubType
-| VKPayTransactionContextSubType
-| VoteContextSubType
-| LikeContextSubType
-| WallPostContextSubType
-| DonutSubscriptionContextSubType
-| DonutSubscriptionPriceContextSubType
-| DonutWithdrawContextSubType;
+    | CommentContextSubType
+    | DialogFlagsContextSubType
+    | DialogNotificationSettingsContextSubType
+    | GroupMemberContextSubType
+    | GroupUpdateContextSubType
+    | GroupUserContextSubType
+    | MessageSubscriptionContextSubType
+    | MessageEventContextSubType
+    | MessageFlagsContextSubType
+    | MessageContextSubType
+    | NewAttachmentsContextSubType
+    | MessagesReadContextSubType
+    | DialogMessagesContextSubType
+    | TypingContextSubType
+    | FriendActivityContextSubType
+    | VKAppPayloadContextSubType
+    | VKPayTransactionContextSubType
+    | VoteContextSubType
+    | LikeContextSubType
+    | WallPostContextSubType
+    | DonutSubscriptionContextSubType
+    | DonutSubscriptionPriceContextSubType
+    | DonutWithdrawContextSubType;
 
 export type ContextPossibleTypes = ContextTypes | ContextSubTypes;
 
@@ -357,10 +276,9 @@ export class Updates {
 
     private webhookTransport: WebhookTransport;
 
-    private composer = Composer.builder<Context>()
-        .caught((context, error) => {
-            console.error(error);
-        });
+    private composer = Composer.builder<Context>().caught((context, error) => {
+        console.error(error);
+    });
 
     private composed!: Middleware<Context>;
 
@@ -445,135 +363,133 @@ export class Updates {
      */
     public on<T = object>(
         events: AllowArray<CommentContextType | CommentContextSubType>,
-        handler: AllowArray<Middleware<CommentContext & T>>
+        handler: AllowArray<Middleware<CommentContext & T>>,
     ): this;
 
     public on<T = object>(
         events: AllowArray<DialogFlagsContextType | DialogFlagsContextSubType>,
-        handler: AllowArray<Middleware<DialogFlagsContext & T>>
+        handler: AllowArray<Middleware<DialogFlagsContext & T>>,
     ): this;
 
     public on<T = object>(
         events: AllowArray<DialogNotificationSettingsContextType | DialogNotificationSettingsContextSubType>,
-        handler: AllowArray<Middleware<DialogNotificationSettingsContext & T>>
+        handler: AllowArray<Middleware<DialogNotificationSettingsContext & T>>,
     ): this;
 
     public on<T = object>(
         events: AllowArray<GroupMemberContextType | GroupMemberContextSubType>,
-        handler: AllowArray<Middleware<GroupMemberContext & T>>
+        handler: AllowArray<Middleware<GroupMemberContext & T>>,
     ): this;
 
     public on<T = object>(
         events: AllowArray<GroupUpdateContextType | GroupUpdateContextSubType>,
-        handler: AllowArray<Middleware<GroupUpdateContext & T>>
+        handler: AllowArray<Middleware<GroupUpdateContext & T>>,
     ): this;
 
     public on<T = object>(
         events: AllowArray<GroupUserContextType | GroupUserContextSubType>,
-        handler: AllowArray<Middleware<GroupUserContext & T>>
+        handler: AllowArray<Middleware<GroupUserContext & T>>,
     ): this;
 
     public on<T = object>(
         events: AllowArray<MessageSubscriptionContextType | MessageSubscriptionContextSubType>,
-        handler: AllowArray<Middleware<MessageSubscriptionContext & T>>
+        handler: AllowArray<Middleware<MessageSubscriptionContext & T>>,
     ): this;
 
     public on<T = object>(
         events: AllowArray<MessageFlagsContextType | MessageFlagsContextSubType>,
-        handler: AllowArray<Middleware<MessageFlagsContext & T>>
+        handler: AllowArray<Middleware<MessageFlagsContext & T>>,
     ): this;
 
     public on<T = object>(
-        events: AllowArray<MessageEventContextType  >,
-        handler: AllowArray<Middleware<MessageEventContext & T>>
+        events: AllowArray<MessageEventContextType>,
+        handler: AllowArray<Middleware<MessageEventContext & T>>,
     ): this;
 
     public on<T = object>(
         events: AllowArray<MessageContextType | MessageContextSubType>,
-        handler: AllowArray<Middleware<MessageContext & T>>
+        handler: AllowArray<Middleware<MessageContext & T>>,
     ): this;
 
     public on<T = object>(
         events: AllowArray<NewAttachmentsContextType | NewAttachmentsContextSubType>,
-        handler: AllowArray<Middleware<NewAttachmentsContext & T>>
+        handler: AllowArray<Middleware<NewAttachmentsContext & T>>,
     ): this;
 
     public on<T = object>(
         events: AllowArray<MessagesReadContextType | MessagesReadContextSubType>,
-        handler: AllowArray<Middleware<MessagesReadContext & T>>
+        handler: AllowArray<Middleware<MessagesReadContext & T>>,
     ): this;
 
     public on<T = object>(
         events: AllowArray<DialogMessagesContextType | DialogMessagesContextSubType>,
-        handler: AllowArray<Middleware<DialogMessagesContext & T>>
+        handler: AllowArray<Middleware<DialogMessagesContext & T>>,
     ): this;
 
     public on<T = object>(
         events: AllowArray<TypingContextType | TypingContextSubType>,
-        handler: AllowArray<Middleware<TypingContext & T>>
+        handler: AllowArray<Middleware<TypingContext & T>>,
     ): this;
 
     public on<T = object>(
         events: AllowArray<FriendActivityContextType | FriendActivityContextSubType>,
-        handler: AllowArray<Middleware<FriendActivityContext & T>>
+        handler: AllowArray<Middleware<FriendActivityContext & T>>,
     ): this;
     public on<T = object, P extends Record<string, any> = object>(
         events: AllowArray<VKAppPayloadContextType | VKAppPayloadContextSubType>,
-        handler: AllowArray<Middleware<VKAppPayloadContext<ContextDefaultState, P> & T>>
+        handler: AllowArray<Middleware<VKAppPayloadContext<ContextDefaultState, P> & T>>,
     ): this;
 
     public on<T = object>(
         events: AllowArray<VKPayTransactionContextType | VKPayTransactionContextSubType>,
-        handler: AllowArray<Middleware<VKPayTransactionContext & T>>
+        handler: AllowArray<Middleware<VKPayTransactionContext & T>>,
     ): this;
 
     public on<T = object>(
         events: AllowArray<VoteContextType | VoteContextSubType>,
-        handler: AllowArray<Middleware<VoteContext & T>>
+        handler: AllowArray<Middleware<VoteContext & T>>,
     ): this;
 
     public on<T = object>(
         events: AllowArray<WallPostContextType | WallPostContextSubType>,
-        handler: AllowArray<Middleware<WallPostContext & T>>
+        handler: AllowArray<Middleware<WallPostContext & T>>,
     ): this;
 
     public on<T = object>(
         events: AllowArray<LikeContextType | LikeContextSubType>,
-        handler: AllowArray<Middleware<LikeContext & T>>
+        handler: AllowArray<Middleware<LikeContext & T>>,
     ): this;
 
     // @ts-expect-error incompitable overload signature
     public on<T = object>(
         events: AllowArray<MarketOrderContextType | MarketOrderContextSubType>,
-        handler: AllowArray<Middleware<MarketOrderContext & T>>
+        handler: AllowArray<Middleware<MarketOrderContext & T>>,
     ): this;
 
     public on<T = object>(
         events: AllowArray<DonutSubscriptionContextType | DonutSubscriptionContextSubType>,
-        handler: AllowArray<Middleware<DonutSubscriptionContext & T>>
+        handler: AllowArray<Middleware<DonutSubscriptionContext & T>>,
     ): this;
 
     public on<T = object>(
         events: AllowArray<DonutSubscriptionPriceContextType | DonutSubscriptionPriceContextSubType>,
-        handler: AllowArray<Middleware<DonutSubscriptionPriceContext & T>>
+        handler: AllowArray<Middleware<DonutSubscriptionPriceContext & T>>,
     ): this;
 
     public on<T = object>(
         events: AllowArray<DonutWithdrawContextType | DonutWithdrawContextSubType>,
-        handler: AllowArray<Middleware<DonutWithdrawContext & T>>
+        handler: AllowArray<Middleware<DonutWithdrawContext & T>>,
     ): this;
     public on<T = object, P extends Record<string, any> = object>(
         events: AllowArray<UnsupportedEventContextType>,
-        handler: AllowArray<Middleware<UnsupportedEventContext<ContextDefaultState, P> & T>>
+        handler: AllowArray<Middleware<UnsupportedEventContext<ContextDefaultState, P> & T>>,
     ): this;
 
     public on<T = object>(
         rawEvents: AllowArray<ContextPossibleTypes>,
         rawHandlers: AllowArray<Middleware<Context & T>>,
     ): this {
-        const events = !Array.isArray(rawEvents)
-            ? [rawEvents]
-            : rawEvents;
+        const events = !Array.isArray(rawEvents) ? [rawEvents] : rawEvents;
 
         const hasEvents = events.every(Boolean);
 
@@ -581,20 +497,18 @@ export class Updates {
             throw new Error('Events should be not empty');
         }
 
-        const handler = Array.isArray(rawHandlers)
-            ? compose(rawHandlers)
-            : rawHandlers;
+        const handler = Array.isArray(rawHandlers) ? compose(rawHandlers) : rawHandlers;
 
         if (typeof handler !== 'function') {
             throw new TypeError('Handler must be a function');
         }
 
-        return this.use((context, next): unknown => (
+        return this.use((context, next): unknown =>
             context.is(events)
-                // @ts-expect-error we need support generic
-                ? handler(context, next)
-                : next()
-        ));
+                ? // @ts-expect-error we need support generic
+                  handler(context, next)
+                : next(),
+        );
     }
 
     /**
@@ -613,14 +527,16 @@ export class Updates {
             return Promise.resolve();
         }
 
-        return this.dispatchMiddleware(new UpdateContext({
-            api: this.api,
-            upload: this.upload,
+        return this.dispatchMiddleware(
+            new UpdateContext({
+                api: this.api,
+                upload: this.upload,
 
-            payload: update,
-            updateType: type,
-            source: UpdateSource.POLLING,
-        }));
+                payload: update,
+                updateType: type,
+                source: UpdateSource.POLLING,
+            }),
+        );
     }
 
     /**
@@ -633,15 +549,17 @@ export class Updates {
 
         const UpdateContext = webhookContexts[type] || UnsupportedEventContext;
 
-        return this.dispatchMiddleware(new UpdateContext({
-            api: this.api,
-            upload: this.upload,
+        return this.dispatchMiddleware(
+            new UpdateContext({
+                api: this.api,
+                upload: this.upload,
 
-            payload,
-            groupId,
-            updateType: type,
-            source: UpdateSource.WEBHOOK,
-        }));
+                payload,
+                groupId,
+                updateType: type,
+                source: UpdateSource.WEBHOOK,
+            }),
+        );
     }
 
     /**
@@ -653,9 +571,7 @@ export class Updates {
         const isGroup = pollingGroupId !== undefined;
 
         this.pollingTransport.subscribe(
-            isGroup
-                ? this.handleWebhookUpdate.bind(this)
-                : this.handlePollingUpdate.bind(this),
+            isGroup ? this.handleWebhookUpdate.bind(this) : this.handlePollingUpdate.bind(this),
         );
 
         return this.pollingTransport.start();
@@ -680,7 +596,9 @@ export class Updates {
 
         if (!this.options.pollingGroupId) {
             try {
-                const { groups: [group] } = await this.api.groups.getById({});
+                const {
+                    groups: [group],
+                } = await this.api.groups.getById({});
 
                 this.pollingTransport = new PollingTransport({
                     api: this.api,
@@ -707,10 +625,7 @@ export class Updates {
      * Stopping gets updates
      */
     public async stop(): Promise<void> {
-        await Promise.all([
-            this.pollingTransport.stop(),
-            this.webhookTransport.stop(),
-        ]);
+        await Promise.all([this.pollingTransport.stop(), this.webhookTransport.stop()]);
     }
 
     /**

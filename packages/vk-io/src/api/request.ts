@@ -2,10 +2,10 @@ import { AbortController } from 'abort-controller';
 
 import { inspectable } from 'inspectable';
 
-import type { API } from './api';
+import type { ICallbackServiceValidate } from '../utils/callback-service';
 import { fetch } from '../utils/fetch';
 import { getExecuteMethod } from '../utils/helpers';
-import type { ICallbackServiceValidate } from '../utils/callback-service';
+import type { API } from './api';
 
 export interface IAPIRequestOptions {
     api: API;
@@ -90,10 +90,7 @@ export class APIRequest {
 
                     connection: 'keep-alive',
                 },
-                body: new URLSearchParams(
-                    Object.entries(params)
-                        .filter(({ 1: value }) => value !== undefined),
-                ),
+                body: new URLSearchParams(Object.entries(params).filter(({ 1: value }) => value !== undefined)),
             });
 
             const result = await response.json();

@@ -1,8 +1,8 @@
 import { ExternalAttachment, type ExternalAttachmentFactoryOptions } from './external';
 
-import { pickProperties } from '../../utils/helpers';
-import { PhotoAttachment, type IPhotoAttachmentPayload } from './photo';
 import { AttachmentType, kSerializeData } from '../../utils/constants';
+import { pickProperties } from '../../utils/helpers';
+import { type IPhotoAttachmentPayload, PhotoAttachment } from './photo';
 
 const kPhoto = Symbol('kPhoto');
 
@@ -24,11 +24,9 @@ export interface ILinkAttachmentPayload {
     photo?: IPhotoAttachmentPayload;
 }
 
-export type LinkAttachmentOptions =
-    ExternalAttachmentFactoryOptions<ILinkAttachmentPayload>;
+export type LinkAttachmentOptions = ExternalAttachmentFactoryOptions<ILinkAttachmentPayload>;
 
-export class LinkAttachment
-    extends ExternalAttachment<ILinkAttachmentPayload, AttachmentType.LINK | 'link'> {
+export class LinkAttachment extends ExternalAttachment<ILinkAttachmentPayload, AttachmentType.LINK | 'link'> {
     protected [kPhoto]: PhotoAttachment | undefined;
 
     /**
@@ -109,14 +107,6 @@ export class LinkAttachment
      * Returns the custom data
      */
     public [kSerializeData](): object {
-        return pickProperties(this, [
-            'title',
-            'caption',
-            'description',
-            'url',
-            'product',
-            'button',
-            'photo',
-        ]);
+        return pickProperties(this, ['title', 'caption', 'description', 'url', 'product', 'button', 'photo']);
     }
 }

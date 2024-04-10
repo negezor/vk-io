@@ -1,15 +1,15 @@
-import { Context, type ContextFactoryOptions, type ContextDefaultState } from './context';
+import { Context, type ContextDefaultState, type ContextFactoryOptions } from './context';
 
-import { pickProperties } from '../../utils/helpers';
 import { kSerializeData } from '../../utils/constants';
+import { pickProperties } from '../../utils/helpers';
 
 export type DonutSubscriptionContextType = 'donut_subscription';
 
 export type DonutSubscriptionContextSubType =
-'donut_subscription_create'
-| 'donut_subscription_prolonged'
-| 'donut_subscription_expired'
-| 'donut_subscription_cancelled';
+    | 'donut_subscription_create'
+    | 'donut_subscription_prolonged'
+    | 'donut_subscription_expired'
+    | 'donut_subscription_cancelled';
 
 export interface IDonutSubscriptionContextPayload {
     user_id: number;
@@ -18,24 +18,20 @@ export interface IDonutSubscriptionContextPayload {
     amount_without_fee?: number;
 }
 
-export type DonutSubscriptionContextOptions<S> =
-    ContextFactoryOptions<IDonutSubscriptionContextPayload, S>;
+export type DonutSubscriptionContextOptions<S> = ContextFactoryOptions<IDonutSubscriptionContextPayload, S>;
 
-export class DonutSubscriptionContext<S = ContextDefaultState>
-    extends Context<
+export class DonutSubscriptionContext<S = ContextDefaultState> extends Context<
     IDonutSubscriptionContextPayload,
     S,
     DonutSubscriptionContextType,
     DonutSubscriptionContextSubType
-    > {
+> {
     public constructor(options: DonutSubscriptionContextOptions<S>) {
         super({
             ...options,
 
             type: 'donut_subscription',
-            subTypes: [
-                options.updateType as DonutSubscriptionContextSubType,
-            ],
+            subTypes: [options.updateType as DonutSubscriptionContextSubType],
         });
     }
 
@@ -78,7 +74,7 @@ export class DonutSubscriptionContext<S = ContextDefaultState>
      * Returns the amount
      */
     public get amount(): number {
-         // biome-ignore lint/style/noNonNullAssertion: always present
+        // biome-ignore lint/style/noNonNullAssertion: always present
         return this.payload.amount!;
     }
 

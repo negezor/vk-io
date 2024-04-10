@@ -1,10 +1,10 @@
 import type { Params } from '../../api';
-import { Context, type ContextFactoryOptions, type ContextDefaultState } from './context';
+import { Context, type ContextDefaultState, type ContextFactoryOptions } from './context';
 
 import { VKError } from '../../errors';
 
-import { pickProperties } from '../../utils/helpers';
 import { kSerializeData } from '../../utils/constants';
+import { pickProperties } from '../../utils/helpers';
 
 /**
  * Causes of blocking
@@ -19,9 +19,7 @@ const reasonNames = new Map([
 
 export type GroupUserContextType = 'group_user';
 
-export type GroupUserContextSubType =
-'user_block'
-| 'user_unblock';
+export type GroupUserContextSubType = 'user_block' | 'user_unblock';
 
 export interface IGroupUserContextPayload {
     admin_id: number;
@@ -32,24 +30,20 @@ export interface IGroupUserContextPayload {
     by_end_date?: number;
 }
 
-export type GroupUserContextOptions<S> =
-    ContextFactoryOptions<IGroupUserContextPayload, S>;
+export type GroupUserContextOptions<S> = ContextFactoryOptions<IGroupUserContextPayload, S>;
 
-export class GroupUserContext<S = ContextDefaultState>
-    extends Context<
+export class GroupUserContext<S = ContextDefaultState> extends Context<
     IGroupUserContextPayload,
     S,
     GroupUserContextType,
     GroupUserContextSubType
-    > {
+> {
     public constructor(options: GroupUserContextOptions<S>) {
         super({
             ...options,
 
             type: 'group_user',
-            subTypes: [
-                options.updateType as GroupUserContextSubType,
-            ],
+            subTypes: [options.updateType as GroupUserContextSubType],
         });
     }
 
@@ -106,7 +100,7 @@ export class GroupUserContext<S = ContextDefaultState>
         const { reasonId } = this;
 
         if (!reasonId) {
-            return undefined
+            return undefined;
         }
 
         return reasonNames.get(reasonId);
@@ -131,10 +125,12 @@ export class GroupUserContext<S = ContextDefaultState>
      */
     ban(params: Partial<Params.GroupsBanParams>): Promise<number> {
         if (this.isBlocked) {
-            return Promise.reject(new VKError({
-                message: 'User is blocked',
-                code: 'ALREADY_BANNED',
-            }));
+            return Promise.reject(
+                new VKError({
+                    message: 'User is blocked',
+                    code: 'ALREADY_BANNED',
+                }),
+            );
         }
 
         return this.api.groups.ban({
@@ -151,10 +147,12 @@ export class GroupUserContext<S = ContextDefaultState>
      */
     unban(): Promise<number> {
         if (this.isUnblocked) {
-            return Promise.reject(new VKError({
-                message: 'User is not blocked',
-                code: 'ALREADY_UNBANNED',
-            }));
+            return Promise.reject(
+                new VKError({
+                    message: 'User is not blocked',
+                    code: 'ALREADY_UNBANNED',
+                }),
+            );
         }
 
         return this.api.groups.unban({

@@ -1,15 +1,13 @@
 import type { Params } from '../../api';
 
-import { Context, type ContextFactoryOptions, type ContextDefaultState } from './context';
+import { Context, type ContextDefaultState, type ContextFactoryOptions } from './context';
 
-import { pickProperties } from '../../utils/helpers';
 import { kSerializeData } from '../../utils/constants';
+import { pickProperties } from '../../utils/helpers';
 
 export type DialogFlagsContextType = 'dialog_flags';
 
-export type DialogFlagsContextSubType =
-'dialog_flags_add'
-| 'dialog_flags_delete';
+export type DialogFlagsContextSubType = 'dialog_flags_add' | 'dialog_flags_delete';
 
 const subTypes: Record<string, DialogFlagsContextSubType> = {
     10: 'dialog_flags_delete',
@@ -19,7 +17,7 @@ const subTypes: Record<string, DialogFlagsContextSubType> = {
 /* eslint-disable no-bitwise */
 enum DialogFlag {
     IMPORTANT = 1 << 0,
-    UNANSWERED = 1 << 1
+    UNANSWERED = 1 << 1,
 }
 /* eslint-enable no-bitwise */
 
@@ -28,16 +26,14 @@ export interface IDialogFlagsContextPayload {
     flags: number;
 }
 
-export type DialogFlagsContextOptions<S> =
-    ContextFactoryOptions<number[], S>;
+export type DialogFlagsContextOptions<S> = ContextFactoryOptions<number[], S>;
 
-export class DialogFlagsContext<S = ContextDefaultState>
-    extends Context<
+export class DialogFlagsContext<S = ContextDefaultState> extends Context<
     IDialogFlagsContextPayload,
     S,
     DialogFlagsContextType,
     DialogFlagsContextSubType
-    > {
+> {
     public constructor(options: DialogFlagsContextOptions<S>) {
         const [eventId, peerId, flags] = options.payload;
 
@@ -45,9 +41,7 @@ export class DialogFlagsContext<S = ContextDefaultState>
             ...options,
 
             type: 'dialog_flags',
-            subTypes: [
-                subTypes[eventId],
-            ],
+            subTypes: [subTypes[eventId]],
 
             payload: {
                 peer_id: peerId,
@@ -87,9 +81,7 @@ export class DialogFlagsContext<S = ContextDefaultState>
     /**
      * Marks the conversation as answered or unchecked
      */
-    public markAsAnsweredConversation(
-        params: Params.MessagesMarkAsAnsweredConversationParams,
-    ): Promise<number> {
+    public markAsAnsweredConversation(params: Params.MessagesMarkAsAnsweredConversationParams): Promise<number> {
         return this.api.messages.markAsAnsweredConversation({
             ...params,
 
@@ -100,9 +92,7 @@ export class DialogFlagsContext<S = ContextDefaultState>
     /**
      * Marks the conversation as important or removes the mark
      */
-    public markAsImportantConversation(
-        params: Params.MessagesMarkAsImportantConversationParams,
-    ): Promise<number> {
+    public markAsImportantConversation(params: Params.MessagesMarkAsImportantConversationParams): Promise<number> {
         return this.api.messages.markAsImportantConversation({
             ...params,
 
@@ -118,11 +108,6 @@ export class DialogFlagsContext<S = ContextDefaultState>
      * Returns the custom data
      */
     public [kSerializeData](): object {
-        return pickProperties(this, [
-            'peerId',
-            'flags',
-            'isImportant',
-            'isUnanswered',
-        ]);
+        return pickProperties(this, ['peerId', 'flags', 'isImportant', 'isUnanswered']);
     }
 }

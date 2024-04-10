@@ -1,7 +1,7 @@
 import { Attachment, type AttachmentFactoryOptions } from './attachment';
 
-import { pickProperties } from '../../utils/helpers';
 import { AttachmentType, kSerializeData } from '../../utils/constants';
+import { pickProperties } from '../../utils/helpers';
 
 const SMALL_SIZES = ['m', 's'];
 const MEDIUM_SIZES = ['y', 'r', 'q', 'p', ...SMALL_SIZES];
@@ -28,8 +28,7 @@ export interface IPhotoAttachmentPayload {
     height?: number;
 }
 
-export type PhotoAttachmentOptions =
-    AttachmentFactoryOptions<IPhotoAttachmentPayload>;
+export type PhotoAttachmentOptions = AttachmentFactoryOptions<IPhotoAttachmentPayload>;
 
 export class PhotoAttachment extends Attachment<IPhotoAttachmentPayload, AttachmentType.PHOTO | 'photo'> {
     /**
@@ -58,7 +57,7 @@ export class PhotoAttachment extends Attachment<IPhotoAttachmentPayload, Attachm
             extended: 0,
         });
 
-        this.payload = (photo as unknown) as IPhotoAttachmentPayload;
+        this.payload = photo as unknown as IPhotoAttachmentPayload;
 
         this.$filled = true;
     }
@@ -165,9 +164,7 @@ export class PhotoAttachment extends Attachment<IPhotoAttachmentPayload, Attachm
         }
 
         return sizeTypes
-            .map((sizeType): IPhotoSize | undefined => (
-                sizes.find((size): boolean => size.type === sizeType)
-            ))
+            .map((sizeType): IPhotoSize | undefined => sizes.find((size): boolean => size.type === sizeType))
             .filter(Boolean) as IPhotoSize[];
     }
 

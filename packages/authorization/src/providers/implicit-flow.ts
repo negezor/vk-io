@@ -1,34 +1,27 @@
-import createDebug from 'debug';
-import { load as cheerioLoad } from 'cheerio';
 import { AbortController } from 'abort-controller';
+import { load as cheerioLoad } from 'cheerio';
+import createDebug from 'debug';
 
-import { CaptchaType, type ICallbackServiceValidate, type CallbackService } from 'vk-io';
+import { type CallbackService, CaptchaType, type ICallbackServiceValidate } from 'vk-io';
 
 import type { Agent } from 'https';
 
+import { AuthErrorCode, CALLBACK_BLANK, DESKTOP_USER_AGENT } from '../constants';
 import { AuthorizationError } from '../errors';
-import { parseFormField, getFullURL, type CheerioStatic } from '../helpers';
 import {
     CookieJar,
-
     type FetchWrapper,
     type RequestInfo,
     type RequestInit,
     type Response,
-
     fetchCookieFollowRedirectsDecorator,
 } from '../fetch-cookie';
-import { DESKTOP_USER_AGENT, CALLBACK_BLANK, AuthErrorCode } from '../constants';
+import { type CheerioStatic, getFullURL, parseFormField } from '../helpers';
 
 const debug = createDebug('vk-io:authorization:implicit-flow');
 
-const {
-    PAGE_BLOCKED,
-    INVALID_PHONE_NUMBER,
-    AUTHORIZATION_FAILED,
-    FAILED_PASSED_CAPTCHA,
-    FAILED_PASSED_TWO_FACTOR,
-} = AuthErrorCode;
+const { PAGE_BLOCKED, INVALID_PHONE_NUMBER, AUTHORIZATION_FAILED, FAILED_PASSED_CAPTCHA, FAILED_PASSED_TWO_FACTOR } =
+    AuthErrorCode;
 
 /**
  * Blocked action
@@ -161,10 +154,7 @@ export abstract class ImplicitFlow {
     /**
      * Executes the HTTP request
      */
-    protected fetch(
-        url: RequestInfo,
-        options: RequestInit = {},
-    ): Promise<Response> {
+    protected fetch(url: RequestInfo, options: RequestInit = {}): Promise<Response> {
         const { agent, timeout } = this.options;
 
         const { headers = {} } = options;
@@ -252,9 +242,7 @@ export abstract class ImplicitFlow {
             const isError = $error.length !== 0;
 
             if (this.captchaValidate === undefined && (isError || $service.length !== 0)) {
-                const errorText = isError
-                    ? $error.text()
-                    : $service.text();
+                const errorText = isError ? $error.text() : $service.text();
 
                 throw new AuthorizationError({
                     message: `Auth form error: ${errorText}`,
@@ -318,11 +306,13 @@ export abstract class ImplicitFlow {
         debug('process login handle');
 
         if (this.captchaValidate) {
-            this.captchaValidate.reject(new AuthorizationError({
-                message: 'Incorrect captcha code',
-                code: FAILED_PASSED_CAPTCHA,
-                pageHtml: $.html(),
-            }));
+            this.captchaValidate.reject(
+                new AuthorizationError({
+                    message: 'Incorrect captcha code',
+                    code: FAILED_PASSED_CAPTCHA,
+                    pageHtml: $.html(),
+                }),
+            );
 
             this.captchaValidate = undefined;
 
@@ -385,11 +375,13 @@ export abstract class ImplicitFlow {
         debug('process two-factor handle');
 
         if (this.twoFactorValidate !== undefined) {
-            this.twoFactorValidate.reject(new AuthorizationError({
-                message: 'Incorrect two-factor code',
-                code: FAILED_PASSED_TWO_FACTOR,
-                pageHtml: $.html(),
-            }));
+            this.twoFactorValidate.reject(
+                new AuthorizationError({
+                    message: 'Incorrect two-factor code',
+                    code: FAILED_PASSED_TWO_FACTOR,
+                    pageHtml: $.html(),
+                }),
+            );
 
             this.twoFactorAttempts += 1;
         }
@@ -441,10 +433,7 @@ export abstract class ImplicitFlow {
                 });
             }
 
-            const {
-                key,
-                validate: captchaValidate,
-            } = await this.options.callbackService.processingCaptcha({
+            const { key, validate: captchaValidate } = await this.options.callbackService.processingCaptcha({
                 type: CaptchaType.IMPLICIT_FLOW_AUTH,
                 sid: fields.captcha_sid,
                 src: `https://api.vk.com/${src}`,

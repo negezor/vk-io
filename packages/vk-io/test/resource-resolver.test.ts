@@ -1,14 +1,7 @@
-import { describe, it } from 'node:test';
 import { deepStrictEqual } from 'node:assert';
+import { describe, it } from 'node:test';
 
-import {
-    type IResolvedTargetResource,
-    type IResolvedOwnerResource,
-
-    VK,
-
-    resolveResource
-} from '..';
+import { type IResolvedOwnerResource, type IResolvedTargetResource, VK, resolveResource } from '..';
 
 const { TOKEN } = process.env;
 
@@ -17,18 +10,18 @@ const vk = new VK({ token: TOKEN! });
 
 const durovUser: IResolvedTargetResource = {
     id: 1,
-    type: 'user'
+    type: 'user',
 };
 
 const durovPhoto: IResolvedOwnerResource = {
     id: 456264771,
     ownerId: 1,
-    type: 'photo'
+    type: 'photo',
 };
 
 const apiclubGroup: IResolvedTargetResource = {
     id: 1,
-    type: 'group'
+    type: 'group',
 };
 
 const dataset: [string | number, IResolvedTargetResource | IResolvedOwnerResource][] = [
@@ -57,40 +50,59 @@ const dataset: [string | number, IResolvedTargetResource | IResolvedOwnerResourc
     ['[public1|APICLUB]', apiclubGroup],
     ['public1', apiclubGroup],
     ['apiclub', apiclubGroup],
-    ['app1', {
-        id: 1,
-        type: 'application'
-    }],
-    ['albums1', {
-        id: 1, // User ID
-        type: 'albums'
-    }],
-    ['album1_0', {
-        id: 0,
-        ownerId: 1,
-        type: 'album'
-    }],
-    ['https://vk.com/id1?w=wall1_32279', {
-        id: 32279,
-        ownerId: 1,
-        type: 'wall'
-    }],
-    ['https://vk.com/club1?w=wall-1_49296', {
-        id: 49296,
-        ownerId: -1,
-        type: 'wall'
-    }]
+    [
+        'app1',
+        {
+            id: 1,
+            type: 'application',
+        },
+    ],
+    [
+        'albums1',
+        {
+            id: 1, // User ID
+            type: 'albums',
+        },
+    ],
+    [
+        'album1_0',
+        {
+            id: 0,
+            ownerId: 1,
+            type: 'album',
+        },
+    ],
+    [
+        'https://vk.com/id1?w=wall1_32279',
+        {
+            id: 32279,
+            ownerId: 1,
+            type: 'wall',
+        },
+    ],
+    [
+        'https://vk.com/club1?w=wall-1_49296',
+        {
+            id: 49296,
+            ownerId: -1,
+            type: 'wall',
+        },
+    ],
 ];
 
 describe('resolveResource', (): void => {
     for (const [resource, result] of dataset) {
-        it(`should resolve correctly "${resource}"`, { timeout: 60_000, skip: TOKEN === undefined ? 'not set env TOKEN=<token>' : undefined }, async (): Promise<void> => {
-            const resolvedResource = await resolveResource({
-                resource,
-                api: vk.api
-            });
+        it(
+            `should resolve correctly "${resource}"`,
+            { timeout: 60_000, skip: TOKEN === undefined ? 'not set env TOKEN=<token>' : undefined },
+            async (): Promise<void> => {
+                const resolvedResource = await resolveResource({
+                    resource,
+                    api: vk.api,
+                });
 
-            deepStrictEqual(resolvedResource, result);
-        });
+                deepStrictEqual(resolvedResource, result);
+            },
+        );
     }
 });

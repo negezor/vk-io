@@ -1,23 +1,22 @@
-import { describe, it } from 'node:test';
 import { strictEqual, throws } from 'node:assert';
+import { describe, it } from 'node:test';
 
 import {
-    VK,
     Attachment,
-
-    WallAttachment,
-    PhotoAttachment,
     AudioAttachment,
-    StoryAttachment,
-    VideoAttachment,
-    MarketAttachment,
     DocumentAttachment,
-    MarketAlbumAttachment
+    MarketAlbumAttachment,
+    MarketAttachment,
+    PhotoAttachment,
+    StoryAttachment,
+    VK,
+    VideoAttachment,
+    WallAttachment,
 } from '..';
 
 const vk = new VK({
     // biome-ignore lint/style/noNonNullAssertion: to be honest, they're just tests
-    token: process.env.TOKEN!
+    token: process.env.TOKEN!,
 });
 
 describe('Attachments', (): void => {
@@ -27,8 +26,8 @@ describe('Attachments', (): void => {
             type: 'photo',
             payload: {
                 id: 5678,
-                owner_id: 1234
-            }
+                owner_id: 1234,
+            },
         });
 
         strictEqual(String(attachment), 'photo1234_5678');
@@ -41,8 +40,8 @@ describe('Attachments', (): void => {
             payload: {
                 id: 5678,
                 owner_id: 1234,
-                access_key: 'ACCESS_KEY'
-            }
+                access_key: 'ACCESS_KEY',
+            },
         });
 
         strictEqual(String(attachment), 'photo1234_5678_ACCESS_KEY');
@@ -59,17 +58,17 @@ describe('Attachments', (): void => {
         it('should be correct parse', (): void => {
             const photo1 = Attachment.fromString('photo1234_5678', vk.api);
 
-            strictEqual(photo1.type,  'photo');
-            strictEqual(photo1.ownerId,  1234);
-            strictEqual(photo1.id,  5678);
-            strictEqual(photo1.accessKey,  undefined);
+            strictEqual(photo1.type, 'photo');
+            strictEqual(photo1.ownerId, 1234);
+            strictEqual(photo1.id, 5678);
+            strictEqual(photo1.accessKey, undefined);
 
             const photo2 = Attachment.fromString('photo1234_5678_ACCESS_KEY', vk.api);
 
-            strictEqual(photo2.type,  'photo');
-            strictEqual(photo2.ownerId,  1234);
-            strictEqual(photo2.id,  5678);
-            strictEqual(photo2.accessKey,  'ACCESS_KEY');
+            strictEqual(photo2.type, 'photo');
+            strictEqual(photo2.ownerId, 1234);
+            strictEqual(photo2.id, 5678);
+            strictEqual(photo2.accessKey, 'ACCESS_KEY');
         });
     });
 
@@ -80,8 +79,8 @@ describe('Attachments', (): void => {
                 type: 'photo',
                 payload: {
                     id: 5678,
-                    owner_id: 1234
-                }
+                    owner_id: 1234,
+                },
             });
 
             throws((): boolean => attachment.equals('ascbas_baasd'));
@@ -95,34 +94,40 @@ describe('Attachments', (): void => {
                 type: 'photo',
                 payload: {
                     id: 5678,
-                    owner_id: 1234
-                }
+                    owner_id: 1234,
+                },
             });
 
             strictEqual(attachment.equals('photo1234_1234'), false);
 
-            strictEqual(attachment.equals(
-                new Attachment({
-                    api: vk.api,
-                    type: 'photo',
-                    payload: {
-                        id: 1234,
-                        owner_id: 1234
-                    }
-                })
-            ), false);
+            strictEqual(
+                attachment.equals(
+                    new Attachment({
+                        api: vk.api,
+                        type: 'photo',
+                        payload: {
+                            id: 1234,
+                            owner_id: 1234,
+                        },
+                    }),
+                ),
+                false,
+            );
 
-            strictEqual(attachment.equals(
-                new Attachment({
-                    api: vk.api,
-                    type: 'photo',
-                    payload: {
-                        id: 1234,
-                        owner_id: 1234,
-                        access_key: 'ACCESS_KEY'
-                    }
-                })
-            ), false);
+            strictEqual(
+                attachment.equals(
+                    new Attachment({
+                        api: vk.api,
+                        type: 'photo',
+                        payload: {
+                            id: 1234,
+                            owner_id: 1234,
+                            access_key: 'ACCESS_KEY',
+                        },
+                    }),
+                ),
+                false,
+            );
         });
 
         it('should be return true', (): void => {
@@ -131,34 +136,40 @@ describe('Attachments', (): void => {
                 type: 'photo',
                 payload: {
                     id: 5678,
-                    owner_id: 1234
-                }
+                    owner_id: 1234,
+                },
             });
 
             strictEqual(attachment.equals('photo1234_5678'), true);
 
-            strictEqual(attachment.equals(
-                new Attachment({
-                    api: vk.api,
-                    type: 'photo',
-                    payload: {
-                        id: 5678,
-                        owner_id: 1234
-                    }
-                })
-            ), true);
+            strictEqual(
+                attachment.equals(
+                    new Attachment({
+                        api: vk.api,
+                        type: 'photo',
+                        payload: {
+                            id: 5678,
+                            owner_id: 1234,
+                        },
+                    }),
+                ),
+                true,
+            );
 
-            strictEqual(attachment.equals(
-                new Attachment({
-                    api: vk.api,
-                    type: 'photo',
-                    payload: {
-                        id: 5678,
-                        owner_id: 1234,
-                        access_key: 'ACCESS_KEY'
-                    }
-                })
-            ), true);
+            strictEqual(
+                attachment.equals(
+                    new Attachment({
+                        api: vk.api,
+                        type: 'photo',
+                        payload: {
+                            id: 5678,
+                            owner_id: 1234,
+                            access_key: 'ACCESS_KEY',
+                        },
+                    }),
+                ),
+                true,
+            );
         });
     });
 
@@ -168,8 +179,8 @@ describe('Attachments', (): void => {
                 api: vk.api,
                 payload: {
                     id: 4567,
-                    owner_id: 1234
-                }
+                    owner_id: 1234,
+                },
             });
 
             strictEqual(String(attachment), 'wall1234_4567');
@@ -180,8 +191,8 @@ describe('Attachments', (): void => {
                 api: vk.api,
                 payload: {
                     id: 4567,
-                    owner_id: 1234
-                }
+                    owner_id: 1234,
+                },
             });
 
             strictEqual(String(attachment), 'photo1234_4567');
@@ -192,8 +203,8 @@ describe('Attachments', (): void => {
                 api: vk.api,
                 payload: {
                     id: 4567,
-                    owner_id: 1234
-                }
+                    owner_id: 1234,
+                },
             });
 
             strictEqual(String(attachment), 'audio1234_4567');
@@ -204,8 +215,8 @@ describe('Attachments', (): void => {
                 api: vk.api,
                 payload: {
                     id: 4567,
-                    owner_id: 1234
-                }
+                    owner_id: 1234,
+                },
             });
 
             strictEqual(String(attachment), 'story1234_4567');
@@ -216,8 +227,8 @@ describe('Attachments', (): void => {
                 api: vk.api,
                 payload: {
                     id: 4567,
-                    owner_id: 1234
-                }
+                    owner_id: 1234,
+                },
             });
 
             strictEqual(String(attachment), 'video1234_4567');
@@ -228,8 +239,8 @@ describe('Attachments', (): void => {
                 api: vk.api,
                 payload: {
                     id: 4567,
-                    owner_id: 1234
-                }
+                    owner_id: 1234,
+                },
             });
 
             strictEqual(String(attachment), 'market1234_4567');
@@ -240,8 +251,8 @@ describe('Attachments', (): void => {
                 api: vk.api,
                 payload: {
                     id: 4567,
-                    owner_id: 1234
-                }
+                    owner_id: 1234,
+                },
             });
 
             strictEqual(String(attachment), 'doc1234_4567');
@@ -252,8 +263,8 @@ describe('Attachments', (): void => {
                 api: vk.api,
                 payload: {
                     id: 4567,
-                    owner_id: 1234
-                }
+                    owner_id: 1234,
+                },
             });
 
             strictEqual(String(attachment), 'market_album1234_4567');

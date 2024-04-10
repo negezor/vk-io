@@ -36,10 +36,12 @@ export class Chain {
      */
     public append<T = any>(method: string, params: object): Promise<T> {
         if (this.started) {
-            return Promise.reject(new VKError({
-                message: 'Chain already started',
-                code: 'ALREADY_STARTED',
-            }));
+            return Promise.reject(
+                new VKError({
+                    message: 'Chain already started',
+                    code: 'ALREADY_STARTED',
+                }),
+            );
         }
 
         const request = new APIRequest({

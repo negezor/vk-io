@@ -1,7 +1,7 @@
-import { Context, type ContextFactoryOptions, type ContextDefaultState } from './context';
+import { Context, type ContextDefaultState, type ContextFactoryOptions } from './context';
 
-import { pickProperties } from '../../utils/helpers';
 import { kSerializeData } from '../../utils/constants';
+import { pickProperties } from '../../utils/helpers';
 
 export type DialogMessagesContextType = 'dialog_messages';
 
@@ -15,16 +15,14 @@ export interface IDialogMessagesContextPayload {
     peer_id: number;
 }
 
-export type DialogMessagesContextOptions<S> =
-    ContextFactoryOptions<number[], S>;
+export type DialogMessagesContextOptions<S> = ContextFactoryOptions<number[], S>;
 
-export class DialogMessagesContext<S = ContextDefaultState>
-    extends Context<
+export class DialogMessagesContext<S = ContextDefaultState> extends Context<
     IDialogMessagesContextPayload,
     S,
     DialogMessagesContextType,
     DialogMessagesContextSubType
-    > {
+> {
     public constructor(options: DialogMessagesContextOptions<S>) {
         const [eventId, peerId, localId] = options.payload;
 
@@ -32,9 +30,7 @@ export class DialogMessagesContext<S = ContextDefaultState>
             ...options,
 
             type: 'dialog_messages',
-            subTypes: [
-                subTypes[eventId],
-            ],
+            subTypes: [subTypes[eventId]],
 
             payload: {
                 peer_id: peerId,
@@ -74,11 +70,6 @@ export class DialogMessagesContext<S = ContextDefaultState>
      * Returns the custom data
      */
     public [kSerializeData](): object {
-        return pickProperties(this, [
-            'peerId',
-            'localId',
-            'isDelete',
-            'isRestore',
-        ]);
+        return pickProperties(this, ['peerId', 'localId', 'isDelete', 'isRestore']);
     }
 }

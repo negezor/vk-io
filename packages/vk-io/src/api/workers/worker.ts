@@ -1,6 +1,6 @@
+import { MINIMUM_TIME_INTERVAL_API } from '../../utils/constants';
 import type { API } from '../api';
 import type { APIRequest } from '../request';
-import { MINIMUM_TIME_INTERVAL_API } from '../../utils/constants';
 
 export abstract class APIWorker {
     public busy = false;
@@ -54,14 +54,11 @@ export abstract class APIWorker {
         if (this.api.options.apiRequestMode === 'sequential') {
             this.execute();
 
-            setTimeout(
-                () => {
-                    this.busy = false;
+            setTimeout(() => {
+                this.busy = false;
 
-                    this.immediateHeat();
-                },
-                this.intervalPerRequests,
-            );
+                this.immediateHeat();
+            }, this.intervalPerRequests);
 
             return;
         }
@@ -74,7 +71,7 @@ export abstract class APIWorker {
             this.execute();
         }
 
-        const interval = Math.ceil(MINIMUM_TIME_INTERVAL_API - (limit * this.intervalPerRequests));
+        const interval = Math.ceil(MINIMUM_TIME_INTERVAL_API - limit * this.intervalPerRequests);
 
         setTimeout(
             () => {
@@ -82,9 +79,7 @@ export abstract class APIWorker {
 
                 this.immediateHeat();
             },
-            interval <= 0
-                ? MINIMUM_TIME_INTERVAL_API
-                : interval,
+            interval <= 0 ? MINIMUM_TIME_INTERVAL_API : interval,
         );
     }
 

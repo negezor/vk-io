@@ -1,10 +1,10 @@
+import { Attachmentable } from '../shared';
 import { Attachment, type AttachmentFactoryOptions } from './attachment';
 import type { ExternalAttachment } from './external';
-import { Attachmentable } from '../shared';
 
-import { transformAttachments } from './helpers';
 import { AttachmentType, kSerializeData } from '../../utils/constants';
-import { pickProperties, applyMixins } from '../../utils/helpers';
+import { applyMixins, pickProperties } from '../../utils/helpers';
+import { transformAttachments } from './helpers';
 
 const kAttachments = Symbol('attachments');
 const kCopyHistoryAttachments = Symbol('copyHistoryAttachments');
@@ -81,8 +81,7 @@ export interface IWallAttachmentPayload {
     postponed_id?: number;
 }
 
-export type WallAttachmentOptions =
-    AttachmentFactoryOptions<IWallAttachmentPayload>;
+export type WallAttachmentOptions = AttachmentFactoryOptions<IWallAttachmentPayload>;
 // biome-ignore lint/suspicious/noUnsafeDeclarationMerging: apply mixins
 class WallAttachment extends Attachment<IWallAttachmentPayload, AttachmentType.WALL | 'wall'> {
     protected [kAttachments]!: (Attachment | ExternalAttachment)[];
@@ -112,7 +111,9 @@ class WallAttachment extends Attachment<IWallAttachmentPayload, AttachmentType.W
             return;
         }
 
-        const { items: [post] } = await this.api.wall.getById({
+        const {
+            items: [post],
+        } = await this.api.wall.getById({
             posts: `${this.ownerId}_${this.id}`,
             extended: 0,
         });
@@ -128,9 +129,7 @@ class WallAttachment extends Attachment<IWallAttachmentPayload, AttachmentType.W
     public get hasComments(): boolean | undefined {
         const { commentsCount } = this;
 
-        return commentsCount !== undefined
-            ? commentsCount > 0
-            : undefined;
+        return commentsCount !== undefined ? commentsCount > 0 : undefined;
     }
 
     /**
@@ -452,12 +451,13 @@ class WallAttachment extends Attachment<IWallAttachmentPayload, AttachmentType.W
 
         this[kAttachments] = transformAttachments(payload.attachments || [], this.api);
 
-        this[kCopyHistoryAttachments] = (payload.copy_history || []).map((history): WallAttachment => (
-            new WallAttachment({
-                api: this.api,
-                payload: history,
-            })
-        ));
+        this[kCopyHistoryAttachments] = (payload.copy_history || []).map(
+            (history): WallAttachment =>
+                new WallAttachment({
+                    api: this.api,
+                    payload: history,
+                }),
+        );
     }
 
     /**

@@ -6,7 +6,7 @@ import { createServer } from 'http';
 import { VK } from '../..';
 
 const vk = new VK({
-    token: '12345'
+    token: '12345',
 });
 
 const app = express();
