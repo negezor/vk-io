@@ -107,8 +107,7 @@ export class SequentialWorker extends APIWorker {
 
         if (
             code !== APIErrorCode.CAPTCHA
-            || !this.api.options.callbackService
-            || !this.api.options.callbackService.hasCaptchaHandler
+            || !this.api.options.callbackService?.hasCaptchaHandler
         ) {
             request.reject(error);
 
