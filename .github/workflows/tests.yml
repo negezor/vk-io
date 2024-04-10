@@ -22,7 +22,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm ci --ignore-scripts
+      - run: npm ci
       - run: npm run build
       - env:
           TOKEN: ${{ secrets.VK_TEST_TOKEN }}
