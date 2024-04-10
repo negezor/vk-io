@@ -1,5 +1,5 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { jest } from '@jest/globals';
+import { describe, it } from 'node:test';
+import { strictEqual, notStrictEqual, ok } from 'node:assert';
 
 import {
     VK,
@@ -18,9 +18,7 @@ const vk = new VK({ token: TOKEN! });
 
 const IMAGE_URL = 'https://picsum.photos/200/300/?image=1';
 
-jest.setTimeout(30000);
-
-describe('Uploads', (): void => {
+describe('Uploads', { timeout: 30_000 }, (): void => {
     const { upload } = vk;
 
     it('should throw an error if there are no parameters', async (): Promise<void> => {
@@ -28,16 +26,16 @@ describe('Uploads', (): void => {
             // @ts-expect-error
             await upload.messagePhoto();
         } catch (error) {
-            expect(error).toBeInstanceOf(UploadError);
-            expect((error as UploadError).code).toEqual(UploadErrorCode.MISSING_PARAMETERS);
+            ok(error instanceof UploadError);
+            strictEqual((error as UploadError).code, UploadErrorCode.MISSING_PARAMETERS);
         }
 
         try {
             // @ts-expect-error
             await upload.messagePhoto({});
         } catch (error) {
-            expect(error).toBeInstanceOf(UploadError);
-            expect((error as UploadError).code).toEqual(UploadErrorCode.MISSING_PARAMETERS);
+            ok(error instanceof UploadError);
+            strictEqual((error as UploadError).code, UploadErrorCode.MISSING_PARAMETERS);
         }
     });
 
@@ -49,8 +47,8 @@ describe('Uploads', (): void => {
                 }
             });
         } catch (error) {
-            expect(error).toBeInstanceOf(UploadError);
-            expect((error as UploadError).code).toEqual(UploadErrorCode.NO_FILES_TO_UPLOAD);
+            ok(error instanceof UploadError);
+            strictEqual((error as UploadError).code, UploadErrorCode.NO_FILES_TO_UPLOAD);
         }
     });
 
@@ -69,31 +67,28 @@ describe('Uploads', (): void => {
                 }
             });
         } catch (error) {
-            expect(error).toBeInstanceOf(UploadError);
-            expect((error as UploadError).code).toEqual(UploadErrorCode.EXCEEDED_MAX_FILES);
+            ok(error instanceof UploadError);
+            strictEqual((error as UploadError).code, UploadErrorCode.EXCEEDED_MAX_FILES);
         }
     });
 
-    if (TOKEN === undefined) {
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        it('the test is skipped because there is no token', (): void => {});
+    const skip = TOKEN === undefined
+        ? 'not set env TOKEN=<token>'
+        : undefined;
 
-        return;
-    }
-
-    it('should upload image to message from url', async (): Promise<void> => {
+    it('should upload image to message from url', { skip }, async (): Promise<void> => {
         const photo = await upload.messagePhoto({
             source: {
                 value: IMAGE_URL
             }
         });
 
-        expect(photo).toBeInstanceOf(PhotoAttachment);
-        expect(photo.id).toBeGreaterThan(0);
-        expect(photo.ownerId).not.toEqual(0);
+        ok(photo instanceof PhotoAttachment);
+        notStrictEqual(photo.id, 0);
+        notStrictEqual(photo.ownerId, 0);
     });
 
-    it('should upload image to message from buffer', async (): Promise<void> => {
+    it('should upload image to message from buffer', { skip }, async (): Promise<void> => {
         const response = await fetch(IMAGE_URL);
         const buffer = Buffer.from(await response.arrayBuffer());
 
@@ -103,12 +98,12 @@ describe('Uploads', (): void => {
             }
         });
 
-        expect(photo).toBeInstanceOf(PhotoAttachment);
-        expect(photo.id).toBeGreaterThan(0);
-        expect(photo.ownerId).not.toEqual(0);
+        ok(photo instanceof PhotoAttachment);
+        notStrictEqual(photo.id, 0);
+        notStrictEqual(photo.ownerId, 0);
     });
 
-    it('should upload image to message from stream', async (): Promise<void> => {
+    it('should upload image to message from stream', { skip }, async (): Promise<void> => {
         const response = await fetch(IMAGE_URL);
 
         const photo = await upload.messagePhoto({
@@ -119,8 +114,8 @@ describe('Uploads', (): void => {
             }
         });
 
-        expect(photo).toBeInstanceOf(PhotoAttachment);
-        expect(photo.id).toBeGreaterThan(0);
-        expect(photo.ownerId).not.toEqual(0);
+        ok(photo instanceof PhotoAttachment);
+        notStrictEqual(photo.id, 0);
+        notStrictEqual(photo.ownerId, 0);
     });
 });

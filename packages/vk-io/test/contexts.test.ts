@@ -1,3 +1,6 @@
+import { describe, it } from 'node:test';
+import { strictEqual } from 'node:assert';
+
 import {
     VK,
 
@@ -32,20 +35,20 @@ describe('Contexts', (): void => {
             it('should return true when the required types are present', (): void => {
                 const context = getContext();
 
-                expect(context.is(['message'])).toBe(true);
-                expect(context.is(['edit_message'])).toBe(true);
+                strictEqual(context.is(['message']), true);
+                strictEqual(context.is(['edit_message']), true);
 
-                expect(context.is(['new_message', 'text'])).toBe(true);
-                expect(context.is(['message', 'edit_message'])).toBe(true);
+                strictEqual(context.is(['new_message', 'text']), true);
+                strictEqual(context.is(['message', 'edit_message']), true);
             });
 
             it('should return false if the required types are not present', (): void => {
                 const context = getContext();
 
-                expect(context.is(['test'])).toBe(false);
-                expect(context.is(['sub_test'])).toBe(false);
+                strictEqual(context.is(['test']), false);
+                strictEqual(context.is(['sub_test']), false);
 
-                expect(context.is(['test', 'sub_test'])).toBe(false);
+                strictEqual(context.is(['test', 'sub_test']), false);
             });
         });
     });

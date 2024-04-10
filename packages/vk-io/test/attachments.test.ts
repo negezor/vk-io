@@ -1,3 +1,6 @@
+import { describe, it } from 'node:test';
+import { strictEqual, throws } from 'node:assert';
+
 import {
     VK,
     Attachment,
@@ -27,7 +30,7 @@ describe('Attachments', (): void => {
             }
         });
 
-        expect(String(attachment)).toBe('photo1234_5678');
+        strictEqual(String(attachment), 'photo1234_5678');
     });
 
     it('the main class must be equivalent to a string with access_key', (): void => {
@@ -41,31 +44,31 @@ describe('Attachments', (): void => {
             }
         });
 
-        expect(String(attachment)).toBe('photo1234_5678_ACCESS_KEY');
+        strictEqual(String(attachment), 'photo1234_5678_ACCESS_KEY');
     });
 
     describe('the #fromString() should be correct working', (): void => {
         it('should be throw an exception if wrong', (): void => {
-            expect((): Attachment => Attachment.fromString('ascbas_baasd', vk.api)).toThrow();
-            expect((): Attachment => Attachment.fromString('12345/@%$%', vk.api)).toThrow();
-            expect((): Attachment => Attachment.fromString('Incorrect', vk.api)).toThrow();
-            expect((): Attachment => Attachment.fromString('1234_', vk.api)).toThrow();
+            throws((): Attachment => Attachment.fromString('ascbas_baasd', vk.api));
+            throws((): Attachment => Attachment.fromString('12345/@%$%', vk.api));
+            throws((): Attachment => Attachment.fromString('Incorrect', vk.api));
+            throws((): Attachment => Attachment.fromString('1234_', vk.api));
         });
 
         it('should be correct parse', (): void => {
-            expect(Attachment.fromString('photo1234_5678', vk.api)).toMatchObject({
-                type: 'photo',
-                ownerId: 1234,
-                id: 5678,
-                accessKey: undefined
-            });
+            const photo1 = Attachment.fromString('photo1234_5678', vk.api);
 
-            expect(Attachment.fromString('photo1234_5678_ACCESS_KEY', vk.api)).toMatchObject({
-                type: 'photo',
-                ownerId: 1234,
-                id: 5678,
-                accessKey: 'ACCESS_KEY'
-            });
+            strictEqual(photo1.type,  'photo');
+            strictEqual(photo1.ownerId,  1234);
+            strictEqual(photo1.id,  5678);
+            strictEqual(photo1.accessKey,  undefined);
+
+            const photo2 = Attachment.fromString('photo1234_5678_ACCESS_KEY', vk.api);
+
+            strictEqual(photo2.type,  'photo');
+            strictEqual(photo2.ownerId,  1234);
+            strictEqual(photo2.id,  5678);
+            strictEqual(photo2.accessKey,  'ACCESS_KEY');
         });
     });
 
@@ -80,9 +83,9 @@ describe('Attachments', (): void => {
                 }
             });
 
-            expect((): boolean => attachment.equals('ascbas_baasd')).toThrow();
-            expect((): boolean => attachment.equals('inccorect')).toThrow();
-            expect((): boolean => attachment.equals('1234_')).toThrow();
+            throws((): boolean => attachment.equals('ascbas_baasd'));
+            throws((): boolean => attachment.equals('inccorect'));
+            throws((): boolean => attachment.equals('1234_'));
         });
 
         it('should be return false', (): void => {
@@ -95,9 +98,9 @@ describe('Attachments', (): void => {
                 }
             });
 
-            expect(attachment.equals('photo1234_1234')).toBe(false);
+            strictEqual(attachment.equals('photo1234_1234'), false);
 
-            expect(attachment.equals(
+            strictEqual(attachment.equals(
                 new Attachment({
                     api: vk.api,
                     type: 'photo',
@@ -106,9 +109,9 @@ describe('Attachments', (): void => {
                         owner_id: 1234
                     }
                 })
-            )).toBe(false);
+            ), false);
 
-            expect(attachment.equals(
+            strictEqual(attachment.equals(
                 new Attachment({
                     api: vk.api,
                     type: 'photo',
@@ -118,7 +121,7 @@ describe('Attachments', (): void => {
                         access_key: 'ACCESS_KEY'
                     }
                 })
-            )).toBe(false);
+            ), false);
         });
 
         it('should be return true', (): void => {
@@ -131,9 +134,9 @@ describe('Attachments', (): void => {
                 }
             });
 
-            expect(attachment.equals('photo1234_5678')).toBe(true);
+            strictEqual(attachment.equals('photo1234_5678'), true);
 
-            expect(attachment.equals(
+            strictEqual(attachment.equals(
                 new Attachment({
                     api: vk.api,
                     type: 'photo',
@@ -142,9 +145,9 @@ describe('Attachments', (): void => {
                         owner_id: 1234
                     }
                 })
-            )).toBe(true);
+            ), true);
 
-            expect(attachment.equals(
+            strictEqual(attachment.equals(
                 new Attachment({
                     api: vk.api,
                     type: 'photo',
@@ -154,7 +157,7 @@ describe('Attachments', (): void => {
                         access_key: 'ACCESS_KEY'
                     }
                 })
-            )).toBe(true);
+            ), true);
         });
     });
 
@@ -168,7 +171,7 @@ describe('Attachments', (): void => {
                 }
             });
 
-            expect(String(attachment)).toBe('wall1234_4567');
+            strictEqual(String(attachment), 'wall1234_4567');
         });
 
         it('photo', (): void => {
@@ -180,7 +183,7 @@ describe('Attachments', (): void => {
                 }
             });
 
-            expect(String(attachment)).toBe('photo1234_4567');
+            strictEqual(String(attachment), 'photo1234_4567');
         });
 
         it('audio', (): void => {
@@ -192,7 +195,7 @@ describe('Attachments', (): void => {
                 }
             });
 
-            expect(String(attachment)).toBe('audio1234_4567');
+            strictEqual(String(attachment), 'audio1234_4567');
         });
 
         it('story', (): void => {
@@ -204,7 +207,7 @@ describe('Attachments', (): void => {
                 }
             });
 
-            expect(String(attachment)).toBe('story1234_4567');
+            strictEqual(String(attachment), 'story1234_4567');
         });
 
         it('video', (): void => {
@@ -216,7 +219,7 @@ describe('Attachments', (): void => {
                 }
             });
 
-            expect(String(attachment)).toBe('video1234_4567');
+            strictEqual(String(attachment), 'video1234_4567');
         });
 
         it('market', (): void => {
@@ -228,7 +231,7 @@ describe('Attachments', (): void => {
                 }
             });
 
-            expect(String(attachment)).toBe('market1234_4567');
+            strictEqual(String(attachment), 'market1234_4567');
         });
 
         it('document', (): void => {
@@ -240,7 +243,7 @@ describe('Attachments', (): void => {
                 }
             });
 
-            expect(String(attachment)).toBe('doc1234_4567');
+            strictEqual(String(attachment), 'doc1234_4567');
         });
 
         it('market album', (): void => {
@@ -252,7 +255,7 @@ describe('Attachments', (): void => {
                 }
             });
 
-            expect(String(attachment)).toBe('market_album1234_4567');
+            strictEqual(String(attachment), 'market_album1234_4567');
         });
     });
 });

@@ -1,5 +1,5 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
-import { jest } from '@jest/globals';
+import { describe, it } from 'node:test';
+import { deepStrictEqual } from 'node:assert';
 
 import {
     IResolvedTargetResource,
@@ -82,22 +82,14 @@ const dataset: [string | number, IResolvedTargetResource | IResolvedOwnerResourc
 ];
 
 describe('resolveResource', (): void => {
-    if (TOKEN === undefined) {
-        it('the test is skipped because there is no token', (): void => {});
-
-        return;
-    }
-
     for (const [resource, result] of dataset) {
-        it(`should resolve correctly "${resource}"`, async (): Promise<void> => {
-            jest.setTimeout(60_000);
-
+        it(`should resolve correctly "${resource}"`, { timeout: 60_000, skip: TOKEN === undefined ? 'not set env TOKEN=<token>' : undefined }, async (): Promise<void> => {
             const resolvedResource = await resolveResource({
                 resource,
                 api: vk.api
             });
 
-            expect(resolvedResource).toMatchObject(result);
+            deepStrictEqual(resolvedResource, result);
         });
     }
 });
