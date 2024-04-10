@@ -1,7 +1,7 @@
-import { Attachment, AttachmentFactoryOptions } from './attachment';
+import { Attachment, type AttachmentFactoryOptions } from './attachment';
 
 import { AttachmentType } from '../../utils/constants';
-import { PhotoAttachment, IPhotoAttachmentPayload } from './photo';
+import { PhotoAttachment, type IPhotoAttachmentPayload } from './photo';
 
 export interface IMarketAlbumAttachmentPayload {
     id: number;

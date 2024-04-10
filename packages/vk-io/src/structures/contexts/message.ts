@@ -1,12 +1,12 @@
 /* eslint-disable max-classes-per-file */
-import { Context, ContextFactoryOptions, ContextDefaultState } from './context';
+import { Context, type ContextFactoryOptions, type ContextDefaultState } from './context';
 
-import { Params } from '../../api';
+import type { Params } from '../../api';
 
 import { transformMessage } from './helpers/transform-message';
-import { MessageForwardsCollection, Attachmentable, IAllAttachmentable } from '../shared';
+import { MessageForwardsCollection, Attachmentable, type IAllAttachmentable } from '../shared';
 
-import { Attachment, ExternalAttachment, transformAttachments } from '../attachments';
+import { type Attachment, type ExternalAttachment, transformAttachments } from '../attachments';
 
 import {
     unescapeHTML,
@@ -19,13 +19,13 @@ import {
     UpdateSource,
     MessageSource,
     PEER_CHAT_ID_OFFSET,
-    AttachmentType,
+    type AttachmentType,
     kSerializeData,
-    AttachmentTypeString,
+    type AttachmentTypeString,
 } from '../../utils/constants';
-import { AllowArray } from '../../types';
-import { KeyboardBuilder } from '../keyboard';
-import { IUploadSourceMedia } from '../../upload';
+import type { AllowArray } from '../../types';
+import type { KeyboardBuilder } from '../keyboard';
+import type { IUploadSourceMedia } from '../../upload';
 
 export type MessageContextType = 'message';
 
@@ -206,7 +206,7 @@ class MessageContext<S = ContextDefaultState>
             })
             : await this.api.messages.getByConversationMessageId({
                 peer_id: this.peerId,
-                conversation_message_ids: this.conversationMessageId!,
+                conversation_message_ids: this.conversationMessageId,
             });
 
         const [message] = items;
@@ -542,7 +542,7 @@ class MessageContext<S = ContextDefaultState>
                     attachment.canBeAttached
                 )),
             ),
-            message: this.text!,
+            message: this.text,
             keep_forward_messages: 1,
             keep_snippets: 1,
 
@@ -766,7 +766,7 @@ class MessageContext<S = ContextDefaultState>
             ...target,
         });
 
-        return Boolean(messageIds[isConversation ? this.conversationMessageId! : this.id]);
+        return Boolean(messageIds[isConversation ? this.conversationMessageId as number : this.id]);
     }
 
     /**

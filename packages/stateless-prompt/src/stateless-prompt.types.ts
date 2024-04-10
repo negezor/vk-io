@@ -1,4 +1,4 @@
-import { HandlerMiddleware } from './types';
+import type { HandlerMiddleware } from './types';
 
 export interface IStatelessPromptManagerOptions {
     /**

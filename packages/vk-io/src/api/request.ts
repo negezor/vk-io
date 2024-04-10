@@ -2,10 +2,10 @@ import { AbortController } from 'abort-controller';
 
 import { inspectable } from 'inspectable';
 
-import { API } from './api';
+import type { API } from './api';
 import { fetch } from '../utils/fetch';
 import { getExecuteMethod } from '../utils/helpers';
-import { ICallbackServiceValidate } from '../utils/callback-service';
+import type { ICallbackServiceValidate } from '../utils/callback-service';
 
 export interface IAPIRequestOptions {
     api: API;

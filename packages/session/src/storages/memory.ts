@@ -1,4 +1,4 @@
-import { ISessionStorage } from './storage';
+import type { ISessionStorage } from './storage';
 
 export interface IMemoryStoreLike<K, V> {
     get(key: K): V | undefined;

@@ -1,4 +1,4 @@
-import { Context, ContextFactoryOptions, ContextDefaultState } from './context';
+import { Context, type ContextFactoryOptions, type ContextDefaultState } from './context';
 
 import { pickProperties } from '../../utils/helpers';
 import { kSerializeData } from '../../utils/constants';
@@ -48,6 +48,7 @@ export class DonutWithdrawContext<S = ContextDefaultState>
      * Returns the amount
      */
     public get amount(): number {
+        // biome-ignore lint/style/noNonNullAssertion: always present
         return this.payload.amount!;
     }
 
@@ -55,14 +56,15 @@ export class DonutWithdrawContext<S = ContextDefaultState>
      * Returns the amount without fee
      */
     public get amountWithoutFee(): number {
+        // biome-ignore lint/style/noNonNullAssertion: always present
         return this.payload.amount_without_fee!;
     }
 
     /**
      * Returns the reason for the error
      */
-    public get reason(): string {
-        return this.payload.reason!;
+    public get reason(): string | undefined {
+        return this.payload.reason;
     }
 
     /**

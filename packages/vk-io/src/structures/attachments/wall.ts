@@ -1,5 +1,5 @@
-import { Attachment, AttachmentFactoryOptions } from './attachment';
-import { ExternalAttachment } from './external';
+import { Attachment, type AttachmentFactoryOptions } from './attachment';
+import type { ExternalAttachment } from './external';
 import { Attachmentable } from '../shared';
 
 import { transformAttachments } from './helpers';
@@ -83,7 +83,7 @@ export interface IWallAttachmentPayload {
 
 export type WallAttachmentOptions =
     AttachmentFactoryOptions<IWallAttachmentPayload>;
-
+// biome-ignore lint/suspicious/noUnsafeDeclarationMerging: apply mixins
 class WallAttachment extends Attachment<IWallAttachmentPayload, AttachmentType.WALL | 'wall'> {
     protected [kAttachments]!: (Attachment | ExternalAttachment)[];
 
@@ -152,7 +152,7 @@ class WallAttachment extends Attachment<IWallAttachmentPayload, AttachmentType.W
             return undefined;
         }
 
-        return Boolean(this.payload.reposts!.user_reposted);
+        return Boolean(this.payload.reposts?.user_reposted);
     }
 
     /**
@@ -163,7 +163,7 @@ class WallAttachment extends Attachment<IWallAttachmentPayload, AttachmentType.W
             return undefined;
         }
 
-        return Boolean(this.payload.likes!.user_likes);
+        return Boolean(this.payload.likes?.user_likes);
     }
 
     /**
@@ -174,7 +174,7 @@ class WallAttachment extends Attachment<IWallAttachmentPayload, AttachmentType.W
             return undefined;
         }
 
-        return Boolean(this.payload.comments!.can_post);
+        return Boolean(this.payload.comments?.can_post);
     }
 
     /**
@@ -185,7 +185,7 @@ class WallAttachment extends Attachment<IWallAttachmentPayload, AttachmentType.W
             return undefined;
         }
 
-        return Boolean(this.payload.comments!.groups_can_post);
+        return Boolean(this.payload.comments?.groups_can_post);
     }
 
     /**
@@ -203,7 +203,7 @@ class WallAttachment extends Attachment<IWallAttachmentPayload, AttachmentType.W
             return undefined;
         }
 
-        return Boolean(this.payload.comments!.can_close);
+        return Boolean(this.payload.comments?.can_close);
     }
 
     /**
@@ -214,7 +214,7 @@ class WallAttachment extends Attachment<IWallAttachmentPayload, AttachmentType.W
             return undefined;
         }
 
-        return Boolean(this.payload.comments!.can_open);
+        return Boolean(this.payload.comments?.can_open);
     }
 
     /**
@@ -225,7 +225,7 @@ class WallAttachment extends Attachment<IWallAttachmentPayload, AttachmentType.W
             return undefined;
         }
 
-        return Boolean(this.payload.likes!.can_like);
+        return Boolean(this.payload.likes?.can_like);
     }
 
     /**
@@ -236,7 +236,7 @@ class WallAttachment extends Attachment<IWallAttachmentPayload, AttachmentType.W
             return undefined;
         }
 
-        return Boolean(this.payload.likes!.can_publish);
+        return Boolean(this.payload.likes?.can_publish);
     }
 
     /**
@@ -306,6 +306,7 @@ class WallAttachment extends Attachment<IWallAttachmentPayload, AttachmentType.W
     }
 
     public get ownerId(): number {
+        // biome-ignore lint/style/noNonNullAssertion: one of property should be present
         return this.payload.owner_id || this.payload.to_id!;
     }
 

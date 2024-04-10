@@ -2,8 +2,8 @@ import { describe, it } from 'node:test';
 import { deepStrictEqual } from 'node:assert';
 
 import {
-    IResolvedTargetResource,
-    IResolvedOwnerResource,
+    type IResolvedTargetResource,
+    type IResolvedOwnerResource,
 
     VK,
 
@@ -12,6 +12,7 @@ import {
 
 const { TOKEN } = process.env;
 
+// biome-ignore lint/style/noNonNullAssertion: to be honest, they're just tests
 const vk = new VK({ token: TOKEN! });
 
 const durovUser: IResolvedTargetResource = {

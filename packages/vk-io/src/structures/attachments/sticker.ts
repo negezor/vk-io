@@ -1,4 +1,4 @@
-import { ExternalAttachment, ExternalAttachmentFactoryOptions } from './external';
+import { ExternalAttachment, type ExternalAttachmentFactoryOptions } from './external';
 
 import { pickProperties } from '../../utils/helpers';
 import { AttachmentType, kSerializeData } from '../../utils/constants';

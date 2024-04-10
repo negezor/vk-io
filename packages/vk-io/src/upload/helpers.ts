@@ -1,5 +1,5 @@
 import { Stream, PassThrough } from 'stream';
-import { UploadNormalizedSourceOptions, UploadAllowedSource } from './types';
+import type { UploadNormalizedSourceOptions, UploadAllowedSource } from './types';
 
 /**
  * Check object is stream

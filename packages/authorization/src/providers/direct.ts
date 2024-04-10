@@ -2,24 +2,24 @@ import createDebug from 'debug';
 import { load as cheerioLoad } from 'cheerio';
 import { AbortController } from 'abort-controller';
 
-import { CaptchaType, ICallbackServiceValidate, CallbackService } from 'vk-io';
+import { CaptchaType, type ICallbackServiceValidate, type CallbackService } from 'vk-io';
 
-import { Agent } from 'https';
+import type { Agent } from 'https';
 
 import { AuthorizationError } from '../errors';
 import { DESKTOP_USER_AGENT, AuthErrorCode } from '../constants';
 import {
-    CookieJar,
+    type CookieJar,
 
-    FetchWrapper,
-    RequestInfo,
-    RequestInit,
-    Response,
+    type FetchWrapper,
+    type RequestInfo,
+    type RequestInit,
+    type Response,
 
     fetchCookieFollowRedirectsDecorator,
 } from '../fetch-cookie';
 import {
-    CheerioStatic,
+    type CheerioStatic,
 
     getFullURL,
     parseFormField,
@@ -169,6 +169,13 @@ export class DirectAuthorization {
             apiVersion,
         } = this.options;
 
+        if (!password) {
+            throw new AuthorizationError({
+                message: 'Password is missing!',
+                code: AUTHORIZATION_FAILED,
+            });
+        }
+
         const params = new URLSearchParams({
             ...query,
             username: String(login || phone),
@@ -177,7 +184,7 @@ export class DirectAuthorization {
             '2fa_supported': String(Number(this.options.callbackService.hasTwoFactorHandler)),
             v: apiVersion,
             client_id: clientId,
-            password: password!,
+            password: password,
             scope: String(scope),
         });
 
@@ -209,7 +216,7 @@ export class DirectAuthorization {
         this.fetchCookie = fetchCookieFollowRedirectsDecorator();
 
         let response = await this.getPermissionsPage();
-        let text;
+        let text: any;
 
         const isProcessed = true;
 
@@ -421,7 +428,7 @@ export class DirectAuthorization {
 
         const { login, phone } = this.options;
 
-        let number;
+        let number: string | number;
         if (phone !== undefined) {
             number = phone;
         } else if (login !== undefined && !login.includes('@')) {

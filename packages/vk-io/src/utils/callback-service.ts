@@ -1,7 +1,7 @@
-import { APIRequest } from '../api/request';
+import type { APIRequest } from '../api/request';
 
 import { VKError, SharedErrorCode } from '../errors';
-import { CaptchaType } from './constants';
+import type { CaptchaType } from './constants';
 
 const {
     MISSING_CAPTCHA_HANDLER,

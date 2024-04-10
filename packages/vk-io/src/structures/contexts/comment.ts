@@ -1,4 +1,4 @@
-import { Context, ContextFactoryOptions, ContextDefaultState } from './context';
+import { Context, type ContextFactoryOptions, type ContextDefaultState } from './context';
 
 import { VKError } from '../../errors';
 
@@ -164,14 +164,26 @@ class CommentContext<S = ContextDefaultState>
      * Checks if the user wrote a message
      */
     public get isUser(): boolean {
-        return this.fromId! > 0;
+        const { fromId } = this;
+
+        if (!fromId) {
+            return false;
+        }
+
+        return fromId > 0;
     }
 
     /**
      * Checks if the group wrote a message
      */
     public get isGroup(): boolean {
-        return this.fromId! < 0;
+        const { fromId } = this;
+
+        if (!fromId) {
+            return false;
+        }
+
+        return fromId < 0;
     }
 
     /**
@@ -218,6 +230,7 @@ class CommentContext<S = ContextDefaultState>
     public get objectId(): number {
         const { payload } = this;
 
+        // biome-ignore lint/style/noNonNullAssertion: one of properties is present
         return (
             payload.photo_id
             || payload.video_id
@@ -233,6 +246,7 @@ class CommentContext<S = ContextDefaultState>
     public get ownerId(): number {
         const { payload } = this;
 
+        // biome-ignore lint/style/noNonNullAssertion: one of properties is present
         return (
             payload.owner_id
             || payload.photo_owner_id
@@ -288,6 +302,7 @@ class CommentContext<S = ContextDefaultState>
 
                 comment_id: this.id,
                 topic_id: this.objectId,
+                // biome-ignore lint/style/noNonNullAssertion: comment context allowed only for group
                 group_id: this.$groupId!,
             });
         }
@@ -336,6 +351,7 @@ class CommentContext<S = ContextDefaultState>
             return this.api.board.deleteComment({
                 comment_id: this.id,
                 topic_id: this.objectId,
+                // biome-ignore lint/style/noNonNullAssertion: comment context allowed only for group
                 group_id: this.$groupId!,
             });
         }

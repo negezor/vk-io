@@ -1,5 +1,5 @@
-import { IContext } from '../types';
-import { SceneRepository } from '../scene-manager.types';
+import type { IContext } from '../types';
+import type { SceneRepository } from '../scene-manager.types';
 
 export interface ISceneContextOptions {
     context: IContext;

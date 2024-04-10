@@ -2,16 +2,16 @@ import createDebug from 'debug';
 
 import { APIWorker } from './worker';
 
-import { APIRequest } from '../request';
+import type { APIRequest } from '../request';
 import { delay } from '../../utils/helpers';
 import {
-    IExecuteErrorOptions,
+    type IExecuteErrorOptions,
 
     APIError,
     ExecuteError,
 
     APIErrorCode,
-    IAPIErrorOptions,
+    type IAPIErrorOptions,
 } from '../../errors';
 
 import { CaptchaType, MINIMUM_TIME_INTERVAL_API } from '../../utils/constants';
@@ -28,7 +28,7 @@ export class SequentialWorker extends APIWorker {
 
         debug(`${method} -->`);
 
-        let response;
+        let response: any;
         try {
             response = await request.make();
         } catch (error) {
@@ -119,7 +119,9 @@ export class SequentialWorker extends APIWorker {
 
             const { key, validate } = await this.api.options.callbackService.processingCaptcha({
                 type: CaptchaType.API,
+                // biome-ignore lint/style/noNonNullAssertion: Captcha error always has captcha img
                 src: error.captchaImg!,
+                // biome-ignore lint/style/noNonNullAssertion: Captcha error always has captcha sid
                 sid: captchaSid!,
                 request,
             });

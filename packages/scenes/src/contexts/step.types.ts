@@ -1,4 +1,4 @@
-import { IStepContext, StepSceneHandler } from '../scenes/step.types';
+import type { IStepContext, StepSceneHandler } from '../scenes/step.types';
 
 export interface IStepContextOptions<S extends Record<string, unknown> = Record<string, any>> {
     context: IStepContext<S>;

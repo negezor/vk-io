@@ -1,7 +1,7 @@
-import { IAPIOptions } from './api';
-import { IUpdatesOptions } from './updates';
-import { IUploadOptions } from './upload';
-import { CallbackService } from './utils/callback-service';
+import type { IAPIOptions } from './api';
+import type { IUpdatesOptions } from './updates';
+import type { IUploadOptions } from './upload';
+import type { CallbackService } from './utils/callback-service';
 
 export type AllowArray<T> = T | T[];
 

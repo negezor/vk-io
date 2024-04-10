@@ -1,6 +1,6 @@
-import { Context } from 'vk-io';
+import type { Context } from 'vk-io';
 
-import { ISessionStorage } from './storages';
+import type { ISessionStorage } from './storages';
 
 export type Middleware<T> = (context: T, next: () => Promise<void>) => unknown;
 

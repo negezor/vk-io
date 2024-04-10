@@ -1,12 +1,12 @@
-import { ISessionContext } from '../types';
+import type { ISessionContext } from '../types';
 import {
-    ISceneContextOptions,
-    ISceneContextEnterOptions,
-    ISceneContextLeaveOptions,
+    type ISceneContextOptions,
+    type ISceneContextEnterOptions,
+    type ISceneContextLeaveOptions,
 
     LastAction,
 } from './scene.types';
-import { IScene } from '../scenes';
+import type { IScene } from '../scenes';
 
 export class SceneContext<S extends Record<string, unknown>> {
     /**
@@ -167,6 +167,7 @@ export class SceneContext<S extends Record<string, unknown>> {
      * Reset state/session
      */
     public reset(): void {
+        // biome-ignore lint/performance/noDelete: we have to remove the property because other storage can find it in the enumerations
         delete this.context.session.__scene;
 
         this.updateSession();

@@ -1,5 +1,5 @@
-import { Params } from '../../api';
-import { Context, ContextFactoryOptions, ContextDefaultState } from './context';
+import type { Params } from '../../api';
+import { Context, type ContextFactoryOptions, type ContextDefaultState } from './context';
 
 import { VKError } from '../../errors';
 
@@ -103,7 +103,13 @@ export class GroupUserContext<S = ContextDefaultState>
      * Returns the reason name for the ban
      */
     public get reasonName(): string | undefined {
-        return reasonNames.get(this.reasonId!);
+        const { reasonId } = this;
+
+        if (!reasonId) {
+            return undefined
+        }
+
+        return reasonNames.get(reasonId);
     }
 
     /**
@@ -134,6 +140,7 @@ export class GroupUserContext<S = ContextDefaultState>
         return this.api.groups.ban({
             ...params,
 
+            // biome-ignore lint/style/noNonNullAssertion: this event only for group
             group_id: this.$groupId!,
             user_id: this.userId,
         });
@@ -151,6 +158,7 @@ export class GroupUserContext<S = ContextDefaultState>
         }
 
         return this.api.groups.unban({
+            // biome-ignore lint/style/noNonNullAssertion: this event only for group
             group_id: this.$groupId!,
             user_id: this.userId,
         });

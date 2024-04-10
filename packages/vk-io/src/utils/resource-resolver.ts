@@ -1,4 +1,4 @@
-import { API } from '../api';
+import type { API } from '../api';
 import { ResourceError } from '../errors';
 
 import { ResourceType, ResourceErrorCode } from './constants';
@@ -42,12 +42,14 @@ const transformNumberResourceToTarget = (resource: number): string => (
 );
 
 const transformMentionResourceToTarget = (resource: string): string => {
+    // biome-ignore lint/style/noNonNullAssertion: we already check by test pattern
     const { 1: mentionResource } = resource.match(systemMentionRe)!;
 
     return mentionResource;
 };
 
 const resolveTargetResouce = (resource: string): IResolvedTargetResource => {
+    // biome-ignore lint/style/noNonNullAssertion: we already check by test pattern
     const { 1: rawType, 2: rawId } = resource.match(parseTargetResourceRe)! as [
         never,
         IResolvedTargetResource['type'],
@@ -61,6 +63,7 @@ const resolveTargetResouce = (resource: string): IResolvedTargetResource => {
 };
 
 const resolveOwnerResource = (resource: string): IResolvedOwnerResource => {
+    // biome-ignore lint/style/noNonNullAssertion: we already check by test pattern
     const { 1: rawType, 2: rawOwnerId, 3: rawId } = resource.match(parseOwnerResourceRe)!;
 
     return {

@@ -1,11 +1,11 @@
 import createDebug from 'debug';
 import { AbortController } from 'abort-controller';
 
-import { API } from '../../api';
+import type { API } from '../../api';
 import { fetch } from '../../utils/fetch';
 import { delay } from '../../utils/helpers';
 import { UpdatesError, UpdatesErrorCode } from '../../errors';
-import { IUpdatesOptions } from '../updates';
+import type { IUpdatesOptions } from '../updates';
 
 const { NEED_RESTART, POLLING_REQUEST_FAILED } = UpdatesErrorCode;
 
@@ -71,8 +71,8 @@ export class PollingTransport {
                     lp_version: POLLING_VERSION,
                 });
 
-            if (this.ts === 0) {
-                this.ts = ts!;
+            if (this.ts === 0 && ts) {
+                this.ts = ts;
             }
 
             const pollingURL = isGroup

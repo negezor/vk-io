@@ -1,7 +1,7 @@
 import { inspectable } from 'inspectable';
 
-import { API } from '../../api';
-import { kSerializeData, AttachmentType } from '../../utils/constants';
+import type { API } from '../../api';
+import { kSerializeData, type AttachmentType } from '../../utils/constants';
 
 /**
  * Parse attachments
@@ -74,6 +74,7 @@ export class Attachment<P = object, Type extends string | AttachmentType = strin
             throw new TypeError('Incorrect attachment');
         }
 
+        // biome-ignore lint/style/noNonNullAssertion: we already check by test pattern
         const [, type, ownerId, id, accessKey] = attachment.match(parseAttachmentRe)!;
 
         return new Attachment({

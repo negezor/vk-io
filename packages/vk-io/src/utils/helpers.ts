@@ -138,6 +138,7 @@ export const applyMixins = (derivedCtor: any, baseCtors: any[]): void => {
             Object.defineProperty(
                 derivedCtor.prototype,
                 name,
+                // biome-ignore lint/style/noNonNullAssertion: because offical implementation of mixins does that
                 Object.getOwnPropertyDescriptor(baseCtor.prototype, name)!,
             );
         }

@@ -1,12 +1,12 @@
 import { KeyboardBuilder } from './builder';
 import {
-    IKeyboardProxyButton,
-    IKeyboardTextButtonOptions,
-    IKeyboardURLButtonOptions,
-    IKeyboardLocationRequestButtonOptions,
-    IKeyboardVKPayButtonOptions,
-    IKeyboardApplicationButtonOptions,
-    IKeyboardCallbackButtonOptions,
+    type IKeyboardProxyButton,
+    type IKeyboardTextButtonOptions,
+    type IKeyboardURLButtonOptions,
+    type IKeyboardLocationRequestButtonOptions,
+    type IKeyboardVKPayButtonOptions,
+    type IKeyboardApplicationButtonOptions,
+    type IKeyboardCallbackButtonOptions,
 
     ButtonColor,
 } from './types';

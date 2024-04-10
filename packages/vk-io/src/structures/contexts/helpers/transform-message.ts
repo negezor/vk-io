@@ -1,5 +1,5 @@
 // import { MessagesMessage } from '../api/schemas/objects';
-import { IMessageContextPayload, MessageContextPayloadEventType } from '../message';
+import type { IMessageContextPayload, MessageContextPayloadEventType } from '../message';
 
 import { AttachmentType } from '../../../utils/constants';
 

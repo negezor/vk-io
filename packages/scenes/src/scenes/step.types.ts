@@ -1,5 +1,5 @@
-import { IContext } from '../types';
-import { SceneContext, StepSceneContext } from '../contexts';
+import type { IContext } from '../types';
+import type { SceneContext, StepSceneContext } from '../contexts';
 
 export interface IStepContext<S extends Record<string, unknown>> extends IContext {
     scene: SceneContext<S> & {

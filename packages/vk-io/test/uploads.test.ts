@@ -14,6 +14,7 @@ import { fetch } from '../src/utils/fetch';
 
 const { TOKEN } = process.env;
 
+// biome-ignore lint/style/noNonNullAssertion: to be honest, they're just tests
 const vk = new VK({ token: TOKEN! });
 
 const IMAGE_URL = 'https://picsum.photos/200/300/?image=1';
@@ -108,6 +109,7 @@ describe('Uploads', { timeout: 30_000 }, (): void => {
 
         const photo = await upload.messagePhoto({
             source: {
+                // biome-ignore lint/style/noNonNullAssertion: testing...
                 value: response.body!,
                 // @ts-expect-error
                 contentLength: response.headers.get('content-length')

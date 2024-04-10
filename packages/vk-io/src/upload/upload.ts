@@ -9,11 +9,11 @@ import { createReadStream, promises as fs } from 'fs';
 import { globalAgent } from 'https';
 import { Readable } from 'stream';
 
-import { API } from '../api';
+import type { API } from '../api';
 import { fetch } from '../utils/fetch';
 import { UploadError, UploadErrorCode } from '../errors';
 import { DefaultExtension, DefaultContentType } from '../utils/constants';
-import {
+import type {
     IUploadOptions,
     IUploadParams,
     IUploadSourceMedia,
@@ -452,7 +452,7 @@ export class Upload {
 
         const video = await this.upload(save.upload_url, {
             formData,
-            timeout: source.timeout!,
+            timeout: source.timeout,
             forceBuffer: !knownLength,
         });
 
@@ -870,9 +870,11 @@ export class Upload {
 
         const source = normalizeSource(params.source);
 
-        if (source.uploadUrl !== undefined) {
+        const { uploadUrl: sourceUploadUrl } = source;
+
+        if (sourceUploadUrl !== undefined) {
             getServer = (): Promise<{ upload_url: string }> => Promise.resolve({
-                upload_url: source.uploadUrl!,
+                upload_url: sourceUploadUrl,
             });
         }
 
@@ -909,7 +911,7 @@ export class Upload {
 
         const uploaded = await this.upload(url, {
             formData,
-            timeout: source.timeout!,
+            timeout: source.timeout,
             forceBuffer: !knownLength,
         });
 
@@ -954,6 +956,7 @@ export class Upload {
                 if (isURL.test(value)) {
                     const response = await fetch(value);
 
+                    // biome-ignore lint/style/noNonNullAssertion: i din't see body null
                     value = response.body!;
 
                     const length = response.headers.get('content-length');
@@ -1028,7 +1031,7 @@ export class Upload {
      */
     async upload(url: URL | string, { formData, timeout, forceBuffer }: {
         formData: FormData;
-        timeout: number;
+        timeout: number | undefined;
         forceBuffer: boolean;
     }): Promise<any> {
         const { agent, uploadTimeout } = this.options;

@@ -1,7 +1,7 @@
-import { Context, ContextFactoryOptions, ContextDefaultState } from './context';
+import { Context, type ContextFactoryOptions, type ContextDefaultState } from './context';
 
 import { Attachmentable } from '../shared/attachmentable';
-import { PhotoAttachment, IPhotoAttachmentPayload } from '../attachments';
+import { PhotoAttachment, type IPhotoAttachmentPayload } from '../attachments';
 
 import { kSerializeData } from '../../utils/constants';
 import { pickProperties, applyMixins } from '../../utils/helpers';
@@ -44,7 +44,7 @@ class GroupUpdateContext<S = ContextDefaultState>
         this.attachments = options.updateType === 'group_change_photo'
             ? [new PhotoAttachment({
                 api: this.api,
-                payload: this.payload.photo!,
+                payload: this.payload.photo as IPhotoAttachmentPayload,
             })]
             : [];
     }
@@ -123,4 +123,5 @@ class GroupUpdateContext<S = ContextDefaultState>
 interface GroupUpdateContext extends Attachmentable {}
 applyMixins(GroupUpdateContext, [Attachmentable]);
 
+// biome-ignore lint/style/useExportType: false positive
 export { GroupUpdateContext };

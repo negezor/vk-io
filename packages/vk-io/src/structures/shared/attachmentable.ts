@@ -1,5 +1,5 @@
 /* eslint-disable */
-import {
+import type {
     Attachment,
     ExternalAttachment,
 
@@ -20,7 +20,7 @@ import {
     WallAttachment
 } from '../attachments';
 
-import { AttachmentType, AttachmentTypeString } from '../../utils/constants';
+import type { AttachmentType, AttachmentTypeString } from '../../utils/constants';
 
 export class Attachmentable {
     public attachments!: (Attachment | ExternalAttachment)[];

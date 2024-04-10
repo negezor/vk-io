@@ -105,7 +105,7 @@ export const fetchCookieFollowRedirectsDecorator = (jar?: CookieJar): FetchWrapp
                 throw new Error('Location header missing');
             }
 
-            let follow;
+            let follow: RequestInit['follow'];
             if (options.follow) {
                 follow = options.follow - 1;
             }

@@ -1,6 +1,6 @@
 import { MemoryStorage } from './storages';
 
-import {
+import type {
     IContext,
     ISessionContext,
     ISessionManagerOptions,

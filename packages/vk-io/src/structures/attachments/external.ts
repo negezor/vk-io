@@ -1,9 +1,9 @@
 import { inspectable } from 'inspectable';
 
-import { API } from '../../api';
-import { IAttachmentOptions, AttachmentFactoryOptions } from './attachment';
+import type { API } from '../../api';
+import type { IAttachmentOptions, AttachmentFactoryOptions } from './attachment';
 
-import { kSerializeData, AttachmentType } from '../../utils/constants';
+import { kSerializeData, type AttachmentType } from '../../utils/constants';
 
 export type IExternalAttachmentOptions<P, Type extends string = string> =
 IAttachmentOptions<P, Type>;

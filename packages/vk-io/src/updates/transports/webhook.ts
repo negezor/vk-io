@@ -1,19 +1,19 @@
 import createDebug from 'debug';
 
-import { TlsOptions } from 'tls';
-import { Server as HTTPSServer, createServer as createHttpsServer } from 'https';
+import type { TlsOptions } from 'tls';
+import { type Server as HTTPSServer, createServer as createHttpsServer } from 'https';
 import {
-    Server as HttpServer,
-    IncomingMessage,
-    ServerResponse,
+    type Server as HttpServer,
+    type IncomingMessage,
+    type ServerResponse,
 
     createServer as createHttpServer,
 } from 'http';
 import { promisify } from 'util';
 
-import { API } from '../../api';
+import type { API } from '../../api';
 import { parseRequestJSON } from '../helpers';
-import { IUpdatesOptions } from '../updates';
+import type { IUpdatesOptions } from '../updates';
 
 const debug = createDebug('vk-io:updates');
 
@@ -145,18 +145,18 @@ export class WebhookTransport {
         };
 
         const checkIsNotValidPath = path !== undefined
-            ? (requestPath: string): boolean => requestPath !== path
+            ? (requestPath: string | undefined): boolean => requestPath !== path
             : (): boolean => false;
 
         return async (req, res, next) => {
-            if (req.method !== 'POST' || checkIsNotValidPath(req.url!)) {
+            if (req.method !== 'POST' || checkIsNotValidPath(req.url)) {
                 next?.();
 
                 return;
             }
             const reqBody = (req as typeof req & { body: string | Record<string, any>; }).body;
 
-            let update;
+            let update: any;
             try {
                 update = typeof reqBody !== 'object'
                     ? await parseRequestJSON(req)

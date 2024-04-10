@@ -1,8 +1,8 @@
 import createDebug from 'debug';
 
-import { API, Objects } from '../api';
+import type { API, Objects } from '../api';
 import {
-    APIError,
+    type APIError,
     CollectError,
 
     APIErrorCode,
@@ -52,7 +52,7 @@ export async function* createCollectIterator<T>({
     params: rawParams = {},
 
     countPerRequest,
-    maxCount = Infinity,
+    maxCount = Number.POSITIVE_INFINITY,
 
     retryLimit = 3,
     parallelRequests = 25,
@@ -70,7 +70,7 @@ export async function* createCollectIterator<T>({
     const code = getExecuteCode({ method, params });
 
     const {
-        count: desiredCount = Infinity,
+        count: desiredCount = Number.POSITIVE_INFINITY,
         offset: ignoredOffset = 0,
     } = rawParams;
 
@@ -88,7 +88,7 @@ export async function* createCollectIterator<T>({
     while (true) {
         const firstTime = received === 0;
 
-        if (!firstTime && total! <= received) {
+        if (!firstTime && total && total <= received) {
             break;
         }
 

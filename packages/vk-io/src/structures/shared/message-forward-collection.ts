@@ -1,9 +1,9 @@
 /* eslint-disable max-classes-per-file */
-import { MessageContext } from '../contexts/message';
-import { ContextDefaultState } from '../contexts/context';
-import { Attachment, ExternalAttachment } from '../attachments';
-import { AttachmentTypeString } from '../../utils/constants';
-import { Attachmentable } from './attachmentable';
+import type { MessageContext } from '../contexts/message';
+import type { ContextDefaultState } from '../contexts/context';
+import type { Attachment, ExternalAttachment } from '../attachments';
+import type { AttachmentTypeString } from '../../utils/constants';
+import type { Attachmentable } from './attachmentable';
 import { applyMixins } from '../../utils/helpers';
 
 const getForwards = <S = ContextDefaultState>(rootForwards: MessageContext<S>[]): MessageContext<S>[] => {

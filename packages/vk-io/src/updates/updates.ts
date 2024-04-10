@@ -1,14 +1,14 @@
 import createDebug from 'debug';
 import { inspectable } from 'inspectable';
-import { Middleware, compose, noopNext } from 'middleware-io';
+import { type Middleware, compose, noopNext } from 'middleware-io';
 
-import { Agent, globalAgent } from 'https';
+import { type Agent, globalAgent } from 'https';
 
 import {
     Composer,
-    ContextDefaultState,
+    type ContextDefaultState,
 
-    Context,
+    type Context,
     UnsupportedEventContext,
     VoteContext,
     LikeContext,
@@ -35,74 +35,74 @@ import {
     DonutSubscriptionPriceContext,
     DonutWithdrawContext,
 
-    UnsupportedEventContextType,
-    CommentContextType,
-    DialogFlagsContextType,
-    DialogNotificationSettingsContextType,
-    GroupMemberContextType,
-    GroupUpdateContextType,
-    GroupUserContextType,
-    MessageSubscriptionContextType,
-    MessageEventContextType,
-    MessageFlagsContextType,
-    MessageContextType,
-    NewAttachmentsContextType,
-    MessagesReadContextType,
-    DialogMessagesContextType,
-    TypingContextType,
-    FriendActivityContextType,
-    VKAppPayloadContextType,
-    VKPayTransactionContextType,
-    VoteContextType,
-    LikeContextType,
-    WallPostContextType,
-    MarketOrderContextType,
-    DonutSubscriptionContextType,
-    DonutSubscriptionPriceContextType,
-    DonutWithdrawContextType,
+    type UnsupportedEventContextType,
+    type CommentContextType,
+    type DialogFlagsContextType,
+    type DialogNotificationSettingsContextType,
+    type GroupMemberContextType,
+    type GroupUpdateContextType,
+    type GroupUserContextType,
+    type MessageSubscriptionContextType,
+    type MessageEventContextType,
+    type MessageFlagsContextType,
+    type MessageContextType,
+    type NewAttachmentsContextType,
+    type MessagesReadContextType,
+    type DialogMessagesContextType,
+    type TypingContextType,
+    type FriendActivityContextType,
+    type VKAppPayloadContextType,
+    type VKPayTransactionContextType,
+    type VoteContextType,
+    type LikeContextType,
+    type WallPostContextType,
+    type MarketOrderContextType,
+    type DonutSubscriptionContextType,
+    type DonutSubscriptionPriceContextType,
+    type DonutWithdrawContextType,
 
-    CommentContextSubType,
-    DialogFlagsContextSubType,
-    DialogNotificationSettingsContextSubType,
-    GroupMemberContextSubType,
-    GroupUpdateContextSubType,
-    GroupUserContextSubType,
-    MessageSubscriptionContextSubType,
-    MessageEventContextSubType,
-    MessageFlagsContextSubType,
-    MessageContextSubType,
-    NewAttachmentsContextSubType,
-    MessagesReadContextSubType,
-    DialogMessagesContextSubType,
-    TypingContextSubType,
-    FriendActivityContextSubType,
-    VKAppPayloadContextSubType,
-    VKPayTransactionContextSubType,
-    VoteContextSubType,
-    LikeContextSubType,
-    WallPostContextSubType,
-    MarketOrderContextSubType,
-    DonutSubscriptionContextSubType,
-    DonutSubscriptionPriceContextSubType,
-    DonutWithdrawContextSubType,
+    type CommentContextSubType,
+    type DialogFlagsContextSubType,
+    type DialogNotificationSettingsContextSubType,
+    type GroupMemberContextSubType,
+    type GroupUpdateContextSubType,
+    type GroupUserContextSubType,
+    type MessageSubscriptionContextSubType,
+    type MessageEventContextSubType,
+    type MessageFlagsContextSubType,
+    type MessageContextSubType,
+    type NewAttachmentsContextSubType,
+    type MessagesReadContextSubType,
+    type DialogMessagesContextSubType,
+    type TypingContextSubType,
+    type FriendActivityContextSubType,
+    type VKAppPayloadContextSubType,
+    type VKPayTransactionContextSubType,
+    type VoteContextSubType,
+    type LikeContextSubType,
+    type WallPostContextSubType,
+    type MarketOrderContextSubType,
+    type DonutSubscriptionContextSubType,
+    type DonutSubscriptionPriceContextSubType,
+    type DonutWithdrawContextSubType,
 } from '../structures';
 
-import { API } from '../api';
-import { Upload } from '../upload';
+import type { API } from '../api';
+import type { Upload } from '../upload';
 
 import {
     PollingTransport,
 
     WebhookTransport,
-    WebhookTransportCallback,
-    WebhookTransportKoaCallback,
-    IWebhookTransportStartOptions,
+    type WebhookTransportCallback,
+    type WebhookTransportKoaCallback,
+    type IWebhookTransportStartOptions,
 } from './transports';
 
-import { APIError, APIErrorCode } from '../errors';
+import { type APIError, APIErrorCode } from '../errors';
 
 import { UpdateSource } from '../utils/constants';
-import { AllowArray, Constructor } from '../types';
+import type { AllowArray, Constructor } from '../types';
 
 const debug = createDebug('vk-io:updates');
 
@@ -690,7 +690,7 @@ export class Updates {
                     pollingGroupId: group.id,
                 });
 
-                this.options.pollingGroupId = group.id!;
+                this.options.pollingGroupId = group.id;
             } catch (error) {
                 if ((error as APIError).code !== APIErrorCode.PARAM) {
                     throw error;

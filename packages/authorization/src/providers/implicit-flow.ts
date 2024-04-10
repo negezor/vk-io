@@ -2,19 +2,19 @@ import createDebug from 'debug';
 import { load as cheerioLoad } from 'cheerio';
 import { AbortController } from 'abort-controller';
 
-import { CaptchaType, ICallbackServiceValidate, CallbackService } from 'vk-io';
+import { CaptchaType, type ICallbackServiceValidate, type CallbackService } from 'vk-io';
 
-import { Agent } from 'https';
+import type { Agent } from 'https';
 
 import { AuthorizationError } from '../errors';
-import { parseFormField, getFullURL, CheerioStatic } from '../helpers';
+import { parseFormField, getFullURL, type CheerioStatic } from '../helpers';
 import {
     CookieJar,
 
-    FetchWrapper,
-    RequestInfo,
-    RequestInit,
-    Response,
+    type FetchWrapper,
+    type RequestInfo,
+    type RequestInit,
+    type Response,
 
     fetchCookieFollowRedirectsDecorator,
 } from '../fetch-cookie';
@@ -475,7 +475,7 @@ export abstract class ImplicitFlow {
 
         const { login, phone } = this.options;
 
-        let number;
+        let number: string | number;
         if (phone !== undefined) {
             number = phone;
         } else if (login !== undefined && !login.includes('@')) {

@@ -9,6 +9,7 @@ import {
 } from '..';
 
 const vk = new VK({
+    // biome-ignore lint/style/noNonNullAssertion: to be honest, they're just tests
     token: process.env.TOKEN!
 });
 

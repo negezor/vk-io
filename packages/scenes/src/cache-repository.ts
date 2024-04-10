@@ -51,7 +51,7 @@ export class CacheRepository<Key extends string, Value> {
             throw new Error(`Value by ${key} already exists`);
         }
 
-        return this.set(key, value);
+        this.set(key, value);
     }
 
     /**

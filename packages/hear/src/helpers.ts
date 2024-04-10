@@ -1,4 +1,4 @@
-import { HearFunctionCondition } from './types';
+import type { HearFunctionCondition } from './types';
 
 export const splitPath = (path: string): string[] => (
 	path

@@ -1,14 +1,14 @@
 import {
     ButtonColor,
-    ButtonPayload,
-    KeyboardButton,
+    type ButtonPayload,
+    type KeyboardButton,
 
-    IKeyboardTextButtonOptions,
-    IKeyboardURLButtonOptions,
-    IKeyboardLocationRequestButtonOptions,
-    IKeyboardVKPayButtonOptions,
-    IKeyboardApplicationButtonOptions,
-    IKeyboardCallbackButtonOptions,
+    type IKeyboardTextButtonOptions,
+    type IKeyboardURLButtonOptions,
+    type IKeyboardLocationRequestButtonOptions,
+    type IKeyboardVKPayButtonOptions,
+    type IKeyboardApplicationButtonOptions,
+    type IKeyboardCallbackButtonOptions,
 } from './types';
 
 const serializePayload = (rawPayload: ButtonPayload): string => {

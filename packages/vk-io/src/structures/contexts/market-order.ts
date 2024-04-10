@@ -1,6 +1,6 @@
-import { Context, ContextFactoryOptions, ContextDefaultState } from './context';
+import { Context, type ContextFactoryOptions, type ContextDefaultState } from './context';
 
-import { IMarketAttachmentPayload, MarketAttachment } from '../attachments';
+import { type IMarketAttachmentPayload, MarketAttachment } from '../attachments';
 
 import { pickProperties } from '../../utils/helpers';
 import { kSerializeData } from '../../utils/constants';

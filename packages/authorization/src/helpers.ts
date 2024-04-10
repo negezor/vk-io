@@ -1,6 +1,6 @@
-import { load as cheerioLoad } from 'cheerio';
+import type { load as cheerioLoad } from 'cheerio';
 
-import { Response } from './fetch-cookie';
+import type { Response } from './fetch-cookie';
 import { userScopes, groupScopes } from './constants';
 
 export type CheerioStatic = ReturnType<typeof cheerioLoad>;
@@ -70,8 +70,14 @@ export const parseFormField = ($: unknown): {
         fields[name] = value;
     }
 
+    const action = $form.attr('action');
+
+    if (!action) {
+        throw new Error('Form action is not found');
+    }
+
     return {
-        action: $form.attr('action')!,
+        action,
         fields,
     };
 };

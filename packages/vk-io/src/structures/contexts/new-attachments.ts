@@ -1,4 +1,4 @@
-import { Context, ContextFactoryOptions, ContextDefaultState } from './context';
+import { Context, type ContextFactoryOptions, type ContextDefaultState } from './context';
 
 import { VKError } from '../../errors';
 

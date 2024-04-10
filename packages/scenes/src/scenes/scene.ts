@@ -1,4 +1,4 @@
-import { IContext } from '../types';
+import type { IContext } from '../types';
 
 export interface IScene<S extends Record<string, unknown> = Record<string, any>> {
     /**

@@ -1,6 +1,6 @@
 import {
     Context,
-    ContextFactoryOptions,
+    type ContextFactoryOptions,
 
     Attachmentable,
 
@@ -8,7 +8,7 @@ import {
     kSerializeData,
 
     applyMixins,
-    ContextDefaultState,
+    type ContextDefaultState,
 } from 'vk-io';
 
 import { copyParams } from '../helpers';

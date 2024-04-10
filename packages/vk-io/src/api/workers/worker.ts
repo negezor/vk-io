@@ -1,5 +1,5 @@
-import { API } from '../api';
-import { APIRequest } from '../request';
+import type { API } from '../api';
+import type { APIRequest } from '../request';
 import { MINIMUM_TIME_INTERVAL_API } from '../../utils/constants';
 
 export abstract class APIWorker {

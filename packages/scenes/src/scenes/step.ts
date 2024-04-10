@@ -1,10 +1,10 @@
-import { MessageContext } from 'vk-io';
+import type { MessageContext } from 'vk-io';
 
-import { IScene } from './scene';
+import type { IScene } from './scene';
 
 import { StepSceneContext } from '../contexts';
 import { LastAction } from '../contexts/scene.types';
-import { StepSceneHandler, IStepContext, IStepSceneOptions } from './step.types';
+import type { StepSceneHandler, IStepContext, IStepSceneOptions } from './step.types';
 
 export class StepScene<
     T = MessageContext,

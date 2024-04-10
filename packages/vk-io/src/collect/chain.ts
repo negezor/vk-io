@@ -2,9 +2,9 @@ import { inspectable } from 'inspectable';
 
 import { VKError } from '../errors';
 
-import { API } from '../api';
+import type { API } from '../api';
 import { APIRequest } from '../api/request';
-import { IExecutesPayload, executeRequests } from './executes';
+import { type IExecutesPayload, executeRequests } from './executes';
 
 export interface IChainOptions {
     api: API;
@@ -56,6 +56,7 @@ export class Chain {
     /**
      * Promise based
      */
+    // biome-ignore lint/suspicious/noThenProperty: alias for .run().then() or await chain
     public then(thenFn: (value: IExecutesPayload) => unknown, catchFn: (reason: unknown) => unknown): Promise<unknown> {
         return this.run().then(thenFn, catchFn);
     }

@@ -1,12 +1,12 @@
-import { Context, Composer } from 'vk-io';
+import { type Context, Composer } from 'vk-io';
 import {
-    Middleware,
-    MiddlewareReturn,
-    NextMiddleware,
+    type Middleware,
+    type MiddlewareReturn,
+    type NextMiddleware,
     skipMiddleware,
 } from 'middleware-io';
 
-import { HearConditions, HearFunctionCondition } from './types';
+import type { HearConditions, HearFunctionCondition } from './types';
 
 import { splitPath, unifyCondition, getObjectValue } from './helpers';
 
@@ -80,6 +80,7 @@ export class HearManager<C extends Context> {
 
                     if (passed) {
                         // @ts-expect-error
+                        // biome-ignore lint/style/noNonNullAssertion: we already check by test regex pattern
                         context.$match = (text as string).match(condition)!;
                     }
 

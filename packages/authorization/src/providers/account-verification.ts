@@ -2,19 +2,19 @@ import createDebug from 'debug';
 import { load as cheerioLoad } from 'cheerio';
 import { AbortController } from 'abort-controller';
 
-import { CaptchaType, ICallbackServiceValidate, CallbackService } from 'vk-io';
+import { CaptchaType, type ICallbackServiceValidate, type CallbackService } from 'vk-io';
 
-import { Agent } from 'https';
+import type { Agent } from 'https';
 
 import { AuthorizationError } from '../errors';
-import { CheerioStatic, parseFormField, getFullURL } from '../helpers';
+import { type CheerioStatic, parseFormField, getFullURL } from '../helpers';
 import {
     CookieJar,
 
-    FetchWrapper,
-    RequestInfo,
-    RequestInit,
-    Response,
+    type FetchWrapper,
+    type RequestInfo,
+    type RequestInit,
+    type Response,
 
     fetchCookieFollowRedirectsDecorator,
 } from '../fetch-cookie';
@@ -160,11 +160,27 @@ export class AccountVerification {
                     });
                 }
 
-                const userId = params.get('user_id')!;
+                const userId = params.get('user_id');
+
+                if (!userId) {
+                    throw new AuthorizationError({
+                        message: 'Field user_id is not found in params',
+                        code: AUTHORIZATION_FAILED,
+                    });
+                }
+
+                const accessToken = params.get('access_token');
+
+                if (!accessToken) {
+                    throw new AuthorizationError({
+                        message: 'Field access_token is not found in params',
+                        code: AUTHORIZATION_FAILED,
+                    });
+                }
 
                 return {
                     userId: Number(userId),
-                    token: params.get('access_token')!,
+                    token: accessToken,
                 };
             }
 
@@ -256,7 +272,7 @@ export class AccountVerification {
 
         const { login, phone } = this.options;
 
-        let number;
+        let number: string | number;
         if (phone !== undefined) {
             number = phone;
         } else if (login !== undefined && !login.includes('@')) {
@@ -304,7 +320,15 @@ export class AccountVerification {
      * Process validation form
      */
     protected processValidateForm(response: Response, $: CheerioStatic): Promise<Response> {
-        const href = $('#activation_wrap a').attr('href')!;
+        const href = $('#activation_wrap a').attr('href');
+
+        if (!href) {
+            throw new AuthorizationError({
+                message: 'Validate form href is missing',
+                code: AUTHORIZATION_FAILED,
+            });
+        }
+
         const url = getFullURL(href, response);
 
         return this.fetch(url, {

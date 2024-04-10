@@ -1,6 +1,6 @@
-import { Context, ContextFactoryOptions, ContextDefaultState } from './context';
+import { Context, type ContextFactoryOptions, type ContextDefaultState } from './context';
 
-import { WallAttachment, IWallAttachmentPayload } from '../attachments';
+import { WallAttachment, type IWallAttachmentPayload } from '../attachments';
 
 import { pickProperties } from '../../utils/helpers';
 import { kSerializeData } from '../../utils/constants';

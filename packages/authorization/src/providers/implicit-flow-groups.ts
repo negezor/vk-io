@@ -1,8 +1,8 @@
 import createDebug from 'debug';
 
-import { ImplicitFlow, IImplicitFlowOptions } from './implicit-flow';
+import { ImplicitFlow, type IImplicitFlowOptions } from './implicit-flow';
 
-import { Response } from '../fetch-cookie';
+import type { Response } from '../fetch-cookie';
 import { AuthorizationError } from '../errors';
 import { getGroupPermissionsByName, getAllGroupPermissions } from '../helpers';
 import { CALLBACK_BLANK, AuthErrorCode } from '../constants';
@@ -104,6 +104,8 @@ export class ImplicitFlowGroups extends ImplicitFlow {
 
         if (expires !== undefined) {
             expires = Number(expires);
+        } else {
+            expires = 0;
         }
 
         const groups: {
@@ -123,7 +125,7 @@ export class ImplicitFlowGroups extends ImplicitFlow {
             groups.push({
                 groupId: Number(groupId),
                 token: value,
-                expires: expires!,
+                expires,
             });
         }
 

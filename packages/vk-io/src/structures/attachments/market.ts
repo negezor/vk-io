@@ -1,6 +1,6 @@
-import { Attachment, AttachmentFactoryOptions } from './attachment';
+import { Attachment, type AttachmentFactoryOptions } from './attachment';
 
-import { IPhotoAttachmentPayload, PhotoAttachment } from './photo';
+import { type IPhotoAttachmentPayload, PhotoAttachment } from './photo';
 
 import { AttachmentType } from '../../utils/constants';
 

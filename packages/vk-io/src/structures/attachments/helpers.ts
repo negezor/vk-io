@@ -1,6 +1,6 @@
 import {
-    Attachment,
-    ExternalAttachment,
+    type Attachment,
+    type ExternalAttachment,
 
     PollAttachment,
     GiftAttachment,
@@ -19,7 +19,7 @@ import {
     AudioMessageAttachment,
 } from '.';
 
-import { API } from '../../api';
+import type { API } from '../../api';
 import { AttachmentType } from '../../utils/constants';
 
 const attachmentsTypes = {

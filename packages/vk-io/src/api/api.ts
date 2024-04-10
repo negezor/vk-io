@@ -1,20 +1,20 @@
 import { inspectable } from 'inspectable';
 
-import { Agent, globalAgent } from 'https';
+import { type Agent, globalAgent } from 'https';
 
-import { APIMethods } from './schemas/methods';
+import type { APIMethods } from './schemas/methods';
 
 import {
-    APIWorker,
+    type APIWorker,
     SequentialWorker,
     ParallelWorker,
     ParallelSelectedWorker,
 } from './workers';
 
 import { APIRequest } from './request';
-import { Constructor } from '../types';
-import { VKError, ExecuteError } from '../errors';
-import { CallbackService } from '../utils/callback-service';
+import type { Constructor } from '../types';
+import { VKError, type ExecuteError } from '../errors';
+import type { CallbackService } from '../utils/callback-service';
 import { MINIMUM_TIME_INTERVAL_API } from '../utils/constants';
 
 // @ts-expect-error assert's not supported yet
@@ -217,6 +217,7 @@ export interface IExecuteResponse<T> {
 /**
  * Working with API methods
  */
+// biome-ignore lint/suspicious/noUnsafeDeclarationMerging: this is how types in library works
 class API {
     public options: IAPIOptions;
 

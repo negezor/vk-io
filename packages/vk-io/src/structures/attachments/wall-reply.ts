@@ -1,5 +1,5 @@
-import { Attachment } from './attachment';
-import { ExternalAttachment, ExternalAttachmentFactoryOptions } from './external';
+import type { Attachment } from './attachment';
+import { ExternalAttachment, type ExternalAttachmentFactoryOptions } from './external';
 
 import { AttachmentType } from '../../utils/constants';
 import { transformAttachments } from './helpers';

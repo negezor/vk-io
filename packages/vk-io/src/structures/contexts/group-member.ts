@@ -1,4 +1,4 @@
-import { Context, ContextFactoryOptions, ContextDefaultState } from './context';
+import { Context, type ContextFactoryOptions, type ContextDefaultState } from './context';
 
 import { pickProperties } from '../../utils/helpers';
 import { kSerializeData } from '../../utils/constants';
@@ -76,7 +76,7 @@ export class GroupMemberContext<S = ContextDefaultState>
             return undefined;
         }
 
-        return this.payload.join_type!;
+        return this.payload.join_type;
     }
 
     /**

@@ -1,6 +1,6 @@
-import { Attachment, AttachmentFactoryOptions } from './attachment';
+import { Attachment, type AttachmentFactoryOptions } from './attachment';
 
-import { IPhotoAttachmentPayload } from './photo';
+import type { IPhotoAttachmentPayload } from './photo';
 
 import { pickProperties } from '../../utils/helpers';
 import { AttachmentType, kSerializeData } from '../../utils/constants';

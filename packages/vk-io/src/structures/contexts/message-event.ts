@@ -1,6 +1,6 @@
-import { Context, ContextFactoryOptions, ContextDefaultState } from './context';
+import { Context, type ContextFactoryOptions, type ContextDefaultState } from './context';
 
-import { IMessageContextSendOptions, MessageContext } from './message';
+import { type IMessageContextSendOptions, MessageContext } from './message';
 
 import { getRandomId, pickProperties } from '../../utils/helpers';
 import { UpdateSource, kSerializeData } from '../../utils/constants';

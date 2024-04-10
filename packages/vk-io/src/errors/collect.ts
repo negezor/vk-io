@@ -1,5 +1,5 @@
 import { VKError } from './error';
-import { ExecuteError } from './execute';
+import type { ExecuteError } from './execute';
 
 export interface ICollectErrorOptions {
     message: string;

@@ -5,7 +5,7 @@ import { Upload } from './upload';
 import { Updates } from './updates';
 import { CallbackService } from './utils/callback-service';
 
-import { VKOptions } from './types';
+import type { VKOptions } from './types';
 
 /**
  * Main class

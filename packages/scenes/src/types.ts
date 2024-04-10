@@ -1,6 +1,6 @@
-import { Context } from 'vk-io';
+import type { Context } from 'vk-io';
 
-import { SceneContext } from './contexts';
+import type { SceneContext } from './contexts';
 
 export type Middleware<T> = (context: T, next: () => Promise<void>) => unknown;
 

@@ -1,5 +1,5 @@
-import { IScene } from './scenes/scene';
-import { CacheRepository } from './cache-repository';
+import type { IScene } from './scenes/scene';
+import type { CacheRepository } from './cache-repository';
 
 export type SceneRepository = CacheRepository<string, IScene>;
 

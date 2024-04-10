@@ -2,14 +2,14 @@ import WebSocket from 'ws';
 import createDebug from 'debug';
 import { inspectable } from 'inspectable';
 
-import { API, Updates, UpdateSource } from 'vk-io';
+import { type API, type Updates, UpdateSource, VKError } from 'vk-io';
 
-import { Agent, globalAgent } from 'https';
+import { type Agent, globalAgent } from 'https';
 
 import { fetch } from './fetch';
 import { StreamingRuleError } from './errors';
-import { StreamingContext, IStreamingContextPayload } from './contexts';
-import { IStreamingRuleErrorOptions } from './errors/streaming-rule';
+import { StreamingContext, type IStreamingContextPayload } from './contexts';
+import type { IStreamingRuleErrorOptions } from './errors/streaming-rule';
 
 const debug = createDebug('vk-io:streaming');
 
@@ -76,7 +76,7 @@ export class StreamingAPI {
         try {
             const { key, endpoint } = await this.api.streaming.getServerUrl({});
 
-            this.key = key!;
+            this.key = key;
             this.endpoint = new URL(`https://${endpoint}`);
 
             const search = new URLSearchParams({ key: key });
@@ -92,7 +92,7 @@ export class StreamingAPI {
 
         const { socket } = this;
         socket.on('message', async (data: string) => {
-            let message;
+            let message: any;
 
             try {
                 message = JSON.parse(data);
@@ -142,7 +142,7 @@ export class StreamingAPI {
             return Promise.resolve();
         }
 
-        this.socket!.close();
+        this.socket?.close();
 
         this.started = false;
 
@@ -186,10 +186,17 @@ export class StreamingAPI {
     private async fetchRules<T = never>(method: string, payload: object = {}): Promise<T> {
         const { agent } = this.options;
 
-        const url = new URL('/rules', this.endpoint);
-        url.searchParams.set('key', this.key!);
+        if (!this.key) {
+            throw new VKError({
+                message: 'You should start websocket before call fetchRules',
+                code: 0
+            });
+        }
 
-        let body;
+        const url = new URL('/rules', this.endpoint);
+        url.searchParams.set('key', this.key);
+
+        let body: any;
         if (method !== 'GET') {
             body = JSON.stringify(payload);
         }

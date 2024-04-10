@@ -3,7 +3,7 @@ import createDebug from 'debug';
 import { ImplicitFlow } from './implicit-flow';
 import { AuthorizationError } from '../errors';
 
-import { Response } from '../fetch-cookie';
+import type { Response } from '../fetch-cookie';
 import { getUserPermissionsByName, getAllUserPermissions } from '../helpers';
 import { CALLBACK_BLANK, AuthErrorCode } from '../constants';
 
@@ -75,6 +75,14 @@ export class ImplicitFlowUser extends ImplicitFlow {
 
         const userId = params.get('user_id');
         const expires = params.get('expires_in');
+        const accessToken = params.get('access_token');
+
+        if (!accessToken) {
+            throw new AuthorizationError({
+                message: 'Field access_token is not found',
+                code: AUTHORIZATION_FAILED,
+            });
+        }
 
         return {
             email: params.get('email') || undefined,
@@ -82,7 +90,7 @@ export class ImplicitFlowUser extends ImplicitFlow {
                 ? Number(userId)
                 : undefined,
 
-            token: params.get('access_token')!,
+            token: accessToken,
             expires: expires !== null
                 ? Number(expires)
                 : undefined,
