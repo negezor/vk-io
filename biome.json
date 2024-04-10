@@ -12,5 +12,10 @@
             "semicolons": "always",
 			"arrowParentheses": "asNeeded"
         }
+    },
+    "files": {
+        "ignore": [
+            "packages/vk-io/src/api/schemas"
+        ]
     }
 }
