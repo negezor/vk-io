@@ -29,8 +29,9 @@
     "docs:dev": "vitepress dev docs",
     "docs:build": "sh scripts/deploy-docs.sh",
     "docs:preview": "vitepress preview docs",
-    "test": "npm run test:node && npm run lint:eslint",
+    "test": "npm run test:node && npm run lint",
     "test:node": "node --import tsx --test packages/*/test/*.test.ts",
-    "lint:eslint": "eslint --ext .ts --ignore-path .gitignore packages/*/src"
+    "lint": "npm run lint:biome",
+    "lint:biome": "biome lint --apply packages/*/{src,test}"
   }
 }
