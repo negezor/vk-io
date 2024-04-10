@@ -6,6 +6,16 @@
         "lineWidth": 120,
         "lineEnding": "lf"
     },
+    "linter": {
+        "rules": {
+            "style": {
+                "useNodejsImportProtocol": "off"
+            },
+            "suspicious": {
+                "noExplicitAny": "off"
+            }
+        }
+    },
     "javascript": {
         "formatter": {
             "quoteStyle": "single",
