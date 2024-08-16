@@ -40,13 +40,13 @@
         "vk-io": "^4.0.0"
     },
     "dependencies": {
-        "debug": "^4.3.4",
+        "debug": "^4.3.6",
         "inspectable": "^2.1.0",
         "node-fetch": "^3.3.2",
-        "ws": "^8.16.0"
+        "ws": "^8.18.0"
     },
     "devDependencies": {
         "@types/debug": "^4.1.12",
-        "@types/ws": "^8.5.10"
+        "@types/ws": "^8.5.12"
     }
 }
