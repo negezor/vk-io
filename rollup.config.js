@@ -38,7 +38,7 @@ export default async () => (
                 const modulePkg = await import(
                     pathJoin(modulePath, 'package.json'),
                     {
-                        assert: {
+                        with: {
                             type: 'json'
                         }
                     },
