@@ -725,9 +725,11 @@ class MessageContext<S = ContextDefaultState> extends Context<
     async deleteMessage(options: Partial<Params.MessagesDeleteParams> = {}): Promise<boolean> {
         const isConversation = Boolean(this.conversationMessageId);
 
+        const cmid : number | undefined = this.conversationMessageId;
+
         const target = isConversation
-            ? { peer_id: this.peerId, cmids: this.conversationMessageId }
-            : { message_ids: this.id };
+            ? { peer_id: this.peerId, cmids: cmid ? [cmid] : cmid, delete_for_all: true }
+            : { message_ids: this.id, delete_for_all: true };
 
         const messageIds = await this.api.messages.delete({
             ...options,

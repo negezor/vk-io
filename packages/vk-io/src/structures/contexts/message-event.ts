@@ -101,6 +101,16 @@ export class MessageEventContext<S = ContextDefaultState> extends Context<
     }
 
     /**
+     * Show snackbar for user
+     */
+    public answerSnackbar(text: string): Promise<1> {
+        return this.answer({
+            type: "show_snackbar",
+            text
+        })
+    }
+
+    /**
      * Sends a message to the current dialog
      */
     async send(
