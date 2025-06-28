@@ -49,7 +49,10 @@ const dataset: [string | number, IResolvedTargetResource | IResolvedOwnerResourc
     ['[club1|VK API]', apiclubGroup],
     ['[public1|APICLUB]', apiclubGroup],
     ['public1', apiclubGroup],
-    ['apiclub', apiclubGroup],
+    ['apiclub', {
+        id: 166562603,
+        type: 'group'
+    }],
     [
         'app1',
         {
