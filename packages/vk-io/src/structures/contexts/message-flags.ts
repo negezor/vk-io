@@ -2,7 +2,8 @@ import { Context, type ContextDefaultState, type ContextFactoryOptions } from '.
 
 import { MessageContext } from './message';
 
-import { UpdateSource, kSerializeData } from '../../utils/constants';
+import { kSerializeData, UpdateSource } from '../../utils/constants';
+
 import { pickProperties } from '../../utils/helpers';
 
 export type MessageFlagsContextType = 'message_flags';

@@ -1,8 +1,9 @@
 import { ExternalAttachment, type ExternalAttachmentFactoryOptions } from './external';
+import { type IPhotoAttachmentPayload, PhotoAttachment } from './photo';
 
 import { AttachmentType, kSerializeData } from '../../utils/constants';
+
 import { pickProperties } from '../../utils/helpers';
-import { type IPhotoAttachmentPayload, PhotoAttachment } from './photo';
 
 const kPhoto = Symbol('kPhoto');
 

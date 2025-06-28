@@ -12,9 +12,7 @@ function parseParameters(rawParameters, payload) {
         return [];
     }
 
-    return rawParameters.map(rawParameter => (
-        parseParameter(rawParameter, payload)
-    ));
+    return rawParameters.map(rawParameter => parseParameter(rawParameter, payload));
 }
 
 module.exports = {

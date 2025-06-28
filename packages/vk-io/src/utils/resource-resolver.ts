@@ -1,5 +1,6 @@
-import type { API } from '../api';
 import { ResourceError } from '../errors';
+
+import type { API } from '../api';
 
 import { ResourceErrorCode, ResourceType } from './constants';
 

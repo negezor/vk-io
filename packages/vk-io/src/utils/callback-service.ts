@@ -1,6 +1,7 @@
 import type { APIRequest } from '../api/request';
 
 import { SharedErrorCode, VKError } from '../errors';
+
 import type { CaptchaType } from './constants';
 
 const { MISSING_CAPTCHA_HANDLER, MISSING_TWO_FACTOR_HANDLER } = SharedErrorCode;

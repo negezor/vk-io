@@ -2,7 +2,8 @@ import { inspectable } from 'inspectable';
 
 import type { API } from '../../api';
 import type { Upload } from '../../upload';
-import { type UpdateSource, kSerializeData } from '../../utils/constants';
+
+import { kSerializeData, type UpdateSource } from '../../utils/constants';
 
 export type ContextDefaultState = Record<string, any>;
 

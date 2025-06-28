@@ -2,7 +2,7 @@ const { VK, APIError } = require('vk-io');
 const { HearManager } = require('@vk-io/hear');
 
 const vk = new VK({
-    token: process.env.TOKEN
+    token: process.env.TOKEN,
 });
 
 const hearManager = new HearManager();
@@ -50,14 +50,14 @@ vk.updates.use(async (context, next) => {
 
 vk.updates.on('message_new', hearManager.middleware);
 
-hearManager.hear(/get chat/i, async (context) => {
+hearManager.hear(/get chat/i, async context => {
     if (!context.isChat) {
         return context.send('We are not in chat!');
     }
 
     // Throw an error if there is no access
     const { items } = await vk.api.messages.getConversationsById({
-        peer_ids: context.peerId
+        peer_ids: context.peerId,
     });
 
     const [conversation] = items;

@@ -9,8 +9,8 @@ if (userIsNotRegistered) {
     baseBuilder.textButton({
         label: 'Sign Up',
         payload: {
-            command: 'sign_up'
-        }
+            command: 'sign_up',
+        },
     });
 }
 
@@ -21,22 +21,22 @@ shopBuilder
         label: 'Buy a coffee',
         payload: {
             command: 'buy',
-            item: 'coffee'
-        }
+            item: 'coffee',
+        },
     })
     .textButton({
         label: 'Buy a tea',
         payload: {
             command: 'buy',
-            item: 'tea'
-        }
+            item: 'tea',
+        },
     })
     .row()
     .textButton({
         label: 'Go back',
         payload: {
-            command: 'go_back'
-        }
+            command: 'go_back',
+        },
     });
 
 console.log('Base builder', String(baseBuilder));

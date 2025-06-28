@@ -1,6 +1,7 @@
 import { ExternalAttachment, type ExternalAttachmentFactoryOptions } from './external';
 
 import { AttachmentType, kSerializeData } from '../../utils/constants';
+
 import { pickProperties } from '../../utils/helpers';
 
 export interface IStickerImage {

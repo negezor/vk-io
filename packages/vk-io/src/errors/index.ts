@@ -1,16 +1,16 @@
 export * from './error';
 
 export * from './api';
-export * from './upload';
 export * from './collect';
-export * from './updates';
 export * from './execute';
 export * from './resource';
+export * from './updates';
+export * from './upload';
 
 export {
-    SharedErrorCode,
-    UploadErrorCode,
-    UpdatesErrorCode,
     CollectErrorCode,
     ResourceErrorCode,
+    SharedErrorCode,
+    UpdatesErrorCode,
+    UploadErrorCode,
 } from '../utils/constants';

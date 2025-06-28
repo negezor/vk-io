@@ -1,8 +1,9 @@
 import type { MessageContext } from 'vk-io';
 
+import { StepSceneContext } from '../contexts';
+
 import type { IScene } from './scene';
 
-import { StepSceneContext } from '../contexts';
 import { LastAction } from '../contexts/scene.types';
 import type { IStepContext, IStepSceneOptions, StepSceneHandler } from './step.types';
 

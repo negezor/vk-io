@@ -1,3 +1,4 @@
+import type { API } from '../../api';
 import {
     type Attachment,
     AudioAttachment,
@@ -18,7 +19,6 @@ import {
     WallReplyAttachment,
 } from '.';
 
-import type { API } from '../../api';
 import { AttachmentType } from '../../utils/constants';
 
 const attachmentsTypes = {

@@ -2,7 +2,8 @@ import { Context, type ContextDefaultState, type ContextFactoryOptions } from '.
 
 import { type IMessageContextSendOptions, MessageContext } from './message';
 
-import { UpdateSource, kSerializeData } from '../../utils/constants';
+import { kSerializeData, UpdateSource } from '../../utils/constants';
+
 import { getRandomId, pickProperties } from '../../utils/helpers';
 
 export interface IMessageEventShowSnackbar {

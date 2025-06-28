@@ -1,4 +1,5 @@
 import { type Middleware, type MiddlewareReturn, type NextMiddleware, skipMiddleware } from 'middleware-io';
+
 import { Composer, type Context } from 'vk-io';
 
 import type { HearConditions, HearFunctionCondition } from './types';

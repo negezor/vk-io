@@ -3,6 +3,7 @@ import { Attachment, type AttachmentFactoryOptions } from './attachment';
 import type { ExternalAttachment } from './external';
 
 import { AttachmentType, kSerializeData } from '../../utils/constants';
+
 import { applyMixins, pickProperties } from '../../utils/helpers';
 import { transformAttachments } from './helpers';
 

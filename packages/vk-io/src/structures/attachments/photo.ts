@@ -1,6 +1,7 @@
 import { Attachment, type AttachmentFactoryOptions } from './attachment';
 
 import { AttachmentType, kSerializeData } from '../../utils/constants';
+
 import { pickProperties } from '../../utils/helpers';
 
 const SMALL_SIZES = ['m', 's'];

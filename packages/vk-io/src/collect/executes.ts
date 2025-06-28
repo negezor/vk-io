@@ -1,6 +1,7 @@
+import type { ExecuteError } from '../errors';
+
 import { type API, APIRequest } from '../api';
 
-import type { ExecuteError } from '../errors';
 import { getChainReturn, resolveExecuteTask } from '../utils/helpers';
 
 export interface IExecutesPayload {

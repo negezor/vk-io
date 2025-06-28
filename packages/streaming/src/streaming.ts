@@ -6,9 +6,11 @@ import { type API, UpdateSource, type Updates, VKError } from 'vk-io';
 
 import { type Agent, globalAgent } from 'https';
 
-import { type IStreamingContextPayload, StreamingContext } from './contexts';
 import { StreamingRuleError } from './errors';
 import type { IStreamingRuleErrorOptions } from './errors/streaming-rule';
+
+import { type IStreamingContextPayload, StreamingContext } from './contexts';
+
 import { fetch } from './fetch';
 
 const debug = createDebug('vk-io:streaming');

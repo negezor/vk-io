@@ -1,5 +1,4 @@
 import { Attachment, type AttachmentFactoryOptions } from './attachment';
-
 import { type IPhotoAttachmentPayload, PhotoAttachment } from './photo';
 
 import { AttachmentType } from '../../utils/constants';

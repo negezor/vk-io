@@ -1,7 +1,8 @@
-import type { IScene } from './scenes/scene';
+import { SceneContext } from './contexts';
 
 import { CacheRepository } from './cache-repository';
-import { SceneContext } from './contexts';
+import type { IScene } from './scenes/scene';
+
 import type { ISceneManagerOptions, SceneRepository } from './scene-manager.types';
 import type { IContext, Middleware } from './types';
 

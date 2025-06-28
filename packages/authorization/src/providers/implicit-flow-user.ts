@@ -1,10 +1,12 @@
 import createDebug from 'debug';
 
 import { AuthorizationError } from '../errors';
+
+import type { Response } from '../fetch-cookie';
 import { ImplicitFlow } from './implicit-flow';
 
 import { AuthErrorCode, CALLBACK_BLANK } from '../constants';
-import type { Response } from '../fetch-cookie';
+
 import { getAllUserPermissions, getUserPermissionsByName } from '../helpers';
 
 const debug = createDebug('vk-io:authorization:implicit-flow-user');

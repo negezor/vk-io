@@ -1,9 +1,12 @@
 import createDebug from 'debug';
 import { inspectable } from 'inspectable';
-import { type Middleware, compose, noopNext } from 'middleware-io';
+import { compose, type Middleware, noopNext } from 'middleware-io';
 
 import { type Agent, globalAgent } from 'https';
 
+import { type APIError, APIErrorCode } from '../errors';
+
+import type { API } from '../api';
 import {
     CommentContext,
     type CommentContextSubType,
@@ -83,10 +86,7 @@ import {
     type WallPostContextSubType,
     type WallPostContextType,
 } from '../structures';
-
-import type { API } from '../api';
 import type { Upload } from '../upload';
-
 import {
     type IWebhookTransportStartOptions,
     PollingTransport,
@@ -95,10 +95,8 @@ import {
     type WebhookTransportKoaCallback,
 } from './transports';
 
-import { type APIError, APIErrorCode } from '../errors';
-
-import type { AllowArray, Constructor } from '../types';
 import { UpdateSource } from '../utils/constants';
+import type { AllowArray, Constructor } from '../types';
 
 const debug = createDebug('vk-io:updates');
 

@@ -1,10 +1,11 @@
-import { Context, type ContextDefaultState, type ContextFactoryOptions } from './context';
-
 import { VKError } from '../../errors';
+
+import { Context, type ContextDefaultState, type ContextFactoryOptions } from './context';
 
 import { Attachmentable } from '../shared/attachmentable';
 
 import { kSerializeData } from '../../utils/constants';
+
 import { applyMixins, pickProperties } from '../../utils/helpers';
 import { transformAttachments } from '../attachments/helpers';
 

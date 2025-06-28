@@ -1,24 +1,22 @@
 export * from './errors';
 
 export * from './api';
-export * from './upload';
 export * from './collect';
-export * from './updates';
 export * from './structures';
-
-export * from './utils/callback-service';
-export * from './utils/resource-resolver';
-
-export { getRandomId, applyMixins } from './utils/helpers';
+export * from './updates';
+export * from './upload';
+export { VK } from './vk';
 
 export {
-    CaptchaType,
-    UpdateSource,
-    ResourceType,
-    MessageSource,
     AttachmentType,
     AttachmentTypeString,
+    CaptchaType,
     kSerializeData,
+    MessageSource,
+    ResourceType,
+    UpdateSource,
 } from './utils/constants';
 
-export { VK } from './vk';
+export { applyMixins, getRandomId } from './utils/helpers';
+export * from './utils/callback-service';
+export * from './utils/resource-resolver';

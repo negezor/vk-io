@@ -6,16 +6,19 @@ import { type CallbackService, CaptchaType, type ICallbackServiceValidate } from
 
 import type { Agent } from 'https';
 
-import { AuthErrorCode, CALLBACK_BLANK, DESKTOP_USER_AGENT } from '../constants';
 import { AuthorizationError } from '../errors';
+
 import {
     CookieJar,
     type FetchWrapper,
+    fetchCookieFollowRedirectsDecorator,
     type RequestInfo,
     type RequestInit,
     type Response,
-    fetchCookieFollowRedirectsDecorator,
 } from '../fetch-cookie';
+
+import { AuthErrorCode, CALLBACK_BLANK, DESKTOP_USER_AGENT } from '../constants';
+
 import { type CheerioStatic, getFullURL, parseFormField } from '../helpers';
 
 const debug = createDebug('vk-io:authorization:account-verification');

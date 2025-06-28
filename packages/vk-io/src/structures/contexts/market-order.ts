@@ -3,6 +3,7 @@ import { Context, type ContextDefaultState, type ContextFactoryOptions } from '.
 import { type IMarketAttachmentPayload, MarketAttachment } from '../attachments';
 
 import { kSerializeData } from '../../utils/constants';
+
 import { pickProperties } from '../../utils/helpers';
 
 export type MarketOrderContextType = 'market_order';

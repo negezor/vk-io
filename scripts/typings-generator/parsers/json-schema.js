@@ -28,10 +28,7 @@ const jsonSchemaTypes = {
                 kind: 'type',
                 // Just array in VK that string (N, N, ...)
                 type: arrayUnion
-                    ? TypesGenerator.union([
-                        TypesGenerator.array(arrayType),
-                        arrayType,
-                    ])
+                    ? TypesGenerator.union([TypesGenerator.array(arrayType), arrayType])
                     : TypesGenerator.array(arrayType),
             };
         }
@@ -39,16 +36,12 @@ const jsonSchemaTypes = {
         if (items?.$ref) {
             const [, group, refName] = items.$ref.match(MATCH_REF_RE);
 
-            const refIdentifierName = ts.factory.createIdentifier(
-                toPascalCase(refName),
-            );
+            const refIdentifierName = ts.factory.createIdentifier(toPascalCase(refName));
 
-            const refIdentifier = group !== '' && namespace
-                ? ts.factory.createQualifiedName(
-                    namespace,
-                    refIdentifierName,
-                )
-                : refIdentifierName;
+            const refIdentifier =
+                group !== '' && namespace
+                    ? ts.factory.createQualifiedName(namespace, refIdentifierName)
+                    : refIdentifierName;
 
             return {
                 type: TypesGenerator.array(refIdentifier),
@@ -57,71 +50,41 @@ const jsonSchemaTypes = {
 
         return {
             kind: type,
-            type: TypesGenerator.array(
-                ts.factory.createKeywordTypeNode(
-                    ts.SyntaxKind.AnyKeyword,
-                ),
-            ),
+            type: TypesGenerator.array(ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)),
         };
     },
 
     string: ({ type }) => ({
         kind: 'type',
-        description: type.description && formatTSComments(
-            type.description,
-        ),
-        type: 'enum' in type
-            ? TypesGenerator.union(
-                type.enum.map(enumName => (
-                    ts.factory.createStringLiteral(String(enumName))
-                )),
-            )
-            : TypesGenerator.string,
-        required: typeof type.required === 'boolean'
-            ? type.required
-            : false,
-
+        description: type.description && formatTSComments(type.description),
+        type:
+            'enum' in type
+                ? TypesGenerator.union(type.enum.map(enumName => ts.factory.createStringLiteral(String(enumName))))
+                : TypesGenerator.string,
+        required: typeof type.required === 'boolean' ? type.required : false,
     }),
     integer: ({ type }) => ({
         kind: 'type',
-        description: type.description && formatTSComments(
-            type.description,
-        ),
-        type: 'enum' in type
-            ? TypesGenerator.union(
-                type.enum.map(enumName => (
-                    ts.factory.createNumericLiteral(String(enumName))
-                )),
-            )
-            : TypesGenerator.number,
-        required: typeof type.required === 'boolean'
-            ? type.required
-            : false,
+        description: type.description && formatTSComments(type.description),
+        type:
+            'enum' in type
+                ? TypesGenerator.union(type.enum.map(enumName => ts.factory.createNumericLiteral(String(enumName))))
+                : TypesGenerator.number,
+        required: typeof type.required === 'boolean' ? type.required : false,
     }),
     boolean: ({ type }) => ({
         kind: 'type',
-        description: type.description && formatTSComments(
-            type.description,
-        ),
-        type: TypesGenerator.union([
-            TypesGenerator.boolean,
-            TypesGenerator.number,
-        ]),
-        required: typeof type.required === 'boolean'
-            ? type.required
-            : false,
+        description: type.description && formatTSComments(type.description),
+        type: TypesGenerator.union([TypesGenerator.boolean, TypesGenerator.number]),
+        required: typeof type.required === 'boolean' ? type.required : false,
     }),
     number: payload => jsonSchemaTypes.integer(payload),
 
     any: ({ type }) => ({
         kind: 'type',
-        description: type.description && formatTSComments(
-            type.description,
-        ),
+        description: type.description && formatTSComments(type.description),
         type: TypesGenerator.any,
-        required: typeof type.required === 'boolean'
-            ? type.required
-            : false,
+        required: typeof type.required === 'boolean' ? type.required : false,
     }),
 };
 
@@ -129,16 +92,12 @@ function parseJSONObject(name, type, payload = {}, { preferRequired } = { prefer
     if (type.$ref) {
         const [, group, refName] = type.$ref.match(MATCH_REF_RE);
 
-        const refIdentifierName = ts.factory.createIdentifier(
-            toPascalCase(refName),
-        );
+        const refIdentifierName = ts.factory.createIdentifier(toPascalCase(refName));
 
-        const refIdentifier = group !== '' && payload.namespace
-            ? ts.factory.createQualifiedName(
-                payload.namespace,
-                refIdentifierName,
-            )
-            : refIdentifierName;
+        const refIdentifier =
+            group !== '' && payload.namespace
+                ? ts.factory.createQualifiedName(payload.namespace, refIdentifierName)
+                : refIdentifierName;
 
         return {
             name,
@@ -155,16 +114,12 @@ function parseJSONObject(name, type, payload = {}, { preferRequired } = { prefer
             if (obj.$ref) {
                 const [, group, refName] = obj.$ref.match(MATCH_REF_RE);
 
-                const refIdentifierName = ts.factory.createIdentifier(
-                    toPascalCase(refName),
-                );
+                const refIdentifierName = ts.factory.createIdentifier(toPascalCase(refName));
 
-                const refIdentifier = group !== '' && payload.namespace
-                    ? ts.factory.createQualifiedName(
-                        payload.namespace,
-                        refIdentifierName,
-                    )
-                    : refIdentifierName;
+                const refIdentifier =
+                    group !== '' && payload.namespace
+                        ? ts.factory.createQualifiedName(payload.namespace, refIdentifierName)
+                        : refIdentifierName;
 
                 allOf.push(refIdentifier);
 
@@ -183,16 +138,12 @@ function parseJSONObject(name, type, payload = {}, { preferRequired } = { prefer
                     if (propertyValue.$ref) {
                         const [, group, refName] = propertyValue.$ref.match(MATCH_REF_RE);
 
-                        const refIdentifierName = ts.factory.createIdentifier(
-                            toPascalCase(refName),
-                        );
+                        const refIdentifierName = ts.factory.createIdentifier(toPascalCase(refName));
 
-                        const refIdentifier = group !== '' && payload.namespace
-                            ? ts.factory.createQualifiedName(
-                                payload.namespace,
-                                refIdentifierName,
-                            )
-                            : refIdentifierName;
+                        const refIdentifier =
+                            group !== '' && payload.namespace
+                                ? ts.factory.createQualifiedName(payload.namespace, refIdentifierName)
+                                : refIdentifierName;
 
                         interfaceType.addProperty({
                             name: propertyName,
@@ -245,9 +196,7 @@ function parseJSONObject(name, type, payload = {}, { preferRequired } = { prefer
         if (Array.isArray(type.type) || !jsonSchemaTypes[type.type]) {
             return {
                 name,
-                type: ts.factory.createKeywordTypeNode(
-                    ts.SyntaxKind.AnyKeyword,
-                ),
+                type: ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword),
             };
         }
 
@@ -267,9 +216,7 @@ function parseJSONObject(name, type, payload = {}, { preferRequired } = { prefer
     if (!type.properties) {
         return {
             name,
-            type: ts.factory.createKeywordTypeNode(
-                ts.SyntaxKind.AnyKeyword,
-            ),
+            type: ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword),
         };
     }
 
@@ -281,18 +228,16 @@ function parseJSONObject(name, type, payload = {}, { preferRequired } = { prefer
     interfaceType.methods.push(
         ts.factory.createIndexSignature(
             undefined,
-            [ts.factory.createParameterDeclaration(
-                undefined,
-                undefined,
-                'key',
-                undefined,
-                ts.factory.createKeywordTypeNode(
-                    ts.SyntaxKind.StringKeyword,
+            [
+                ts.factory.createParameterDeclaration(
+                    undefined,
+                    undefined,
+                    'key',
+                    undefined,
+                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
                 ),
-            )],
-            ts.factory.createKeywordTypeNode(
-                ts.SyntaxKind.AnyKeyword,
-            ),
+            ],
+            ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword),
         ),
     );
 
@@ -318,9 +263,8 @@ function parseJSONObject(name, type, payload = {}, { preferRequired } = { prefer
                 name: propertyName,
 
                 type: nodeType,
-                required: preferRequired || (typeof required !== 'boolean'
-                    ? required.includes(propertyName)
-                    : required),
+                required:
+                    preferRequired || (typeof required !== 'boolean' ? required.includes(propertyName) : required),
             });
         }
     }
@@ -333,10 +277,7 @@ function parseJSONObject(name, type, payload = {}, { preferRequired } = { prefer
 }
 
 function parseJSONSchema(schema, payload, options) {
-    return Object.entries(schema)
-        .map(([key, value]) => (
-            parseJSONObject(key, value, payload, options)
-        ));
+    return Object.entries(schema).map(([key, value]) => parseJSONObject(key, value, payload, options));
 }
 
 module.exports = {

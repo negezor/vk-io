@@ -1,12 +1,13 @@
 import createDebug from 'debug';
 
+import { APIError, APIErrorCode, ExecuteError, type IAPIErrorOptions, type IExecuteErrorOptions } from '../../errors';
+
+import type { APIRequest } from '../request';
 import { APIWorker } from './worker';
 
-import { APIError, APIErrorCode, ExecuteError, type IAPIErrorOptions, type IExecuteErrorOptions } from '../../errors';
-import { delay } from '../../utils/helpers';
-import type { APIRequest } from '../request';
-
 import { CaptchaType, MINIMUM_TIME_INTERVAL_API } from '../../utils/constants';
+
+import { delay } from '../../utils/helpers';
 
 const debug = createDebug('vk-io:api');
 

@@ -4,7 +4,7 @@ const fetch = require('node-fetch');
 const fs = require('fs');
 
 const vk = new VK({
-    token: process.env.TOKEN
+    token: process.env.TOKEN,
 });
 
 /**
@@ -17,10 +17,10 @@ vk.upload.photoAlbum({
         values: [
             // Examples of parameters below
             {
-                value: '<value>'
-            }
-        ]
-    }
+                value: '<value>',
+            },
+        ],
+    },
 });
 
 /**
@@ -32,52 +32,51 @@ Promise.all([
     /* File path */
     vk.upload.wallPhoto({
         source: {
-            value: './path/to/cat1.jpg'
-        }
+            value: './path/to/cat1.jpg',
+        },
     }),
 
     /* File stream */
     vk.upload.wallPhoto({
         source: {
-            value: fs.createReadStream('./path/to/cat2.jpg')
-        }
+            value: fs.createReadStream('./path/to/cat2.jpg'),
+        },
     }),
 
     /* Buffer */
     vk.upload.wallPhoto({
         source: {
-            value: fs.readFileSync('./path/to/cat3.jpg')
-        }
+            value: fs.readFileSync('./path/to/cat3.jpg'),
+        },
     }),
 
     /* URL */
     vk.upload.wallPhoto({
         source: {
-            value: 'http://lorempixel.com/400/200/cats/'
-        }
+            value: 'http://lorempixel.com/400/200/cats/',
+        },
     }),
 
     /* URL Buffer */
     fetch('http://lorempixel.com/400/200/cats/')
         .then(response => response.buffer())
-        .then(buffer => (
+        .then(buffer =>
             vk.upload.wallPhoto({
                 source: {
-                    value: buffer
-                }
-            })
-        )),
+                    value: buffer,
+                },
+            }),
+        ),
 
     /* URL Stream */
-    fetch('http://lorempixel.com/400/200/cats/')
-        .then(response => (
-            vk.upload.wallPhoto({
-                source: {
-                    value: response.body,
-                    contentLength: response.headers.get('content-length')
-                }
-            })
-        ))
+    fetch('http://lorempixel.com/400/200/cats/').then(response =>
+        vk.upload.wallPhoto({
+            source: {
+                value: response.body,
+                contentLength: response.headers.get('content-length'),
+            },
+        }),
+    ),
 ]);
 
 /**
@@ -91,9 +90,9 @@ Promise.all([
             values: {
                 value: './path/to/cat1.dat',
                 contentType: 'image/jpeg',
-                filename: 'cat1.jpg'
-            }
-        }
+                filename: 'cat1.jpg',
+            },
+        },
     }),
 
     /* File stream */
@@ -103,10 +102,10 @@ Promise.all([
             values: {
                 value: fs.createReadStream('./path/to/cat2'),
                 contentType: 'image/png',
-                filename: 'cat2.png'
-            }
-        }
-    })
+                filename: 'cat2.png',
+            },
+        },
+    }),
 
     // ...etc
 ]);
@@ -119,27 +118,27 @@ vk.upload.photoAlbum({
         timeout: 1e3 * 60,
         values: [
             {
-                value: './path/to/cat1.jpg'
+                value: './path/to/cat1.jpg',
             },
 
             {
-                value: 'http://lorempixel.com/400/200/cats/'
-            },
-
-            {
-                value: fs.createReadStream('./path/to/cat2.jpg')
+                value: 'http://lorempixel.com/400/200/cats/',
             },
 
             {
                 value: fs.createReadStream('./path/to/cat2.jpg'),
-                filename: 'cat2.jpg'
+            },
+
+            {
+                value: fs.createReadStream('./path/to/cat2.jpg'),
+                filename: 'cat2.jpg',
             },
 
             {
                 value: './path/to/cat5.dat',
                 contentType: 'image/jpeg',
-                filename: 'cat5.jpg'
-            }
-        ]
-    }
+                filename: 'cat5.jpg',
+            },
+        ],
+    },
 });

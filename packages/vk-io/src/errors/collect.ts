@@ -1,4 +1,5 @@
 import { VKError } from './error';
+
 import type { ExecuteError } from './execute';
 
 export interface ICollectErrorOptions {

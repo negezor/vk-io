@@ -1,8 +1,8 @@
 import createDebug from 'debug';
 
-import type { API, Objects } from '../api';
 import { type APIError, APIErrorCode, CollectError, CollectErrorCode } from '../errors';
 
+import type { API, Objects } from '../api';
 import { getExecuteCode } from './execute-code';
 
 const debug = createDebug('api-io:collect');

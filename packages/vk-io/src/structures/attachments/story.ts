@@ -1,9 +1,10 @@
 import { Attachment, type AttachmentFactoryOptions } from './attachment';
-
-import { AttachmentType, kSerializeData } from '../../utils/constants';
-import { pickProperties } from '../../utils/helpers';
 import { type IPhotoAttachmentPayload, PhotoAttachment } from './photo';
 import { type IVideoAttachmentPayload, VideoAttachment } from './video';
+
+import { AttachmentType, kSerializeData } from '../../utils/constants';
+
+import { pickProperties } from '../../utils/helpers';
 
 export interface IStoryAttachmentPayload {
     id: number;

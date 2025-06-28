@@ -1,7 +1,8 @@
 import type { load as cheerioLoad } from 'cheerio';
 
-import { groupScopes, userScopes } from './constants';
 import type { Response } from './fetch-cookie';
+
+import { groupScopes, userScopes } from './constants';
 
 export type CheerioStatic = ReturnType<typeof cheerioLoad>;
 

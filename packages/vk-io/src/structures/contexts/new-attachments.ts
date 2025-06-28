@@ -1,11 +1,12 @@
-import { Context, type ContextDefaultState, type ContextFactoryOptions } from './context';
-
 import { VKError } from '../../errors';
+
+import { Context, type ContextDefaultState, type ContextFactoryOptions } from './context';
 
 import { AudioAttachment, PhotoAttachment, VideoAttachment } from '../attachments';
 import { Attachmentable } from '../shared/attachmentable';
 
 import { AttachmentType, kSerializeData } from '../../utils/constants';
+
 import { applyMixins, pickProperties } from '../../utils/helpers';
 
 export type NewAttachmentsContextType = 'new_attachment';

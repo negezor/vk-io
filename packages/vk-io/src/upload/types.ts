@@ -1,6 +1,7 @@
 import type { Agent } from 'https';
 
 import type { API } from '../api';
+
 import type { AllowArray } from '../types';
 
 /**

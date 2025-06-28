@@ -1,6 +1,7 @@
 import { Context, type ContextDefaultState, type ContextFactoryOptions } from './context';
 
 import { kSerializeData } from '../../utils/constants';
+
 import { pickProperties } from '../../utils/helpers';
 
 export type FriendActivityContextType = 'friend_activity';

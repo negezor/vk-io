@@ -6,16 +6,19 @@ import { type CallbackService, CaptchaType, type ICallbackServiceValidate } from
 
 import type { Agent } from 'https';
 
-import { AuthErrorCode, DESKTOP_USER_AGENT } from '../constants';
 import { AuthorizationError } from '../errors';
+
 import {
     type CookieJar,
     type FetchWrapper,
+    fetchCookieFollowRedirectsDecorator,
     type RequestInfo,
     type RequestInit,
     type Response,
-    fetchCookieFollowRedirectsDecorator,
 } from '../fetch-cookie';
+
+import { AuthErrorCode, DESKTOP_USER_AGENT } from '../constants';
+
 import {
     type CheerioStatic,
     getAllUserPermissions,

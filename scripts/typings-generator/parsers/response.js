@@ -7,8 +7,7 @@ module.exports = function parseResponses(rawResponses, payload) {
         return [];
     }
 
-    return Object.entries(rawResponses)
-        .map(([key, value]) => (
-            parseJSONObject(toPascalCase(key), value.properties.response, payload)
-        ));
+    return Object.entries(rawResponses).map(([key, value]) =>
+        parseJSONObject(toPascalCase(key), value.properties.response, payload),
+    );
 };

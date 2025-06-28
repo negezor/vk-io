@@ -1,38 +1,38 @@
 {
-  "name": "vk-io-monorepo",
-  "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
-  "engines": {
-    "node": ">=12.20.0"
-  },
-  "type": "module",
-  "devDependencies": {
-    "@biomejs/biome": "^2.0.6",
-    "@rollup/plugin-json": "^6.1.0",
-    "@types/node": "^24.0.7",
-    "rollup": "^4.44.1",
-    "rollup-plugin-typescript2": "^0.36.0",
-    "tsx": "^4.20.3",
-    "typedoc": "^0.28.6",
-    "typescript": "^5.8.3",
-    "vitepress": "^1.6.3"
-  },
-  "scripts": {
-    "prepare": "npm run rollup:build && npm run test",
-    "build": "npm run rollup:build",
-    "watch": "npm run rollup:watch",
-    "clean": "rm -rf ./packages/*/lib",
-    "rollup:build": "NODE_ENV=production rollup -c rollup.config.js",
-    "rollup:watch": "npm run rollup:build -- -w",
-    "docs:dev": "vitepress dev docs",
-    "docs:build": "sh scripts/deploy-docs.sh",
-    "docs:preview": "vitepress preview docs",
-    "test": "npm run test:node && npm run lint",
-    "test:node": "node --import tsx --test packages/*/test/*.test.ts",
-    "lint": "npm run lint:biome",
-    "lint:biome": "biome lint --write ./packages/*/{src,test}",
-    "fmt": "biome format --write ./packages/*/{src,test}"
-  }
+    "name": "vk-io-monorepo",
+    "private": true,
+    "workspaces": [
+        "packages/*"
+    ],
+    "engines": {
+        "node": ">=12.20.0"
+    },
+    "type": "module",
+    "devDependencies": {
+        "@biomejs/biome": "^2.0.6",
+        "@rollup/plugin-json": "^6.1.0",
+        "@types/node": "^24.0.7",
+        "rollup": "^4.44.1",
+        "rollup-plugin-typescript2": "^0.36.0",
+        "tsx": "^4.20.3",
+        "typedoc": "^0.28.6",
+        "typescript": "^5.8.3",
+        "vitepress": "^1.6.3"
+    },
+    "scripts": {
+        "prepare": "npm run rollup:build && npm run test",
+        "build": "npm run rollup:build",
+        "watch": "npm run rollup:watch",
+        "clean": "rm -rf ./packages/*/lib",
+        "rollup:build": "NODE_ENV=production rollup -c rollup.config.js",
+        "rollup:watch": "npm run rollup:build -- -w",
+        "docs:dev": "vitepress dev docs",
+        "docs:build": "sh scripts/deploy-docs.sh",
+        "docs:preview": "vitepress preview docs",
+        "test": "npm run test:node && npm run lint",
+        "test:node": "node --import tsx --test packages/*/test/*.test.ts",
+        "lint": "npm run lint:biome",
+        "lint:biome": "biome lint --write ./packages/*/{src,test}",
+        "fmt": "biome format --write ./packages/*/{src,test}"
+    }
 }

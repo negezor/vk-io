@@ -1,4 +1,5 @@
 import type { SceneContext, StepSceneContext } from '../contexts';
+
 import type { IContext } from '../types';
 
 export interface IStepContext<S extends Record<string, unknown>> extends IContext {

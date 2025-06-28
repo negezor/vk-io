@@ -1,10 +1,11 @@
 import { inspectable } from 'inspectable';
 
+import { APIRequest } from '../api/request';
+
 import { VKError } from '../errors';
 
 import type { API } from '../api';
-import { APIRequest } from '../api/request';
-import { type IExecutesPayload, executeRequests } from './executes';
+import { executeRequests, type IExecutesPayload } from './executes';
 
 export interface IChainOptions {
     api: API;

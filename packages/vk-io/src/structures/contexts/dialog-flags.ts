@@ -1,8 +1,9 @@
-import type { Params } from '../../api';
-
 import { Context, type ContextDefaultState, type ContextFactoryOptions } from './context';
 
+import type { Params } from '../../api';
+
 import { kSerializeData } from '../../utils/constants';
+
 import { pickProperties } from '../../utils/helpers';
 
 export type DialogFlagsContextType = 'dialog_flags';

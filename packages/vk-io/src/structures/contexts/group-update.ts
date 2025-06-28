@@ -4,6 +4,7 @@ import { type IPhotoAttachmentPayload, PhotoAttachment } from '../attachments';
 import { Attachmentable } from '../shared/attachmentable';
 
 import { kSerializeData } from '../../utils/constants';
+
 import { applyMixins, pickProperties } from '../../utils/helpers';
 
 export type GroupUpdateContextType = 'group_update';

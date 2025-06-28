@@ -3,9 +3,10 @@ import { inspectable } from 'inspectable';
 import { API } from './api';
 import { Updates } from './updates';
 import { Upload } from './upload';
-import { CallbackService } from './utils/callback-service';
 
 import type { VKOptions } from './types';
+
+import { CallbackService } from './utils/callback-service';
 
 /**
  * Main class

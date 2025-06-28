@@ -27,26 +27,15 @@ module.exports = class TypesGenerator {
     }
 
     static type(name, type) {
-        return ts.factory.createTypeAliasDeclaration(
-            undefined,
-            name,
-            undefined,
-            type,
-        );
+        return ts.factory.createTypeAliasDeclaration(undefined, name, undefined, type);
     }
 
     static genericType(name, types) {
-        return ts.factory.createTypeReferenceNode(
-            name,
-            types,
-        );
+        return ts.factory.createTypeReferenceNode(name, types);
     }
 
     static promiseType(type) {
-        return TypesGenerator.genericType(
-            'Promise',
-            [type],
-        );
+        return TypesGenerator.genericType('Promise', [type]);
     }
 
     static parameter({ name, type, required = false }) {
@@ -54,20 +43,12 @@ module.exports = class TypesGenerator {
             undefined,
             undefined,
             name,
-            !required
-                ? ts.factory.createKeywordTypeNode(
-                    ts.SyntaxKind.QuestionToken,
-                )
-                : undefined,
+            !required ? ts.factory.createKeywordTypeNode(ts.SyntaxKind.QuestionToken) : undefined,
             type,
         );
     }
 
     static declarationExport(exportClause) {
-        return ts.factory.createExportDeclaration(
-            undefined,
-            false,
-            exportClause,
-        );
+        return ts.factory.createExportDeclaration(undefined, false, exportClause);
     }
 };

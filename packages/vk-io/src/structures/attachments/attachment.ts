@@ -1,6 +1,7 @@
 import { inspectable } from 'inspectable';
 
 import type { API } from '../../api';
+
 import { type AttachmentType, kSerializeData } from '../../utils/constants';
 
 /**

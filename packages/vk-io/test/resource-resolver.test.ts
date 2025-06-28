@@ -1,7 +1,7 @@
 import { deepStrictEqual } from 'node:assert';
 import { describe, it } from 'node:test';
 
-import { type IResolvedOwnerResource, type IResolvedTargetResource, VK, resolveResource } from '..';
+import { type IResolvedOwnerResource, type IResolvedTargetResource, resolveResource, VK } from '..';
 
 const { TOKEN } = process.env;
 

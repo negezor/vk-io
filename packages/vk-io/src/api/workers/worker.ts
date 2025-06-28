@@ -1,6 +1,7 @@
-import { MINIMUM_TIME_INTERVAL_API } from '../../utils/constants';
 import type { API } from '../api';
 import type { APIRequest } from '../request';
+
+import { MINIMUM_TIME_INTERVAL_API } from '../../utils/constants';
 
 export abstract class APIWorker {
     public busy = false;

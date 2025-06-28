@@ -1,7 +1,7 @@
 import createDebug from 'debug';
 import { CookieJar } from 'tough-cookie';
 
-import { RequestInfo, RequestInit, Response, fetch } from './fetch';
+import { fetch, RequestInfo, RequestInit, Response } from './fetch';
 
 export type Headers = Record<string, string>;
 

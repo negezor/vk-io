@@ -1,8 +1,8 @@
 import { Attachment, type AttachmentFactoryOptions } from './attachment';
-
 import type { IPhotoAttachmentPayload } from './photo';
 
 import { AttachmentType, kSerializeData } from '../../utils/constants';
+
 import { pickProperties } from '../../utils/helpers';
 
 export interface IDocumentAttachmentPayload {

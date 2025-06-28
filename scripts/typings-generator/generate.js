@@ -6,23 +6,11 @@
 const ts = require('typescript');
 
 const createPrinter = require('./printer');
-const {
-    TypesGenerator,
-    InterfaceGenerator,
-} = require('./generators');
+const { TypesGenerator, InterfaceGenerator } = require('./generators');
 
-const {
-    parseParameters,
-    parseResponses,
-    parseJSONSchema,
-} = require('./parsers');
+const { parseParameters, parseResponses, parseJSONSchema } = require('./parsers');
 
-const {
-    readJSONFile,
-    toPascalCase,
-    upperFirstLetter,
-    formatTSComments,
-} = require('./utils/helpers');
+const { readJSONFile, toPascalCase, upperFirstLetter, formatTSComments } = require('./utils/helpers');
 
 const METHODS_FILE = 'methods.ts';
 const PARAMS_FILE = 'params.ts';
@@ -33,12 +21,7 @@ const CONSTANTS_FILE = 'constants.ts';
 const typeingsDir = '../../packages/vk-io/src/api/schemas';
 
 async function generate() {
-    const [
-        { methods },
-        { definitions: responses },
-        { definitions: objects },
-        { errors },
-    ] = await Promise.all([
+    const [{ methods }, { definitions: responses }, { definitions: objects }, { errors }] = await Promise.all([
         readJSONFile('./schemas/methods.json'),
         readJSONFile('./schemas/responses.json'),
         readJSONFile('./schemas/objects.json'),
@@ -58,12 +41,7 @@ async function generate() {
     writeParamsNode(
         ts.factory.createImportDeclaration(
             undefined,
-            ts.factory.createImportClause(
-                false,
-                ts.factory.createNamespaceImport(
-                    objectsIdentifier,
-                ),
-            ),
+            ts.factory.createImportClause(false, ts.factory.createNamespaceImport(objectsIdentifier)),
             ts.factory.createStringLiteral(`./${OBJECTS_FILE.replace('.ts', '')}`),
         ),
     );
@@ -71,12 +49,7 @@ async function generate() {
     writeResponsesNode(
         ts.factory.createImportDeclaration(
             undefined,
-            ts.factory.createImportClause(
-                false,
-                ts.factory.createNamespaceImport(
-                    objectsIdentifier,
-                ),
-            ),
+            ts.factory.createImportClause(false, ts.factory.createNamespaceImport(objectsIdentifier)),
             ts.factory.createStringLiteral(`./${OBJECTS_FILE.replace('.ts', '')}`),
         ),
     );
@@ -84,12 +57,7 @@ async function generate() {
     writeMethodsNode(
         ts.factory.createImportDeclaration(
             undefined,
-            ts.factory.createImportClause(
-                false,
-                ts.factory.createNamespaceImport(
-                    paramsIdentifier,
-                ),
-            ),
+            ts.factory.createImportClause(false, ts.factory.createNamespaceImport(paramsIdentifier)),
             ts.factory.createStringLiteral(`./${PARAMS_FILE.replace('.ts', '')}`),
         ),
     );
@@ -97,12 +65,7 @@ async function generate() {
     writeMethodsNode(
         ts.factory.createImportDeclaration(
             undefined,
-            ts.factory.createImportClause(
-                false,
-                ts.factory.createNamespaceImport(
-                    responsesIdentifier,
-                ),
-            ),
+            ts.factory.createImportClause(false, ts.factory.createNamespaceImport(responsesIdentifier)),
             ts.factory.createStringLiteral(`./${RESPONSES_FILE.replace('.ts', '')}`),
         ),
     );
@@ -112,7 +75,7 @@ async function generate() {
 
     for (const method of methods) {
         if (method.name === 'execute') {
-            continue
+            continue;
         }
 
         const [groupName, methodName] = method.name.split('.');
@@ -141,18 +104,16 @@ async function generate() {
         params.methods.push(
             ts.factory.createIndexSignature(
                 undefined,
-                [ts.factory.createParameterDeclaration(
-                    undefined,
-                    undefined,
-                    'key',
-                    undefined,
-                    ts.factory.createKeywordTypeNode(
-                        ts.SyntaxKind.StringKeyword,
+                [
+                    ts.factory.createParameterDeclaration(
+                        undefined,
+                        undefined,
+                        'key',
+                        undefined,
+                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
                     ),
-                )],
-                ts.factory.createKeywordTypeNode(
-                    ts.SyntaxKind.AnyKeyword,
-                ),
+                ],
+                ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword),
             ),
         );
 
@@ -166,10 +127,7 @@ async function generate() {
             parameters: [
                 TypesGenerator.parameter({
                     name: 'params',
-                    type: ts.factory.createQualifiedName(
-                        paramsIdentifier,
-                        params.name,
-                    ),
+                    type: ts.factory.createQualifiedName(paramsIdentifier, params.name),
                     required: true,
                 }),
             ],
@@ -178,18 +136,15 @@ async function generate() {
                     responsesIdentifier,
                     ts.factory.createIdentifier(
                         toPascalCase(
-                            (method.responses.response
-                                || method.responses.baseResponse
-                                || method.responses.keyResponse
-                                || method.responses.responseInteger
-                                || method.responses.responseArray
-                                || method.responses.userIdsResponse
-                                || method.responses.deprecatedResponse
-                            ).$ref
-                                .replace(
-                                    'responses.json#/definitions/',
-                                    '',
-                                ),
+                            (
+                                method.responses.response ||
+                                method.responses.baseResponse ||
+                                method.responses.keyResponse ||
+                                method.responses.responseInteger ||
+                                method.responses.responseArray ||
+                                method.responses.userIdsResponse ||
+                                method.responses.deprecatedResponse
+                            ).$ref.replace('responses.json#/definitions/', ''),
                         ),
                     ),
                 ),
@@ -202,15 +157,13 @@ async function generate() {
             response.kind === 'interface'
                 ? response.type.toASTNode({ exported: true })
                 : TypesGenerator.declarationExport(
-                    ts.factory.createTypeAliasDeclaration(
-                        [ts.factory.createModifier(
-                            ts.SyntaxKind.DeclareKeyword,
-                        )],
-                        response.name,
-                        undefined,
-                        response.type,
-                    ),
-                ),
+                      ts.factory.createTypeAliasDeclaration(
+                          [ts.factory.createModifier(ts.SyntaxKind.DeclareKeyword)],
+                          response.name,
+                          undefined,
+                          response.type,
+                      ),
+                  ),
         );
     }
 
@@ -225,13 +178,13 @@ async function generate() {
             object.kind === 'interface'
                 ? object.type.toASTNode({ exported: true })
                 : TypesGenerator.declarationExport(
-                    ts.factory.createTypeAliasDeclaration(
-                        undefined,
-                        toPascalCase(object.name),
-                        undefined,
-                        object.type,
-                    ),
-                ),
+                      ts.factory.createTypeAliasDeclaration(
+                          undefined,
+                          toPascalCase(object.name),
+                          undefined,
+                          object.type,
+                      ),
+                  ),
         );
     }
 
@@ -242,20 +195,17 @@ async function generate() {
             ts.factory.createEnumDeclaration(
                 undefined,
                 'APIErrorCode',
-                Object.entries(errors)
-                    .map(([name, info]) => (
-                        ts.addSyntheticLeadingComment(
-                            ts.factory.createEnumMember(
-                                name.substring(10).toUpperCase(),
-                                ts.factory.createNumericLiteral(
-                                    String(info.code),
-                                ),
-                            ),
-                            ts.SyntaxKind.MultiLineCommentTrivia,
-                            formatTSComments(`${info.description}\n\nCode: \`${info.code}\``),
-                            true,
-                        )
-                    )),
+                Object.entries(errors).map(([name, info]) =>
+                    ts.addSyntheticLeadingComment(
+                        ts.factory.createEnumMember(
+                            name.substring(10).toUpperCase(),
+                            ts.factory.createNumericLiteral(String(info.code)),
+                        ),
+                        ts.SyntaxKind.MultiLineCommentTrivia,
+                        formatTSComments(`${info.description}\n\nCode: \`${info.code}\``),
+                        true,
+                    ),
+                ),
             ),
         ),
     );
@@ -295,7 +245,7 @@ async function generate() {
     console.log('Schema successful generated!');
 }
 
-generate().catch((error) => {
+generate().catch(error => {
     console.error('Could not generate schema', error);
 
     process.exit(1);

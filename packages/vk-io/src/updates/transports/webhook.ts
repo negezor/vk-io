@@ -1,18 +1,19 @@
 import createDebug from 'debug';
 
 import {
+    createServer as createHttpServer,
     type Server as HttpServer,
     type IncomingMessage,
     type ServerResponse,
-    createServer as createHttpServer,
 } from 'http';
-import { type Server as HTTPSServer, createServer as createHttpsServer } from 'https';
+import { createServer as createHttpsServer, type Server as HTTPSServer } from 'https';
 import type { TlsOptions } from 'tls';
 import { promisify } from 'util';
 
 import type { API } from '../../api';
-import { parseRequestJSON } from '../helpers';
 import type { IUpdatesOptions } from '../updates';
+
+import { parseRequestJSON } from '../helpers';
 
 const debug = createDebug('vk-io:updates');
 

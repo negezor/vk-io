@@ -1,11 +1,13 @@
 import { AbortController } from 'abort-controller';
 import createDebug from 'debug';
 
-import type { API } from '../../api';
 import { UpdatesError, UpdatesErrorCode } from '../../errors';
-import { fetch } from '../../utils/fetch';
-import { delay } from '../../utils/helpers';
+
+import type { API } from '../../api';
 import type { IUpdatesOptions } from '../updates';
+
+import { delay } from '../../utils/helpers';
+import { fetch } from '../../utils/fetch';
 
 const { NEED_RESTART, POLLING_REQUEST_FAILED } = UpdatesErrorCode;
 

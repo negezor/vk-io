@@ -2,18 +2,18 @@ import { inspectable } from 'inspectable';
 
 import { type Agent, globalAgent } from 'https';
 
-import type { APIMethods } from './schemas/methods';
-
-import { type APIWorker, ParallelSelectedWorker, ParallelWorker, SequentialWorker } from './workers';
-
 import { type ExecuteError, VKError } from '../errors';
-import type { Constructor } from '../types';
-import type { CallbackService } from '../utils/callback-service';
-import { MINIMUM_TIME_INTERVAL_API } from '../utils/constants';
-import { APIRequest } from './request';
 
 // @ts-expect-error assert's not supported yet
 import { version } from '../../package.json';
+import { APIRequest } from './request';
+import type { APIMethods } from './schemas/methods';
+import { type APIWorker, ParallelSelectedWorker, ParallelWorker, SequentialWorker } from './workers';
+
+import { MINIMUM_TIME_INTERVAL_API } from '../utils/constants';
+import type { Constructor } from '../types';
+
+import type { CallbackService } from '../utils/callback-service';
 
 const groupMethods = [
     'account',

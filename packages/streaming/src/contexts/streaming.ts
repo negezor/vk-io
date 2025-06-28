@@ -1,9 +1,9 @@
 import {
     Attachmentable,
+    applyMixins,
     Context,
     type ContextDefaultState,
     type ContextFactoryOptions,
-    applyMixins,
     kSerializeData,
     transformAttachments,
 } from 'vk-io';

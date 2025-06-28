@@ -2,7 +2,7 @@ const { VK, Keyboard } = require('vk-io');
 const { HearManager } = require('@vk-io/hear');
 
 const vk = new VK({
-    token: process.env.TOKEN
+    token: process.env.TOKEN,
 });
 
 const hearManager = new HearManager();
@@ -10,9 +10,7 @@ const hearManager = new HearManager();
 vk.updates.on('message_new', (context, next) => {
     const { messagePayload } = context;
 
-    context.state.command = messagePayload && messagePayload.command
-        ? messagePayload.command
-        : null;
+    context.state.command = messagePayload && messagePayload.command ? messagePayload.command : null;
 
     return next();
 });
@@ -30,15 +28,7 @@ const hearCommand = (name, conditions, handle) => {
         conditions = [conditions];
     }
 
-    hearManager.hear(
-        [
-            (text, { state }) => (
-                state.command === name
-            ),
-            ...conditions
-        ],
-        handle
-    );
+    hearManager.hear([(text, { state }) => state.command === name, ...conditions], handle);
 };
 
 // Handle start button
@@ -48,11 +38,11 @@ hearCommand('start', (context, next) => {
     return Promise.all([
         context.send('Hello!'),
 
-        next()
+        next(),
     ]);
 });
 
-hearCommand('help', async (context) => {
+hearCommand('help', async context => {
     await context.send({
         message: `
             My commands list
@@ -66,63 +56,63 @@ hearCommand('help', async (context) => {
             .textButton({
                 label: 'The help',
                 payload: {
-                    command: 'help'
-                }
+                    command: 'help',
+                },
             })
             .row()
             .textButton({
                 label: 'The current date',
                 payload: {
-                    command: 'time'
-                }
+                    command: 'time',
+                },
             })
             .row()
             .textButton({
                 label: 'Cat photo',
                 payload: {
-                    command: 'cat'
+                    command: 'cat',
                 },
-                color: Keyboard.PRIMARY_COLOR
+                color: Keyboard.PRIMARY_COLOR,
             })
             .textButton({
                 label: 'Cat purring',
                 payload: {
-                    command: 'purr'
+                    command: 'purr',
                 },
-                color: Keyboard.PRIMARY_COLOR
-            })
+                color: Keyboard.PRIMARY_COLOR,
+            }),
     });
 });
 
-hearCommand('cat', async (context) => {
+hearCommand('cat', async context => {
     await Promise.all([
         context.send('Wait for the uploads awesome 😻'),
 
         context.sendPhotos({
-            value: 'https://loremflickr.com/400/300/'
-        })
+            value: 'https://loremflickr.com/400/300/',
+        }),
     ]);
 });
 
-hearCommand('time', ['/time', '/date'], async (context) => {
+hearCommand('time', ['/time', '/date'], async context => {
     await context.send(String(new Date()));
 });
 
 const catsPurring = [
     'http://ronsen.org/purrfectsounds/purrs/trip.mp3',
     'http://ronsen.org/purrfectsounds/purrs/maja.mp3',
-    'http://ronsen.org/purrfectsounds/purrs/chicken.mp3'
+    'http://ronsen.org/purrfectsounds/purrs/chicken.mp3',
 ];
 
-hearCommand('purr', async (context) => {
+hearCommand('purr', async context => {
     const link = catsPurring[Math.floor(Math.random() * catsPurring.length)];
 
     await Promise.all([
         context.send('Wait for the uploads purring 😻'),
 
         context.sendAudioMessage({
-            value: link
-        })
+            value: link,
+        }),
     ]);
 });
 

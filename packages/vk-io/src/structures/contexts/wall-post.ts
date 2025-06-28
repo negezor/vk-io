@@ -3,6 +3,7 @@ import { Context, type ContextDefaultState, type ContextFactoryOptions } from '.
 import { type IWallAttachmentPayload, WallAttachment } from '../attachments';
 
 import { kSerializeData } from '../../utils/constants';
+
 import { pickProperties } from '../../utils/helpers';
 
 export type WallPostContextType = 'wall_post';

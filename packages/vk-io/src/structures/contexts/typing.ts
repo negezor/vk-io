@@ -1,6 +1,7 @@
 import { Context, type ContextDefaultState, type ContextFactoryOptions } from './context';
 
-import { PEER_CHAT_ID_OFFSET, UpdateSource, kSerializeData } from '../../utils/constants';
+import { kSerializeData, PEER_CHAT_ID_OFFSET, UpdateSource } from '../../utils/constants';
+
 import { getPeerType, pickProperties } from '../../utils/helpers';
 
 export enum TypingState {

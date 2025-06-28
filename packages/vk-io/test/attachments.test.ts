@@ -9,8 +9,8 @@ import {
     MarketAttachment,
     PhotoAttachment,
     StoryAttachment,
-    VK,
     VideoAttachment,
+    VK,
     WallAttachment,
 } from '..';
 

@@ -1,25 +1,26 @@
 /* eslint-disable max-classes-per-file */
+
 import { Context, type ContextDefaultState, type ContextFactoryOptions } from './context';
 
-import type { Params } from '../../api';
-
-import { Attachmentable, type IAllAttachmentable, MessageForwardsCollection } from '../shared';
-import { transformMessage } from './helpers/transform-message';
-
 import { type Attachment, type ExternalAttachment, transformAttachments } from '../attachments';
-
-import type { AllowArray } from '../../types';
+import type { Params } from '../../api';
 import type { IUploadSourceMedia } from '../../upload';
+import { Attachmentable, type IAllAttachmentable, MessageForwardsCollection } from '../shared';
+
+import type { KeyboardBuilder } from '../keyboard';
+
 import {
     type AttachmentType,
     type AttachmentTypeString,
+    kSerializeData,
     MessageSource,
     PEER_CHAT_ID_OFFSET,
     UpdateSource,
-    kSerializeData,
 } from '../../utils/constants';
+import type { AllowArray } from '../../types';
+
 import { applyMixins, getPeerType, getRandomId, pickProperties, unescapeHTML } from '../../utils/helpers';
-import type { KeyboardBuilder } from '../keyboard';
+import { transformMessage } from './helpers/transform-message';
 
 export type MessageContextType = 'message';
 

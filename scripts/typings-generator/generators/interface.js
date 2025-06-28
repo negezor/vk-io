@@ -26,11 +26,7 @@ module.exports = class InterfaceGenerator {
         const property = ts.factory.createPropertyDeclaration(
             undefined,
             name,
-            !required
-                ? ts.factory.createKeywordTypeNode(
-                    ts.SyntaxKind.QuestionToken,
-                )
-                : undefined,
+            !required ? ts.factory.createKeywordTypeNode(ts.SyntaxKind.QuestionToken) : undefined,
             type,
             undefined,
         );
@@ -42,12 +38,7 @@ module.exports = class InterfaceGenerator {
         }
 
         this.properties.push(
-            ts.addSyntheticLeadingComment(
-                property,
-                ts.SyntaxKind.MultiLineCommentTrivia,
-                description,
-                true,
-            ),
+            ts.addSyntheticLeadingComment(property, ts.SyntaxKind.MultiLineCommentTrivia, description, true),
         );
     }
 
@@ -77,31 +68,18 @@ module.exports = class InterfaceGenerator {
         }
 
         this.methods.push(
-            ts.addSyntheticLeadingComment(
-                method,
-                ts.SyntaxKind.MultiLineCommentTrivia,
-                description,
-                true,
-            ),
+            ts.addSyntheticLeadingComment(method, ts.SyntaxKind.MultiLineCommentTrivia, description, true),
         );
     }
 
     toASTNode({ exported = false } = {}) {
-        let iterfaceDeclaration = ts.factory.createInterfaceDeclaration(
-            undefined,
-            this.name,
-            undefined,
-            undefined,
-            [
-                ...this.properties,
-                ...this.methods,
-            ],
-        );
+        let iterfaceDeclaration = ts.factory.createInterfaceDeclaration(undefined, this.name, undefined, undefined, [
+            ...this.properties,
+            ...this.methods,
+        ]);
 
         if (exported) {
-            iterfaceDeclaration = TypesGenerator.declarationExport(
-                iterfaceDeclaration,
-            );
+            iterfaceDeclaration = TypesGenerator.declarationExport(iterfaceDeclaration);
         }
 
         if (this.description) {

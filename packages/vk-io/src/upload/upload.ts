@@ -2,20 +2,15 @@ import { AbortController } from 'abort-controller';
 import { FormDataEncoder } from 'form-data-encoder';
 // eslint-disable-next-line import/extensions
 import { File, FormData } from 'formdata-node';
-
 import { inspectable } from 'inspectable';
 
-import { promises as fs, createReadStream } from 'fs';
+import { createReadStream, promises as fs } from 'fs';
 import { globalAgent } from 'https';
 import { Readable } from 'stream';
 
-import type { API } from '../api';
 import { UploadError, UploadErrorCode } from '../errors';
-import { DefaultContentType, DefaultExtension } from '../utils/constants';
-import { fetch } from '../utils/fetch';
-import { isStream, normalizeSource, pickExistingProperties, streamToBuffer } from './helpers';
-import type { IUploadConduct, IUploadOptions, IUploadParams, IUploadSourceMedia } from './types';
 
+import type { API } from '../api';
 import {
     AudioAttachment,
     AudioMessageAttachment,
@@ -25,6 +20,12 @@ import {
     StoryAttachment,
     VideoAttachment,
 } from '../structures';
+
+import { DefaultContentType, DefaultExtension } from '../utils/constants';
+import type { IUploadConduct, IUploadOptions, IUploadParams, IUploadSourceMedia } from './types';
+
+import { isStream, normalizeSource, pickExistingProperties, streamToBuffer } from './helpers';
+import { fetch } from '../utils/fetch';
 
 const { stat: fileStat } = fs;
 
