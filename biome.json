@@ -6,6 +6,11 @@
         "lineWidth": 120,
         "lineEnding": "lf"
     },
+    "vcs": {
+        "enabled": true,
+        "clientKind": "git",
+        "useIgnoreFile": true
+    },
     "linter": {
         "rules": {
             "style": {
@@ -20,12 +25,48 @@
         "formatter": {
             "quoteStyle": "single",
             "semicolons": "always",
-			"arrowParentheses": "asNeeded"
+            "arrowParentheses": "asNeeded"
+        }
+    },
+    "assist": {
+        "actions": {
+            "source": {
+                "organizeImports": {
+                    "level": "on",
+                    "options": {
+                        "groups": [
+                            [":PACKAGE:", "!vk-io", "!:NODE:"],
+                            ":BLANK_LINE:",
+                            "vk-io",
+                            ":BLANK_LINE:",
+                            ":NODE:",
+                            "**/{api,updates,upload}/**/*",
+                            ":BLANK_LINE:",
+                            ["**/{errors,error}", "**/{errors,error}/*"],
+                            ":BLANK_LINE:",
+                            ["**/contexts", "**/context"],
+                            ":BLANK_LINE:",
+                            "**/attachments",
+                            [
+                                ":PATH:",
+                                "!**/{keyboard,constants,types,helpers,utils}",
+                                "!**/{keyboard,constants,types,helpers,utils}/**/*",
+                                "!**/*.types"
+                            ],
+                            ":BLANK_LINE:",
+                            "**/keyboard",
+                            ":BLANK_LINE:",
+                            "**/constants",
+                            ["**/types", "**/*.types"],
+                            ":BLANK_LINE:",
+                            ["**/{helpers,utils}"]
+                        ]
+                    }
+                }
+            }
         }
     },
     "files": {
-        "ignore": [
-            "packages/vk-io/src/api/schemas"
-        ]
+        "includes": ["**", "!packages/vk-io/src/api/schemas", "!scripts/typings-generator/schemas"]
     }
 }
