@@ -216,7 +216,7 @@ export class DirectAuthorization {
             let isJSON = true;
             try {
                 text = JSON.parse(text);
-            } catch (e) {
+            } catch (_e) {
                 isJSON = false;
             }
 

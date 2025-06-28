@@ -274,7 +274,7 @@ export class Updates {
 
     private webhookTransport: WebhookTransport;
 
-    private composer = Composer.builder<Context>().caught((context, error) => {
+    private composer = Composer.builder<Context>().caught((_context, error) => {
         console.error(error);
     });
 

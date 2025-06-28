@@ -305,7 +305,7 @@ export abstract class ImplicitFlow {
     /**
      * Process form auth
      */
-    protected async processAuthForm(response: Response, $: CheerioStatic): Promise<Response> {
+    protected async processAuthForm(_response: Response, $: CheerioStatic): Promise<Response> {
         debug('process login handle');
 
         if (this.captchaValidate) {

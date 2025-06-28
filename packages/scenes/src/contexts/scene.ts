@@ -167,7 +167,6 @@ export class SceneContext<S extends Record<string, unknown>> {
      * Reset state/session
      */
     public reset(): void {
-        // biome-ignore lint/performance/noDelete: we have to remove the property because other storage can find it in the enumerations
         delete this.context.session.__scene;
 
         this.updateSession();

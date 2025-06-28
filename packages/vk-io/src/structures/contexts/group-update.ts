@@ -114,5 +114,4 @@ class GroupUpdateContext<S = ContextDefaultState> extends Context<
 interface GroupUpdateContext extends Attachmentable {}
 applyMixins(GroupUpdateContext, [Attachmentable]);
 
-// biome-ignore lint/style/useExportType: false positive
 export { GroupUpdateContext };

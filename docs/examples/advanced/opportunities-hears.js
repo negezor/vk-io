@@ -21,7 +21,7 @@ hearManager.hear(/^\/text (.+)/i, context => {
 
 // Callback validation
 hearManager.hear(
-    value => value && value.includes('cat'),
+    value => value?.includes('cat'),
     async context => {
         await context.send('Who say cat?!');
     },
@@ -29,7 +29,7 @@ hearManager.hear(
 
 // Callback validation with context
 hearManager.hear(
-    (value, context) => {
+    (_value, context) => {
         const messagePayload = context.messagePayload || {};
 
         return messagePayload.command === 'start';

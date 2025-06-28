@@ -1,6 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 const ts = require('typescript');
 
+// biome-ignore lint/complexity/noStaticOnlyClass: legacy code
 module.exports = class TypesGenerator {
     static get any() {
         return ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword);

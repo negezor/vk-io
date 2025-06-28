@@ -261,7 +261,7 @@ class API {
             // @ts-ignore
             this[group] = new Proxy(Object.create(null), {
                 get:
-                    (obj, prop: string) =>
+                    (_obj, prop: string) =>
                     (params: object): Promise<any> =>
                         this.callWithRequest(
                             new APIRequest({

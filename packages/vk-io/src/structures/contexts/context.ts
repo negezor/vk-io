@@ -99,7 +99,7 @@ export class Context<
      * Returns the custom data
      */
     public [kSerializeData](): object {
-        const { api, upload, ...payload } = this;
+        const { api: _, upload: __, ...payload } = this;
 
         return payload;
     }

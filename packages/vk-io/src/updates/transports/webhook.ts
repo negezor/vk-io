@@ -17,7 +17,7 @@ import { parseRequestJSON } from '../helpers';
 
 const debug = createDebug('vk-io:updates');
 
-const defaultNextHandler = (req: IncomingMessage, res: ServerResponse): void => {
+const defaultNextHandler = (_req: IncomingMessage, res: ServerResponse): void => {
     res.writeHead(403);
     res.end();
 };

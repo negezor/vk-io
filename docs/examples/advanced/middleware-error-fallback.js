@@ -10,7 +10,7 @@ const hearManager = new HearManager();
 const logger = console;
 
 // Custom catch all the errors
-vk.updates.use(async (context, next) => {
+vk.updates.use(async (_context, next) => {
     try {
         await next();
     } catch (error) {

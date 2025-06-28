@@ -4,7 +4,7 @@ import { MessageSource, PEER_CHAT_ID_OFFSET } from './constants';
  * Returns params for execute
  */
 export const getExecuteParams = (params: Record<string, object | string>): string =>
-    JSON.stringify(params, (key, value) =>
+    JSON.stringify(params, (_key, value) =>
         typeof value === 'object' && value !== params ? String(value) : (value as unknown),
     );
 

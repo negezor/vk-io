@@ -49,7 +49,7 @@ export class HearManager<C extends Context> {
                     ],
                 );
 
-                return (text, context) =>
+                return (_text, context) =>
                     entries.every(([selectors, callback]): boolean => {
                         const value = getObjectValue(context, selectors);
 

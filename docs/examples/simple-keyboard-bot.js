@@ -10,7 +10,7 @@ const hearManager = new HearManager();
 vk.updates.on('message_new', (context, next) => {
     const { messagePayload } = context;
 
-    context.state.command = messagePayload && messagePayload.command ? messagePayload.command : null;
+    context.state.command = messagePayload?.command || null;
 
     return next();
 });
@@ -28,7 +28,7 @@ const hearCommand = (name, conditions, handle) => {
         conditions = [conditions];
     }
 
-    hearManager.hear([(text, { state }) => state.command === name, ...conditions], handle);
+    hearManager.hear([(_text, { state }) => state.command === name, ...conditions], handle);
 };
 
 // Handle start button
