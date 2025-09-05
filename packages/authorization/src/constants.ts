@@ -1,7 +1,7 @@
 /**
  * Blank html redirect
  */
-export const CALLBACK_BLANK = 'https://oauth.vk.com/blank.html';
+export const CALLBACK_BLANK = 'https://oauth.vk.ru/blank.html';
 
 /**
  * User-Agent for standalone auth

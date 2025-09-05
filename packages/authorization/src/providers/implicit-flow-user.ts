@@ -42,7 +42,7 @@ export class ImplicitFlowUser extends ImplicitFlow {
             scope: String(scope),
         });
 
-        const url = new URL(`https://oauth.vk.com/authorize?${params.toString()}`);
+        const url = new URL(`https://oauth.vk.ru/authorize?${params.toString()}`);
 
         return this.fetch(url, {
             method: 'GET',
