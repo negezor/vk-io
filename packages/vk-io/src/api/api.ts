@@ -132,14 +132,14 @@ export interface IAPIOptions {
     /**
      * VK API version
      *
-     * @see https://vk.com/dev/versions
+     * @see https://dev.vk.ru/reference/versions
      */
     apiVersion: string;
 
     /**
      * Base API URL
      *
-     * @defaultValue `https://api.vk.com/method`
+     * @defaultValue `https://api.vk.ru/method`
      */
     apiBaseUrl: string;
 

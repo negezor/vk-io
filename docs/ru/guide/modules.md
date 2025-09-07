@@ -4,7 +4,7 @@
 
 ## API
 
-Базовый модуль [запросов](https://vk.com/dev/api_requests), позволяет вызывать методы API.
+Базовый модуль [запросов](https://dev.vk.ru/api_requests), позволяет вызывать методы API.
 
 ```ts
 import { VK } from 'vk-io';
@@ -22,7 +22,7 @@ const users = await vk.api.users.get({
 
 ## Upload
 
-Базовый модуль для [загрузки](https://vk.com/dev/upload_files), позволяет:
+Базовый модуль для [загрузки](https://dev.vk.ru/api/upload/overview), позволяет:
 - Загружать файлы на стену (фото/документ)
 - Загружать фото в альбом
 - Загружать файлы в личные сообщения (фото/документ/граффити/голосовое сообщение)
@@ -50,9 +50,9 @@ const attachment = await vk.upload.messagePhoto({
 ## Updates
 
 Базовый модуль для получения обновлений, поддерживает:
-- [Callback API](https://vk.com/dev/callback_api)
-- [Bots Long Poll](https://vk.com/dev/bots_longpoll)
-- [User Long Poll](https://vk.com/dev/using_longpoll)
+- [Callback API](https://dev.vk.ru/api/callback/getting-started)
+- [Bots Long Poll](https://dev.vk.ru/api/bots-long-poll/getting-started)
+- [User Long Poll](https://dev.vk.ru/api/user-long-poll/getting-started)
 
 ```ts
 import { VK } from 'vk-io';
@@ -75,8 +75,8 @@ await vk.updates.start();
 ## Collect
 
 Базовый модуль для работы с коллекциями, позволяет:
-- Вызывать множество однотипных методов через [execute](https://vk.com/dev/execute)
-- Цепочка вызовов с контролируемым результатом запроса через [execute](https://vk.com/dev/execute)
+- Вызывать множество однотипных методов через [execute](https://dev.vk.ru/method/execute)
+- Цепочка вызовов с контролируемым результатом запроса через [execute](https://dev.vk.ru/method/execute)
 - Итератор сбора данных с методов которые поддерживают limit/offset
 
 [Более подробно](./collect)
@@ -84,7 +84,7 @@ await vk.updates.start();
 ## Keyboard
 
 Базовый модуль для работы с клавиатурой, предоставляет:
-- Абстракцию над [структурой клавиатуры](https://vk.com/dev/bots_docs_3)
+- Абстракцию над [структурой клавиатуры](https://dev.vk.ru/api/bots/development/keyboard)
 - Две вариации составления клавиатуры, через сборщик или ручное составление
 
 ```ts

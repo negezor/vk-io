@@ -221,13 +221,13 @@ class StreamingContext<S = ContextDefaultState> extends Context<IStreamingContex
     /**
      * Returns the author platform
      *
-     * - `1` - m.vk.com or other unknown application
+     * - `1` - m.vk.ru or other unknown application
      * - `2` - iPhone
      * - `3` - iPad
      * - `4` - Android
      * - `5` - Windows Phone
      * - `6` - Windows
-     * - `7` - vk.com or other unknown application
+     * - `7` - vk.ru or other unknown application
      */
     public get authorPlatform(): number | undefined {
         return this.payload.author.platform;

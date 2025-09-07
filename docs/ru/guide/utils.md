@@ -7,12 +7,12 @@
 Позволяет получить информацию о ресурсе внутри ВКонтакте. Зачастую возникает задача получить идентификатор ресурса из ссылки/упоминания или числа. Для того что бы не писать эту логику самостоятельно можно воспользоваться `resolveResource`. Поддерживается следующие приведённые примеры:
 
 Ссылка
-- https://vk.com/id1 — `{ id: 1, type: 'user' }`
-- https://vk.com/durov — `{ id: 1, type: 'user' }`
-- https://vk.com/wall1_2442097 — `{ id: 2442097, ownerId: 1, type: 'wall' }`
-- https://vk.com/durov?w=wall1_2442097 — `{ id: 2442097, ownerId: 1, type: 'wall' }`
-- https://vk.com/club1 — `{ id: 1, type: 'group' }`
-- https://vk.com/app1 — `{ id: 1, type: 'application' }`
+- https://vk.ru/id1 — `{ id: 1, type: 'user' }`
+- https://vk.ru/durov — `{ id: 1, type: 'user' }`
+- https://vk.ru/wall1_2442097 — `{ id: 2442097, ownerId: 1, type: 'wall' }`
+- https://vk.ru/durov?w=wall1_2442097 — `{ id: 2442097, ownerId: 1, type: 'wall' }`
+- https://vk.ru/club1 — `{ id: 1, type: 'group' }`
+- https://vk.ru/app1 — `{ id: 1, type: 'application' }`
 
 Упоминание
 - \[id1|Durov\] — `{ id: 1, type: 'user' }`
@@ -50,7 +50,7 @@ interface IResolvedOwnerResource {
 [Опции функции](https://negezor.github.io/vk-io/references/vk-io/interfaces/IResolveResourceOptions.html)
 
 ::: warning Внимание
-Вы вполне можете не передавать класс API, однако если будет встречено короткое имя ([slug](https://en.wikipedia.org/wiki/Clean_URL#Slug)) по типу `durov` — вы получите ошибку, так как он нужен для вызова метода [utils.resolveScreenName](https://vk.com/dev/utils.resolveScreenName).
+Вы вполне можете не передавать класс API, однако если будет встречено короткое имя ([slug](https://en.wikipedia.org/wiki/Clean_URL#Slug)) по типу `durov` — вы получите ошибку, так как он нужен для вызова метода [utils.resolveScreenName](https://dev.vk.ru/method/utils.resolveScreenName).
 :::
 
 ```ts
@@ -66,7 +66,7 @@ const resource = await resolveResource({
     // api: vk.api,
 
     // Ресурс который нужно разобрать
-    resource: 'https://vk.com/id1'
+    resource: 'https://vk.ru/id1'
 });
 
 console.log(resource); // { id: 1, type: 'user' }

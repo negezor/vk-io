@@ -106,13 +106,13 @@ export class FriendActivityContext<S = ContextDefaultState> extends Context<
     /**
      * Returns the platform from which the user entered
      *
-     * - `1` - m.vk.com or other unknown application
+     * - `1` - m.vk.ru or other unknown application
      * - `2` - iPhone
      * - `3` - iPad
      * - `4` - Android
      * - `5` - Windows Phone
      * - `6` - Windows
-     * - `7` - vk.com or other unknown application
+     * - `7` - vk.ru or other unknown application
      */
     public get platform(): number | undefined {
         const { extra } = this.payload;

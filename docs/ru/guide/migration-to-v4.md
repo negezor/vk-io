@@ -45,7 +45,7 @@ const result = await resolveResource({
     // Объект API
     api,
 
-    resource: 'https://vk.com/durov'
+    resource: 'https://vk.ru/durov'
 });
 ```
 - Удалён `vk.collect`, модуль разбит на мелкие классы и функции
@@ -339,7 +339,7 @@ updates.on('message_new', async (context) => {
 });
 ```
 - Удалён метод `updates.hear()` и `updates.setHearFallbackHandler()`, используйте вместо этого пакет [@vk-io/hear](https://github.com/negezor/vk-io/tree/master/packages/hear)
-- Теперь используются [официальные именования событий](https://vk.com/dev/groups_events)
+- Теперь используются [официальные именования событий](https://dev.vk.ru/api/community-events/json-schema)
 Например
 ```ts
 updates.on('message_new', async (context) => {

@@ -1,6 +1,6 @@
 # Upload
 
-Базовый модуль [загрузки файлов](https://vk.com/dev/upload_files), позволяет загружать фотографии/видео/документы/аудио.
+Базовый модуль [загрузки файлов](https://dev.vk.ru/api/upload/overview), позволяет загружать фотографии/видео/документы/аудио.
 
 ## Описание типов
 [API Reference [EN]](https://negezor.github.io/vk-io/references/vk-io/classes/Upload.html)

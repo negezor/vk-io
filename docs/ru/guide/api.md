@@ -1,6 +1,6 @@
 # API
 
-Базовый модуль [запросов](https://vk.com/dev/api_requests), позволяет вызывать [методы API](https://vk.com/dev/methods).
+Базовый модуль [запросов](https://dev.vk.ru/api/api-requests), позволяет вызывать [методы API](https://dev.vk.ru/method).
 
 ## Описание типов
 [API Reference [EN]](https://negezor.github.io/vk-io/references/vk-io/classes/API.html)
@@ -103,11 +103,11 @@ const api = new API({
 
 ### parallel
 
-Объединяет методы в [execute](https://vk.com/dev/execute), позволяет вызывать до `25` методов включительно. Максимальное количество методов в `execute` контролируется опцией [apiExecuteCount](https://negezor.github.io/vk-io/references/vk-io/interfaces/IAPIOptions.html#apiexEcuteCount), [1..25] методов — 1 запрос
+Объединяет методы в [execute](https://dev.vk.ru/method/execute), позволяет вызывать до `25` методов включительно. Максимальное количество методов в `execute` контролируется опцией [apiExecuteCount](https://negezor.github.io/vk-io/references/vk-io/interfaces/IAPIOptions.html#apiexEcuteCount), [1..25] методов — 1 запрос
 
 ### parallel_selected
 
-Схож по работе с [parallel](#parallel), за исключением того, что в [execute](https://vk.com/dev/execute) будут попадать методы из опции [apiExecuteMethods](https://negezor.github.io/vk-io/references/vk-io/interfaces/IAPIOptions.html#apiExecuteMethods), а остальные через [sequential](#sequential).
+Схож по работе с [parallel](#parallel), за исключением того, что в [execute](https://dev.vk.ru/method/execute) будут попадать методы из опции [apiExecuteMethods](https://negezor.github.io/vk-io/references/vk-io/interfaces/IAPIOptions.html#apiExecuteMethods), а остальные через [sequential](#sequential).
 
 ## Режим запросов
 
@@ -187,7 +187,7 @@ callbackService.onCaptcha(async (payload, retry) => {
 ```
 
 ## Использование APIRequest
-Может вам понадобится контролировать запрос на всех стадиях, или иметь удобную оболочку для создания [execute](https://vk.com/dev/execute) методов.
+Может вам понадобится контролировать запрос на всех стадиях, или иметь удобную оболочку для создания [execute](https://dev.vk.ru/method/execute) методов.
 
 [API Reference](https://negezor.github.io/vk-io/references/vk-io/classes/APIRequest.html)
 

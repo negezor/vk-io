@@ -30,7 +30,7 @@ vk.updates.use(async (context, next) => {
             throw error;
         }
 
-        // If there is no access in the chat (https://vk.com/dev/messages.getConversationsById)
+        // If there is no access in the chat (https://dev.vk.ru/method/messages.getConversationsById)
         if (error instanceof APIError && error.code === 917) {
             await context.send('I do not have access to the chat, please give it to me.');
 

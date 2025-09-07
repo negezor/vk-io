@@ -1,6 +1,6 @@
 # Updates
 
-Базовый модуль получения событий из [User Long Poll](https://vk.com/dev/using_longpoll), [Bots Long Poll](https://vk.com/dev/bots_longpoll) и [Callback API](https://vk.com/dev/callback_api).
+Базовый модуль получения событий из [User Long Poll](https://dev.vk.ru/api/user-long-poll/getting-started), [Bots Long Poll](https://dev.vk.ru/api/bots-long-poll/getting-started) и [Callback API](https://dev.vk.ru/api/callback/getting-started).
 
 ## Описание типов
 [API Reference [EN]](https://negezor.github.io/vk-io/references/vk-io/classes/Updates.html)
@@ -123,7 +123,7 @@ updates.on('like', () => {...});
 
 ## Список событий
 
-Библиотека полностью соответствует официальным названиям событий для групп, посмотреть их можно [здесь](https://vk.com/dev/groups_events).
+Библиотека полностью соответствует официальным названиям событий для групп, посмотреть их можно [здесь](https://dev.vk.ru/api/community-events/json-schema).
 
 ## Webhook (Callback API)
 
