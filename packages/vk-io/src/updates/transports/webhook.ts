@@ -100,7 +100,7 @@ export class WebhookTransport {
             const port = customPort || (tls ? 443 : 80);
 
             await promisify(webhookServer.listen)
-                // @ts-ignore https://devblogs.microsoft.com/typescript/announcing-typescript-4-1/#unmatched-parameters-are-no-longer-related
+                // @ts-expect-error https://devblogs.microsoft.com/typescript/announcing-typescript-4-1/#unmatched-parameters-are-no-longer-related
                 .call(webhookServer, { host, port });
 
             debug(`Webhook listening on port: ${port}`);

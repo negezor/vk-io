@@ -31,7 +31,7 @@ export class StepScene<T = MessageContext, S extends Record<string, unknown> = R
     public async enterHandler(context: IStepContext<S> & T): Promise<void> {
         context.scene.step = new StepSceneContext<S>({
             context,
-            // @ts-ignore
+            // @ts-expect-error
             steps: this.steps,
         });
 

@@ -258,7 +258,7 @@ class API {
         };
 
         for (const group of groupMethods) {
-            // @ts-ignore
+            // @ts-expect-error
             this[group] = new Proxy(Object.create(null), {
                 get:
                     (_obj, prop: string) =>
