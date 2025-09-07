@@ -178,7 +178,7 @@ export class DirectAuthorization {
             scope: String(scope),
         });
 
-        const url = new URL(`https://oauth.vk.com/token?${params.toString()}`);
+        const url = new URL(`https://oauth.vk.ru/token?${params.toString()}`);
 
         return this.fetch(url, {
             method: 'GET',

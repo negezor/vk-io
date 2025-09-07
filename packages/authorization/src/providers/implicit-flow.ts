@@ -140,17 +140,17 @@ export abstract class ImplicitFlow {
     /**
      * Returns cookie
      */
-    public async getCookies(): Promise<{ 'login.vk.com': string; 'vk.com': string }> {
+    public async getCookies(): Promise<{ 'login.vk.ru': string; 'vk.ru': string }> {
         const { jar } = this;
 
         const [login, main] = await Promise.all([
-            jar.getCookieString('https://login.vk.com'),
-            jar.getCookieString('https://vk.com'),
+            jar.getCookieString('https://login.vk.ru'),
+            jar.getCookieString('https://vk.ru'),
         ]);
 
         return {
-            'login.vk.com': login,
-            'vk.com': main,
+            'login.vk.ru': login,
+            'vk.ru': main,
         };
     }
 
@@ -439,7 +439,7 @@ export abstract class ImplicitFlow {
             const { key, validate: captchaValidate } = await this.options.callbackService.processingCaptcha({
                 type: CaptchaType.IMPLICIT_FLOW_AUTH,
                 sid: fields.captcha_sid,
-                src: `https://api.vk.com/${src}`,
+                src: `https://api.vk.ru/${src}`,
             });
 
             this.captchaValidate = captchaValidate;

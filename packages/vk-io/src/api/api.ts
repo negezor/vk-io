@@ -231,7 +231,7 @@ class API {
             apiWait: 3e3,
             apiLimit: 3,
             apiVersion: '5.199',
-            apiBaseUrl: 'https://api.vk.com/method',
+            apiBaseUrl: 'https://api.vk.ru/method',
             apiRetryLimit: 3,
             apiTimeout: 10e3,
             apiHeaders: {
