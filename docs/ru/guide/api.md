@@ -173,11 +173,14 @@ const api = new API({
 });
 
 callbackService.onCaptcha(async (payload, retry) => {
-    
-    const key = await myAwesomeCaptchaHandler(payload.src);
+    const { successToken, cookie } = await myAwesomeCaptchaHandler(payload.redirectUri);
+
+    if (payload.request) {
+        payload.request.headers.cookie = cookie;
+    }
 
     try {
-        await retry(key);
+        await retry(successToken);
 
         console.log('Капча успешно решена');
     } catch (error) {
