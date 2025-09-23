@@ -12,11 +12,15 @@ export interface IAPIRequestOptions {
 
     method: string;
     params: Record<string, any>;
+
+    headers?: Record<string, string>;
 }
 
 export class APIRequest {
     public method: string;
     public params: Record<string, any>;
+
+    public headers: Record<string, string>;
 
     public retries = 0;
     public promise: Promise<any>;
@@ -32,11 +36,13 @@ export class APIRequest {
     /**
      * Constructor
      */
-    public constructor({ api, method, params = {} }: IAPIRequestOptions) {
+    public constructor({ api, method, params = {}, headers = {} }: IAPIRequestOptions) {
         this.api = api;
 
         this.method = method;
         this.params = { ...params };
+
+        this.headers = headers;
 
         this.promise = new Promise((resolve, reject): void => {
             this.resolve = resolve;
@@ -87,6 +93,7 @@ export class APIRequest {
                 signal: controller.signal,
                 headers: {
                     ...options.apiHeaders,
+                    ...this.headers,
 
                     connection: 'keep-alive',
                 },
