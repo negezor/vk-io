@@ -47,7 +47,7 @@
     },
     "dependencies": {
         "abort-controller": "^3.0.0",
-        "debug": "^4.4.1",
+        "debug": "^4.4.3",
         "form-data-encoder": "^1.7.2",
         "formdata-node": "^4.4.1",
         "inspectable": "^2.1.0",

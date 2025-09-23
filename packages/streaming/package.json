@@ -40,7 +40,7 @@
         "vk-io": "^4.0.0"
     },
     "dependencies": {
-        "debug": "^4.4.1",
+        "debug": "^4.4.3",
         "inspectable": "^2.1.0",
         "node-fetch": "^3.3.2",
         "ws": "^8.18.3"
