@@ -105,7 +105,7 @@ export class SequentialWorker extends APIWorker {
         }
 
         try {
-            const { captchaSid } = error;
+            const { captchaSid, redirectUri } = error;
 
             const { key, validate } = await this.api.options.callbackService.processingCaptcha({
                 type: CaptchaType.API,
@@ -113,13 +113,19 @@ export class SequentialWorker extends APIWorker {
                 src: error.captchaImg!,
                 // biome-ignore lint/style/noNonNullAssertion: Captcha error always has captcha sid
                 sid: captchaSid!,
+                // biome-ignore lint/style/noNonNullAssertion: Captcha error always has captcha sid
+                redirectUri: redirectUri!,
                 request,
             });
 
             request.captchaValidate = validate;
 
-            request.params.captcha_sid = captchaSid;
-            request.params.captcha_key = key;
+            if (redirectUri) {
+                request.params.success_token = key;
+            } else {
+                request.params.captcha_sid = captchaSid;
+                request.params.captcha_key = key;
+            }
 
             this.requeue(request);
         } catch (e) {

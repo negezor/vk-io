@@ -10,6 +10,7 @@ export interface ICallbackServiceCaptchaPayload {
     type: CaptchaType;
     sid: string;
     src: string;
+    redirectUri: string;
     request?: APIRequest;
 }
 
