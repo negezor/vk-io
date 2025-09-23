@@ -350,6 +350,8 @@ export abstract class ImplicitFlow {
                 type: CaptchaType.IMPLICIT_FLOW_AUTH,
                 sid: fields.captcha_sid,
                 src,
+                // TODO: Handle redirect uri
+                redirectUri: '',
             });
 
             this.captchaValidate = validate;
@@ -440,6 +442,8 @@ export abstract class ImplicitFlow {
                 type: CaptchaType.IMPLICIT_FLOW_AUTH,
                 sid: fields.captcha_sid,
                 src: `https://api.vk.ru/${src}`,
+                // TODO: Handle redirect uri
+                redirectUri: '',
             });
 
             this.captchaValidate = captchaValidate;

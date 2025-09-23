@@ -353,6 +353,8 @@ export class DirectAuthorization {
             type: CaptchaType.DIRECT_AUTH,
             sid,
             src,
+            // TODO: Handle redirect uri
+            redirectUri: '',
         });
 
         this.captchaValidate = validate;

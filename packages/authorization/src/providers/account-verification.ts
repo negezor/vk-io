@@ -365,6 +365,8 @@ export class AccountVerification {
         const { key, validate } = await this.options.callbackService.processingCaptcha({
             type: CaptchaType.ACCOUNT_VERIFICATION,
             sid: fields.captcha_sid,
+            // TODO: Handle redirect uri
+            redirectUri: '',
             src,
         });
 
