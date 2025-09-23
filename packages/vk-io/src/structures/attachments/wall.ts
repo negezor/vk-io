@@ -431,6 +431,13 @@ class WallAttachment extends Attachment<IWallAttachmentPayload, AttachmentType.W
     }
 
     /**
+     * Returns the donut
+     */
+    public get donut(): IWallAttachmentPayload['donut'] | undefined {
+        return this.payload.donut;
+    }
+
+    /**
      * Returns the attachments
      */
     public get attachments(): (Attachment | ExternalAttachment)[] {
