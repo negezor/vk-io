@@ -9,14 +9,14 @@
     },
     "type": "module",
     "devDependencies": {
-        "@biomejs/biome": "^2.2.4",
+        "@biomejs/biome": "^2.3.2",
         "@rollup/plugin-json": "^6.1.0",
-        "@types/node": "^24.5.2",
-        "rollup": "^4.52.2",
+        "@types/node": "^24.9.2",
+        "rollup": "^4.52.5",
         "rollup-plugin-typescript2": "^0.36.0",
-        "tsx": "^4.20.5",
-        "typedoc": "^0.28.13",
-        "typescript": "^5.9.2",
+        "tsx": "^4.20.6",
+        "typedoc": "^0.28.14",
+        "typescript": "^5.9.3",
         "vitepress": "^1.6.4"
     },
     "scripts": {
