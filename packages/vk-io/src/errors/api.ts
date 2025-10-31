@@ -57,6 +57,7 @@ export class APIError extends VKError {
         if (code === APIErrorCode.CAPTCHA) {
             this.captchaSid = payload.captcha_sid;
             this.captchaImg = payload.captcha_img;
+            this.redirectUri = payload.redirect_uri;
         } else if (code === APIErrorCode.AUTH_VALIDATION) {
             this.redirectUri = payload.redirect_uri;
         } else if (code === APIErrorCode.NEED_CONFIRMATION) {
