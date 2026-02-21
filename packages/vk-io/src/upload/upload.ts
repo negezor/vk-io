@@ -753,7 +753,7 @@ export class Upload {
                 'group_id',
                 'attach_access_key',
                 'clickable_stickers',
-                'lifetime'
+                'lifetime',
             ],
 
             saveFiles: file =>
@@ -800,7 +800,7 @@ export class Upload {
                 'link_url',
                 'group_id',
                 'clickable_stickers',
-                'lifetime'
+                'lifetime',
             ],
 
             saveFiles: file =>
