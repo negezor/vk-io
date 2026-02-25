@@ -86,19 +86,35 @@ export class APIRequest {
         const timeout = setTimeout(() => controller.abort(), options.apiTimeout);
 
         try {
-            const response = await fetch(`${options.apiBaseUrl}/${this.method}`, {
-                method: 'POST',
-                compress: false,
-                agent: options.agent,
-                signal: controller.signal,
-                headers: {
-                    ...options.apiHeaders,
-                    ...this.headers,
+            const serializedParams = Object.entries(params)
+                .filter(({ 1: value }) => value !== undefined)
+                .map(([key, value]): [string, string] => {
+                    if (Array.isArray(value)) {
+                        return [key, value.join(',')];
+                    }
 
-                    connection: 'keep-alive',
-                },
-                body: new URLSearchParams(Object.entries(params).filter(({ 1: value }) => value !== undefined)),
-            });
+                    if (typeof value === 'object') {
+                        return [key, JSON.stringify(value)];
+                    }
+                    return [key, String(value)];
+                });
+
+            const response = await fetch(
+                `${options.apiBaseUrl}/${this.method}`,
+                {
+                    method: 'POST',
+                    compress: false,
+                    agent: options.agent,
+                    signal: controller.signal,
+                    headers: {
+                        ...options.apiHeaders,
+                        ...this.headers,
+
+                        connection: 'keep-alive',
+                    },
+                    body: new URLSearchParams(serializedParams),
+                }
+            );
 
             const result = await response.json();
 
