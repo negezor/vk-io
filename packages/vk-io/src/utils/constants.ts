@@ -2,6 +2,7 @@
  * Chat peer ID
  */
 export const PEER_CHAT_ID_OFFSET = 2e9;
+export const PEER_CHAT_ID_LIMIT = 2e9 + 1e8;
 
 /**
  * Minimum time interval api with error
